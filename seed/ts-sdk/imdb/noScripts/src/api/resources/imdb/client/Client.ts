@@ -44,7 +44,23 @@ export class Imdb {
      *         rating: 1.1
      *     })
      */
-    public async createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: Imdb.RequestOptions): Promise<SeedApi.MovieId> {
+    public createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: Imdb.RequestOptions): core.HttpResponsePromise<SeedApi.MovieId> {
+        return core.HttpResponsePromise.fromFunction(this.__createMovie, request, requestOptions);
+    }
+
+    /**
+     * Add a movie to the database using the movies/* /... path.
+     *
+     * @param {SeedApi.CreateMovieRequest} request
+     * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.imdb.createMovie({
+     *         title: "title",
+     *         rating: 1.1
+     *     })
+     */
+    private async __createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: Imdb.RequestOptions): Promise<core.WithRawResponse<SeedApi.MovieId>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/movies/create-movie"),
             method: "POST",
@@ -66,7 +82,7 @@ export class Imdb {
             abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.MovieId.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return { data: serializers.MovieId.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -97,7 +113,20 @@ export class Imdb {
      * @example
      *     await client.imdb.getMovie("movieId")
      */
-    public async getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<SeedApi.Movie> {
+    public getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): core.HttpResponsePromise<SeedApi.Movie> {
+        return core.HttpResponsePromise.fromFunction(this.__getMovie, movieId, requestOptions);
+    }
+
+    /**
+     * @param {SeedApi.MovieId} movieId
+     * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedApi.MovieDoesNotExistError}
+     *
+     * @example
+     *     await client.imdb.getMovie("movieId")
+     */
+    private async __getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<core.WithRawResponse<SeedApi.Movie>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`),
             method: "GET",
@@ -118,7 +147,7 @@ export class Imdb {
             abortSignal: requestOptions?.abortSignal
         });
         if (_response.ok) {
-            return serializers.Movie.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] });
+            return { data: serializers.Movie.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

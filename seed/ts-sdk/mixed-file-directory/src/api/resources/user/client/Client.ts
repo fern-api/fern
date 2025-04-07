@@ -48,10 +48,28 @@ export class User {
      *         limit: 1
      *     })
      */
-    public async list(
+    public list(
         request: SeedMixedFileDirectory.ListUsersRequest = {},
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedMixedFileDirectory.User[]> {
+    ): core.HttpResponsePromise<SeedMixedFileDirectory.User[]> {
+        return core.HttpResponsePromise.fromFunction(this.__list, request, requestOptions);
+    }
+
+    /**
+     * List all users.
+     *
+     * @param {SeedMixedFileDirectory.ListUsersRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.list({
+     *         limit: 1
+     *     })
+     */
+    private async __list(
+        request: SeedMixedFileDirectory.ListUsersRequest = {},
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.User[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -82,12 +100,15 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.user.list.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.user.list.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

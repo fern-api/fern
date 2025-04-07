@@ -38,7 +38,17 @@ export class User {
      * @example
      *     await client.user.get()
      */
-    public async get(requestOptions?: User.RequestOptions): Promise<SeedAnyAuth.User[]> {
+    public get(requestOptions?: User.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
+        return core.HttpResponsePromise.fromFunction(this.__get, requestOptions);
+    }
+
+    /**
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.get()
+     */
+    private async __get(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -64,12 +74,15 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.user.get.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.user.get.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

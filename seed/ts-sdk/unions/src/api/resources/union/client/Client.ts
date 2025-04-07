@@ -37,7 +37,21 @@ export class Union {
      * @example
      *     await client.union.get("id")
      */
-    public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
+    public get(id: string, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<SeedUnions.Shape> {
+        return core.HttpResponsePromise.fromFunction(this.__get, id, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.get("id")
+     */
+    private async __get(
+        id: string,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedUnions.Shape>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,12 +75,15 @@ export class Union {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Shape.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Shape.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -101,7 +118,24 @@ export class Union {
      *         radius: 1.1
      *     })
      */
-    public async update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): Promise<boolean> {
+    public update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__update, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedUnions.Shape} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.update({
+     *         type: "circle",
+     *         radius: 1.1
+     *     })
+     */
+    private async __update(
+        request: SeedUnions.Shape,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -124,12 +158,15 @@ export class Union {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.union.update.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.union.update.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

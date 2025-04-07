@@ -37,8 +37,11 @@ export class SeedAliasClient {
      * @example
      *     await client.get("typeId")
      */
-    public get(typeId: SeedAlias.TypeId, requestOptions?: SeedAliasClient.RequestOptions): core.ResponsePromise<void> {
-        return core.ResponsePromise.fromFunction(this.__get, typeId, requestOptions);
+    public get(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__get, typeId, requestOptions);
     }
 
     /**

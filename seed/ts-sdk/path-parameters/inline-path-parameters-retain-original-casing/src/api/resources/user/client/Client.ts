@@ -40,10 +40,26 @@ export class User {
      *         user_id: "user_id"
      *     })
      */
-    public async getUser(
+    public getUser(
         request: SeedPathParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromFunction(this.__getUser, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPathParameters.GetUsersRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.getUser({
+     *         user_id: "user_id"
+     *     })
+     */
+    private async __getUser(
+        request: SeedPathParameters.GetUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -68,12 +84,15 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -110,10 +129,27 @@ export class User {
      *         tags: ["tags", "tags"]
      *     })
      */
-    public async createUser(
+    public createUser(
         request: SeedPathParameters.User,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPathParameters.User} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.createUser({
+     *         name: "name",
+     *         tags: ["tags", "tags"]
+     *     })
+     */
+    private async __createUser(
+        request: SeedPathParameters.User,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -138,12 +174,15 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -183,10 +222,30 @@ export class User {
      *         }
      *     })
      */
-    public async updateUser(
+    public updateUser(
         request: SeedPathParameters.UpdateUserRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromFunction(this.__updateUser, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPathParameters.UpdateUserRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.updateUser({
+     *         user_id: "user_id",
+     *         body: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         }
+     *     })
+     */
+    private async __updateUser(
+        request: SeedPathParameters.UpdateUserRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId, body: _body } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -212,12 +271,15 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -254,10 +316,27 @@ export class User {
      *         limit: 1
      *     })
      */
-    public async searchUsers(
+    public searchUsers(
         request: SeedPathParameters.SearchUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User[]> {
+    ): core.HttpResponsePromise<SeedPathParameters.User[]> {
+        return core.HttpResponsePromise.fromFunction(this.__searchUsers, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPathParameters.SearchUsersRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.searchUsers({
+     *         user_id: "user_id",
+     *         limit: 1
+     *     })
+     */
+    private async __searchUsers(
+        request: SeedPathParameters.SearchUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
         const { user_id: userId, limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -288,12 +367,15 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.user.searchUsers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.user.searchUsers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

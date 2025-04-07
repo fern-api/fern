@@ -43,10 +43,26 @@ export class S3 {
      *         s3Key: "s3Key"
      *     })
      */
-    public async getPresignedUrl(
+    public getPresignedUrl(
         request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
         requestOptions?: S3.RequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__getPresignedUrl, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedMultiUrlEnvironment.GetPresignedUrlRequest} request
+     * @param {S3.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.s3.getPresignedUrl({
+     *         s3Key: "s3Key"
+     *     })
+     */
+    private async __getPresignedUrl(
+        request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
+        requestOptions?: S3.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,12 +91,15 @@ export class S3 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.s3.getPresignedUrl.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.s3.getPresignedUrl.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

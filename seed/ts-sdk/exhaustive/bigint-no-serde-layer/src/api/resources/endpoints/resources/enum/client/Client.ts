@@ -40,8 +40,8 @@ export class Enum {
     public getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: Enum.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.WeatherReport> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnEnum, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnEnum, request, requestOptions);
     }
 
     /**

@@ -37,10 +37,24 @@ export class Service {
      * @example
      *     await client.service.getMovie("string")
      */
-    public async getMovie(
+    public getMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedResponseProperty.Response> {
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromFunction(this.__getMovie, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getMovie("string")
+     */
+    private async __getMovie(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -65,12 +79,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -102,10 +119,24 @@ export class Service {
      * @example
      *     await client.service.getMovieDocs("string")
      */
-    public async getMovieDocs(
+    public getMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedResponseProperty.Response> {
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromFunction(this.__getMovieDocs, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getMovieDocs("string")
+     */
+    private async __getMovieDocs(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -130,12 +161,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -167,10 +201,24 @@ export class Service {
      * @example
      *     await client.service.getMovieName("string")
      */
-    public async getMovieName(
+    public getMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedResponseProperty.StringResponse> {
+    ): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__getMovieName, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getMovieName("string")
+     */
+    private async __getMovieName(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.StringResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -195,12 +243,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.StringResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.StringResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -232,10 +283,24 @@ export class Service {
      * @example
      *     await client.service.getMovieMetadata("string")
      */
-    public async getMovieMetadata(
+    public getMovieMetadata(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedResponseProperty.Response> {
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromFunction(this.__getMovieMetadata, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getMovieMetadata("string")
+     */
+    private async __getMovieMetadata(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -262,12 +327,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -299,10 +367,24 @@ export class Service {
      * @example
      *     await client.service.getOptionalMovie("string")
      */
-    public async getOptionalMovie(
+    public getOptionalMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedResponseProperty.Response | undefined> {
+    ): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
+        return core.HttpResponsePromise.fromFunction(this.__getOptionalMovie, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getOptionalMovie("string")
+     */
+    private async __getOptionalMovie(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -329,12 +411,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.getOptionalMovie.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.service.getOptionalMovie.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -366,10 +451,24 @@ export class Service {
      * @example
      *     await client.service.getOptionalMovieDocs("string")
      */
-    public async getOptionalMovieDocs(
+    public getOptionalMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedResponseProperty.OptionalWithDocs | undefined> {
+    ): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
+        return core.HttpResponsePromise.fromFunction(this.__getOptionalMovieDocs, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getOptionalMovieDocs("string")
+     */
+    private async __getOptionalMovieDocs(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -396,12 +495,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.OptionalWithDocs.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.OptionalWithDocs.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -433,10 +535,24 @@ export class Service {
      * @example
      *     await client.service.getOptionalMovieName("string")
      */
-    public async getOptionalMovieName(
+    public getOptionalMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedResponseProperty.OptionalStringResponse | undefined> {
+    ): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
+        return core.HttpResponsePromise.fromFunction(this.__getOptionalMovieName, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getOptionalMovieName("string")
+     */
+    private async __getOptionalMovieName(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalStringResponse | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -463,12 +579,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.OptionalStringResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.OptionalStringResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

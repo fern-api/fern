@@ -42,7 +42,23 @@ export class BasicAuth {
      * @example
      *     await client.basicAuth.getWithBasicAuth()
      */
-    public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
+    public getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithBasicAuth, requestOptions);
+    }
+
+    /**
+     * GET request with basic auth scheme
+     *
+     * @param {BasicAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedBasicAuth.UnauthorizedRequest}
+     *
+     * @example
+     *     await client.basicAuth.getWithBasicAuth()
+     */
+    private async __getWithBasicAuth(
+        requestOptions?: BasicAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,12 +83,15 @@ export class BasicAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -123,7 +142,31 @@ export class BasicAuth {
      *         "key": "value"
      *     })
      */
-    public async postWithBasicAuth(request?: unknown, requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
+    public postWithBasicAuth(
+        request?: unknown,
+        requestOptions?: BasicAuth.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__postWithBasicAuth, request, requestOptions);
+    }
+
+    /**
+     * POST request with basic auth scheme
+     *
+     * @param {unknown} request
+     * @param {BasicAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedBasicAuth.UnauthorizedRequest}
+     * @throws {@link SeedBasicAuth.BadRequest}
+     *
+     * @example
+     *     await client.basicAuth.postWithBasicAuth({
+     *         "key": "value"
+     *     })
+     */
+    private async __postWithBasicAuth(
+        request?: unknown,
+        requestOptions?: BasicAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -149,12 +192,15 @@ export class BasicAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

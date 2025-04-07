@@ -43,8 +43,8 @@ export class Union {
     public getAndReturnUnion(
         request: Fiddle.types.Animal,
         requestOptions?: Union.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
     }
 
     /**
@@ -108,6 +108,7 @@ export class Union {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.union.getAndReturnUnion.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

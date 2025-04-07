@@ -44,8 +44,11 @@ export class NoAuth {
      *         "key": "value"
      *     })
      */
-    public postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): core.ResponsePromise<boolean> {
-        return core.ResponsePromise.fromFunction(this.__postWithNoAuth, request, requestOptions);
+    public postWithNoAuth(
+        request?: unknown,
+        requestOptions?: NoAuth.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__postWithNoAuth, request, requestOptions);
     }
 
     /**

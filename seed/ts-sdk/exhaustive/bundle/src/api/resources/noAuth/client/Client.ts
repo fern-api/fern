@@ -44,8 +44,8 @@ export class NoAuth {
     public postWithNoAuth(
         request?: unknown,
         requestOptions?: NoAuth.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
-        return core.ResponsePromise.fromFunction(this.__postWithNoAuth, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__postWithNoAuth, request, requestOptions);
     }
 
     /**
@@ -118,6 +118,7 @@ export class NoAuth {
                                     breadcrumbsPrefix: ["response"],
                                 }),
                             ),
+                            rawResponse: _response.rawResponse,
                         },
                         rawResponse: _response.rawResponse,
                     };
@@ -128,6 +129,7 @@ export class NoAuth {
             data: {
                 ok: false,
                 error: Fiddle.noAuth.postWithNoAuth.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

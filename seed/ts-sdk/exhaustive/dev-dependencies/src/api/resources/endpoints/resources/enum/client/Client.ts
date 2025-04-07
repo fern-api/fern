@@ -40,10 +40,10 @@ export class Enum {
     public getAndReturnEnum(
         request: Fiddle.types.WeatherReport,
         requestOptions?: Enum.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnEnum, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnEnum, request, requestOptions);
     }
 
     /**
@@ -106,6 +106,7 @@ export class Enum {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.enum_.getAndReturnEnum.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

@@ -57,7 +57,21 @@ export class SeedExamplesClient {
      * @example
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
-    public async echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): Promise<string> {
+    public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__echo, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
+     */
+    private async __echo(
+        request: string,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -81,12 +95,15 @@ export class SeedExamplesClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.echo.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.echo.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -118,10 +135,24 @@ export class SeedExamplesClient {
      * @example
      *     await client.createType("primitive")
      */
-    public async createType(
+    public createType(
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
-    ): Promise<SeedExamples.Identifier> {
+    ): core.HttpResponsePromise<SeedExamples.Identifier> {
+        return core.HttpResponsePromise.fromFunction(this.__createType, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExamples.Type} request
+     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.createType("primitive")
+     */
+    private async __createType(
+        request: SeedExamples.Type,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -145,12 +176,15 @@ export class SeedExamplesClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Identifier.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Identifier.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

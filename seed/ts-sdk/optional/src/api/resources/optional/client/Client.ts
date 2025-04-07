@@ -40,10 +40,28 @@ export class Optional {
      *         }
      *     })
      */
-    public async sendOptionalBody(
+    public sendOptionalBody(
         request?: Record<string, unknown>,
         requestOptions?: Optional.RequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__sendOptionalBody, request, requestOptions);
+    }
+
+    /**
+     * @param {Record<string, unknown>} request
+     * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.optional.sendOptionalBody({
+     *         "string": {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    private async __sendOptionalBody(
+        request?: Record<string, unknown>,
+        requestOptions?: Optional.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -73,12 +91,15 @@ export class Optional {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.optional.sendOptionalBody.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.optional.sendOptionalBody.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

@@ -9,6 +9,30 @@ export type RawResponse = Omit<
 >; // strips out body and bodyUsed
 
 /**
+ * A raw response indicating that the request was aborted.
+ */
+export const abortRawResponse: RawResponse = {
+    headers: new Headers(),
+    redirected: false,
+    status: 499,
+    statusText: "Client Closed Request",
+    type: "error",
+    url: "",
+} as const;
+
+/**
+ * A raw response indicating an unknown error.
+ */
+export const unknownRawResponse: RawResponse = {
+    headers: new Headers(),
+    redirected: false,
+    status: 0,
+    statusText: "Unknown Error",
+    type: "error",
+    url: "",
+} as const;
+
+/**
  * Converts a `RawResponse` object into a `RawResponse` by extracting its properties,
  * excluding the `body` and `bodyUsed` fields.
  *
@@ -28,7 +52,10 @@ export interface WithRawResponse<T> {
     readonly rawResponse: RawResponse;
 }
 
-export class ResponsePromise<T> extends Promise<T> {
+/**
+ * A promise that returns the parsed response and lets you retrieve the raw response too.
+ */
+export class HttpResponsePromise<T> extends Promise<T> {
     private innerPromise: Promise<WithRawResponse<T>>;
     private unwrappedPromise: Promise<T> | undefined;
 
@@ -50,8 +77,8 @@ export class ResponsePromise<T> extends Promise<T> {
     public static fromFunction<F extends (...args: never[]) => Promise<WithRawResponse<T>>, T>(
         fn: F,
         ...args: Parameters<F>
-    ): ResponsePromise<T> {
-        return new ResponsePromise<T>(fn(...args));
+    ): HttpResponsePromise<T> {
+        return new HttpResponsePromise<T>(fn(...args));
     }
 
     /**
@@ -60,8 +87,8 @@ export class ResponsePromise<T> extends Promise<T> {
      * @param promise - A promise resolving to a `WithRawResponse` object.
      * @returns A `ResponsePromise` instance.
      */
-    public static fromPromise<T>(promise: Promise<WithRawResponse<T>>): ResponsePromise<T> {
-        return new ResponsePromise<T>(promise);
+    public static fromPromise<T>(promise: Promise<WithRawResponse<T>>): HttpResponsePromise<T> {
+        return new HttpResponsePromise<T>(promise);
     }
 
     /**
@@ -72,9 +99,9 @@ export class ResponsePromise<T> extends Promise<T> {
      */
     public static fromExecutor<T>(
         executor: (resolve: (value: WithRawResponse<T>) => void, reject: (reason?: unknown) => void) => void,
-    ): ResponsePromise<T> {
+    ): HttpResponsePromise<T> {
         const promise = new Promise<WithRawResponse<T>>(executor);
-        return new ResponsePromise<T>(promise);
+        return new HttpResponsePromise<T>(promise);
     }
 
     /**
@@ -83,9 +110,9 @@ export class ResponsePromise<T> extends Promise<T> {
      * @param result - A `WithRawResponse` object to resolve immediately.
      * @returns A `ResponsePromise` instance.
      */
-    public static fromResult<T>(result: WithRawResponse<T>): ResponsePromise<T> {
+    public static fromResult<T>(result: WithRawResponse<T>): HttpResponsePromise<T> {
         const promise = Promise.resolve(result);
-        return new ResponsePromise<T>(promise);
+        return new HttpResponsePromise<T>(promise);
     }
 
     private unwrap(): Promise<T> {

@@ -45,8 +45,8 @@ export class Union {
     public getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.Animal> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
     }
 
     /**

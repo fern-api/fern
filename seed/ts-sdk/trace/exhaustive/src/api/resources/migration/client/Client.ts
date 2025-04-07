@@ -44,10 +44,30 @@ export class Migration {
      *         adminKeyHeader: "admin-key-header"
      *     })
      */
-    public async getAttemptedMigrations(
+    public getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__getAttemptedMigrations, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
+     * @param {Migration.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.migration.getAttemptedMigrations({
+     *         adminKeyHeader: "admin-key-header"
+     *     })
+     */
+    private async __getAttemptedMigrations(
+        request: SeedTrace.GetAttemptedMigrationsRequest,
+        requestOptions?: Migration.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>>
+    > {
         const { adminKeyHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -81,19 +101,28 @@ export class Migration {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.migration.getAttemptedMigrations.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.migration.getAttemptedMigrations.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

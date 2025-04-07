@@ -54,10 +54,32 @@ export class Query {
      *         query: "What is the weather today"
      *     })
      */
-    public async send(
+    public send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions,
-    ): Promise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedLiteral.SendLiteralsInQueryRequest} request
+     * @param {Query.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.query.send({
+     *         optionalPrompt: "You are a helpful assistant",
+     *         aliasPrompt: "You are a helpful assistant",
+     *         aliasOptionalPrompt: "You are a helpful assistant",
+     *         optionalStream: false,
+     *         aliasStream: false,
+     *         aliasOptionalStream: false,
+     *         query: "What is the weather today"
+     *     })
+     */
+    private async __send(
+        request: SeedLiteral.SendLiteralsInQueryRequest,
+        requestOptions?: Query.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
         const {
             prompt,
             optionalPrompt,
@@ -129,12 +151,15 @@ export class Query {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SendResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SendResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

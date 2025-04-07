@@ -52,7 +52,21 @@ export class V2 {
      * @example
      *     await client.v2.test()
      */
-    public async test(requestOptions?: V2.RequestOptions): Promise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
+    public test(
+        requestOptions?: V2.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__test, requestOptions);
+    }
+
+    /**
+     * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.test()
+     */
+    private async __test(
+        requestOptions?: V2.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.v2.test.Error>>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -82,14 +96,23 @@ export class V2 {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.test.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.test.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

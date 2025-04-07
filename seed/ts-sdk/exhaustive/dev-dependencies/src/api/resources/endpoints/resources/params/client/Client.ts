@@ -42,8 +42,8 @@ export class Params {
     public getWithPath(
         param: string,
         requestOptions?: Params.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getWithPath, param, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithPath, param, requestOptions);
     }
 
     /**
@@ -103,6 +103,7 @@ export class Params {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.params.getWithPath.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -122,8 +123,8 @@ export class Params {
         param: string,
         request: Fiddle.endpoints.GetWithInlinePath = {},
         requestOptions?: Params.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getWithInlinePath, param, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithInlinePath, param, request, requestOptions);
     }
 
     /**
@@ -185,6 +186,7 @@ export class Params {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.params.getWithInlinePath.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -205,8 +207,8 @@ export class Params {
     public getWithQuery(
         request: Fiddle.endpoints.GetWithQuery,
         requestOptions?: Params.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithQuery.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getWithQuery, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithQuery.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithQuery, request, requestOptions);
     }
 
     /**
@@ -269,6 +271,7 @@ export class Params {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.params.getWithQuery.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -289,8 +292,8 @@ export class Params {
     public getWithAllowMultipleQuery(
         request: Fiddle.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getWithAllowMultipleQuery, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithAllowMultipleQuery, request, requestOptions);
     }
 
     /**
@@ -363,6 +366,7 @@ export class Params {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.params.getWithAllowMultipleQuery.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -384,8 +388,8 @@ export class Params {
         param: string,
         request: Fiddle.endpoints.GetWithPathAndQuery,
         requestOptions?: Params.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithPathAndQuery.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getWithPathAndQuery, param, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithPathAndQuery.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithPathAndQuery, param, request, requestOptions);
     }
 
     /**
@@ -448,6 +452,7 @@ export class Params {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.params.getWithPathAndQuery.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -469,8 +474,8 @@ export class Params {
         param: string,
         request: Fiddle.endpoints.GetWithInlinePathAndQuery,
         requestOptions?: Params.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getWithInlinePathAndQuery, param, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithInlinePathAndQuery, param, request, requestOptions);
     }
 
     /**
@@ -533,6 +538,7 @@ export class Params {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -552,8 +558,8 @@ export class Params {
         param: string,
         request: string,
         requestOptions?: Params.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
-        return core.ResponsePromise.fromFunction(this.__modifyWithPath, param, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__modifyWithPath, param, request, requestOptions);
     }
 
     /**
@@ -618,6 +624,7 @@ export class Params {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.params.modifyWithPath.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -639,8 +646,8 @@ export class Params {
         param: string,
         request: Fiddle.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: Params.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>> {
-        return core.ResponsePromise.fromFunction(this.__modifyWithInlinePath, param, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__modifyWithInlinePath, param, request, requestOptions);
     }
 
     /**
@@ -707,6 +714,7 @@ export class Params {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.params.modifyWithInlinePath.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

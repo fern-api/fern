@@ -40,8 +40,8 @@ export class Primitive {
     public getAndReturnString(
         request: string,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnString.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnString, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnString.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnString, request, requestOptions);
     }
 
     /**
@@ -102,6 +102,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnString.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -117,8 +118,8 @@ export class Primitive {
     public getAndReturnInt(
         request: number,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnInt.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnInt, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnInt.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnInt, request, requestOptions);
     }
 
     /**
@@ -179,6 +180,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnInt.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -194,8 +196,8 @@ export class Primitive {
     public getAndReturnLong(
         request: number,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnLong.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnLong, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnLong.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnLong, request, requestOptions);
     }
 
     /**
@@ -256,6 +258,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnLong.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -271,8 +274,8 @@ export class Primitive {
     public getAndReturnDouble(
         request: number,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnDouble.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnDouble, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnDouble.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDouble, request, requestOptions);
     }
 
     /**
@@ -333,6 +336,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnDouble.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -348,8 +352,8 @@ export class Primitive {
     public getAndReturnBool(
         request: boolean,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<boolean, Fiddle.endpoints.primitive.getAndReturnBool.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnBool, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<boolean, Fiddle.endpoints.primitive.getAndReturnBool.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnBool, request, requestOptions);
     }
 
     /**
@@ -410,6 +414,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnBool.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -425,8 +430,8 @@ export class Primitive {
     public getAndReturnDatetime(
         request: Date,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<Date, Fiddle.endpoints.primitive.getAndReturnDatetime.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnDatetime, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<Date, Fiddle.endpoints.primitive.getAndReturnDatetime.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDatetime, request, requestOptions);
     }
 
     /**
@@ -487,6 +492,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnDatetime.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -502,8 +508,8 @@ export class Primitive {
     public getAndReturnDate(
         request: string,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDate.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnDate, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDate.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDate, request, requestOptions);
     }
 
     /**
@@ -564,6 +570,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnDate.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -579,8 +586,8 @@ export class Primitive {
     public getAndReturnUuid(
         request: string,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnUuid.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnUuid, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnUuid.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnUuid, request, requestOptions);
     }
 
     /**
@@ -641,6 +648,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnUuid.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -656,8 +664,8 @@ export class Primitive {
     public getAndReturnBase64(
         request: string,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnBase64.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnBase64, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnBase64.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnBase64, request, requestOptions);
     }
 
     /**
@@ -718,6 +726,7 @@ export class Primitive {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.primitive.getAndReturnBase64.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

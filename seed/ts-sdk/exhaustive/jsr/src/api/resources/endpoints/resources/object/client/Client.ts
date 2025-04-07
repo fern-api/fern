@@ -57,8 +57,8 @@ export class Object_ {
     public getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnWithOptionalField, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithOptionalField, request, requestOptions);
     }
 
     /**
@@ -160,8 +160,8 @@ export class Object_ {
     public getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnWithRequiredField, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithRequiredField, request, requestOptions);
     }
 
     /**
@@ -253,8 +253,8 @@ export class Object_ {
     public getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnWithMapOfMap, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithMapOfMap, request, requestOptions);
     }
 
     /**
@@ -363,8 +363,12 @@ export class Object_ {
     public getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnNestedWithOptionalField, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__getAndReturnNestedWithOptionalField,
+            request,
+            requestOptions,
+        );
     }
 
     /**
@@ -490,8 +494,8 @@ export class Object_ {
         string_: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
-        return core.ResponsePromise.fromFunction(
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromFunction(
             this.__getAndReturnNestedWithRequiredField,
             string_,
             request,
@@ -641,8 +645,8 @@ export class Object_ {
     public getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
-        return core.ResponsePromise.fromFunction(
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromFunction(
             this.__getAndReturnNestedWithRequiredFieldAsList,
             request,
             requestOptions,

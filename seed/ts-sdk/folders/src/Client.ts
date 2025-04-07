@@ -46,7 +46,17 @@ export class SeedApiClient {
      * @example
      *     await client.foo()
      */
-    public async foo(requestOptions?: SeedApiClient.RequestOptions): Promise<void> {
+    public foo(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__foo, requestOptions);
+    }
+
+    /**
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.foo()
+     */
+    private async __foo(requestOptions?: SeedApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,7 +78,7 @@ export class SeedApiClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

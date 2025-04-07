@@ -38,8 +38,8 @@ export class HttpMethods {
      * @example
      *     await client.endpoints.httpMethods.testGet("id")
      */
-    public testGet(id: string, requestOptions?: HttpMethods.RequestOptions): core.ResponsePromise<string> {
-        return core.ResponsePromise.fromFunction(this.__testGet, id, requestOptions);
+    public testGet(id: string, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__testGet, id, requestOptions);
     }
 
     /**
@@ -122,8 +122,8 @@ export class HttpMethods {
     public testPost(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.ResponsePromise.fromFunction(this.__testPost, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromFunction(this.__testPost, request, requestOptions);
     }
 
     /**
@@ -211,8 +211,8 @@ export class HttpMethods {
         id: string,
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.ResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
     }
 
     /**
@@ -316,8 +316,8 @@ export class HttpMethods {
         id: string,
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.ResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
     }
 
     /**
@@ -414,8 +414,8 @@ export class HttpMethods {
      * @example
      *     await client.endpoints.httpMethods.testDelete("id")
      */
-    public testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): core.ResponsePromise<boolean> {
-        return core.ResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
+    public testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
     }
 
     /**

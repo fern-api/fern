@@ -41,10 +41,28 @@ export class Metadata {
      *         id: "id"
      *     })
      */
-    public async getMetadata(
+    public getMetadata(
         request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
         requestOptions?: Metadata.RequestOptions,
-    ): Promise<SeedMixedFileDirectory.user.events.Metadata> {
+    ): core.HttpResponsePromise<SeedMixedFileDirectory.user.events.Metadata> {
+        return core.HttpResponsePromise.fromFunction(this.__getMetadata, request, requestOptions);
+    }
+
+    /**
+     * Get event metadata.
+     *
+     * @param {SeedMixedFileDirectory.user.events.GetEventMetadataRequest} request
+     * @param {Metadata.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.events.metadata.getMetadata({
+     *         id: "id"
+     *     })
+     */
+    private async __getMetadata(
+        request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
+        requestOptions?: Metadata.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.events.Metadata>> {
         const { id } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["id"] = id;
@@ -72,12 +90,15 @@ export class Metadata {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.user.events.Metadata.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.user.events.Metadata.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

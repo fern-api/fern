@@ -53,11 +53,36 @@ export class Playlist {
      *         }
      *     })
      */
-    public async createPlaylist(
+    public createPlaylist(
         serviceParam: number,
         request: SeedTrace.CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<SeedTrace.Playlist> {
+    ): core.HttpResponsePromise<SeedTrace.Playlist> {
+        return core.HttpResponsePromise.fromFunction(this.__createPlaylist, serviceParam, request, requestOptions);
+    }
+
+    /**
+     * Create a new playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.CreatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.playlist.createPlaylist(1, {
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         optionalDatetime: "2024-01-15T09:30:00Z",
+     *         body: {
+     *             name: "name",
+     *             problems: ["problems", "problems"]
+     *         }
+     *     })
+     */
+    private async __createPlaylist(
+        serviceParam: number,
+        request: SeedTrace.CreatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["datetime"] = datetime.toISOString();
@@ -96,12 +121,15 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Playlist.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Playlist.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -144,11 +172,35 @@ export class Playlist {
      *         multipleField: "multipleField"
      *     })
      */
-    public async getPlaylists(
+    public getPlaylists(
         serviceParam: number,
         request: SeedTrace.GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<SeedTrace.Playlist[]> {
+    ): core.HttpResponsePromise<SeedTrace.Playlist[]> {
+        return core.HttpResponsePromise.fromFunction(this.__getPlaylists, serviceParam, request, requestOptions);
+    }
+
+    /**
+     * Returns the user's playlists
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.GetPlaylistsRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.playlist.getPlaylists(1, {
+     *         limit: 1,
+     *         otherField: "otherField",
+     *         multiLineDocs: "multiLineDocs",
+     *         optionalMultipleField: "optionalMultipleField",
+     *         multipleField: "multipleField"
+     *     })
+     */
+    private async __getPlaylists(
+        serviceParam: number,
+        request: SeedTrace.GetPlaylistsRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist[]>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -201,12 +253,15 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -246,11 +301,32 @@ export class Playlist {
      * @example
      *     await client.playlist.getPlaylist(1, "playlistId")
      */
-    public async getPlaylist(
+    public getPlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<SeedTrace.Playlist> {
+    ): core.HttpResponsePromise<SeedTrace.Playlist> {
+        return core.HttpResponsePromise.fromFunction(this.__getPlaylist, serviceParam, playlistId, requestOptions);
+    }
+
+    /**
+     * Returns a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedTrace.PlaylistIdNotFoundError}
+     * @throws {@link SeedTrace.UnauthorizedError}
+     *
+     * @example
+     *     await client.playlist.getPlaylist(1, "playlistId")
+     */
+    private async __getPlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -280,12 +356,15 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Playlist.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Playlist.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -342,12 +421,43 @@ export class Playlist {
      *         problems: ["problems", "problems"]
      *     })
      */
-    public async updatePlaylist(
+    public updatePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         request?: SeedTrace.UpdatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<SeedTrace.Playlist | undefined> {
+    ): core.HttpResponsePromise<SeedTrace.Playlist | undefined> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__updatePlaylist,
+            serviceParam,
+            playlistId,
+            request,
+            requestOptions,
+        );
+    }
+
+    /**
+     * Updates a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {SeedTrace.UpdatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedTrace.PlaylistIdNotFoundError}
+     *
+     * @example
+     *     await client.playlist.updatePlaylist(1, "playlistId", {
+     *         name: "name",
+     *         problems: ["problems", "problems"]
+     *     })
+     */
+    private async __updatePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        request?: SeedTrace.UpdatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -383,12 +493,15 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -437,11 +550,29 @@ export class Playlist {
      * @example
      *     await client.playlist.deletePlaylist(1, "playlist_id")
      */
-    public async deletePlaylist(
+    public deletePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__deletePlaylist, serviceParam, playlistId, requestOptions);
+    }
+
+    /**
+     * Deletes a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.playlist.deletePlaylist(1, "playlist_id")
+     */
+    private async __deletePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -471,7 +602,7 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

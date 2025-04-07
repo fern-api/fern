@@ -40,8 +40,8 @@ export class HttpMethods {
     public testGet(
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>> {
-        return core.ResponsePromise.fromFunction(this.__testGet, id, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__testGet, id, requestOptions);
     }
 
     /**
@@ -99,6 +99,7 @@ export class HttpMethods {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.httpMethods.testGet.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -116,10 +117,10 @@ export class HttpMethods {
     public testPost(
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPost.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__testPost, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__testPost, request, requestOptions);
     }
 
     /**
@@ -184,6 +185,7 @@ export class HttpMethods {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.httpMethods.testPost.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -203,10 +205,10 @@ export class HttpMethods {
         id: string,
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
     }
 
     /**
@@ -273,6 +275,7 @@ export class HttpMethods {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.httpMethods.testPut.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -306,10 +309,10 @@ export class HttpMethods {
         id: string,
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
     }
 
     /**
@@ -390,6 +393,7 @@ export class HttpMethods {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.httpMethods.testPatch.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -405,8 +409,8 @@ export class HttpMethods {
     public testDelete(
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>> {
-        return core.ResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
     }
 
     /**
@@ -464,6 +468,7 @@ export class HttpMethods {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.httpMethods.testDelete.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

@@ -43,7 +43,23 @@ export class Service {
      * @example
      *     await client.health.service.check("id-3tey93i")
      */
-    public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
+    public check(id: string, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__check, id, requestOptions);
+    }
+
+    /**
+     * This endpoint checks the health of a resource.
+     *
+     * @param {string} id - The id to check
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.health.service.check("id-2sdx82h")
+     *
+     * @example
+     *     await client.health.service.check("id-3tey93i")
+     */
+    private async __check(id: string, requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,7 +84,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -101,7 +117,19 @@ export class Service {
      * @example
      *     await client.health.service.ping()
      */
-    public async ping(requestOptions?: Service.RequestOptions): Promise<boolean> {
+    public ping(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__ping, requestOptions);
+    }
+
+    /**
+     * This endpoint checks the health of the service.
+     *
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.health.service.ping()
+     */
+    private async __ping(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -126,12 +154,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.health.service.ping.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.health.service.ping.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

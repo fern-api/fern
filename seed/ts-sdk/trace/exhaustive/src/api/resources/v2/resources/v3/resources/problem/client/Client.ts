@@ -43,12 +43,33 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getLightweightProblems()
      */
-    public async getLightweightProblems(
+    public getLightweightProblems(
         requestOptions?: Problem.RequestOptions,
-    ): Promise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             SeedTrace.v2.v3.LightweightProblemInfoV2[],
             SeedTrace.v2.v3.problem.getLightweightProblems.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__getLightweightProblems, requestOptions);
+    }
+
+    /**
+     * Returns lightweight versions of all problems
+     *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.v3.problem.getLightweightProblems()
+     */
+    private async __getLightweightProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedTrace.v2.v3.LightweightProblemInfoV2[],
+                SeedTrace.v2.v3.problem.getLightweightProblems.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -82,19 +103,28 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.v2.v3.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.v2.v3.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.v3.problem.getLightweightProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.v3.problem.getLightweightProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -106,9 +136,29 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getProblems()
      */
-    public async getProblems(
+    public getProblems(
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__getProblems, requestOptions);
+    }
+
+    /**
+     * Returns latest versions of all problems
+     *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.v3.problem.getProblems()
+     */
+    private async __getProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -140,19 +190,28 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.v2.v3.problem.getProblems.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.v2.v3.problem.getProblems.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.v3.problem.getProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.v3.problem.getProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -165,10 +224,32 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("problemId"))
      */
-    public async getLatestProblem(
+    public getLatestProblem(
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__getLatestProblem, problemId, requestOptions);
+    }
+
+    /**
+     * Returns latest version of a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("problemId"))
+     */
+    private async __getLatestProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -200,19 +281,28 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.v2.v3.ProblemInfoV2.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.v2.v3.ProblemInfoV2.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.v3.problem.getLatestProblem.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.v3.problem.getLatestProblem.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -226,11 +316,40 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1)
      */
-    public async getProblemVersion(
+    public getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(
+            this.__getProblemVersion,
+            problemId,
+            problemVersion,
+            requestOptions,
+        );
+    }
+
+    /**
+     * Returns requested version of a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {number} problemVersion
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1)
+     */
+    private async __getProblemVersion(
+        problemId: SeedTrace.ProblemId,
+        problemVersion: number,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -262,19 +381,28 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.v2.v3.ProblemInfoV2.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.v2.v3.ProblemInfoV2.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.v3.problem.getProblemVersion.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.v3.problem.getProblemVersion.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

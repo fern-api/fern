@@ -51,11 +51,36 @@ export class Playlist {
      *         }
      *     })
      */
-    public async createPlaylist(
+    public createPlaylist(
         serviceParam: number,
         request: SeedTrace.CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__createPlaylist, serviceParam, request, requestOptions);
+    }
+
+    /**
+     * Create a new playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.CreatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.playlist.createPlaylist(1, {
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         optionalDatetime: "2024-01-15T09:30:00Z",
+     *         body: {
+     *             name: "name",
+     *             problems: ["problems", "problems"]
+     *         }
+     *     })
+     */
+    private async __createPlaylist(
+        serviceParam: number,
+        request: SeedTrace.CreatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>>> {
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["datetime"] = datetime;
@@ -95,14 +120,23 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.Playlist,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.Playlist,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.createPlaylist.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.createPlaylist.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -122,11 +156,35 @@ export class Playlist {
      *         multipleField: "multipleField"
      *     })
      */
-    public async getPlaylists(
+    public getPlaylists(
         serviceParam: number,
         request: SeedTrace.GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getPlaylists, serviceParam, request, requestOptions);
+    }
+
+    /**
+     * Returns the user's playlists
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.GetPlaylistsRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.playlist.getPlaylists(1, {
+     *         limit: 1,
+     *         otherField: "otherField",
+     *         multiLineDocs: "multiLineDocs",
+     *         optionalMultipleField: "optionalMultipleField",
+     *         multipleField: "multipleField"
+     *     })
+     */
+    private async __getPlaylists(
+        serviceParam: number,
+        request: SeedTrace.GetPlaylistsRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -180,14 +238,23 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.Playlist[],
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.Playlist[],
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.getPlaylists.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.getPlaylists.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -201,11 +268,29 @@ export class Playlist {
      * @example
      *     await client.playlist.getPlaylist(1, "playlistId")
      */
-    public async getPlaylist(
+    public getPlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getPlaylist, serviceParam, playlistId, requestOptions);
+    }
+
+    /**
+     * Returns a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.playlist.getPlaylist(1, "playlistId")
+     */
+    private async __getPlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -236,8 +321,13 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.Playlist,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.Playlist,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -246,15 +336,23 @@ export class Playlist {
                 case "PlaylistIdNotFoundError":
                 case "UnauthorizedError":
                     return {
-                        ok: false,
-                        error: _response.error.body as SeedTrace.playlist.getPlaylist.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as SeedTrace.playlist.getPlaylist.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.getPlaylist.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.getPlaylist.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -272,12 +370,45 @@ export class Playlist {
      *         problems: ["problems", "problems"]
      *     })
      */
-    public async updatePlaylist(
+    public updatePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         request?: SeedTrace.UpdatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(
+            this.__updatePlaylist,
+            serviceParam,
+            playlistId,
+            request,
+            requestOptions,
+        );
+    }
+
+    /**
+     * Updates a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {SeedTrace.UpdatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.playlist.updatePlaylist(1, "playlistId", {
+     *         name: "name",
+     *         problems: ["problems", "problems"]
+     *     })
+     */
+    private async __updatePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        request?: SeedTrace.UpdatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -309,8 +440,13 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.Playlist | undefined,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.Playlist | undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -318,15 +454,23 @@ export class Playlist {
             switch ((_response.error.body as SeedTrace.playlist.updatePlaylist.Error)?.errorName) {
                 case "PlaylistIdNotFoundError":
                     return {
-                        ok: false,
-                        error: _response.error.body as SeedTrace.playlist.updatePlaylist.Error,
+                        data: {
+                            ok: false,
+                            error: _response.error.body as SeedTrace.playlist.updatePlaylist.Error,
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.updatePlaylist.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.updatePlaylist.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -340,11 +484,29 @@ export class Playlist {
      * @example
      *     await client.playlist.deletePlaylist(1, "playlist_id")
      */
-    public async deletePlaylist(
+    public deletePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__deletePlaylist, serviceParam, playlistId, requestOptions);
+    }
+
+    /**
+     * Deletes a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.playlist.deletePlaylist(1, "playlist_id")
+     */
+    private async __deletePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -375,14 +537,23 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.deletePlaylist.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.deletePlaylist.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

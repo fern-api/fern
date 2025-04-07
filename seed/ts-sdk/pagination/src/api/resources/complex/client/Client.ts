@@ -48,10 +48,34 @@ export class Complex {
      *         }
      *     })
      */
-    public async search(
+    public search(
         request: SeedPagination.SearchRequest,
         requestOptions?: Complex.RequestOptions,
-    ): Promise<core.Page<SeedPagination.Conversation>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.Conversation>> {
+        return core.HttpResponsePromise.fromFunction(this.__search, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.SearchRequest} request
+     * @param {Complex.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.complex.search({
+     *         pagination: {
+     *             perPage: 1,
+     *             startingAfter: "starting_after"
+     *         },
+     *         query: {
+     *             field: "field",
+     *             operator: "=",
+     *             value: "value"
+     *         }
+     *     })
+     */
+    private async __search(
+        request: SeedPagination.SearchRequest,
+        requestOptions?: Complex.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.Conversation>>> {
         const list = async (
             request: SeedPagination.SearchRequest,
         ): Promise<SeedPagination.PaginatedConversationResponse> => {
@@ -80,12 +104,15 @@ export class Complex {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.PaginatedConversationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.PaginatedConversationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -109,16 +136,23 @@ export class Complex {
                     });
             }
         };
-        return new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
-            response: await list(request),
-            hasNextPage: (response) => response?.pages?.next?.startingAfter != null,
-            getItems: (response) => response?.conversations ?? [],
-            loadPage: (response) => {
-                return list(
-                    core.setObjectProperty(request, "pagination.startingAfter", response?.pages?.next?.startingAfter),
-                );
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
+                response: await list(request),
+                hasNextPage: (response) => response?.pages?.next?.startingAfter != null,
+                getItems: (response) => response?.conversations ?? [],
+                loadPage: (response) => {
+                    return list(
+                        core.setObjectProperty(
+                            request,
+                            "pagination.startingAfter",
+                            response?.pages?.next?.startingAfter,
+                        ),
+                    );
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

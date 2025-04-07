@@ -36,7 +36,17 @@ export class Dummy {
      * @example
      *     await client.dummy.getDummy()
      */
-    public async getDummy(requestOptions?: Dummy.RequestOptions): Promise<string> {
+    public getDummy(requestOptions?: Dummy.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__getDummy, requestOptions);
+    }
+
+    /**
+     * @param {Dummy.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.dummy.getDummy()
+     */
+    private async __getDummy(requestOptions?: Dummy.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,12 +71,15 @@ export class Dummy {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.dummy.getDummy.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.dummy.getDummy.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

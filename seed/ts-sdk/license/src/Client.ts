@@ -34,7 +34,17 @@ export class SeedLicenseClient {
      * @example
      *     await client.get()
      */
-    public async get(requestOptions?: SeedLicenseClient.RequestOptions): Promise<void> {
+    public get(requestOptions?: SeedLicenseClient.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__get, requestOptions);
+    }
+
+    /**
+     * @param {SeedLicenseClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.get()
+     */
+    private async __get(requestOptions?: SeedLicenseClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -58,7 +68,7 @@ export class SeedLicenseClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

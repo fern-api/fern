@@ -42,8 +42,8 @@ export class Put {
         id: string,
         request: Fiddle.endpoints.PutRequest = {},
         requestOptions?: Put.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<Fiddle.endpoints.PutResponse, Fiddle.endpoints.put.add.Error>> {
-        return core.ResponsePromise.fromFunction(this.__add, id, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<Fiddle.endpoints.PutResponse, Fiddle.endpoints.put.add.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__add, id, request, requestOptions);
     }
 
     /**
@@ -103,6 +103,7 @@ export class Put {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.put.add.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

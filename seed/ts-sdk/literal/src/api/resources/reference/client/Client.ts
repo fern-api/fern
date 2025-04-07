@@ -57,10 +57,36 @@ export class Reference {
      *         }
      *     })
      */
-    public async send(
+    public send(
         request: SeedLiteral.SendRequest,
         requestOptions?: Reference.RequestOptions,
-    ): Promise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedLiteral.SendRequest} request
+     * @param {Reference.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.reference.send({
+     *         prompt: "You are a helpful assistant",
+     *         stream: false,
+     *         context: "You're super wise",
+     *         query: "What is the weather today",
+     *         containerObject: {
+     *             nestedObjects: [{
+     *                     literal1: "literal1",
+     *                     literal2: "literal2",
+     *                     strProp: "strProp"
+     *                 }]
+     *         }
+     *     })
+     */
+    private async __send(
+        request: SeedLiteral.SendRequest,
+        requestOptions?: Reference.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -91,12 +117,15 @@ export class Reference {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SendResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SendResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

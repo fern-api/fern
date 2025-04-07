@@ -38,7 +38,19 @@ export class Service {
      * @example
      *     await client.service.endpoint()
      */
-    public async endpoint(requestOptions?: Service.RequestOptions): Promise<void> {
+    public endpoint(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__endpoint, requestOptions);
+    }
+
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedAccept.NotFoundError}
+     *
+     * @example
+     *     await client.service.endpoint()
+     */
+    private async __endpoint(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -63,7 +75,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

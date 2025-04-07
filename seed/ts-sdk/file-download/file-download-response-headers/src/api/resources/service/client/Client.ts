@@ -28,11 +28,21 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async downloadFile(requestOptions?: Service.RequestOptions): Promise<{
+    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<{
         data: stream.Readable;
         contentLengthInBytes?: number;
         contentType?: string;
     }> {
+        return core.HttpResponsePromise.fromFunction(this.__downloadFile, requestOptions);
+    }
+
+    private async __downloadFile(requestOptions?: Service.RequestOptions): Promise<
+        core.WithRawResponse<{
+            data: stream.Readable;
+            contentLengthInBytes?: number;
+            contentType?: string;
+        }>
+    > {
         const _response = await core.fetcher<stream.Readable>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -57,9 +67,12 @@ export class Service {
         if (_response.ok) {
             const _contentLength = core.getHeader(_response.headers ?? {}, "Content-Length");
             return {
-                data: _response.body,
-                contentLengthInBytes: _contentLength != null ? Number(_contentLength) : undefined,
-                contentType: core.getHeader(_response.headers ?? {}, "Content-Type"),
+                data: {
+                    data: _response.body,
+                    contentLengthInBytes: _contentLength != null ? Number(_contentLength) : undefined,
+                    contentType: core.getHeader(_response.headers ?? {}, "Content-Type"),
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 

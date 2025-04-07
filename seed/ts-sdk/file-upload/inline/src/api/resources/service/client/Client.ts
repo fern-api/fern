@@ -35,7 +35,21 @@ export class Service {
      * @param {SeedFileUpload.MyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async post(request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
+    public post(
+        request: SeedFileUpload.MyRequest,
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__post, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedFileUpload.MyRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    private async __post(
+        request: SeedFileUpload.MyRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         if (request.maybeString != null) {
             _request.append("maybe_string", request.maybeString);
@@ -137,7 +151,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -166,10 +180,21 @@ export class Service {
      * @param {SeedFileUpload.JustFileRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async justFile(
+    public justFile(
         request: SeedFileUpload.JustFileRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__justFile, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedFileUpload.JustFileRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    private async __justFile(
+        request: SeedFileUpload.JustFileRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         const _maybeEncodedRequest = await _request.getRequest();
@@ -198,7 +223,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -227,10 +252,21 @@ export class Service {
      * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async justFileWithQueryParams(
+    public justFileWithQueryParams(
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__justFileWithQueryParams, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    private async __justFileWithQueryParams(
+        request: SeedFileUpload.JustFileWithQueryParamsRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (request.maybeString != null) {
             _queryParams["maybeString"] = request.maybeString;
@@ -284,7 +320,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -315,10 +351,21 @@ export class Service {
      * @param {SeedFileUpload.WithContentTypeRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async withContentType(
+    public withContentType(
         request: SeedFileUpload.WithContentTypeRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__withContentType, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedFileUpload.WithContentTypeRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    private async __withContentType(
+        request: SeedFileUpload.WithContentTypeRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         _request.append("foo", request.foo);
@@ -359,7 +406,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -388,10 +435,21 @@ export class Service {
      * @param {SeedFileUpload.WithFormEncodingRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async withFormEncoding(
+    public withFormEncoding(
         request: SeedFileUpload.WithFormEncodingRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__withFormEncoding, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedFileUpload.WithFormEncodingRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    private async __withFormEncoding(
+        request: SeedFileUpload.WithFormEncodingRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         for (const [key, value] of Object.entries(core.encodeAsFormParameter({ foo: request.foo }))) {
@@ -428,7 +486,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -457,10 +515,21 @@ export class Service {
      * @param {SeedFileUpload.MyOtherRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async withFormEncodedContainers(
+    public withFormEncodedContainers(
         request: SeedFileUpload.MyOtherRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__withFormEncodedContainers, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedFileUpload.MyOtherRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    private async __withFormEncodedContainers(
+        request: SeedFileUpload.MyOtherRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         if (request.maybeString != null) {
             for (const [key, value] of Object.entries(
@@ -581,7 +650,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -610,10 +679,21 @@ export class Service {
      * @param {SeedFileUpload.OptionalArgsRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public async optionalArgs(
+    public optionalArgs(
         request: SeedFileUpload.OptionalArgsRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__optionalArgs, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedFileUpload.OptionalArgsRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    private async __optionalArgs(
+        request: SeedFileUpload.OptionalArgsRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _request = await core.newFormData();
         if (request.imageFile != null) {
             await _request.appendFile("image_file", request.imageFile);
@@ -652,12 +732,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.optionalArgs.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.service.optionalArgs.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

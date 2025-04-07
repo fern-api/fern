@@ -43,11 +43,32 @@ export class Sysprop {
      * @example
      *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
-    public async setNumWarmInstances(
+    public setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
         requestOptions?: Sysprop.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__setNumWarmInstances,
+            language,
+            numWarmInstances,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {SeedTrace.Language} language
+     * @param {number} numWarmInstances
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.sysprop.setNumWarmInstances("JAVA", 1)
+     */
+    private async __setNumWarmInstances(
+        language: SeedTrace.Language,
+        numWarmInstances: number,
+        requestOptions?: Sysprop.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -79,14 +100,23 @@ export class Sysprop {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.sysprop.setNumWarmInstances.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.sysprop.setNumWarmInstances.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -96,10 +126,29 @@ export class Sysprop {
      * @example
      *     await client.sysprop.getNumWarmInstances()
      */
-    public async getNumWarmInstances(
+    public getNumWarmInstances(
+        requestOptions?: Sysprop.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__getNumWarmInstances, requestOptions);
+    }
+
+    /**
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.sysprop.getNumWarmInstances()
+     */
+    private async __getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions,
     ): Promise<
-        core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>
+        core.WithRawResponse<
+            core.APIResponse<
+                Record<SeedTrace.Language, number | undefined>,
+                SeedTrace.sysprop.getNumWarmInstances.Error
+            >
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -132,19 +181,28 @@ export class Sysprop {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.sysprop.getNumWarmInstances.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.sysprop.getNumWarmInstances.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

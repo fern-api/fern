@@ -39,7 +39,23 @@ export class Unknown {
      *         "key": "value"
      *     })
      */
-    public async post(request?: unknown, requestOptions?: Unknown.RequestOptions): Promise<unknown[]> {
+    public post(request?: unknown, requestOptions?: Unknown.RequestOptions): core.HttpResponsePromise<unknown[]> {
+        return core.HttpResponsePromise.fromFunction(this.__post, request, requestOptions);
+    }
+
+    /**
+     * @param {unknown} request
+     * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.unknown.post({
+     *         "key": "value"
+     *     })
+     */
+    private async __post(
+        request?: unknown,
+        requestOptions?: Unknown.RequestOptions,
+    ): Promise<core.WithRawResponse<unknown[]>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -62,12 +78,15 @@ export class Unknown {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.unknown.post.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.unknown.post.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -103,10 +122,28 @@ export class Unknown {
      *         }
      *     })
      */
-    public async postObject(
+    public postObject(
         request: SeedUnknownAsAny.MyObject,
         requestOptions?: Unknown.RequestOptions,
-    ): Promise<unknown[]> {
+    ): core.HttpResponsePromise<unknown[]> {
+        return core.HttpResponsePromise.fromFunction(this.__postObject, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedUnknownAsAny.MyObject} request
+     * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.unknown.postObject({
+     *         unknown: {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    private async __postObject(
+        request: SeedUnknownAsAny.MyObject,
+        requestOptions?: Unknown.RequestOptions,
+    ): Promise<core.WithRawResponse<unknown[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -131,12 +168,15 @@ export class Unknown {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.unknown.postObject.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.unknown.postObject.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

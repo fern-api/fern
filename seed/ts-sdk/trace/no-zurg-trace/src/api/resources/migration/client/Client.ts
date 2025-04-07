@@ -44,10 +44,26 @@ export class Migration {
      *         "admin-key-header": "admin-key-header"
      *     })
      */
-    public async getAttemptedMigrations(
+    public getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
-    ): Promise<SeedTrace.Migration[]> {
+    ): core.HttpResponsePromise<SeedTrace.Migration[]> {
+        return core.HttpResponsePromise.fromFunction(this.__getAttemptedMigrations, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
+     * @param {Migration.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.migration.getAttemptedMigrations({
+     *         "admin-key-header": "admin-key-header"
+     *     })
+     */
+    private async __getAttemptedMigrations(
+        request: SeedTrace.GetAttemptedMigrationsRequest,
+        requestOptions?: Migration.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
         const { "admin-key-header": adminKeyHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -79,7 +95,7 @@ export class Migration {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.Migration[];
+            return { data: _response.body as SeedTrace.Migration[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

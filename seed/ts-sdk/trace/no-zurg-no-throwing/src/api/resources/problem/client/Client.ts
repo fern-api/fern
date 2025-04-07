@@ -115,10 +115,102 @@ export class Problem {
      *         methodName: "methodName"
      *     })
      */
-    public async createProblem(
+    public createProblem(
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__createProblem, request, requestOptions);
+    }
+
+    /**
+     * Creates a problem
+     *
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.problem.createProblem({
+     *         problemName: "problemName",
+     *         problemDescription: {
+     *             boards: [{
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }]
+     *         },
+     *         files: {
+     *             ["JAVA"]: {
+     *                 solutionFile: {
+     *                     filename: "filename",
+     *                     contents: "contents"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }],
+     *         methodName: "methodName"
+     *     })
+     */
+    private async __createProblem(
+        request: SeedTrace.CreateProblemRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -150,14 +242,23 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.CreateProblemResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.CreateProblemResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.problem.createProblem.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.problem.createProblem.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -243,11 +344,105 @@ export class Problem {
      *         methodName: "methodName"
      *     })
      */
-    public async updateProblem(
+    public updateProblem(
         problemId: SeedTrace.ProblemId,
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__updateProblem, problemId, request, requestOptions);
+    }
+
+    /**
+     * Updates a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.problem.updateProblem("problemId", {
+     *         problemName: "problemName",
+     *         problemDescription: {
+     *             boards: [{
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }]
+     *         },
+     *         files: {
+     *             ["JAVA"]: {
+     *                 solutionFile: {
+     *                     filename: "filename",
+     *                     contents: "contents"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }],
+     *         methodName: "methodName"
+     *     })
+     */
+    private async __updateProblem(
+        problemId: SeedTrace.ProblemId,
+        request: SeedTrace.CreateProblemRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -279,14 +474,23 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.UpdateProblemResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.UpdateProblemResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.problem.updateProblem.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.problem.updateProblem.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -299,10 +503,26 @@ export class Problem {
      * @example
      *     await client.problem.deleteProblem("problemId")
      */
-    public async deleteProblem(
+    public deleteProblem(
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__deleteProblem, problemId, requestOptions);
+    }
+
+    /**
+     * Soft deletes a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.problem.deleteProblem("problemId")
+     */
+    private async __deleteProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -333,14 +553,23 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.problem.deleteProblem.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.problem.deleteProblem.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -369,11 +598,47 @@ export class Problem {
      *         methodName: "methodName"
      *     })
      */
-    public async getDefaultStarterFiles(
+    public getDefaultStarterFiles(
+        request: SeedTrace.GetDefaultStarterFilesRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__getDefaultStarterFiles, request, requestOptions);
+    }
+
+    /**
+     * Returns default starter files for problem
+     *
+     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.problem.getDefaultStarterFiles({
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         methodName: "methodName"
+     *     })
+     */
+    private async __getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,
         requestOptions?: Problem.RequestOptions,
     ): Promise<
-        core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error>
+        core.WithRawResponse<
+            core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error>
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -406,14 +671,23 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.GetDefaultStarterFilesResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.GetDefaultStarterFilesResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.problem.getDefaultStarterFiles.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.problem.getDefaultStarterFiles.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

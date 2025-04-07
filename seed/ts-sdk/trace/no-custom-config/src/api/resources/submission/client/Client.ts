@@ -48,10 +48,26 @@ export class Submission {
      * @example
      *     await client.submission.createExecutionSession("JAVA")
      */
-    public async createExecutionSession(
+    public createExecutionSession(
         language: SeedTrace.Language,
         requestOptions?: Submission.RequestOptions,
-    ): Promise<SeedTrace.ExecutionSessionResponse> {
+    ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__createExecutionSession, language, requestOptions);
+    }
+
+    /**
+     * Returns sessionId and execution server URL for session. Spins up server.
+     *
+     * @param {SeedTrace.Language} language
+     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.submission.createExecutionSession("JAVA")
+     */
+    private async __createExecutionSession(
+        language: SeedTrace.Language,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -81,12 +97,15 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -122,10 +141,26 @@ export class Submission {
      * @example
      *     await client.submission.getExecutionSession("sessionId")
      */
-    public async getExecutionSession(
+    public getExecutionSession(
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
-    ): Promise<SeedTrace.ExecutionSessionResponse | undefined> {
+    ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse | undefined> {
+        return core.HttpResponsePromise.fromFunction(this.__getExecutionSession, sessionId, requestOptions);
+    }
+
+    /**
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     *
+     * @param {string} sessionId
+     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.submission.getExecutionSession("sessionId")
+     */
+    private async __getExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -155,12 +190,15 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -194,7 +232,26 @@ export class Submission {
      * @example
      *     await client.submission.stopExecutionSession("sessionId")
      */
-    public async stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<void> {
+    public stopExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__stopExecutionSession, sessionId, requestOptions);
+    }
+
+    /**
+     * Stops execution session.
+     *
+     * @param {string} sessionId
+     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.submission.stopExecutionSession("sessionId")
+     */
+    private async __stopExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -224,7 +281,7 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -257,9 +314,21 @@ export class Submission {
      * @example
      *     await client.submission.getExecutionSessionsState()
      */
-    public async getExecutionSessionsState(
+    public getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions,
-    ): Promise<SeedTrace.GetExecutionSessionStateResponse> {
+    ): core.HttpResponsePromise<SeedTrace.GetExecutionSessionStateResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__getExecutionSessionsState, requestOptions);
+    }
+
+    /**
+     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.submission.getExecutionSessionsState()
+     */
+    private async __getExecutionSessionsState(
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.GetExecutionSessionStateResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -289,12 +358,15 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

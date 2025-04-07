@@ -52,7 +52,17 @@ export class V2 {
      * @example
      *     await client.v2.test()
      */
-    public async test(requestOptions?: V2.RequestOptions): Promise<void> {
+    public test(requestOptions?: V2.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__test, requestOptions);
+    }
+
+    /**
+     * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.test()
+     */
+    private async __test(requestOptions?: V2.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -80,7 +90,7 @@ export class V2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

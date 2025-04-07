@@ -1,0 +1,102 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/content-type",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "PATCH",
+            "identifierOverride": "endpoint_service.patch"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedContentTypesClient } from \"@fern/content-type\";"
+                ],
+                "templateString": "const client = new SeedContentTypesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.patch(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "application: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "application",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "requireAuth: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "require_auth",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

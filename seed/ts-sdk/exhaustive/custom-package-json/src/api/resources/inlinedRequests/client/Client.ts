@@ -62,13 +62,13 @@ export class InlinedRequests {
     public postWithObjectBodyandResponse(
         request: Fiddle.PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithOptionalField,
             Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(this.__postWithObjectBodyandResponse, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__postWithObjectBodyandResponse, request, requestOptions);
     }
 
     /**
@@ -166,6 +166,7 @@ export class InlinedRequests {
                                     breadcrumbsPrefix: ["response"],
                                 }),
                             ),
+                            rawResponse: _response.rawResponse,
                         },
                         rawResponse: _response.rawResponse,
                     };
@@ -176,6 +177,7 @@ export class InlinedRequests {
             data: {
                 ok: false,
                 error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

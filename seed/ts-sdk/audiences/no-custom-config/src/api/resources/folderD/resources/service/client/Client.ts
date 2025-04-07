@@ -37,7 +37,21 @@ export class Service {
      * @example
      *     await client.folderD.service.getDirectThread()
      */
-    public async getDirectThread(requestOptions?: Service.RequestOptions): Promise<SeedAudiences.folderD.Response> {
+    public getDirectThread(
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedAudiences.folderD.Response> {
+        return core.HttpResponsePromise.fromFunction(this.__getDirectThread, requestOptions);
+    }
+
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.folderD.service.getDirectThread()
+     */
+    private async __getDirectThread(
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedAudiences.folderD.Response>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,12 +75,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.folderD.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.folderD.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

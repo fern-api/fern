@@ -40,8 +40,10 @@ export class Container {
     public getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnListOfPrimitives, request, requestOptions);
+    ): core.HttpResponsePromise<
+        core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>
+    > {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfPrimitives, request, requestOptions);
     }
 
     /**
@@ -107,6 +109,7 @@ export class Container {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -126,13 +129,13 @@ export class Container {
     public getAndReturnListOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField[],
             Fiddle.endpoints.container.getAndReturnListOfObjects.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnListOfObjects, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfObjects, request, requestOptions);
     }
 
     /**
@@ -207,6 +210,7 @@ export class Container {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.container.getAndReturnListOfObjects.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -222,10 +226,10 @@ export class Container {
     public getAndReturnSetOfPrimitives(
         request: Set<string>,
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnSetOfPrimitives, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfPrimitives, request, requestOptions);
     }
 
     /**
@@ -293,6 +297,7 @@ export class Container {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -310,13 +315,13 @@ export class Container {
     public getAndReturnSetOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField[],
             Fiddle.endpoints.container.getAndReturnSetOfObjects.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnSetOfObjects, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfObjects, request, requestOptions);
     }
 
     /**
@@ -389,6 +394,7 @@ export class Container {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.container.getAndReturnSetOfObjects.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -406,10 +412,10 @@ export class Container {
     public getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<Record<string, string>, Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnMapPrimToPrim, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapPrimToPrim, request, requestOptions);
     }
 
     /**
@@ -479,6 +485,7 @@ export class Container {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -498,13 +505,13 @@ export class Container {
     public getAndReturnMapOfPrimToObject(
         request: Record<string, Fiddle.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Record<string, Fiddle.types.ObjectWithRequiredField>,
             Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnMapOfPrimToObject, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapOfPrimToObject, request, requestOptions);
     }
 
     /**
@@ -579,6 +586,7 @@ export class Container {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -596,13 +604,13 @@ export class Container {
     public getAndReturnOptional(
         request?: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField | undefined,
             Fiddle.endpoints.container.getAndReturnOptional.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnOptional, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnOptional, request, requestOptions);
     }
 
     /**
@@ -675,6 +683,7 @@ export class Container {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.container.getAndReturnOptional.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

@@ -44,10 +44,26 @@ export class Ec2 {
      *         size: "size"
      *     })
      */
-    public async bootInstance(
+    public bootInstance(
         request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
         requestOptions?: Ec2.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__bootInstance, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest} request
+     * @param {Ec2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.ec2.bootInstance({
+     *         size: "size"
+     *     })
+     */
+    private async __bootInstance(
+        request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
+        requestOptions?: Ec2.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -73,7 +89,7 @@ export class Ec2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

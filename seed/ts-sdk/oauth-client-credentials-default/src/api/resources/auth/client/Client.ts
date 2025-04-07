@@ -41,10 +41,27 @@ export class Auth {
      *         clientSecret: "client_secret"
      *     })
      */
-    public async getToken(
+    public getToken(
         request: SeedOauthClientCredentialsDefault.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): Promise<SeedOauthClientCredentialsDefault.TokenResponse> {
+    ): core.HttpResponsePromise<SeedOauthClientCredentialsDefault.TokenResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__getToken, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedOauthClientCredentialsDefault.GetTokenRequest} request
+     * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.auth.getToken({
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret"
+     *     })
+     */
+    private async __getToken(
+        request: SeedOauthClientCredentialsDefault.GetTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedOauthClientCredentialsDefault.TokenResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -73,12 +90,15 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.TokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.TokenResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

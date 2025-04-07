@@ -40,8 +40,8 @@ export class Primitive {
     public getAndReturnString(
         request: string,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<string> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnString, request, requestOptions);
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnString, request, requestOptions);
     }
 
     /**
@@ -122,8 +122,11 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnInt(1)
      */
-    public getAndReturnInt(request: number, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<number> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnInt, request, requestOptions);
+    public getAndReturnInt(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<number> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnInt, request, requestOptions);
     }
 
     /**
@@ -204,8 +207,11 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnLong(BigInt("1000000"))
      */
-    public getAndReturnLong(request: bigint, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<bigint> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnLong, request, requestOptions);
+    public getAndReturnLong(
+        request: bigint,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<bigint> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnLong, request, requestOptions);
     }
 
     /**
@@ -289,8 +295,8 @@ export class Primitive {
     public getAndReturnDouble(
         request: number,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<number> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnDouble, request, requestOptions);
+    ): core.HttpResponsePromise<number> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDouble, request, requestOptions);
     }
 
     /**
@@ -374,8 +380,8 @@ export class Primitive {
     public getAndReturnBool(
         request: boolean,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<boolean> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnBool, request, requestOptions);
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnBool, request, requestOptions);
     }
 
     /**
@@ -456,8 +462,11 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
      */
-    public getAndReturnDatetime(request: Date, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<Date> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnDatetime, request, requestOptions);
+    public getAndReturnDatetime(
+        request: Date,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<Date> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDatetime, request, requestOptions);
     }
 
     /**
@@ -538,8 +547,11 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
      */
-    public getAndReturnDate(request: string, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<string> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnDate, request, requestOptions);
+    public getAndReturnDate(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDate, request, requestOptions);
     }
 
     /**
@@ -620,8 +632,11 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
-    public getAndReturnUuid(request: string, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<string> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnUuid, request, requestOptions);
+    public getAndReturnUuid(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnUuid, request, requestOptions);
     }
 
     /**
@@ -705,8 +720,8 @@ export class Primitive {
     public getAndReturnBase64(
         request: string,
         requestOptions?: Primitive.RequestOptions,
-    ): core.ResponsePromise<string> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnBase64, request, requestOptions);
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnBase64, request, requestOptions);
     }
 
     /**

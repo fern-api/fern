@@ -41,10 +41,28 @@ export class Foo {
      *         privateProperty: 1
      *     })
      */
-    public async find(
+    public find(
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions,
-    ): Promise<SeedAudiences.ImportingType> {
+    ): core.HttpResponsePromise<SeedAudiences.ImportingType> {
+        return core.HttpResponsePromise.fromFunction(this.__find, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedAudiences.FindRequest} request
+     * @param {Foo.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.foo.find({
+     *         optionalString: "optionalString",
+     *         publicProperty: "publicProperty",
+     *         privateProperty: 1
+     *     })
+     */
+    private async __find(
+        request: SeedAudiences.FindRequest = {},
+        requestOptions?: Foo.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedAudiences.ImportingType>> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (optionalString != null) {
@@ -74,12 +92,15 @@ export class Foo {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ImportingType.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ImportingType.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

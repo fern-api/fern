@@ -43,10 +43,29 @@ export class Users {
      *         startingAfter: "starting_after"
      *     })
      */
-    public async listWithCursorPagination(
+    public listWithCursorPagination(
         request: SeedPagination.ListUsersCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithCursorPagination, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersCursorPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithCursorPagination({
+     *         page: 1,
+     *         perPage: 1,
+     *         order: "asc",
+     *         startingAfter: "starting_after"
+     *     })
+     */
+    private async __listWithCursorPagination(
+        request: SeedPagination.ListUsersCursorPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
@@ -89,12 +108,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -116,14 +138,17 @@ export class Users {
                     });
             }
         };
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => response?.page?.next?.startingAfter != null,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "startingAfter", response?.page?.next?.startingAfter));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => response?.page?.next?.startingAfter != null,
+                getItems: (response) => response?.data ?? [],
+                loadPage: (response) => {
+                    return list(core.setObjectProperty(request, "startingAfter", response?.page?.next?.startingAfter));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -135,10 +160,26 @@ export class Users {
      *         cursor: "cursor"
      *     })
      */
-    public async listWithMixedTypeCursorPagination(
+    public listWithMixedTypeCursorPagination(
         request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithMixedTypeCursorPagination, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersMixedTypeCursorPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithMixedTypeCursorPagination({
+     *         cursor: "cursor"
+     *     })
+     */
+    private async __listWithMixedTypeCursorPagination(
+        request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersMixedTypePaginationResponse> => {
@@ -172,12 +213,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersMixedTypePaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersMixedTypePaginationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -199,14 +243,17 @@ export class Users {
                     });
             }
         };
-        return new core.Pageable<SeedPagination.ListUsersMixedTypePaginationResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => response?.next != null,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersMixedTypePaginationResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => response?.next != null,
+                getItems: (response) => response?.data ?? [],
+                loadPage: (response) => {
+                    return list(core.setObjectProperty(request, "cursor", response?.next));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -220,10 +267,28 @@ export class Users {
      *         }
      *     })
      */
-    public async listWithBodyCursorPagination(
+    public listWithBodyCursorPagination(
         request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithBodyCursorPagination, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersBodyCursorPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithBodyCursorPagination({
+     *         pagination: {
+     *             cursor: "cursor"
+     *         }
+     *     })
+     */
+    private async __listWithBodyCursorPagination(
+        request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersBodyCursorPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
@@ -254,12 +319,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -281,14 +349,19 @@ export class Users {
                     });
             }
         };
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => response?.page?.next?.startingAfter != null,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "pagination.cursor", response?.page?.next?.startingAfter));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => response?.page?.next?.startingAfter != null,
+                getItems: (response) => response?.data ?? [],
+                loadPage: (response) => {
+                    return list(
+                        core.setObjectProperty(request, "pagination.cursor", response?.page?.next?.startingAfter),
+                    );
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -303,10 +376,29 @@ export class Users {
      *         startingAfter: "starting_after"
      *     })
      */
-    public async listWithOffsetPagination(
+    public listWithOffsetPagination(
         request: SeedPagination.ListUsersOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithOffsetPagination, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersOffsetPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithOffsetPagination({
+     *         page: 1,
+     *         perPage: 1,
+     *         order: "asc",
+     *         startingAfter: "starting_after"
+     *     })
+     */
+    private async __listWithOffsetPagination(
+        request: SeedPagination.ListUsersOffsetPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
@@ -349,12 +441,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -377,15 +472,18 @@ export class Users {
             }
         };
         let _offset = request?.page != null ? request?.page : 0;
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => (response?.data ?? []).length > 0,
+                getItems: (response) => response?.data ?? [],
+                loadPage: (_response) => {
+                    _offset += 1;
+                    return list(core.setObjectProperty(request, "page", _offset));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -400,10 +498,29 @@ export class Users {
      *         startingAfter: "starting_after"
      *     })
      */
-    public async listWithDoubleOffsetPagination(
+    public listWithDoubleOffsetPagination(
         request: SeedPagination.ListUsersDoubleOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithDoubleOffsetPagination, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersDoubleOffsetPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithDoubleOffsetPagination({
+     *         page: 1.1,
+     *         perPage: 1.1,
+     *         order: "asc",
+     *         startingAfter: "starting_after"
+     *     })
+     */
+    private async __listWithDoubleOffsetPagination(
+        request: SeedPagination.ListUsersDoubleOffsetPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersDoubleOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
@@ -446,12 +563,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -474,15 +594,18 @@ export class Users {
             }
         };
         let _offset = request?.page != null ? request?.page : 1;
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => (response?.data ?? []).length > 0,
+                getItems: (response) => response?.data ?? [],
+                loadPage: (_response) => {
+                    _offset += 1;
+                    return list(core.setObjectProperty(request, "page", _offset));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -496,10 +619,28 @@ export class Users {
      *         }
      *     })
      */
-    public async listWithBodyOffsetPagination(
+    public listWithBodyOffsetPagination(
         request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithBodyOffsetPagination, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersBodyOffsetPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithBodyOffsetPagination({
+     *         pagination: {
+     *             page: 1
+     *         }
+     *     })
+     */
+    private async __listWithBodyOffsetPagination(
+        request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
@@ -530,12 +671,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -558,15 +702,18 @@ export class Users {
             }
         };
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "pagination.page", _offset));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => (response?.data ?? []).length > 0,
+                getItems: (response) => response?.data ?? [],
+                loadPage: (_response) => {
+                    _offset += 1;
+                    return list(core.setObjectProperty(request, "pagination.page", _offset));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -580,10 +727,28 @@ export class Users {
      *         order: "asc"
      *     })
      */
-    public async listWithOffsetStepPagination(
+    public listWithOffsetStepPagination(
         request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithOffsetStepPagination, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersOffsetStepPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithOffsetStepPagination({
+     *         page: 1,
+     *         limit: 1,
+     *         order: "asc"
+     *     })
+     */
+    private async __listWithOffsetStepPagination(
+        request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersOffsetStepPaginationRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
@@ -623,12 +788,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -651,15 +819,18 @@ export class Users {
             }
         };
         let _offset = request?.page != null ? request?.page : 1;
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                _offset += response?.data != null ? response.data.length : 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => (response?.data ?? []).length > 0,
+                getItems: (response) => response?.data ?? [],
+                loadPage: (response) => {
+                    _offset += response?.data != null ? response.data.length : 1;
+                    return list(core.setObjectProperty(request, "page", _offset));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -673,10 +844,32 @@ export class Users {
      *         order: "asc"
      *     })
      */
-    public async listWithOffsetPaginationHasNextPage(
+    public listWithOffsetPaginationHasNextPage(
         request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__listWithOffsetPaginationHasNextPage,
+            request,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {SeedPagination.ListWithOffsetPaginationHasNextPageRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithOffsetPaginationHasNextPage({
+     *         page: 1,
+     *         limit: 1,
+     *         order: "asc"
+     *     })
+     */
+    private async __listWithOffsetPaginationHasNextPage(
+        request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
         ): Promise<SeedPagination.ListUsersPaginationResponse> => {
@@ -716,12 +909,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -744,15 +940,18 @@ export class Users {
             }
         };
         let _offset = request?.page != null ? request?.page : 1;
-        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => response?.hasNextPage ?? (response?.data ?? []).length > 0,
-            getItems: (response) => response?.data ?? [],
-            loadPage: (response) => {
-                _offset += response?.data != null ? response.data.length : 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => response?.hasNextPage ?? (response?.data ?? []).length > 0,
+                getItems: (response) => response?.data ?? [],
+                loadPage: (response) => {
+                    _offset += response?.data != null ? response.data.length : 1;
+                    return list(core.setObjectProperty(request, "page", _offset));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -764,10 +963,26 @@ export class Users {
      *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
      *     })
      */
-    public async listWithExtendedResults(
+    public listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithExtendedResults, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersExtendedRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithExtendedResults({
+     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+     *     })
+     */
+    private async __listWithExtendedResults(
+        request: SeedPagination.ListUsersExtendedRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersExtendedRequest,
         ): Promise<SeedPagination.ListUsersExtendedResponse> => {
@@ -801,12 +1016,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersExtendedResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersExtendedResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -828,14 +1046,17 @@ export class Users {
                     });
             }
         };
-        return new core.Pageable<SeedPagination.ListUsersExtendedResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => response?.next != null,
-            getItems: (response) => response?.data?.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersExtendedResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => response?.next != null,
+                getItems: (response) => response?.data?.users ?? [],
+                loadPage: (response) => {
+                    return list(core.setObjectProperty(request, "cursor", response?.next));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -847,10 +1068,30 @@ export class Users {
      *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
      *     })
      */
-    public async listWithExtendedResultsAndOptionalData(
+    public listWithExtendedResultsAndOptionalData(
         request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User>> {
+    ): core.HttpResponsePromise<core.Page<SeedPagination.User>> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__listWithExtendedResultsAndOptionalData,
+            request,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersExtendedRequestForOptionalData} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithExtendedResultsAndOptionalData({
+     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+     *     })
+     */
+    private async __listWithExtendedResultsAndOptionalData(
+        request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<SeedPagination.User>>> {
         const list = async (
             request: SeedPagination.ListUsersExtendedRequestForOptionalData,
         ): Promise<SeedPagination.ListUsersExtendedOptionalListResponse> => {
@@ -884,12 +1125,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.ListUsersExtendedOptionalListResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.ListUsersExtendedOptionalListResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -911,14 +1155,17 @@ export class Users {
                     });
             }
         };
-        return new core.Pageable<SeedPagination.ListUsersExtendedOptionalListResponse, SeedPagination.User>({
-            response: await list(request),
-            hasNextPage: (response) => response?.next != null,
-            getItems: (response) => response?.data?.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.ListUsersExtendedOptionalListResponse, SeedPagination.User>({
+                response: await list(request),
+                hasNextPage: (response) => response?.next != null,
+                getItems: (response) => response?.data?.users ?? [],
+                loadPage: (response) => {
+                    return list(core.setObjectProperty(request, "cursor", response?.next));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -930,10 +1177,26 @@ export class Users {
      *         startingAfter: "starting_after"
      *     })
      */
-    public async listUsernames(
+    public listUsernames(
         request: SeedPagination.ListUsernamesRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<string>> {
+    ): core.HttpResponsePromise<core.Page<string>> {
+        return core.HttpResponsePromise.fromFunction(this.__listUsernames, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsernamesRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listUsernames({
+     *         startingAfter: "starting_after"
+     *     })
+     */
+    private async __listUsernames(
+        request: SeedPagination.ListUsernamesRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<string>>> {
         const list = async (request: SeedPagination.ListUsernamesRequest): Promise<SeedPagination.UsernameCursor> => {
             const { startingAfter } = request;
             const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
@@ -965,12 +1228,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.UsernameCursor.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.UsernameCursor.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -992,14 +1258,17 @@ export class Users {
                     });
             }
         };
-        return new core.Pageable<SeedPagination.UsernameCursor, string>({
-            response: await list(request),
-            hasNextPage: (response) => response?.cursor?.after != null,
-            getItems: (response) => response?.cursor?.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "startingAfter", response?.cursor?.after));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.UsernameCursor, string>({
+                response: await list(request),
+                hasNextPage: (response) => response?.cursor?.after != null,
+                getItems: (response) => response?.cursor?.data ?? [],
+                loadPage: (response) => {
+                    return list(core.setObjectProperty(request, "startingAfter", response?.cursor?.after));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     /**
@@ -1011,10 +1280,26 @@ export class Users {
      *         startingAfter: "starting_after"
      *     })
      */
-    public async listUsernamesCustom(
+    public listUsernamesCustom(
         request: SeedPagination.ListUsernamesRequestCustom = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<SeedPagination.UsernameCursor> {
+    ): core.HttpResponsePromise<SeedPagination.UsernameCursor> {
+        return core.HttpResponsePromise.fromFunction(this.__listUsernamesCustom, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListUsernamesRequestCustom} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listUsernamesCustom({
+     *         startingAfter: "starting_after"
+     *     })
+     */
+    private async __listUsernamesCustom(
+        request: SeedPagination.ListUsernamesRequestCustom = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> {
         const { startingAfter } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (startingAfter != null) {
@@ -1046,12 +1331,15 @@ export class Users {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.UsernameCursor.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.UsernameCursor.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -1085,10 +1373,26 @@ export class Users {
      *         offset: 1
      *     })
      */
-    public async listWithGlobalConfig(
+    public listWithGlobalConfig(
         request: SeedPagination.ListWithGlobalConfigRequest = {},
         requestOptions?: Users.RequestOptions,
-    ): Promise<core.Page<string>> {
+    ): core.HttpResponsePromise<core.Page<string>> {
+        return core.HttpResponsePromise.fromFunction(this.__listWithGlobalConfig, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedPagination.ListWithGlobalConfigRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithGlobalConfig({
+     *         offset: 1
+     *     })
+     */
+    private async __listWithGlobalConfig(
+        request: SeedPagination.ListWithGlobalConfigRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Page<string>>> {
         const list = async (
             request: SeedPagination.ListWithGlobalConfigRequest,
         ): Promise<SeedPagination.UsernameContainer> => {
@@ -1122,12 +1426,15 @@ export class Users {
                 abortSignal: requestOptions?.abortSignal,
             });
             if (_response.ok) {
-                return serializers.UsernameContainer.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                });
+                return {
+                    data: serializers.UsernameContainer.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedPaginationError({
@@ -1150,15 +1457,18 @@ export class Users {
             }
         };
         let _offset = request?.offset != null ? request?.offset : 1;
-        return new core.Pageable<SeedPagination.UsernameContainer, string>({
-            response: await list(request),
-            hasNextPage: (response) => (response?.results ?? []).length > 0,
-            getItems: (response) => response?.results ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "offset", _offset));
-            },
-        });
+        return {
+            data: new core.Pageable<SeedPagination.UsernameContainer, string>({
+                response: await list(request),
+                hasNextPage: (response) => (response?.results ?? []).length > 0,
+                getItems: (response) => response?.results ?? [],
+                loadPage: (_response) => {
+                    _offset += 1;
+                    return list(core.setObjectProperty(request, "offset", _offset));
+                },
+            }),
+            rawResponse: _response.rawResponse,
+        };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

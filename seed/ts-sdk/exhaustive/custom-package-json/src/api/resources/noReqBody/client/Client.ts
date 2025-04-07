@@ -38,10 +38,10 @@ export class NoReqBody {
      */
     public getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__getWithNoRequestBody, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getWithNoRequestBody, requestOptions);
     }
 
     /**
@@ -101,6 +101,7 @@ export class NoReqBody {
             data: {
                 ok: false,
                 error: Fiddle.noReqBody.getWithNoRequestBody.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -114,8 +115,8 @@ export class NoReqBody {
      */
     public postWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
-        return core.ResponsePromise.fromFunction(this.__postWithNoRequestBody, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__postWithNoRequestBody, requestOptions);
     }
 
     /**
@@ -171,6 +172,7 @@ export class NoReqBody {
             data: {
                 ok: false,
                 error: Fiddle.noReqBody.postWithNoRequestBody.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

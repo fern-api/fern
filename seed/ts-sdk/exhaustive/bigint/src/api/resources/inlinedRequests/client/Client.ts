@@ -65,8 +65,8 @@ export class InlinedRequests {
     public postWithObjectBodyandResponse(
         request: SeedExhaustive.PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.ResponsePromise.fromFunction(this.__postWithObjectBodyandResponse, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromFunction(this.__postWithObjectBodyandResponse, request, requestOptions);
     }
 
     /**

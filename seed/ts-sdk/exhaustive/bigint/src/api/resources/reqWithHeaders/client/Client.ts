@@ -45,8 +45,8 @@ export class ReqWithHeaders {
     public getWithCustomHeader(
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions,
-    ): core.ResponsePromise<void> {
-        return core.ResponsePromise.fromFunction(this.__getWithCustomHeader, request, requestOptions);
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithCustomHeader, request, requestOptions);
     }
 
     /**

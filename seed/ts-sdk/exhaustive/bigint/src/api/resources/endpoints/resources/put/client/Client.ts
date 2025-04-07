@@ -43,8 +43,8 @@ export class Put {
         id: string,
         request: SeedExhaustive.endpoints.PutRequest = {},
         requestOptions?: Put.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.endpoints.PutResponse> {
-        return core.ResponsePromise.fromFunction(this.__add, id, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__add, id, request, requestOptions);
     }
 
     /**

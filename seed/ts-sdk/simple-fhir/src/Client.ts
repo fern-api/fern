@@ -37,10 +37,24 @@ export class SeedApiClient {
      * @example
      *     await client.getAccount("account_id")
      */
-    public async getAccount(
+    public getAccount(
         accountId: string,
         requestOptions?: SeedApiClient.RequestOptions,
-    ): Promise<SeedApi.Account> {
+    ): core.HttpResponsePromise<SeedApi.Account> {
+        return core.HttpResponsePromise.fromFunction(this.__getAccount, accountId, requestOptions);
+    }
+
+    /**
+     * @param {string} accountId
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.getAccount("account_id")
+     */
+    private async __getAccount(
+        accountId: string,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.Account>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -64,12 +78,15 @@ export class SeedApiClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Account.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Account.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

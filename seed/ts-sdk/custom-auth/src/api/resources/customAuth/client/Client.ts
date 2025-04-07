@@ -41,7 +41,23 @@ export class CustomAuth {
      * @example
      *     await client.customAuth.getWithCustomAuth()
      */
-    public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
+    public getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithCustomAuth, requestOptions);
+    }
+
+    /**
+     * GET request with custom auth scheme
+     *
+     * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedCustomAuth.UnauthorizedRequest}
+     *
+     * @example
+     *     await client.customAuth.getWithCustomAuth()
+     */
+    private async __getWithCustomAuth(
+        requestOptions?: CustomAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -66,12 +82,15 @@ export class CustomAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -122,7 +141,31 @@ export class CustomAuth {
      *         "key": "value"
      *     })
      */
-    public async postWithCustomAuth(request?: unknown, requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
+    public postWithCustomAuth(
+        request?: unknown,
+        requestOptions?: CustomAuth.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromFunction(this.__postWithCustomAuth, request, requestOptions);
+    }
+
+    /**
+     * POST request with custom auth scheme
+     *
+     * @param {unknown} request
+     * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedCustomAuth.UnauthorizedRequest}
+     * @throws {@link SeedCustomAuth.BadRequest}
+     *
+     * @example
+     *     await client.customAuth.postWithCustomAuth({
+     *         "key": "value"
+     *     })
+     */
+    private async __postWithCustomAuth(
+        request?: unknown,
+        requestOptions?: CustomAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -148,12 +191,15 @@ export class CustomAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

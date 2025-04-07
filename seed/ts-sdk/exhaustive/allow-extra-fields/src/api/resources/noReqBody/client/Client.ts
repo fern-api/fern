@@ -39,8 +39,8 @@ export class NoReqBody {
      */
     public getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.ResponsePromise.fromFunction(this.__getWithNoRequestBody, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithNoRequestBody, requestOptions);
     }
 
     /**
@@ -115,8 +115,8 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.postWithNoRequestBody()
      */
-    public postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): core.ResponsePromise<string> {
-        return core.ResponsePromise.fromFunction(this.__postWithNoRequestBody, requestOptions);
+    public postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromFunction(this.__postWithNoRequestBody, requestOptions);
     }
 
     /**

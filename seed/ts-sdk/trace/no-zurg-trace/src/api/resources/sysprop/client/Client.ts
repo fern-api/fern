@@ -43,11 +43,32 @@ export class Sysprop {
      * @example
      *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
-    public async setNumWarmInstances(
+    public setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
         requestOptions?: Sysprop.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__setNumWarmInstances,
+            language,
+            numWarmInstances,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {SeedTrace.Language} language
+     * @param {number} numWarmInstances
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.sysprop.setNumWarmInstances("JAVA", 1)
+     */
+    private async __setNumWarmInstances(
+        language: SeedTrace.Language,
+        numWarmInstances: number,
+        requestOptions?: Sysprop.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -77,7 +98,7 @@ export class Sysprop {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -110,9 +131,21 @@ export class Sysprop {
      * @example
      *     await client.sysprop.getNumWarmInstances()
      */
-    public async getNumWarmInstances(
+    public getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions,
-    ): Promise<Record<SeedTrace.Language, number | undefined>> {
+    ): core.HttpResponsePromise<Record<SeedTrace.Language, number | undefined>> {
+        return core.HttpResponsePromise.fromFunction(this.__getNumWarmInstances, requestOptions);
+    }
+
+    /**
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.sysprop.getNumWarmInstances()
+     */
+    private async __getNumWarmInstances(
+        requestOptions?: Sysprop.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<SeedTrace.Language, number | undefined>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -142,7 +175,10 @@ export class Sysprop {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Record<SeedTrace.Language, number | undefined>;
+            return {
+                data: _response.body as Record<SeedTrace.Language, number | undefined>,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

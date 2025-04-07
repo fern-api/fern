@@ -40,10 +40,27 @@ export class InlinedRequest {
      *         operandOrColor: "red"
      *     })
      */
-    public async send(
+    public send(
         request: SeedEnum.SendEnumInlinedRequest,
         requestOptions?: InlinedRequest.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedEnum.SendEnumInlinedRequest} request
+     * @param {InlinedRequest.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.inlinedRequest.send({
+     *         operand: ">",
+     *         operandOrColor: "red"
+     *     })
+     */
+    private async __send(
+        request: SeedEnum.SendEnumInlinedRequest,
+        requestOptions?: InlinedRequest.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,7 +85,7 @@ export class InlinedRequest {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -56,13 +56,13 @@ export class Object_ {
     public getAndReturnWithOptionalField(
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithOptionalField,
             Fiddle.endpoints.object.getAndReturnWithOptionalField.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnWithOptionalField, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithOptionalField, request, requestOptions);
     }
 
     /**
@@ -144,6 +144,7 @@ export class Object_ {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -161,13 +162,13 @@ export class Object_ {
     public getAndReturnWithRequiredField(
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField,
             Fiddle.endpoints.object.getAndReturnWithRequiredField.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnWithRequiredField, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithRequiredField, request, requestOptions);
     }
 
     /**
@@ -235,6 +236,7 @@ export class Object_ {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.object.getAndReturnWithRequiredField.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -256,10 +258,10 @@ export class Object_ {
     public getAndReturnWithMapOfMap(
         request: Fiddle.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnWithMapOfMap, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithMapOfMap, request, requestOptions);
     }
 
     /**
@@ -328,6 +330,7 @@ export class Object_ {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -362,13 +365,17 @@ export class Object_ {
     public getAndReturnNestedWithOptionalField(
         request: Fiddle.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithOptionalField,
             Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnNestedWithOptionalField, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(
+            this.__getAndReturnNestedWithOptionalField,
+            request,
+            requestOptions,
+        );
     }
 
     /**
@@ -455,6 +462,7 @@ export class Object_ {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -491,13 +499,13 @@ export class Object_ {
         string_: string,
         request: Fiddle.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithRequiredField,
             Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(
+        return core.HttpResponsePromise.fromFunction(
             this.__getAndReturnNestedWithRequiredField,
             string_,
             request,
@@ -591,6 +599,7 @@ export class Object_ {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -644,13 +653,13 @@ export class Object_ {
     public getAndReturnNestedWithRequiredFieldAsList(
         request: Fiddle.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithRequiredField,
             Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
         >
     > {
-        return core.ResponsePromise.fromFunction(
+        return core.HttpResponsePromise.fromFunction(
             this.__getAndReturnNestedWithRequiredFieldAsList,
             request,
             requestOptions,
@@ -762,6 +771,7 @@ export class Object_ {
                 error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(
                     _response.error,
                 ),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

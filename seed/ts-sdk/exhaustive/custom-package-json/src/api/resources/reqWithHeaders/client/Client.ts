@@ -44,8 +44,8 @@ export class ReqWithHeaders {
     public getWithCustomHeader(
         request: Fiddle.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
-        return core.ResponsePromise.fromFunction(this.__getWithCustomHeader, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__getWithCustomHeader, request, requestOptions);
     }
 
     /**
@@ -108,6 +108,7 @@ export class ReqWithHeaders {
             data: {
                 ok: false,
                 error: Fiddle.reqWithHeaders.getWithCustomHeader.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

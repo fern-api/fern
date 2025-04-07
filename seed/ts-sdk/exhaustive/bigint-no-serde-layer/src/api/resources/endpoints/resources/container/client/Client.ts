@@ -40,8 +40,8 @@ export class Container {
     public getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<string[]> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnListOfPrimitives, request, requestOptions);
+    ): core.HttpResponsePromise<string[]> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfPrimitives, request, requestOptions);
     }
 
     /**
@@ -121,8 +121,8 @@ export class Container {
     public getAndReturnListOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnListOfObjects, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfObjects, request, requestOptions);
     }
 
     /**
@@ -205,8 +205,8 @@ export class Container {
     public getAndReturnSetOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<string[]> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnSetOfPrimitives, request, requestOptions);
+    ): core.HttpResponsePromise<string[]> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfPrimitives, request, requestOptions);
     }
 
     /**
@@ -284,8 +284,8 @@ export class Container {
     public getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnSetOfObjects, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfObjects, request, requestOptions);
     }
 
     /**
@@ -368,8 +368,8 @@ export class Container {
     public getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<Record<string, string>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnMapPrimToPrim, request, requestOptions);
+    ): core.HttpResponsePromise<Record<string, string>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapPrimToPrim, request, requestOptions);
     }
 
     /**
@@ -451,8 +451,8 @@ export class Container {
     public getAndReturnMapOfPrimToObject(
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnMapOfPrimToObject, request, requestOptions);
+    ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapOfPrimToObject, request, requestOptions);
     }
 
     /**
@@ -537,8 +537,8 @@ export class Container {
     public getAndReturnOptional(
         request?: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions,
-    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
-        return core.ResponsePromise.fromFunction(this.__getAndReturnOptional, request, requestOptions);
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+        return core.HttpResponsePromise.fromFunction(this.__getAndReturnOptional, request, requestOptions);
     }
 
     /**

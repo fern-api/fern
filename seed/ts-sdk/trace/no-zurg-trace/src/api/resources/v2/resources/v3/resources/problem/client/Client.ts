@@ -43,9 +43,23 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getLightweightProblems()
      */
-    public async getLightweightProblems(
+    public getLightweightProblems(
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.v2.v3.LightweightProblemInfoV2[]> {
+    ): core.HttpResponsePromise<SeedTrace.v2.v3.LightweightProblemInfoV2[]> {
+        return core.HttpResponsePromise.fromFunction(this.__getLightweightProblems, requestOptions);
+    }
+
+    /**
+     * Returns lightweight versions of all problems
+     *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.v3.problem.getLightweightProblems()
+     */
+    private async __getLightweightProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.LightweightProblemInfoV2[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,7 +89,10 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[];
+            return {
+                data: _response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[],
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -110,7 +127,23 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getProblems()
      */
-    public async getProblems(requestOptions?: Problem.RequestOptions): Promise<SeedTrace.v2.v3.ProblemInfoV2[]> {
+    public getProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2[]> {
+        return core.HttpResponsePromise.fromFunction(this.__getProblems, requestOptions);
+    }
+
+    /**
+     * Returns latest versions of all problems
+     *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.v3.problem.getProblems()
+     */
+    private async __getProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -140,7 +173,7 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.v2.v3.ProblemInfoV2[];
+            return { data: _response.body as SeedTrace.v2.v3.ProblemInfoV2[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -174,10 +207,26 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getLatestProblem("problemId")
      */
-    public async getLatestProblem(
+    public getLatestProblem(
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.v2.v3.ProblemInfoV2> {
+    ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2> {
+        return core.HttpResponsePromise.fromFunction(this.__getLatestProblem, problemId, requestOptions);
+    }
+
+    /**
+     * Returns latest version of a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.v3.problem.getLatestProblem("problemId")
+     */
+    private async __getLatestProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -207,7 +256,7 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.v2.v3.ProblemInfoV2;
+            return { data: _response.body as SeedTrace.v2.v3.ProblemInfoV2, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -244,11 +293,34 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getProblemVersion("problemId", 1)
      */
-    public async getProblemVersion(
+    public getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.v2.v3.ProblemInfoV2> {
+    ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__getProblemVersion,
+            problemId,
+            problemVersion,
+            requestOptions,
+        );
+    }
+
+    /**
+     * Returns requested version of a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {number} problemVersion
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.v2.v3.problem.getProblemVersion("problemId", 1)
+     */
+    private async __getProblemVersion(
+        problemId: SeedTrace.ProblemId,
+        problemVersion: number,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -278,7 +350,7 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.v2.v3.ProblemInfoV2;
+            return { data: _response.body as SeedTrace.v2.v3.ProblemInfoV2, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

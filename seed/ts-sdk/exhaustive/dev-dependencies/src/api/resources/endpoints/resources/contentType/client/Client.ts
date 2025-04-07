@@ -56,8 +56,8 @@ export class ContentType {
     public postJsonPatchContentType(
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
-        return core.ResponsePromise.fromFunction(this.__postJsonPatchContentType, request, requestOptions);
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
+        return core.HttpResponsePromise.fromFunction(this.__postJsonPatchContentType, request, requestOptions);
     }
 
     /**
@@ -129,6 +129,7 @@ export class ContentType {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };
@@ -160,10 +161,14 @@ export class ContentType {
     public postJsonPatchContentWithCharsetType(
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): core.ResponsePromise<
+    ): core.HttpResponsePromise<
         core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
     > {
-        return core.ResponsePromise.fromFunction(this.__postJsonPatchContentWithCharsetType, request, requestOptions);
+        return core.HttpResponsePromise.fromFunction(
+            this.__postJsonPatchContentWithCharsetType,
+            request,
+            requestOptions,
+        );
     }
 
     /**
@@ -237,6 +242,7 @@ export class ContentType {
             data: {
                 ok: false,
                 error: Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
         };

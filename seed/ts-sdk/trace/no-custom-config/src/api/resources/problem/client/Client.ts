@@ -117,10 +117,98 @@ export class Problem {
      *         methodName: "methodName"
      *     })
      */
-    public async createProblem(
+    public createProblem(
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.CreateProblemResponse> {
+    ): core.HttpResponsePromise<SeedTrace.CreateProblemResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__createProblem, request, requestOptions);
+    }
+
+    /**
+     * Creates a problem
+     *
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.problem.createProblem({
+     *         problemName: "problemName",
+     *         problemDescription: {
+     *             boards: [{
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }]
+     *         },
+     *         files: {
+     *             ["JAVA"]: {
+     *                 solutionFile: {
+     *                     filename: "filename",
+     *                     contents: "contents"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }],
+     *         methodName: "methodName"
+     *     })
+     */
+    private async __createProblem(
+        request: SeedTrace.CreateProblemRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.CreateProblemResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -151,12 +239,15 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.CreateProblemResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.CreateProblemResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -263,11 +354,101 @@ export class Problem {
      *         methodName: "methodName"
      *     })
      */
-    public async updateProblem(
+    public updateProblem(
         problemId: SeedTrace.ProblemId,
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.UpdateProblemResponse> {
+    ): core.HttpResponsePromise<SeedTrace.UpdateProblemResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__updateProblem, problemId, request, requestOptions);
+    }
+
+    /**
+     * Updates a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.problem.updateProblem("problemId", {
+     *         problemName: "problemName",
+     *         problemDescription: {
+     *             boards: [{
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }]
+     *         },
+     *         files: {
+     *             ["JAVA"]: {
+     *                 solutionFile: {
+     *                     filename: "filename",
+     *                     contents: "contents"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }],
+     *         methodName: "methodName"
+     *     })
+     */
+    private async __updateProblem(
+        problemId: SeedTrace.ProblemId,
+        request: SeedTrace.CreateProblemRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.UpdateProblemResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -298,12 +479,15 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -339,7 +523,26 @@ export class Problem {
      * @example
      *     await client.problem.deleteProblem("problemId")
      */
-    public async deleteProblem(problemId: SeedTrace.ProblemId, requestOptions?: Problem.RequestOptions): Promise<void> {
+    public deleteProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__deleteProblem, problemId, requestOptions);
+    }
+
+    /**
+     * Soft deletes a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.problem.deleteProblem("problemId")
+     */
+    private async __deleteProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -369,7 +572,7 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -421,10 +624,42 @@ export class Problem {
      *         methodName: "methodName"
      *     })
      */
-    public async getDefaultStarterFiles(
+    public getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.GetDefaultStarterFilesResponse> {
+    ): core.HttpResponsePromise<SeedTrace.GetDefaultStarterFilesResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__getDefaultStarterFiles, request, requestOptions);
+    }
+
+    /**
+     * Returns default starter files for problem
+     *
+     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.problem.getDefaultStarterFiles({
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         methodName: "methodName"
+     *     })
+     */
+    private async __getDefaultStarterFiles(
+        request: SeedTrace.GetDefaultStarterFilesRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.GetDefaultStarterFilesResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -455,12 +690,15 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

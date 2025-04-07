@@ -39,10 +39,24 @@ export class Service {
      * @example
      *     await client.file.notification.service.getException("notification-hsy129x")
      */
-    public async getException(
+    public getException(
         notificationId: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedExamples.Exception> {
+    ): core.HttpResponsePromise<SeedExamples.Exception> {
+        return core.HttpResponsePromise.fromFunction(this.__getException, notificationId, requestOptions);
+    }
+
+    /**
+     * @param {string} notificationId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.file.notification.service.getException("notification-hsy129x")
+     */
+    private async __getException(
+        notificationId: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Exception>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,12 +81,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Exception.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Exception.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

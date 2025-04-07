@@ -57,8 +57,8 @@ export class ContentType {
     public postJsonPatchContentType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): core.ResponsePromise<void> {
-        return core.ResponsePromise.fromFunction(this.__postJsonPatchContentType, request, requestOptions);
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__postJsonPatchContentType, request, requestOptions);
     }
 
     /**
@@ -164,8 +164,12 @@ export class ContentType {
     public postJsonPatchContentWithCharsetType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): core.ResponsePromise<void> {
-        return core.ResponsePromise.fromFunction(this.__postJsonPatchContentWithCharsetType, request, requestOptions);
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__postJsonPatchContentWithCharsetType,
+            request,
+            requestOptions,
+        );
     }
 
     /**

@@ -39,10 +39,26 @@ export class User {
      *         name: "name"
      *     })
      */
-    public async createUser(
+    public createUser(
         request: SeedExtraProperties.CreateUserRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedExtraProperties.User> {
+    ): core.HttpResponsePromise<SeedExtraProperties.User> {
+        return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExtraProperties.CreateUserRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.createUser({
+     *         name: "name"
+     *     })
+     */
+    private async __createUser(
+        request: SeedExtraProperties.CreateUserRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExtraProperties.User>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -71,12 +87,15 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

@@ -38,12 +38,36 @@ export class Service {
      * @example
      *     await client.service.post("serviceParam", "resourceParam", 1)
      */
-    public async post(
+    public post(
         serviceParam: string,
         resourceParam: string,
         endpointParam: number,
         requestOptions?: Service.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(
+            this.__post,
+            serviceParam,
+            resourceParam,
+            endpointParam,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {string} serviceParam
+     * @param {string} resourceParam
+     * @param {number} endpointParam
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.post("serviceParam", "resourceParam", 1)
+     */
+    private async __post(
+        serviceParam: string,
+        resourceParam: string,
+        endpointParam: number,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,7 +91,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

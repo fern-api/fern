@@ -42,10 +42,28 @@ export class Auth {
      *         scope: "scope"
      *     })
      */
-    public async getTokenWithClientCredentials(
+    public getTokenWithClientCredentials(
         request: SeedOauthClientCredentials.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): Promise<SeedOauthClientCredentials.TokenResponse> {
+    ): core.HttpResponsePromise<SeedOauthClientCredentials.TokenResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__getTokenWithClientCredentials, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedOauthClientCredentials.GetTokenRequest} request
+     * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.auth.getTokenWithClientCredentials({
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret",
+     *         scope: "scope"
+     *     })
+     */
+    private async __getTokenWithClientCredentials(
+        request: SeedOauthClientCredentials.GetTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,12 +93,15 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.TokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.TokenResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -117,10 +138,29 @@ export class Auth {
      *         scope: "scope"
      *     })
      */
-    public async refreshToken(
+    public refreshToken(
         request: SeedOauthClientCredentials.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): Promise<SeedOauthClientCredentials.TokenResponse> {
+    ): core.HttpResponsePromise<SeedOauthClientCredentials.TokenResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__refreshToken, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedOauthClientCredentials.RefreshTokenRequest} request
+     * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.auth.refreshToken({
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret",
+     *         refreshToken: "refresh_token",
+     *         scope: "scope"
+     *     })
+     */
+    private async __refreshToken(
+        request: SeedOauthClientCredentials.RefreshTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -150,12 +190,15 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.TokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.TokenResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

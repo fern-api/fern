@@ -41,10 +41,27 @@ export class QueryParam {
      *         operandOrColor: "red"
      *     })
      */
-    public async send(
+    public send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedEnum.SendEnumAsQueryParamRequest} request
+     * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.queryParam.send({
+     *         operand: ">",
+     *         operandOrColor: "red"
+     *     })
+     */
+    private async __send(
+        request: SeedEnum.SendEnumAsQueryParamRequest,
+        requestOptions?: QueryParam.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
@@ -91,7 +108,7 @@ export class QueryParam {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -128,10 +145,29 @@ export class QueryParam {
      *         maybeOperandOrColor: "red"
      *     })
      */
-    public async sendList(
+    public sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromFunction(this.__sendList, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedEnum.SendEnumListAsQueryParamRequest} request
+     * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.queryParam.sendList({
+     *         operand: ">",
+     *         maybeOperand: ">",
+     *         operandOrColor: "red",
+     *         maybeOperandOrColor: "red"
+     *     })
+     */
+    private async __sendList(
+        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        requestOptions?: QueryParam.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(operand)) {
@@ -214,7 +250,7 @@ export class QueryParam {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

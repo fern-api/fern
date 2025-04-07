@@ -45,7 +45,21 @@ export class Path {
      * @example
      *     await client.path.send("123")
      */
-    public async send(id: "123", requestOptions?: Path.RequestOptions): Promise<SeedLiteral.SendResponse> {
+    public send(id: "123", requestOptions?: Path.RequestOptions): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromFunction(this.__send, id, requestOptions);
+    }
+
+    /**
+     * @param {"123"} id
+     * @param {Path.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.path.send("123")
+     */
+    private async __send(
+        id: "123",
+        requestOptions?: Path.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,12 +89,15 @@ export class Path {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SendResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SendResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
