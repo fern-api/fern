@@ -47,7 +47,6 @@ internal static partial class JsonOptions
                                 switch (jsonAccessAttribute.AccessType)
                                 {
                                     case JsonAccessType.ReadOnly:
-                                        propertyInfo.Get = null;
                                         propertyInfo.ShouldSerialize = (_, _) => false;
                                         break;
                                     case JsonAccessType.WriteOnly:

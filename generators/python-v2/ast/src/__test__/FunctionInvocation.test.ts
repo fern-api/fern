@@ -1,7 +1,7 @@
 import { python } from "..";
 import { Writer } from "../core/Writer";
 
-describe("MethodInvocation", () => {
+describe("FunctionInvocation", () => {
     let writer: Writer;
 
     beforeEach(() => {
@@ -9,8 +9,8 @@ describe("MethodInvocation", () => {
     });
 
     it("should write a method invocation with no args", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+        const invocation = python.invokeFunction({
+            reference: python.reference({ name: "test_method" }),
             arguments_: []
         });
 
@@ -21,8 +21,8 @@ describe("MethodInvocation", () => {
     });
 
     it("should write a method invocation with one positional arg", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+        const invocation = python.invokeFunction({
+            reference: python.reference({ name: "test_method" }),
             arguments_: [python.methodArgument({ value: python.codeBlock("42") })]
         });
 
@@ -33,8 +33,8 @@ describe("MethodInvocation", () => {
     });
 
     it("should write a method invocation with one positional arg and one kwarg", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+        const invocation = python.invokeFunction({
+            reference: python.reference({ name: "test_method" }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("42") }),
                 python.methodArgument({ name: "key", value: python.codeBlock("'value'") })
@@ -48,8 +48,8 @@ describe("MethodInvocation", () => {
     });
 
     it("should write a method invocation with multiple positional and kwarg args", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+        const invocation = python.invokeFunction({
+            reference: python.reference({ name: "test_method" }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("42") }),
                 python.methodArgument({ value: python.codeBlock("'hello'") }),
@@ -65,8 +65,8 @@ describe("MethodInvocation", () => {
     });
 
     it("should write a method invocation with a parent", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "parent_object", attribute: ["test_method"] }),
+        const invocation = python.invokeFunction({
+            reference: python.reference({ name: "parent_object", attribute: ["test_method"] }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("'arg1'") }),
                 python.methodArgument({ name: "kwarg", value: python.codeBlock("42") })
@@ -80,8 +80,8 @@ describe("MethodInvocation", () => {
     });
 
     it("should write a method invocation with a reference argument", async () => {
-        const invocation = python.invokeMethod({
-            methodReference: python.reference({ name: "test_method" }),
+        const invocation = python.invokeFunction({
+            reference: python.reference({ name: "test_method" }),
             arguments_: [
                 python.methodArgument({
                     value: python.instantiateClass({
