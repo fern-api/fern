@@ -2,11 +2,13 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .raw_client import RawUnionClient
 from ...types.union.types.animal import Animal
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
+from ...core.pydantic_utilities import parse_obj_as
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawUnionClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -14,18 +16,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class UnionClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawUnionClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawUnionClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawUnionClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def get_and_return_union(
         self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
@@ -58,27 +49,31 @@ class UnionClient:
             ),
         )
         """
-        response = self._raw_client.get_and_return_union(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "union",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Animal, direction="write"),
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Animal,
+                    parse_obj_as(
+                        type_=Animal,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawUnionClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawUnionClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawUnionClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def get_and_return_union(
         self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
@@ -119,8 +114,23 @@ class AsyncUnionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_union(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "union",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Animal, direction="write"),
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Animal,
+                    parse_obj_as(
+                        type_=Animal,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

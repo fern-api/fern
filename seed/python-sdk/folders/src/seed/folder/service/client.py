@@ -2,10 +2,12 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .raw_client import RawServiceClient
 from ...core.request_options import RequestOptions
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
+from .errors.not_found_error import NotFoundError
+from ...core.pydantic_utilities import parse_obj_as
 from ...core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawServiceClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,18 +15,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawServiceClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawServiceClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawServiceClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def endpoint(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -46,10 +37,18 @@ class ServiceClient:
         )
         client.folder.service.endpoint()
         """
-        response = self._raw_client.endpoint(
+        _response = self._client_wrapper.httpx_client.request(
+            "service",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def unknown_request(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -77,27 +76,35 @@ class ServiceClient:
             request={"key": "value"},
         )
         """
-        response = self._raw_client.unknown_request(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "service",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        str,
+                        parse_obj_as(
+                            type_=str,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawServiceClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawServiceClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawServiceClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def endpoint(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -127,10 +134,18 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.endpoint(
+        _response = await self._client_wrapper.httpx_client.request(
+            "service",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def unknown_request(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -166,8 +181,27 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.unknown_request(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "service",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    typing.cast(
+                        str,
+                        parse_obj_as(
+                            type_=str,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

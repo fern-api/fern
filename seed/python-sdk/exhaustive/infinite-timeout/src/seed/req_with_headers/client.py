@@ -2,10 +2,10 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawReqWithHeadersClient
 from ..core.request_options import RequestOptions
+from json.decoder import JSONDecodeError
+from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawReqWithHeadersClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,18 +13,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ReqWithHeadersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawReqWithHeadersClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawReqWithHeadersClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawReqWithHeadersClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def get_with_custom_header(
         self,
@@ -64,29 +53,29 @@ class ReqWithHeadersClient:
             request="string",
         )
         """
-        response = self._raw_client.get_with_custom_header(
-            x_test_service_header=x_test_service_header,
-            x_test_endpoint_header=x_test_endpoint_header,
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "test-headers/custom-header",
+            method="POST",
+            json=request,
+            headers={
+                "X-TEST-SERVICE-HEADER": str(x_test_service_header) if x_test_service_header is not None else None,
+                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header) if x_test_endpoint_header is not None else None,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncReqWithHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawReqWithHeadersClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawReqWithHeadersClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawReqWithHeadersClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def get_with_custom_header(
         self,
@@ -134,10 +123,21 @@ class AsyncReqWithHeadersClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_custom_header(
-            x_test_service_header=x_test_service_header,
-            x_test_endpoint_header=x_test_endpoint_header,
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "test-headers/custom-header",
+            method="POST",
+            json=request,
+            headers={
+                "X-TEST-SERVICE-HEADER": str(x_test_service_header) if x_test_service_header is not None else None,
+                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header) if x_test_endpoint_header is not None else None,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

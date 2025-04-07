@@ -2,11 +2,12 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawAuthClient
 from ..core.request_options import RequestOptions
 from .types.token_response import TokenResponse
+from ..core.pydantic_utilities import parse_obj_as
+from json.decoder import JSONDecodeError
+from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawAuthClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -14,18 +15,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class AuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawAuthClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawAuthClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawAuthClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def get_token_with_client_credentials(
         self,
@@ -74,15 +64,34 @@ class AuthClient:
             scope="scope",
         )
         """
-        response = self._raw_client.get_token_with_client_credentials(
-            cid=cid,
-            csr=csr,
-            scp=scp,
-            entity_id=entity_id,
-            scope=scope,
+        _response = self._client_wrapper.httpx_client.request(
+            "token",
+            method="POST",
+            json={
+                "cid": cid,
+                "csr": csr,
+                "scp": scp,
+                "entity_id": entity_id,
+                "scope": scope,
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TokenResponse,
+                    parse_obj_as(
+                        type_=TokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def refresh_token(
         self,
@@ -127,30 +136,38 @@ class AuthClient:
             scope="scope",
         )
         """
-        response = self._raw_client.refresh_token(
-            client_id=client_id,
-            client_secret=client_secret,
-            refresh_token=refresh_token,
-            scope=scope,
+        _response = self._client_wrapper.httpx_client.request(
+            "token",
+            method="POST",
+            json={
+                "client_id": client_id,
+                "client_secret": client_secret,
+                "refresh_token": refresh_token,
+                "scope": scope,
+                "audience": "https://api.example.com",
+                "grant_type": "refresh_token",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TokenResponse,
+                    parse_obj_as(
+                        type_=TokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawAuthClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawAuthClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawAuthClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def get_token_with_client_credentials(
         self,
@@ -207,15 +224,34 @@ class AsyncAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_token_with_client_credentials(
-            cid=cid,
-            csr=csr,
-            scp=scp,
-            entity_id=entity_id,
-            scope=scope,
+        _response = await self._client_wrapper.httpx_client.request(
+            "token",
+            method="POST",
+            json={
+                "cid": cid,
+                "csr": csr,
+                "scp": scp,
+                "entity_id": entity_id,
+                "scope": scope,
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TokenResponse,
+                    parse_obj_as(
+                        type_=TokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def refresh_token(
         self,
@@ -268,11 +304,30 @@ class AsyncAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.refresh_token(
-            client_id=client_id,
-            client_secret=client_secret,
-            refresh_token=refresh_token,
-            scope=scope,
+        _response = await self._client_wrapper.httpx_client.request(
+            "token",
+            method="POST",
+            json={
+                "client_id": client_id,
+                "client_secret": client_secret,
+                "refresh_token": refresh_token,
+                "scope": scope,
+                "audience": "https://api.example.com",
+                "grant_type": "refresh_token",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    TokenResponse,
+                    parse_obj_as(
+                        type_=TokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

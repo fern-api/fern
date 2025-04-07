@@ -46,6 +46,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "property": {
                   "availability": null,
                   "docs": null,
+                  "example": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -88,6 +89,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "property": {
                   "availability": null,
                   "docs": null,
+                  "example": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -131,6 +133,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                   "property": {
                     "availability": null,
                     "docs": null,
+                    "example": null,
                     "name": {
                       "name": {
                         "camelCase": {
@@ -176,6 +179,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "property": {
                   "availability": null,
                   "docs": null,
+                  "example": null,
                   "name": {
                     "name": {
                       "camelCase": {
@@ -1864,6 +1868,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               {
                 "availability": null,
                 "docs": null,
+                "example": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -1901,6 +1906,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               {
                 "availability": null,
                 "docs": null,
+                "example": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -1938,6 +1944,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               {
                 "availability": null,
                 "docs": null,
+                "example": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -2189,6 +2196,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
           "allPathParameters": [
             {
               "docs": null,
+              "example": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -2947,6 +2955,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
           "pathParameters": [
             {
               "docs": null,
+              "example": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -2986,6 +2995,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3020,6 +3030,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3058,6 +3069,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3153,6 +3165,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3208,6 +3221,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3252,6 +3266,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": true,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3347,6 +3362,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": true,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -3385,6 +3401,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -4886,6 +4903,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "allowMultiple": false,
                 "availability": null,
                 "docs": null,
+                "example": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -4927,6 +4945,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "property": {
                 "availability": null,
                 "docs": null,
+                "example": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -5040,6 +5059,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": null,
+              "example": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -5515,6 +5535,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
           {
             "availability": null,
             "docs": null,
+            "example": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5554,6 +5575,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
       },
       "source": null,
       "userProvidedExamples": [],
+      "v2Examples": null,
     },
     "type_service:ListUsersResponse": {
       "autogeneratedExamples": [],
@@ -5641,6 +5663,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
           {
             "availability": null,
             "docs": null,
+            "example": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5743,6 +5766,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
       },
       "source": null,
       "userProvidedExamples": [],
+      "v2Examples": null,
     },
     "type_service:User": {
       "autogeneratedExamples": [],
@@ -5828,6 +5852,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
           {
             "availability": null,
             "docs": null,
+            "example": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -5867,6 +5892,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
       },
       "source": null,
       "userProvidedExamples": [],
+      "v2Examples": null,
     },
   },
   "variables": [],

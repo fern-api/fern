@@ -189,7 +189,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             docs: this.schema.description,
             referencedTypes: new Set(),
             source: undefined,
-            inline: this.inlined
+            inline: this.inlined,
+            v2Examples: undefined
         };
     }
 
@@ -237,7 +238,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             docs: this.schema.description,
             referencedTypes: new Set<string>(),
             source: undefined,
-            inline: this.inlined
+            inline: this.inlined,
+            v2Examples: undefined
         };
     }
 

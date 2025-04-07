@@ -2,10 +2,14 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawCustomAuthClient
 from ..core.request_options import RequestOptions
+from ..core.pydantic_utilities import parse_obj_as
+from ..errors.errors.unauthorized_request import UnauthorizedRequest
+from ..errors.types.unauthorized_request_error_body import UnauthorizedRequestErrorBody
+from json.decoder import JSONDecodeError
+from ..core.api_error import ApiError
+from ..errors.errors.bad_request import BadRequest
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawCustomAuthClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,18 +17,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class CustomAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawCustomAuthClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawCustomAuthClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawCustomAuthClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def get_with_custom_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -49,10 +42,34 @@ class CustomAuthClient:
         )
         client.custom_auth.get_with_custom_auth()
         """
-        response = self._raw_client.get_with_custom_auth(
+        _response = self._client_wrapper.httpx_client.request(
+            "custom-auth",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedRequest(
+                    typing.cast(
+                        UnauthorizedRequestErrorBody,
+                        parse_obj_as(
+                            type_=UnauthorizedRequestErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_with_custom_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -83,27 +100,43 @@ class CustomAuthClient:
             request={"key": "value"},
         )
         """
-        response = self._raw_client.post_with_custom_auth(
-            request=request,
+        _response = self._client_wrapper.httpx_client.request(
+            "custom-auth",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedRequest(
+                    typing.cast(
+                        UnauthorizedRequestErrorBody,
+                        parse_obj_as(
+                            type_=UnauthorizedRequestErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 400:
+                raise BadRequest()
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncCustomAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawCustomAuthClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawCustomAuthClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawCustomAuthClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def get_with_custom_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -136,10 +169,34 @@ class AsyncCustomAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_custom_auth(
+        _response = await self._client_wrapper.httpx_client.request(
+            "custom-auth",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedRequest(
+                    typing.cast(
+                        UnauthorizedRequestErrorBody,
+                        parse_obj_as(
+                            type_=UnauthorizedRequestErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_with_custom_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -178,8 +235,35 @@ class AsyncCustomAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.post_with_custom_auth(
-            request=request,
+        _response = await self._client_wrapper.httpx_client.request(
+            "custom-auth",
+            method="POST",
+            json=request,
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedRequest(
+                    typing.cast(
+                        UnauthorizedRequestErrorBody,
+                        parse_obj_as(
+                            type_=UnauthorizedRequestErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 400:
+                raise BadRequest()
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

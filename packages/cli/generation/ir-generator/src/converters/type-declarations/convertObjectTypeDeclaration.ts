@@ -35,7 +35,8 @@ export function getObjectPropertiesFromRawObjectSchema(
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name
         }),
         valueType: file.parseTypeReference(propertyDefinition),
-        propertyAccess: getPropertyAccess({ property: propertyDefinition })
+        propertyAccess: getPropertyAccess({ property: propertyDefinition }),
+        example: undefined
     }));
 }
 

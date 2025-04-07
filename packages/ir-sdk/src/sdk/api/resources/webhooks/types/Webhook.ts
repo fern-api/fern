@@ -12,4 +12,5 @@ export interface Webhook extends FernIr.Declaration {
     headers: FernIr.HttpHeader[];
     payload: FernIr.WebhookPayload;
     examples: FernIr.ExampleWebhookCall[] | undefined;
+    v2Examples: FernIr.V2WebhookExamples | undefined;
 }
