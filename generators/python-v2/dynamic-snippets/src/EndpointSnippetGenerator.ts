@@ -64,16 +64,18 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): python.AstNode {
-        return python.instantiateClass({
-            assignTo: CLIENT_VAR_NAME,
-            classReference: this.context.getRootClientClassReference(),
-            arguments_: this.getConstructorArgs({ endpoint, snippet }).map((arg) =>
-                python.methodArgument({
-                    name: arg.name,
-                    value: arg.value
-                })
-            ),
-            multiline: true
+        return python.assign({
+            lhs: python.reference({ name: CLIENT_VAR_NAME }),
+            rhs: python.instantiateClass({
+                classReference: this.context.getRootClientClassReference(),
+                arguments_: this.getConstructorArgs({ endpoint, snippet }).map((arg) =>
+                    python.methodArgument({
+                        name: arg.name,
+                        value: arg.value
+                    })
+                ),
+                multiline: true
+            })
         });
     }
 

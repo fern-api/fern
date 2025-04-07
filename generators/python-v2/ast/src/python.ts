@@ -1,4 +1,5 @@
 import { AccessAttribute } from "./AccessAttribute";
+import { Assign } from "./Assign";
 import { BaseInvocation } from "./BaseInvocation";
 import { Class } from "./Class";
 import { ClassInstantiation } from "./ClassInstantiation";
@@ -40,6 +41,10 @@ export { type NamedValue, TypeInstantiation } from "./TypeInstantiation";
 
 export function accessAttribute(args: AccessAttribute.Args): AccessAttribute {
     return new AccessAttribute(args);
+}
+
+export function assign(args: Assign.Args): Assign {
+    return new Assign(args);
 }
 
 export function file(args: PythonFile.Args): PythonFile {
