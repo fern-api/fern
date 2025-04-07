@@ -12,9 +12,6 @@ from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
 from .service.client import AsyncServiceClient
 
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
-
 
 class SeedPackageYml:
     """

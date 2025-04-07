@@ -2,10 +2,10 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawServiceClient
 from ..core.request_options import RequestOptions
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawServiceClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,7 +13,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawServiceClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawServiceClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawServiceClient
+        """
+        return self._raw_client
 
     def patch(
         self,
@@ -48,30 +59,28 @@ class ServiceClient:
             require_auth=True,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            method="PATCH",
-            json={
-                "application": application,
-                "require_auth": require_auth,
-            },
-            headers={
-                "content-type": "application/merge-patch+json",
-            },
+        response = self._raw_client.patch(
+            application=application,
+            require_auth=require_auth,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawServiceClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawServiceClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawServiceClient
+        """
+        return self._raw_client
 
     async def patch(
         self,
@@ -114,22 +123,9 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="PATCH",
-            json={
-                "application": application,
-                "require_auth": require_auth,
-            },
-            headers={
-                "content-type": "application/merge-patch+json",
-            },
+        response = await self._raw_client.patch(
+            application=application,
+            require_auth=require_auth,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

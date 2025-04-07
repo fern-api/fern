@@ -2,15 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawInlinedRequestsClient
 from ..types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
-from ..core.pydantic_utilities import parse_obj_as
-from ..general_errors.errors.bad_request_body import BadRequestBody
-from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawInlinedRequestsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -18,7 +14,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class InlinedRequestsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawInlinedRequestsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawInlinedRequestsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawInlinedRequestsClient
+        """
+        return self._raw_client
 
     def post_with_object_bodyand_response(
         self,
@@ -84,47 +91,29 @@ class InlinedRequestsClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "req-bodies/object",
-            method="POST",
-            json={
-                "string": string,
-                "integer": integer,
-                "NestedObject": convert_and_respect_annotation_metadata(
-                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
-                ),
-            },
+        response = self._raw_client.post_with_object_bodyand_response(
+            string=string,
+            integer=integer,
+            nested_object=nested_object,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ObjectWithOptionalField,
-                    parse_obj_as(
-                        type_=ObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestBody(
-                    typing.cast(
-                        BadObjectRequestInfo,
-                        parse_obj_as(
-                            type_=BadObjectRequestInfo,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncInlinedRequestsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawInlinedRequestsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawInlinedRequestsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawInlinedRequestsClient
+        """
+        return self._raw_client
 
     async def post_with_object_bodyand_response(
         self,
@@ -197,39 +186,10 @@ class AsyncInlinedRequestsClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "req-bodies/object",
-            method="POST",
-            json={
-                "string": string,
-                "integer": integer,
-                "NestedObject": convert_and_respect_annotation_metadata(
-                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
-                ),
-            },
+        response = await self._raw_client.post_with_object_bodyand_response(
+            string=string,
+            integer=integer,
+            nested_object=nested_object,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ObjectWithOptionalField,
-                    parse_obj_as(
-                        type_=ObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestBody(
-                    typing.cast(
-                        BadObjectRequestInfo,
-                        parse_obj_as(
-                            type_=BadObjectRequestInfo,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
