@@ -5,6 +5,7 @@ from typing import List, Optional
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
+from .endpoint_function_generator import EndpointFunctionGenerator
 from .endpoint_metadata_collector import EndpointMetadataCollector
 from .endpoint_response_code_writer import EndpointResponseCodeWriter
 from .generated_root_client import GeneratedRootClient
@@ -46,10 +47,10 @@ class BaseClientGenerator(ABC):
         *,
         context: SdkGeneratorContext,
         package: ir_types.Package,
-        subpackage_id: ir_types.SubpackageId,
+        subpackage_id: Optional[ir_types.SubpackageId],
         class_name: str,
         async_class_name: str,
-        generated_root_client: GeneratedRootClient,
+        generated_root_client: Optional[GeneratedRootClient],
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
         endpoint_metadata_collector: EndpointMetadataCollector,
@@ -132,6 +133,20 @@ class BaseClientGenerator(ABC):
         writer.write(f"{DEFAULT_BODY_PARAMETER_VALUE} = ")
         writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
         writer.write_newline_if_last_line_not()
+
+    def _environment_is_enum(self) -> bool:
+        return self._context.ir.environments is not None
+
+    def _is_streaming_endpoint(self, endpoint: ir_types.HttpEndpoint) -> bool:
+        """Check if an endpoint is a streaming endpoint (but not a stream parameter endpoint)"""
+        if endpoint.response is None or endpoint.response.body is None:
+            return False
+
+        body_type = endpoint.response.body.get_as_union().type
+        return body_type == "streaming"  # We handle streamParameter endpoints separately
+
+    def _get_raw_client_member_name(self) -> str:
+        return "_raw_client"
 
     def _get_client_wrapper_member_name(self) -> str:
         return "_client_wrapper"

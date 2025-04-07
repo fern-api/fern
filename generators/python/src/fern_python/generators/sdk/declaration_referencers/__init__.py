@@ -5,7 +5,9 @@ from .error_declaration_referencer import ErrorDeclarationReferencer
 from .oauth_token_provider_declaration_referencer import (
     OAuthTokenProviderDeclarationReferencer,
 )
+from .root_async_raw_client_declaration_referencer import RootAsyncRawClientDeclarationReferencer
 from .root_client_declaration_referencer import RootClientDeclarationReferencer
+from .root_raw_client_declaration_referencer import RootRawClientDeclarationReferencer
 from .subpackage_async_client_declaration_referencer import (
     SubpackageAsyncClientDeclarationReferencer,
 )
@@ -28,6 +30,8 @@ __all__ = [
     "SubpackageClientDeclarationReferencer",
     "TypeDeclarationReferencer",
     "RootClientDeclarationReferencer",
+    "RootRawClientDeclarationReferencer",
+    "RootAsyncRawClientDeclarationReferencer",
     "SubpackageAsyncClientDeclarationReferencer",
     "OAuthTokenProviderDeclarationReferencer",
     "SubpackageSocketClientDeclarationReferencer",

@@ -468,8 +468,28 @@ class SdkGenerator(AbstractGenerator):
             snippet_writer=snippet_writer,
             oauth_scheme=oauth_scheme,
             endpoint_metadata_collector=endpoint_metadata_collector,
+            websocket=None,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
+
+        if ir.root_package.service is not None:
+            raw_client_filepath = context.get_filepath_for_generated_raw_root_client()
+            raw_client_source_file = context.source_file_factory.create(
+                project=project, filepath=raw_client_filepath, generator_exec_wrapper=generator_exec_wrapper
+            )
+            RawClientGenerator(
+                context=context,
+                package=ir.root_package,
+                subpackage_id=ir.root_package.service,
+                class_name=context.get_class_name_for_generated_raw_root_client(),
+                async_class_name=context.get_class_name_for_generated_async_raw_root_client(),
+                generated_root_client=generated_root_client,
+                snippet_registry=snippet_registry,
+                snippet_writer=snippet_writer,
+                endpoint_metadata_collector=endpoint_metadata_collector,
+                websocket=None,
+            ).generate(source_file=raw_client_source_file)
+            project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
         return generated_root_client
 
     def _generate_subpackage_client(

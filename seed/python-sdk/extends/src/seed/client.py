@@ -3,10 +3,10 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .raw_client import RawSeedExtends
 from .core.request_options import RequestOptions
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawSeedExtends
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -59,6 +59,18 @@ class SeedExtends:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawSeedExtends(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSeedExtends:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSeedExtends
+        """
+        return self._raw_client
 
     def extended_inline_request_body(
         self, *, unique: str, name: str, docs: str, request_options: typing.Optional[RequestOptions] = None
@@ -90,24 +102,13 @@ class SeedExtends:
             unique="unique",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "extends/extended-inline-request-body",
-            method="POST",
-            json={
-                "unique": unique,
-                "name": name,
-                "docs": docs,
-            },
+        response = self._raw_client.extended_inline_request_body(
+            unique=unique,
+            name=name,
+            docs=docs,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncSeedExtends:
@@ -157,6 +158,18 @@ class AsyncSeedExtends:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawSeedExtends(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSeedExtends:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSeedExtends
+        """
+        return self._raw_client
 
     async def extended_inline_request_body(
         self, *, unique: str, name: str, docs: str, request_options: typing.Optional[RequestOptions] = None
@@ -196,21 +209,10 @@ class AsyncSeedExtends:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "extends/extended-inline-request-body",
-            method="POST",
-            json={
-                "unique": unique,
-                "name": name,
-                "docs": docs,
-            },
+        response = await self._raw_client.extended_inline_request_body(
+            unique=unique,
+            name=name,
+            docs=docs,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

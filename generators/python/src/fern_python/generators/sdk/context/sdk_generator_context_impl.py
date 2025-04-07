@@ -6,7 +6,9 @@ from ..declaration_referencers import (
     EnvironmentsEnumDeclarationReferencer,
     ErrorDeclarationReferencer,
     OAuthTokenProviderDeclarationReferencer,
+    RootAsyncRawClientDeclarationReferencer,
     RootClientDeclarationReferencer,
+    RootRawClientDeclarationReferencer,
     SubpackageAsyncClientDeclarationReferencer,
     SubpackageAsyncRawClientDeclarationReferencer,
     SubpackageAsyncSocketClientDeclarationReferencer,
@@ -45,6 +47,17 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             client_filename=client_filename,
             skip_resources_module=custom_config.improved_imports,
         )
+        self._root_generated_raw_client_declaration_referencer = RootRawClientDeclarationReferencer(
+            client_class_name=client_class_name,
+            client_filename=client_filename,
+            skip_resources_module=custom_config.improved_imports,
+        )
+        self._root_generated_async_raw_client_declaration_referencer = RootAsyncRawClientDeclarationReferencer(
+            client_class_name=client_class_name,
+            client_filename=client_filename,
+            skip_resources_module=custom_config.improved_imports,
+        )
+
         self._root_exported_client_declaration_referencer = RootClientDeclarationReferencer(
             client_class_name=exported_client_class_name,
             client_filename=custom_config.client.exported_filename or client_filename,
@@ -171,6 +184,12 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             name=subpackage, as_request=False
         )
 
+    def get_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
+        return self._root_generated_raw_client_declaration_referencer.get_class_reference(name=None, as_request=False)
+    
+    def get_async_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
+        return self._root_generated_async_raw_client_declaration_referencer.get_class_reference(name=None, as_request=False)
+
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
         return self._error_declaration_referencer.get_class_reference(name=error_name, as_request=False)
 
@@ -184,8 +203,17 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_filepath_for_generated_root_client(self) -> Filepath:
         return self._root_generated_client_declaration_referencer.get_filepath(name=None)
 
+    def get_filepath_for_generated_raw_root_client(self) -> Filepath:
+        return self._root_generated_raw_client_declaration_referencer.get_filepath(name=None)
+
     def get_class_name_for_generated_root_client(self) -> str:
         return self._root_generated_client_declaration_referencer.get_class_name(name=None)
+
+    def get_class_name_for_generated_raw_root_client(self) -> str:
+        return self._root_generated_raw_client_declaration_referencer.get_class_name(name=None)
+
+    def get_class_name_for_generated_async_raw_root_client(self) -> str:
+        return self._root_generated_async_raw_client_declaration_referencer.get_class_name(name=None)
 
     def get_filepath_for_exported_root_client(self) -> Filepath:
         return self._root_exported_client_declaration_referencer.get_filepath(name=None)

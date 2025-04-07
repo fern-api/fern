@@ -124,6 +124,16 @@ class SdkGeneratorContext(ABC):
     ) -> AST.ClassReference: ...
 
     @abstractmethod
+    def get_raw_client_class_reference_for_root_client(
+        self,
+    ) -> AST.ClassReference: ...
+
+    @abstractmethod
+    def get_async_raw_client_class_reference_for_root_client(
+        self,
+    ) -> AST.ClassReference: ...
+
+    @abstractmethod
     def get_socket_client_class_reference_for_subpackage_service(
         self, subpackage_id: ir_types.SubpackageId
     ) -> AST.ClassReference: ...
@@ -149,7 +159,16 @@ class SdkGeneratorContext(ABC):
     def get_filepath_for_generated_root_client(self) -> Filepath: ...
 
     @abstractmethod
+    def get_filepath_for_generated_raw_root_client(self) -> Filepath: ...
+
+    @abstractmethod
     def get_class_name_for_generated_root_client(self) -> str: ...
+
+    @abstractmethod
+    def get_class_name_for_generated_raw_root_client(self) -> str: ...
+
+    @abstractmethod
+    def get_class_name_for_generated_async_raw_root_client(self) -> str: ...
 
     @abstractmethod
     def get_filepath_for_exported_root_client(self) -> Filepath: ...

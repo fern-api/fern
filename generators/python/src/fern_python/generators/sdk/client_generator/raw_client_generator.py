@@ -76,14 +76,6 @@ class RawClientGenerator(BaseClientGenerator):
             class_declaration.add_method(generated_connect_method.function)
         return class_declaration
 
-    def _is_streaming_endpoint(self, endpoint):
-        """Check if an endpoint is a streaming endpoint"""
-        if endpoint.response is None or endpoint.response.body is None:
-            return False
-
-        body_type = endpoint.response.body.get_as_union().type
-        return body_type == "streaming" or body_type == "streamParameter"
-
     def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
         return [
             ConstructorParameter(
@@ -92,9 +84,6 @@ class RawClientGenerator(BaseClientGenerator):
                 type_hint=AST.TypeHint(self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async)),
             )
         ]
-
-    def _environment_is_enum(self) -> bool:
-        return self._context.ir.environments is not None
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
