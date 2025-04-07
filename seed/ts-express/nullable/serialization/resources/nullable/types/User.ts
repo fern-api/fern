@@ -17,6 +17,8 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedNul
             "favorite-number",
             core.serialization.lazy(() => serializers.WeirdNumber),
         ),
+        numbers: core.serialization.list(core.serialization.number()).optional(),
+        strings: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     },
 );
 
@@ -28,5 +30,7 @@ export declare namespace User {
         metadata?: serializers.Metadata.Raw | null;
         email?: serializers.Email.Raw;
         "favorite-number": serializers.WeirdNumber.Raw;
+        numbers?: number[] | null;
+        strings?: Record<string, unknown> | null;
     }
 }
