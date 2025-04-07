@@ -3,13 +3,12 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .raw_client import RawSeedValidation
 from .types.shape import Shape
 from .core.request_options import RequestOptions
 from .types.type import Type
-from .core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawSeedValidation
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -62,6 +61,18 @@ class SeedValidation:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawSeedValidation(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSeedValidation:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSeedValidation
+        """
+        return self._raw_client
 
     def create(
         self,
@@ -104,31 +115,14 @@ class SeedValidation:
             shape="SQUARE",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "create",
-            method="POST",
-            json={
-                "decimal": decimal,
-                "even": even,
-                "name": name,
-                "shape": shape,
-            },
+        response = self._raw_client.create(
+            decimal=decimal,
+            even=even,
+            name=name,
+            shape=shape,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Type,
-                    parse_obj_as(
-                        type_=Type,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get(
         self,
@@ -167,28 +161,13 @@ class SeedValidation:
             name="foo",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            method="GET",
-            params={
-                "decimal": decimal,
-                "even": even,
-                "name": name,
-            },
+        response = self._raw_client.get(
+            decimal=decimal,
+            even=even,
+            name=name,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Type,
-                    parse_obj_as(
-                        type_=Type,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncSeedValidation:
@@ -238,6 +217,18 @@ class AsyncSeedValidation:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawSeedValidation(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSeedValidation:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSeedValidation
+        """
+        return self._raw_client
 
     async def create(
         self,
@@ -288,31 +279,14 @@ class AsyncSeedValidation:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "create",
-            method="POST",
-            json={
-                "decimal": decimal,
-                "even": even,
-                "name": name,
-                "shape": shape,
-            },
+        response = await self._raw_client.create(
+            decimal=decimal,
+            even=even,
+            name=name,
+            shape=shape,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Type,
-                    parse_obj_as(
-                        type_=Type,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get(
         self,
@@ -359,25 +333,10 @@ class AsyncSeedValidation:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="GET",
-            params={
-                "decimal": decimal,
-                "even": even,
-                "name": name,
-            },
+        response = await self._raw_client.get(
+            decimal=decimal,
+            even=even,
+            name=name,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Type,
-                    parse_obj_as(
-                        type_=Type,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

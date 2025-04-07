@@ -2,13 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawUserClient
 from ..core.request_options import RequestOptions
 from .types.user import User
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawUserClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -16,7 +14,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class UserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawUserClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawUserClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawUserClient
+        """
+        return self._raw_client
 
     def get_user(
         self, tenant_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -47,24 +56,12 @@ class UserClient:
             user_id="user_id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}",
-            method="GET",
+        response = self._raw_client.get_user(
+            tenant_id,
+            user_id,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def create_user(
         self,
@@ -103,29 +100,13 @@ class UserClient:
             tags=["tags", "tags"],
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/",
-            method="POST",
-            json={
-                "name": name,
-                "tags": tags,
-            },
+        response = self._raw_client.create_user(
+            tenant_id,
+            name=name,
+            tags=tags,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def update_user(
         self,
@@ -168,29 +149,14 @@ class UserClient:
             tags=["tags", "tags"],
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}",
-            method="PATCH",
-            json={
-                "name": name,
-                "tags": tags,
-            },
+        response = self._raw_client.update_user(
+            tenant_id,
+            user_id,
+            name=name,
+            tags=tags,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def search_users(
         self,
@@ -229,32 +195,29 @@ class UserClient:
             limit=1,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}/search",
-            method="GET",
-            params={
-                "limit": limit,
-            },
+        response = self._raw_client.search_users(
+            tenant_id,
+            user_id,
+            limit=limit,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[User],
-                    parse_obj_as(
-                        type_=typing.List[User],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawUserClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawUserClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawUserClient
+        """
+        return self._raw_client
 
     async def get_user(
         self, tenant_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -293,24 +256,12 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}",
-            method="GET",
+        response = await self._raw_client.get_user(
+            tenant_id,
+            user_id,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def create_user(
         self,
@@ -357,29 +308,13 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/",
-            method="POST",
-            json={
-                "name": name,
-                "tags": tags,
-            },
+        response = await self._raw_client.create_user(
+            tenant_id,
+            name=name,
+            tags=tags,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def update_user(
         self,
@@ -430,29 +365,14 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}",
-            method="PATCH",
-            json={
-                "name": name,
-                "tags": tags,
-            },
+        response = await self._raw_client.update_user(
+            tenant_id,
+            user_id,
+            name=name,
+            tags=tags,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def search_users(
         self,
@@ -499,24 +419,10 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/user/{jsonable_encoder(user_id)}/search",
-            method="GET",
-            params={
-                "limit": limit,
-            },
+        response = await self._raw_client.search_users(
+            tenant_id,
+            user_id,
+            limit=limit,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[User],
-                    parse_obj_as(
-                        type_=typing.List[User],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
