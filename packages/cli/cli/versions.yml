@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Prevent combinatorial explosion of oneOf types when provided a nullable type array in the OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.17
+
+- changelogEntry:
+  - summary: |
       Fix an issue where environment URLs would be incorrectly remapped during the merge IR step.
     type: fix
   irVersion: 57
