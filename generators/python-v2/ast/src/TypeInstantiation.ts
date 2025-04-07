@@ -242,6 +242,17 @@ export class TypeInstantiation extends AstNode {
         return typeInstantiation instanceof TypeInstantiation && typeInstantiation.internalType.type === "nop";
     }
 
+    public isTypedDict(): this is TypedDict {
+        return (this.internalType as TypedDict).type === "typedDict";
+    }
+
+    public asTypedDictOrThrow(): TypedDict {
+        if (this.isTypedDict()) {
+            return this.internalType as TypedDict;
+        }
+        throw new Error("Internal error; python.TypeInstantiation is not a TypedDict");
+    }
+
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "int":

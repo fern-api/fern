@@ -1,9 +1,11 @@
-import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+
+const UNION_VALUE_KEY = "value";
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -187,8 +189,7 @@ export class DynamicTypeLiteralMapper {
                 return this.convert({ typeReference: named.typeReference, value, as });
             }
             case "discriminatedUnion":
-                // TODO: Implement me!
-                return python.TypeInstantiation.nop();
+                return this.convertDiscriminatedUnion({ discriminatedUnion: named, value });
             case "enum":
                 return this.convertEnum({ enum_: named, value });
             case "object":
@@ -198,6 +199,130 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(named);
         }
+    }
+
+    private convertDiscriminatedUnion({
+        discriminatedUnion,
+        value
+    }: {
+        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
+        value: unknown;
+    }): python.TypeInstantiation {
+        const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
+            discriminatedUnion,
+            value
+        });
+        if (discriminatedUnionTypeInstance == null) {
+            return python.TypeInstantiation.nop();
+        }
+        const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const unionProperties = this.convertDiscriminatedUnionProperties({
+            discriminatedUnionTypeInstance,
+            unionVariant
+        });
+        if (unionProperties == null) {
+            return python.TypeInstantiation.nop();
+        }
+        const discriminantProperty = {
+            name: this.context.getPropertyName(discriminatedUnion.discriminant.name),
+            value: python.TypeInstantiation.str(unionVariant.discriminantValue.wireValue)
+        };
+        return python.TypeInstantiation.typedDict([discriminantProperty, ...unionProperties]);
+    }
+
+    private convertDiscriminatedUnionProperties({
+        discriminatedUnionTypeInstance,
+        unionVariant
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): python.NamedValue[] | undefined {
+        const baseFields = this.getBaseFields({
+            discriminatedUnionTypeInstance,
+            singleDiscriminatedUnionType: unionVariant
+        });
+        switch (unionVariant.type) {
+            case "samePropertiesAsObject": {
+                const named = this.context.resolveNamedType({
+                    typeId: unionVariant.typeId
+                });
+                if (named == null) {
+                    return undefined;
+                }
+                const converted = this.convertNamed({ named, value: discriminatedUnionTypeInstance.value });
+                if (!converted.isTypedDict()) {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: "Internal error; expected union value to be an object"
+                    });
+                    return undefined;
+                }
+                const typedDict = converted.asTypedDictOrThrow();
+                return [...baseFields, ...typedDict.entries];
+            }
+            case "singleProperty": {
+                try {
+                    this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+                    if (record == null) {
+                        return [
+                            ...baseFields,
+                            {
+                                name: UNION_VALUE_KEY,
+                                value: this.convert({
+                                    typeReference: unionVariant.typeReference,
+                                    value: discriminatedUnionTypeInstance.value
+                                })
+                            }
+                        ];
+                    }
+                    return [
+                        ...baseFields,
+                        {
+                            name: this.context.getPropertyName(unionVariant.discriminantValue.name),
+                            value: this.convert({
+                                typeReference: unionVariant.typeReference,
+                                value: record[unionVariant.discriminantValue.wireValue]
+                            })
+                        }
+                    ];
+                } finally {
+                    this.context.errors.unscope();
+                }
+            }
+            case "noProperties":
+                return baseFields;
+            default:
+                assertNever(unionVariant);
+        }
+    }
+
+    private getBaseFields({
+        discriminatedUnionTypeInstance,
+        singleDiscriminatedUnionType
+    }: {
+        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
+        singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
+    }): python.NamedValue[] {
+        const properties = this.context.associateByWireValue({
+            parameters: singleDiscriminatedUnionType.properties ?? [],
+            values: this.context.getRecord(discriminatedUnionTypeInstance.value) ?? {},
+
+            // We're only selecting the base properties here. The rest of the properties
+            // are handled by the union variant.
+            ignoreMissingParameters: true
+        });
+        return properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return {
+                    name: this.context.getPropertyName(property.name.name),
+                    value: this.convert(property)
+                };
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
     }
 
     private convertObject({
