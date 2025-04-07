@@ -7,6 +7,13 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.15.14
+  createdAt: "2025-04-07"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where read-only list properties wouldn't deserialize correctly.
+
 - version: 1.15.13
   createdAt: "2025-04-01"
   irVersion: 57

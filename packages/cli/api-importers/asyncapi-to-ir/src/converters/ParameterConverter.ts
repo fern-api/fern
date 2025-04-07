@@ -120,7 +120,8 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                             typeReference ??
                             (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         allowMultiple: this.parameter.explode ?? false,
-                        availability
+                        availability,
+                        example: this.parameter.example
                     },
                     inlinedTypes
                 };
@@ -137,7 +138,8 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                             typeReference ??
                             (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         env: undefined,
-                        availability
+                        availability,
+                        example: this.parameter.example
                     },
                     inlinedTypes
                 };
@@ -151,7 +153,8 @@ export class ParameterConverter extends AbstractConverter<AsyncAPIConverterConte
                             typeReference ??
                             (parameterIsOptional ? ParameterConverter.OPTIONAL_STRING : ParameterConverter.STRING),
                         location: "ENDPOINT",
-                        variable: undefined
+                        variable: undefined,
+                        example: this.parameter.example
                     },
                     inlinedTypes
                 };

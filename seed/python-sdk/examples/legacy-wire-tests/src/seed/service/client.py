@@ -2,10 +2,13 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawServiceClient
 from ..types.types.movie_id import MovieId
 from ..core.request_options import RequestOptions
 from ..types.types.movie import Movie
+from ..core.jsonable_encoder import jsonable_encoder
+from ..core.pydantic_utilities import parse_obj_as
+from json.decoder import JSONDecodeError
+from ..core.api_error import ApiError
 from ..commons.types.types.tag import Tag
 from ..types.types.metadata import Metadata as types_types_metadata_Metadata
 from ..types.types.cast_member import CastMember
@@ -21,8 +24,8 @@ from ..types.types.node import Node
 from ..types.types.directory import Directory
 from ..types.types.moment import Moment
 from ..types.types.response import Response
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawServiceClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -30,18 +33,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawServiceClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawServiceClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawServiceClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
@@ -69,11 +61,24 @@ class ServiceClient:
             movie_id="movie-c06a4ad7",
         )
         """
-        response = self._raw_client.get_movie(
-            movie_id,
+        _response = self._client_wrapper.httpx_client.request(
+            f"movie/{jsonable_encoder(movie_id)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Movie,
+                    parse_obj_as(
+                        type_=Movie,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_movie(
         self,
@@ -142,19 +147,37 @@ class ServiceClient:
             revenue=1000000,
         )
         """
-        response = self._raw_client.create_movie(
-            id=id,
-            title=title,
-            from_=from_,
-            rating=rating,
-            tag=tag,
-            metadata=metadata,
-            revenue=revenue,
-            prequel=prequel,
-            book=book,
+        _response = self._client_wrapper.httpx_client.request(
+            "movie",
+            method="POST",
+            json={
+                "id": id,
+                "prequel": prequel,
+                "title": title,
+                "from": from_,
+                "rating": rating,
+                "tag": tag,
+                "book": book,
+                "metadata": metadata,
+                "revenue": revenue,
+                "type": "movie",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    MovieId,
+                    parse_obj_as(
+                        type_=MovieId,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_metadata(
         self,
@@ -195,13 +218,31 @@ class ServiceClient:
             tag="development",
         )
         """
-        response = self._raw_client.get_metadata(
-            x_api_version=x_api_version,
-            shallow=shallow,
-            tag=tag,
+        _response = self._client_wrapper.httpx_client.request(
+            "metadata",
+            method="GET",
+            params={
+                "shallow": shallow,
+                "tag": tag,
+            },
+            headers={
+                "X-API-Version": str(x_api_version) if x_api_version is not None else None,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    types_types_metadata_Metadata,
+                    parse_obj_as(
+                        type_=types_types_metadata_Metadata,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_big_entity(
         self,
@@ -486,39 +527,61 @@ class ServiceClient:
             ),
         )
         """
-        response = self._raw_client.create_big_entity(
-            cast_member=cast_member,
-            extended_movie=extended_movie,
-            entity=entity,
-            metadata=metadata,
-            common_metadata=common_metadata,
-            event_info=event_info,
-            data=data,
-            migration=migration,
-            exception=exception,
-            test=test,
-            node=node,
-            directory=directory,
-            moment=moment,
+        _response = self._client_wrapper.httpx_client.request(
+            "big-entity",
+            method="POST",
+            json={
+                "castMember": convert_and_respect_annotation_metadata(
+                    object_=cast_member, annotation=CastMember, direction="write"
+                ),
+                "extendedMovie": convert_and_respect_annotation_metadata(
+                    object_=extended_movie, annotation=ExtendedMovie, direction="write"
+                ),
+                "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=types_types_metadata_Metadata, direction="write"
+                ),
+                "commonMetadata": convert_and_respect_annotation_metadata(
+                    object_=common_metadata, annotation=commons_types_types_metadata_Metadata, direction="write"
+                ),
+                "eventInfo": convert_and_respect_annotation_metadata(
+                    object_=event_info, annotation=EventInfo, direction="write"
+                ),
+                "data": convert_and_respect_annotation_metadata(object_=data, annotation=Data, direction="write"),
+                "migration": convert_and_respect_annotation_metadata(
+                    object_=migration, annotation=Migration, direction="write"
+                ),
+                "exception": convert_and_respect_annotation_metadata(
+                    object_=exception, annotation=Exception, direction="write"
+                ),
+                "test": convert_and_respect_annotation_metadata(object_=test, annotation=Test, direction="write"),
+                "node": convert_and_respect_annotation_metadata(object_=node, annotation=Node, direction="write"),
+                "directory": convert_and_respect_annotation_metadata(
+                    object_=directory, annotation=Directory, direction="write"
+                ),
+                "moment": convert_and_respect_annotation_metadata(object_=moment, annotation=Moment, direction="write"),
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Response,
+                    parse_obj_as(
+                        type_=Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawServiceClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawServiceClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawServiceClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
@@ -554,11 +617,24 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie(
-            movie_id,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"movie/{jsonable_encoder(movie_id)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Movie,
+                    parse_obj_as(
+                        type_=Movie,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_movie(
         self,
@@ -635,19 +711,37 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_movie(
-            id=id,
-            title=title,
-            from_=from_,
-            rating=rating,
-            tag=tag,
-            metadata=metadata,
-            revenue=revenue,
-            prequel=prequel,
-            book=book,
+        _response = await self._client_wrapper.httpx_client.request(
+            "movie",
+            method="POST",
+            json={
+                "id": id,
+                "prequel": prequel,
+                "title": title,
+                "from": from_,
+                "rating": rating,
+                "tag": tag,
+                "book": book,
+                "metadata": metadata,
+                "revenue": revenue,
+                "type": "movie",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    MovieId,
+                    parse_obj_as(
+                        type_=MovieId,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_metadata(
         self,
@@ -696,13 +790,31 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_metadata(
-            x_api_version=x_api_version,
-            shallow=shallow,
-            tag=tag,
+        _response = await self._client_wrapper.httpx_client.request(
+            "metadata",
+            method="GET",
+            params={
+                "shallow": shallow,
+                "tag": tag,
+            },
+            headers={
+                "X-API-Version": str(x_api_version) if x_api_version is not None else None,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    types_types_metadata_Metadata,
+                    parse_obj_as(
+                        type_=types_types_metadata_Metadata,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_big_entity(
         self,
@@ -994,20 +1106,53 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_big_entity(
-            cast_member=cast_member,
-            extended_movie=extended_movie,
-            entity=entity,
-            metadata=metadata,
-            common_metadata=common_metadata,
-            event_info=event_info,
-            data=data,
-            migration=migration,
-            exception=exception,
-            test=test,
-            node=node,
-            directory=directory,
-            moment=moment,
+        _response = await self._client_wrapper.httpx_client.request(
+            "big-entity",
+            method="POST",
+            json={
+                "castMember": convert_and_respect_annotation_metadata(
+                    object_=cast_member, annotation=CastMember, direction="write"
+                ),
+                "extendedMovie": convert_and_respect_annotation_metadata(
+                    object_=extended_movie, annotation=ExtendedMovie, direction="write"
+                ),
+                "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=types_types_metadata_Metadata, direction="write"
+                ),
+                "commonMetadata": convert_and_respect_annotation_metadata(
+                    object_=common_metadata, annotation=commons_types_types_metadata_Metadata, direction="write"
+                ),
+                "eventInfo": convert_and_respect_annotation_metadata(
+                    object_=event_info, annotation=EventInfo, direction="write"
+                ),
+                "data": convert_and_respect_annotation_metadata(object_=data, annotation=Data, direction="write"),
+                "migration": convert_and_respect_annotation_metadata(
+                    object_=migration, annotation=Migration, direction="write"
+                ),
+                "exception": convert_and_respect_annotation_metadata(
+                    object_=exception, annotation=Exception, direction="write"
+                ),
+                "test": convert_and_respect_annotation_metadata(object_=test, annotation=Test, direction="write"),
+                "node": convert_and_respect_annotation_metadata(object_=node, annotation=Node, direction="write"),
+                "directory": convert_and_respect_annotation_metadata(
+                    object_=directory, annotation=Directory, direction="write"
+                ),
+                "moment": convert_and_respect_annotation_metadata(object_=moment, annotation=Moment, direction="write"),
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Response,
+                    parse_obj_as(
+                        type_=Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

@@ -59,7 +59,8 @@ export function convertWebhookGroup({
                           exampleResolver,
                           workspace
                       })
-                    : undefined
+                    : undefined,
+            v2Examples: undefined
         });
     }
     return webhookGroup;

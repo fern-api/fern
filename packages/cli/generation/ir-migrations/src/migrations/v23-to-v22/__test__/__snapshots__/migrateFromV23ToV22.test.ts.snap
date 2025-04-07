@@ -4013,6 +4013,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -4094,6 +4095,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -4549,6 +4551,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -4630,6 +4633,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -5029,6 +5033,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -5110,6 +5115,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -5509,6 +5515,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -5590,6 +5597,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -7473,6 +7481,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -7554,6 +7563,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -7645,6 +7655,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "example": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -7679,6 +7690,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "example": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -7826,6 +7838,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "example": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -7860,6 +7873,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "example": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -7961,6 +7975,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -8042,6 +8057,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -8077,6 +8093,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "example": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -8178,6 +8195,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -8259,6 +8277,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "example": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -10043,6 +10062,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               {
                 "availability": undefined,
                 "docs": undefined,
+                "example": undefined,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -10073,6 +10093,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               {
                 "availability": undefined,
                 "docs": undefined,
+                "example": undefined,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -10103,6 +10124,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               {
                 "availability": undefined,
                 "docs": undefined,
+                "example": undefined,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -10945,6 +10967,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "docs": undefined,
               "env": undefined,
+              "example": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -11086,6 +11109,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "docs": undefined,
           "env": undefined,
+          "example": undefined,
           "name": {
             "name": {
               "camelCase": {
@@ -12922,6 +12946,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -13421,6 +13446,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -13461,6 +13487,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -13834,6 +13861,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -13868,6 +13896,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14130,6 +14159,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14170,6 +14200,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14210,6 +14241,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14250,6 +14282,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14290,6 +14323,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14330,6 +14364,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14370,6 +14405,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14410,6 +14446,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14450,6 +14487,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14490,6 +14528,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14536,6 +14575,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14582,6 +14622,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -14755,6 +14796,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -15539,6 +15581,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -15573,6 +15616,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -15730,6 +15774,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -15764,6 +15809,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "status": "GENERAL_AVAILABILITY",
             },
             "docs": undefined,
+            "example": undefined,
             "name": {
               "name": {
                 "camelCase": {

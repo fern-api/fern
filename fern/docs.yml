@@ -491,6 +491,9 @@ navigation:
           - page: Changelog
             path: ./pages/docs/writing-content/changelog.mdx
             icon: fa-regular fa-clock-rotate-left
+          - page: Visual Editor (Beta)
+            path: ./pages/docs/writing-content/visual-editor.mdx
+            icon: fa-regular fa-paintbrush
 
       - section: API References
         contents:
