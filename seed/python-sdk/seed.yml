@@ -101,6 +101,9 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        inline_path_params: true
+      outputFolder: inline-path-params
+    - customConfig:
         timeout_in_seconds: infinity
       outputFolder: infinite-timeout
     - customConfig:
