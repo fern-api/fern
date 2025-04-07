@@ -11,6 +11,7 @@ import { WebhookHttpMethod } from "./WebhookHttpMethod";
 import { HttpHeader } from "../../http/types/HttpHeader";
 import { WebhookPayload } from "./WebhookPayload";
 import { ExampleWebhookCall } from "./ExampleWebhookCall";
+import { V2WebhookExamples } from "../../examples/types/V2WebhookExamples";
 import { Declaration } from "../../commons/types/Declaration";
 
 export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, FernIr.Webhook> = core.serialization
@@ -22,6 +23,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
         headers: core.serialization.list(HttpHeader),
         payload: WebhookPayload,
         examples: core.serialization.list(ExampleWebhookCall).optional(),
+        v2Examples: V2WebhookExamples.optional(),
     })
     .extend(Declaration);
 
@@ -34,5 +36,6 @@ export declare namespace Webhook {
         headers: HttpHeader.Raw[];
         payload: WebhookPayload.Raw;
         examples?: ExampleWebhookCall.Raw[] | null;
+        v2Examples?: V2WebhookExamples.Raw | null;
     }
 }

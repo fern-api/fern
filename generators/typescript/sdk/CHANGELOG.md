@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   } = rawResponse;
   ```
 
+## [0.49.7] - 2025-03-27
+
+- Fix: Significantly improve performance of SDK generation when the `useLegacyExports` config is `false`.
+  For a large spec like Square, the generation went from 10+ minutes to almost 1 minute.
+
 ## [0.49.6] - 2025-03-27
 
 - Feat: Support arbitrary websocket headers during connect handshake.

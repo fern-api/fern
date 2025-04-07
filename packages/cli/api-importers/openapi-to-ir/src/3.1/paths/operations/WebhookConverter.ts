@@ -100,7 +100,8 @@ export class WebhookConverter extends AbstractOperationConverter {
                     breadcrumbs: this.breadcrumbs,
                     errorCollector
                 }),
-                docs: this.operation.description
+                docs: this.operation.description,
+                v2Examples: undefined
             },
             inlinedTypes: this.inlinedTypes
         };

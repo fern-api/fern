@@ -80,11 +80,11 @@ channels:
       - messages: 
         - messageId: SendAudio
           type: publish
-          payload: 
+          value: 
             audio_data: "base64-encoded-audio-data"
         - messageId: TerminateSession
           type: publish
-          payload: 
+          value: 
             terminate_session: true
 
 components:

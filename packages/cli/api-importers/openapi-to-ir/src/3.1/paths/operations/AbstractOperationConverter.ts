@@ -150,7 +150,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 valueType: ParameterConverter.STRING,
                 docs: undefined,
                 location: "ENDPOINT",
-                variable: undefined
+                variable: undefined,
+                example: undefined
             });
         }
 

@@ -747,17 +747,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isAsync: true,
                 statements: internalResponseStatements.map(getTextOfTsNode),
                 overloads: overloads.map((overload, index) => ({
-                    docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
                     parameters: overload.parameters,
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
                     )
                 }))
             };
-
-            if (overloads.length === 0) {
-                maybeAddDocsStructure(internalMethod, docs);
-            }
 
             serviceClass.methods.push(internalMethod);
         }

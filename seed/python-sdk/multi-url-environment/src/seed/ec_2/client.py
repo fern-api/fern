@@ -2,10 +2,10 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawEc2Client
 from ..core.request_options import RequestOptions
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawEc2Client
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,7 +13,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class Ec2Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawEc2Client(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawEc2Client:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawEc2Client
+        """
+        return self._raw_client
 
     def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -39,28 +50,27 @@ class Ec2Client:
             size="size",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "ec2/boot",
-            base_url=self._client_wrapper.get_environment().ec_2,
-            method="POST",
-            json={
-                "size": size,
-            },
+        response = self._raw_client.boot_instance(
+            size=size,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncEc2Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawEc2Client(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawEc2Client:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawEc2Client
+        """
+        return self._raw_client
 
     async def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -94,20 +104,8 @@ class AsyncEc2Client:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "ec2/boot",
-            base_url=self._client_wrapper.get_environment().ec_2,
-            method="POST",
-            json={
-                "size": size,
-            },
+        response = await self._raw_client.boot_instance(
+            size=size,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

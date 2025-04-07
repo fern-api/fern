@@ -226,9 +226,10 @@ export function convertSchemaObject(
                 schema.nullable = true;
             }
             if (schema.oneOf == null) {
-                schema.oneOf = schema.type;
+                schema.oneOf = [...new Set(schema.type)];
             } else {
-                schema.oneOf.push(...schema.type);
+                const uniqueTypes = new Set([...schema.oneOf, ...schema.type]);
+                schema.oneOf = [...uniqueTypes];
             }
         }
     }
