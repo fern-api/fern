@@ -1,7 +1,7 @@
 from typing import List
 
-from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .base_client_generator import ConstructorParameter
+from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 from fern_python.codegen import AST, SourceFile
@@ -68,7 +68,9 @@ class ClientGenerator(BaseWrappedClientGenerator):
                     class_declaration.add_method(generated_endpoint_functions[-1].function)
                 else:
                     # For non-stream parameter endpoints, use the regular approach
-                    wrapper_method = self._create_wrapper_method(endpoint=endpoint, is_async=is_async, generated_root_client=self._generated_root_client)
+                    wrapper_method = self._create_wrapper_method(
+                        endpoint=endpoint, is_async=is_async, generated_root_client=self._generated_root_client
+                    )
                     class_declaration.add_method(wrapper_method)
 
         if self._websocket is not None and self._context.custom_config.should_generate_websocket_clients:
@@ -85,14 +87,13 @@ class ClientGenerator(BaseWrappedClientGenerator):
 
         return class_declaration
 
-
     def get_raw_client_class_name(self, *, is_async: bool) -> str:
         return (
             self._context.get_async_raw_client_class_name_for_subpackage_service(self._subpackage_id)
             if is_async
             else self._context.get_raw_client_class_name_for_subpackage_service(self._subpackage_id)
         )
-    
+
     def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
         return (
             self._context.get_async_raw_client_class_reference_for_subpackage_service(self._subpackage_id)

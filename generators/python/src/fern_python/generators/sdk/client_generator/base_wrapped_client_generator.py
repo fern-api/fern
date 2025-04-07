@@ -34,7 +34,9 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
             decorators=[AST.Expression(AST.Reference(qualified_name_excluding_import=("property",), import_=None))],
         )
 
-    def _create_wrapper_method(self, endpoint: ir_types.HttpEndpoint, is_async: bool, generated_root_client: GeneratedRootClient) -> AST.FunctionDeclaration:
+    def _create_wrapper_method(
+        self, endpoint: ir_types.HttpEndpoint, is_async: bool, generated_root_client: GeneratedRootClient
+    ) -> AST.FunctionDeclaration:
         """Create a method that delegates to the raw client and extracts the data property."""
 
         # Skip stream parameter endpoints as they're handled separately in _create_class_declaration

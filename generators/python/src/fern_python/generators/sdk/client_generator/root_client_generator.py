@@ -183,7 +183,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
 
         if self._is_default_body_parameter_used:
             source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
-        
+
         source_file.add_class_declaration(
             declaration=class_declaration,
             should_export=False,
@@ -278,7 +278,9 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                     class_declaration.add_method(generated_endpoint_functions[-1].function)
                 else:
                     # For non-stream parameter endpoints, use the regular approach
-                    wrapper_method = self._create_wrapper_method(endpoint=endpoint, is_async=is_async, generated_root_client=generated_root_client)
+                    wrapper_method = self._create_wrapper_method(
+                        endpoint=endpoint, is_async=is_async, generated_root_client=generated_root_client
+                    )
                     class_declaration.add_method(wrapper_method)
 
         return class_declaration
@@ -316,7 +318,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             if is_async
             else self._context.get_class_name_for_generated_raw_root_client()
         )
-    
+
     def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
         return (
             self._context.get_async_raw_client_class_reference_for_root_client()
