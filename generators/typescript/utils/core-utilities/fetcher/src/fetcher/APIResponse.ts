@@ -12,4 +12,5 @@ export interface SuccessfulResponse<T> {
 export interface FailedResponse<T> {
     ok: false;
     error: T;
+    rawResponse?: RawResponse;
 }

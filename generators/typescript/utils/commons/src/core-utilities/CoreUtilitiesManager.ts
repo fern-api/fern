@@ -19,6 +19,7 @@ import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
+import { RawResponseImpl } from "./RawResponse/RawResponseImpl";
 import { AuthImpl } from "./auth/AuthImpl";
 import { BaseCoreUtilitiesImpl } from "./base/BaseCoreUtilitiesImpl";
 import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
@@ -31,7 +32,6 @@ import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
 import { UtilsImpl } from "./utils/UtilsImpl";
 import { WebsocketImpl } from "./websocket/WebsocketImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
-import { RawResponseImpl } from "./RawResponse/RawResponseImpl";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {

@@ -12,9 +12,12 @@ export class RawResponseImpl extends CoreUtility implements RawResponse {
             path: RelativeFilePath.of("")
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/RawResponse.ts"),
-        pathInCoreUtilities: [{
-            nameOnDisk: "RawResponse.ts", exportDeclaration: { exportAll: true } ,
-        }],
+        pathInCoreUtilities: [
+            {
+                nameOnDisk: "RawResponse.ts",
+                exportDeclaration: { exportAll: true }
+            }
+        ],
         addDependencies: (): void => {}
     };
     public readonly RawResponse = {
@@ -24,11 +27,34 @@ export class RawResponseImpl extends CoreUtility implements RawResponse {
         _getReferenceToType: this.withExportedName("toRawResponse", (RawResponse) => () => RawResponse.getTypeNode())
     };
     public readonly WithRawResponse = {
-        _getReferenceToType: this.withExportedName("WithRawResponse", (RawResponse) => () => RawResponse.getTypeNode()),
-        create: (typeArgs: ts.TypeNode[]): ts.Node => {
+        _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
             return this.withExportedName(
                 "WithRawResponse",
-                (RawResponse) => () => ts.factory.createTypeReferenceNode(RawResponse.getEntityName(), typeArgs)
+                (RawResponse) => () =>
+                    ts.factory.createTypeReferenceNode(RawResponse.getEntityName(), typeArg ? [typeArg] : undefined)
+            )();
+        }
+    };
+    public readonly ResponsePromise = {
+        _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
+            return this.withExportedName(
+                "ResponsePromise",
+                (ResponsePromise) => () =>
+                    ts.factory.createTypeReferenceNode(ResponsePromise.getEntityName(), typeArg ? [typeArg] : undefined)
+            )();
+        },
+        fromFunction: (params: ts.Expression[]): ts.Expression => {
+            return this.withExportedName(
+                "ResponsePromise",
+                (ResponsePromise) => () =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ResponsePromise.getExpression(),
+                            ts.factory.createIdentifier("fromFunction")
+                        ),
+                        undefined,
+                        params
+                    )
             )();
         }
     };

@@ -37,10 +37,24 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
-    public async getAndReturnListOfPrimitives(
+    public getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions,
-    ): Promise<string[]> {
+    ): core.ResponsePromise<string[]> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnListOfPrimitives, request, requestOptions);
+    }
+
+    /**
+     * @param {string[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
+     */
+    private async __getAndReturnListOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<string[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -66,7 +80,7 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string[];
+            return { data: _response.body as string[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -104,10 +118,28 @@ export class Container {
      *             string: "string"
      *         }])
      */
-    public async getAndReturnListOfObjects(
+    public getAndReturnListOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnListOfObjects, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnListOfObjects([{
+     *             string: "string"
+     *         }, {
+     *             string: "string"
+     *         }])
+     */
+    private async __getAndReturnListOfObjects(
+        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -133,7 +165,10 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithRequiredField[];
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -167,10 +202,24 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
-    public async getAndReturnSetOfPrimitives(
+    public getAndReturnSetOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions,
-    ): Promise<string[]> {
+    ): core.ResponsePromise<string[]> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnSetOfPrimitives, request, requestOptions);
+    }
+
+    /**
+     * @param {string[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     */
+    private async __getAndReturnSetOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<string[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -196,7 +245,7 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string[];
+            return { data: _response.body as string[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -232,10 +281,26 @@ export class Container {
      *             string: "string"
      *         }]))
      */
-    public async getAndReturnSetOfObjects(
+    public getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnSetOfObjects, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *             string: "string"
+     *         }]))
+     */
+    private async __getAndReturnSetOfObjects(
+        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -261,7 +326,10 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithRequiredField[];
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -297,10 +365,26 @@ export class Container {
      *         "string": "string"
      *     })
      */
-    public async getAndReturnMapPrimToPrim(
+    public getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions,
-    ): Promise<Record<string, string>> {
+    ): core.ResponsePromise<Record<string, string>> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnMapPrimToPrim, request, requestOptions);
+    }
+
+    /**
+     * @param {Record<string, string>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnMapPrimToPrim({
+     *         "string": "string"
+     *     })
+     */
+    private async __getAndReturnMapPrimToPrim(
+        request: Record<string, string>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, string>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -326,7 +410,7 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Record<string, string>;
+            return { data: _response.body as Record<string, string>, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -364,10 +448,28 @@ export class Container {
      *         }
      *     })
      */
-    public async getAndReturnMapOfPrimToObject(
+    public getAndReturnMapOfPrimToObject(
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions,
-    ): Promise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+    ): core.ResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnMapOfPrimToObject, request, requestOptions);
+    }
+
+    /**
+     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
+     *         "string": {
+     *             string: "string"
+     *         }
+     *     })
+     */
+    private async __getAndReturnMapOfPrimToObject(
+        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -393,7 +495,10 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>;
+            return {
+                data: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -429,10 +534,26 @@ export class Container {
      *         string: "string"
      *     })
      */
-    public async getAndReturnOptional(
+    public getAndReturnOptional(
         request?: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnOptional, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnOptional({
+     *         string: "string"
+     *     })
+     */
+    private async __getAndReturnOptional(
+        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -458,7 +579,10 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined;
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

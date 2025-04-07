@@ -37,7 +37,24 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnString("string")
      */
-    public async getAndReturnString(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
+    public getAndReturnString(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnString, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnString("string")
+     */
+    private async __getAndReturnString(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -65,12 +82,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -102,7 +122,21 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnInt(1)
      */
-    public async getAndReturnInt(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
+    public getAndReturnInt(request: number, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<number> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnInt, request, requestOptions);
+    }
+
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnInt(1)
+     */
+    private async __getAndReturnInt(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<number>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -130,12 +164,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -167,7 +204,21 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnLong(1000000)
      */
-    public async getAndReturnLong(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
+    public getAndReturnLong(request: number, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<number> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnLong, request, requestOptions);
+    }
+
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnLong(1000000)
+     */
+    private async __getAndReturnLong(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<number>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -195,12 +246,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -232,7 +286,24 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDouble(1.1)
      */
-    public async getAndReturnDouble(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
+    public getAndReturnDouble(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.ResponsePromise<number> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnDouble, request, requestOptions);
+    }
+
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnDouble(1.1)
+     */
+    private async __getAndReturnDouble(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<number>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -260,12 +331,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -297,7 +371,24 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnBool(true)
      */
-    public async getAndReturnBool(request: boolean, requestOptions?: Primitive.RequestOptions): Promise<boolean> {
+    public getAndReturnBool(
+        request: boolean,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.ResponsePromise<boolean> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnBool, request, requestOptions);
+    }
+
+    /**
+     * @param {boolean} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnBool(true)
+     */
+    private async __getAndReturnBool(
+        request: boolean,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -325,12 +416,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -362,7 +456,21 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
      */
-    public async getAndReturnDatetime(request: Date, requestOptions?: Primitive.RequestOptions): Promise<Date> {
+    public getAndReturnDatetime(request: Date, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<Date> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnDatetime, request, requestOptions);
+    }
+
+    /**
+     * @param {Date} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
+     */
+    private async __getAndReturnDatetime(
+        request: Date,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<Date>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -390,12 +498,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -427,7 +538,21 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
      */
-    public async getAndReturnDate(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
+    public getAndReturnDate(request: string, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnDate, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
+     */
+    private async __getAndReturnDate(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -455,12 +580,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -492,7 +620,21 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
-    public async getAndReturnUuid(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
+    public getAndReturnUuid(request: string, requestOptions?: Primitive.RequestOptions): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnUuid, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     */
+    private async __getAndReturnUuid(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -520,12 +662,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -557,7 +702,24 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
      */
-    public async getAndReturnBase64(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
+    public getAndReturnBase64(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnBase64, request, requestOptions);
+    }
+
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
+     */
+    private async __getAndReturnBase64(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -585,12 +747,15 @@ export class Primitive {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

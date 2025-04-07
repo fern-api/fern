@@ -432,25 +432,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
     }
 
-    public getReturnType(context: SdkContext): GeneratedEndpointResponse.ReturnTypes {
-        const mainMethod = getSuccessReturnType(this.response, context, {
+    public getReturnType(context: SdkContext): ts.TypeNode {
+        return getSuccessReturnType(this.response, context, {
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
         });
-        const withRawResponseMethod = ts.factory.createIntersectionTypeNode([
-            ts.factory.createTypeLiteralNode([
-                ts.factory.createPropertySignature(
-                    undefined,
-                    ts.factory.createIdentifier("data"),
-                    undefined,
-                    mainMethod
-                )
-            ]),
-            context.coreUtilities.RawResponse.RawResponse._getReferenceToType()
-        ]);
-        return {
-            mainMethod,
-            withRawResponseMethod
-        };
     }
 
     public getReturnResponseStatements(context: SdkContext): ts.Statement[] {
@@ -533,9 +518,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     true
                                 )
                             ),
-                            ts.factory.createSpreadAssignment(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("rawResponse"),
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier("_response"),
+                                    ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                                     ts.factory.createIdentifier("rawResponse")
                                 )
                             )
@@ -641,9 +627,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                           )
                                 })
                             ),
-                            ts.factory.createSpreadAssignment(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("rawResponse"),
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier("_response"),
+                                    ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                                     ts.factory.createIdentifier("rawResponse")
                                 )
                             )
@@ -665,9 +652,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(ts.factory.createIdentifier("data"), deserializeToResponse),
-                        ts.factory.createSpreadAssignment(
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("rawResponse"),
                             ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("_response"),
+                                ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                                 ts.factory.createIdentifier("rawResponse")
                             )
                         )
@@ -932,9 +920,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                   ts.factory.createIdentifier("data"),
                                   ts.factory.createIdentifier("undefined")
                               ),
-                              ts.factory.createSpreadAssignment(
+                              ts.factory.createPropertyAssignment(
+                                  ts.factory.createIdentifier("rawResponse"),
                                   ts.factory.createPropertyAccessExpression(
-                                      ts.factory.createIdentifier("_response"),
+                                      ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                                       ts.factory.createIdentifier("rawResponse")
                                   )
                               )

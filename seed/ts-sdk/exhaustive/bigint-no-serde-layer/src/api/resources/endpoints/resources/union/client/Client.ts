@@ -41,10 +41,28 @@ export class Union {
      *         likesToWoof: true
      *     })
      */
-    public async getAndReturnUnion(
+    public getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions,
-    ): Promise<SeedExhaustive.types.Animal> {
+    ): core.ResponsePromise<SeedExhaustive.types.Animal> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.Animal} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.union.getAndReturnUnion({
+     *         animal: "dog",
+     *         name: "name",
+     *         likesToWoof: true
+     *     })
+     */
+    private async __getAndReturnUnion(
+        request: SeedExhaustive.types.Animal,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -70,7 +88,7 @@ export class Union {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.Animal;
+            return { data: _response.body as SeedExhaustive.types.Animal, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

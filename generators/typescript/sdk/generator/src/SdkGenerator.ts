@@ -1127,12 +1127,11 @@ export class SdkGenerator {
                                     context,
                                     endpointId: endpoint.id
                                 });
-                                const returnTypeNode =
-                                    endpointDetailed?.getSignature(context).mainMethod.returnTypeWithoutPromise;
+                                const returnTypeNode = endpointDetailed?.getSignature(context).returnTypeWithoutPromise;
                                 returnType =
                                     returnTypeNode !== undefined ? getTextOfTsNode(returnTypeNode) : returnTypeNode;
                                 parameters.push(
-                                    ...(endpointDetailed?.getSignature(context).mainMethod.parameters.map((param) => {
+                                    ...(endpointDetailed?.getSignature(context).parameters.map((param) => {
                                         return {
                                             name: param.name,
                                             description: param.docs,

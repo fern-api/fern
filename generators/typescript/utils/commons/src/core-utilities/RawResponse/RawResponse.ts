@@ -8,7 +8,10 @@ export interface RawResponse {
         _getReferenceToType: () => ts.TypeNode;
     };
     readonly WithRawResponse: {
-        _getReferenceToType: () => ts.TypeNode;
-        create: (typeArgs: ts.TypeNode[]) => ts.Node;
+        _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
+    };
+    readonly ResponsePromise: {
+        _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
+        fromFunction: (params: ts.Expression[]) => ts.Expression;
     };
 }

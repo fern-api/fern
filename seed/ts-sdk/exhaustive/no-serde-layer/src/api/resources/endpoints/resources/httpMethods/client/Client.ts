@@ -37,7 +37,21 @@ export class HttpMethods {
      * @example
      *     await client.endpoints.httpMethods.testGet("id")
      */
-    public async testGet(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<string> {
+    public testGet(id: string, requestOptions?: HttpMethods.RequestOptions): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__testGet, id, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testGet("id")
+     */
+    private async __testGet(
+        id: string,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -62,7 +76,7 @@ export class HttpMethods {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string;
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -96,10 +110,26 @@ export class HttpMethods {
      *         string: "string"
      *     })
      */
-    public async testPost(
+    public testPost(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.ResponsePromise.fromFunction(this.__testPost, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPost({
+     *         string: "string"
+     *     })
+     */
+    private async __testPost(
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -125,7 +155,10 @@ export class HttpMethods {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithOptionalField;
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -160,11 +193,29 @@ export class HttpMethods {
      *         string: "string"
      *     })
      */
-    public async testPut(
+    public testPut(
         id: string,
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.ResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPut("id", {
+     *         string: "string"
+     *     })
+     */
+    private async __testPut(
+        id: string,
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -190,7 +241,10 @@ export class HttpMethods {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithOptionalField;
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -239,11 +293,43 @@ export class HttpMethods {
      *         bigint: "1000000"
      *     })
      */
-    public async testPatch(
+    public testPatch(
         id: string,
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.ResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPatch("id", {
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: new Set(["set"]),
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
+     *     })
+     */
+    private async __testPatch(
+        id: string,
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -269,7 +355,10 @@ export class HttpMethods {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithOptionalField;
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -301,7 +390,21 @@ export class HttpMethods {
      * @example
      *     await client.endpoints.httpMethods.testDelete("id")
      */
-    public async testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<boolean> {
+    public testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): core.ResponsePromise<boolean> {
+        return core.ResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testDelete("id")
+     */
+    private async __testDelete(
+        id: string,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -326,7 +429,7 @@ export class HttpMethods {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as boolean;
+            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

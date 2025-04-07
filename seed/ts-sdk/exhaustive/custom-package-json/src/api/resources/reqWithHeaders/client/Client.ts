@@ -41,10 +41,28 @@ export class ReqWithHeaders {
      *         body: "string"
      *     })
      */
-    public async getWithCustomHeader(
+    public getWithCustomHeader(
         request: Fiddle.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
+    ): core.ResponsePromise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
+        return core.ResponsePromise.fromFunction(this.__getWithCustomHeader, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.ReqWithHeaders} request
+     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.reqWithHeaders.getWithCustomHeader({
+     *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+     *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+     *         body: "string"
+     *     })
+     */
+    private async __getWithCustomHeader(
+        request: Fiddle.ReqWithHeaders,
+        requestOptions?: ReqWithHeaders.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>>> {
         const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -76,14 +94,22 @@ export class ReqWithHeaders {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.reqWithHeaders.getWithCustomHeader.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.reqWithHeaders.getWithCustomHeader.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

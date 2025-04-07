@@ -37,13 +37,8 @@ export class SeedAliasClient {
      * @example
      *     await client.get("typeId")
      */
-    public async get(
-        typeId: SeedAlias.TypeId,
-        requestOptions?: SeedAliasClient.RequestOptions,
-    ): core.WithRawResponse<SeedAliasClient["__get"], SeedAliasClient["__getWithRawResponse"]> {
-        return Object.assign(this.__get.bind(this), {
-            withRawResponse: this.__getWithRawResponse.bind(this),
-        });
+    public get(typeId: SeedAlias.TypeId, requestOptions?: SeedAliasClient.RequestOptions): core.ResponsePromise<void> {
+        return core.ResponsePromise.fromFunction(this.__get, typeId, requestOptions);
     }
 
     /**
@@ -53,14 +48,10 @@ export class SeedAliasClient {
      * @example
      *     await client.get("typeId")
      */
-    private async __getWithRawResponse(
+    private async __get(
         typeId: SeedAlias.TypeId,
         requestOptions?: SeedAliasClient.RequestOptions,
-    ): Promise<
-        {
-            data: void;
-        } & core.RawResponse
-    > {
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -84,7 +75,7 @@ export class SeedAliasClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -107,17 +98,5 @@ export class SeedAliasClient {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    /**
-     * @param {SeedAlias.TypeId} typeId
-     * @param {SeedAliasClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.get("typeId")
-     */
-    private async __get(...args: Parameters<SeedAliasClient["__getWithRawResponse"]>): Promise<void> {
-        const { data } = await this.__getWithRawResponse(...args);
-        return data;
     }
 }

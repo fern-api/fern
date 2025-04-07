@@ -40,7 +40,23 @@ export class Params {
      * @example
      *     await client.endpoints.params.getWithPath("param")
      */
-    public async getWithPath(param: string, requestOptions?: Params.RequestOptions): Promise<string> {
+    public getWithPath(param: string, requestOptions?: Params.RequestOptions): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__getWithPath, param, requestOptions);
+    }
+
+    /**
+     * GET with path param
+     *
+     * @param {string} param
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithPath("param")
+     */
+    private async __getWithPath(
+        param: string,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -65,12 +81,15 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -105,11 +124,29 @@ export class Params {
      * @example
      *     await client.endpoints.params.getWithInlinePath("param")
      */
-    public async getWithInlinePath(
+    public getWithInlinePath(
         param: string,
         request: SeedExhaustive.endpoints.GetWithInlinePath = {},
         requestOptions?: Params.RequestOptions,
-    ): Promise<string> {
+    ): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__getWithInlinePath, param, request, requestOptions);
+    }
+
+    /**
+     * GET with path param
+     *
+     * @param {string} param
+     * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithInlinePath("param")
+     */
+    private async __getWithInlinePath(
+        param: string,
+        request: SeedExhaustive.endpoints.GetWithInlinePath = {},
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -134,12 +171,15 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.params.getWithInlinePath.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.params.getWithInlinePath.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -176,10 +216,29 @@ export class Params {
      *         number: 1
      *     })
      */
-    public async getWithQuery(
+    public getWithQuery(
         request: SeedExhaustive.endpoints.GetWithQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<void> {
+    ): core.ResponsePromise<void> {
+        return core.ResponsePromise.fromFunction(this.__getWithQuery, request, requestOptions);
+    }
+
+    /**
+     * GET with query param
+     *
+     * @param {SeedExhaustive.endpoints.GetWithQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithQuery({
+     *         query: "query",
+     *         number: 1
+     *     })
+     */
+    private async __getWithQuery(
+        request: SeedExhaustive.endpoints.GetWithQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -209,7 +268,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -246,10 +305,29 @@ export class Params {
      *         number: 1
      *     })
      */
-    public async getWithAllowMultipleQuery(
+    public getWithAllowMultipleQuery(
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<void> {
+    ): core.ResponsePromise<void> {
+        return core.ResponsePromise.fromFunction(this.__getWithAllowMultipleQuery, request, requestOptions);
+    }
+
+    /**
+     * GET with multiple of same query param
+     *
+     * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithAllowMultipleQuery({
+     *         query: "query",
+     *         number: 1
+     *     })
+     */
+    private async __getWithAllowMultipleQuery(
+        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
@@ -289,7 +367,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -326,11 +404,31 @@ export class Params {
      *         query: "query"
      *     })
      */
-    public async getWithPathAndQuery(
+    public getWithPathAndQuery(
         param: string,
         request: SeedExhaustive.endpoints.GetWithPathAndQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<void> {
+    ): core.ResponsePromise<void> {
+        return core.ResponsePromise.fromFunction(this.__getWithPathAndQuery, param, request, requestOptions);
+    }
+
+    /**
+     * GET with path and query params
+     *
+     * @param {string} param
+     * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithPathAndQuery("param", {
+     *         query: "query"
+     *     })
+     */
+    private async __getWithPathAndQuery(
+        param: string,
+        request: SeedExhaustive.endpoints.GetWithPathAndQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -359,7 +457,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -398,11 +496,31 @@ export class Params {
      *         query: "query"
      *     })
      */
-    public async getWithInlinePathAndQuery(
+    public getWithInlinePathAndQuery(
         param: string,
         request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<void> {
+    ): core.ResponsePromise<void> {
+        return core.ResponsePromise.fromFunction(this.__getWithInlinePathAndQuery, param, request, requestOptions);
+    }
+
+    /**
+     * GET with path and query params
+     *
+     * @param {string} param
+     * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithInlinePathAndQuery("param", {
+     *         query: "query"
+     *     })
+     */
+    private async __getWithInlinePathAndQuery(
+        param: string,
+        request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -431,7 +549,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -468,11 +586,29 @@ export class Params {
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
-    public async modifyWithPath(
+    public modifyWithPath(
         param: string,
         request: string,
         requestOptions?: Params.RequestOptions,
-    ): Promise<string> {
+    ): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__modifyWithPath, param, request, requestOptions);
+    }
+
+    /**
+     * PUT to update with path param
+     *
+     * @param {string} param
+     * @param {string} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.modifyWithPath("param", "string")
+     */
+    private async __modifyWithPath(
+        param: string,
+        request: string,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -500,12 +636,15 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -542,11 +681,31 @@ export class Params {
      *         body: "string"
      *     })
      */
-    public async modifyWithInlinePath(
+    public modifyWithInlinePath(
         param: string,
         request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: Params.RequestOptions,
-    ): Promise<string> {
+    ): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__modifyWithInlinePath, param, request, requestOptions);
+    }
+
+    /**
+     * PUT to update with path param
+     *
+     * @param {string} param
+     * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.modifyWithInlinePath("param", {
+     *         body: "string"
+     *     })
+     */
+    private async __modifyWithInlinePath(
+        param: string,
+        request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -574,12 +733,15 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.params.modifyWithInlinePath.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.params.modifyWithInlinePath.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

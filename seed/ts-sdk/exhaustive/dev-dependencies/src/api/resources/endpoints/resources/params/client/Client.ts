@@ -39,10 +39,26 @@ export class Params {
      * @example
      *     await client.endpoints.params.getWithPath("param")
      */
-    public async getWithPath(
+    public getWithPath(
         param: string,
         requestOptions?: Params.RequestOptions,
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
+    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
+        return core.ResponsePromise.fromFunction(this.__getWithPath, param, requestOptions);
+    }
+
+    /**
+     * GET with path param
+     *
+     * @param {string} param
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithPath("param")
+     */
+    private async __getWithPath(
+        param: string,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,19 +84,27 @@ export class Params {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.params.getWithPath.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.params.getWithPath.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -94,11 +118,29 @@ export class Params {
      * @example
      *     await client.endpoints.params.getWithInlinePath("param")
      */
-    public async getWithInlinePath(
+    public getWithInlinePath(
         param: string,
         request: Fiddle.endpoints.GetWithInlinePath = {},
         requestOptions?: Params.RequestOptions,
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>> {
+    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>> {
+        return core.ResponsePromise.fromFunction(this.__getWithInlinePath, param, request, requestOptions);
+    }
+
+    /**
+     * GET with path param
+     *
+     * @param {string} param
+     * @param {Fiddle.endpoints.GetWithInlinePath} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithInlinePath("param")
+     */
+    private async __getWithInlinePath(
+        param: string,
+        request: Fiddle.endpoints.GetWithInlinePath = {},
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -124,19 +166,27 @@ export class Params {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.params.getWithInlinePath.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.params.getWithInlinePath.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.params.getWithInlinePath.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.params.getWithInlinePath.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -152,10 +202,29 @@ export class Params {
      *         number: 1
      *     })
      */
-    public async getWithQuery(
+    public getWithQuery(
         request: Fiddle.endpoints.GetWithQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithQuery.Error>> {
+    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithQuery.Error>> {
+        return core.ResponsePromise.fromFunction(this.__getWithQuery, request, requestOptions);
+    }
+
+    /**
+     * GET with query param
+     *
+     * @param {Fiddle.endpoints.GetWithQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithQuery({
+     *         query: "query",
+     *         number: 1
+     *     })
+     */
+    private async __getWithQuery(
+        request: Fiddle.endpoints.GetWithQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, Fiddle.endpoints.params.getWithQuery.Error>>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -186,14 +255,22 @@ export class Params {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.params.getWithQuery.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.params.getWithQuery.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -209,10 +286,29 @@ export class Params {
      *         number: 1
      *     })
      */
-    public async getWithAllowMultipleQuery(
+    public getWithAllowMultipleQuery(
         request: Fiddle.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>> {
+    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>> {
+        return core.ResponsePromise.fromFunction(this.__getWithAllowMultipleQuery, request, requestOptions);
+    }
+
+    /**
+     * GET with multiple of same query param
+     *
+     * @param {Fiddle.endpoints.GetWithMultipleQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithAllowMultipleQuery({
+     *         query: "query",
+     *         number: 1
+     *     })
+     */
+    private async __getWithAllowMultipleQuery(
+        request: Fiddle.endpoints.GetWithMultipleQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
@@ -253,14 +349,22 @@ export class Params {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.params.getWithAllowMultipleQuery.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.params.getWithAllowMultipleQuery.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -276,11 +380,31 @@ export class Params {
      *         query: "query"
      *     })
      */
-    public async getWithPathAndQuery(
+    public getWithPathAndQuery(
         param: string,
         request: Fiddle.endpoints.GetWithPathAndQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithPathAndQuery.Error>> {
+    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithPathAndQuery.Error>> {
+        return core.ResponsePromise.fromFunction(this.__getWithPathAndQuery, param, request, requestOptions);
+    }
+
+    /**
+     * GET with path and query params
+     *
+     * @param {string} param
+     * @param {Fiddle.endpoints.GetWithPathAndQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithPathAndQuery("param", {
+     *         query: "query"
+     *     })
+     */
+    private async __getWithPathAndQuery(
+        param: string,
+        request: Fiddle.endpoints.GetWithPathAndQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, Fiddle.endpoints.params.getWithPathAndQuery.Error>>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -310,14 +434,22 @@ export class Params {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.params.getWithPathAndQuery.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.params.getWithPathAndQuery.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -333,11 +465,31 @@ export class Params {
      *         query: "query"
      *     })
      */
-    public async getWithInlinePathAndQuery(
+    public getWithInlinePathAndQuery(
         param: string,
         request: Fiddle.endpoints.GetWithInlinePathAndQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>> {
+    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>> {
+        return core.ResponsePromise.fromFunction(this.__getWithInlinePathAndQuery, param, request, requestOptions);
+    }
+
+    /**
+     * GET with path and query params
+     *
+     * @param {string} param
+     * @param {Fiddle.endpoints.GetWithInlinePathAndQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithInlinePathAndQuery("param", {
+     *         query: "query"
+     *     })
+     */
+    private async __getWithInlinePathAndQuery(
+        param: string,
+        request: Fiddle.endpoints.GetWithInlinePathAndQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -367,14 +519,22 @@ export class Params {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.params.getWithInlinePathAndQuery.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -388,11 +548,29 @@ export class Params {
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
-    public async modifyWithPath(
+    public modifyWithPath(
         param: string,
         request: string,
         requestOptions?: Params.RequestOptions,
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
+    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
+        return core.ResponsePromise.fromFunction(this.__modifyWithPath, param, request, requestOptions);
+    }
+
+    /**
+     * PUT to update with path param
+     *
+     * @param {string} param
+     * @param {string} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.modifyWithPath("param", "string")
+     */
+    private async __modifyWithPath(
+        param: string,
+        request: string,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -421,19 +599,27 @@ export class Params {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.params.modifyWithPath.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.params.modifyWithPath.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -449,11 +635,31 @@ export class Params {
      *         body: "string"
      *     })
      */
-    public async modifyWithInlinePath(
+    public modifyWithInlinePath(
         param: string,
         request: Fiddle.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: Params.RequestOptions,
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>> {
+    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>> {
+        return core.ResponsePromise.fromFunction(this.__modifyWithInlinePath, param, request, requestOptions);
+    }
+
+    /**
+     * PUT to update with path param
+     *
+     * @param {string} param
+     * @param {Fiddle.endpoints.ModifyResourceAtInlinedPath} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.modifyWithInlinePath("param", {
+     *         body: "string"
+     *     })
+     */
+    private async __modifyWithInlinePath(
+        param: string,
+        request: Fiddle.endpoints.ModifyResourceAtInlinedPath,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -482,19 +688,27 @@ export class Params {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.params.modifyWithInlinePath.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.params.modifyWithInlinePath.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.params.modifyWithInlinePath.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.params.modifyWithInlinePath.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

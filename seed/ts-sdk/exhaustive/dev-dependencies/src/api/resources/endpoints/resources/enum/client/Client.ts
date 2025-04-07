@@ -37,10 +37,30 @@ export class Enum {
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
-    public async getAndReturnEnum(
+    public getAndReturnEnum(
         request: Fiddle.types.WeatherReport,
         requestOptions?: Enum.RequestOptions,
-    ): Promise<core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>> {
+    ): core.ResponsePromise<
+        core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>
+    > {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnEnum, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.types.WeatherReport} request
+     * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
+     */
+    private async __getAndReturnEnum(
+        request: Fiddle.types.WeatherReport,
+        requestOptions?: Enum.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,19 +87,27 @@ export class Enum {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.WeatherReport.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.WeatherReport.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.enum_.getAndReturnEnum.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.enum_.getAndReturnEnum.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

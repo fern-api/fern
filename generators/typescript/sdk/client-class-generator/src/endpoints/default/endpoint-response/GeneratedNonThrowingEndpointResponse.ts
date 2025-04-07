@@ -72,31 +72,14 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         return [];
     }
 
-    public getReturnType(context: SdkContext): GeneratedEndpointResponse.ReturnTypes {
-        const mainMethod = context.coreUtilities.fetcher.APIResponse._getReferenceToType(
+    public getReturnType(context: SdkContext): ts.TypeNode {
+        return context.coreUtilities.fetcher.APIResponse._getReferenceToType(
             getSuccessReturnType(this.response, context),
             context.endpointErrorUnion
                 .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                 .getErrorUnion()
                 .getReferenceTo(context)
         );
-        const withRawResponseMethod = ts.factory.createIntersectionTypeNode([
-            ts.factory.createTypeLiteralNode([
-                ts.factory.createPropertySignature(
-                    undefined,
-                    ts.factory.createIdentifier("data"),
-                    undefined,
-                    mainMethod
-                )
-            ]),
-            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Partial"), [
-                context.coreUtilities.RawResponse.RawResponse._getReferenceToType()
-            ])
-        ]);
-        return {
-            mainMethod,
-            withRawResponseMethod
-        };
     }
 
     public getReturnResponseStatements(context: SdkContext): ts.Statement[] {
@@ -119,9 +102,12 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                     this.getReturnValueForOkResponse(context) ??
                                         ts.factory.createIdentifier("undefined")
                                 ),
-                                ts.factory.createSpreadAssignment(
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("rawResponse"),
                                     ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier("_response"),
+                                        ts.factory.createIdentifier(
+                                            GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                        ),
                                         ts.factory.createIdentifier("rawResponse")
                                     )
                                 )
@@ -268,22 +254,13 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                                       )
                                                   )
                                               ),
-                                              ts.factory.createSpreadAssignment(
-                                                  ts.factory.createParenthesizedExpression(
-                                                      ts.factory.createConditionalExpression(
-                                                          ts.factory.createBinaryExpression(
-                                                              ts.factory.createStringLiteral("rawResponse"),
-                                                              ts.factory.createToken(ts.SyntaxKind.InKeyword),
-                                                              referenceToErrorBody
-                                                          ),
-                                                          ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                                          ts.factory.createPropertyAccessExpression(
-                                                              referenceToErrorBody,
-                                                              ts.factory.createIdentifier("rawResponse")
-                                                          ),
-                                                          ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                                                          ts.factory.createIdentifier("undefined")
-                                                      )
+                                              ts.factory.createPropertyAssignment(
+                                                  ts.factory.createIdentifier("rawResponse"),
+                                                  ts.factory.createPropertyAccessExpression(
+                                                      ts.factory.createIdentifier(
+                                                          GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                                      ),
+                                                      ts.factory.createIdentifier("rawResponse")
                                                   )
                                               )
                                           ],
@@ -334,22 +311,11 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                                 })
                                         )
                                     ),
-                                    ts.factory.createSpreadAssignment(
-                                        ts.factory.createParenthesizedExpression(
-                                            ts.factory.createConditionalExpression(
-                                                ts.factory.createBinaryExpression(
-                                                    ts.factory.createStringLiteral("rawResponse"),
-                                                    ts.factory.createToken(ts.SyntaxKind.InKeyword),
-                                                    referenceToError
-                                                ),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                                ts.factory.createPropertyAccessExpression(
-                                                    referenceToError,
-                                                    ts.factory.createIdentifier("rawResponse")
-                                                ),
-                                                ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                                                ts.factory.createIdentifier("undefined")
-                                            )
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("rawResponse"),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                                            ts.factory.createIdentifier("rawResponse")
                                         )
                                     )
                                 ],
@@ -378,22 +344,11 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                 })
                         )
                     ),
-                    ts.factory.createSpreadAssignment(
-                        ts.factory.createParenthesizedExpression(
-                            ts.factory.createConditionalExpression(
-                                ts.factory.createBinaryExpression(
-                                    ts.factory.createStringLiteral("rawResponse"),
-                                    ts.factory.createToken(ts.SyntaxKind.InKeyword),
-                                    referenceToError
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                ts.factory.createPropertyAccessExpression(
-                                    referenceToError,
-                                    ts.factory.createIdentifier("rawResponse")
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                                ts.factory.createIdentifier("undefined")
-                            )
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier("rawResponse"),
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                            ts.factory.createIdentifier("rawResponse")
                         )
                     )
                 ],

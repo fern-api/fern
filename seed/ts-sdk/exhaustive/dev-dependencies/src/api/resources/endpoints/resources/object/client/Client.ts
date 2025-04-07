@@ -53,13 +53,50 @@ export class Object_ {
      *         bigint: "1000000"
      *     })
      */
-    public async getAndReturnWithOptionalField(
+    public getAndReturnWithOptionalField(
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<
+    ): core.ResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithOptionalField,
             Fiddle.endpoints.object.getAndReturnWithOptionalField.Error
+        >
+    > {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnWithOptionalField, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.types.ObjectWithOptionalField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithOptionalField({
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: new Set(["set"]),
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
+     *     })
+     */
+    private async __getAndReturnWithOptionalField(
+        request: Fiddle.types.ObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.ObjectWithOptionalField,
+                Fiddle.endpoints.object.getAndReturnWithOptionalField.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -88,19 +125,27 @@ export class Object_ {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.object.getAndReturnWithOptionalField.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -113,13 +158,36 @@ export class Object_ {
      *         string: "string"
      *     })
      */
-    public async getAndReturnWithRequiredField(
+    public getAndReturnWithRequiredField(
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<
+    ): core.ResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField,
             Fiddle.endpoints.object.getAndReturnWithRequiredField.Error
+        >
+    > {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnWithRequiredField, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.types.ObjectWithRequiredField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithRequiredField({
+     *         string: "string"
+     *     })
+     */
+    private async __getAndReturnWithRequiredField(
+        request: Fiddle.types.ObjectWithRequiredField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.ObjectWithRequiredField,
+                Fiddle.endpoints.object.getAndReturnWithRequiredField.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -148,19 +216,27 @@ export class Object_ {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.object.getAndReturnWithRequiredField.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.object.getAndReturnWithRequiredField.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -177,11 +253,35 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnWithMapOfMap(
+    public getAndReturnWithMapOfMap(
+        request: Fiddle.types.ObjectWithMapOfMap,
+        requestOptions?: Object_.RequestOptions,
+    ): core.ResponsePromise<
+        core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
+    > {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnWithMapOfMap, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.types.ObjectWithMapOfMap} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithMapOfMap({
+     *         map: {
+     *             "map": {
+     *                 "map": "map"
+     *             }
+     *         }
+     *     })
+     */
+    private async __getAndReturnWithMapOfMap(
         request: Fiddle.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
     ): Promise<
-        core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
+        core.WithRawResponse<
+            core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -209,19 +309,27 @@ export class Object_ {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -251,13 +359,53 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithOptionalField(
+    public getAndReturnNestedWithOptionalField(
         request: Fiddle.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<
+    ): core.ResponsePromise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithOptionalField,
             Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error
+        >
+    > {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnNestedWithOptionalField, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.types.NestedObjectWithOptionalField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
+     *         string: "string",
+     *         nestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: "2024-01-15T09:30:00Z",
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: new Set(["set"]),
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
+     *     })
+     */
+    private async __getAndReturnNestedWithOptionalField(
+        request: Fiddle.types.NestedObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.NestedObjectWithOptionalField,
+                Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -288,19 +436,27 @@ export class Object_ {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -331,14 +487,61 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithRequiredField(
+    public getAndReturnNestedWithRequiredField(
+        string_: string,
+        request: Fiddle.types.NestedObjectWithRequiredField,
+        requestOptions?: Object_.RequestOptions,
+    ): core.ResponsePromise<
+        core.APIResponse<
+            Fiddle.types.NestedObjectWithRequiredField,
+            Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error
+        >
+    > {
+        return core.ResponsePromise.fromFunction(
+            this.__getAndReturnNestedWithRequiredField,
+            string_,
+            request,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {string} string_
+     * @param {Fiddle.types.NestedObjectWithRequiredField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
+     *         string: "string",
+     *         nestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: "2024-01-15T09:30:00Z",
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: new Set(["set"]),
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
+     *     })
+     */
+    private async __getAndReturnNestedWithRequiredField(
         string_: string,
         request: Fiddle.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<
-        core.APIResponse<
-            Fiddle.types.NestedObjectWithRequiredField,
-            Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.NestedObjectWithRequiredField,
+                Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -369,19 +572,27 @@ export class Object_ {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -430,13 +641,76 @@ export class Object_ {
      *             }
      *         }])
      */
-    public async getAndReturnNestedWithRequiredFieldAsList(
+    public getAndReturnNestedWithRequiredFieldAsList(
         request: Fiddle.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,
-    ): Promise<
+    ): core.ResponsePromise<
         core.APIResponse<
             Fiddle.types.NestedObjectWithRequiredField,
             Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
+        >
+    > {
+        return core.ResponsePromise.fromFunction(
+            this.__getAndReturnNestedWithRequiredFieldAsList,
+            request,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {Fiddle.types.NestedObjectWithRequiredField[]} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
+     *             string: "string",
+     *             nestedObject: {
+     *                 string: "string",
+     *                 integer: 1,
+     *                 long: 1000000,
+     *                 double: 1.1,
+     *                 bool: true,
+     *                 datetime: "2024-01-15T09:30:00Z",
+     *                 date: "2023-01-15",
+     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 base64: "SGVsbG8gd29ybGQh",
+     *                 list: ["list", "list"],
+     *                 set: new Set(["set"]),
+     *                 map: {
+     *                     1: "map"
+     *                 },
+     *                 bigint: "1000000"
+     *             }
+     *         }, {
+     *             string: "string",
+     *             nestedObject: {
+     *                 string: "string",
+     *                 integer: 1,
+     *                 long: 1000000,
+     *                 double: 1.1,
+     *                 bool: true,
+     *                 datetime: "2024-01-15T09:30:00Z",
+     *                 date: "2023-01-15",
+     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 base64: "SGVsbG8gd29ybGQh",
+     *                 list: ["list", "list"],
+     *                 set: new Set(["set"]),
+     *                 map: {
+     *                     1: "map"
+     *                 },
+     *                 bigint: "1000000"
+     *             }
+     *         }])
+     */
+    private async __getAndReturnNestedWithRequiredFieldAsList(
+        request: Fiddle.types.NestedObjectWithRequiredField[],
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.NestedObjectWithRequiredField,
+                Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -467,19 +741,29 @@ export class Object_ {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(
+                    _response.error,
+                ),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

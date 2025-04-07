@@ -37,9 +37,21 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
-    public async getWithNoRequestBody(
+    public getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.ResponsePromise.fromFunction(this.__getWithNoRequestBody, requestOptions);
+    }
+
+    /**
+     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.noReqBody.getWithNoRequestBody()
+     */
+    private async __getWithNoRequestBody(
+        requestOptions?: NoReqBody.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -64,12 +76,15 @@ export class NoReqBody {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -100,7 +115,19 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.postWithNoRequestBody()
      */
-    public async postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<string> {
+    public postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): core.ResponsePromise<string> {
+        return core.ResponsePromise.fromFunction(this.__postWithNoRequestBody, requestOptions);
+    }
+
+    /**
+     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.noReqBody.postWithNoRequestBody()
+     */
+    private async __postWithNoRequestBody(
+        requestOptions?: NoReqBody.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -125,12 +152,15 @@ export class NoReqBody {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

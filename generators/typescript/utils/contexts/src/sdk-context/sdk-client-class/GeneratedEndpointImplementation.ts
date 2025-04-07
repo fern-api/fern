@@ -6,17 +6,6 @@ import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "../SdkContext";
 
 export namespace GeneratedEndpointImplementation {
-    export interface Docs {
-        getter: string | undefined;
-        mainMethod: string | undefined;
-        withRawResponseMethod: string | undefined;
-    }
-
-    export interface EndpointSignatures {
-        mainMethod: EndpointSignature;
-        withRawResponseMethod: EndpointSignature;
-    }
-
     export interface EndpointSignature {
         parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
         returnTypeWithoutPromise: ts.TypeNode;
@@ -26,9 +15,9 @@ export namespace GeneratedEndpointImplementation {
 export interface GeneratedEndpointImplementation {
     endpoint: HttpEndpoint;
     getStatements: (context: SdkContext) => ts.Statement[];
-    getOverloads: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignatures[];
-    getSignature: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignatures;
-    getDocs: (context: SdkContext) => GeneratedEndpointImplementation.Docs;
+    getOverloads: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignature[];
+    getSignature: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignature;
+    getDocs: (context: SdkContext) => string | undefined;
     getExample: (args: {
         context: SdkContext;
         example: ExampleEndpointCall;

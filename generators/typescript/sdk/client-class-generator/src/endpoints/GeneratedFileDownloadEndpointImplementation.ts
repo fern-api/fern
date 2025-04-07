@@ -103,55 +103,37 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         return undefined;
     }
 
-    public getOverloads(): GeneratedEndpointImplementation.EndpointSignatures[] {
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignatures {
-        const returnTypes = this.response.getReturnType(context);
-        const mainMethod = {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
+        return {
             parameters: [
                 ...this.request.getEndpointParameters(context),
                 getRequestOptionsParameter({
                     requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
                 })
             ],
-            returnTypeWithoutPromise: returnTypes.mainMethod
-        };
-        return {
-            mainMethod,
-            withRawResponseMethod: {
-                ...mainMethod,
-                returnTypeWithoutPromise: returnTypes.withRawResponseMethod
-            }
+            returnTypeWithoutPromise: this.response.getReturnType(context)
         };
     }
 
-    public getDocs(context: SdkContext): GeneratedEndpointImplementation.Docs {
-        const docs: GeneratedEndpointImplementation.Docs = {
-            getter: undefined,
-            mainMethod: "",
-            withRawResponseMethod: undefined
-        };
+    public getDocs(context: SdkContext): string | undefined {
+        const lines: string[] = [];
         if (this.endpoint.docs != null) {
-            docs.mainMethod += `${this.endpoint.docs}\n`;
+            lines.push(this.endpoint.docs);
         }
 
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
-            docs.mainMethod += `@throws {@link ${errorName}}\n`;
+            lines.push(`@throws {@link ${errorName}}`);
         }
 
-        if (docs.getter?.length === 0) {
-            docs.getter = undefined;
-        }
-        if (docs.mainMethod?.length === 0) {
-            docs.mainMethod = undefined;
-        }
-        if (docs.withRawResponseMethod?.length === 0) {
-            docs.withRawResponseMethod = undefined;
+        if (lines.length === 0) {
+            return undefined;
         }
 
-        return docs;
+        return lines.join("\n");
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {

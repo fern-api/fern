@@ -154,22 +154,15 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         ];
     }
 
-    public getOverloads(): GeneratedEndpointImplementation.EndpointSignatures[] {
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignatures {
-        const returnTypes = this.response.getReturnType(context);
-        const mainMethod = {
-            parameters: this.getEndpointParameters(context),
-            returnTypeWithoutPromise: returnTypes.mainMethod
-        };
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
+        const returnType = this.response.getReturnType(context);
         return {
-            mainMethod,
-            withRawResponseMethod: {
-                ...mainMethod,
-                returnTypeWithoutPromise: returnTypes.withRawResponseMethod
-            }
+            parameters: this.getEndpointParameters(context),
+            returnTypeWithoutPromise: returnType
         };
     }
 
@@ -182,13 +175,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         ];
     }
 
-    public getDocs(): GeneratedEndpointImplementation.Docs {
-        const docs: GeneratedEndpointImplementation.Docs = {
-            getter: undefined,
-            mainMethod: this.endpoint.docs ?? undefined,
-            withRawResponseMethod: undefined
-        };
-        return docs;
+    public getDocs(): string | undefined {
+        return this.endpoint.docs;
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {

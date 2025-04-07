@@ -42,10 +42,28 @@ export class ReqWithHeaders {
      *         body: "string"
      *     })
      */
-    public async getWithCustomHeader(
+    public getWithCustomHeader(
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions,
-    ): Promise<void> {
+    ): core.ResponsePromise<void> {
+        return core.ResponsePromise.fromFunction(this.__getWithCustomHeader, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.reqWithHeaders.getWithCustomHeader({
+     *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+     *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+     *         body: "string"
+     *     })
+     */
+    private async __getWithCustomHeader(
+        request: SeedExhaustive.ReqWithHeaders,
+        requestOptions?: ReqWithHeaders.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -76,7 +94,7 @@ export class ReqWithHeaders {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

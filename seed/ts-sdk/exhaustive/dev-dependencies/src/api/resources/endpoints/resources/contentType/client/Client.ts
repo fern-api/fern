@@ -53,10 +53,42 @@ export class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    public async postJsonPatchContentType(
+    public postJsonPatchContentType(
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
+    ): core.ResponsePromise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
+        return core.ResponsePromise.fromFunction(this.__postJsonPatchContentType, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.types.ObjectWithOptionalField} request
+     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.contentType.postJsonPatchContentType({
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: new Set(["set"]),
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
+     *     })
+     */
+    private async __postJsonPatchContentType(
+        request: Fiddle.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -83,14 +115,22 @@ export class ContentType {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -117,10 +157,46 @@ export class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    public async postJsonPatchContentWithCharsetType(
+    public postJsonPatchContentWithCharsetType(
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>> {
+    ): core.ResponsePromise<
+        core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
+    > {
+        return core.ResponsePromise.fromFunction(this.__postJsonPatchContentWithCharsetType, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.types.ObjectWithOptionalField} request
+     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: new Set(["set"]),
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
+     *     })
+     */
+    private async __postJsonPatchContentWithCharsetType(
+        request: Fiddle.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -147,14 +223,22 @@ export class ContentType {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

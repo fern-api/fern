@@ -53,10 +53,40 @@ export class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    public async postJsonPatchContentType(
+    public postJsonPatchContentType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): Promise<void> {
+    ): core.ResponsePromise<void> {
+        return core.ResponsePromise.fromFunction(this.__postJsonPatchContentType, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.contentType.postJsonPatchContentType({
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: new Set(["set"]),
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
+     *     })
+     */
+    private async __postJsonPatchContentType(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -82,7 +112,7 @@ export class ContentType {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -130,10 +160,40 @@ export class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    public async postJsonPatchContentWithCharsetType(
+    public postJsonPatchContentWithCharsetType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): Promise<void> {
+    ): core.ResponsePromise<void> {
+        return core.ResponsePromise.fromFunction(this.__postJsonPatchContentWithCharsetType, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: new Set(["set"]),
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
+     *     })
+     */
+    private async __postJsonPatchContentWithCharsetType(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -159,7 +219,7 @@ export class ContentType {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

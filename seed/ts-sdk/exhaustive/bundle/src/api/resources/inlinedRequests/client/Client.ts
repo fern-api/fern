@@ -59,13 +59,56 @@ export class InlinedRequests {
      *         }
      *     })
      */
-    public async postWithObjectBodyandResponse(
+    public postWithObjectBodyandResponse(
         request: Fiddle.PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
-    ): Promise<
+    ): core.ResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithOptionalField,
             Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error
+        >
+    > {
+        return core.ResponsePromise.fromFunction(this.__postWithObjectBodyandResponse, request, requestOptions);
+    }
+
+    /**
+     * POST with custom object in request body, response is an object
+     *
+     * @param {Fiddle.PostWithObjectBody} request
+     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
+     *         string: "string",
+     *         integer: 1,
+     *         nestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: "2024-01-15T09:30:00Z",
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: new Set(["set"]),
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
+     *     })
+     */
+    private async __postWithObjectBodyandResponse(
+        request: Fiddle.PostWithObjectBody,
+        requestOptions?: InlinedRequests.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.ObjectWithOptionalField,
+                Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -94,13 +137,18 @@ export class InlinedRequests {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -108,22 +156,28 @@ export class InlinedRequests {
             switch (_response.error.statusCode) {
                 case 400:
                     return {
-                        ok: false,
-                        error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.badRequestBody(
-                            serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                breadcrumbsPrefix: ["response"],
-                            }),
-                        ),
+                        data: {
+                            ok: false,
+                            error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.badRequestBody(
+                                serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    breadcrumbsPrefix: ["response"],
+                                }),
+                            ),
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

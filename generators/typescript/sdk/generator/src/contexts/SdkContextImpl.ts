@@ -44,6 +44,7 @@ import { EndpointDeclarationReferencer } from "../declaration-referencers/Endpoi
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { JsonDeclarationReferencer } from "../declaration-referencers/JsonDeclarationReferencer";
+import { RawResponseDeclarationReferencer } from "../declaration-referencers/RawResponseDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "../declaration-referencers/SdkClientClassDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
@@ -70,7 +71,6 @@ import { TypeContextImpl } from "./type/TypeContextImpl";
 import { VersionContextImpl } from "./version/VersionContextImpl";
 import { WebsocketTypeSchemaContextImpl } from "./websocket-type-schema/WebsocketTypeSchemaImpl";
 import { WebsocketContextImpl } from "./websocket/WebsocketContextImpl";
-import { RawResponseDeclarationReferencer } from "../declaration-referencers/RawResponseDeclarationReferencer";
 
 const ROOT_CLIENT_VARIABLE_NAME = "client";
 

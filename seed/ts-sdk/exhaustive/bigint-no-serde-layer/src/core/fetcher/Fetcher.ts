@@ -1,3 +1,4 @@
+import { RawResponse, toRawResponse } from "../RawResponse";
 import { toJson } from "../json";
 import { APIResponse } from "./APIResponse";
 import { createRequestUrl } from "./createRequestUrl";
@@ -94,6 +95,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: true,
                 body: responseBody as R,
                 headers: response.headers,
+                rawResponse: toRawResponse(response),
             };
         } else {
             return {
@@ -103,6 +105,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     statusCode: response.status,
                     body: responseBody,
                 },
+                rawResponse: toRawResponse(response),
             };
         }
     } catch (error) {

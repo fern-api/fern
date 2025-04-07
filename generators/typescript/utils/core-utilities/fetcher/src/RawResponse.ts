@@ -5,33 +5,122 @@ export type RawResponse = Omit<
     {
         [K in keyof Response as Response[K] extends Function ? never : K]: Response[K]; // strips out functions
     },
-    "body" | "bodyUsed"
+    "ok" | "body" | "bodyUsed"
 >; // strips out body and bodyUsed
 
 /**
- * Converts a `Response` object into a `RawResponse` by extracting its properties,
+ * Converts a `RawResponse` object into a `RawResponse` by extracting its properties,
  * excluding the `body` and `bodyUsed` fields.
  *
- * @param response - The `Response` object to convert.
+ * @param response - The `RawResponse` object to convert.
  * @returns A `RawResponse` object containing the extracted properties of the input response.
  */
 export function toRawResponse(response: Response): RawResponse {
-    const { body, bodyUsed, ...rawResponse } = response;
+    const { body, bodyUsed, ok, ...rawResponse } = response;
     return rawResponse as RawResponse;
 }
 
 /**
- * A utility type that extends a function type `F` with an additional property `withRawResponse`.
- * The `withRawResponse` property is a function type `FRaw` that represents the same function
- * as `F` but with a different behavior or return type, typically used to provide access to raw
- * response data.
- *
- * @template F - The primary function type, which is a function returning a Promise.
- * @template FRaw - The extended function type, which is also a function returning a Promise.
+ * Creates a `RawResponse` from a standard `Response` object.
  */
-export type WithRawResponse<
-    F extends (...args: any[]) => Promise<any>,
-    FRaw extends (...args: any[]) => Promise<any>,
-> = F & {
-    withRawResponse: FRaw;
-};
+export interface WithRawResponse<T> {
+    readonly data: T;
+    readonly rawResponse: RawResponse;
+}
+
+export class ResponsePromise<T> extends Promise<T> {
+    private innerPromise: Promise<WithRawResponse<T>>;
+    private unwrappedPromise: Promise<T> | undefined;
+
+    private constructor(promise: Promise<WithRawResponse<T>>) {
+        // Initialize with a no-op to avoid premature parsing
+        super((resolve) => {
+            resolve(undefined as unknown as T);
+        });
+        this.innerPromise = promise;
+    }
+
+    /**
+     * Creates a `ResponsePromise` from a function that returns a promise.
+     *
+     * @param fn - A function that returns a promise resolving to a `WithRawResponse` object.
+     * @param args - Arguments to pass to the function.
+     * @returns A `ResponsePromise` instance.
+     */
+    public static fromFunction<F extends (...args: never[]) => Promise<WithRawResponse<T>>, T>(
+        fn: F,
+        ...args: Parameters<F>
+    ): ResponsePromise<T> {
+        return new ResponsePromise<T>(fn(...args));
+    }
+
+    /**
+     * Creates a `ResponsePromise` from an existing promise.
+     *
+     * @param promise - A promise resolving to a `WithRawResponse` object.
+     * @returns A `ResponsePromise` instance.
+     */
+    public static fromPromise<T>(promise: Promise<WithRawResponse<T>>): ResponsePromise<T> {
+        return new ResponsePromise<T>(promise);
+    }
+
+    /**
+     * Creates a `ResponsePromise` from an executor function.
+     *
+     * @param executor - A function that takes resolve and reject callbacks to create a promise.
+     * @returns A `ResponsePromise` instance.
+     */
+    public static fromExecutor<T>(
+        executor: (resolve: (value: WithRawResponse<T>) => void, reject: (reason?: unknown) => void) => void
+    ): ResponsePromise<T> {
+        const promise = new Promise<WithRawResponse<T>>(executor);
+        return new ResponsePromise<T>(promise);
+    }
+
+    /**
+     * Creates a `ResponsePromise` from a resolved result.
+     *
+     * @param result - A `WithRawResponse` object to resolve immediately.
+     * @returns A `ResponsePromise` instance.
+     */
+    public static fromResult<T>(result: WithRawResponse<T>): ResponsePromise<T> {
+        const promise = Promise.resolve(result);
+        return new ResponsePromise<T>(promise);
+    }
+
+    private unwrap(): Promise<T> {
+        if (!this.unwrappedPromise) {
+            this.unwrappedPromise = this.innerPromise.then(({ data }) => data);
+        }
+        return this.unwrappedPromise;
+    }
+
+    /** @inheritdoc */
+    public override then<TResult1 = T, TResult2 = never>(
+        onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null,
+        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null
+    ): Promise<TResult1 | TResult2> {
+        return this.unwrap().then(onfulfilled, onrejected);
+    }
+
+    /** @inheritdoc */
+    public override catch<TResult = never>(
+        onrejected?: ((reason: unknown) => TResult | PromiseLike<TResult>) | null
+    ): Promise<T | TResult> {
+        return this.unwrap().catch(onrejected);
+    }
+
+    /** @inheritdoc */
+    public override finally(onfinally?: (() => void) | null): Promise<T> {
+        return this.unwrap().finally(onfinally);
+    }
+
+    /**
+     * Retrieves the data and raw response.
+     *
+     * @returns A promise resolving to a `WithRawResponse` object.
+     */
+    public async withRawResponse(): Promise<WithRawResponse<T>> {
+        return await this.innerPromise;
+    }
+}

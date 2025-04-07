@@ -44,7 +44,27 @@ export class NoAuth {
      *         "key": "value"
      *     })
      */
-    public async postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): Promise<boolean> {
+    public postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): core.ResponsePromise<boolean> {
+        return core.ResponsePromise.fromFunction(this.__postWithNoAuth, request, requestOptions);
+    }
+
+    /**
+     * POST request with no auth
+     *
+     * @param {unknown} request
+     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link SeedExhaustive.BadRequestBody}
+     *
+     * @example
+     *     await client.noAuth.postWithNoAuth({
+     *         "key": "value"
+     *     })
+     */
+    private async __postWithNoAuth(
+        request?: unknown,
+        requestOptions?: NoAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -70,12 +90,15 @@ export class NoAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

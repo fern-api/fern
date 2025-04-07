@@ -700,189 +700,61 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
             const publicMethodName = endpoint.endpoint.name.camelCase.unsafeName;
             const internalMethodName = `__${publicMethodName}`;
-            const withRawMethodName = `${internalMethodName}WithRawResponse`;
-
             const publicStatements = [
                 ts.factory.createReturnStatement(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("Object"),
-                            ts.factory.createIdentifier("assign")
-                        ),
-                        undefined,
+                    context.coreUtilities.RawResponse.ResponsePromise.fromFunction(
                         [
-                            ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createThis(),
-                                        ts.factory.createIdentifier(internalMethodName)
-                                    ),
-                                    ts.factory.createIdentifier("bind")
-                                ),
-                                undefined,
-                                [ts.factory.createThis()]
-                            ),
-                            ts.factory.createObjectLiteralExpression(
-                                [
-                                    ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier("withRawResponse"),
-                                        ts.factory.createCallExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createPropertyAccessExpression(
-                                                    ts.factory.createThis(),
-                                                    ts.factory.createIdentifier(withRawMethodName)
-                                                ),
-                                                ts.factory.createIdentifier("bind")
-                                            ),
-                                            undefined,
-                                            [ts.factory.createThis()]
-                                        )
-                                    )
-                                ],
-                                true
-                            )
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createThis(),
+                                ts.factory.createIdentifier(internalMethodName)
+                          ),
+                          ...signature.parameters.map(p => ts.factory.createIdentifier(p.name))
                         ]
-                    )
+                    ),
                 )
             ];
-            // const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
-            const publicMethod: GetAccessorDeclarationStructure = {
-                kind: StructureKind.GetAccessor,
-                name: publicMethodName,
-                returnType: getTextOfTsNode(
-                    context.coreUtilities.RawResponse.WithRawResponse.create([
-                        ts.factory.createIndexedAccessTypeNode(
-                            ts.factory.createTypeReferenceNode(
-                                ts.factory.createIdentifier(this.serviceClassName),
-                                undefined
-                            ),
-                            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(internalMethodName))
-                        ),
-                        ts.factory.createIndexedAccessTypeNode(
-                            ts.factory.createTypeReferenceNode(
-                                ts.factory.createIdentifier(this.serviceClassName),
-                                undefined
-                            ),
-                            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(withRawMethodName))
-                        )
-                    ])
-                ),
+
+            const publicMethod: MethodDeclarationStructure = {
+                kind: StructureKind.Method,
                 scope: Scope.Public,
+                name: publicMethodName,
+                parameters: signature.parameters,
+                returnType: getTextOfTsNode(
+                    context.coreUtilities.RawResponse.ResponsePromise._getReferenceToType(signature.returnTypeWithoutPromise)
+                ),
                 statements: publicStatements.map(getTextOfTsNode)
             };
 
             if (overloads.length === 0) {
-                maybeAddDocsStructure(publicMethod, docs.getter);
+                maybeAddDocsStructure(publicMethod, docs);
             }
 
-            serviceClass.getAccessors.push(publicMethod);
+            serviceClass.methods.push(publicMethod);
 
-            const withRawResponseStatements = endpoint.getStatements(context);
-            // const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
-            const withRawMethod: MethodDeclarationStructure = {
-                kind: StructureKind.Method,
-                name: withRawMethodName,
-                parameters: signature.withRawResponseMethod.parameters,
-                returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode("Promise", [
-                        signature.withRawResponseMethod.returnTypeWithoutPromise
-                    ])
-                ),
-                scope: Scope.Private,
-                isAsync: true, // if not returnsAPIPromise we return an `APIPromise`
-                statements: withRawResponseStatements.map(getTextOfTsNode),
-                overloads: overloads.map((overload, index) => ({
-                    docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
-                    parameters: overload.withRawResponseMethod.parameters,
-                    returnType: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode("Promise", [
-                            overload.withRawResponseMethod.returnTypeWithoutPromise
-                        ])
-                    )
-                }))
-            };
-
-            if (overloads.length === 0) {
-                maybeAddDocsStructure(withRawMethod, docs.withRawResponseMethod);
-            }
-
-            serviceClass.methods.push(withRawMethod);
-
-            const internalMethodStatements: ts.Statement[] = [
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                ts.factory.createObjectBindingPattern([
-                                    ts.factory.createBindingElement(
-                                        undefined,
-                                        undefined,
-                                        ts.factory.createIdentifier("data"),
-                                        undefined
-                                    )
-                                ]),
-                                undefined,
-                                undefined,
-                                ts.factory.createAwaitExpression(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createThis(),
-                                            ts.factory.createIdentifier(withRawMethodName)
-                                        ),
-                                        undefined,
-                                        [ts.factory.createSpreadElement(ts.factory.createIdentifier("args"))]
-                                    )
-                                )
-                            )
-                        ],
-                        ts.NodeFlags.Const |
-                            ts.NodeFlags.AwaitContext |
-                            ts.NodeFlags.ContextFlags |
-                            ts.NodeFlags.TypeExcludesFlags
-                    )
-                ),
-                ts.factory.createReturnStatement(ts.factory.createIdentifier("data"))
-            ];
-
+            const internalResponseStatements = endpoint.getStatements(context);
             const internalMethod: MethodDeclarationStructure = {
                 kind: StructureKind.Method,
                 name: internalMethodName,
-                parameters: [
-                    {
-                        kind: StructureKind.Parameter,
-                        name: "args",
-                        isRestParameter: true,
-                        type: getTextOfTsNode(
-                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Parameters"), [
-                                ts.factory.createIndexedAccessTypeNode(
-                                    ts.factory.createTypeReferenceNode(
-                                        ts.factory.createIdentifier(this.serviceClassName),
-                                        undefined
-                                    ),
-                                    ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(withRawMethodName))
-                                )
-                            ])
-                        )
-                    }
-                ],
+                parameters: signature.parameters,
                 returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode("Promise", [signature.mainMethod.returnTypeWithoutPromise])
+                    ts.factory.createTypeReferenceNode("Promise", [
+                        context.coreUtilities.RawResponse.WithRawResponse._getReferenceToType(signature.returnTypeWithoutPromise)
+                    ])
                 ),
                 scope: Scope.Private,
-                isAsync: true, // if not returnsAPIPromise we return an `APIPromise`
-                statements: internalMethodStatements.map(getTextOfTsNode),
+                isAsync: true,
+                statements: internalResponseStatements.map(getTextOfTsNode),
                 overloads: overloads.map((overload, index) => ({
                     docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
-                    parameters: overload.mainMethod.parameters,
+                    parameters: overload.parameters,
                     returnType: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode("Promise", [overload.mainMethod.returnTypeWithoutPromise])
+                        ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
                     )
                 }))
             };
 
             if (overloads.length === 0) {
-                maybeAddDocsStructure(internalMethod, docs.mainMethod);
+                maybeAddDocsStructure(internalMethod, docs);
             }
 
             serviceClass.methods.push(internalMethod);

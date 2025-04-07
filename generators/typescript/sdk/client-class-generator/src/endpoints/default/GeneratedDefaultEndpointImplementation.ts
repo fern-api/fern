@@ -69,21 +69,17 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return this.response.getPaginationInfo(context) != null;
     }
 
-    public getOverloads(): GeneratedEndpointImplementation.EndpointSignatures[] {
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignatures {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
         const paginationInfo = this.response.getPaginationInfo(context);
         const mainReturnType =
             paginationInfo != null
                 ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
-                : this.response.getReturnType(context).mainMethod;
-        const withRawResponseReturnType =
-            paginationInfo != null
-                ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
-                : this.response.getReturnType(context).withRawResponseMethod;
-        const mainMethod = {
+                : this.response.getReturnType(context);
+        return {
             parameters: [
                 ...this.request.getEndpointParameters(context),
                 getRequestOptionsParameter({
@@ -92,25 +88,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             ],
             returnTypeWithoutPromise: mainReturnType
         };
-        return {
-            mainMethod,
-            withRawResponseMethod: {
-                ...mainMethod,
-                returnTypeWithoutPromise: withRawResponseReturnType
-            }
-        };
     }
 
-    public getDocs(context: SdkContext): GeneratedEndpointImplementation.Docs {
-        const docs: GeneratedEndpointImplementation.Docs = {
-            getter: "",
-            mainMethod: "",
-            withRawResponseMethod: ""
-        };
+    public getDocs(context: SdkContext): string | undefined {
+        const groups: string[] = [];
         if (this.endpoint.docs != null) {
-            docs.getter += `${this.endpoint.docs}\n\n`;
-            docs.mainMethod += `${this.endpoint.docs}\n\n`;
-            docs.withRawResponseMethod += `${this.endpoint.docs}\n\n`;
+            groups.push(this.endpoint.docs);
         }
 
         const params: string[] = [];
@@ -135,24 +118,17 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         params.push(
             `@param {${requestOptionsType}} ${REQUEST_OPTIONS_PARAMETER_NAME} - Request-specific configuration.`
         );
-
-        if (params.length > 0) {
-            const paramsJoined = params.join("\n");
-            docs.mainMethod += `${paramsJoined}\n\n`;
-            docs.withRawResponseMethod += `${paramsJoined}\n\n`;
-        }
+        groups.push(params.join("\n"));
 
         const exceptions: string[] = [];
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
             exceptions.push(`@throws {@link ${errorName}}`);
         }
         if (exceptions.length > 0) {
-            const exceptionsJoined = exceptions.join("\n");
-            docs.mainMethod += `${exceptionsJoined}\n\n`;
-            docs.withRawResponseMethod += `${exceptionsJoined}\n\n`;
+            groups.push(exceptions.join("\n"));
         }
 
-        const mainExamples: string[] = [];
+        const examples: string[] = [];
         for (const example of getExampleEndpointCalls(this.endpoint)) {
             const generatedExample = this.getExample({
                 context,
@@ -166,39 +142,16 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
             exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
             // Only add if it doesn't already exist
-            if (!mainExamples.includes(exampleStr)) {
-                mainExamples.push(exampleStr);
-                docs.getter += `${exampleStr}}\n\n`;
-                docs.mainMethod += `${exampleStr}}\n\n`;
+            if (!examples.includes(exampleStr)) {
+                examples.push(exampleStr);
             }
         }
-
-        const withRawResponseExamples: string[] = [];
-        for (const example of getExampleEndpointCalls(this.endpoint)) {
-            const generatedExample = this.getWithRawResponseExample({
-                context,
-                example,
-                opts: { isForComment: true },
-                clientReference: context.sdkInstanceReferenceForSnippet
-            });
-            if (generatedExample == null) {
-                continue;
-            }
-            let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
-            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
-            // Only add if it doesn't already exist
-            if (!withRawResponseExamples.includes(exampleStr)) {
-                withRawResponseExamples.push(exampleStr);
-                docs.getter += `${exampleStr}\n\n`;
-                docs.withRawResponseMethod += `${exampleStr}\n\n`;
-            }
+        if (examples.length > 0) {
+            // Each example is its own group.
+            groups.push(...examples);
         }
 
-        docs.getter = docs.getter?.trim();
-        docs.mainMethod = docs.mainMethod?.trim();
-        docs.withRawResponseMethod = docs.withRawResponseMethod?.trim();
-
-        return docs;
+        return groups.join("\n\n");
     }
 
     public getExample(args: {
@@ -222,37 +175,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         referenceToRootClient: args.clientReference
                     }),
                     ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
-                ),
-                undefined,
-                exampleParameters
-            )
-        );
-    }
-
-    private getWithRawResponseExample(args: {
-        context: SdkContext;
-        example: ExampleEndpointCall;
-        opts: GetReferenceOpts;
-        clientReference: ts.Identifier;
-    }): ts.Expression | undefined {
-        const exampleParameters = this.request.getExampleEndpointParameters({
-            context: args.context,
-            example: args.example,
-            opts: args.opts
-        });
-        if (exampleParameters == null) {
-            return undefined;
-        }
-        return ts.factory.createAwaitExpression(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        this.generatedSdkClientClass.accessFromRootClient({
-                            referenceToRootClient: args.clientReference
-                        }),
-                        ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
-                    ),
-                    ts.factory.createIdentifier("withRawResponse")
                 ),
                 undefined,
                 exampleParameters
@@ -375,7 +297,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
         const requestParameter = this.request.getRequestParameter(context);
         const paginationInfo = this.response.getPaginationInfo(context);
-        const responseReturnTypes = this.response.getReturnType(context);
+        const responseReturnType = this.response.getReturnType(context);
         if (paginationInfo != null && requestParameter != null) {
             const listFn = ts.factory.createVariableDeclarationList(
                 [
@@ -397,7 +319,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                     undefined
                                 )
                             ],
-                            ts.factory.createTypeReferenceNode("Promise", [responseReturnTypes.mainMethod]),
+                            ts.factory.createTypeReferenceNode("Promise", [responseReturnType]),
                             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                             ts.factory.createBlock(body, undefined)
                         )
@@ -433,7 +355,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                     })
                                 })
                             ),
-                            ts.factory.createSpreadAssignment(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("rawResponse"),
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createIdentifier("_response"),
                                     ts.factory.createIdentifier("rawResponse")

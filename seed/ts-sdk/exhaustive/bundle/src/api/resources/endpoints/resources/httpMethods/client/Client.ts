@@ -37,10 +37,24 @@ export class HttpMethods {
      * @example
      *     await client.endpoints.httpMethods.testGet("id")
      */
-    public async testGet(
+    public testGet(
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>> {
+    ): core.ResponsePromise<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>> {
+        return core.ResponsePromise.fromFunction(this.__testGet, id, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testGet("id")
+     */
+    private async __testGet(
+        id: string,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -66,19 +80,27 @@ export class HttpMethods {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.httpMethods.testGet.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.httpMethods.testGet.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.httpMethods.testGet.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.httpMethods.testGet.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -91,10 +113,32 @@ export class HttpMethods {
      *         string: "string"
      *     })
      */
-    public async testPost(
+    public testPost(
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPost.Error>> {
+    ): core.ResponsePromise<
+        core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPost.Error>
+    > {
+        return core.ResponsePromise.fromFunction(this.__testPost, request, requestOptions);
+    }
+
+    /**
+     * @param {Fiddle.types.ObjectWithRequiredField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPost({
+     *         string: "string"
+     *     })
+     */
+    private async __testPost(
+        request: Fiddle.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPost.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -121,19 +165,27 @@ export class HttpMethods {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.httpMethods.testPost.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.httpMethods.testPost.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -147,11 +199,35 @@ export class HttpMethods {
      *         string: "string"
      *     })
      */
-    public async testPut(
+    public testPut(
         id: string,
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>> {
+    ): core.ResponsePromise<
+        core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>
+    > {
+        return core.ResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {Fiddle.types.ObjectWithRequiredField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPut("id", {
+     *         string: "string"
+     *     })
+     */
+    private async __testPut(
+        id: string,
+        request: Fiddle.types.ObjectWithRequiredField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -178,19 +254,27 @@ export class HttpMethods {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.httpMethods.testPut.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.httpMethods.testPut.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -218,11 +302,49 @@ export class HttpMethods {
      *         bigint: "1000000"
      *     })
      */
-    public async testPatch(
+    public testPatch(
         id: string,
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>> {
+    ): core.ResponsePromise<
+        core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>
+    > {
+        return core.ResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {Fiddle.types.ObjectWithOptionalField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPatch("id", {
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: new Set(["set"]),
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
+     *     })
+     */
+    private async __testPatch(
+        id: string,
+        request: Fiddle.types.ObjectWithOptionalField,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -249,19 +371,27 @@ export class HttpMethods {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.httpMethods.testPatch.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.httpMethods.testPatch.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -272,10 +402,24 @@ export class HttpMethods {
      * @example
      *     await client.endpoints.httpMethods.testDelete("id")
      */
-    public async testDelete(
+    public testDelete(
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
-    ): Promise<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>> {
+    ): core.ResponsePromise<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>> {
+        return core.ResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testDelete("id")
+     */
+    private async __testDelete(
+        id: string,
+        requestOptions?: HttpMethods.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -301,19 +445,27 @@ export class HttpMethods {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.httpMethods.testDelete.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.httpMethods.testDelete.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.httpMethods.testDelete.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.httpMethods.testDelete.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -38,11 +38,27 @@ export class Put {
      * @example
      *     await client.endpoints.put.add("id")
      */
-    public async add(
+    public add(
         id: string,
         request: Fiddle.endpoints.PutRequest = {},
         requestOptions?: Put.RequestOptions,
-    ): Promise<core.APIResponse<Fiddle.endpoints.PutResponse, Fiddle.endpoints.put.add.Error>> {
+    ): core.ResponsePromise<core.APIResponse<Fiddle.endpoints.PutResponse, Fiddle.endpoints.put.add.Error>> {
+        return core.ResponsePromise.fromFunction(this.__add, id, request, requestOptions);
+    }
+
+    /**
+     * @param {string} id
+     * @param {Fiddle.endpoints.PutRequest} request
+     * @param {Put.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.put.add("id")
+     */
+    private async __add(
+        id: string,
+        request: Fiddle.endpoints.PutRequest = {},
+        requestOptions?: Put.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<Fiddle.endpoints.PutResponse, Fiddle.endpoints.put.add.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,19 +84,27 @@ export class Put {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.PutResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.PutResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.put.add.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.put.add.Error._unknown(_response.error),
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

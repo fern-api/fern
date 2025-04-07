@@ -21,18 +21,20 @@ export function toRawResponse(response: Response): RawResponse {
 }
 
 /**
- * Creates a `RawResponse` from a standard `Response` object.
+ * A parsed response and raw response in a single object.
  */
 export interface WithRawResponse<T> {
     readonly data: T;
     readonly rawResponse: RawResponse;
 }
 
-export class ResponsePromise<T> extends Promise<T> {
-    private innerPromise: Promise<WithRawResponse<T>>;
+export type MayWithRawResponse<T> =  Pick<WithRawResponse<T>, "data"> & Pick<WithRawResponse<T>, "rawResponse">;
+
+export class ResponsePromise<T, RawResponseWrapper = WithRawResponse<T>> extends Promise<T> {
+    private innerPromise: Promise<RawResponseWrapper>;
     private unwrappedPromise: Promise<T> | undefined;
 
-    private constructor(promise: Promise<WithRawResponse<T>>) {
+    private constructor(promise: Promise<RawResponseWrapper>) {
         // Initialize with a no-op to avoid premature parsing
         super((resolve) => {
             resolve(undefined as unknown as T);

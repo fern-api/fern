@@ -54,10 +54,40 @@ export class Object_ {
      *         bigint: "1000000"
      *     })
      */
-    public async getAndReturnWithOptionalField(
+    public getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnWithOptionalField, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithOptionalField({
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["list", "list"],
+     *         set: new Set(["set"]),
+     *         map: {
+     *             1: "map"
+     *         },
+     *         bigint: "1000000"
+     *     })
+     */
+    private async __getAndReturnWithOptionalField(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -83,12 +113,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -124,10 +157,26 @@ export class Object_ {
      *         string: "string"
      *     })
      */
-    public async getAndReturnWithRequiredField(
+    public getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnWithRequiredField, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithRequiredField({
+     *         string: "string"
+     *     })
+     */
+    private async __getAndReturnWithRequiredField(
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -153,12 +202,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -198,10 +250,30 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnWithMapOfMap(
+    public getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithMapOfMap> {
+    ): core.ResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnWithMapOfMap, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithMapOfMap({
+     *         map: {
+     *             "map": {
+     *                 "map": "map"
+     *             }
+     *         }
+     *     })
+     */
+    private async __getAndReturnWithMapOfMap(
+        request: SeedExhaustive.types.ObjectWithMapOfMap,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMapOfMap>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -227,12 +299,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -285,10 +360,43 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithOptionalField(
+    public getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+    ): core.ResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+        return core.ResponsePromise.fromFunction(this.__getAndReturnNestedWithOptionalField, request, requestOptions);
+    }
+
+    /**
+     * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
+     *         string: "string",
+     *         nestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: "2024-01-15T09:30:00Z",
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: new Set(["set"]),
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
+     *     })
+     */
+    private async __getAndReturnNestedWithOptionalField(
+        request: SeedExhaustive.types.NestedObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -316,12 +424,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -375,11 +486,51 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithRequiredField(
+    public getAndReturnNestedWithRequiredField(
         string_: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+    ): core.ResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.ResponsePromise.fromFunction(
+            this.__getAndReturnNestedWithRequiredField,
+            string_,
+            request,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {string} string_
+     * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
+     *         string: "string",
+     *         nestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: "2024-01-15T09:30:00Z",
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: new Set(["set"]),
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
+     *     })
+     */
+    private async __getAndReturnNestedWithRequiredField(
+        string_: string,
+        request: SeedExhaustive.types.NestedObjectWithRequiredField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -407,12 +558,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -484,10 +638,66 @@ export class Object_ {
      *             }
      *         }])
      */
-    public async getAndReturnNestedWithRequiredFieldAsList(
+    public getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+    ): core.ResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.ResponsePromise.fromFunction(
+            this.__getAndReturnNestedWithRequiredFieldAsList,
+            request,
+            requestOptions,
+        );
+    }
+
+    /**
+     * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
+     *             string: "string",
+     *             nestedObject: {
+     *                 string: "string",
+     *                 integer: 1,
+     *                 long: 1000000,
+     *                 double: 1.1,
+     *                 bool: true,
+     *                 datetime: "2024-01-15T09:30:00Z",
+     *                 date: "2023-01-15",
+     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 base64: "SGVsbG8gd29ybGQh",
+     *                 list: ["list", "list"],
+     *                 set: new Set(["set"]),
+     *                 map: {
+     *                     1: "map"
+     *                 },
+     *                 bigint: "1000000"
+     *             }
+     *         }, {
+     *             string: "string",
+     *             nestedObject: {
+     *                 string: "string",
+     *                 integer: 1,
+     *                 long: 1000000,
+     *                 double: 1.1,
+     *                 bool: true,
+     *                 datetime: "2024-01-15T09:30:00Z",
+     *                 date: "2023-01-15",
+     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 base64: "SGVsbG8gd29ybGQh",
+     *                 list: ["list", "list"],
+     *                 set: new Set(["set"]),
+     *                 map: {
+     *                     1: "map"
+     *                 },
+     *                 bigint: "1000000"
+     *             }
+     *         }])
+     */
+    private async __getAndReturnNestedWithRequiredFieldAsList(
+        request: SeedExhaustive.types.NestedObjectWithRequiredField[],
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -515,12 +725,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
