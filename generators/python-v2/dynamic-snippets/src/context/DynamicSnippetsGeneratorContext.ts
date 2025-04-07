@@ -86,6 +86,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootClientClassName(): string {
+        if (this.customConfig.client?.exported_class_name != null) {
+            return this.customConfig.client.exported_class_name;
+        }
         if (this.customConfig.client_class_name != null) {
             return this.customConfig.client_class_name;
         }
