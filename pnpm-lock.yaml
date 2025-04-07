@@ -7120,6 +7120,9 @@ importers:
       '@fern-api/php-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/php/dynamic-snippets
+      '@fern-api/python-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/python-v2/dynamic-snippets
       '@fern-api/sdk':
         specifier: 0.12.3
         version: 0.12.3(encoding@0.1.13)

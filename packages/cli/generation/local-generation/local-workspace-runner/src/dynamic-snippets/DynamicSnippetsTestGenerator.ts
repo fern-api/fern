@@ -10,6 +10,7 @@ import { DynamicSnippetsCsharpTestGenerator } from "./csharp/DynamicSnippetsCsha
 import { DynamicSnippetsGoTestGenerator } from "./go/DynamicSnippetsGoTestGenerator";
 import { DynamicSnippetsJavaTestGenerator } from "./java/DynamicSnippetsJavaTestGenerator";
 import { DynamicSnippetsPhpTestGenerator } from "./php/DynamicSnippetsPhpTestGenerator";
+import { DynamicSnippetsPythonTestGenerator } from "./python/DynamicSnippetsPythonTestGenerator";
 import { DynamicSnippetsTypeScriptTestGenerator } from "./typescript/DynamicSnippetsTypeScriptTestGenerator";
 
 interface DynamicSnippetsGenerator {
@@ -25,18 +26,28 @@ interface DynamicSnippetsGenerator {
     };
 }
 
+type GeneratorConfig = {
+    // Represents unstable generators due to example generation issues, which
+    // shouldn't be run in certain environments.
+    unstable?: boolean;
+
+    // The generator to use for this language.
+    generator: DynamicSnippetsGenerator;
+};
+
 export class DynamicSnippetsTestGenerator {
-    private static readonly GENERATORS: Record<generatorsYml.GenerationLanguage, DynamicSnippetsGenerator | undefined> =
-        {
-            csharp: DynamicSnippetsCsharpTestGenerator,
-            go: DynamicSnippetsGoTestGenerator,
-            java: DynamicSnippetsJavaTestGenerator,
-            php: DynamicSnippetsPhpTestGenerator,
-            typescript: undefined, // TODO: Re-enable dynamic snippet tests when example generation is resolved.
-            python: undefined,
-            ruby: undefined,
-            swift: undefined
-        };
+    private static readonly GENERATORS: Record<generatorsYml.GenerationLanguage, GeneratorConfig | undefined> = {
+        csharp: { generator: DynamicSnippetsCsharpTestGenerator },
+        go: { generator: DynamicSnippetsGoTestGenerator },
+        java: { generator: DynamicSnippetsJavaTestGenerator },
+        php: { generator: DynamicSnippetsPhpTestGenerator },
+
+        // TODO: Re-enable dynamic snippet tests when example generation is resolved.
+        typescript: { generator: DynamicSnippetsTypeScriptTestGenerator, unstable: true },
+        python: { generator: DynamicSnippetsPythonTestGenerator, unstable: true },
+        ruby: undefined,
+        swift: undefined
+    };
 
     constructor(
         private readonly context: TaskContext,
@@ -45,17 +56,19 @@ export class DynamicSnippetsTestGenerator {
 
     public async generateTests({
         outputDir,
-        language
+        language,
+        skipUnstable
     }: {
         outputDir: AbsoluteFilePath;
         language: generatorsYml.GenerationLanguage;
+        skipUnstable?: boolean;
     }): Promise<void> {
-        const generator = DynamicSnippetsTestGenerator.GENERATORS[language];
-        if (generator == null) {
+        const config = DynamicSnippetsTestGenerator.GENERATORS[language];
+        if (config == null || (config.unstable && skipUnstable)) {
             this.context.logger.debug(`Skipping dynamic snippets test generation for language "${language}"`);
             return;
         }
-        return new generator(this.context, this.testSuite.ir, this.testSuite.config).generateTests({
+        return new config.generator(this.context, this.testSuite.ir, this.testSuite.config).generateTests({
             outputDir,
             requests: this.testSuite.requests
         });
