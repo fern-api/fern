@@ -512,7 +512,13 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private getBodyRequestArgsForBytes({ body, value }: { body: FernIr.dynamic.ReferencedRequestBody; value: unknown }): python.NamedValue[] {
+    private getBodyRequestArgsForBytes({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.ReferencedRequestBody;
+        value: unknown;
+    }): python.NamedValue[] {
         const typeInstantiation = this.getBytesBodyRequestTypeInstantiation({ value });
         if (python.TypeInstantiation.isNop(typeInstantiation)) {
             return [];
