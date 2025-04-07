@@ -203,6 +203,13 @@ fixtures:
         pydantic_config:
           use_pydantic_field_aliases: true
       outputFolder: aliases_with_validation
+  file-upload:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+        use_typeddict_requests_for_file_upload: true
+      outputFolder: use_typeddict_requests
   unions:
     - customConfig: null
       outputFolder: no-custom-config
