@@ -44,7 +44,6 @@ import { EndpointDeclarationReferencer } from "../declaration-referencers/Endpoi
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { JsonDeclarationReferencer } from "../declaration-referencers/JsonDeclarationReferencer";
-import { RawResponseDeclarationReferencer } from "../declaration-referencers/RawResponseDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "../declaration-referencers/SdkClientClassDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
@@ -89,7 +88,6 @@ export declare namespace SdkContextImpl {
         versionGenerator: VersionGenerator;
         versionDeclarationReferencer: VersionDeclarationReferencer;
         jsonDeclarationReferencer: JsonDeclarationReferencer;
-        rawResponseReferencer: RawResponseDeclarationReferencer;
         typeGenerator: TypeGenerator;
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
@@ -158,7 +156,6 @@ export class SdkContextImpl implements SdkContext {
 
     public readonly versionContext: VersionContextImpl;
     public readonly jsonContext: JsonContext;
-    public readonly rawResponseReferencer: RawResponseDeclarationReferencer;
     public readonly sdkError: SdkErrorContextImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextImpl;
@@ -190,7 +187,6 @@ export class SdkContextImpl implements SdkContext {
         versionGenerator,
         versionDeclarationReferencer,
         jsonDeclarationReferencer,
-        rawResponseReferencer,
         typeGenerator,
         typeResolver,
         typeDeclarationReferencer,
@@ -258,7 +254,6 @@ export class SdkContextImpl implements SdkContext {
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;
         this.neverThrowErrors = neverThrowErrors;
-        this.rawResponseReferencer = rawResponseReferencer;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager

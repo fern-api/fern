@@ -61,7 +61,6 @@ import { EndpointDeclarationReferencer } from "./declaration-referencers/Endpoin
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
-import { RawResponseDeclarationReferencer } from "./declaration-referencers/RawResponseDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer";
@@ -183,7 +182,6 @@ export class SdkGenerator {
     private genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
     private timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
     private jsonDeclarationReferencer: JsonDeclarationReferencer;
-    private rawResponseReferencer: RawResponseDeclarationReferencer;
 
     private versionGenerator: VersionGenerator;
     private typeGenerator: TypeGenerator;
@@ -321,14 +319,6 @@ export class SdkGenerator {
                 }
             ],
             namespaceExport: "json"
-        });
-        this.rawResponseReferencer = new RawResponseDeclarationReferencer({
-            containingDirectory: [
-                {
-                    nameOnDisk: "core"
-                }
-            ],
-            namespaceExport: "RawResponse"
         });
 
         this.versionGenerator = new VersionGenerator();
@@ -1403,7 +1393,6 @@ export class SdkGenerator {
             versionGenerator: this.versionGenerator,
             versionDeclarationReferencer: this.versionDeclarationReferencer,
             jsonDeclarationReferencer: this.jsonDeclarationReferencer,
-            rawResponseReferencer: this.rawResponseReferencer,
             typeResolver: this.typeResolver,
             typeDeclarationReferencer: this.typeDeclarationReferencer,
             typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,

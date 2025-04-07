@@ -19,7 +19,6 @@ import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
-import { RawResponseImpl } from "./RawResponse/RawResponseImpl";
 import { AuthImpl } from "./auth/AuthImpl";
 import { BaseCoreUtilitiesImpl } from "./base/BaseCoreUtilitiesImpl";
 import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
@@ -58,8 +57,7 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
-            websocket: new WebsocketImpl({ getReferenceToExport }),
-            RawResponse: new RawResponseImpl({ getReferenceToExport })
+            websocket: new WebsocketImpl({ getReferenceToExport })
         };
     }
 

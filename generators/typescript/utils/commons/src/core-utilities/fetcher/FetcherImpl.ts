@@ -33,7 +33,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 "../../stream-wrappers/chooseStreamWrapper":
                     "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
                 "../stream-wrappers/chooseStreamWrapper":
-                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper"
+                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
+                "../RawResponse": "../../../src/core/fetcher/RawResponse"
             }
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
@@ -334,4 +335,51 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(Fetcher.getEntityName(), typeName))
         );
     }
+
+    public readonly RawResponse = {
+        RawResponse: {
+            _getReferenceToType: this.withExportedName("RawResponse", (RawResponse) => () => RawResponse.getTypeNode())
+        },
+        toRawResponse: {
+            _getReferenceToType: this.withExportedName(
+                "toRawResponse",
+                (RawResponse) => () => RawResponse.getTypeNode()
+            )
+        },
+        WithRawResponse: {
+            _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
+                return this.withExportedName(
+                    "WithRawResponse",
+                    (RawResponse) => () =>
+                        ts.factory.createTypeReferenceNode(RawResponse.getEntityName(), typeArg ? [typeArg] : undefined)
+                )();
+            }
+        },
+        HttpResponsePromise: {
+            _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
+                return this.withExportedName(
+                    "HttpResponsePromise",
+                    (HttpResponsePromise) => () =>
+                        ts.factory.createTypeReferenceNode(
+                            HttpResponsePromise.getEntityName(),
+                            typeArg ? [typeArg] : undefined
+                        )
+                )();
+            },
+            fromFunction: (params: ts.Expression[]): ts.Expression => {
+                return this.withExportedName(
+                    "HttpResponsePromise",
+                    (HttpResponsePromise) => () =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                HttpResponsePromise.getExpression(),
+                                ts.factory.createIdentifier("fromFunction")
+                            ),
+                            undefined,
+                            params
+                        )
+                )();
+            }
+        }
+    };
 }

@@ -9,7 +9,6 @@ const filePathOnDockerContainer = AbsoluteFilePath.of("/assets/asIs");
  * A map containing the original source path and the target path in the generated project
  */
 const asIsFiles = {
-    RawResponse: { "RawResponse.ts": "src/core/RawResponse.ts" },
     json: {
         vanilla: { "json/json.vanilla.ts": "src/core/json.ts" },
         bigint: { "json/json.bigint.ts": "src/core/json.ts" }
@@ -32,9 +31,7 @@ export class AsIsManager {
     }
 
     public async AddToTsProject({ project }: { project: Project }): Promise<void> {
-        const filesToCopy: Record<string, string>[] = [
-            //asIsFiles.RawResponse
-        ];
+        const filesToCopy: Record<string, string>[] = [];
 
         filesToCopy.push(this.useBigInt ? asIsFiles.json.bigint : asIsFiles.json.vanilla);
 

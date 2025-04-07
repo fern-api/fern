@@ -1,4 +1,3 @@
-import { RawResponse } from "./RawResponse/RawResponse";
 import { Auth } from "./auth/Auth";
 import { BaseCoreUtilities } from "./base/BaseCoreUtilities";
 import { CallbackQueue } from "./callback-queue/CallbackQueue";
@@ -23,5 +22,4 @@ export interface CoreUtilities {
     pagination: Pagination;
     utils: Utils;
     websocket: Websocket;
-    RawResponse: RawResponse;
 }
