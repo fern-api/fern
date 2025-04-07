@@ -44,14 +44,14 @@ class RawProblemClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 typing.List[LightweightProblemInfoV2],
                 parse_obj_as(
                     type_=typing.List[LightweightProblemInfoV2],  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return HttpResponse(response=_response, data=data)
+            return HttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problems(
@@ -79,14 +79,14 @@ class RawProblemClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 typing.List[ProblemInfoV2],
                 parse_obj_as(
                     type_=typing.List[ProblemInfoV2],  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return HttpResponse(response=_response, data=data)
+            return HttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_latest_problem(
@@ -116,14 +116,14 @@ class RawProblemClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 ProblemInfoV2,
                 parse_obj_as(
                     type_=ProblemInfoV2,  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return HttpResponse(response=_response, data=data)
+            return HttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problem_version(
@@ -155,14 +155,14 @@ class RawProblemClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 ProblemInfoV2,
                 parse_obj_as(
                     type_=ProblemInfoV2,  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return HttpResponse(response=_response, data=data)
+            return HttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
@@ -195,14 +195,14 @@ class AsyncRawProblemClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 typing.List[LightweightProblemInfoV2],
                 parse_obj_as(
                     type_=typing.List[LightweightProblemInfoV2],  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return AsyncHttpResponse(response=_response, data=data)
+            return AsyncHttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problems(
@@ -230,14 +230,14 @@ class AsyncRawProblemClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 typing.List[ProblemInfoV2],
                 parse_obj_as(
                     type_=typing.List[ProblemInfoV2],  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return AsyncHttpResponse(response=_response, data=data)
+            return AsyncHttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_latest_problem(
@@ -267,14 +267,14 @@ class AsyncRawProblemClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 ProblemInfoV2,
                 parse_obj_as(
                     type_=ProblemInfoV2,  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return AsyncHttpResponse(response=_response, data=data)
+            return AsyncHttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problem_version(
@@ -306,12 +306,12 @@ class AsyncRawProblemClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 ProblemInfoV2,
                 parse_obj_as(
                     type_=ProblemInfoV2,  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return AsyncHttpResponse(response=_response, data=data)
+            return AsyncHttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)

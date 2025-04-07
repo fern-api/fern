@@ -54,8 +54,8 @@ class RawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.data
-                return HttpResponse(response=_response, data=data)
+                _data = _parsed_response.data
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -92,8 +92,8 @@ class RawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.docs
-                return HttpResponse(response=_response, data=data)
+                _data = _parsed_response.docs
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -130,8 +130,8 @@ class RawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.data
-                return HttpResponse(response=_response, data=data)
+                _data = _parsed_response.data
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -168,8 +168,8 @@ class RawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.metadata
-                return HttpResponse(response=_response, data=data)
+                _data = _parsed_response.metadata
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -206,8 +206,8 @@ class RawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.data if _parsed_response is not None else _parsed_response
-                return HttpResponse(response=_response, data=data)
+                _data = _parsed_response.data if _parsed_response is not None else _parsed_response
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -244,8 +244,8 @@ class RawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.docs if _parsed_response is not None else None
-                return HttpResponse(response=_response, data=data)  # type: ignore
+                _data = _parsed_response.docs if _parsed_response is not None else None
+                return HttpResponse(response=_response, data=_data)  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -282,8 +282,8 @@ class RawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.data if _parsed_response is not None else None
-                return HttpResponse(response=_response, data=data)  # type: ignore
+                _data = _parsed_response.data if _parsed_response is not None else None
+                return HttpResponse(response=_response, data=_data)  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -325,8 +325,8 @@ class AsyncRawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.data
-                return AsyncHttpResponse(response=_response, data=data)
+                _data = _parsed_response.data
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -363,8 +363,8 @@ class AsyncRawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.docs
-                return AsyncHttpResponse(response=_response, data=data)
+                _data = _parsed_response.docs
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -401,8 +401,8 @@ class AsyncRawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.data
-                return AsyncHttpResponse(response=_response, data=data)
+                _data = _parsed_response.data
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -439,8 +439,8 @@ class AsyncRawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.metadata
-                return AsyncHttpResponse(response=_response, data=data)
+                _data = _parsed_response.metadata
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -477,8 +477,8 @@ class AsyncRawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.data if _parsed_response is not None else _parsed_response
-                return AsyncHttpResponse(response=_response, data=data)
+                _data = _parsed_response.data if _parsed_response is not None else _parsed_response
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -515,8 +515,8 @@ class AsyncRawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.docs if _parsed_response is not None else None
-                return AsyncHttpResponse(response=_response, data=data)  # type: ignore
+                _data = _parsed_response.docs if _parsed_response is not None else None
+                return AsyncHttpResponse(response=_response, data=_data)  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -553,8 +553,8 @@ class AsyncRawServiceClient:
                         object_=_response.json(),
                     ),
                 )
-                data = _parsed_response.data if _parsed_response is not None else None
-                return AsyncHttpResponse(response=_response, data=data)  # type: ignore
+                _data = _parsed_response.data if _parsed_response is not None else None
+                return AsyncHttpResponse(response=_response, data=_data)  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

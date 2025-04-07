@@ -44,14 +44,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -81,14 +81,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     int,
                     parse_obj_as(
                         type_=int,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -118,14 +118,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     int,
                     parse_obj_as(
                         type_=int,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -155,14 +155,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     float,
                     parse_obj_as(
                         type_=float,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -192,14 +192,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     bool,
                     parse_obj_as(
                         type_=bool,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -229,14 +229,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     dt.datetime,
                     parse_obj_as(
                         type_=dt.datetime,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -266,14 +266,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     dt.date,
                     parse_obj_as(
                         type_=dt.date,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -303,14 +303,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     uuid.UUID,
                     parse_obj_as(
                         type_=uuid.UUID,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -340,14 +340,14 @@ class RawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -382,14 +382,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -419,14 +419,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     int,
                     parse_obj_as(
                         type_=int,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -456,14 +456,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     int,
                     parse_obj_as(
                         type_=int,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -493,14 +493,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     float,
                     parse_obj_as(
                         type_=float,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -530,14 +530,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     bool,
                     parse_obj_as(
                         type_=bool,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -567,14 +567,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     dt.datetime,
                     parse_obj_as(
                         type_=dt.datetime,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -604,14 +604,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     dt.date,
                     parse_obj_as(
                         type_=dt.date,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -641,14 +641,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     uuid.UUID,
                     parse_obj_as(
                         type_=uuid.UUID,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -678,14 +678,14 @@ class AsyncRawPrimitiveClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

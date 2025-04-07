@@ -45,14 +45,14 @@ class RawS3Client:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -90,14 +90,14 @@ class AsyncRawS3Client:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

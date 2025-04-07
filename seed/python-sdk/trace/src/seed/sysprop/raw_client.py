@@ -70,14 +70,14 @@ class RawSyspropClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 typing.Dict[Language, int],
                 parse_obj_as(
                     type_=typing.Dict[Language, int],  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return HttpResponse(response=_response, data=data)
+            return HttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
@@ -138,12 +138,12 @@ class AsyncRawSyspropClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 typing.Dict[Language, int],
                 parse_obj_as(
                     type_=typing.Dict[Language, int],  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return AsyncHttpResponse(response=_response, data=data)
+            return AsyncHttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)

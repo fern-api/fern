@@ -42,14 +42,14 @@ class RawHomepageClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 typing.List[ProblemId],
                 parse_obj_as(
                     type_=typing.List[ProblemId],  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return HttpResponse(response=_response, data=data)
+            return HttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def set_homepage_problems(
@@ -110,14 +110,14 @@ class AsyncRawHomepageClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            data = typing.cast(
+            _data = typing.cast(
                 typing.List[ProblemId],
                 parse_obj_as(
                     type_=typing.List[ProblemId],  # type: ignore
                     object_=_response_json,
                 ),
             )
-            return AsyncHttpResponse(response=_response, data=data)
+            return AsyncHttpResponse(response=_response, data=_data)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def set_homepage_problems(

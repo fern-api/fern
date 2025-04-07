@@ -595,3 +595,4 @@ client.endpoints.content_type.post_json_patch_content_type(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_with_charset_type</a>(...)</code></summary>

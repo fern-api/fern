@@ -105,14 +105,14 @@ class RawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     ObjectWithOptionalField,
                     construct_type(
                         type_=ObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -144,14 +144,14 @@ class RawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     ObjectWithRequiredField,
                     construct_type(
                         type_=ObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -183,14 +183,14 @@ class RawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     ObjectWithMapOfMap,
                     construct_type(
                         type_=ObjectWithMapOfMap,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -231,14 +231,14 @@ class RawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     NestedObjectWithOptionalField,
                     construct_type(
                         type_=NestedObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -282,14 +282,14 @@ class RawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     NestedObjectWithRequiredField,
                     construct_type(
                         type_=NestedObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -324,14 +324,14 @@ class RawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     NestedObjectWithRequiredField,
                     construct_type(
                         type_=NestedObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -420,14 +420,14 @@ class AsyncRawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     ObjectWithOptionalField,
                     construct_type(
                         type_=ObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -459,14 +459,14 @@ class AsyncRawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     ObjectWithRequiredField,
                     construct_type(
                         type_=ObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -498,14 +498,14 @@ class AsyncRawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     ObjectWithMapOfMap,
                     construct_type(
                         type_=ObjectWithMapOfMap,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -546,14 +546,14 @@ class AsyncRawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     NestedObjectWithOptionalField,
                     construct_type(
                         type_=NestedObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -597,14 +597,14 @@ class AsyncRawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     NestedObjectWithRequiredField,
                     construct_type(
                         type_=NestedObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -639,14 +639,14 @@ class AsyncRawObjectClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     NestedObjectWithRequiredField,
                     construct_type(
                         type_=NestedObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

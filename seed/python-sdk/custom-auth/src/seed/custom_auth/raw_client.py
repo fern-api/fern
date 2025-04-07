@@ -41,14 +41,14 @@ class RawCustomAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     bool,
                     parse_obj_as(
                         type_=bool,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
                     typing.cast(
@@ -90,14 +90,14 @@ class RawCustomAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     bool,
                     parse_obj_as(
                         type_=bool,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
                     typing.cast(
@@ -142,14 +142,14 @@ class AsyncRawCustomAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     bool,
                     parse_obj_as(
                         type_=bool,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
                     typing.cast(
@@ -191,14 +191,14 @@ class AsyncRawCustomAuthClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     bool,
                     parse_obj_as(
                         type_=bool,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
                     typing.cast(

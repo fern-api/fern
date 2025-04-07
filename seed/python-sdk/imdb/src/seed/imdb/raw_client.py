@@ -53,14 +53,14 @@ class RawImdbClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     MovieId,
                     parse_obj_as(
                         type_=MovieId,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -88,14 +88,14 @@ class RawImdbClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     Movie,
                     parse_obj_as(
                         type_=Movie,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=data)
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise MovieDoesNotExistError(
                     typing.cast(
@@ -147,14 +147,14 @@ class AsyncRawImdbClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     MovieId,
                     parse_obj_as(
                         type_=MovieId,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -182,14 +182,14 @@ class AsyncRawImdbClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                data = typing.cast(
+                _data = typing.cast(
                     Movie,
                     parse_obj_as(
                         type_=Movie,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=data)
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise MovieDoesNotExistError(
                     typing.cast(

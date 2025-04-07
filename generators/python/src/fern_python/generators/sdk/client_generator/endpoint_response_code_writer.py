@@ -252,7 +252,7 @@ class EndpointResponseCodeWriter:
             if isinstance(pydantic_parse_expression.expression, AST.CodeWriter) and not str(
                 pydantic_parse_expression.expression._code_writer
             ).startswith("data"):
-                writer.write("data = ")
+                writer.write("_data = ")
                 writer.write_node(pydantic_parse_expression)
                 writer.write_newline_if_last_line_not()
                 is_optional = str(pydantic_parse_expression.expression._code_writer).endswith(
@@ -273,7 +273,7 @@ class EndpointResponseCodeWriter:
                     ),
                     kwargs=[
                         ("response", AST.Expression(EndpointResponseCodeWriter.RESPONSE_VARIABLE)),
-                        ("data", AST.Expression("data")),
+                        ("data", AST.Expression("_data")),
                     ],
                 )
             )
