@@ -1,6 +1,6 @@
-import { abortRawResponse, toRawResponse, unknownRawResponse } from "../RawResponse";
 import { toJson } from "../json";
 import { APIResponse } from "./APIResponse";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 import { createRequestUrl } from "./createRequestUrl";
 import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";

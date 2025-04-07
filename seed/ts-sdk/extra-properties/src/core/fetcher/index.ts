@@ -3,3 +3,4 @@ export { fetcher } from "./Fetcher";
 export type { Fetcher, FetchFunction } from "./Fetcher";
 export { getHeader } from "./getHeader";
 export { Supplier } from "./Supplier";
+export * from "./RawResponse";
