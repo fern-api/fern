@@ -555,7 +555,7 @@ export class TypeInstantiation extends AstNode {
     private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
         switch (typeof value) {
             case "boolean":
-                writer.write(value.toString());
+                writer.write(value ? "True" : "False");
                 return;
             case "string":
                 writer.write(`"${this.escapeString(value)}"`);

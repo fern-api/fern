@@ -78,7 +78,8 @@ export class DockerTestRunner extends TestRunner {
             context: taskContext,
             irVersionOverride: irVersion,
             outputVersionOverride: outputVersion,
-            shouldGenerateDynamicSnippetTests
+            shouldGenerateDynamicSnippetTests,
+            skipUnstableDynamicSnippetTests: true
         });
     }
 

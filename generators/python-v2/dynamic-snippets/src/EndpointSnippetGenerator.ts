@@ -431,7 +431,7 @@ export class EndpointSnippetGenerator {
                 return [
                     {
                         name: REQUEST_BODY_ARG_NAME,
-                        value: this.getBytesBodyRequestArg({ value })
+                        value: this.getBytesBodyRequestTypeInstantiation({ value })
                     }
                 ];
             case "typeReference":
@@ -487,6 +487,7 @@ export class EndpointSnippetGenerator {
     }): python.NamedValue[] {
         switch (named.type) {
             case "alias":
+                return this.getBodyRequestArgsForTypeReference({ typeReference: named.typeReference, value });
             case "enum":
             case "discriminatedUnion":
             case "undiscriminatedUnion":
@@ -511,7 +512,20 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private getBytesBodyRequestArg({ value }: { value: unknown }): python.TypeInstantiation {
+    private getBodyRequestArgsForBytes({ body, value }: { body: FernIr.dynamic.ReferencedRequestBody; value: unknown }): python.NamedValue[] {
+        const typeInstantiation = this.getBytesBodyRequestTypeInstantiation({ value });
+        if (python.TypeInstantiation.isNop(typeInstantiation)) {
+            return [];
+        }
+        return [
+            {
+                name: this.context.getPropertyName(body.bodyKey),
+                value: typeInstantiation
+            }
+        ];
+    }
+
+    private getBytesBodyRequestTypeInstantiation({ value }: { value: unknown }): python.TypeInstantiation {
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -656,7 +670,7 @@ export class EndpointSnippetGenerator {
             case "properties":
                 return this.getInlinedRequestBodyPropertyObjectFields({ parameters: body.value, value });
             case "referenced":
-                return [this.getReferencedRequestBodyPropertyObjectField({ body, value })];
+                return this.getReferencedRequestBodyPropertyTypeInstantiation({ body, value });
             case "fileUpload":
                 return this.getFileUploadRequestBodyObjectFields({ filePropertyInfo });
             default:
@@ -672,33 +686,21 @@ export class EndpointSnippetGenerator {
         return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
     }
 
-    private getReferencedRequestBodyPropertyObjectField({
+    private getReferencedRequestBodyPropertyTypeInstantiation({
         body,
         value
     }: {
         body: FernIr.dynamic.ReferencedRequestBody;
         value: unknown;
-    }): python.NamedValue {
-        return {
-            name: this.context.getPropertyName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
-        };
-    }
-
-    private getReferencedRequestBodyPropertyTypeLiteral({
-        body,
-        value
-    }: {
-        body: FernIr.dynamic.ReferencedRequestBodyType;
-        value: unknown;
-    }): python.TypeInstantiation {
-        switch (body.type) {
+    }): python.NamedValue[] {
+        const bodyType = body.bodyType;
+        switch (bodyType.type) {
             case "bytes":
-                return this.getBytesBodyRequestArg({ value });
+                return this.getBodyRequestArgsForBytes({ body, value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.getBodyRequestArgsForTypeReference({ typeReference: bodyType.value, value });
             default:
-                assertNever(body);
+                assertNever(bodyType);
         }
     }
 
