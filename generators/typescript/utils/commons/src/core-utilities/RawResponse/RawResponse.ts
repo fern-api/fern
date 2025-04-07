@@ -10,7 +10,7 @@ export interface RawResponse {
     readonly WithRawResponse: {
         _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
     };
-    readonly ResponsePromise: {
+    readonly HttpResponsePromise: {
         _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
         fromFunction: (params: ts.Expression[]) => ts.Expression;
     };

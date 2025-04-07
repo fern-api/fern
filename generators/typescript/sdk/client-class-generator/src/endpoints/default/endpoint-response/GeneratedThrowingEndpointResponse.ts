@@ -521,7 +521,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier("rawResponse"),
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                                    ts.factory.createIdentifier(
+                                        GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                    ),
                                     ts.factory.createIdentifier("rawResponse")
                                 )
                             )
@@ -630,7 +632,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createIdentifier("rawResponse"),
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                                    ts.factory.createIdentifier(
+                                        GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                    ),
                                     ts.factory.createIdentifier("rawResponse")
                                 )
                             )
@@ -923,7 +927,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                               ts.factory.createPropertyAssignment(
                                   ts.factory.createIdentifier("rawResponse"),
                                   ts.factory.createPropertyAccessExpression(
-                                      ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                                      ts.factory.createIdentifier(
+                                          GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                      ),
                                       ts.factory.createIdentifier("rawResponse")
                                   )
                               )

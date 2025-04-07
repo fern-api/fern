@@ -70,8 +70,9 @@ export interface Fetcher {
         };
 
         FailedResponse: {
-            _build: (error: ts.Expression) => ts.ObjectLiteralExpression;
+            _build: (error: ts.Expression, rawResponse: ts.Expression) => ts.ObjectLiteralExpression;
             error: string;
+            rawResponse: string;
         };
     };
 

@@ -5,7 +5,6 @@ import { CallbackQueue } from "./callback-queue/CallbackQueue";
 import { Fetcher } from "./fetcher/Fetcher";
 import { FormDataUtils } from "./form-data-utils/FormDataUtils";
 import { Pagination } from "./pagination/Pagination";
-import { PromiseUtils } from "./promise/PromiseUtils";
 import { Runtime } from "./runtime/Runtime";
 import { StreamUtils } from "./stream-utils/StreamUtils";
 import { Utils } from "./utils/Utils";
@@ -23,7 +22,6 @@ export interface CoreUtilities {
     runtime: Runtime;
     pagination: Pagination;
     utils: Utils;
-    promiseUtils: PromiseUtils;
     websocket: Websocket;
     RawResponse: RawResponse;
 }

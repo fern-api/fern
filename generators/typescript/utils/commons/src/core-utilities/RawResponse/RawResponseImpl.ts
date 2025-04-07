@@ -35,21 +35,24 @@ export class RawResponseImpl extends CoreUtility implements RawResponse {
             )();
         }
     };
-    public readonly ResponsePromise = {
+    public readonly HttpResponsePromise = {
         _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
             return this.withExportedName(
-                "ResponsePromise",
-                (ResponsePromise) => () =>
-                    ts.factory.createTypeReferenceNode(ResponsePromise.getEntityName(), typeArg ? [typeArg] : undefined)
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createTypeReferenceNode(
+                        HttpResponsePromise.getEntityName(),
+                        typeArg ? [typeArg] : undefined
+                    )
             )();
         },
         fromFunction: (params: ts.Expression[]): ts.Expression => {
             return this.withExportedName(
-                "ResponsePromise",
-                (ResponsePromise) => () =>
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            ResponsePromise.getExpression(),
+                            HttpResponsePromise.getExpression(),
                             ts.factory.createIdentifier("fromFunction")
                         ),
                         undefined,

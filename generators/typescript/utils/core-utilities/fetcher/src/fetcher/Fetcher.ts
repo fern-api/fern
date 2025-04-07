@@ -1,4 +1,4 @@
-import { RawResponse, toRawResponse } from "../RawResponse";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "../RawResponse";
 import { toJson } from "../json";
 import { APIResponse } from "./APIResponse";
 import { createRequestUrl } from "./createRequestUrl";
@@ -115,14 +115,16 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: "The user aborted a request"
-                }
+                },
+                rawResponse: abortRawResponse
             };
         } else if (error instanceof Error && error.name === "AbortError") {
             return {
                 ok: false,
                 error: {
                     reason: "timeout"
-                }
+                },
+                rawResponse: abortRawResponse
             };
         } else if (error instanceof Error) {
             return {
@@ -130,7 +132,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: error.message
-                }
+                },
+                rawResponse: unknownRawResponse
             };
         }
 
@@ -139,7 +142,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             error: {
                 reason: "unknown",
                 errorMessage: toJson(error)
-            }
+            },
+            rawResponse: unknownRawResponse
         };
     }
 }

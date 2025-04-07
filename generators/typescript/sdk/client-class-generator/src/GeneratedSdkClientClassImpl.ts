@@ -702,15 +702,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const internalMethodName = `__${publicMethodName}`;
             const publicStatements = [
                 ts.factory.createReturnStatement(
-                    context.coreUtilities.RawResponse.ResponsePromise.fromFunction(
-                        [
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createThis(),
-                                ts.factory.createIdentifier(internalMethodName)
-                          ),
-                          ...signature.parameters.map(p => ts.factory.createIdentifier(p.name))
-                        ]
-                    ),
+                    context.coreUtilities.RawResponse.HttpResponsePromise.fromFunction([
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createThis(),
+                            ts.factory.createIdentifier(internalMethodName)
+                        ),
+                        ...signature.parameters.map((p) => ts.factory.createIdentifier(p.name))
+                    ])
                 )
             ];
 
@@ -720,7 +718,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 name: publicMethodName,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
-                    context.coreUtilities.RawResponse.ResponsePromise._getReferenceToType(signature.returnTypeWithoutPromise)
+                    context.coreUtilities.RawResponse.HttpResponsePromise._getReferenceToType(
+                        signature.returnTypeWithoutPromise
+                    )
                 ),
                 statements: publicStatements.map(getTextOfTsNode)
             };
@@ -738,7 +738,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
                     ts.factory.createTypeReferenceNode("Promise", [
-                        context.coreUtilities.RawResponse.WithRawResponse._getReferenceToType(signature.returnTypeWithoutPromise)
+                        context.coreUtilities.RawResponse.WithRawResponse._getReferenceToType(
+                            signature.returnTypeWithoutPromise
+                        )
                     ])
                 ),
                 scope: Scope.Private,

@@ -223,6 +223,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                   .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                   .getErrorUnion()
                   .getReferenceTo(context);
+        const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
+        );
 
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessChain(
@@ -251,17 +255,13 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                                               errorBodyType
                                                           ),
                                                           context
-                                                      )
+                                                      ),
+                                                      rawResponseAccessor
                                                   )
                                               ),
                                               ts.factory.createPropertyAssignment(
                                                   ts.factory.createIdentifier("rawResponse"),
-                                                  ts.factory.createPropertyAccessExpression(
-                                                      ts.factory.createIdentifier(
-                                                          GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
-                                                      ),
-                                                      ts.factory.createIdentifier("rawResponse")
-                                                  )
+                                                  rawResponseAccessor
                                               )
                                           ],
                                           false
@@ -279,7 +279,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     }
 
     private getSwitchStatementForStatusCodeDiscriminatedErrors(context: SdkContext) {
-        const referenceToError = this.getReferenceToError(context);
+        const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
+        );
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToError(context),
@@ -308,15 +311,13 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                                               })
                                                             : undefined,
                                                     context
-                                                })
+                                                }),
+                                            rawResponseAccessor
                                         )
                                     ),
                                     ts.factory.createPropertyAssignment(
                                         ts.factory.createIdentifier("rawResponse"),
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                                            ts.factory.createIdentifier("rawResponse")
-                                        )
+                                        rawResponseAccessor
                                     )
                                 ],
                                 false
@@ -330,27 +331,24 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     private getReturnResponseForUnknownError(context: SdkContext): ts.Statement {
         const referenceToError = this.getReferenceToError(context);
+        const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
+        );
         return ts.factory.createReturnStatement(
             ts.factory.createObjectLiteralExpression(
                 [
                     ts.factory.createPropertyAssignment(
                         ts.factory.createIdentifier("data"),
                         context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                            this.getGeneratedEndpointErrorUnion(context)
-                                .getErrorUnion()
-                                .buildUnknown({
-                                    existingValue: this.getReferenceToError(context),
-                                    context
-                                })
+                            this.getGeneratedEndpointErrorUnion(context).getErrorUnion().buildUnknown({
+                                existingValue: referenceToError,
+                                context
+                            }),
+                            rawResponseAccessor
                         )
                     ),
-                    ts.factory.createPropertyAssignment(
-                        ts.factory.createIdentifier("rawResponse"),
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                            ts.factory.createIdentifier("rawResponse")
-                        )
-                    )
+                    ts.factory.createPropertyAssignment(ts.factory.createIdentifier("rawResponse"), rawResponseAccessor)
                 ],
                 false
             )

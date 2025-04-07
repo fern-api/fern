@@ -256,15 +256,17 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         },
 
         FailedResponse: {
-            _build: (error: ts.Expression): ts.ObjectLiteralExpression =>
+            _build: (error: ts.Expression, rawResponse: ts.Expression): ts.ObjectLiteralExpression =>
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(this.APIResponse.ok, ts.factory.createFalse()),
-                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.error, error)
+                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.error, error),
+                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.rawResponse, rawResponse)
                     ],
                     true
                 ),
-            error: "error"
+            error: "error",
+            rawResponse: "rawResponse"
         }
     };
 
