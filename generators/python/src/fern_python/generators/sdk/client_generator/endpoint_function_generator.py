@@ -237,9 +237,11 @@ class EndpointFunctionGenerator:
                 else:
                     cleaned_parameters.append(param)
             named_parameters = cleaned_parameters
-        
+
         if self._context.custom_config.inline_path_params:
-            named_path_parameters: List[AST.NamedFunctionParameter] = self._named_parameters_from_path_parameters(self._endpoint.all_path_parameters)
+            named_path_parameters: List[AST.NamedFunctionParameter] = self._named_parameters_from_path_parameters(
+                self._endpoint.all_path_parameters
+            )
             # path parameters go first because it's important that request options is the last parameter
             named_parameters = named_path_parameters + named_parameters
 

@@ -5,7 +5,6 @@ from typing import List, Optional
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
-from .endpoint_function_generator import EndpointFunctionGenerator
 from .endpoint_metadata_collector import EndpointMetadataCollector
 from .endpoint_response_code_writer import EndpointResponseCodeWriter
 from .generated_root_client import GeneratedRootClient

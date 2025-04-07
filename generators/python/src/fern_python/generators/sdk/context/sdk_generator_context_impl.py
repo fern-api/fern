@@ -186,9 +186,11 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
         return self._root_generated_raw_client_declaration_referencer.get_class_reference(name=None, as_request=False)
-    
+
     def get_async_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
-        return self._root_generated_async_raw_client_declaration_referencer.get_class_reference(name=None, as_request=False)
+        return self._root_generated_async_raw_client_declaration_referencer.get_class_reference(
+            name=None, as_request=False
+        )
 
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
         return self._error_declaration_referencer.get_class_reference(name=error_name, as_request=False)
