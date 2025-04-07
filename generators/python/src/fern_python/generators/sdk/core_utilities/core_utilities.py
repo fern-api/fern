@@ -106,6 +106,16 @@ class CoreUtilities:
             exports={"HttpClient", "AsyncHttpClient"},
         )
 
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="http_response.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="http_response"),
+            ),
+            exports={"HttpResponse", "AsyncHttpResponse"},
+        )
+
         is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
         utilities_path = (
             "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py"

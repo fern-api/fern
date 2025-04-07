@@ -2,13 +2,12 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawInlinedRequestClient
 from ..types.operand import Operand
 from ..types.color_or_operand import ColorOrOperand
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawInlinedRequestClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -16,7 +15,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class InlinedRequestClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawInlinedRequestClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawInlinedRequestClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawInlinedRequestClient
+        """
+        return self._raw_client
 
     def send(
         self,
@@ -57,34 +67,30 @@ class InlinedRequestClient:
             operand_or_color=Color.RED,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "inlined",
-            method="POST",
-            json={
-                "operand": operand,
-                "maybeOperand": maybe_operand,
-                "operandOrColor": convert_and_respect_annotation_metadata(
-                    object_=operand_or_color, annotation=ColorOrOperand, direction="write"
-                ),
-                "maybeOperandOrColor": convert_and_respect_annotation_metadata(
-                    object_=maybe_operand_or_color, annotation=ColorOrOperand, direction="write"
-                ),
-            },
+        response = self._raw_client.send(
+            operand=operand,
+            operand_or_color=operand_or_color,
+            maybe_operand=maybe_operand,
+            maybe_operand_or_color=maybe_operand_or_color,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncInlinedRequestClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawInlinedRequestClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawInlinedRequestClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawInlinedRequestClient
+        """
+        return self._raw_client
 
     async def send(
         self,
@@ -133,26 +139,11 @@ class AsyncInlinedRequestClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "inlined",
-            method="POST",
-            json={
-                "operand": operand,
-                "maybeOperand": maybe_operand,
-                "operandOrColor": convert_and_respect_annotation_metadata(
-                    object_=operand_or_color, annotation=ColorOrOperand, direction="write"
-                ),
-                "maybeOperandOrColor": convert_and_respect_annotation_metadata(
-                    object_=maybe_operand_or_color, annotation=ColorOrOperand, direction="write"
-                ),
-            },
+        response = await self._raw_client.send(
+            operand=operand,
+            operand_or_color=operand_or_color,
+            maybe_operand=maybe_operand,
+            maybe_operand_or_color=maybe_operand_or_color,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

@@ -8,7 +8,7 @@ from ..environment_generators import (
     MultipleBaseUrlsEnvironmentGenerator,
     SingleBaseUrlEnvironmentGenerator,
 )
-from .constants import DEFAULT_BODY_PARAMETER_VALUE
+from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient, RootClient
 from fern_python.codegen import AST, SourceFile
@@ -16,9 +16,6 @@ from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunc
 from fern_python.external_dependencies import HttpX
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
-)
-from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
-    EndpointResponseCodeWriter,
 )
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
@@ -40,7 +37,11 @@ class RootClientConstructorParameter:
     docs: Optional[str] = None
 
 
-class RootClientGenerator:
+class RootClientGenerator(BaseWrappedClientGenerator):
+    ROOT_CLASS_DOCSTRING = (
+        "Use this class to access the different functions within the SDK. "
+        "You can instantiate any number of clients with different configuration that will propagate to these functions."
+    )
     FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME = "follow_redirects"
 
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME = "environment"
@@ -52,9 +53,6 @@ class RootClientGenerator:
     BASE_URL_MEMBER_NAME = "_base_url"
 
     HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME = "httpx_client"
-
-    RESPONSE_VARIABLE = EndpointResponseCodeWriter.RESPONSE_VARIABLE
-    RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
 
     GET_BASEURL_FUNCTION_NAME = "_get_base_url"
     TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
@@ -71,18 +69,24 @@ class RootClientGenerator:
         snippet_writer: SnippetWriter,
         oauth_scheme: Optional[ir_types.OAuthScheme],
         endpoint_metadata_collector: EndpointMetadataCollector,
+        websocket: Optional[ir_types.WebSocketChannel],
     ):
-        self._context = context
-        self._package = package
-        self._class_name = class_name
-        self._async_class_name = async_class_name
-        self._is_default_body_parameter_used = False
-        self._environments_config = self._context.ir.environments
+        super().__init__(
+            context=context,
+            package=package,
+            subpackage_id=None,
+            class_name=class_name,
+            async_class_name=async_class_name,
+            generated_root_client=None,
+            snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
+            endpoint_metadata_collector=endpoint_metadata_collector,
+            websocket=websocket,
+        )
+
         self._generated_environment = generated_environment
-        self._snippet_registry = snippet_registry
-        self._snippet_writer = snippet_writer
         self._oauth_scheme = oauth_scheme
-        self._endpoint_metadata_collector = endpoint_metadata_collector
+        self._environments_config = self._context.ir.environments
 
         client_wrapper_generator = ClientWrapperGenerator(
             context=self._context,
@@ -172,56 +176,30 @@ class RootClientGenerator:
             is_async=False,
             generated_root_client=generated_root_client,
         )
+        async_class_declaration = self._create_class_declaration(
+            is_async=True,
+            generated_root_client=generated_root_client,
+        )
+
         if self._is_default_body_parameter_used:
             source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
+        
         source_file.add_class_declaration(
             declaration=class_declaration,
             should_export=False,
         )
         source_file.add_class_declaration(
-            declaration=self._create_class_declaration(
-                is_async=True,
-                generated_root_client=generated_root_client,
-            ),
+            declaration=async_class_declaration,
             should_export=False,
         )
         if self._environments_config is not None:
             environments_union = self._environments_config.environments.get_as_union()
             if environments_union.type == "singleBaseUrl":
-                source_file.add_declaration(
-                    AST.FunctionDeclaration(
-                        name=RootClientGenerator.GET_BASEURL_FUNCTION_NAME,
-                        signature=AST.FunctionSignature(
-                            named_parameters=[
-                                AST.NamedFunctionParameter(
-                                    name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
-                                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
-                                ),
-                                AST.NamedFunctionParameter(
-                                    name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                                    type_hint=(
-                                        AST.TypeHint(self._context.get_reference_to_environments_class())
-                                        if self._environments_config.default_environment is not None
-                                        else AST.TypeHint.optional(
-                                            AST.TypeHint(self._context.get_reference_to_environments_class())
-                                        )
-                                    ),
-                                    docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
-                                ),
-                            ],
-                            return_type=AST.TypeHint.str_(),
-                        ),
-                        body=AST.CodeWriter(self._write_get_base_url_function),
-                    ),
-                    should_export=False,
-                )
+                source_file.add_declaration(self._get_base_url_function_declaration(), should_export=False)
         return generated_root_client
 
     def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
-        writer.write_line(
-            "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions."
-        )
+        writer.write_line(self.ROOT_CLASS_DOCSTRING)
 
     def _create_class_declaration(
         self,
@@ -264,40 +242,87 @@ class RootClientGenerator:
         )
 
         if self._package.service is not None:
+            class_declaration.add_method(self._create_with_raw_response_method(is_async=is_async))
             service = self._context.ir.services[self._package.service]
             for endpoint in service.endpoints:
-                endpoint_function_generator = EndpointFunctionGenerator(
-                    context=self._context,
-                    package=self._package,
-                    service=service,
-                    endpoint=endpoint,
-                    idempotency_headers=self._context.ir.idempotency_headers,
-                    client_wrapper_member_name=self._get_client_wrapper_member_name(),
-                    is_async=is_async,
-                    generated_root_client=generated_root_client,
-                    snippet_writer=self._snippet_writer,
-                    endpoint_metadata_collector=self._endpoint_metadata_collector,
-                )
-                generated_endpoint_functions = endpoint_function_generator.generate()
-                for generated_endpoint_function in generated_endpoint_functions:
-                    class_declaration.add_method(generated_endpoint_function.function)
-                    if (
-                        not self._is_default_body_parameter_used
-                        and generated_endpoint_function.is_default_body_parameter_used
-                    ):
-                        self._is_default_body_parameter_used = True
+                # Handle stream parameter endpoints specially to ensure all overloads are included
+                if self._is_stream_parameter_endpoint(endpoint):
+                    endpoint_generator = EndpointFunctionGenerator(
+                        context=self._context,
+                        package=self._package,
+                        service=service,
+                        endpoint=endpoint,
+                        idempotency_headers=self._context.ir.idempotency_headers,
+                        is_async=is_async,
+                        client_wrapper_member_name=f"{self._get_raw_client_member_name()}.{self._get_client_wrapper_member_name()}",
+                        generated_root_client=generated_root_client,
+                        snippet_writer=self._snippet_writer,
+                        endpoint_metadata_collector=self._endpoint_metadata_collector,
+                        is_raw_client=False,
+                    )
 
-                    for val in generated_endpoint_function.snippets or []:
-                        if is_async:
-                            self._snippet_registry.register_async_client_endpoint_snippet(
-                                endpoint=endpoint, expr=val.snippet, example_id=val.example_id
-                            )
-                        else:
-                            self._snippet_registry.register_sync_client_endpoint_snippet(
-                                endpoint=endpoint, expr=val.snippet, example_id=val.example_id
-                            )
+                    # Generate all functions (overloads + implementation)
+                    generated_endpoint_functions = endpoint_generator.generate()
+
+                    # Check if any generated function needs DEFAULT_BODY_PARAMETER
+                    for generated_function in generated_endpoint_functions:
+                        if generated_function.is_default_body_parameter_used:
+                            self._is_default_body_parameter_used = True
+                            break
+
+                    # Add all overloads first
+                    for overload_function in generated_endpoint_functions[:-1]:
+                        class_declaration.add_method(overload_function.function)
+
+                    # Then add the implementation
+                    class_declaration.add_method(generated_endpoint_functions[-1].function)
+                else:
+                    # For non-stream parameter endpoints, use the regular approach
+                    wrapper_method = self._create_wrapper_method(endpoint=endpoint, is_async=is_async, generated_root_client=generated_root_client)
+                    class_declaration.add_method(wrapper_method)
 
         return class_declaration
+
+    def _get_base_url_function_declaration(self) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name=RootClientGenerator.GET_BASEURL_FUNCTION_NAME,
+            signature=AST.FunctionSignature(
+                named_parameters=[
+                    AST.NamedFunctionParameter(
+                        name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
+                    ),
+                    AST.NamedFunctionParameter(
+                        name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=(
+                            AST.TypeHint(self._context.get_reference_to_environments_class())
+                            if self._environments_config.default_environment is not None
+                            else AST.TypeHint.optional(
+                                AST.TypeHint(self._context.get_reference_to_environments_class())
+                            )
+                        ),
+                        docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
+                    ),
+                ],
+                return_type=AST.TypeHint.str_(),
+            ),
+            body=AST.CodeWriter(self._write_get_base_url_function),
+        )
+
+    def get_raw_client_class_name(self, *, is_async: bool) -> str:
+        return (
+            self._context.get_class_name_for_generated_async_raw_root_client()
+            if is_async
+            else self._context.get_class_name_for_generated_raw_root_client()
+        )
+    
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
+        return (
+            self._context.get_async_raw_client_class_reference_for_root_client()
+            if is_async
+            else self._context.get_raw_client_class_reference_for_root_client()
+        )
 
     def _get_constructor_parameters(self, *, is_async: bool) -> List[RootClientConstructorParameter]:
         parameters: List[RootClientConstructorParameter] = []
@@ -574,9 +599,6 @@ class RootClientGenerator:
         )
         return parameters
 
-    def _environment_is_enum(self) -> bool:
-        return self._context.ir.environments is not None
-
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
         def _write_parameter_validation(writer: AST.NodeWriter) -> None:
             writer.write_line(f"if {param_name} is None:")
@@ -686,6 +708,28 @@ class RootClientGenerator:
                     kwargs=client_wrapper_constructor_kwargs,
                 )
             )
+            if self._package.service is not None:
+                writer.write_newline_if_last_line_not()
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name=f"self.{self._get_raw_client_member_name()}",
+                        initializer=AST.Expression(
+                            AST.ClassInstantiation(
+                                class_=(
+                                    self._context.get_async_raw_client_class_reference_for_root_client()
+                                    if is_async
+                                    else self._context.get_raw_client_class_reference_for_root_client()
+                                ),
+                                kwargs=[
+                                    (
+                                        "client_wrapper",
+                                        AST.Expression(f"self.{self._get_client_wrapper_member_name()}"),
+                                    ),
+                                ],
+                            )
+                        ),
+                    )
+                )
             writer.write_newline_if_last_line_not()
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
@@ -862,12 +906,6 @@ class RootClientGenerator:
 
         return client_wrapper_constructor_kwargs
 
-    def _write_default_param(self, writer: AST.NodeWriter) -> None:
-        writer.write_line("# this is used as the default value for optional parameters")
-        writer.write(f"{DEFAULT_BODY_PARAMETER_VALUE} = ")
-        writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
-        writer.write_newline_if_last_line_not()
-
     def _write_get_base_url_function(self, writer: AST.NodeWriter) -> None:
         writer.write_line(f"if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None:")
         with writer.indent():
@@ -881,17 +919,6 @@ class RootClientGenerator:
                 'raise Exception("Please pass in either base_url or environment to construct the client")'
             )
         writer.write_newline_if_last_line_not()
-
-    def _get_client_wrapper_constructor_parameter_name(
-        self, params: typing.List[RootClientConstructorParameter]
-    ) -> str:
-        for param in params:
-            if param.constructor_parameter_name == "client_wrapper":
-                return "_client_wrapper"
-        return "client_wrapper"
-
-    def _get_client_wrapper_member_name(self) -> str:
-        return "_client_wrapper"
 
     def _get_timeout_constructor_parameter_name(self, params: typing.List[str]) -> str:
         for param in params:

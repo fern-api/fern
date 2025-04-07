@@ -2,19 +2,17 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .raw_client import RawObjectClient
 import datetime as dt
 import uuid
 from ...core.request_options import RequestOptions
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
-from ...core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ...core.api_error import ApiError
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
-from ...core.jsonable_encoder import jsonable_encoder
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawObjectClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -22,7 +20,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ObjectClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawObjectClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawObjectClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawObjectClient
+        """
+        return self._raw_client
 
     def get_and_return_with_optional_field(
         self,
@@ -112,40 +121,23 @@ class ObjectClient:
             bigint=1000000,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-optional-field",
-            method="POST",
-            json={
-                "string": string,
-                "integer": integer,
-                "long": long_,
-                "double": double,
-                "bool": bool_,
-                "datetime": datetime,
-                "date": date,
-                "uuid": uuid_,
-                "base64": base_64,
-                "list": list_,
-                "set": set_,
-                "map": map_,
-                "bigint": bigint,
-            },
+        response = self._raw_client.get_and_return_with_optional_field(
+            string=string,
+            integer=integer,
+            long_=long_,
+            double=double,
+            bool_=bool_,
+            datetime=datetime,
+            date=date,
+            uuid_=uuid_,
+            base_64=base_64,
+            list_=list_,
+            set_=set_,
+            map_=map_,
+            bigint=bigint,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ObjectWithOptionalField,
-                    parse_obj_as(
-                        type_=ObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get_and_return_with_required_field(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -174,28 +166,11 @@ class ObjectClient:
             string="string",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-required-field",
-            method="POST",
-            json={
-                "string": string,
-            },
+        response = self._raw_client.get_and_return_with_required_field(
+            string=string,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ObjectWithRequiredField,
-                    parse_obj_as(
-                        type_=ObjectWithRequiredField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get_and_return_with_map_of_map(
         self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
@@ -224,28 +199,11 @@ class ObjectClient:
             map_={"map": {"map": "map"}},
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-map-of-map",
-            method="POST",
-            json={
-                "map": map_,
-            },
+        response = self._raw_client.get_and_return_with_map_of_map(
+            map_=map_,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ObjectWithMapOfMap,
-                    parse_obj_as(
-                        type_=ObjectWithMapOfMap,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get_and_return_nested_with_optional_field(
         self,
@@ -305,29 +263,12 @@ class ObjectClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "object/get-and-return-nested-with-optional-field",
-            method="POST",
-            json={
-                "string": string,
-                "NestedObject": nested_object,
-            },
+        response = self._raw_client.get_and_return_nested_with_optional_field(
+            string=string,
+            nested_object=nested_object,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    NestedObjectWithOptionalField,
-                    parse_obj_as(
-                        type_=NestedObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get_and_return_nested_with_required_field(
         self,
@@ -391,29 +332,13 @@ class ObjectClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
-            method="POST",
-            json={
-                "string": string,
-                "NestedObject": nested_object,
-            },
+        response = self._raw_client.get_and_return_nested_with_required_field(
+            string_,
+            string=string,
+            nested_object=nested_object,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    NestedObjectWithRequiredField,
-                    parse_obj_as(
-                        type_=NestedObjectWithRequiredField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get_and_return_nested_with_required_field_as_list(
         self,
@@ -501,31 +426,27 @@ class ObjectClient:
             ],
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "object/get-and-return-nested-with-required-field-list",
-            method="POST",
-            json=request,
+        response = self._raw_client.get_and_return_nested_with_required_field_as_list(
+            request=request,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    NestedObjectWithRequiredField,
-                    parse_obj_as(
-                        type_=NestedObjectWithRequiredField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncObjectClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawObjectClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawObjectClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawObjectClient
+        """
+        return self._raw_client
 
     async def get_and_return_with_optional_field(
         self,
@@ -622,40 +543,23 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-optional-field",
-            method="POST",
-            json={
-                "string": string,
-                "integer": integer,
-                "long": long_,
-                "double": double,
-                "bool": bool_,
-                "datetime": datetime,
-                "date": date,
-                "uuid": uuid_,
-                "base64": base_64,
-                "list": list_,
-                "set": set_,
-                "map": map_,
-                "bigint": bigint,
-            },
+        response = await self._raw_client.get_and_return_with_optional_field(
+            string=string,
+            integer=integer,
+            long_=long_,
+            double=double,
+            bool_=bool_,
+            datetime=datetime,
+            date=date,
+            uuid_=uuid_,
+            base_64=base_64,
+            list_=list_,
+            set_=set_,
+            map_=map_,
+            bigint=bigint,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ObjectWithOptionalField,
-                    parse_obj_as(
-                        type_=ObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get_and_return_with_required_field(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -692,28 +596,11 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-required-field",
-            method="POST",
-            json={
-                "string": string,
-            },
+        response = await self._raw_client.get_and_return_with_required_field(
+            string=string,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ObjectWithRequiredField,
-                    parse_obj_as(
-                        type_=ObjectWithRequiredField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get_and_return_with_map_of_map(
         self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
@@ -750,28 +637,11 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-map-of-map",
-            method="POST",
-            json={
-                "map": map_,
-            },
+        response = await self._raw_client.get_and_return_with_map_of_map(
+            map_=map_,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ObjectWithMapOfMap,
-                    parse_obj_as(
-                        type_=ObjectWithMapOfMap,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get_and_return_nested_with_optional_field(
         self,
@@ -838,29 +708,12 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "object/get-and-return-nested-with-optional-field",
-            method="POST",
-            json={
-                "string": string,
-                "NestedObject": nested_object,
-            },
+        response = await self._raw_client.get_and_return_nested_with_optional_field(
+            string=string,
+            nested_object=nested_object,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    NestedObjectWithOptionalField,
-                    parse_obj_as(
-                        type_=NestedObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get_and_return_nested_with_required_field(
         self,
@@ -931,29 +784,13 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
-            method="POST",
-            json={
-                "string": string,
-                "NestedObject": nested_object,
-            },
+        response = await self._raw_client.get_and_return_nested_with_required_field(
+            string_,
+            string=string,
+            nested_object=nested_object,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    NestedObjectWithRequiredField,
-                    parse_obj_as(
-                        type_=NestedObjectWithRequiredField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get_and_return_nested_with_required_field_as_list(
         self,
@@ -1048,23 +885,8 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "object/get-and-return-nested-with-required-field-list",
-            method="POST",
-            json=request,
+        response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
+            request=request,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    NestedObjectWithRequiredField,
-                    parse_obj_as(
-                        type_=NestedObjectWithRequiredField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
