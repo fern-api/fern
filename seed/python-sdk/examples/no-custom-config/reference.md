@@ -660,3 +660,180 @@ client.service.get_metadata(
 </details>
 
 <details><summary><code>client.service.<a href="src/seed/service/client.py">create_big_entity</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+import uuid
+
+from seed import SeedExamples
+from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
+from seed.environment import SeedExamplesEnvironment
+from seed.types import (
+    Actor,
+    Directory,
+    Entity,
+    Exception_Generic,
+    ExtendedMovie,
+    File,
+    Metadata_Html,
+    Migration,
+    Moment,
+    Node,
+    Test_And,
+    Tree,
+)
+
+client = SeedExamples(
+    token="YOUR_TOKEN",
+    environment=SeedExamplesEnvironment.PRODUCTION,
+)
+client.service.create_big_entity(
+    cast_member=Actor(
+        name="name",
+        id="id",
+    ),
+    extended_movie=ExtendedMovie(
+        id="id",
+        prequel="prequel",
+        title="title",
+        from_="from",
+        rating=1.1,
+        tag="tag",
+        book="book",
+        metadata={"metadata": {"key": "value"}},
+        revenue=1000000,
+        cast=["cast", "cast"],
+    ),
+    entity=Entity(
+        type="primitive",
+        name="name",
+    ),
+    metadata=Metadata_Html(value="metadata"),
+    common_metadata=Metadata(
+        id="id",
+        data={"data": "data"},
+        json_string="jsonString",
+    ),
+    event_info=EventInfo_Metadata(
+        id="id",
+        data={"data": "data"},
+        json_string="jsonString",
+    ),
+    data=Data_String(value="data"),
+    migration=Migration(
+        name="name",
+        status="RUNNING",
+    ),
+    exception=Exception_Generic(
+        exception_type="exceptionType",
+        exception_message="exceptionMessage",
+        exception_stacktrace="exceptionStacktrace",
+    ),
+    test=Test_And(value=True),
+    node=Node(
+        name="name",
+        nodes=[
+            Node(
+                name="name",
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                ],
+                trees=[
+                    Tree(
+                        nodes=[],
+                    ),
+                    Tree(
+                        nodes=[],
+                    ),
+                ],
+            ),
+            Node(
+                name="name",
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                ],
+                trees=[
+                    Tree(
+                        nodes=[],
+                    ),
+                    Tree(
+                        nodes=[],
+                    ),
+                ],
+            ),
+        ],
+        trees=[
+            Tree(
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                ],
+            ),
+            Tree(
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                ],
+            ),
+        ],
+    ),
+    directory=Directory(
+        name="name",
+        files=[
+            File(
+                name="name",
+                contents="contents",
+            ),
+            File(
+                name="name",
+                contents="contents",
+            ),
+        ],
+        directories=[
+            Directory(
+                name="name",
+               
