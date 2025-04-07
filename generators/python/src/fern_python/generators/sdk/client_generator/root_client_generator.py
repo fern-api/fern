@@ -246,13 +246,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             service = self._context.ir.services[self._package.service]
             for endpoint in service.endpoints:
                 # Handle stream parameter endpoints specially to ensure all overloads are included
-                is_stream_parameter_endpoint = (
-                    endpoint.response is not None
-                    and endpoint.response.body is not None
-                    and endpoint.response.body.get_as_union().type == "streamParameter"
-                )
-
-                if is_stream_parameter_endpoint:
+                if self._is_stream_parameter_endpoint(endpoint):
                     # For stream parameter endpoints, we need to manually handle the overloads
                     endpoint_generator = EndpointFunctionGenerator(
                         context=self._context,

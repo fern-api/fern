@@ -145,6 +145,16 @@ class BaseClientGenerator(ABC):
         body_type = endpoint.response.body.get_as_union().type
         return body_type == "streaming"  # We handle streamParameter endpoints separately
 
+    def _is_stream_parameter_endpoint(self, endpoint: ir_types.HttpEndpoint) -> bool:
+        """Check if an endpoint is a stream parameter endpoint"""
+        if (
+            endpoint.response is not None
+            and endpoint.response.body is not None
+            and endpoint.response.body.get_as_union().type == "streamParameter"
+        ):
+            return True
+        return False
+
     def _get_raw_client_member_name(self) -> str:
         return "_raw_client"
 
