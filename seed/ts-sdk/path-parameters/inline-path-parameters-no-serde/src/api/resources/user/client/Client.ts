@@ -39,10 +39,17 @@ export class User {
      *         user_id: "user_id"
      *     })
      */
-    public async getUser(
+    public getUser(
         request: SeedPathParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getUser(request, requestOptions));
+    }
+
+    private async __getUser(
+        request: SeedPathParameters.GetUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -67,7 +74,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedPathParameters.User;
+            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -104,10 +111,17 @@ export class User {
      *         tags: ["tags", "tags"]
      *     })
      */
-    public async createUser(
+    public createUser(
         request: SeedPathParameters.User,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
+    }
+
+    private async __createUser(
+        request: SeedPathParameters.User,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -132,7 +146,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedPathParameters.User;
+            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -172,10 +186,17 @@ export class User {
      *         }
      *     })
      */
-    public async updateUser(
+    public updateUser(
         request: SeedPathParameters.UpdateUserRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__updateUser(request, requestOptions));
+    }
+
+    private async __updateUser(
+        request: SeedPathParameters.UpdateUserRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId, body: _body } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -201,7 +222,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedPathParameters.User;
+            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -238,10 +259,17 @@ export class User {
      *         limit: 1
      *     })
      */
-    public async searchUsers(
+    public searchUsers(
         request: SeedPathParameters.SearchUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User[]> {
+    ): core.HttpResponsePromise<SeedPathParameters.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__searchUsers(request, requestOptions));
+    }
+
+    private async __searchUsers(
+        request: SeedPathParameters.SearchUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
         const { user_id: userId, limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -272,7 +300,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedPathParameters.User[];
+            return { data: _response.body as SeedPathParameters.User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

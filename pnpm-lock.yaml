@@ -4456,6 +4456,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../../packages/configs
+      '@jest/globals':
+        specifier: ^29.7.0
+        version: 29.7.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)

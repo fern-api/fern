@@ -39,10 +39,17 @@ export class SeedAliasExtendsClient {
      *         child: "child"
      *     })
      */
-    public async extendedInlineRequestBody(
+    public extendedInlineRequestBody(
         request: SeedAliasExtends.InlinedChildRequest,
         requestOptions?: SeedAliasExtendsClient.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__extendedInlineRequestBody(request, requestOptions));
+    }
+
+    private async __extendedInlineRequestBody(
+        request: SeedAliasExtends.InlinedChildRequest,
+        requestOptions?: SeedAliasExtendsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,7 +74,7 @@ export class SeedAliasExtendsClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

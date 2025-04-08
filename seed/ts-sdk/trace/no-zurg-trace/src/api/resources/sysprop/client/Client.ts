@@ -43,11 +43,21 @@ export class Sysprop {
      * @example
      *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
-    public async setNumWarmInstances(
+    public setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
         requestOptions?: Sysprop.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__setNumWarmInstances(language, numWarmInstances, requestOptions),
+        );
+    }
+
+    private async __setNumWarmInstances(
+        language: SeedTrace.Language,
+        numWarmInstances: number,
+        requestOptions?: Sysprop.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -77,7 +87,7 @@ export class Sysprop {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -110,9 +120,15 @@ export class Sysprop {
      * @example
      *     await client.sysprop.getNumWarmInstances()
      */
-    public async getNumWarmInstances(
+    public getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions,
-    ): Promise<Record<SeedTrace.Language, number | undefined>> {
+    ): core.HttpResponsePromise<Record<SeedTrace.Language, number | undefined>> {
+        return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
+    }
+
+    private async __getNumWarmInstances(
+        requestOptions?: Sysprop.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<SeedTrace.Language, number | undefined>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -142,7 +158,10 @@ export class Sysprop {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Record<SeedTrace.Language, number | undefined>;
+            return {
+                data: _response.body as Record<SeedTrace.Language, number | undefined>,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

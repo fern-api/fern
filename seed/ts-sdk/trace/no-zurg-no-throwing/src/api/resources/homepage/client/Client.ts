@@ -40,9 +40,17 @@ export class Homepage {
      * @example
      *     await client.homepage.getHomepageProblems()
      */
-    public async getHomepageProblems(
+    public getHomepageProblems(
         requestOptions?: Homepage.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
+    }
+
+    private async __getHomepageProblems(
+        requestOptions?: Homepage.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -73,14 +81,23 @@ export class Homepage {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.ProblemId[],
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.ProblemId[],
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.homepage.getHomepageProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.homepage.getHomepageProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -91,10 +108,17 @@ export class Homepage {
      * @example
      *     await client.homepage.setHomepageProblems(["string", "string"])
      */
-    public async setHomepageProblems(
+    public setHomepageProblems(
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
+    }
+
+    private async __setHomepageProblems(
+        request: SeedTrace.ProblemId[],
+        requestOptions?: Homepage.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -126,14 +150,23 @@ export class Homepage {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.homepage.setHomepageProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.homepage.setHomepageProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -45,10 +45,17 @@ export class Migration {
      *         adminKeyHeader: "admin-key-header"
      *     })
      */
-    public async getAttemptedMigrations(
+    public getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
-    ): Promise<SeedTrace.Migration[]> {
+    ): core.HttpResponsePromise<SeedTrace.Migration[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
+    }
+
+    private async __getAttemptedMigrations(
+        request: SeedTrace.GetAttemptedMigrationsRequest,
+        requestOptions?: Migration.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
         const { adminKeyHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -80,12 +87,15 @@ export class Migration {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

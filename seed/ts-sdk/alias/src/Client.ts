@@ -37,7 +37,17 @@ export class SeedAliasClient {
      * @example
      *     await client.get("typeId")
      */
-    public async get(typeId: SeedAlias.TypeId, requestOptions?: SeedAliasClient.RequestOptions): Promise<void> {
+    public get(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__get(typeId, requestOptions));
+    }
+
+    private async __get(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,7 +71,7 @@ export class SeedAliasClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -45,7 +45,7 @@ export const V2AuthValues = {
         return {
             ...value,
             type: "basic",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.V2AuthValues.Basic,
                 visitor: FernIr.V2AuthValues._Visitor<_Result>,
             ) {
@@ -58,7 +58,7 @@ export const V2AuthValues = {
         return {
             ...value,
             type: "bearer",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.V2AuthValues.Bearer,
                 visitor: FernIr.V2AuthValues._Visitor<_Result>,
             ) {
@@ -71,7 +71,7 @@ export const V2AuthValues = {
         return {
             ...value,
             type: "header",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.V2AuthValues.Header,
                 visitor: FernIr.V2AuthValues._Visitor<_Result>,
             ) {
@@ -84,7 +84,7 @@ export const V2AuthValues = {
         return {
             ...value,
             type: "oauth",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.V2AuthValues.Oauth,
                 visitor: FernIr.V2AuthValues._Visitor<_Result>,
             ) {
