@@ -56,7 +56,7 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
                 decorators=[],
             )
 
-        if self._is_streaming_endpoint(endpoint):
+        if self._is_streaming_endpoint(endpoint) or self._treat_as_paginated(endpoint):
             # Use EndpointFunctionGenerator but generate the function directly
             endpoint_generator = EndpointFunctionGenerator(
                 context=self._context,
