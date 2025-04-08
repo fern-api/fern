@@ -33,7 +33,11 @@ export class B {
      * @example
      *     await client.a.b.foo()
      */
-    public async foo(requestOptions?: B.RequestOptions): Promise<void> {
+    public foo(requestOptions?: B.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__foo(requestOptions));
+    }
+
+    private async __foo(requestOptions?: B.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -55,7 +59,7 @@ export class B {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

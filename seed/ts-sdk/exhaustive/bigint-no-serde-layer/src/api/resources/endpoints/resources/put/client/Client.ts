@@ -38,11 +38,19 @@ export class Put {
      * @example
      *     await client.endpoints.put.add("id")
      */
-    public async add(
+    public add(
         id: string,
         request: SeedExhaustive.endpoints.PutRequest = {},
         requestOptions?: Put.RequestOptions,
-    ): Promise<SeedExhaustive.endpoints.PutResponse> {
+    ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__add(id, request, requestOptions));
+    }
+
+    private async __add(
+        id: string,
+        request: SeedExhaustive.endpoints.PutRequest = {},
+        requestOptions?: Put.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PutResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,7 +75,7 @@ export class Put {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.endpoints.PutResponse;
+            return { data: _response.body as SeedExhaustive.endpoints.PutResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

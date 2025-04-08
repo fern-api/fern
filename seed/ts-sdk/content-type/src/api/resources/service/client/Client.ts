@@ -39,10 +39,17 @@ export class Service {
      *         requireAuth: true
      *     })
      */
-    public async patch(
+    public patch(
         request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__patch(request, requestOptions));
+    }
+
+    private async __patch(
+        request: SeedContentTypes.PatchProxyRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -65,7 +72,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

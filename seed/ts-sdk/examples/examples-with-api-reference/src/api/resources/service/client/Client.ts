@@ -39,10 +39,17 @@ export class Service {
      * @example
      *     await client.service.getMovie("movie-c06a4ad7")
      */
-    public async getMovie(
+    public getMovie(
         movieId: SeedExamples.MovieId,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedExamples.Movie> {
+    ): core.HttpResponsePromise<SeedExamples.Movie> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
+    }
+
+    private async __getMovie(
+        movieId: SeedExamples.MovieId,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Movie>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,12 +74,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Movie.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Movie.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -125,10 +135,17 @@ export class Service {
      *         revenue: 1000000
      *     })
      */
-    public async createMovie(
+    public createMovie(
         request: SeedExamples.Movie,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedExamples.MovieId> {
+    ): core.HttpResponsePromise<SeedExamples.MovieId> {
+        return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
+    }
+
+    private async __createMovie(
+        request: SeedExamples.Movie,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.MovieId>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -154,12 +171,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.MovieId.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.MovieId.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -195,10 +215,17 @@ export class Service {
      *         tag: "development"
      *     })
      */
-    public async getMetadata(
+    public getMetadata(
         request: SeedExamples.GetMetadataRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedExamples.Metadata> {
+    ): core.HttpResponsePromise<SeedExamples.Metadata> {
+        return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
+    }
+
+    private async __getMetadata(
+        request: SeedExamples.GetMetadataRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
         const { shallow, tag, xApiVersion } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (shallow != null) {
@@ -239,12 +266,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Metadata.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Metadata.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -448,10 +478,17 @@ export class Service {
      *         }
      *     })
      */
-    public async createBigEntity(
+    public createBigEntity(
         request: SeedExamples.BigEntity,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedExamples.Response> {
+    ): core.HttpResponsePromise<SeedExamples.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__createBigEntity(request, requestOptions));
+    }
+
+    private async __createBigEntity(
+        request: SeedExamples.BigEntity,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Response>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -477,12 +514,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

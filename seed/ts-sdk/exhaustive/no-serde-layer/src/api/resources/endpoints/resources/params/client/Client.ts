@@ -39,7 +39,14 @@ export class Params {
      * @example
      *     await client.endpoints.params.getWithPath("param")
      */
-    public async getWithPath(param: string, requestOptions?: Params.RequestOptions): Promise<string> {
+    public getWithPath(param: string, requestOptions?: Params.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithPath(param, requestOptions));
+    }
+
+    private async __getWithPath(
+        param: string,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -64,7 +71,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string;
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -99,11 +106,19 @@ export class Params {
      * @example
      *     await client.endpoints.params.getWithInlinePath("param")
      */
-    public async getWithInlinePath(
+    public getWithInlinePath(
         param: string,
         request: SeedExhaustive.endpoints.GetWithInlinePath = {},
         requestOptions?: Params.RequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithInlinePath(param, request, requestOptions));
+    }
+
+    private async __getWithInlinePath(
+        param: string,
+        request: SeedExhaustive.endpoints.GetWithInlinePath = {},
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -128,7 +143,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string;
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -165,10 +180,17 @@ export class Params {
      *         number: 1
      *     })
      */
-    public async getWithQuery(
+    public getWithQuery(
         request: SeedExhaustive.endpoints.GetWithQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithQuery(request, requestOptions));
+    }
+
+    private async __getWithQuery(
+        request: SeedExhaustive.endpoints.GetWithQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -198,7 +220,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -235,10 +257,17 @@ export class Params {
      *         number: 1
      *     })
      */
-    public async getWithAllowMultipleQuery(
+    public getWithAllowMultipleQuery(
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
+    }
+
+    private async __getWithAllowMultipleQuery(
+        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
@@ -278,7 +307,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -315,11 +344,19 @@ export class Params {
      *         query: "query"
      *     })
      */
-    public async getWithPathAndQuery(
+    public getWithPathAndQuery(
         param: string,
         request: SeedExhaustive.endpoints.GetWithPathAndQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
+    }
+
+    private async __getWithPathAndQuery(
+        param: string,
+        request: SeedExhaustive.endpoints.GetWithPathAndQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -348,7 +385,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -387,11 +424,19 @@ export class Params {
      *         query: "query"
      *     })
      */
-    public async getWithInlinePathAndQuery(
+    public getWithInlinePathAndQuery(
         param: string,
         request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
         requestOptions?: Params.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithInlinePathAndQuery(param, request, requestOptions));
+    }
+
+    private async __getWithInlinePathAndQuery(
+        param: string,
+        request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["query"] = query;
@@ -420,7 +465,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -457,11 +502,19 @@ export class Params {
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
-    public async modifyWithPath(
+    public modifyWithPath(
         param: string,
         request: string,
         requestOptions?: Params.RequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__modifyWithPath(param, request, requestOptions));
+    }
+
+    private async __modifyWithPath(
+        param: string,
+        request: string,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -487,7 +540,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string;
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -524,11 +577,19 @@ export class Params {
      *         body: "string"
      *     })
      */
-    public async modifyWithInlinePath(
+    public modifyWithInlinePath(
         param: string,
         request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: Params.RequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__modifyWithInlinePath(param, request, requestOptions));
+    }
+
+    private async __modifyWithInlinePath(
+        param: string,
+        request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
+        requestOptions?: Params.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -554,7 +615,7 @@ export class Params {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string;
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

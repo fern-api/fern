@@ -75,10 +75,17 @@ export class User {
      *         filter: "filter"
      *     })
      */
-    public async getUsername(
+    public getUsername(
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedQueryParameters.User> {
+    ): core.HttpResponsePromise<SeedQueryParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
+    }
+
+    private async __getUsername(
+        request: SeedQueryParameters.GetUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
         const {
             limit,
             id,
@@ -153,7 +160,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedQueryParameters.User;
+            return { data: _response.body as SeedQueryParameters.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

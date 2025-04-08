@@ -1,5 +1,5 @@
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
-import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -154,14 +154,15 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         ];
     }
 
-    public getOverloads(): EndpointSignature[] {
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): EndpointSignature {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
+        const returnType = this.response.getReturnType(context);
         return {
             parameters: this.getEndpointParameters(context),
-            returnTypeWithoutPromise: this.response.getReturnType(context)
+            returnTypeWithoutPromise: returnType
         };
     }
 
@@ -175,7 +176,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getDocs(): string | undefined {
-        return this.endpoint.docs ?? undefined;
+        return this.endpoint.docs;
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {

@@ -46,11 +46,19 @@ export class Service {
      *         xFileApiVersion: "0.0.2"
      *     })
      */
-    public async getFile(
+    public getFile(
         filename: string,
         request: SeedExamples.file.GetFileRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedExamples.File_> {
+    ): core.HttpResponsePromise<SeedExamples.File_> {
+        return core.HttpResponsePromise.fromPromise(this.__getFile(filename, request, requestOptions));
+    }
+
+    private async __getFile(
+        filename: string,
+        request: SeedExamples.file.GetFileRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.File_>> {
         const { xFileApiVersion } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -77,12 +85,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.File_.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.File_.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
