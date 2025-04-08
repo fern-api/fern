@@ -40,8 +40,14 @@ export const unknownRawResponse: RawResponse = {
  * @returns A `RawResponse` object containing the extracted properties of the input response.
  */
 export function toRawResponse(response: Response): RawResponse {
-    const { body, bodyUsed, ok, ...rawResponse } = response;
-    return rawResponse as RawResponse;
+    return {
+        headers: response.headers,
+        redirected: response.redirected,
+        status: response.status,
+        statusText: response.statusText,
+        type: response.type,
+        url: response.url
+    };
 }
 
 /**
