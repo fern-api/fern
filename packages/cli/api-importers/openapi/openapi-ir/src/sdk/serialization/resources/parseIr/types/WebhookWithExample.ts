@@ -19,6 +19,7 @@ export const WebhookWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.WebhookWithExample
 > = core.serialization
     .objectWithoutOptionalProperties({
+        audiences: core.serialization.list(core.serialization.string()),
         sdkName: EndpointSdkName.optional(),
         method: WebhookHttpMethod,
         summary: core.serialization.string().optional(),
@@ -35,6 +36,7 @@ export const WebhookWithExample: core.serialization.ObjectSchema<
 
 export declare namespace WebhookWithExample {
     export interface Raw extends WithDescription.Raw, WithSource.Raw, WithNamespace.Raw {
+        audiences: string[];
         sdkName?: EndpointSdkName.Raw | null;
         method: WebhookHttpMethod.Raw;
         summary?: string | null;
