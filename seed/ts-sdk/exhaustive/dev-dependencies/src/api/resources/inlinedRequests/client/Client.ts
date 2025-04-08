@@ -59,13 +59,27 @@ export class InlinedRequests {
      *         }
      *     })
      */
-    public async postWithObjectBodyandResponse(
+    public postWithObjectBodyandResponse(
         request: Fiddle.PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
-    ): Promise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithOptionalField,
             Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
+    }
+
+    private async __postWithObjectBodyandResponse(
+        request: Fiddle.PostWithObjectBody,
+        requestOptions?: InlinedRequests.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.ObjectWithOptionalField,
+                Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -94,13 +108,18 @@ export class InlinedRequests {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -108,22 +127,30 @@ export class InlinedRequests {
             switch (_response.error.statusCode) {
                 case 400:
                     return {
-                        ok: false,
-                        error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.badRequestBody(
-                            serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                breadcrumbsPrefix: ["response"],
-                            }),
-                        ),
+                        data: {
+                            ok: false,
+                            error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error.badRequestBody(
+                                serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    breadcrumbsPrefix: ["response"],
+                                }),
+                            ),
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

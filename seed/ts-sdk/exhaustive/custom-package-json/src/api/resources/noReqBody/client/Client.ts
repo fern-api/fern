@@ -36,9 +36,21 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
-    public async getWithNoRequestBody(
+    public getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
-    ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
+    }
+
+    private async __getWithNoRequestBody(
+        requestOptions?: NoReqBody.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -64,19 +76,28 @@ export class NoReqBody {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.noReqBody.getWithNoRequestBody.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.noReqBody.getWithNoRequestBody.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -86,9 +107,15 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.postWithNoRequestBody()
      */
-    public async postWithNoRequestBody(
+    public postWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
-    ): Promise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoRequestBody(requestOptions));
+    }
+
+    private async __postWithNoRequestBody(
+        requestOptions?: NoReqBody.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -114,19 +141,28 @@ export class NoReqBody {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.noReqBody.postWithNoRequestBody.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.noReqBody.postWithNoRequestBody.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -37,7 +37,17 @@ export class Package {
      *         for: "for"
      *     })
      */
-    public async test(request: SeedNurseryApi.TestRequest, requestOptions?: Package.RequestOptions): Promise<void> {
+    public test(
+        request: SeedNurseryApi.TestRequest,
+        requestOptions?: Package.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__test(request, requestOptions));
+    }
+
+    private async __test(
+        request: SeedNurseryApi.TestRequest,
+        requestOptions?: Package.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { for: for_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["for"] = for_;
@@ -63,7 +73,7 @@ export class Package {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

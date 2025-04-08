@@ -41,10 +41,17 @@ export class Organization {
      *         name: "name"
      *     })
      */
-    public async create(
+    public create(
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
         requestOptions?: Organization.RequestOptions,
-    ): Promise<SeedMixedFileDirectory.Organization> {
+    ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: SeedMixedFileDirectory.CreateOrganizationRequest,
+        requestOptions?: Organization.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.Organization>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -69,12 +76,15 @@ export class Organization {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Organization.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Organization.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

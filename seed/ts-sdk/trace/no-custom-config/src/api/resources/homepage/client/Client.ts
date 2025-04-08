@@ -42,7 +42,15 @@ export class Homepage {
      * @example
      *     await client.homepage.getHomepageProblems()
      */
-    public async getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<SeedTrace.ProblemId[]> {
+    public getHomepageProblems(
+        requestOptions?: Homepage.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.ProblemId[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
+    }
+
+    private async __getHomepageProblems(
+        requestOptions?: Homepage.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.ProblemId[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -72,12 +80,15 @@ export class Homepage {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -109,10 +120,17 @@ export class Homepage {
      * @example
      *     await client.homepage.setHomepageProblems(["string", "string"])
      */
-    public async setHomepageProblems(
+    public setHomepageProblems(
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
+    }
+
+    private async __setHomepageProblems(
+        request: SeedTrace.ProblemId[],
+        requestOptions?: Homepage.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -145,7 +163,7 @@ export class Homepage {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

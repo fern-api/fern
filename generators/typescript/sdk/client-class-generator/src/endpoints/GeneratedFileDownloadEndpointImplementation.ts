@@ -1,5 +1,5 @@
 import { Fetcher, GetReferenceOpts, visitJavaScriptRuntime } from "@fern-typescript/commons";
-import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -103,11 +103,11 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         return undefined;
     }
 
-    public getOverloads(): EndpointSignature[] {
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): EndpointSignature {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
         return {
             parameters: [
                 ...this.request.getEndpointParameters(context),

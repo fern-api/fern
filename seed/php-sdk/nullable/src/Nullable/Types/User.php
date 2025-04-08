@@ -42,13 +42,14 @@ class User extends JsonSerializableType
     /**
      * @var (
      *    int
-     *   |?float
-     *   |?string
      *   |float
+     *   |string
+     *   |float
+     *   |null
      * ) $favoriteNumber
      */
-    #[JsonProperty('favorite-number'), Union('integer',new Union('float', 'null'),new Union('string', 'null'),'float')]
-    public int|?float|?string|float $favoriteNumber;
+    #[JsonProperty('favorite-number'), Union('integer', new Union('float', 'null'), new Union('string', 'null'), 'float')]
+    public int|float|string|float|null $favoriteNumber;
 
     /**
      * @var ?array<int> $numbers
@@ -68,9 +69,10 @@ class User extends JsonSerializableType
      *   id: string,
      *   favoriteNumber: (
      *    int
-     *   |?float
-     *   |?string
      *   |float
+     *   |string
+     *   |float
+     *   |null
      * ),
      *   tags?: ?array<string>,
      *   metadata?: ?Metadata,
@@ -81,15 +83,22 @@ class User extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->name = $values['name'];$this->id = $values['id'];$this->tags = $values['tags'] ?? null;$this->metadata = $values['metadata'] ?? null;$this->email = $values['email'] ?? null;$this->favoriteNumber = $values['favoriteNumber'];$this->numbers = $values['numbers'] ?? null;$this->strings = $values['strings'] ?? null;
+    ) {
+        $this->name = $values['name'];
+        $this->id = $values['id'];
+        $this->tags = $values['tags'] ?? null;
+        $this->metadata = $values['metadata'] ?? null;
+        $this->email = $values['email'] ?? null;
+        $this->favoriteNumber = $values['favoriteNumber'];
+        $this->numbers = $values['numbers'] ?? null;
+        $this->strings = $values['strings'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

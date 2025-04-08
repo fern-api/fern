@@ -38,11 +38,19 @@ export class PathParam {
      * @example
      *     await client.pathParam.send(">", "red")
      */
-    public async send(
+    public send(
         operand: SeedEnum.Operand,
         operandOrColor: SeedEnum.ColorOrOperand,
         requestOptions?: PathParam.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__send(operand, operandOrColor, requestOptions));
+    }
+
+    private async __send(
+        operand: SeedEnum.Operand,
+        operandOrColor: SeedEnum.ColorOrOperand,
+        requestOptions?: PathParam.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -66,7 +74,7 @@ export class PathParam {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

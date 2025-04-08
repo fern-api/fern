@@ -42,10 +42,17 @@ export class Auth {
      *         scope: "scope"
      *     })
      */
-    public async getTokenWithClientCredentials(
+    public getTokenWithClientCredentials(
         request: SeedOauthClientCredentials.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): Promise<SeedOauthClientCredentials.TokenResponse> {
+    ): core.HttpResponsePromise<SeedOauthClientCredentials.TokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getTokenWithClientCredentials(request, requestOptions));
+    }
+
+    private async __getTokenWithClientCredentials(
+        request: SeedOauthClientCredentials.GetTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,12 +82,15 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.TokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.TokenResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -117,10 +127,17 @@ export class Auth {
      *         scope: "scope"
      *     })
      */
-    public async refreshToken(
+    public refreshToken(
         request: SeedOauthClientCredentials.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): Promise<SeedOauthClientCredentials.TokenResponse> {
+    ): core.HttpResponsePromise<SeedOauthClientCredentials.TokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
+    }
+
+    private async __refreshToken(
+        request: SeedOauthClientCredentials.RefreshTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -150,12 +167,15 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.TokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.TokenResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

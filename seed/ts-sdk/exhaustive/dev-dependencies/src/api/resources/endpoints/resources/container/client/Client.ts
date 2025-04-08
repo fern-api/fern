@@ -37,10 +37,21 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
-    public async getAndReturnListOfPrimitives(
+    public getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions,
-    ): Promise<core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfPrimitives(request, requestOptions));
+    }
+
+    private async __getAndReturnListOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -69,22 +80,31 @@ export class Container {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
-                    _response.body,
-                    {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    },
-                ),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
+                        _response.body,
+                        {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        },
+                    ),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -99,13 +119,27 @@ export class Container {
      *             string: "string"
      *         }])
      */
-    public async getAndReturnListOfObjects(
+    public getAndReturnListOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
-    ): Promise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField[],
             Fiddle.endpoints.container.getAndReturnListOfObjects.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
+    }
+
+    private async __getAndReturnListOfObjects(
+        request: Fiddle.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.ObjectWithRequiredField[],
+                Fiddle.endpoints.container.getAndReturnListOfObjects.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -136,19 +170,31 @@ export class Container {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(
+                        _response.body,
+                        {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        },
+                    ),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.container.getAndReturnListOfObjects.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.container.getAndReturnListOfObjects.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -159,10 +205,23 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
-    public async getAndReturnSetOfPrimitives(
+    public getAndReturnSetOfPrimitives(
         request: Set<string>,
         requestOptions?: Container.RequestOptions,
-    ): Promise<core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
+    }
+
+    private async __getAndReturnSetOfPrimitives(
+        request: Set<string>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -191,22 +250,31 @@ export class Container {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
-                    _response.body,
-                    {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    },
-                ),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
+                        _response.body,
+                        {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        },
+                    ),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -219,13 +287,27 @@ export class Container {
      *             string: "string"
      *         }]))
      */
-    public async getAndReturnSetOfObjects(
+    public getAndReturnSetOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
-    ): Promise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField[],
             Fiddle.endpoints.container.getAndReturnSetOfObjects.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
+    }
+
+    private async __getAndReturnSetOfObjects(
+        request: Fiddle.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.ObjectWithRequiredField[],
+                Fiddle.endpoints.container.getAndReturnSetOfObjects.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -256,19 +338,31 @@ export class Container {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(
+                        _response.body,
+                        {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        },
+                    ),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.container.getAndReturnSetOfObjects.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.container.getAndReturnSetOfObjects.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -281,10 +375,23 @@ export class Container {
      *         "string": "string"
      *     })
      */
-    public async getAndReturnMapPrimToPrim(
+    public getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions,
-    ): Promise<core.APIResponse<Record<string, string>, Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<Record<string, string>, Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapPrimToPrim(request, requestOptions));
+    }
+
+    private async __getAndReturnMapPrimToPrim(
+        request: Record<string, string>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<Record<string, string>, Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -313,19 +420,31 @@ export class Container {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(
+                        _response.body,
+                        {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        },
+                    ),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -340,13 +459,27 @@ export class Container {
      *         }
      *     })
      */
-    public async getAndReturnMapOfPrimToObject(
+    public getAndReturnMapOfPrimToObject(
         request: Record<string, Fiddle.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions,
-    ): Promise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Record<string, Fiddle.types.ObjectWithRequiredField>,
             Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
+    }
+
+    private async __getAndReturnMapOfPrimToObject(
+        request: Record<string, Fiddle.types.ObjectWithRequiredField>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Record<string, Fiddle.types.ObjectWithRequiredField>,
+                Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -377,22 +510,31 @@ export class Container {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
-                    _response.body,
-                    {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    },
-                ),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
+                        _response.body,
+                        {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        },
+                    ),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -405,13 +547,27 @@ export class Container {
      *         string: "string"
      *     })
      */
-    public async getAndReturnOptional(
+    public getAndReturnOptional(
         request?: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions,
-    ): Promise<
+    ): core.HttpResponsePromise<
         core.APIResponse<
             Fiddle.types.ObjectWithRequiredField | undefined,
             Fiddle.endpoints.container.getAndReturnOptional.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
+    }
+
+    private async __getAndReturnOptional(
+        request?: Fiddle.types.ObjectWithRequiredField,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                Fiddle.types.ObjectWithRequiredField | undefined,
+                Fiddle.endpoints.container.getAndReturnOptional.Error
+            >
         >
     > {
         const _response = await core.fetcher({
@@ -445,19 +601,28 @@ export class Container {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.container.getAndReturnOptional.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.container.getAndReturnOptional.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

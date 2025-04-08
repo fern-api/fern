@@ -37,10 +37,17 @@ export class Organizations {
      * @example
      *     await client.organizations.getOrganization("organization_id")
      */
-    public async getOrganization(
+    public getOrganization(
         organizationId: string,
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.Organization> {
+    ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organizationId, requestOptions));
+    }
+
+    private async __getOrganization(
+        organizationId: string,
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -64,7 +71,7 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedPathParameters.Organization;
+            return { data: _response.body as SeedPathParameters.Organization, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -101,10 +108,17 @@ export class Organizations {
      *         user_id: "user_id"
      *     })
      */
-    public async getOrganizationUser(
+    public getOrganizationUser(
         request: SeedPathParameters.GetOrganizationUserRequest,
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganizationUser(request, requestOptions));
+    }
+
+    private async __getOrganizationUser(
+        request: SeedPathParameters.GetOrganizationUserRequest,
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { organization_id: organizationId, user_id: userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -129,7 +143,7 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedPathParameters.User;
+            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -166,11 +180,21 @@ export class Organizations {
      *         limit: 1
      *     })
      */
-    public async searchOrganizations(
+    public searchOrganizations(
         organizationId: string,
         request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.Organization[]> {
+    ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__searchOrganizations(organizationId, request, requestOptions),
+        );
+    }
+
+    private async __searchOrganizations(
+        organizationId: string,
+        request: SeedPathParameters.SearchOrganizationsRequest = {},
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -201,7 +225,7 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedPathParameters.Organization[];
+            return { data: _response.body as SeedPathParameters.Organization[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -37,10 +37,17 @@ export class Union {
      * @example
      *     await client.union.get("string")
      */
-    public async get(
+    public get(
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: Union.RequestOptions,
-    ): Promise<SeedUndiscriminatedUnions.MyUnion> {
+    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    }
+
+    private async __get(
+        request: SeedUndiscriminatedUnions.MyUnion,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -63,13 +70,16 @@ export class Union {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.MyUnion.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.MyUnion.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -100,7 +110,15 @@ export class Union {
      * @example
      *     await client.union.getMetadata()
      */
-    public async getMetadata(requestOptions?: Union.RequestOptions): Promise<SeedUndiscriminatedUnions.Metadata> {
+    public getMetadata(
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
+        return core.HttpResponsePromise.fromPromise(this.__getMetadata(requestOptions));
+    }
+
+    private async __getMetadata(
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -124,13 +142,16 @@ export class Union {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Metadata.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Metadata.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
