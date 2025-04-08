@@ -43,15 +43,6 @@ export class Unknown {
         return core.HttpResponsePromise.fromFunction(this.__post, request, requestOptions);
     }
 
-    /**
-     * @param {unknown} request
-     * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.unknown.post({
-     *         "key": "value"
-     *     })
-     */
     private async __post(
         request?: unknown,
         requestOptions?: Unknown.RequestOptions,
@@ -129,17 +120,6 @@ export class Unknown {
         return core.HttpResponsePromise.fromFunction(this.__postObject, request, requestOptions);
     }
 
-    /**
-     * @param {SeedUnknownAsAny.MyObject} request
-     * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.unknown.postObject({
-     *         unknown: {
-     *             "key": "value"
-     *         }
-     *     })
-     */
     private async __postObject(
         request: SeedUnknownAsAny.MyObject,
         requestOptions?: Unknown.RequestOptions,

@@ -48,17 +48,6 @@ export class Foo {
         return core.HttpResponsePromise.fromFunction(this.__find, request, requestOptions);
     }
 
-    /**
-     * @param {SeedAudiences.FindRequest} request
-     * @param {Foo.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.foo.find({
-     *         optionalString: "optionalString",
-     *         publicProperty: "publicProperty",
-     *         privateProperty: 1
-     *     })
-     */
     private async __find(
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions,

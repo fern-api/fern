@@ -61,21 +61,6 @@ export class Query {
         return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
     }
 
-    /**
-     * @param {SeedLiteral.SendLiteralsInQueryRequest} request
-     * @param {Query.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.query.send({
-     *         optionalPrompt: "You are a helpful assistant",
-     *         aliasPrompt: "You are a helpful assistant",
-     *         aliasOptionalPrompt: "You are a helpful assistant",
-     *         optionalStream: false,
-     *         aliasStream: false,
-     *         aliasOptionalStream: false,
-     *         query: "What is the weather today"
-     *     })
-     */
     private async __send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions,

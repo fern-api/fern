@@ -55,23 +55,6 @@ export class Complex {
         return core.HttpResponsePromise.fromFunction(this.__search, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.SearchRequest} request
-     * @param {Complex.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.complex.search({
-     *         pagination: {
-     *             perPage: 1,
-     *             startingAfter: "starting_after"
-     *         },
-     *         query: {
-     *             field: "field",
-     *             operator: "=",
-     *             value: "value"
-     *         }
-     *     })
-     */
     private async __search(
         request: SeedPagination.SearchRequest,
         requestOptions?: Complex.RequestOptions,

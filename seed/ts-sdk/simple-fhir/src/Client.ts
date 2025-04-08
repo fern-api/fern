@@ -44,13 +44,6 @@ export class SeedApiClient {
         return core.HttpResponsePromise.fromFunction(this.__getAccount, accountId, requestOptions);
     }
 
-    /**
-     * @param {string} accountId
-     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.getAccount("account_id")
-     */
     private async __getAccount(
         accountId: string,
         requestOptions?: SeedApiClient.RequestOptions,

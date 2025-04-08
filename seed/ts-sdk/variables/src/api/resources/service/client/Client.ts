@@ -39,12 +39,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__post, requestOptions);
     }
 
-    /**
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.post()
-     */
     private async __post(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(

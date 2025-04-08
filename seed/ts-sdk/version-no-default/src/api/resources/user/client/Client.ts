@@ -48,13 +48,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__getUser, userId, requestOptions);
     }
 
-    /**
-     * @param {SeedVersion.UserId} userId
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.getUser("userId")
-     */
     private async __getUser(
         userId: SeedVersion.UserId,
         requestOptions?: User.RequestOptions,

@@ -37,12 +37,6 @@ export class C {
         return core.HttpResponsePromise.fromFunction(this.__foo, requestOptions);
     }
 
-    /**
-     * @param {C.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.a.c.foo()
-     */
     private async __foo(requestOptions?: C.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url:

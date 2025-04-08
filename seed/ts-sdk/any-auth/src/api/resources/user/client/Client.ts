@@ -42,12 +42,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__get, requestOptions);
     }
 
-    /**
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.get()
-     */
     private async __get(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
         const _response = await core.fetcher({
             url: urlJoin(

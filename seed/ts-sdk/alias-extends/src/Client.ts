@@ -46,15 +46,6 @@ export class SeedAliasExtendsClient {
         return core.HttpResponsePromise.fromFunction(this.__extendedInlineRequestBody, request, requestOptions);
     }
 
-    /**
-     * @param {SeedAliasExtends.InlinedChildRequest} request
-     * @param {SeedAliasExtendsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.extendedInlineRequestBody({
-     *         child: "child"
-     *     })
-     */
     private async __extendedInlineRequestBody(
         request: SeedAliasExtends.InlinedChildRequest,
         requestOptions?: SeedAliasExtendsClient.RequestOptions,

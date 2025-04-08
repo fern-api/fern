@@ -42,14 +42,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__endpoint, requestOptions);
     }
 
-    /**
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedAccept.NotFoundError}
-     *
-     * @example
-     *     await client.service.endpoint()
-     */
     private async __endpoint(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(

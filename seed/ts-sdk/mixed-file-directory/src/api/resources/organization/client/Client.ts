@@ -48,17 +48,6 @@ export class Organization {
         return core.HttpResponsePromise.fromFunction(this.__create, request, requestOptions);
     }
 
-    /**
-     * Create a new organization.
-     *
-     * @param {SeedMixedFileDirectory.CreateOrganizationRequest} request
-     * @param {Organization.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.organization.create({
-     *         name: "name"
-     *     })
-     */
     private async __create(
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
         requestOptions?: Organization.RequestOptions,

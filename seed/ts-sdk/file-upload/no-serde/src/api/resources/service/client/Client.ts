@@ -59,14 +59,6 @@ export class Service {
         );
     }
 
-    /**
-     * @param {File | fs.ReadStream | Blob} file
-     * @param {File[] | fs.ReadStream[] | Blob[]} file_list
-     * @param {File | fs.ReadStream | Blob | undefined} maybe_file
-     * @param {File[] | fs.ReadStream[] | Blob[] | undefined} maybe_file_list
-     * @param {SeedFileUpload.MyRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __post(
         file: File | fs.ReadStream | Blob,
         file_list: File[] | fs.ReadStream[] | Blob[],
@@ -112,9 +104,9 @@ export class Service {
 
         if (request.optional_metadata != null) {
             if (Array.isArray(request.optional_metadata) || request.optional_metadata instanceof Set)
-                for (const _item of request.optional_metadata) {
+                {for (const _item of request.optional_metadata) {
                     _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
-                }
+                }}
         }
 
         if (request.optional_object_type != null) {
@@ -194,10 +186,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__justFile, file, requestOptions);
     }
 
-    /**
-     * @param {File | fs.ReadStream | Blob} file
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __justFile(
         file: File | fs.ReadStream | Blob,
         requestOptions?: Service.RequestOptions,
@@ -268,11 +256,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__justFileWithQueryParams, file, request, requestOptions);
     }
 
-    /**
-     * @param {File | fs.ReadStream | Blob} file
-     * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __justFileWithQueryParams(
         file: File | fs.ReadStream | Blob,
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
@@ -371,11 +354,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__withContentType, file, request, requestOptions);
     }
 
-    /**
-     * @param {File | fs.ReadStream | Blob} file
-     * @param {SeedFileUpload.WithContentTypeRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __withContentType(
         file: File | fs.ReadStream | Blob,
         request: SeedFileUpload.WithContentTypeRequest,
@@ -453,11 +431,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__withFormEncoding, file, request, requestOptions);
     }
 
-    /**
-     * @param {File | fs.ReadStream | Blob} file
-     * @param {SeedFileUpload.WithFormEncodingRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __withFormEncoding(
         file: File | fs.ReadStream | Blob,
         request: SeedFileUpload.WithFormEncodingRequest,
@@ -551,14 +524,6 @@ export class Service {
         );
     }
 
-    /**
-     * @param {File | fs.ReadStream | Blob} file
-     * @param {File[] | fs.ReadStream[] | Blob[]} file_list
-     * @param {File | fs.ReadStream | Blob | undefined} maybe_file
-     * @param {File[] | fs.ReadStream[] | Blob[] | undefined} maybe_file_list
-     * @param {SeedFileUpload.MyOtherRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __withFormEncodedContainers(
         file: File | fs.ReadStream | Blob,
         file_list: File[] | fs.ReadStream[] | Blob[],
@@ -725,11 +690,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__optionalArgs, image_file, request, requestOptions);
     }
 
-    /**
-     * @param {File | fs.ReadStream | Blob | undefined} image_file
-     * @param {SeedFileUpload.OptionalArgsRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __optionalArgs(
         image_file: File | fs.ReadStream | Blob | undefined,
         request: SeedFileUpload.OptionalArgsRequest,
@@ -742,9 +702,9 @@ export class Service {
 
         if (request.request != null) {
             if (Array.isArray(request.request) || request.request instanceof Set)
-                for (const _item of request.request) {
+                {for (const _item of request.request) {
                     _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }
+                }}
         }
 
         const _maybeEncodedRequest = await _request.getRequest();

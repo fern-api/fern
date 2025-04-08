@@ -42,12 +42,6 @@ export class NoReqBody {
         return core.HttpResponsePromise.fromFunction(this.__getWithNoRequestBody, requestOptions);
     }
 
-    /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.noReqBody.getWithNoRequestBody()
-     */
     private async __getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
@@ -113,12 +107,6 @@ export class NoReqBody {
         return core.HttpResponsePromise.fromFunction(this.__postWithNoRequestBody, requestOptions);
     }
 
-    /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.noReqBody.postWithNoRequestBody()
-     */
     private async __postWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {

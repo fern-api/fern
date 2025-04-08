@@ -63,24 +63,6 @@ export class Inlined {
         return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
     }
 
-    /**
-     * @param {SeedLiteral.SendLiteralsInlinedRequest} request
-     * @param {Inlined.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.inlined.send({
-     *         temperature: 10.1,
-     *         context: "You're super wise",
-     *         aliasedContext: "You're super wise",
-     *         maybeContext: "You're super wise",
-     *         objectWithLiteral: {
-     *             nestedLiteral: {
-     *                 myLiteral: "How super cool"
-     *             }
-     *         },
-     *         query: "What is the weather today"
-     *     })
-     */
     private async __send(
         request: SeedLiteral.SendLiteralsInlinedRequest,
         requestOptions?: Inlined.RequestOptions,

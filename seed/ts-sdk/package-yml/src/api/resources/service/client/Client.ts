@@ -40,13 +40,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__nop, nestedId, requestOptions);
     }
 
-    /**
-     * @param {string} nestedId
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.nop("id-219xca8")
-     */
     private async __nop(
         nestedId: string,
         requestOptions?: Service.RequestOptions,

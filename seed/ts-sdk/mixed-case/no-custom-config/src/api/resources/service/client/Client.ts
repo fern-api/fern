@@ -44,13 +44,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getResource, resourceId, requestOptions);
     }
 
-    /**
-     * @param {string} resourceId
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getResource("rsc-xyz")
-     */
     private async __getResource(
         resourceId: string,
         requestOptions?: Service.RequestOptions,
@@ -128,16 +121,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__listResources, request, requestOptions);
     }
 
-    /**
-     * @param {SeedMixedCase.ListResourcesRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.listResources({
-     *         pageLimit: 10,
-     *         beforeDate: "2023-01-01"
-     *     })
-     */
     private async __listResources(
         request: SeedMixedCase.ListResourcesRequest,
         requestOptions?: Service.RequestOptions,

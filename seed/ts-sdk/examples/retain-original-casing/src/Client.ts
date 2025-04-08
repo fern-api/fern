@@ -61,13 +61,6 @@ export class SeedExamplesClient {
         return core.HttpResponsePromise.fromFunction(this.__echo, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
-     */
     private async __echo(
         request: string,
         requestOptions?: SeedExamplesClient.RequestOptions,
@@ -142,13 +135,6 @@ export class SeedExamplesClient {
         return core.HttpResponsePromise.fromFunction(this.__createType, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExamples.Type} request
-     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.createType("primitive")
-     */
     private async __createType(
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,

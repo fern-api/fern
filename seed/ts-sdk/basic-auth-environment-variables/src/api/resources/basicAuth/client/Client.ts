@@ -46,16 +46,6 @@ export class BasicAuth {
         return core.HttpResponsePromise.fromFunction(this.__getWithBasicAuth, requestOptions);
     }
 
-    /**
-     * GET request with basic auth scheme
-     *
-     * @param {BasicAuth.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
-     *
-     * @example
-     *     await client.basicAuth.getWithBasicAuth()
-     */
     private async __getWithBasicAuth(
         requestOptions?: BasicAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
@@ -151,20 +141,6 @@ export class BasicAuth {
         return core.HttpResponsePromise.fromFunction(this.__postWithBasicAuth, request, requestOptions);
     }
 
-    /**
-     * POST request with basic auth scheme
-     *
-     * @param {unknown} request
-     * @param {BasicAuth.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
-     * @throws {@link SeedBasicAuthEnvironmentVariables.BadRequest}
-     *
-     * @example
-     *     await client.basicAuth.postWithBasicAuth({
-     *         "key": "value"
-     *     })
-     */
     private async __postWithBasicAuth(
         request?: unknown,
         requestOptions?: BasicAuth.RequestOptions,
@@ -261,7 +237,7 @@ export class BasicAuth {
         }
 
         return core.BasicAuth.toAuthorizationHeader({
-            username: username,
+            username,
             password: accessToken,
         });
     }

@@ -41,13 +41,6 @@ export class Bigunion {
         return core.HttpResponsePromise.fromFunction(this.__get, id, requestOptions);
     }
 
-    /**
-     * @param {string} id
-     * @param {Bigunion.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.bigunion.get("id")
-     */
     private async __get(
         id: string,
         requestOptions?: Bigunion.RequestOptions,
@@ -125,16 +118,6 @@ export class Bigunion {
         return core.HttpResponsePromise.fromFunction(this.__update, request, requestOptions);
     }
 
-    /**
-     * @param {SeedUnions.BigUnion} request
-     * @param {Bigunion.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.bigunion.update({
-     *         type: "normalSweet",
-     *         value: "value"
-     *     })
-     */
     private async __update(
         request: SeedUnions.BigUnion,
         requestOptions?: Bigunion.RequestOptions,
@@ -214,19 +197,6 @@ export class Bigunion {
         return core.HttpResponsePromise.fromFunction(this.__updateMany, request, requestOptions);
     }
 
-    /**
-     * @param {SeedUnions.BigUnion[]} request
-     * @param {Bigunion.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.bigunion.updateMany([{
-     *             type: "normalSweet",
-     *             value: "value"
-     *         }, {
-     *             type: "normalSweet",
-     *             value: "value"
-     *         }])
-     */
     private async __updateMany(
         request: SeedUnions.BigUnion[],
         requestOptions?: Bigunion.RequestOptions,

@@ -45,13 +45,6 @@ export class Organizations {
         return core.HttpResponsePromise.fromFunction(this.__getOrganization, organization_id, requestOptions);
     }
 
-    /**
-     * @param {string} organization_id
-     * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.organizations.getOrganization("organization_id")
-     */
     private async __getOrganization(
         organization_id: string,
         requestOptions?: Organizations.RequestOptions,
@@ -138,15 +131,6 @@ export class Organizations {
         );
     }
 
-    /**
-     * @param {string} organization_id
-     * @param {string} user_id
-     * @param {SeedPathParameters.GetOrganizationUserRequest} request
-     * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.organizations.getOrganizationUser("organization_id", "user_id")
-     */
     private async __getOrganizationUser(
         organization_id: string,
         user_id: string,
@@ -234,16 +218,6 @@ export class Organizations {
         );
     }
 
-    /**
-     * @param {string} organization_id
-     * @param {SeedPathParameters.SearchOrganizationsRequest} request
-     * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.organizations.searchOrganizations("organization_id", {
-     *         limit: 1
-     *     })
-     */
     private async __searchOrganizations(
         organization_id: string,
         request: SeedPathParameters.SearchOrganizationsRequest = {},

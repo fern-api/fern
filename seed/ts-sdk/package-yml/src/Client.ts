@@ -55,16 +55,6 @@ export class SeedPackageYmlClient {
         return core.HttpResponsePromise.fromFunction(this.__echo, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPackageYml.EchoRequest} request
-     * @param {SeedPackageYmlClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.echo({
-     *         name: "Hello world!",
-     *         size: 20
-     *     })
-     */
     private async __echo(
         request: SeedPackageYml.EchoRequest,
         requestOptions?: SeedPackageYmlClient.RequestOptions,

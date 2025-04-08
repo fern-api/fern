@@ -45,17 +45,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__getUser, userId, requestOptions);
     }
 
-    /**
-     * Retrieve a user.
-     * This endpoint is used to retrieve a user.
-     *
-     * @param {string} userId - The ID of the user to retrieve.
-     *                          This ID is unique to each user.
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.getUser("userId")
-     */
     private async __getUser(userId: string, requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -125,19 +114,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
     }
 
-    /**
-     * Create a new user.
-     * This endpoint is used to create a new user.
-     *
-     * @param {SeedMultiLineDocs.CreateUserRequest} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.createUser({
-     *         name: "name",
-     *         age: 1
-     *     })
-     */
     private async __createUser(
         request: SeedMultiLineDocs.CreateUserRequest,
         requestOptions?: User.RequestOptions,

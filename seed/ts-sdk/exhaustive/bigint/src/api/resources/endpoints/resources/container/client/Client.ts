@@ -45,13 +45,6 @@ export class Container {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfPrimitives, request, requestOptions);
     }
 
-    /**
-     * @param {string[]} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
-     */
     private async __getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions,
@@ -139,17 +132,6 @@ export class Container {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfObjects, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.container.getAndReturnListOfObjects([{
-     *             string: "string"
-     *         }, {
-     *             string: "string"
-     *         }])
-     */
     private async __getAndReturnListOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
@@ -230,13 +212,6 @@ export class Container {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfPrimitives, request, requestOptions);
     }
 
-    /**
-     * @param {Set<string>} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
-     */
     private async __getAndReturnSetOfPrimitives(
         request: Set<string>,
         requestOptions?: Container.RequestOptions,
@@ -322,15 +297,6 @@ export class Container {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfObjects, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.container.getAndReturnSetOfObjects(new Set([{
-     *             string: "string"
-     *         }]))
-     */
     private async __getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
@@ -413,15 +379,6 @@ export class Container {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapPrimToPrim, request, requestOptions);
     }
 
-    /**
-     * @param {Record<string, string>} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.container.getAndReturnMapPrimToPrim({
-     *         "string": "string"
-     *     })
-     */
     private async __getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions,
@@ -506,17 +463,6 @@ export class Container {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapOfPrimToObject, request, requestOptions);
     }
 
-    /**
-     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
-     *         "string": {
-     *             string: "string"
-     *         }
-     *     })
-     */
     private async __getAndReturnMapOfPrimToObject(
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions,
@@ -602,15 +548,6 @@ export class Container {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnOptional, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.container.getAndReturnOptional({
-     *         string: "string"
-     *     })
-     */
     private async __getAndReturnOptional(
         request?: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions,

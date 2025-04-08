@@ -44,13 +44,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getMovie, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getMovie("string")
-     */
     private async __getMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
@@ -126,13 +119,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getMovieDocs, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getMovieDocs("string")
-     */
     private async __getMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
@@ -208,13 +194,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getMovieName, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getMovieName("string")
-     */
     private async __getMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,
@@ -290,13 +269,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getMovieMetadata, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getMovieMetadata("string")
-     */
     private async __getMovieMetadata(
         request: string,
         requestOptions?: Service.RequestOptions,
@@ -374,13 +346,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getOptionalMovie, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getOptionalMovie("string")
-     */
     private async __getOptionalMovie(
         request: string,
         requestOptions?: Service.RequestOptions,
@@ -458,13 +423,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getOptionalMovieDocs, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getOptionalMovieDocs("string")
-     */
     private async __getOptionalMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions,
@@ -542,13 +500,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getOptionalMovieName, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getOptionalMovieName("string")
-     */
     private async __getOptionalMovieName(
         request: string,
         requestOptions?: Service.RequestOptions,

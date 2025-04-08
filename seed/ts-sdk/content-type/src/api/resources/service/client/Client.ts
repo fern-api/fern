@@ -46,16 +46,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__patch, request, requestOptions);
     }
 
-    /**
-     * @param {SeedContentTypes.PatchProxyRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.patch({
-     *         application: "application",
-     *         requireAuth: true
-     *     })
-     */
     private async __patch(
         request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: Service.RequestOptions,

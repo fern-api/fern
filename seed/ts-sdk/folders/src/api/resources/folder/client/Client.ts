@@ -44,12 +44,6 @@ export class Folder {
         return core.HttpResponsePromise.fromFunction(this.__foo, requestOptions);
     }
 
-    /**
-     * @param {Folder.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.folder.foo()
-     */
     private async __foo(requestOptions?: Folder.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url:

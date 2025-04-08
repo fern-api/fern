@@ -48,16 +48,6 @@ export class Auth {
         return core.HttpResponsePromise.fromFunction(this.__getToken, request, requestOptions);
     }
 
-    /**
-     * @param {SeedOauthClientCredentialsDefault.GetTokenRequest} request
-     * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.auth.getToken({
-     *         clientId: "client_id",
-     *         clientSecret: "client_secret"
-     *     })
-     */
     private async __getToken(
         request: SeedOauthClientCredentialsDefault.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,

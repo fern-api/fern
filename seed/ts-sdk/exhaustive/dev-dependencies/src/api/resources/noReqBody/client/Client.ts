@@ -44,12 +44,6 @@ export class NoReqBody {
         return core.HttpResponsePromise.fromFunction(this.__getWithNoRequestBody, requestOptions);
     }
 
-    /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.noReqBody.getWithNoRequestBody()
-     */
     private async __getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
     ): Promise<
@@ -119,12 +113,6 @@ export class NoReqBody {
         return core.HttpResponsePromise.fromFunction(this.__postWithNoRequestBody, requestOptions);
     }
 
-    /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.noReqBody.postWithNoRequestBody()
-     */
     private async __postWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>>> {

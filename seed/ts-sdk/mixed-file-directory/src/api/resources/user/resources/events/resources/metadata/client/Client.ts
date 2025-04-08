@@ -48,17 +48,6 @@ export class Metadata {
         return core.HttpResponsePromise.fromFunction(this.__getMetadata, request, requestOptions);
     }
 
-    /**
-     * Get event metadata.
-     *
-     * @param {SeedMixedFileDirectory.user.events.GetEventMetadataRequest} request
-     * @param {Metadata.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.events.metadata.getMetadata({
-     *         id: "id"
-     *     })
-     */
     private async __getMetadata(
         request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
         requestOptions?: Metadata.RequestOptions,

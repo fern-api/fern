@@ -46,15 +46,6 @@ export class Params {
         return core.HttpResponsePromise.fromFunction(this.__getWithPath, param, requestOptions);
     }
 
-    /**
-     * GET with path param
-     *
-     * @param {string} param
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithPath("param")
-     */
     private async __getWithPath(
         param: string,
         requestOptions?: Params.RequestOptions,
@@ -127,16 +118,6 @@ export class Params {
         return core.HttpResponsePromise.fromFunction(this.__getWithInlinePath, param, request, requestOptions);
     }
 
-    /**
-     * GET with path param
-     *
-     * @param {string} param
-     * @param {Fiddle.endpoints.GetWithInlinePath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithInlinePath("param")
-     */
     private async __getWithInlinePath(
         param: string,
         request: Fiddle.endpoints.GetWithInlinePath = {},
@@ -211,18 +192,6 @@ export class Params {
         return core.HttpResponsePromise.fromFunction(this.__getWithQuery, request, requestOptions);
     }
 
-    /**
-     * GET with query param
-     *
-     * @param {Fiddle.endpoints.GetWithQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithQuery({
-     *         query: "query",
-     *         number: 1
-     *     })
-     */
     private async __getWithQuery(
         request: Fiddle.endpoints.GetWithQuery,
         requestOptions?: Params.RequestOptions,
@@ -296,18 +265,6 @@ export class Params {
         return core.HttpResponsePromise.fromFunction(this.__getWithAllowMultipleQuery, request, requestOptions);
     }
 
-    /**
-     * GET with multiple of same query param
-     *
-     * @param {Fiddle.endpoints.GetWithMultipleQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithAllowMultipleQuery({
-     *         query: "query",
-     *         number: 1
-     *     })
-     */
     private async __getWithAllowMultipleQuery(
         request: Fiddle.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
@@ -392,18 +349,6 @@ export class Params {
         return core.HttpResponsePromise.fromFunction(this.__getWithPathAndQuery, param, request, requestOptions);
     }
 
-    /**
-     * GET with path and query params
-     *
-     * @param {string} param
-     * @param {Fiddle.endpoints.GetWithPathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithPathAndQuery("param", {
-     *         query: "query"
-     *     })
-     */
     private async __getWithPathAndQuery(
         param: string,
         request: Fiddle.endpoints.GetWithPathAndQuery,
@@ -478,18 +423,6 @@ export class Params {
         return core.HttpResponsePromise.fromFunction(this.__getWithInlinePathAndQuery, param, request, requestOptions);
     }
 
-    /**
-     * GET with path and query params
-     *
-     * @param {string} param
-     * @param {Fiddle.endpoints.GetWithInlinePathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithInlinePathAndQuery("param", {
-     *         query: "query"
-     *     })
-     */
     private async __getWithInlinePathAndQuery(
         param: string,
         request: Fiddle.endpoints.GetWithInlinePathAndQuery,
@@ -562,16 +495,6 @@ export class Params {
         return core.HttpResponsePromise.fromFunction(this.__modifyWithPath, param, request, requestOptions);
     }
 
-    /**
-     * PUT to update with path param
-     *
-     * @param {string} param
-     * @param {string} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.modifyWithPath("param", "string")
-     */
     private async __modifyWithPath(
         param: string,
         request: string,
@@ -650,18 +573,6 @@ export class Params {
         return core.HttpResponsePromise.fromFunction(this.__modifyWithInlinePath, param, request, requestOptions);
     }
 
-    /**
-     * PUT to update with path param
-     *
-     * @param {string} param
-     * @param {Fiddle.endpoints.ModifyResourceAtInlinedPath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.modifyWithInlinePath("param", {
-     *         body: "string"
-     *     })
-     */
     private async __modifyWithInlinePath(
         param: string,
         request: Fiddle.endpoints.ModifyResourceAtInlinedPath,

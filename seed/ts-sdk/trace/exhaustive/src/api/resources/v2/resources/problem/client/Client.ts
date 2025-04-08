@@ -51,14 +51,6 @@ export class Problem {
         return core.HttpResponsePromise.fromFunction(this.__getLightweightProblems, requestOptions);
     }
 
-    /**
-     * Returns lightweight versions of all problems
-     *
-     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.v2.problem.getLightweightProblems()
-     */
     private async __getLightweightProblems(
         requestOptions?: Problem.RequestOptions,
     ): Promise<
@@ -138,14 +130,6 @@ export class Problem {
         return core.HttpResponsePromise.fromFunction(this.__getProblems, requestOptions);
     }
 
-    /**
-     * Returns latest versions of all problems
-     *
-     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.v2.problem.getProblems()
-     */
     private async __getProblems(
         requestOptions?: Problem.RequestOptions,
     ): Promise<
@@ -225,15 +209,6 @@ export class Problem {
         return core.HttpResponsePromise.fromFunction(this.__getLatestProblem, problemId, requestOptions);
     }
 
-    /**
-     * Returns latest version of a problem
-     *
-     * @param {SeedTrace.ProblemId} problemId
-     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.v2.problem.getLatestProblem(SeedTrace.ProblemId("problemId"))
-     */
     private async __getLatestProblem(
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
@@ -321,16 +296,6 @@ export class Problem {
         );
     }
 
-    /**
-     * Returns requested version of a problem
-     *
-     * @param {SeedTrace.ProblemId} problemId
-     * @param {number} problemVersion
-     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.v2.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1)
-     */
     private async __getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,

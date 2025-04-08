@@ -129,15 +129,6 @@ export class Dummy {
         return core.HttpResponsePromise.fromFunction(this.__generate, request, requestOptions);
     }
 
-    /**
-     * @param {SeedStreaming.Generateequest} request
-     * @param {Dummy.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.dummy.generate({
-     *         numEvents: 5
-     *     })
-     */
     private async __generate(
         request: SeedStreaming.Generateequest,
         requestOptions?: Dummy.RequestOptions,

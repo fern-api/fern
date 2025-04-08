@@ -47,17 +47,6 @@ export class Optional {
         return core.HttpResponsePromise.fromFunction(this.__sendOptionalBody, request, requestOptions);
     }
 
-    /**
-     * @param {Record<string, unknown>} request
-     * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.optional.sendOptionalBody({
-     *         "string": {
-     *             "key": "value"
-     *         }
-     *     })
-     */
     private async __sendOptionalBody(
         request?: Record<string, unknown>,
         requestOptions?: Optional.RequestOptions,

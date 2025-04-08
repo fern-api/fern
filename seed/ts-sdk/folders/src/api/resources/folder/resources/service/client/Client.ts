@@ -40,12 +40,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__endpoint, requestOptions);
     }
 
-    /**
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.folder.service.endpoint()
-     */
     private async __endpoint(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -110,17 +104,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__unknownRequest, request, requestOptions);
     }
 
-    /**
-     * @param {unknown} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedApi.folder.NotFoundError}
-     *
-     * @example
-     *     await client.folder.service.unknownRequest({
-     *         "key": "value"
-     *     })
-     */
     private async __unknownRequest(
         request?: unknown,
         requestOptions?: Service.RequestOptions,

@@ -47,16 +47,6 @@ export class Union {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
     }
 
-    /**
-     * @param {Fiddle.types.Animal} request
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.union.getAndReturnUnion(Fiddle.types.Animal.dog({
-     *         name: "name",
-     *         likesToWoof: true
-     *     }))
-     */
     private async __getAndReturnUnion(
         request: Fiddle.types.Animal,
         requestOptions?: Union.RequestOptions,

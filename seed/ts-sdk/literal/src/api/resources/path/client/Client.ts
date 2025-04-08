@@ -49,13 +49,6 @@ export class Path {
         return core.HttpResponsePromise.fromFunction(this.__send, id, requestOptions);
     }
 
-    /**
-     * @param {"123"} id
-     * @param {Path.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.path.send("123")
-     */
     private async __send(
         id: "123",
         requestOptions?: Path.RequestOptions,

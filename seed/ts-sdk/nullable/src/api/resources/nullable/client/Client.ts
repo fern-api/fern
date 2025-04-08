@@ -50,19 +50,6 @@ export class Nullable {
         return core.HttpResponsePromise.fromFunction(this.__getUsers, request, requestOptions);
     }
 
-    /**
-     * @param {SeedNullable.GetUsersRequest} request
-     * @param {Nullable.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.nullable.getUsers({
-     *         usernames: "usernames",
-     *         avatar: "avatar",
-     *         activated: true,
-     *         tags: "tags",
-     *         extra: true
-     *     })
-     */
     private async __getUsers(
         request: SeedNullable.GetUsersRequest = {},
         requestOptions?: Nullable.RequestOptions,
@@ -185,26 +172,6 @@ export class Nullable {
         return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
     }
 
-    /**
-     * @param {SeedNullable.CreateUserRequest} request
-     * @param {Nullable.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.nullable.createUser({
-     *         username: "username",
-     *         tags: ["tags", "tags"],
-     *         metadata: {
-     *             createdAt: "2024-01-15T09:30:00Z",
-     *             updatedAt: "2024-01-15T09:30:00Z",
-     *             avatar: "avatar",
-     *             activated: true,
-     *             status: {
-     *                 type: "active"
-     *             }
-     *         },
-     *         avatar: "avatar"
-     *     })
-     */
     private async __createUser(
         request: SeedNullable.CreateUserRequest,
         requestOptions?: Nullable.RequestOptions,
@@ -282,15 +249,6 @@ export class Nullable {
         return core.HttpResponsePromise.fromFunction(this.__deleteUser, request, requestOptions);
     }
 
-    /**
-     * @param {SeedNullable.DeleteUserRequest} request
-     * @param {Nullable.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.nullable.deleteUser({
-     *         username: "xy"
-     *     })
-     */
     private async __deleteUser(
         request: SeedNullable.DeleteUserRequest = {},
         requestOptions?: Nullable.RequestOptions,

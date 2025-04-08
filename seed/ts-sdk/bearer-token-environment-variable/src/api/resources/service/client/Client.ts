@@ -46,14 +46,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getWithBearerToken, requestOptions);
     }
 
-    /**
-     * GET request with custom api key
-     *
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getWithBearerToken()
-     */
     private async __getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(

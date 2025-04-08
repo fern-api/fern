@@ -46,15 +46,6 @@ export class SeedExtendsClient {
         return core.HttpResponsePromise.fromFunction(this.__extendedInlineRequestBody, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExtends.Inlined} request
-     * @param {SeedExtendsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.extendedInlineRequestBody({
-     *         unique: "unique"
-     *     })
-     */
     private async __extendedInlineRequestBody(
         request: SeedExtends.Inlined,
         requestOptions?: SeedExtendsClient.RequestOptions,

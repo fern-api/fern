@@ -50,12 +50,6 @@ export class SeedApiClient {
         return core.HttpResponsePromise.fromFunction(this.__foo, requestOptions);
     }
 
-    /**
-     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.foo()
-     */
     private async __foo(requestOptions?: SeedApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url:

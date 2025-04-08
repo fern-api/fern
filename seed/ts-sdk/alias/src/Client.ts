@@ -44,13 +44,6 @@ export class SeedAliasClient {
         return core.HttpResponsePromise.fromFunction(this.__get, typeId, requestOptions);
     }
 
-    /**
-     * @param {SeedAlias.TypeId} typeId
-     * @param {SeedAliasClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.get("typeId")
-     */
     private async __get(
         typeId: SeedAlias.TypeId,
         requestOptions?: SeedAliasClient.RequestOptions,

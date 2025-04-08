@@ -48,16 +48,6 @@ export class QueryParam {
         return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
     }
 
-    /**
-     * @param {SeedEnum.SendEnumAsQueryParamRequest} request
-     * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.queryParam.send({
-     *         operand: ">",
-     *         operandOrColor: "red"
-     *     })
-     */
     private async __send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
@@ -152,18 +142,6 @@ export class QueryParam {
         return core.HttpResponsePromise.fromFunction(this.__sendList, request, requestOptions);
     }
 
-    /**
-     * @param {SeedEnum.SendEnumListAsQueryParamRequest} request
-     * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.queryParam.sendList({
-     *         operand: ">",
-     *         maybeOperand: ">",
-     *         operandOrColor: "red",
-     *         maybeOperandOrColor: "red"
-     *     })
-     */
     private async __sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,

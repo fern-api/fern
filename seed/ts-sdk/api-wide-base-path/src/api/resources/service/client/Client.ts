@@ -53,15 +53,6 @@ export class Service {
         );
     }
 
-    /**
-     * @param {string} serviceParam
-     * @param {string} resourceParam
-     * @param {number} endpointParam
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.post("serviceParam", "resourceParam", 1)
-     */
     private async __post(
         serviceParam: string,
         resourceParam: string,

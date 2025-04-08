@@ -54,15 +54,6 @@ export class Submission {
         return core.HttpResponsePromise.fromFunction(this.__createExecutionSession, language, requestOptions);
     }
 
-    /**
-     * Returns sessionId and execution server URL for session. Spins up server.
-     *
-     * @param {SeedTrace.Language} language
-     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.submission.createExecutionSession("JAVA")
-     */
     private async __createExecutionSession(
         language: SeedTrace.Language,
         requestOptions?: Submission.RequestOptions,
@@ -139,15 +130,6 @@ export class Submission {
         return core.HttpResponsePromise.fromFunction(this.__getExecutionSession, sessionId, requestOptions);
     }
 
-    /**
-     * Returns execution server URL for session. Returns empty if session isn't registered.
-     *
-     * @param {string} sessionId
-     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.submission.getExecutionSession("sessionId")
-     */
     private async __getExecutionSession(
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
@@ -225,15 +207,6 @@ export class Submission {
         return core.HttpResponsePromise.fromFunction(this.__stopExecutionSession, sessionId, requestOptions);
     }
 
-    /**
-     * Stops execution session.
-     *
-     * @param {string} sessionId
-     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.submission.stopExecutionSession("sessionId")
-     */
     private async __stopExecutionSession(
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
@@ -306,12 +279,6 @@ export class Submission {
         return core.HttpResponsePromise.fromFunction(this.__getExecutionSessionsState, requestOptions);
     }
 
-    /**
-     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.submission.getExecutionSessionsState()
-     */
     private async __getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.GetExecutionSessionStateResponse>> {

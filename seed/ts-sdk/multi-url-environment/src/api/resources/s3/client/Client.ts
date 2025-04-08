@@ -50,15 +50,6 @@ export class S3 {
         return core.HttpResponsePromise.fromFunction(this.__getPresignedUrl, request, requestOptions);
     }
 
-    /**
-     * @param {SeedMultiUrlEnvironment.GetPresignedUrlRequest} request
-     * @param {S3.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.s3.getPresignedUrl({
-     *         s3Key: "s3Key"
-     *     })
-     */
     private async __getPresignedUrl(
         request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
         requestOptions?: S3.RequestOptions,

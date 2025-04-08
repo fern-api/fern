@@ -40,12 +40,6 @@ export class Dummy {
         return core.HttpResponsePromise.fromFunction(this.__getDummy, requestOptions);
     }
 
-    /**
-     * @param {Dummy.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.dummy.getDummy()
-     */
     private async __getDummy(requestOptions?: Dummy.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(

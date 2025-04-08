@@ -42,10 +42,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__post, request, requestOptions);
     }
 
-    /**
-     * @param {SeedFileUpload.MyRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __post(
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions,
@@ -90,9 +86,9 @@ export class Service {
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
+                {for (const _item of request.optionalMetadata) {
                     _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
-                }
+                }}
         }
 
         if (request.optionalObjectType != null) {
@@ -187,10 +183,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__justFile, request, requestOptions);
     }
 
-    /**
-     * @param {SeedFileUpload.JustFileRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __justFile(
         request: SeedFileUpload.JustFileRequest,
         requestOptions?: Service.RequestOptions,
@@ -259,10 +251,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__justFileWithQueryParams, request, requestOptions);
     }
 
-    /**
-     * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __justFileWithQueryParams(
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: Service.RequestOptions,
@@ -358,10 +346,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__withContentType, request, requestOptions);
     }
 
-    /**
-     * @param {SeedFileUpload.WithContentTypeRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __withContentType(
         request: SeedFileUpload.WithContentTypeRequest,
         requestOptions?: Service.RequestOptions,
@@ -442,10 +426,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__withFormEncoding, request, requestOptions);
     }
 
-    /**
-     * @param {SeedFileUpload.WithFormEncodingRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __withFormEncoding(
         request: SeedFileUpload.WithFormEncodingRequest,
         requestOptions?: Service.RequestOptions,
@@ -522,10 +502,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__withFormEncodedContainers, request, requestOptions);
     }
 
-    /**
-     * @param {SeedFileUpload.MyOtherRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __withFormEncodedContainers(
         request: SeedFileUpload.MyOtherRequest,
         requestOptions?: Service.RequestOptions,
@@ -686,10 +662,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__optionalArgs, request, requestOptions);
     }
 
-    /**
-     * @param {SeedFileUpload.OptionalArgsRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     */
     private async __optionalArgs(
         request: SeedFileUpload.OptionalArgsRequest,
         requestOptions?: Service.RequestOptions,
@@ -701,9 +673,9 @@ export class Service {
 
         if (request.request != null) {
             if (Array.isArray(request.request) || request.request instanceof Set)
-                for (const _item of request.request) {
+                {for (const _item of request.request) {
                     _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }
+                }}
         }
 
         const _maybeEncodedRequest = await _request.getRequest();

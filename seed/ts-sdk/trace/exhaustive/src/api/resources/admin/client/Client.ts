@@ -56,14 +56,6 @@ export class Admin {
         );
     }
 
-    /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.TestSubmissionStatus} request
-     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.TestSubmissionStatus.stopped())
-     */
     private async __updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionStatus,
@@ -145,17 +137,6 @@ export class Admin {
         );
     }
 
-    /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.TestSubmissionUpdate} request
-     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
-     *         updateTime: "2024-01-15T09:30:00Z",
-     *         updateInfo: SeedTrace.TestSubmissionUpdateInfo.running("QUEUEING_SUBMISSION")
-     *     })
-     */
     private async __sendTestSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionUpdate,
@@ -234,14 +215,6 @@ export class Admin {
         );
     }
 
-    /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.WorkspaceSubmissionStatus} request
-     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.WorkspaceSubmissionStatus.stopped())
-     */
     private async __updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionStatus,
@@ -323,17 +296,6 @@ export class Admin {
         );
     }
 
-    /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.WorkspaceSubmissionUpdate} request
-     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
-     *         updateTime: "2024-01-15T09:30:00Z",
-     *         updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running("QUEUEING_SUBMISSION")
-     *     })
-     */
     private async __sendWorkspaceSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionUpdate,
@@ -475,75 +437,6 @@ export class Admin {
         );
     }
 
-    /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {string} testCaseId
-     * @param {SeedTrace.StoreTracedTestCaseRequest} request
-     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "testCaseId", {
-     *         result: {
-     *             result: {
-     *                 expectedResult: SeedTrace.VariableValue.integerValue(1),
-     *                 actualResult: SeedTrace.ActualResult.value(SeedTrace.VariableValue.integerValue(1)),
-     *                 passed: true
-     *             },
-     *             stdout: "stdout"
-     *         },
-     *         traceResponses: [{
-     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-     *                 lineNumber: 1,
-     *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *                 expressionLocation: {
-     *                     start: 1,
-     *                     offset: 1
-     *                 },
-     *                 stack: {
-     *                     numStackFrames: 1,
-     *                     topStackFrame: {
-     *                         methodName: "methodName",
-     *                         lineNumber: 1,
-     *                         scopes: [{
-     *                                 variables: {
-     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                                 }
-     *                             }, {
-     *                                 variables: {
-     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                                 }
-     *                             }]
-     *                     }
-     *                 },
-     *                 stdout: "stdout"
-     *             }, {
-     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-     *                 lineNumber: 1,
-     *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *                 expressionLocation: {
-     *                     start: 1,
-     *                     offset: 1
-     *                 },
-     *                 stack: {
-     *                     numStackFrames: 1,
-     *                     topStackFrame: {
-     *                         methodName: "methodName",
-     *                         lineNumber: 1,
-     *                         scopes: [{
-     *                                 variables: {
-     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                                 }
-     *                             }, {
-     *                                 variables: {
-     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                                 }
-     *                             }]
-     *                     }
-     *                 },
-     *                 stdout: "stdout"
-     *             }]
-     *     })
-     */
     private async __storeTracedTestCase(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: string,
@@ -684,73 +577,6 @@ export class Admin {
         );
     }
 
-    /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.v2.TestCaseId} testCaseId
-     * @param {SeedTrace.TraceResponseV2[]} request
-     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.v2.TestCaseId("testCaseId"), [{
-     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-     *             lineNumber: 1,
-     *             file: {
-     *                 filename: "filename",
-     *                 directory: "directory"
-     *             },
-     *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *             expressionLocation: {
-     *                 start: 1,
-     *                 offset: 1
-     *             },
-     *             stack: {
-     *                 numStackFrames: 1,
-     *                 topStackFrame: {
-     *                     methodName: "methodName",
-     *                     lineNumber: 1,
-     *                     scopes: [{
-     *                             variables: {
-     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                             }
-     *                         }, {
-     *                             variables: {
-     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                             }
-     *                         }]
-     *                 }
-     *             },
-     *             stdout: "stdout"
-     *         }, {
-     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-     *             lineNumber: 1,
-     *             file: {
-     *                 filename: "filename",
-     *                 directory: "directory"
-     *             },
-     *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *             expressionLocation: {
-     *                 start: 1,
-     *                 offset: 1
-     *             },
-     *             stack: {
-     *                 numStackFrames: 1,
-     *                 topStackFrame: {
-     *                     methodName: "methodName",
-     *                     lineNumber: 1,
-     *                     scopes: [{
-     *                             variables: {
-     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                             }
-     *                         }, {
-     *                             variables: {
-     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                             }
-     *                         }]
-     *                 }
-     *             },
-     *             stdout: "stdout"
-     *         }])
-     */
     private async __storeTracedTestCaseV2(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: SeedTrace.v2.TestCaseId,
@@ -897,79 +723,6 @@ export class Admin {
         );
     }
 
-    /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.StoreTracedWorkspaceRequest} request
-     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
-     *         workspaceRunDetails: {
-     *             exceptionV2: SeedTrace.ExceptionV2.generic({
-     *                 exceptionType: "exceptionType",
-     *                 exceptionMessage: "exceptionMessage",
-     *                 exceptionStacktrace: "exceptionStacktrace"
-     *             }),
-     *             exception: {
-     *                 exceptionType: "exceptionType",
-     *                 exceptionMessage: "exceptionMessage",
-     *                 exceptionStacktrace: "exceptionStacktrace"
-     *             },
-     *             stdout: "stdout"
-     *         },
-     *         traceResponses: [{
-     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-     *                 lineNumber: 1,
-     *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *                 expressionLocation: {
-     *                     start: 1,
-     *                     offset: 1
-     *                 },
-     *                 stack: {
-     *                     numStackFrames: 1,
-     *                     topStackFrame: {
-     *                         methodName: "methodName",
-     *                         lineNumber: 1,
-     *                         scopes: [{
-     *                                 variables: {
-     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                                 }
-     *                             }, {
-     *                                 variables: {
-     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                                 }
-     *                             }]
-     *                     }
-     *                 },
-     *                 stdout: "stdout"
-     *             }, {
-     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-     *                 lineNumber: 1,
-     *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *                 expressionLocation: {
-     *                     start: 1,
-     *                     offset: 1
-     *                 },
-     *                 stack: {
-     *                     numStackFrames: 1,
-     *                     topStackFrame: {
-     *                         methodName: "methodName",
-     *                         lineNumber: 1,
-     *                         scopes: [{
-     *                                 variables: {
-     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                                 }
-     *                             }, {
-     *                                 variables: {
-     *                                     "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                                 }
-     *                             }]
-     *                     }
-     *                 },
-     *                 stdout: "stdout"
-     *             }]
-     *     })
-     */
     private async __storeTracedWorkspace(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.StoreTracedWorkspaceRequest,
@@ -1106,72 +859,6 @@ export class Admin {
         );
     }
 
-    /**
-     * @param {SeedTrace.SubmissionId} submissionId
-     * @param {SeedTrace.TraceResponseV2[]} request
-     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), [{
-     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-     *             lineNumber: 1,
-     *             file: {
-     *                 filename: "filename",
-     *                 directory: "directory"
-     *             },
-     *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *             expressionLocation: {
-     *                 start: 1,
-     *                 offset: 1
-     *             },
-     *             stack: {
-     *                 numStackFrames: 1,
-     *                 topStackFrame: {
-     *                     methodName: "methodName",
-     *                     lineNumber: 1,
-     *                     scopes: [{
-     *                             variables: {
-     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                             }
-     *                         }, {
-     *                             variables: {
-     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                             }
-     *                         }]
-     *                 }
-     *             },
-     *             stdout: "stdout"
-     *         }, {
-     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-     *             lineNumber: 1,
-     *             file: {
-     *                 filename: "filename",
-     *                 directory: "directory"
-     *             },
-     *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *             expressionLocation: {
-     *                 start: 1,
-     *                 offset: 1
-     *             },
-     *             stack: {
-     *                 numStackFrames: 1,
-     *                 topStackFrame: {
-     *                     methodName: "methodName",
-     *                     lineNumber: 1,
-     *                     scopes: [{
-     *                             variables: {
-     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                             }
-     *                         }, {
-     *                             variables: {
-     *                                 "variables": SeedTrace.DebugVariableValue.integerValue(1)
-     *                             }
-     *                         }]
-     *                 }
-     *             },
-     *             stdout: "stdout"
-     *         }])
-     */
     private async __storeTracedWorkspaceV2(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TraceResponseV2[],

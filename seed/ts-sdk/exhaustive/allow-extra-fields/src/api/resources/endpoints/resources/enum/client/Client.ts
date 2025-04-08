@@ -45,13 +45,6 @@ export class Enum {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnEnum, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.types.WeatherReport} request
-     * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
-     */
     private async __getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: Enum.RequestOptions,

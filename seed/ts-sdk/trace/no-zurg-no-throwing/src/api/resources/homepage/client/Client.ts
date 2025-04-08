@@ -46,12 +46,6 @@ export class Homepage {
         return core.HttpResponsePromise.fromFunction(this.__getHomepageProblems, requestOptions);
     }
 
-    /**
-     * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.homepage.getHomepageProblems()
-     */
     private async __getHomepageProblems(
         requestOptions?: Homepage.RequestOptions,
     ): Promise<
@@ -121,13 +115,6 @@ export class Homepage {
         return core.HttpResponsePromise.fromFunction(this.__setHomepageProblems, request, requestOptions);
     }
 
-    /**
-     * @param {SeedTrace.ProblemId[]} request
-     * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.homepage.setHomepageProblems(["string", "string"])
-     */
     private async __setHomepageProblems(
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions,

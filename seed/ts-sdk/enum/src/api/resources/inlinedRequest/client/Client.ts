@@ -47,16 +47,6 @@ export class InlinedRequest {
         return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
     }
 
-    /**
-     * @param {SeedEnum.SendEnumInlinedRequest} request
-     * @param {InlinedRequest.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.inlinedRequest.send({
-     *         operand: ">",
-     *         operandOrColor: "red"
-     *     })
-     */
     private async __send(
         request: SeedEnum.SendEnumInlinedRequest,
         requestOptions?: InlinedRequest.RequestOptions,

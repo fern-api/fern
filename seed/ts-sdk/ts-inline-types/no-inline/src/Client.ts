@@ -48,18 +48,6 @@ export class SeedObjectClient {
         return core.HttpResponsePromise.fromFunction(this.__getRoot, request, requestOptions);
     }
 
-    /**
-     * @param {SeedObject.PostRootRequest} request
-     * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.getRoot({
-     *         bar: {
-     *             foo: "foo"
-     *         },
-     *         foo: "foo"
-     *     })
-     */
     private async __getRoot(
         request: SeedObject.PostRootRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
@@ -142,28 +130,6 @@ export class SeedObjectClient {
         return core.HttpResponsePromise.fromFunction(this.__getDiscriminatedUnion, request, requestOptions);
     }
 
-    /**
-     * @param {SeedObject.GetDiscriminatedUnionRequest} request
-     * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.getDiscriminatedUnion({
-     *         bar: {
-     *             type: "type1",
-     *             foo: "foo",
-     *             bar: {
-     *                 foo: "foo",
-     *                 ref: {
-     *                     foo: "foo"
-     *                 }
-     *             },
-     *             ref: {
-     *                 foo: "foo"
-     *             }
-     *         },
-     *         foo: "foo"
-     *     })
-     */
     private async __getDiscriminatedUnion(
         request: SeedObject.GetDiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
@@ -247,27 +213,6 @@ export class SeedObjectClient {
         return core.HttpResponsePromise.fromFunction(this.__getUndiscriminatedUnion, request, requestOptions);
     }
 
-    /**
-     * @param {SeedObject.GetUndiscriminatedUnionRequest} request
-     * @param {SeedObjectClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.getUndiscriminatedUnion({
-     *         bar: {
-     *             foo: "foo",
-     *             bar: {
-     *                 foo: "foo",
-     *                 ref: {
-     *                     foo: "foo"
-     *                 }
-     *             },
-     *             ref: {
-     *                 foo: "foo"
-     *             }
-     *         },
-     *         foo: "foo"
-     *     })
-     */
     private async __getUndiscriminatedUnion(
         request: SeedObject.GetUndiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,

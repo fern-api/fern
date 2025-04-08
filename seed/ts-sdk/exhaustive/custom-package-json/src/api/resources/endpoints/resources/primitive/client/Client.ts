@@ -44,13 +44,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnString, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnString("string")
-     */
     private async __getAndReturnString(
         request: string,
         requestOptions?: Primitive.RequestOptions,
@@ -122,13 +115,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnInt, request, requestOptions);
     }
 
-    /**
-     * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnInt(1)
-     */
     private async __getAndReturnInt(
         request: number,
         requestOptions?: Primitive.RequestOptions,
@@ -200,13 +186,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnLong, request, requestOptions);
     }
 
-    /**
-     * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnLong(1000000)
-     */
     private async __getAndReturnLong(
         request: number,
         requestOptions?: Primitive.RequestOptions,
@@ -278,13 +257,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnDouble, request, requestOptions);
     }
 
-    /**
-     * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnDouble(1.1)
-     */
     private async __getAndReturnDouble(
         request: number,
         requestOptions?: Primitive.RequestOptions,
@@ -356,13 +328,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnBool, request, requestOptions);
     }
 
-    /**
-     * @param {boolean} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnBool(true)
-     */
     private async __getAndReturnBool(
         request: boolean,
         requestOptions?: Primitive.RequestOptions,
@@ -434,13 +399,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnDatetime, request, requestOptions);
     }
 
-    /**
-     * @param {Date} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
-     */
     private async __getAndReturnDatetime(
         request: Date,
         requestOptions?: Primitive.RequestOptions,
@@ -512,13 +470,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnDate, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
-     */
     private async __getAndReturnDate(
         request: string,
         requestOptions?: Primitive.RequestOptions,
@@ -590,13 +541,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnUuid, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-     */
     private async __getAndReturnUuid(
         request: string,
         requestOptions?: Primitive.RequestOptions,
@@ -668,13 +612,6 @@ export class Primitive {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnBase64, request, requestOptions);
     }
 
-    /**
-     * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
-     */
     private async __getAndReturnBase64(
         request: string,
         requestOptions?: Primitive.RequestOptions,

@@ -46,14 +46,6 @@ export class PathParam {
         return core.HttpResponsePromise.fromFunction(this.__send, operand, operandOrColor, requestOptions);
     }
 
-    /**
-     * @param {SeedEnum.Operand} operand
-     * @param {SeedEnum.ColorOrOperand} operandOrColor
-     * @param {PathParam.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.pathParam.send(">", "red")
-     */
     private async __send(
         operand: SeedEnum.Operand,
         operandOrColor: SeedEnum.ColorOrOperand,

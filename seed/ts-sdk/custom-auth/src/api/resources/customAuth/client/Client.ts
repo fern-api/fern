@@ -45,16 +45,6 @@ export class CustomAuth {
         return core.HttpResponsePromise.fromFunction(this.__getWithCustomAuth, requestOptions);
     }
 
-    /**
-     * GET request with custom auth scheme
-     *
-     * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedCustomAuth.UnauthorizedRequest}
-     *
-     * @example
-     *     await client.customAuth.getWithCustomAuth()
-     */
     private async __getWithCustomAuth(
         requestOptions?: CustomAuth.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
@@ -148,20 +138,6 @@ export class CustomAuth {
         return core.HttpResponsePromise.fromFunction(this.__postWithCustomAuth, request, requestOptions);
     }
 
-    /**
-     * POST request with custom auth scheme
-     *
-     * @param {unknown} request
-     * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedCustomAuth.UnauthorizedRequest}
-     * @throws {@link SeedCustomAuth.BadRequest}
-     *
-     * @example
-     *     await client.customAuth.postWithCustomAuth({
-     *         "key": "value"
-     *     })
-     */
     private async __postWithCustomAuth(
         request?: unknown,
         requestOptions?: CustomAuth.RequestOptions,

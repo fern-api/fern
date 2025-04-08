@@ -54,15 +54,6 @@ export class Headers {
         return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
     }
 
-    /**
-     * @param {SeedLiteral.SendLiteralsInHeadersRequest} request
-     * @param {Headers.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.headers.send({
-     *         query: "What is the weather today"
-     *     })
-     */
     private async __send(
         request: SeedLiteral.SendLiteralsInHeadersRequest,
         requestOptions?: Headers.RequestOptions,

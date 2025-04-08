@@ -49,17 +49,6 @@ export class ReqWithHeaders {
         return core.HttpResponsePromise.fromFunction(this.__getWithCustomHeader, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.ReqWithHeaders} request
-     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.reqWithHeaders.getWithCustomHeader({
-     *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
-     *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-     *         body: "string"
-     *     })
-     */
     private async __getWithCustomHeader(
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions,

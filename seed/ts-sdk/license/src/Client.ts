@@ -38,12 +38,6 @@ export class SeedLicenseClient {
         return core.HttpResponsePromise.fromFunction(this.__get, requestOptions);
     }
 
-    /**
-     * @param {SeedLicenseClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.get()
-     */
     private async __get(requestOptions?: SeedLicenseClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(

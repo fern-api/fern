@@ -54,20 +54,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getFile, filename, request, requestOptions);
     }
 
-    /**
-     * This endpoint returns a file by its name.
-     *
-     * @param {string} filename - This is a filename
-     * @param {SeedExamples.file.GetFileRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedExamples.NotFoundError}
-     *
-     * @example
-     *     await client.file.service.getFile("file.txt", {
-     *         xFileApiVersion: "0.0.2"
-     *     })
-     */
     private async __getFile(
         filename: string,
         request: SeedExamples.file.GetFileRequest,

@@ -38,12 +38,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getText, requestOptions);
     }
 
-    /**
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getText()
-     */
     private async __getText(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(

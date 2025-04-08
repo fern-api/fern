@@ -55,14 +55,6 @@ export class Sysprop {
         );
     }
 
-    /**
-     * @param {SeedTrace.Language} language
-     * @param {number} numWarmInstances
-     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.sysprop.setNumWarmInstances("JAVA", 1)
-     */
     private async __setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
@@ -132,12 +124,6 @@ export class Sysprop {
         return core.HttpResponsePromise.fromFunction(this.__getNumWarmInstances, requestOptions);
     }
 
-    /**
-     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.sysprop.getNumWarmInstances()
-     */
     private async __getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions,
     ): Promise<

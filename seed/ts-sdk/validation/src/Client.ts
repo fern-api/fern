@@ -49,18 +49,6 @@ export class SeedValidationClient {
         return core.HttpResponsePromise.fromFunction(this.__create, request, requestOptions);
     }
 
-    /**
-     * @param {SeedValidation.CreateRequest} request
-     * @param {SeedValidationClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.create({
-     *         decimal: 2.2,
-     *         even: 100,
-     *         name: "foo",
-     *         shape: "SQUARE"
-     *     })
-     */
     private async __create(
         request: SeedValidation.CreateRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
@@ -140,17 +128,6 @@ export class SeedValidationClient {
         return core.HttpResponsePromise.fromFunction(this.__get, request, requestOptions);
     }
 
-    /**
-     * @param {SeedValidation.GetRequest} request
-     * @param {SeedValidationClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.get({
-     *         decimal: 2.2,
-     *         even: 100,
-     *         name: "foo"
-     *     })
-     */
     private async __get(
         request: SeedValidation.GetRequest,
         requestOptions?: SeedValidationClient.RequestOptions,

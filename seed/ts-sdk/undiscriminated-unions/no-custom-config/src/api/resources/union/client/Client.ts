@@ -44,13 +44,6 @@ export class Union {
         return core.HttpResponsePromise.fromFunction(this.__get, request, requestOptions);
     }
 
-    /**
-     * @param {SeedUndiscriminatedUnions.MyUnion} request
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.union.get("string")
-     */
     private async __get(
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: Union.RequestOptions,
@@ -122,12 +115,6 @@ export class Union {
         return core.HttpResponsePromise.fromFunction(this.__getMetadata, requestOptions);
     }
 
-    /**
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.union.getMetadata()
-     */
     private async __getMetadata(
         requestOptions?: Union.RequestOptions,
     ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {

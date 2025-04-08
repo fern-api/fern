@@ -50,19 +50,6 @@ export class NoAuth {
         return core.HttpResponsePromise.fromFunction(this.__postWithNoAuth, request, requestOptions);
     }
 
-    /**
-     * POST request with no auth
-     *
-     * @param {unknown} request
-     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedExhaustive.BadRequestBody}
-     *
-     * @example
-     *     await client.noAuth.postWithNoAuth({
-     *         "key": "value"
-     *     })
-     */
     private async __postWithNoAuth(
         request?: unknown,
         requestOptions?: NoAuth.RequestOptions,

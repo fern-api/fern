@@ -44,13 +44,6 @@ export class HttpMethods {
         return core.HttpResponsePromise.fromFunction(this.__testGet, id, requestOptions);
     }
 
-    /**
-     * @param {string} id
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testGet("id")
-     */
     private async __testGet(
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
@@ -123,15 +116,6 @@ export class HttpMethods {
         return core.HttpResponsePromise.fromFunction(this.__testPost, request, requestOptions);
     }
 
-    /**
-     * @param {Fiddle.types.ObjectWithRequiredField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPost({
-     *         string: "string"
-     *     })
-     */
     private async __testPost(
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
@@ -211,16 +195,6 @@ export class HttpMethods {
         return core.HttpResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
     }
 
-    /**
-     * @param {string} id
-     * @param {Fiddle.types.ObjectWithRequiredField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPut("id", {
-     *         string: "string"
-     *     })
-     */
     private async __testPut(
         id: string,
         request: Fiddle.types.ObjectWithRequiredField,
@@ -315,30 +289,6 @@ export class HttpMethods {
         return core.HttpResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
     }
 
-    /**
-     * @param {string} id
-     * @param {Fiddle.types.ObjectWithOptionalField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPatch("id", {
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: new Set(["set"]),
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
-     */
     private async __testPatch(
         id: string,
         request: Fiddle.types.ObjectWithOptionalField,
@@ -413,13 +363,6 @@ export class HttpMethods {
         return core.HttpResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
     }
 
-    /**
-     * @param {string} id
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testDelete("id")
-     */
     private async __testDelete(
         id: string,
         requestOptions?: HttpMethods.RequestOptions,

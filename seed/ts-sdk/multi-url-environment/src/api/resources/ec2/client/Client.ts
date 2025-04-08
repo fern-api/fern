@@ -50,15 +50,6 @@ export class Ec2 {
         return core.HttpResponsePromise.fromFunction(this.__bootInstance, request, requestOptions);
     }
 
-    /**
-     * @param {SeedMultiUrlEnvironment.BootInstanceRequest} request
-     * @param {Ec2.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.ec2.bootInstance({
-     *         size: "size"
-     *     })
-     */
     private async __bootInstance(
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2.RequestOptions,

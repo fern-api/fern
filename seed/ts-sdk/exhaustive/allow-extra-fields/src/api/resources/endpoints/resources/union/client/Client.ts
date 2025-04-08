@@ -49,17 +49,6 @@ export class Union {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.types.Animal} request
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.union.getAndReturnUnion({
-     *         animal: "dog",
-     *         name: "name",
-     *         likesToWoof: true
-     *     })
-     */
     private async __getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions,

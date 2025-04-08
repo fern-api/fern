@@ -41,12 +41,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getDirectThread, requestOptions);
     }
 
-    /**
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.folderA.service.getDirectThread()
-     */
     private async __getDirectThread(
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.folderA.Response>> {

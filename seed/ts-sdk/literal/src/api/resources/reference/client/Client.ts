@@ -64,25 +64,6 @@ export class Reference {
         return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
     }
 
-    /**
-     * @param {SeedLiteral.SendRequest} request
-     * @param {Reference.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.reference.send({
-     *         prompt: "You are a helpful assistant",
-     *         stream: false,
-     *         context: "You're super wise",
-     *         query: "What is the weather today",
-     *         containerObject: {
-     *             nestedObjects: [{
-     *                     literal1: "literal1",
-     *                     literal2: "literal2",
-     *                     strProp: "strProp"
-     *                 }]
-     *         }
-     *     })
-     */
     private async __send(
         request: SeedLiteral.SendRequest,
         requestOptions?: Reference.RequestOptions,

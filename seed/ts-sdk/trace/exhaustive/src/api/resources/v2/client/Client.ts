@@ -58,12 +58,6 @@ export class V2 {
         return core.HttpResponsePromise.fromFunction(this.__test, requestOptions);
     }
 
-    /**
-     * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.v2.test()
-     */
     private async __test(
         requestOptions?: V2.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.v2.test.Error>>> {

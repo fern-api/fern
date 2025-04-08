@@ -49,17 +49,6 @@ export class Auth {
         return core.HttpResponsePromise.fromFunction(this.__getTokenWithClientCredentials, request, requestOptions);
     }
 
-    /**
-     * @param {SeedOauthClientCredentials.GetTokenRequest} request
-     * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.auth.getTokenWithClientCredentials({
-     *         clientId: "client_id",
-     *         clientSecret: "client_secret",
-     *         scope: "scope"
-     *     })
-     */
     private async __getTokenWithClientCredentials(
         request: SeedOauthClientCredentials.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
@@ -145,18 +134,6 @@ export class Auth {
         return core.HttpResponsePromise.fromFunction(this.__refreshToken, request, requestOptions);
     }
 
-    /**
-     * @param {SeedOauthClientCredentials.RefreshTokenRequest} request
-     * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.auth.refreshToken({
-     *         clientId: "client_id",
-     *         clientSecret: "client_secret",
-     *         refreshToken: "refresh_token",
-     *         scope: "scope"
-     *     })
-     */
     private async __refreshToken(
         request: SeedOauthClientCredentials.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,

@@ -95,57 +95,6 @@ export class Problem {
         return core.HttpResponsePromise.fromFunction(this.__createProblem, request, requestOptions);
     }
 
-    /**
-     * Creates a problem
-     *
-     * @param {SeedTrace.CreateProblemRequest} request
-     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.problem.createProblem({
-     *         problemName: "problemName",
-     *         problemDescription: {
-     *             boards: [SeedTrace.ProblemDescriptionBoard.html("boards"), SeedTrace.ProblemDescriptionBoard.html("boards")]
-     *         },
-     *         files: {
-     *             ["JAVA"]: {
-     *                 solutionFile: {
-     *                     filename: "filename",
-     *                     contents: "contents"
-     *                 },
-     *                 readOnlyFiles: [{
-     *                         filename: "filename",
-     *                         contents: "contents"
-     *                     }, {
-     *                         filename: "filename",
-     *                         contents: "contents"
-     *                     }]
-     *             }
-     *         },
-     *         inputParams: [{
-     *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "name"
-     *             }, {
-     *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "name"
-     *             }],
-     *         outputType: SeedTrace.VariableType.integerType(),
-     *         testcases: [{
-     *                 testCase: {
-     *                     id: "id",
-     *                     params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)]
-     *                 },
-     *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
-     *             }, {
-     *                 testCase: {
-     *                     id: "id",
-     *                     params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)]
-     *                 },
-     *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
-     *             }],
-     *         methodName: "methodName"
-     *     })
-     */
     private async __createProblem(
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: Problem.RequestOptions,
@@ -271,58 +220,6 @@ export class Problem {
         return core.HttpResponsePromise.fromFunction(this.__updateProblem, problemId, request, requestOptions);
     }
 
-    /**
-     * Updates a problem
-     *
-     * @param {SeedTrace.ProblemId} problemId
-     * @param {SeedTrace.CreateProblemRequest} request
-     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.problem.updateProblem(SeedTrace.ProblemId("problemId"), {
-     *         problemName: "problemName",
-     *         problemDescription: {
-     *             boards: [SeedTrace.ProblemDescriptionBoard.html("boards"), SeedTrace.ProblemDescriptionBoard.html("boards")]
-     *         },
-     *         files: {
-     *             ["JAVA"]: {
-     *                 solutionFile: {
-     *                     filename: "filename",
-     *                     contents: "contents"
-     *                 },
-     *                 readOnlyFiles: [{
-     *                         filename: "filename",
-     *                         contents: "contents"
-     *                     }, {
-     *                         filename: "filename",
-     *                         contents: "contents"
-     *                     }]
-     *             }
-     *         },
-     *         inputParams: [{
-     *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "name"
-     *             }, {
-     *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "name"
-     *             }],
-     *         outputType: SeedTrace.VariableType.integerType(),
-     *         testcases: [{
-     *                 testCase: {
-     *                     id: "id",
-     *                     params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)]
-     *                 },
-     *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
-     *             }, {
-     *                 testCase: {
-     *                     id: "id",
-     *                     params: [SeedTrace.VariableValue.integerValue(1), SeedTrace.VariableValue.integerValue(1)]
-     *                 },
-     *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
-     *             }],
-     *         methodName: "methodName"
-     *     })
-     */
     private async __updateProblem(
         problemId: SeedTrace.ProblemId,
         request: SeedTrace.CreateProblemRequest,
@@ -403,15 +300,6 @@ export class Problem {
         return core.HttpResponsePromise.fromFunction(this.__deleteProblem, problemId, requestOptions);
     }
 
-    /**
-     * Soft deletes a problem
-     *
-     * @param {SeedTrace.ProblemId} problemId
-     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.problem.deleteProblem(SeedTrace.ProblemId("problemId"))
-     */
     private async __deleteProblem(
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
@@ -495,25 +383,6 @@ export class Problem {
         return core.HttpResponsePromise.fromFunction(this.__getDefaultStarterFiles, request, requestOptions);
     }
 
-    /**
-     * Returns default starter files for problem
-     *
-     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
-     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.problem.getDefaultStarterFiles({
-     *         inputParams: [{
-     *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "name"
-     *             }, {
-     *                 variableType: SeedTrace.VariableType.integerType(),
-     *                 name: "name"
-     *             }],
-     *         outputType: SeedTrace.VariableType.integerType(),
-     *         methodName: "methodName"
-     *     })
-     */
     private async __getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,
         requestOptions?: Problem.RequestOptions,

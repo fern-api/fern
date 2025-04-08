@@ -44,15 +44,6 @@ export class Package {
         return core.HttpResponsePromise.fromFunction(this.__test, request, requestOptions);
     }
 
-    /**
-     * @param {SeedNurseryApi.TestRequest} request
-     * @param {Package.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.package.test({
-     *         for: "for"
-     *     })
-     */
     private async __test(
         request: SeedNurseryApi.TestRequest,
         requestOptions?: Package.RequestOptions,

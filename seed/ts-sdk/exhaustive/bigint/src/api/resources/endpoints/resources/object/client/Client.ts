@@ -61,29 +61,6 @@ export class Object_ {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithOptionalField, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnWithOptionalField({
-     *         string: "string",
-     *         integer: 1,
-     *         long: BigInt("1000000"),
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: new Set(["set"]),
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: BigInt("1000000")
-     *     })
-     */
     private async __getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
@@ -164,15 +141,6 @@ export class Object_ {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithRequiredField, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnWithRequiredField({
-     *         string: "string"
-     *     })
-     */
     private async __getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
@@ -257,19 +225,6 @@ export class Object_ {
         return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithMapOfMap, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnWithMapOfMap({
-     *         map: {
-     *             "map": {
-     *                 "map": "map"
-     *             }
-     *         }
-     *     })
-     */
     private async __getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
@@ -371,32 +326,6 @@ export class Object_ {
         );
     }
 
-    /**
-     * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
-     *         string: "string",
-     *         nestedObject: {
-     *             string: "string",
-     *             integer: 1,
-     *             long: BigInt("1000000"),
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["list", "list"],
-     *             set: new Set(["set"]),
-     *             map: {
-     *                 1: "map"
-     *             },
-     *             bigint: BigInt("1000000")
-     *         }
-     *     })
-     */
     private async __getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
@@ -503,33 +432,6 @@ export class Object_ {
         );
     }
 
-    /**
-     * @param {string} string_
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
-     *         string: "string",
-     *         nestedObject: {
-     *             string: "string",
-     *             integer: 1,
-     *             long: BigInt("1000000"),
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["list", "list"],
-     *             set: new Set(["set"]),
-     *             map: {
-     *                 1: "map"
-     *             },
-     *             bigint: BigInt("1000000")
-     *         }
-     *     })
-     */
     private async __getAndReturnNestedWithRequiredField(
         string_: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
@@ -653,51 +555,6 @@ export class Object_ {
         );
     }
 
-    /**
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
-     *             string: "string",
-     *             nestedObject: {
-     *                 string: "string",
-     *                 integer: 1,
-     *                 long: BigInt("1000000"),
-     *                 double: 1.1,
-     *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
-     *                 date: "2023-01-15",
-     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *                 base64: "SGVsbG8gd29ybGQh",
-     *                 list: ["list", "list"],
-     *                 set: new Set(["set"]),
-     *                 map: {
-     *                     1: "map"
-     *                 },
-     *                 bigint: BigInt("1000000")
-     *             }
-     *         }, {
-     *             string: "string",
-     *             nestedObject: {
-     *                 string: "string",
-     *                 integer: 1,
-     *                 long: BigInt("1000000"),
-     *                 double: 1.1,
-     *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
-     *                 date: "2023-01-15",
-     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *                 base64: "SGVsbG8gd29ybGQh",
-     *                 list: ["list", "list"],
-     *                 set: new Set(["set"]),
-     *                 map: {
-     *                     1: "map"
-     *                 },
-     *                 bigint: BigInt("1000000")
-     *             }
-     *         }])
-     */
     private async __getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,

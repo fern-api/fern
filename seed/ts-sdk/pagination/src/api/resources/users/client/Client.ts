@@ -50,18 +50,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithCursorPagination, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsersCursorPaginationRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithCursorPagination({
-     *         page: 1,
-     *         perPage: 1,
-     *         order: "asc",
-     *         startingAfter: "starting_after"
-     *     })
-     */
     private async __listWithCursorPagination(
         request: SeedPagination.ListUsersCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -167,15 +155,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithMixedTypeCursorPagination, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsersMixedTypeCursorPaginationRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithMixedTypeCursorPagination({
-     *         cursor: "cursor"
-     *     })
-     */
     private async __listWithMixedTypeCursorPagination(
         request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -274,17 +253,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithBodyCursorPagination, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsersBodyCursorPaginationRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithBodyCursorPagination({
-     *         pagination: {
-     *             cursor: "cursor"
-     *         }
-     *     })
-     */
     private async __listWithBodyCursorPagination(
         request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -383,18 +351,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithOffsetPagination, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsersOffsetPaginationRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithOffsetPagination({
-     *         page: 1,
-     *         perPage: 1,
-     *         order: "asc",
-     *         startingAfter: "starting_after"
-     *     })
-     */
     private async __listWithOffsetPagination(
         request: SeedPagination.ListUsersOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -505,18 +461,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithDoubleOffsetPagination, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsersDoubleOffsetPaginationRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithDoubleOffsetPagination({
-     *         page: 1.1,
-     *         perPage: 1.1,
-     *         order: "asc",
-     *         startingAfter: "starting_after"
-     *     })
-     */
     private async __listWithDoubleOffsetPagination(
         request: SeedPagination.ListUsersDoubleOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -626,17 +570,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithBodyOffsetPagination, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsersBodyOffsetPaginationRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithBodyOffsetPagination({
-     *         pagination: {
-     *             page: 1
-     *         }
-     *     })
-     */
     private async __listWithBodyOffsetPagination(
         request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -734,17 +667,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithOffsetStepPagination, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsersOffsetStepPaginationRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithOffsetStepPagination({
-     *         page: 1,
-     *         limit: 1,
-     *         order: "asc"
-     *     })
-     */
     private async __listWithOffsetStepPagination(
         request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -855,17 +777,6 @@ export class Users {
         );
     }
 
-    /**
-     * @param {SeedPagination.ListWithOffsetPaginationHasNextPageRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithOffsetPaginationHasNextPage({
-     *         page: 1,
-     *         limit: 1,
-     *         order: "asc"
-     *     })
-     */
     private async __listWithOffsetPaginationHasNextPage(
         request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -970,15 +881,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithExtendedResults, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsersExtendedRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithExtendedResults({
-     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-     *     })
-     */
     private async __listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -1079,15 +981,6 @@ export class Users {
         );
     }
 
-    /**
-     * @param {SeedPagination.ListUsersExtendedRequestForOptionalData} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithExtendedResultsAndOptionalData({
-     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-     *     })
-     */
     private async __listWithExtendedResultsAndOptionalData(
         request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
         requestOptions?: Users.RequestOptions,
@@ -1184,15 +1077,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listUsernames, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsernamesRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listUsernames({
-     *         startingAfter: "starting_after"
-     *     })
-     */
     private async __listUsernames(
         request: SeedPagination.ListUsernamesRequest = {},
         requestOptions?: Users.RequestOptions,
@@ -1287,15 +1171,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listUsernamesCustom, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListUsernamesRequestCustom} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listUsernamesCustom({
-     *         startingAfter: "starting_after"
-     *     })
-     */
     private async __listUsernamesCustom(
         request: SeedPagination.ListUsernamesRequestCustom = {},
         requestOptions?: Users.RequestOptions,
@@ -1380,15 +1255,6 @@ export class Users {
         return core.HttpResponsePromise.fromFunction(this.__listWithGlobalConfig, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPagination.ListWithGlobalConfigRequest} request
-     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.users.listWithGlobalConfig({
-     *         offset: 1
-     *     })
-     */
     private async __listWithGlobalConfig(
         request: SeedPagination.ListWithGlobalConfigRequest = {},
         requestOptions?: Users.RequestOptions,

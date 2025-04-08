@@ -48,18 +48,6 @@ export class Imdb {
         return core.HttpResponsePromise.fromFunction(this.__createMovie, request, requestOptions);
     }
 
-    /**
-     * Add a movie to the database using the movies/* /... path.
-     *
-     * @param {SeedApi.CreateMovieRequest} request
-     * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.imdb.createMovie({
-     *         title: "title",
-     *         rating: 1.1
-     *     })
-     */
     private async __createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: Imdb.RequestOptions): Promise<core.WithRawResponse<SeedApi.MovieId>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/movies/create-movie"),
@@ -117,15 +105,6 @@ export class Imdb {
         return core.HttpResponsePromise.fromFunction(this.__getMovie, movieId, requestOptions);
     }
 
-    /**
-     * @param {SeedApi.MovieId} movieId
-     * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedApi.MovieDoesNotExistError}
-     *
-     * @example
-     *     await client.imdb.getMovie("movieId")
-     */
     private async __getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<core.WithRawResponse<SeedApi.Movie>> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`),

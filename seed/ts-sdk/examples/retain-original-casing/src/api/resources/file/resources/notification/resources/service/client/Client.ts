@@ -46,13 +46,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getException, notificationId, requestOptions);
     }
 
-    /**
-     * @param {string} notificationId
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.file.notification.service.getException("notification-hsy129x")
-     */
     private async __getException(
         notificationId: string,
         requestOptions?: Service.RequestOptions,

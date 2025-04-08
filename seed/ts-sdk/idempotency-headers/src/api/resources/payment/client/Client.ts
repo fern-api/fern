@@ -53,16 +53,6 @@ export class Payment {
         return core.HttpResponsePromise.fromFunction(this.__create, request, requestOptions);
     }
 
-    /**
-     * @param {SeedIdempotencyHeaders.CreatePaymentRequest} request
-     * @param {Payment.IdempotentRequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.payment.create({
-     *         amount: 1,
-     *         currency: "USD"
-     *     })
-     */
     private async __create(
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
         requestOptions?: Payment.IdempotentRequestOptions,
@@ -138,13 +128,6 @@ export class Payment {
         return core.HttpResponsePromise.fromFunction(this.__delete, paymentId, requestOptions);
     }
 
-    /**
-     * @param {string} paymentId
-     * @param {Payment.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.payment.delete("paymentId")
-     */
     private async __delete(
         paymentId: string,
         requestOptions?: Payment.RequestOptions,

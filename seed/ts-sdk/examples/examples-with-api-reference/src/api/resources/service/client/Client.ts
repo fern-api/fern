@@ -46,13 +46,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getMovie, movieId, requestOptions);
     }
 
-    /**
-     * @param {SeedExamples.MovieId} movieId
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getMovie("movie-c06a4ad7")
-     */
     private async __getMovie(
         movieId: SeedExamples.MovieId,
         requestOptions?: Service.RequestOptions,
@@ -149,34 +142,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__createMovie, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExamples.Movie} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.createMovie({
-     *         id: "movie-c06a4ad7",
-     *         prequel: "movie-cv9b914f",
-     *         title: "The Boy and the Heron",
-     *         from: "Hayao Miyazaki",
-     *         rating: 8,
-     *         type: "movie",
-     *         tag: "tag-wf9as23d",
-     *         metadata: {
-     *             "actors": [
-     *                 "Christian Bale",
-     *                 "Florence Pugh",
-     *                 "Willem Dafoe"
-     *             ],
-     *             "releaseDate": "2023-12-08",
-     *             "ratings": {
-     *                 "rottenTomatoes": 97,
-     *                 "imdb": 7.6
-     *             }
-     *         },
-     *         revenue: 1000000
-     *     })
-     */
     private async __createMovie(
         request: SeedExamples.Movie,
         requestOptions?: Service.RequestOptions,
@@ -257,17 +222,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getMetadata, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExamples.GetMetadataRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getMetadata({
-     *         xApiVersion: "0.0.1",
-     *         shallow: false,
-     *         tag: "development"
-     *     })
-     */
     private async __getMetadata(
         request: SeedExamples.GetMetadataRequest,
         requestOptions?: Service.RequestOptions,
@@ -531,185 +485,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__createBigEntity, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExamples.BigEntity} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.createBigEntity({
-     *         castMember: {
-     *             name: "name",
-     *             id: "id"
-     *         },
-     *         extendedMovie: {
-     *             id: "id",
-     *             prequel: "prequel",
-     *             title: "title",
-     *             from: "from",
-     *             rating: 1.1,
-     *             type: "movie",
-     *             tag: "tag",
-     *             book: "book",
-     *             metadata: {
-     *                 "metadata": {
-     *                     "key": "value"
-     *                 }
-     *             },
-     *             revenue: 1000000,
-     *             cast: ["cast", "cast"]
-     *         },
-     *         entity: {
-     *             type: "primitive",
-     *             name: "name"
-     *         },
-     *         metadata: {
-     *             type: "html",
-     *             value: "metadata"
-     *         },
-     *         commonMetadata: {
-     *             id: "id",
-     *             data: {
-     *                 "data": "data"
-     *             },
-     *             jsonString: "jsonString"
-     *         },
-     *         eventInfo: {
-     *             type: "metadata",
-     *             id: "id",
-     *             data: {
-     *                 "data": "data"
-     *             },
-     *             jsonString: "jsonString"
-     *         },
-     *         data: {
-     *             type: "string",
-     *             value: "data"
-     *         },
-     *         migration: {
-     *             name: "name",
-     *             status: "RUNNING"
-     *         },
-     *         exception: {
-     *             type: "generic",
-     *             exceptionType: "exceptionType",
-     *             exceptionMessage: "exceptionMessage",
-     *             exceptionStacktrace: "exceptionStacktrace"
-     *         },
-     *         test: {
-     *             type: "and",
-     *             value: true
-     *         },
-     *         node: {
-     *             name: "name",
-     *             nodes: [{
-     *                     name: "name",
-     *                     nodes: [{
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }, {
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }],
-     *                     trees: [{
-     *                             nodes: []
-     *                         }, {
-     *                             nodes: []
-     *                         }]
-     *                 }, {
-     *                     name: "name",
-     *                     nodes: [{
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }, {
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }],
-     *                     trees: [{
-     *                             nodes: []
-     *                         }, {
-     *                             nodes: []
-     *                         }]
-     *                 }],
-     *             trees: [{
-     *                     nodes: [{
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }, {
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }]
-     *                 }, {
-     *                     nodes: [{
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }, {
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }]
-     *                 }]
-     *         },
-     *         directory: {
-     *             name: "name",
-     *             files: [{
-     *                     name: "name",
-     *                     contents: "contents"
-     *                 }, {
-     *                     name: "name",
-     *                     contents: "contents"
-     *                 }],
-     *             directories: [{
-     *                     name: "name",
-     *                     files: [{
-     *                             name: "name",
-     *                             contents: "contents"
-     *                         }, {
-     *                             name: "name",
-     *                             contents: "contents"
-     *                         }],
-     *                     directories: [{
-     *                             name: "name",
-     *                             files: [],
-     *                             directories: []
-     *                         }, {
-     *                             name: "name",
-     *                             files: [],
-     *                             directories: []
-     *                         }]
-     *                 }, {
-     *                     name: "name",
-     *                     files: [{
-     *                             name: "name",
-     *                             contents: "contents"
-     *                         }, {
-     *                             name: "name",
-     *                             contents: "contents"
-     *                         }],
-     *                     directories: [{
-     *                             name: "name",
-     *                             files: [],
-     *                             directories: []
-     *                         }, {
-     *                             name: "name",
-     *                             files: [],
-     *                             directories: []
-     *                         }]
-     *                 }]
-     *         },
-     *         moment: {
-     *             id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             date: "2023-01-15",
-     *             datetime: "2024-01-15T09:30:00Z"
-     *         }
-     *     })
-     */
     private async __createBigEntity(
         request: SeedExamples.BigEntity,
         requestOptions?: Service.RequestOptions,

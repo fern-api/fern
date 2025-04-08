@@ -51,15 +51,6 @@ export class Migration {
         return core.HttpResponsePromise.fromFunction(this.__getAttemptedMigrations, request, requestOptions);
     }
 
-    /**
-     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
-     * @param {Migration.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.migration.getAttemptedMigrations({
-     *         "admin-key-header": "admin-key-header"
-     *     })
-     */
     private async __getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,

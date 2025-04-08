@@ -47,15 +47,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__getUser, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPathParameters.GetUsersRequest} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.getUser({
-     *         user_id: "user_id"
-     *     })
-     */
     private async __getUser(
         request: SeedPathParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
@@ -136,16 +127,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPathParameters.User} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.createUser({
-     *         name: "name",
-     *         tags: ["tags", "tags"]
-     *     })
-     */
     private async __createUser(
         request: SeedPathParameters.User,
         requestOptions?: User.RequestOptions,
@@ -229,19 +210,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__updateUser, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPathParameters.UpdateUserRequest} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.updateUser({
-     *         user_id: "user_id",
-     *         body: {
-     *             name: "name",
-     *             tags: ["tags", "tags"]
-     *         }
-     *     })
-     */
     private async __updateUser(
         request: SeedPathParameters.UpdateUserRequest,
         requestOptions?: User.RequestOptions,
@@ -323,16 +291,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__searchUsers, request, requestOptions);
     }
 
-    /**
-     * @param {SeedPathParameters.SearchUsersRequest} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.searchUsers({
-     *         user_id: "user_id",
-     *         limit: 1
-     *     })
-     */
     private async __searchUsers(
         request: SeedPathParameters.SearchUsersRequest,
         requestOptions?: User.RequestOptions,

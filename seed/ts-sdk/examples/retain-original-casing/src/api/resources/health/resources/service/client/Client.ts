@@ -47,18 +47,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__check, id, requestOptions);
     }
 
-    /**
-     * This endpoint checks the health of a resource.
-     *
-     * @param {string} id - The id to check
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.health.service.check("id-2sdx82h")
-     *
-     * @example
-     *     await client.health.service.check("id-3tey93i")
-     */
     private async __check(id: string, requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -121,14 +109,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__ping, requestOptions);
     }
 
-    /**
-     * This endpoint checks the health of the service.
-     *
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.health.service.ping()
-     */
     private async __ping(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(

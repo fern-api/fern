@@ -46,15 +46,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
     }
 
-    /**
-     * @param {SeedExtraProperties.CreateUserRequest} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.createUser({
-     *         name: "name"
-     *     })
-     */
     private async __createUser(
         request: SeedExtraProperties.CreateUserRequest,
         requestOptions?: User.RequestOptions,

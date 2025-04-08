@@ -60,23 +60,6 @@ export class Playlist {
         return core.HttpResponsePromise.fromFunction(this.__createPlaylist, serviceParam, request, requestOptions);
     }
 
-    /**
-     * Create a new playlist
-     *
-     * @param {number} serviceParam
-     * @param {SeedTrace.CreatePlaylistRequest} request
-     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.playlist.createPlaylist(1, {
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         optionalDatetime: "2024-01-15T09:30:00Z",
-     *         body: {
-     *             name: "name",
-     *             problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")]
-     *         }
-     *     })
-     */
     private async __createPlaylist(
         serviceParam: number,
         request: SeedTrace.CreatePlaylistRequest,
@@ -171,22 +154,6 @@ export class Playlist {
         return core.HttpResponsePromise.fromFunction(this.__getPlaylists, serviceParam, request, requestOptions);
     }
 
-    /**
-     * Returns the user's playlists
-     *
-     * @param {number} serviceParam
-     * @param {SeedTrace.GetPlaylistsRequest} request
-     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.playlist.getPlaylists(1, {
-     *         limit: 1,
-     *         otherField: "otherField",
-     *         multiLineDocs: "multiLineDocs",
-     *         optionalMultipleField: "optionalMultipleField",
-     *         multipleField: "multipleField"
-     *     })
-     */
     private async __getPlaylists(
         serviceParam: number,
         request: SeedTrace.GetPlaylistsRequest,
@@ -289,16 +256,6 @@ export class Playlist {
         return core.HttpResponsePromise.fromFunction(this.__getPlaylist, serviceParam, playlistId, requestOptions);
     }
 
-    /**
-     * Returns a playlist
-     *
-     * @param {number} serviceParam
-     * @param {SeedTrace.PlaylistId} playlistId
-     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("playlistId"))
-     */
     private async __getPlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
@@ -414,20 +371,6 @@ export class Playlist {
         );
     }
 
-    /**
-     * Updates a playlist
-     *
-     * @param {number} serviceParam
-     * @param {SeedTrace.PlaylistId} playlistId
-     * @param {SeedTrace.UpdatePlaylistRequest} request
-     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("playlistId"), {
-     *         name: "name",
-     *         problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")]
-     *     })
-     */
     private async __updatePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
@@ -538,16 +481,6 @@ export class Playlist {
         return core.HttpResponsePromise.fromFunction(this.__deletePlaylist, serviceParam, playlistId, requestOptions);
     }
 
-    /**
-     * Deletes a playlist
-     *
-     * @param {number} serviceParam
-     * @param {SeedTrace.PlaylistId} playlistId
-     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("playlist_id"))
-     */
     private async __deletePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,

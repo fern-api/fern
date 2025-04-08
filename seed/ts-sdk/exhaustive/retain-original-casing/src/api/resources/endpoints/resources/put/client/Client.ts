@@ -47,14 +47,6 @@ export class Put {
         return core.HttpResponsePromise.fromFunction(this.__add, id, request, requestOptions);
     }
 
-    /**
-     * @param {string} id
-     * @param {SeedExhaustive.endpoints.PutRequest} request
-     * @param {Put.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.put.add("id")
-     */
     private async __add(
         id: string,
         request: SeedExhaustive.endpoints.PutRequest = {},

@@ -55,17 +55,6 @@ export class User {
         return core.HttpResponsePromise.fromFunction(this.__list, request, requestOptions);
     }
 
-    /**
-     * List all users.
-     *
-     * @param {SeedMixedFileDirectory.ListUsersRequest} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.list({
-     *         limit: 1
-     *     })
-     */
     private async __list(
         request: SeedMixedFileDirectory.ListUsersRequest = {},
         requestOptions?: User.RequestOptions,

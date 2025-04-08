@@ -44,16 +44,6 @@ export class PropertyBasedError {
         return core.HttpResponsePromise.fromFunction(this.__throwError, requestOptions);
     }
 
-    /**
-     * GET request that always throws an error
-     *
-     * @param {PropertyBasedError.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
-     *
-     * @example
-     *     await client.propertyBasedError.throwError()
-     */
     private async __throwError(
         requestOptions?: PropertyBasedError.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {

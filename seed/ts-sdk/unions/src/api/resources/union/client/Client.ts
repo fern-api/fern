@@ -41,13 +41,6 @@ export class Union {
         return core.HttpResponsePromise.fromFunction(this.__get, id, requestOptions);
     }
 
-    /**
-     * @param {string} id
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.union.get("id")
-     */
     private async __get(
         id: string,
         requestOptions?: Union.RequestOptions,
@@ -122,16 +115,6 @@ export class Union {
         return core.HttpResponsePromise.fromFunction(this.__update, request, requestOptions);
     }
 
-    /**
-     * @param {SeedUnions.Shape} request
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.union.update({
-     *         type: "circle",
-     *         radius: 1.1
-     *     })
-     */
     private async __update(
         request: SeedUnions.Shape,
         requestOptions?: Union.RequestOptions,

@@ -55,17 +55,6 @@ export class Events {
         return core.HttpResponsePromise.fromFunction(this.__listEvents, request, requestOptions);
     }
 
-    /**
-     * List all user events.
-     *
-     * @param {SeedMixedFileDirectory.user.ListUserEventsRequest} request
-     * @param {Events.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.user.events.listEvents({
-     *         limit: 1
-     *     })
-     */
     private async __listEvents(
         request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
         requestOptions?: Events.RequestOptions,

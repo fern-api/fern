@@ -51,14 +51,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getWithApiKey, requestOptions);
     }
 
-    /**
-     * GET request with custom api key
-     *
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getWithApiKey()
-     */
     private async __getWithApiKey(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -137,17 +129,6 @@ export class Service {
         return core.HttpResponsePromise.fromFunction(this.__getWithHeader, request, requestOptions);
     }
 
-    /**
-     * GET request with custom api key
-     *
-     * @param {SeedAuthEnvironmentVariables.HeaderAuthRequest} request
-     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.getWithHeader({
-     *         xEndpointHeader: "X-Endpoint-Header"
-     *     })
-     */
     private async __getWithHeader(
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
         requestOptions?: Service.RequestOptions,
