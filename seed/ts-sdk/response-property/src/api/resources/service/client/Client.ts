@@ -41,7 +41,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
-        return core.HttpResponsePromise.fromFunction(this.__getMovie, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(request, requestOptions));
     }
 
     private async __getMovie(
@@ -116,7 +116,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
-        return core.HttpResponsePromise.fromFunction(this.__getMovieDocs, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMovieDocs(request, requestOptions));
     }
 
     private async __getMovieDocs(
@@ -191,7 +191,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__getMovieName, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMovieName(request, requestOptions));
     }
 
     private async __getMovieName(
@@ -266,7 +266,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
-        return core.HttpResponsePromise.fromFunction(this.__getMovieMetadata, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMovieMetadata(request, requestOptions));
     }
 
     private async __getMovieMetadata(
@@ -343,7 +343,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
-        return core.HttpResponsePromise.fromFunction(this.__getOptionalMovie, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovie(request, requestOptions));
     }
 
     private async __getOptionalMovie(
@@ -420,7 +420,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
-        return core.HttpResponsePromise.fromFunction(this.__getOptionalMovieDocs, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieDocs(request, requestOptions));
     }
 
     private async __getOptionalMovieDocs(
@@ -497,7 +497,7 @@ export class Service {
         request: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
-        return core.HttpResponsePromise.fromFunction(this.__getOptionalMovieName, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieName(request, requestOptions));
     }
 
     private async __getOptionalMovieName(

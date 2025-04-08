@@ -46,7 +46,7 @@ export class Auth {
         request: SeedOauthClientCredentialsEnvironmentVariables.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): core.HttpResponsePromise<SeedOauthClientCredentialsEnvironmentVariables.TokenResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__getTokenWithClientCredentials, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getTokenWithClientCredentials(request, requestOptions));
     }
 
     private async __getTokenWithClientCredentials(
@@ -133,7 +133,7 @@ export class Auth {
         request: SeedOauthClientCredentialsEnvironmentVariables.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): core.HttpResponsePromise<SeedOauthClientCredentialsEnvironmentVariables.TokenResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__refreshToken, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
     }
 
     private async __refreshToken(

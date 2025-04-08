@@ -41,7 +41,7 @@ export class Container {
         request: string[],
         requestOptions?: Container.RequestOptions,
     ): core.HttpResponsePromise<string[]> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfPrimitives, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfPrimitives(request, requestOptions));
     }
 
     private async __getAndReturnListOfPrimitives(
@@ -115,7 +115,7 @@ export class Container {
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfObjects, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnListOfObjects(
@@ -188,7 +188,7 @@ export class Container {
         request: string[],
         requestOptions?: Container.RequestOptions,
     ): core.HttpResponsePromise<string[]> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfPrimitives, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
     }
 
     private async __getAndReturnSetOfPrimitives(
@@ -260,7 +260,7 @@ export class Container {
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfObjects, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnSetOfObjects(
@@ -335,7 +335,7 @@ export class Container {
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions,
     ): core.HttpResponsePromise<Record<string, string>> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapPrimToPrim, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapPrimToPrim(request, requestOptions));
     }
 
     private async __getAndReturnMapPrimToPrim(
@@ -409,7 +409,7 @@ export class Container {
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions,
     ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapOfPrimToObject, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
     }
 
     private async __getAndReturnMapOfPrimToObject(
@@ -484,7 +484,7 @@ export class Container {
         request?: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnOptional, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
     }
 
     private async __getAndReturnOptional(

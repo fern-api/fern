@@ -43,7 +43,7 @@ export class Service {
         request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__patch, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__patch(request, requestOptions));
     }
 
     private async __patch(

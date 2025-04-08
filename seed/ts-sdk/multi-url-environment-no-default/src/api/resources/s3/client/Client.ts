@@ -48,7 +48,7 @@ export class S3 {
         request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
         requestOptions?: S3.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getPresignedUrl, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getPresignedUrl(request, requestOptions));
     }
 
     private async __getPresignedUrl(

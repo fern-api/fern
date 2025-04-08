@@ -79,7 +79,7 @@ export class User {
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedQueryParameters.User> {
-        return core.HttpResponsePromise.fromFunction(this.__getUsername, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
     private async __getUsername(

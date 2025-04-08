@@ -47,7 +47,7 @@ export class Auth {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedOauthClientCredentials.auth.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getToken, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
     }
 
     private async __getToken(

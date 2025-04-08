@@ -52,7 +52,7 @@ export class Events {
         request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
         requestOptions?: Events.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.user.Event[]> {
-        return core.HttpResponsePromise.fromFunction(this.__listEvents, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__listEvents(request, requestOptions));
     }
 
     private async __listEvents(

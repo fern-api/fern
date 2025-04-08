@@ -47,7 +47,7 @@ export class SeedApiClient {
      *     await client.foo()
      */
     public foo(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__foo, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__foo(requestOptions));
     }
 
     private async __foo(requestOptions?: SeedApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {

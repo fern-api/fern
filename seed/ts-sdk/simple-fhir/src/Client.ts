@@ -41,7 +41,7 @@ export class SeedApiClient {
         accountId: string,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Account> {
-        return core.HttpResponsePromise.fromFunction(this.__getAccount, accountId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAccount(accountId, requestOptions));
     }
 
     private async __getAccount(

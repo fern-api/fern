@@ -45,7 +45,7 @@ export class Organization {
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
         requestOptions?: Organization.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
-        return core.HttpResponsePromise.fromFunction(this.__create, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(

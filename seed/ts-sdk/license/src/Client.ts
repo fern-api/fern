@@ -35,7 +35,7 @@ export class SeedLicenseClient {
      *     await client.get()
      */
     public get(requestOptions?: SeedLicenseClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__get, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }
 
     private async __get(requestOptions?: SeedLicenseClient.RequestOptions): Promise<core.WithRawResponse<void>> {

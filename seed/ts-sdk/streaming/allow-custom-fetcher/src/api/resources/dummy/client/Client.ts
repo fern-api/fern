@@ -36,7 +36,7 @@ export class Dummy {
         request: SeedStreaming.GenerateStreamRequest,
         requestOptions?: Dummy.RequestOptions,
     ): core.HttpResponsePromise<core.Stream<SeedStreaming.StreamResponse>> {
-        return core.HttpResponsePromise.fromFunction(this.__generateStream, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__generateStream(request, requestOptions));
     }
 
     private async __generateStream(
@@ -127,7 +127,7 @@ export class Dummy {
         request: SeedStreaming.Generateequest,
         requestOptions?: Dummy.RequestOptions,
     ): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__generate, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__generate(request, requestOptions));
     }
 
     private async __generate(

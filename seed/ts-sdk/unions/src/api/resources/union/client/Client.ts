@@ -38,7 +38,7 @@ export class Union {
      *     await client.union.get("id")
      */
     public get(id: string, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<SeedUnions.Shape> {
-        return core.HttpResponsePromise.fromFunction(this.__get, id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
     private async __get(
@@ -112,7 +112,7 @@ export class Union {
      *     })
      */
     public update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__update, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(

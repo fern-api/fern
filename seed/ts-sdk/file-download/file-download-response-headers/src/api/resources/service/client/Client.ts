@@ -33,7 +33,7 @@ export class Service {
         contentLengthInBytes?: number;
         contentType?: string;
     }> {
-        return core.HttpResponsePromise.fromFunction(this.__downloadFile, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }
 
     private async __downloadFile(requestOptions?: Service.RequestOptions): Promise<

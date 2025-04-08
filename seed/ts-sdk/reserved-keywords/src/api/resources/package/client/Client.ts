@@ -41,7 +41,7 @@ export class Package {
         request: SeedNurseryApi.TestRequest,
         requestOptions?: Package.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__test, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__test(request, requestOptions));
     }
 
     private async __test(

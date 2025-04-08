@@ -41,7 +41,7 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnString, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnString(request, requestOptions));
     }
 
     private async __getAndReturnString(
@@ -121,7 +121,7 @@ export class Primitive {
         request: number,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<number> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnInt, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnInt(request, requestOptions));
     }
 
     private async __getAndReturnInt(
@@ -201,7 +201,7 @@ export class Primitive {
         request: number,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<number> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnLong, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnLong(request, requestOptions));
     }
 
     private async __getAndReturnLong(
@@ -281,7 +281,7 @@ export class Primitive {
         request: number,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<number> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDouble, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnDouble(request, requestOptions));
     }
 
     private async __getAndReturnDouble(
@@ -361,7 +361,7 @@ export class Primitive {
         request: boolean,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnBool, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnBool(request, requestOptions));
     }
 
     private async __getAndReturnBool(
@@ -441,7 +441,7 @@ export class Primitive {
         request: Date,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<Date> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDatetime, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnDatetime(request, requestOptions));
     }
 
     private async __getAndReturnDatetime(
@@ -521,7 +521,7 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnDate, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnDate(request, requestOptions));
     }
 
     private async __getAndReturnDate(
@@ -601,7 +601,7 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnUuid, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnUuid(request, requestOptions));
     }
 
     private async __getAndReturnUuid(
@@ -681,7 +681,7 @@ export class Primitive {
         request: string,
         requestOptions?: Primitive.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnBase64, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnBase64(request, requestOptions));
     }
 
     private async __getAndReturnBase64(

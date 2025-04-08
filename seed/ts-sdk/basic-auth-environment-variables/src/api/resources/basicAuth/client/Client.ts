@@ -43,7 +43,7 @@ export class BasicAuth {
      *     await client.basicAuth.getWithBasicAuth()
      */
     public getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithBasicAuth, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithBasicAuth(requestOptions));
     }
 
     private async __getWithBasicAuth(
@@ -138,7 +138,7 @@ export class BasicAuth {
         request?: unknown,
         requestOptions?: BasicAuth.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__postWithBasicAuth, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__postWithBasicAuth(request, requestOptions));
     }
 
     private async __postWithBasicAuth(
@@ -237,7 +237,7 @@ export class BasicAuth {
         }
 
         return core.BasicAuth.toAuthorizationHeader({
-            username: username,
+            username,
             password: accessToken,
         });
     }

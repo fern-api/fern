@@ -55,7 +55,7 @@ export class V2 {
     public test(
         requestOptions?: V2.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__test, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__test(requestOptions));
     }
 
     private async __test(

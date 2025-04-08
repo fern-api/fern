@@ -41,7 +41,7 @@ export class PropertyBasedError {
      *     await client.propertyBasedError.throwError()
      */
     public throwError(requestOptions?: PropertyBasedError.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__throwError, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__throwError(requestOptions));
     }
 
     private async __throwError(

@@ -44,7 +44,7 @@ export class Union {
         request: Fiddle.types.Animal,
         requestOptions?: Union.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
     private async __getAndReturnUnion(

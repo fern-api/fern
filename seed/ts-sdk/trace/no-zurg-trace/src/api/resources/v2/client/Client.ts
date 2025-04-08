@@ -53,7 +53,7 @@ export class V2 {
      *     await client.v2.test()
      */
     public test(requestOptions?: V2.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__test, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__test(requestOptions));
     }
 
     private async __test(requestOptions?: V2.RequestOptions): Promise<core.WithRawResponse<void>> {

@@ -43,7 +43,7 @@ export class Params {
         param: string,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithPath, param, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithPath(param, requestOptions));
     }
 
     private async __getWithPath(
@@ -115,7 +115,7 @@ export class Params {
         request: Fiddle.endpoints.GetWithInlinePath = {},
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithInlinePath, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithInlinePath(param, request, requestOptions));
     }
 
     private async __getWithInlinePath(
@@ -189,7 +189,7 @@ export class Params {
         request: Fiddle.endpoints.GetWithQuery,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithQuery.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithQuery, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithQuery(request, requestOptions));
     }
 
     private async __getWithQuery(
@@ -262,7 +262,7 @@ export class Params {
         request: Fiddle.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithAllowMultipleQuery.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithAllowMultipleQuery, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
     }
 
     private async __getWithAllowMultipleQuery(
@@ -346,7 +346,7 @@ export class Params {
         request: Fiddle.endpoints.GetWithPathAndQuery,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithPathAndQuery.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithPathAndQuery, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
     }
 
     private async __getWithPathAndQuery(
@@ -420,7 +420,7 @@ export class Params {
         request: Fiddle.endpoints.GetWithInlinePathAndQuery,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithInlinePathAndQuery, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithInlinePathAndQuery(param, request, requestOptions));
     }
 
     private async __getWithInlinePathAndQuery(
@@ -492,7 +492,7 @@ export class Params {
         request: string,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__modifyWithPath, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__modifyWithPath(param, request, requestOptions));
     }
 
     private async __modifyWithPath(
@@ -570,7 +570,7 @@ export class Params {
         request: Fiddle.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__modifyWithInlinePath, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__modifyWithInlinePath(param, request, requestOptions));
     }
 
     private async __modifyWithInlinePath(

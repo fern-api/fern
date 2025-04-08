@@ -40,7 +40,7 @@ export class Params {
      *     await client.endpoints.params.getWithPath("param")
      */
     public getWithPath(param: string, requestOptions?: Params.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithPath, param, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithPath(param, requestOptions));
     }
 
     private async __getWithPath(
@@ -111,7 +111,7 @@ export class Params {
         request: SeedExhaustive.endpoints.GetWithInlinePath = {},
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithInlinePath, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithInlinePath(param, request, requestOptions));
     }
 
     private async __getWithInlinePath(
@@ -184,7 +184,7 @@ export class Params {
         request: SeedExhaustive.endpoints.GetWithQuery,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithQuery, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithQuery(request, requestOptions));
     }
 
     private async __getWithQuery(
@@ -261,7 +261,7 @@ export class Params {
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithAllowMultipleQuery, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
     }
 
     private async __getWithAllowMultipleQuery(
@@ -349,7 +349,7 @@ export class Params {
         request: SeedExhaustive.endpoints.GetWithPathAndQuery,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithPathAndQuery, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
     }
 
     private async __getWithPathAndQuery(
@@ -429,7 +429,7 @@ export class Params {
         request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithInlinePathAndQuery, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithInlinePathAndQuery(param, request, requestOptions));
     }
 
     private async __getWithInlinePathAndQuery(
@@ -507,7 +507,7 @@ export class Params {
         request: string,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__modifyWithPath, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__modifyWithPath(param, request, requestOptions));
     }
 
     private async __modifyWithPath(
@@ -582,7 +582,7 @@ export class Params {
         request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: Params.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__modifyWithInlinePath, param, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__modifyWithInlinePath(param, request, requestOptions));
     }
 
     private async __modifyWithInlinePath(

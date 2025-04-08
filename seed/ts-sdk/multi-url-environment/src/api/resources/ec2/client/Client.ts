@@ -47,7 +47,7 @@ export class Ec2 {
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__bootInstance, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__bootInstance(request, requestOptions));
     }
 
     private async __bootInstance(

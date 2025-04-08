@@ -52,7 +52,7 @@ export class Submission {
         language: SeedTrace.Language,
         requestOptions?: Submission.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__createExecutionSession, language, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createExecutionSession(language, requestOptions));
     }
 
     private async __createExecutionSession(
@@ -136,7 +136,7 @@ export class Submission {
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse | undefined> {
-        return core.HttpResponsePromise.fromFunction(this.__getExecutionSession, sessionId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionSession(sessionId, requestOptions));
     }
 
     private async __getExecutionSession(
@@ -218,7 +218,7 @@ export class Submission {
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__stopExecutionSession, sessionId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__stopExecutionSession(sessionId, requestOptions));
     }
 
     private async __stopExecutionSession(
@@ -290,7 +290,7 @@ export class Submission {
     public getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.GetExecutionSessionStateResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__getExecutionSessionsState, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionSessionsState(requestOptions));
     }
 
     private async __getExecutionSessionsState(

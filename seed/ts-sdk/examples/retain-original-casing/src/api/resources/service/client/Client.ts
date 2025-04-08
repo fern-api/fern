@@ -43,7 +43,7 @@ export class Service {
         movieId: SeedExamples.MovieId,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Movie> {
-        return core.HttpResponsePromise.fromFunction(this.__getMovie, movieId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
     }
 
     private async __getMovie(
@@ -139,7 +139,7 @@ export class Service {
         request: SeedExamples.Movie,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.MovieId> {
-        return core.HttpResponsePromise.fromFunction(this.__createMovie, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
     }
 
     private async __createMovie(
@@ -219,7 +219,7 @@ export class Service {
         request: SeedExamples.GetMetadataRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Metadata> {
-        return core.HttpResponsePromise.fromFunction(this.__getMetadata, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
     }
 
     private async __getMetadata(
@@ -482,7 +482,7 @@ export class Service {
         request: SeedExamples.BigEntity,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Response> {
-        return core.HttpResponsePromise.fromFunction(this.__createBigEntity, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createBigEntity(request, requestOptions));
     }
 
     private async __createBigEntity(

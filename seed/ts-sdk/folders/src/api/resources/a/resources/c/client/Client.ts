@@ -34,7 +34,7 @@ export class C {
      *     await client.a.c.foo()
      */
     public foo(requestOptions?: C.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__foo, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__foo(requestOptions));
     }
 
     private async __foo(requestOptions?: C.RequestOptions): Promise<core.WithRawResponse<void>> {

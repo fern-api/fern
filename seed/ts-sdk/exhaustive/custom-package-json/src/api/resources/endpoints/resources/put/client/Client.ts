@@ -43,7 +43,7 @@ export class Put {
         request: Fiddle.endpoints.PutRequest = {},
         requestOptions?: Put.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<Fiddle.endpoints.PutResponse, Fiddle.endpoints.put.add.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__add, id, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__add(id, request, requestOptions));
     }
 
     private async __add(

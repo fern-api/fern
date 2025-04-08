@@ -43,7 +43,7 @@ export class Put {
         request: SeedExhaustive.endpoints.PutRequest = {},
         requestOptions?: Put.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__add, id, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__add(id, request, requestOptions));
     }
 
     private async __add(

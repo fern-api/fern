@@ -46,7 +46,7 @@ export class SeedValidationClient {
         request: SeedValidation.CreateRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedValidation.Type> {
-        return core.HttpResponsePromise.fromFunction(this.__create, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
@@ -125,7 +125,7 @@ export class SeedValidationClient {
         request: SeedValidation.GetRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedValidation.Type> {
-        return core.HttpResponsePromise.fromFunction(this.__get, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(

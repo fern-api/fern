@@ -46,7 +46,7 @@ export class Path {
      *     await client.path.send("123")
      */
     public send(id: "123", requestOptions?: Path.RequestOptions): core.HttpResponsePromise<SeedLiteral.SendResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__send, id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__send(id, requestOptions));
     }
 
     private async __send(

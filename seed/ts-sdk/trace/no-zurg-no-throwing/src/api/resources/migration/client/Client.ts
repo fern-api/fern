@@ -49,7 +49,7 @@ export class Migration {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAttemptedMigrations, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
     }
 
     private async __getAttemptedMigrations(

@@ -58,7 +58,7 @@ export class Query {
         request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions,
     ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(

@@ -41,7 +41,7 @@ export class Service {
         ResourceID: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedCase.Resource> {
-        return core.HttpResponsePromise.fromFunction(this.__getResource, ResourceID, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getResource(ResourceID, requestOptions));
     }
 
     private async __getResource(
@@ -118,7 +118,7 @@ export class Service {
         request: SeedMixedCase.ListResourcesRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedCase.Resource[]> {
-        return core.HttpResponsePromise.fromFunction(this.__listResources, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
     }
 
     private async __listResources(

@@ -35,7 +35,7 @@ export class Completions {
         request: SeedServerSentEvents.StreamCompletionRequest,
         requestOptions?: Completions.RequestOptions,
     ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
-        return core.HttpResponsePromise.fromFunction(this.__stream, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__stream(request, requestOptions));
     }
 
     private async __stream(

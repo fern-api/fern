@@ -44,7 +44,7 @@ export class Foo {
         request: SeedCrossPackageTypeNames.FindRequest = {},
         requestOptions?: Foo.RequestOptions,
     ): core.HttpResponsePromise<SeedCrossPackageTypeNames.ImportingType> {
-        return core.HttpResponsePromise.fromFunction(this.__find, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
     }
 
     private async __find(

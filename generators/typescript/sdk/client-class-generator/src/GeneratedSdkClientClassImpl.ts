@@ -703,13 +703,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const internalMethodName = `__${publicMethodName}`;
             const publicStatements = [
                 ts.factory.createReturnStatement(
-                    context.coreUtilities.fetcher.HttpResponsePromise.fromFunction([
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createThis(),
-                            ts.factory.createIdentifier(internalMethodName)
-                        ),
-                        ...signature.parameters.map((p) => ts.factory.createIdentifier(p.name))
-                    ])
+                    context.coreUtilities.fetcher.HttpResponsePromise.fromPromise(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createThis(),
+                                ts.factory.createIdentifier(internalMethodName)
+                            ),
+                            undefined,
+                            signature.parameters.map((p) => ts.factory.createIdentifier(p.name))
+                        )
+                    )
                 )
             ];
 

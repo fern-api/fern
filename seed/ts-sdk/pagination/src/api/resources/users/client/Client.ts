@@ -1105,7 +1105,7 @@ export class Users {
         request: SeedPagination.ListUsernamesRequestCustom = {},
         requestOptions?: Users.RequestOptions,
     ): core.HttpResponsePromise<SeedPagination.UsernameCursor> {
-        return core.HttpResponsePromise.fromFunction(this.__listUsernamesCustom, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__listUsernamesCustom(request, requestOptions));
     }
 
     private async __listUsernamesCustom(

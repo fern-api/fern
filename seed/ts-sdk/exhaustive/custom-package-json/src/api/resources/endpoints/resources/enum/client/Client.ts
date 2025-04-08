@@ -43,7 +43,7 @@ export class Enum {
     ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.WeatherReport, Fiddle.endpoints.enum_.getAndReturnEnum.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnEnum, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
     }
 
     private async __getAndReturnEnum(

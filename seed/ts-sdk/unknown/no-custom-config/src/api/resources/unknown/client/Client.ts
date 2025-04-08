@@ -40,7 +40,7 @@ export class Unknown {
      *     })
      */
     public post(request?: unknown, requestOptions?: Unknown.RequestOptions): core.HttpResponsePromise<unknown[]> {
-        return core.HttpResponsePromise.fromFunction(this.__post, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
     }
 
     private async __post(
@@ -117,7 +117,7 @@ export class Unknown {
         request: SeedUnknownAsAny.MyObject,
         requestOptions?: Unknown.RequestOptions,
     ): core.HttpResponsePromise<unknown[]> {
-        return core.HttpResponsePromise.fromFunction(this.__postObject, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__postObject(request, requestOptions));
     }
 
     private async __postObject(

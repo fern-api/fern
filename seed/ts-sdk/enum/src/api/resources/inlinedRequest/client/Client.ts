@@ -44,7 +44,7 @@ export class InlinedRequest {
         request: SeedEnum.SendEnumInlinedRequest,
         requestOptions?: InlinedRequest.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(

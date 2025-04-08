@@ -48,11 +48,8 @@ export class Sysprop {
         numWarmInstances: number,
         requestOptions?: Sysprop.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__setNumWarmInstances,
-            language,
-            numWarmInstances,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__setNumWarmInstances(language, numWarmInstances, requestOptions),
         );
     }
 
@@ -126,7 +123,7 @@ export class Sysprop {
     public getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions,
     ): core.HttpResponsePromise<Record<SeedTrace.Language, number | undefined>> {
-        return core.HttpResponsePromise.fromFunction(this.__getNumWarmInstances, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
     }
 
     private async __getNumWarmInstances(

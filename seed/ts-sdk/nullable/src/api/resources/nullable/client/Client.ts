@@ -47,7 +47,7 @@ export class Nullable {
         request: SeedNullable.GetUsersRequest = {},
         requestOptions?: Nullable.RequestOptions,
     ): core.HttpResponsePromise<SeedNullable.User[]> {
-        return core.HttpResponsePromise.fromFunction(this.__getUsers, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getUsers(request, requestOptions));
     }
 
     private async __getUsers(
@@ -169,7 +169,7 @@ export class Nullable {
         request: SeedNullable.CreateUserRequest,
         requestOptions?: Nullable.RequestOptions,
     ): core.HttpResponsePromise<SeedNullable.User> {
-        return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
@@ -246,7 +246,7 @@ export class Nullable {
         request: SeedNullable.DeleteUserRequest = {},
         requestOptions?: Nullable.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__deleteUser, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__deleteUser(request, requestOptions));
     }
 
     private async __deleteUser(

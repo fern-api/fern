@@ -50,11 +50,8 @@ export class Admin {
         request: SeedTrace.TestSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__updateTestSubmissionStatus,
-            submissionId,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateTestSubmissionStatus(submissionId, request, requestOptions),
         );
     }
 
@@ -139,11 +136,8 @@ export class Admin {
         request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__sendTestSubmissionUpdate,
-            submissionId,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendTestSubmissionUpdate(submissionId, request, requestOptions),
         );
     }
 
@@ -224,11 +218,8 @@ export class Admin {
         request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__updateWorkspaceSubmissionStatus,
-            submissionId,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateWorkspaceSubmissionStatus(submissionId, request, requestOptions),
         );
     }
 
@@ -313,11 +304,8 @@ export class Admin {
         request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__sendWorkspaceSubmissionUpdate,
-            submissionId,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions),
         );
     }
 
@@ -485,12 +473,8 @@ export class Admin {
         request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__storeTracedTestCase,
-            submissionId,
-            testCaseId,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCase(submissionId, testCaseId, request, requestOptions),
         );
     }
 
@@ -648,12 +632,8 @@ export class Admin {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__storeTracedTestCaseV2,
-            submissionId,
-            testCaseId,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions),
         );
     }
 
@@ -817,12 +797,7 @@ export class Admin {
         request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__storeTracedWorkspace,
-            submissionId,
-            request,
-            requestOptions,
-        );
+        return core.HttpResponsePromise.fromPromise(this.__storeTracedWorkspace(submissionId, request, requestOptions));
     }
 
     private async __storeTracedWorkspace(
@@ -976,11 +951,8 @@ export class Admin {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__storeTracedWorkspaceV2,
-            submissionId,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedWorkspaceV2(submissionId, request, requestOptions),
         );
     }
 

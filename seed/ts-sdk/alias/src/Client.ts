@@ -41,7 +41,7 @@ export class SeedAliasClient {
         typeId: SeedAlias.TypeId,
         requestOptions?: SeedAliasClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__get, typeId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__get(typeId, requestOptions));
     }
 
     private async __get(

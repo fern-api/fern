@@ -37,7 +37,7 @@ export class Service {
      *     await client.folder.service.endpoint()
      */
     public endpoint(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__endpoint, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__endpoint(requestOptions));
     }
 
     private async __endpoint(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
@@ -101,7 +101,7 @@ export class Service {
      *     })
      */
     public unknownRequest(request?: unknown, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__unknownRequest, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__unknownRequest(request, requestOptions));
     }
 
     private async __unknownRequest(

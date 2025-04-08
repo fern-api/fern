@@ -45,7 +45,7 @@ export class SeedObjectClient {
         request: SeedObject.PostRootRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedObject.RootType1> {
-        return core.HttpResponsePromise.fromFunction(this.__getRoot, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getRoot(request, requestOptions));
     }
 
     private async __getRoot(
@@ -127,7 +127,7 @@ export class SeedObjectClient {
         request: SeedObject.GetDiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__getDiscriminatedUnion, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getDiscriminatedUnion(request, requestOptions));
     }
 
     private async __getDiscriminatedUnion(
@@ -210,7 +210,7 @@ export class SeedObjectClient {
         request: SeedObject.GetUndiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__getUndiscriminatedUnion, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getUndiscriminatedUnion(request, requestOptions));
     }
 
     private async __getUndiscriminatedUnion(

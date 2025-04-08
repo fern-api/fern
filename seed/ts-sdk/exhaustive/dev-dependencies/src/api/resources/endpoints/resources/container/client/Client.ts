@@ -43,7 +43,7 @@ export class Container {
     ): core.HttpResponsePromise<
         core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnListOfPrimitives.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfPrimitives, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfPrimitives(request, requestOptions));
     }
 
     private async __getAndReturnListOfPrimitives(
@@ -128,7 +128,7 @@ export class Container {
             Fiddle.endpoints.container.getAndReturnListOfObjects.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnListOfObjects, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnListOfObjects(
@@ -211,7 +211,7 @@ export class Container {
     ): core.HttpResponsePromise<
         core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfPrimitives, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
     }
 
     private async __getAndReturnSetOfPrimitives(
@@ -296,7 +296,7 @@ export class Container {
             Fiddle.endpoints.container.getAndReturnSetOfObjects.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnSetOfObjects, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnSetOfObjects(
@@ -381,7 +381,7 @@ export class Container {
     ): core.HttpResponsePromise<
         core.APIResponse<Record<string, string>, Fiddle.endpoints.container.getAndReturnMapPrimToPrim.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapPrimToPrim, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapPrimToPrim(request, requestOptions));
     }
 
     private async __getAndReturnMapPrimToPrim(
@@ -468,7 +468,7 @@ export class Container {
             Fiddle.endpoints.container.getAndReturnMapOfPrimToObject.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnMapOfPrimToObject, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
     }
 
     private async __getAndReturnMapOfPrimToObject(
@@ -556,7 +556,7 @@ export class Container {
             Fiddle.endpoints.container.getAndReturnOptional.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnOptional, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
     }
 
     private async __getAndReturnOptional(

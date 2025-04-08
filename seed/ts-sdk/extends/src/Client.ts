@@ -43,7 +43,7 @@ export class SeedExtendsClient {
         request: SeedExtends.Inlined,
         requestOptions?: SeedExtendsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__extendedInlineRequestBody, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__extendedInlineRequestBody(request, requestOptions));
     }
 
     private async __extendedInlineRequestBody(

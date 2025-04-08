@@ -45,7 +45,7 @@ export class Union {
         request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnUnion, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
     private async __getAndReturnUnion(

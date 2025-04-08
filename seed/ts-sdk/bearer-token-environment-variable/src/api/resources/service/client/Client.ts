@@ -43,7 +43,7 @@ export class Service {
      *     await client.service.getWithBearerToken()
      */
     public getWithBearerToken(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithBearerToken, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithBearerToken(requestOptions));
     }
 
     private async __getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {

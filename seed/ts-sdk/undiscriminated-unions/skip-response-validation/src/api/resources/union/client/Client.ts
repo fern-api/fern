@@ -41,7 +41,7 @@ export class Union {
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: Union.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
-        return core.HttpResponsePromise.fromFunction(this.__get, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(
@@ -113,7 +113,7 @@ export class Union {
     public getMetadata(
         requestOptions?: Union.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
-        return core.HttpResponsePromise.fromFunction(this.__getMetadata, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMetadata(requestOptions));
     }
 
     private async __getMetadata(

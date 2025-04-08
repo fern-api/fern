@@ -50,7 +50,7 @@ export class Payment {
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
         requestOptions?: Payment.IdempotentRequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__create, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
@@ -125,7 +125,7 @@ export class Payment {
      *     await client.payment.delete("paymentId")
      */
     public delete(paymentId: string, requestOptions?: Payment.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__delete, paymentId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__delete(paymentId, requestOptions));
     }
 
     private async __delete(

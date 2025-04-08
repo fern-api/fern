@@ -45,7 +45,7 @@ export class Foo {
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions,
     ): core.HttpResponsePromise<SeedAudiences.ImportingType> {
-        return core.HttpResponsePromise.fromFunction(this.__find, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
     }
 
     private async __find(

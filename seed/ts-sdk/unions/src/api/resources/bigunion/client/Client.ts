@@ -38,7 +38,7 @@ export class Bigunion {
      *     await client.bigunion.get("id")
      */
     public get(id: string, requestOptions?: Bigunion.RequestOptions): core.HttpResponsePromise<SeedUnions.BigUnion> {
-        return core.HttpResponsePromise.fromFunction(this.__get, id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
     private async __get(
@@ -115,7 +115,7 @@ export class Bigunion {
         request: SeedUnions.BigUnion,
         requestOptions?: Bigunion.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__update, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(
@@ -194,7 +194,7 @@ export class Bigunion {
         request: SeedUnions.BigUnion[],
         requestOptions?: Bigunion.RequestOptions,
     ): core.HttpResponsePromise<Record<string, boolean>> {
-        return core.HttpResponsePromise.fromFunction(this.__updateMany, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__updateMany(request, requestOptions));
     }
 
     private async __updateMany(

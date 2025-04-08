@@ -43,7 +43,7 @@ export class Service {
         notificationId: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Exception> {
-        return core.HttpResponsePromise.fromFunction(this.__getException, notificationId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getException(notificationId, requestOptions));
     }
 
     private async __getException(

@@ -52,7 +52,7 @@ export class User {
         request: SeedMixedFileDirectory.ListUsersRequest = {},
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.User[]> {
-        return core.HttpResponsePromise.fromFunction(this.__list, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
     }
 
     private async __list(

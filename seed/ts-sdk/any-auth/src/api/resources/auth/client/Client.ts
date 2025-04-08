@@ -47,7 +47,7 @@ export class Auth {
         request: SeedAnyAuth.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): core.HttpResponsePromise<SeedAnyAuth.TokenResponse> {
-        return core.HttpResponsePromise.fromFunction(this.__getToken, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
     }
 
     private async __getToken(

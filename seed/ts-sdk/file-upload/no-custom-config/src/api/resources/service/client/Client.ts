@@ -49,14 +49,8 @@ export class Service {
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__post,
-            file,
-            fileList,
-            maybeFile,
-            maybeFileList,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__post(file, fileList, maybeFile, maybeFileList, request, requestOptions),
         );
     }
 
@@ -108,9 +102,9 @@ export class Service {
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
+                {for (const _item of request.optionalMetadata) {
                     _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
-                }
+                }}
         }
 
         if (request.optionalObjectType != null) {
@@ -202,7 +196,7 @@ export class Service {
         file: File | fs.ReadStream | Blob,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__justFile, file, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__justFile(file, requestOptions));
     }
 
     private async __justFile(
@@ -272,7 +266,7 @@ export class Service {
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__justFileWithQueryParams, file, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__justFileWithQueryParams(file, request, requestOptions));
     }
 
     private async __justFileWithQueryParams(
@@ -370,7 +364,7 @@ export class Service {
         request: SeedFileUpload.WithContentTypeRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__withContentType, file, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__withContentType(file, request, requestOptions));
     }
 
     private async __withContentType(
@@ -453,7 +447,7 @@ export class Service {
         request: SeedFileUpload.WithFormEncodingRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__withFormEncoding, file, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__withFormEncoding(file, request, requestOptions));
     }
 
     private async __withFormEncoding(
@@ -538,14 +532,8 @@ export class Service {
         request: SeedFileUpload.MyOtherRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__withFormEncodedContainers,
-            file,
-            fileList,
-            maybeFile,
-            maybeFileList,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, requestOptions),
         );
     }
 
@@ -712,7 +700,7 @@ export class Service {
         request: SeedFileUpload.OptionalArgsRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__optionalArgs, imageFile, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__optionalArgs(imageFile, request, requestOptions));
     }
 
     private async __optionalArgs(
@@ -727,9 +715,9 @@ export class Service {
 
         if (request.request != null) {
             if (Array.isArray(request.request) || request.request instanceof Set)
-                for (const _item of request.request) {
+                {for (const _item of request.request) {
                     _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }
+                }}
         }
 
         const _maybeEncodedRequest = await _request.getRequest();

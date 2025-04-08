@@ -40,7 +40,7 @@ export class Service {
     public getDirectThread(
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedAudiences.folderD.Response> {
-        return core.HttpResponsePromise.fromFunction(this.__getDirectThread, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getDirectThread(requestOptions));
     }
 
     private async __getDirectThread(

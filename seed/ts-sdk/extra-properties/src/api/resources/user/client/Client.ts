@@ -43,7 +43,7 @@ export class User {
         request: SeedExtraProperties.CreateUserRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedExtraProperties.User> {
-        return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(

@@ -51,7 +51,7 @@ export class Service {
         request: SeedExamples.file.GetFileRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.File_> {
-        return core.HttpResponsePromise.fromFunction(this.__getFile, filename, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getFile(filename, request, requestOptions));
     }
 
     private async __getFile(

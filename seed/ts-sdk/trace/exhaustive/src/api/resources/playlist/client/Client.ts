@@ -57,7 +57,7 @@ export class Playlist {
         request: SeedTrace.CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__createPlaylist, serviceParam, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createPlaylist(serviceParam, request, requestOptions));
     }
 
     private async __createPlaylist(
@@ -151,7 +151,7 @@ export class Playlist {
         request: SeedTrace.GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getPlaylists, serviceParam, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getPlaylists(serviceParam, request, requestOptions));
     }
 
     private async __getPlaylists(
@@ -253,7 +253,7 @@ export class Playlist {
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getPlaylist, serviceParam, playlistId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getPlaylist(serviceParam, playlistId, requestOptions));
     }
 
     private async __getPlaylist(
@@ -362,12 +362,8 @@ export class Playlist {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(
-            this.__updatePlaylist,
-            serviceParam,
-            playlistId,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__updatePlaylist(serviceParam, playlistId, request, requestOptions),
         );
     }
 
@@ -478,7 +474,7 @@ export class Playlist {
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__deletePlaylist, serviceParam, playlistId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__deletePlaylist(serviceParam, playlistId, requestOptions));
     }
 
     private async __deletePlaylist(

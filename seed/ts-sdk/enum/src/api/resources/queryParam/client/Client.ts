@@ -45,7 +45,7 @@ export class QueryParam {
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__send, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
@@ -139,7 +139,7 @@ export class QueryParam {
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__sendList, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
     }
 
     private async __sendList(

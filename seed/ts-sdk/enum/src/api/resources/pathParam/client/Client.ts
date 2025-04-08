@@ -43,7 +43,7 @@ export class PathParam {
         operandOrColor: SeedEnum.ColorOrOperand,
         requestOptions?: PathParam.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__send, operand, operandOrColor, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__send(operand, operandOrColor, requestOptions));
     }
 
     private async __send(

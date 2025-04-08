@@ -58,7 +58,7 @@ export class SeedExamplesClient {
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
     public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__echo, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__echo(request, requestOptions));
     }
 
     private async __echo(
@@ -132,7 +132,7 @@ export class SeedExamplesClient {
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Identifier> {
-        return core.HttpResponsePromise.fromFunction(this.__createType, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createType(request, requestOptions));
     }
 
     private async __createType(

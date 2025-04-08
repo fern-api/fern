@@ -45,7 +45,7 @@ export class User {
         userId: SeedVersion.UserId,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedVersion.User> {
-        return core.HttpResponsePromise.fromFunction(this.__getUser, userId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
     }
 
     private async __getUser(

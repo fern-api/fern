@@ -39,7 +39,7 @@ export class User {
      *     await client.user.get()
      */
     public get(requestOptions?: User.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
-        return core.HttpResponsePromise.fromFunction(this.__get, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }
 
     private async __get(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {

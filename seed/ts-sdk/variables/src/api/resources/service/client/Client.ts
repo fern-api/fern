@@ -36,7 +36,7 @@ export class Service {
      *     await client.service.post()
      */
     public post(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__post, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__post(requestOptions));
     }
 
     private async __post(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {

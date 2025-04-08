@@ -68,7 +68,7 @@ export class InlinedRequests {
             Fiddle.inlinedRequests.postWithObjectBodyandResponse.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(this.__postWithObjectBodyandResponse, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
 
     private async __postWithObjectBodyandResponse(

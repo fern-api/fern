@@ -48,7 +48,7 @@ export class NoAuth {
         request?: unknown,
         requestOptions?: NoAuth.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__postWithNoAuth, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoAuth(request, requestOptions));
     }
 
     private async __postWithNoAuth(

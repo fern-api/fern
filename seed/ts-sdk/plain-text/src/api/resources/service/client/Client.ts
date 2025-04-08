@@ -35,7 +35,7 @@ export class Service {
      *     await client.service.getText()
      */
     public getText(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getText, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getText(requestOptions));
     }
 
     private async __getText(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {

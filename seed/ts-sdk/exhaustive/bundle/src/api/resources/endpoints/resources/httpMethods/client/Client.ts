@@ -41,7 +41,7 @@ export class HttpMethods {
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__testGet, id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testGet(id, requestOptions));
     }
 
     private async __testGet(
@@ -113,7 +113,7 @@ export class HttpMethods {
     ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPost.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__testPost, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
     }
 
     private async __testPost(
@@ -192,7 +192,7 @@ export class HttpMethods {
     ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
     }
 
     private async __testPut(
@@ -286,7 +286,7 @@ export class HttpMethods {
     ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
     }
 
     private async __testPatch(
@@ -360,7 +360,7 @@ export class HttpMethods {
         id: string,
         requestOptions?: HttpMethods.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testDelete(id, requestOptions));
     }
 
     private async __testDelete(

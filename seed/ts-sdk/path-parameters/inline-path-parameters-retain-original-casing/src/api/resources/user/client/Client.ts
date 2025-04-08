@@ -44,7 +44,7 @@ export class User {
         request: SeedPathParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromFunction(this.__getUser, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getUser(request, requestOptions));
     }
 
     private async __getUser(
@@ -124,7 +124,7 @@ export class User {
         request: SeedPathParameters.User,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
@@ -207,7 +207,7 @@ export class User {
         request: SeedPathParameters.UpdateUserRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromFunction(this.__updateUser, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__updateUser(request, requestOptions));
     }
 
     private async __updateUser(
@@ -288,7 +288,7 @@ export class User {
         request: SeedPathParameters.SearchUsersRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User[]> {
-        return core.HttpResponsePromise.fromFunction(this.__searchUsers, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__searchUsers(request, requestOptions));
     }
 
     private async __searchUsers(

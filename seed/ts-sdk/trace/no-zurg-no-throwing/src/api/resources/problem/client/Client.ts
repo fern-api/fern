@@ -121,7 +121,7 @@ export class Problem {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__createProblem, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createProblem(request, requestOptions));
     }
 
     private async __createProblem(
@@ -270,7 +270,7 @@ export class Problem {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__updateProblem, problemId, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__updateProblem(problemId, request, requestOptions));
     }
 
     private async __updateProblem(
@@ -344,7 +344,7 @@ export class Problem {
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__deleteProblem, problemId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__deleteProblem(problemId, requestOptions));
     }
 
     private async __deleteProblem(
@@ -432,7 +432,7 @@ export class Problem {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getDefaultStarterFiles, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getDefaultStarterFiles(request, requestOptions));
     }
 
     private async __getDefaultStarterFiles(

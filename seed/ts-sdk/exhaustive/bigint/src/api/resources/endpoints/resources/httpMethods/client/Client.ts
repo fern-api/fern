@@ -39,7 +39,7 @@ export class HttpMethods {
      *     await client.endpoints.httpMethods.testGet("id")
      */
     public testGet(id: string, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__testGet, id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testGet(id, requestOptions));
     }
 
     private async __testGet(
@@ -116,7 +116,7 @@ export class HttpMethods {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromFunction(this.__testPost, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
     }
 
     private async __testPost(
@@ -196,7 +196,7 @@ export class HttpMethods {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromFunction(this.__testPut, id, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
     }
 
     private async __testPut(
@@ -291,7 +291,7 @@ export class HttpMethods {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromFunction(this.__testPatch, id, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
     }
 
     private async __testPatch(
@@ -365,7 +365,7 @@ export class HttpMethods {
      *     await client.endpoints.httpMethods.testDelete("id")
      */
     public testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__testDelete, id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__testDelete(id, requestOptions));
     }
 
     private async __testDelete(

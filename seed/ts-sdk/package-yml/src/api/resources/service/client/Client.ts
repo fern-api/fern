@@ -37,7 +37,7 @@ export class Service {
      *     await client.service.nop("id-219xca8")
      */
     public nop(nestedId: string, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__nop, nestedId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__nop(nestedId, requestOptions));
     }
 
     private async __nop(

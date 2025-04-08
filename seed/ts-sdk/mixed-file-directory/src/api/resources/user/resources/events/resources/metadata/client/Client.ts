@@ -45,7 +45,7 @@ export class Metadata {
         request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
         requestOptions?: Metadata.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.user.events.Metadata> {
-        return core.HttpResponsePromise.fromFunction(this.__getMetadata, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
     }
 
     private async __getMetadata(

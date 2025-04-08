@@ -41,7 +41,7 @@ export class NoReqBody {
     ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getWithNoRequestBody, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
 
     private async __getWithNoRequestBody(
@@ -110,7 +110,7 @@ export class NoReqBody {
     public postWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__postWithNoRequestBody, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoRequestBody(requestOptions));
     }
 
     private async __postWithNoRequestBody(

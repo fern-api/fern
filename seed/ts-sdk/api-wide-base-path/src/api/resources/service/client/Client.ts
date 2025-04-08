@@ -44,12 +44,8 @@ export class Service {
         endpointParam: number,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__post,
-            serviceParam,
-            resourceParam,
-            endpointParam,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__post(serviceParam, resourceParam, endpointParam, requestOptions),
         );
     }
 

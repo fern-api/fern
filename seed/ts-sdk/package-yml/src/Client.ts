@@ -52,7 +52,7 @@ export class SeedPackageYmlClient {
         request: SeedPackageYml.EchoRequest,
         requestOptions?: SeedPackageYmlClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__echo, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__echo(request, requestOptions));
     }
 
     private async __echo(

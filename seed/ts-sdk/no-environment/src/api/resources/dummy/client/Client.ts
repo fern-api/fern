@@ -37,7 +37,7 @@ export class Dummy {
      *     await client.dummy.getDummy()
      */
     public getDummy(requestOptions?: Dummy.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getDummy, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getDummy(requestOptions));
     }
 
     private async __getDummy(requestOptions?: Dummy.RequestOptions): Promise<core.WithRawResponse<string>> {

@@ -42,7 +42,7 @@ export class Organizations {
         organization_id: string,
         requestOptions?: Organizations.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization> {
-        return core.HttpResponsePromise.fromFunction(this.__getOrganization, organization_id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organization_id, requestOptions));
     }
 
     private async __getOrganization(
@@ -122,12 +122,8 @@ export class Organizations {
         request: SeedPathParameters.GetOrganizationUserRequest = {},
         requestOptions?: Organizations.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__getOrganizationUser,
-            organization_id,
-            user_id,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__getOrganizationUser(organization_id, user_id, request, requestOptions),
         );
     }
 
@@ -210,11 +206,8 @@ export class Organizations {
         request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: Organizations.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
-        return core.HttpResponsePromise.fromFunction(
-            this.__searchOrganizations,
-            organization_id,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__searchOrganizations(organization_id, request, requestOptions),
         );
     }
 

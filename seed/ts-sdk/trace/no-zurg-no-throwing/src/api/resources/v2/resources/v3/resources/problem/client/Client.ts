@@ -50,7 +50,7 @@ export class Problem {
             SeedTrace.v2.v3.problem.getLightweightProblems.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getLightweightProblems, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getLightweightProblems(requestOptions));
     }
 
     private async __getLightweightProblems(
@@ -126,7 +126,7 @@ export class Problem {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getProblems, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getProblems(requestOptions));
     }
 
     private async __getProblems(
@@ -201,7 +201,7 @@ export class Problem {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getLatestProblem, problemId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getLatestProblem(problemId, requestOptions));
     }
 
     private async __getLatestProblem(
@@ -279,11 +279,8 @@ export class Problem {
     ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(
-            this.__getProblemVersion,
-            problemId,
-            problemVersion,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__getProblemVersion(problemId, problemVersion, requestOptions),
         );
     }
 

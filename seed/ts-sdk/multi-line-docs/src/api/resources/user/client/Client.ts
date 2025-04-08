@@ -42,7 +42,7 @@ export class User {
      *     await client.user.getUser("userId")
      */
     public getUser(userId: string, requestOptions?: User.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__getUser, userId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
     }
 
     private async __getUser(userId: string, requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<void>> {
@@ -111,7 +111,7 @@ export class User {
         request: SeedMultiLineDocs.CreateUserRequest,
         requestOptions?: User.RequestOptions,
     ): core.HttpResponsePromise<SeedMultiLineDocs.User> {
-        return core.HttpResponsePromise.fromFunction(this.__createUser, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(

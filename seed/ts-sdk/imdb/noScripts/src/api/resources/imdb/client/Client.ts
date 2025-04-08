@@ -45,7 +45,7 @@ export class Imdb {
      *     })
      */
     public createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: Imdb.RequestOptions): core.HttpResponsePromise<SeedApi.MovieId> {
-        return core.HttpResponsePromise.fromFunction(this.__createMovie, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
     }
 
     private async __createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: Imdb.RequestOptions): Promise<core.WithRawResponse<SeedApi.MovieId>> {
@@ -102,7 +102,7 @@ export class Imdb {
      *     await client.imdb.getMovie("movieId")
      */
     public getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): core.HttpResponsePromise<SeedApi.Movie> {
-        return core.HttpResponsePromise.fromFunction(this.__getMovie, movieId, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
     }
 
     private async __getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<core.WithRawResponse<SeedApi.Movie>> {

@@ -57,7 +57,7 @@ export class ContentType {
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__postJsonPatchContentType, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
     }
 
     private async __postJsonPatchContentType(
@@ -141,10 +141,8 @@ export class ContentType {
     ): core.HttpResponsePromise<
         core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(
-            this.__postJsonPatchContentWithCharsetType,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__postJsonPatchContentWithCharsetType(request, requestOptions),
         );
     }
 

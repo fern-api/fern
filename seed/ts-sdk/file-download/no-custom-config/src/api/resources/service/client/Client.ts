@@ -29,7 +29,7 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
     public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<stream.Readable> {
-        return core.HttpResponsePromise.fromFunction(this.__downloadFile, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }
 
     private async __downloadFile(

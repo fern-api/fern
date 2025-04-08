@@ -45,7 +45,7 @@ export class ReqWithHeaders {
         request: Fiddle.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithCustomHeader, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
     }
 
     private async __getWithCustomHeader(

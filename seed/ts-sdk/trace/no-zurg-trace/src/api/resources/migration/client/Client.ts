@@ -48,7 +48,7 @@ export class Migration {
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.Migration[]> {
-        return core.HttpResponsePromise.fromFunction(this.__getAttemptedMigrations, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
     }
 
     private async __getAttemptedMigrations(

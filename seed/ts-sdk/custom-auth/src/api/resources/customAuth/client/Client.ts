@@ -42,7 +42,7 @@ export class CustomAuth {
      *     await client.customAuth.getWithCustomAuth()
      */
     public getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithCustomAuth, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithCustomAuth(requestOptions));
     }
 
     private async __getWithCustomAuth(
@@ -135,7 +135,7 @@ export class CustomAuth {
         request?: unknown,
         requestOptions?: CustomAuth.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__postWithCustomAuth, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__postWithCustomAuth(request, requestOptions));
     }
 
     private async __postWithCustomAuth(

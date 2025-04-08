@@ -48,7 +48,7 @@ export class Service {
      *     await client.service.getWithApiKey()
      */
     public getWithApiKey(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithApiKey, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithApiKey(requestOptions));
     }
 
     private async __getWithApiKey(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
@@ -126,7 +126,7 @@ export class Service {
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__getWithHeader, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getWithHeader(request, requestOptions));
     }
 
     private async __getWithHeader(

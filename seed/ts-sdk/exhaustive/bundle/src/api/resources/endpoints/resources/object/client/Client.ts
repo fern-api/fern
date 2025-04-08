@@ -62,7 +62,7 @@ export class Object_ {
             Fiddle.endpoints.object.getAndReturnWithOptionalField.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithOptionalField, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithOptionalField(request, requestOptions));
     }
 
     private async __getAndReturnWithOptionalField(
@@ -145,7 +145,7 @@ export class Object_ {
             Fiddle.endpoints.object.getAndReturnWithRequiredField.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithRequiredField, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithRequiredField(request, requestOptions));
     }
 
     private async __getAndReturnWithRequiredField(
@@ -229,7 +229,7 @@ export class Object_ {
     ): core.HttpResponsePromise<
         core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
     > {
-        return core.HttpResponsePromise.fromFunction(this.__getAndReturnWithMapOfMap, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithMapOfMap(request, requestOptions));
     }
 
     private async __getAndReturnWithMapOfMap(
@@ -326,10 +326,8 @@ export class Object_ {
             Fiddle.endpoints.object.getAndReturnNestedWithOptionalField.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(
-            this.__getAndReturnNestedWithOptionalField,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithOptionalField(request, requestOptions),
         );
     }
 
@@ -434,11 +432,8 @@ export class Object_ {
             Fiddle.endpoints.object.getAndReturnNestedWithRequiredField.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(
-            this.__getAndReturnNestedWithRequiredField,
-            string_,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithRequiredField(string_, request, requestOptions),
         );
     }
 
@@ -561,10 +556,8 @@ export class Object_ {
             Fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
         >
     > {
-        return core.HttpResponsePromise.fromFunction(
-            this.__getAndReturnNestedWithRequiredFieldAsList,
-            request,
-            requestOptions,
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithRequiredFieldAsList(request, requestOptions),
         );
     }
 

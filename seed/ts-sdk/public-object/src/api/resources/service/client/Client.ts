@@ -30,7 +30,7 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
     public get(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<stream.Readable> {
-        return core.HttpResponsePromise.fromFunction(this.__get, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }
 
     private async __get(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<stream.Readable>> {

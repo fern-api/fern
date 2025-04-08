@@ -44,7 +44,7 @@ export class Homepage {
     public getHomepageProblems(
         requestOptions?: Homepage.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__getHomepageProblems, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
     }
 
     private async __getHomepageProblems(
@@ -119,7 +119,7 @@ export class Homepage {
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
-        return core.HttpResponsePromise.fromFunction(this.__setHomepageProblems, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
     }
 
     private async __setHomepageProblems(

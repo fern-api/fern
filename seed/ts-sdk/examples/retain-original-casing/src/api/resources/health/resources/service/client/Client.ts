@@ -44,7 +44,7 @@ export class Service {
      *     await client.health.service.check("id-3tey93i")
      */
     public check(id: string, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromFunction(this.__check, id, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__check(id, requestOptions));
     }
 
     private async __check(id: string, requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<void>> {
@@ -106,7 +106,7 @@ export class Service {
      *     await client.health.service.ping()
      */
     public ping(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromFunction(this.__ping, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__ping(requestOptions));
     }
 
     private async __ping(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<boolean>> {

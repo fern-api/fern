@@ -44,7 +44,7 @@ export class Optional {
         request?: Record<string, unknown>,
         requestOptions?: Optional.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromFunction(this.__sendOptionalBody, request, requestOptions);
+        return core.HttpResponsePromise.fromPromise(this.__sendOptionalBody(request, requestOptions));
     }
 
     private async __sendOptionalBody(
