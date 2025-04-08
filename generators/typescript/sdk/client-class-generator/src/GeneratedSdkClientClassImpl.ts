@@ -693,6 +693,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const signature = endpoint.getSignature(context);
             const docs = endpoint.getDocs(context);
             const overloads = endpoint.getOverloads(context);
+            const isPaginated = endpoint.isPaginated(context);
 
             if (!isIdempotent && endpoint.endpoint.idempotent) {
                 isIdempotent = true;
@@ -729,8 +730,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 maybeAddDocsStructure(publicMethod, docs);
             }
 
-            serviceClass.methods.push(publicMethod);
-
             const internalResponseStatements = endpoint.getStatements(context);
             const internalMethod: MethodDeclarationStructure = {
                 kind: StructureKind.Method,
@@ -738,9 +737,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
                     ts.factory.createTypeReferenceNode("Promise", [
-                        context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
-                            signature.returnTypeWithoutPromise
-                        )
+                        isPaginated
+                            ? signature.returnTypeWithoutPromise
+                            : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                  signature.returnTypeWithoutPromise
+                              )
                     ])
                 ),
                 scope: Scope.Private,
@@ -749,12 +750,27 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 overloads: overloads.map((overload) => ({
                     parameters: overload.parameters,
                     returnType: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
+                        ts.factory.createTypeReferenceNode("Promise", [
+                            isPaginated
+                                ? overload.returnTypeWithoutPromise
+                                : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                      overload.returnTypeWithoutPromise
+                                  )
+                        ])
                     )
                 }))
             };
 
-            serviceClass.methods.push(internalMethod);
+            if (isPaginated) {
+                // paginated only has one implementation, so copy the implementation from internal to public
+                Object.assign(publicMethod, internalMethod);
+                publicMethod.name = publicMethodName;
+                publicMethod.scope = Scope.Public;
+                serviceClass.methods.push(publicMethod);
+            } else {
+                serviceClass.methods.push(publicMethod);
+                serviceClass.methods.push(internalMethod);
+            }
         }
 
         if (this.generatedWebsocketImplementation != null) {

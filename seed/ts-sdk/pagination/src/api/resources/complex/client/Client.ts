@@ -48,94 +48,83 @@ export class Complex {
      *         }
      *     })
      */
-    public search(
+    public async search(
         request: SeedPagination.SearchRequest,
         requestOptions?: Complex.RequestOptions,
-    ): core.HttpResponsePromise<core.Page<SeedPagination.Conversation>> {
-        return core.HttpResponsePromise.fromFunction(this.__search, request, requestOptions);
-    }
-
-    private async __search(
-        request: SeedPagination.SearchRequest,
-        requestOptions?: Complex.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Page<SeedPagination.Conversation>>> {
-        const list = async (
-            request: SeedPagination.SearchRequest,
-        ): Promise<SeedPagination.PaginatedConversationResponse> => {
-            const _response = await core.fetcher({
-                url: urlJoin(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "conversations/search",
-                ),
-                method: "POST",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                    ...requestOptions?.headers,
-                },
-                contentType: "application/json",
-                requestType: "json",
-                body: serializers.SearchRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return {
-                    data: serializers.PaginatedConversationResponse.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
+    ): Promise<core.Page<SeedPagination.Conversation>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.SearchRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "conversations/search",
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.SearchRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.PaginatedConversationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError(
-                        "Timeout exceeded when calling POST /conversations/search.",
-                    );
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
-        return {
-            data: new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
-                response: await list(request),
-                hasNextPage: (response) => response?.pages?.next?.startingAfter != null,
-                getItems: (response) => response?.conversations ?? [],
-                loadPage: (response) => {
-                    return list(
-                        core.setObjectProperty(
-                            request,
-                            "pagination.startingAfter",
-                            response?.pages?.next?.startingAfter,
-                        ),
-                    );
-                },
-            }),
-            rawResponse: _response.rawResponse,
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError(
+                            "Timeout exceeded when calling POST /conversations/search.",
+                        );
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                        });
+                }
+            },
+        );
+        return new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
+            response: await list(request),
+            hasNextPage: (response) => response?.pages?.next?.startingAfter != null,
+            getItems: (response) => response?.conversations ?? [],
+            loadPage: (response) => {
+                return list(
+                    core.setObjectProperty(request, "pagination.startingAfter", response?.pages?.next?.startingAfter),
+                );
+            },
+        });
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

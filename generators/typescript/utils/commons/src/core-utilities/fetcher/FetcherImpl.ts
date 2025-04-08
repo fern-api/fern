@@ -381,6 +381,20 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         params
                     )
             )();
+        },
+        interceptFunction: (fn: ts.Expression): ts.Expression => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            HttpResponsePromise.getExpression(),
+                            ts.factory.createIdentifier("interceptFunction")
+                        ),
+                        undefined,
+                        [fn]
+                    )
+            )();
         }
     };
 }

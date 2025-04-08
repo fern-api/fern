@@ -30,6 +30,21 @@ export class HttpResponsePromise<T> extends Promise<T> {
     }
 
     /**
+     * Creates a function that returns a `ResponsePromise` from a function that returns a promise.
+     *
+     * @param fn - A function that returns a promise resolving to a `WithRawResponse` object.
+     * @returns A function that returns a `ResponsePromise` instance.
+     */
+    public static interceptFunction<
+        F extends (...args: never[]) => Promise<WithRawResponse<T>>,
+        T = Awaited<ReturnType<F>>["data"]
+    >(fn: F): (...args: Parameters<F>) => HttpResponsePromise<T> {
+        return (...args: Parameters<F>): HttpResponsePromise<T> => {
+            return HttpResponsePromise.fromPromise<T>(fn(...args));
+        };
+    }
+
+    /**
      * Creates a `ResponsePromise` from an existing promise.
      *
      * @param promise - A promise resolving to a `WithRawResponse` object.

@@ -104,6 +104,7 @@ export interface Fetcher {
     readonly HttpResponsePromise: {
         _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
         fromFunction: (params: ts.Expression[]) => ts.Expression;
+        interceptFunction: (fn: ts.Expression) => ts.Expression;
     };
 }
 

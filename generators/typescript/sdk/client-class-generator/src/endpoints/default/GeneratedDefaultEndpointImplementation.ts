@@ -305,23 +305,29 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         ts.factory.createIdentifier("list"),
                         undefined,
                         undefined,
-                        ts.factory.createArrowFunction(
-                            [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
-                            undefined,
-                            [
-                                ts.factory.createParameterDeclaration(
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    ts.factory.createIdentifier("request"),
-                                    undefined,
-                                    requestParameter,
-                                    undefined
-                                )
-                            ],
-                            ts.factory.createTypeReferenceNode("Promise", [responseReturnType]),
-                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                            ts.factory.createBlock(body, undefined)
+                        context.coreUtilities.fetcher.HttpResponsePromise.interceptFunction(
+                            ts.factory.createArrowFunction(
+                                [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                                undefined,
+                                [
+                                    ts.factory.createParameterDeclaration(
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                        ts.factory.createIdentifier("request"),
+                                        undefined,
+                                        requestParameter,
+                                        undefined
+                                    )
+                                ],
+                                ts.factory.createTypeReferenceNode("Promise", [
+                                    context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                        responseReturnType
+                                    )
+                                ]),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                ts.factory.createBlock(body, undefined)
+                            )
                         )
                     )
                 ],
@@ -333,38 +339,21 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }
             statements.push(
                 ts.factory.createReturnStatement(
-                    ts.factory.createObjectLiteralExpression(
-                        [
-                            ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier("data"),
-                                context.coreUtilities.pagination.Pageable._construct({
-                                    responseType: paginationInfo.responseType,
-                                    itemType: paginationInfo.itemType,
-                                    response: ts.factory.createAwaitExpression(
-                                        ts.factory.createCallExpression(
-                                            ts.factory.createIdentifier("list"),
-                                            undefined,
-                                            [ts.factory.createIdentifier("request")]
-                                        )
-                                    ),
-                                    hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
-                                    getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
-                                    loadPage: this.createLambdaWithResponse({
-                                        body: ts.factory.createBlock(paginationInfo.loadPage),
-                                        ignoreResponse: paginationInfo.type === "offset"
-                                    })
-                                })
-                            ),
-                            ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier("rawResponse"),
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier("_response"),
-                                    ts.factory.createIdentifier("rawResponse")
-                                )
-                            )
-                        ],
-                        false
-                    )
+                    context.coreUtilities.pagination.Pageable._construct({
+                        responseType: paginationInfo.responseType,
+                        itemType: paginationInfo.itemType,
+                        response: ts.factory.createAwaitExpression(
+                            ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                                ts.factory.createIdentifier("request")
+                            ])
+                        ),
+                        hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
+                        getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
+                        loadPage: this.createLambdaWithResponse({
+                            body: ts.factory.createBlock(paginationInfo.loadPage),
+                            ignoreResponse: paginationInfo.type === "offset"
+                        })
+                    })
                 )
             );
             return statements;
