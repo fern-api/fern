@@ -46,10 +46,10 @@ class ServiceClient:
         )
         client.service.get_with_bearer_token()
         """
-        response = self._raw_client.get_with_bearer_token(
+        _response = self._raw_client.get_with_bearer_token(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -98,7 +98,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_bearer_token(
+        _response = await self._raw_client.get_with_bearer_token(
             request_options=request_options,
         )
-        return response.data
+        return _response.data

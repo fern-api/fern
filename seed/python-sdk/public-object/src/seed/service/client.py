@@ -23,7 +23,9 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
+    def get(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[typing.Iterator[bytes]]:
         """
         Parameters
         ----------
@@ -32,12 +34,12 @@ class ServiceClient:
 
         Returns
         -------
-        typing.Iterator[bytes]
+        typing.Iterator[typing.Iterator[bytes]]
         """
-        response = self._raw_client.get(
+        _response = self._raw_client.get(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -55,7 +57,9 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.AsyncIterator[bytes]:
+    async def get(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[typing.AsyncIterator[bytes]]:
         """
         Parameters
         ----------
@@ -64,9 +68,9 @@ class AsyncServiceClient:
 
         Returns
         -------
-        typing.AsyncIterator[bytes]
+        typing.AsyncIterator[typing.AsyncIterator[bytes]]
         """
-        response = await self._raw_client.get(
+        _response = await self._raw_client.get(
             request_options=request_options,
         )
-        return response.data
+        return _response.data

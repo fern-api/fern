@@ -49,11 +49,11 @@ class UserClient:
             user_id="userId",
         )
         """
-        response = self._raw_client.get_user(
+        _response = self._raw_client.get_user(
             user_id,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncUserClient:
@@ -103,8 +103,8 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_user(
+        _response = await self._raw_client.get_user(
             user_id,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

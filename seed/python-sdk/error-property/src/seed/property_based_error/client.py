@@ -45,10 +45,10 @@ class PropertyBasedErrorClient:
         )
         client.property_based_error.throw_error()
         """
-        response = self._raw_client.throw_error(
+        _response = self._raw_client.throw_error(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncPropertyBasedErrorClient:
@@ -96,7 +96,7 @@ class AsyncPropertyBasedErrorClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.throw_error(
+        _response = await self._raw_client.throw_error(
             request_options=request_options,
         )
-        return response.data
+        return _response.data

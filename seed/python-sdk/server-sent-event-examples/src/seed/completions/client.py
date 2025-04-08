@@ -5,11 +5,6 @@ from ..core.client_wrapper import SyncClientWrapper
 from .raw_client import RawCompletionsClient
 from ..core.request_options import RequestOptions
 from .types.streamed_completion import StreamedCompletion
-import httpx_sse
-from ..core.pydantic_utilities import parse_obj_as
-import json
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
 from .raw_client import AsyncRawCompletionsClient
 
@@ -60,37 +55,12 @@ class CompletionsClient:
         for chunk in response:
             yield chunk
         """
-        with self._raw_client._client_wrapper.httpx_client.stream(
-            "stream",
-            method="POST",
-            json={
-                "query": query,
-            },
+        _response = self._raw_client.stream(
+            query=query,
             request_options=request_options,
-            omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _event_source = httpx_sse.EventSource(_response)
-                    for _sse in _event_source.iter_sse():
-                        if _sse.data == "[[DONE]]":
-                            return
-                        try:
-                            yield typing.cast(
-                                StreamedCompletion,
-                                parse_obj_as(
-                                    type_=StreamedCompletion,  # type: ignore
-                                    object_=json.loads(_sse.data),
-                                ),
-                            )
-                        except:
-                            pass
-                    return
-                _response.read()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+        )
+        with _response as r:
+            return r.data
 
 
 class AsyncCompletionsClient:
@@ -144,34 +114,9 @@ class AsyncCompletionsClient:
 
         asyncio.run(main())
         """
-        async with self._raw_client._client_wrapper.httpx_client.stream(
-            "stream",
-            method="POST",
-            json={
-                "query": query,
-            },
+        _response = await self._raw_client.stream(
+            query=query,
             request_options=request_options,
-            omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _event_source = httpx_sse.EventSource(_response)
-                    async for _sse in _event_source.aiter_sse():
-                        if _sse.data == "[[DONE]]":
-                            return
-                        try:
-                            yield typing.cast(
-                                StreamedCompletion,
-                                parse_obj_as(
-                                    type_=StreamedCompletion,  # type: ignore
-                                    object_=json.loads(_sse.data),
-                                ),
-                            )
-                        except:
-                            pass
-                    return
-                await _response.aread()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+        )
+        async with _response as r:
+            return r.data

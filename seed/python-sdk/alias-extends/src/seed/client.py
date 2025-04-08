@@ -100,12 +100,12 @@ class SeedAliasExtends:
             child="child",
         )
         """
-        response = self._raw_client.extended_inline_request_body(
+        _response = self._raw_client.extended_inline_request_body(
             child=child,
             parent=parent,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncSeedAliasExtends:
@@ -204,9 +204,9 @@ class AsyncSeedAliasExtends:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.extended_inline_request_body(
+        _response = await self._raw_client.extended_inline_request_body(
             child=child,
             parent=parent,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

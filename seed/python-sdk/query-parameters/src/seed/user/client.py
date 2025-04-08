@@ -144,7 +144,7 @@ class UserClient:
             filter="filter",
         )
         """
-        response = self._raw_client.get_username(
+        _response = self._raw_client.get_username(
             limit=limit,
             id=id,
             date=date,
@@ -161,7 +161,7 @@ class UserClient:
             optional_user=optional_user,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncUserClient:
@@ -303,7 +303,7 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_username(
+        _response = await self._raw_client.get_username(
             limit=limit,
             id=id,
             date=date,
@@ -320,4 +320,4 @@ class AsyncUserClient:
             optional_user=optional_user,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

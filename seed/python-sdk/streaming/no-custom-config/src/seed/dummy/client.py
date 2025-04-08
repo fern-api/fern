@@ -5,10 +5,6 @@ from ..core.client_wrapper import SyncClientWrapper
 from .raw_client import RawDummyClient
 from ..core.request_options import RequestOptions
 from .types.stream_response import StreamResponse
-from ..core.pydantic_utilities import parse_obj_as
-import json
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
 from .raw_client import AsyncRawDummyClient
 
@@ -59,37 +55,11 @@ class DummyClient:
         for chunk in response:
             yield chunk
         """
-        with self._raw_client._client_wrapper.httpx_client.stream(
-            "generate-stream",
-            method="POST",
-            json={
-                "num_events": num_events,
-                "stream": True,
-            },
+        with self._raw_client.generate_stream(
+            num_events=num_events,
             request_options=request_options,
-            omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    for _text in _response.iter_lines():
-                        try:
-                            if len(_text) == 0:
-                                continue
-                            yield typing.cast(
-                                StreamResponse,
-                                parse_obj_as(
-                                    type_=StreamResponse,  # type: ignore
-                                    object_=json.loads(_text),
-                                ),
-                            )
-                        except Exception:
-                            pass
-                    return
-                _response.read()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as r:
+            return r.data
 
     def generate(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> StreamResponse:
         """
@@ -115,11 +85,11 @@ class DummyClient:
             num_events=5,
         )
         """
-        response = self._raw_client.generate(
+        _response = self._raw_client.generate(
             num_events=num_events,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncDummyClient:
@@ -173,37 +143,11 @@ class AsyncDummyClient:
 
         asyncio.run(main())
         """
-        async with self._raw_client._client_wrapper.httpx_client.stream(
-            "generate-stream",
-            method="POST",
-            json={
-                "num_events": num_events,
-                "stream": True,
-            },
+        async with await self._raw_client.generate_stream(
+            num_events=num_events,
             request_options=request_options,
-            omit=OMIT,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    async for _text in _response.aiter_lines():
-                        try:
-                            if len(_text) == 0:
-                                continue
-                            yield typing.cast(
-                                StreamResponse,
-                                parse_obj_as(
-                                    type_=StreamResponse,  # type: ignore
-                                    object_=json.loads(_text),
-                                ),
-                            )
-                        except Exception:
-                            pass
-                    return
-                await _response.aread()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+        ) as r:
+            return r.data
 
     async def generate(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
@@ -239,8 +183,8 @@ class AsyncDummyClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.generate(
+        _response = await self._raw_client.generate(
             num_events=num_events,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

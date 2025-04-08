@@ -102,13 +102,13 @@ class SeedExtends:
             unique="unique",
         )
         """
-        response = self._raw_client.extended_inline_request_body(
+        _response = self._raw_client.extended_inline_request_body(
             unique=unique,
             name=name,
             docs=docs,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncSeedExtends:
@@ -209,10 +209,10 @@ class AsyncSeedExtends:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.extended_inline_request_body(
+        _response = await self._raw_client.extended_inline_request_body(
             unique=unique,
             name=name,
             docs=docs,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

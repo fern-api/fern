@@ -49,10 +49,10 @@ class CustomAuthClient:
         )
         client.custom_auth.get_with_custom_auth()
         """
-        response = self._raw_client.get_with_custom_auth(
+        _response = self._raw_client.get_with_custom_auth(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def post_with_custom_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -83,11 +83,11 @@ class CustomAuthClient:
             request={"key": "value"},
         )
         """
-        response = self._raw_client.post_with_custom_auth(
+        _response = self._raw_client.post_with_custom_auth(
             request=request,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncCustomAuthClient:
@@ -136,10 +136,10 @@ class AsyncCustomAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_custom_auth(
+        _response = await self._raw_client.get_with_custom_auth(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def post_with_custom_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -178,8 +178,8 @@ class AsyncCustomAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.post_with_custom_auth(
+        _response = await self._raw_client.post_with_custom_auth(
             request=request,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

@@ -52,11 +52,11 @@ class UnknownClient:
             request={"key": "value"},
         )
         """
-        response = self._raw_client.post(
+        _response = self._raw_client.post(
             request=request,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def post_object(
         self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -84,11 +84,11 @@ class UnknownClient:
             unknown={"key": "value"},
         )
         """
-        response = self._raw_client.post_object(
+        _response = self._raw_client.post_object(
             unknown=unknown,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncUnknownClient:
@@ -140,11 +140,11 @@ class AsyncUnknownClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.post(
+        _response = await self._raw_client.post(
             request=request,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def post_object(
         self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -180,8 +180,8 @@ class AsyncUnknownClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.post_object(
+        _response = await self._raw_client.post_object(
             unknown=unknown,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

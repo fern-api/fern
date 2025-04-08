@@ -1,4 +1,6 @@
-from typing import Dict, Generic, TypeVar
+import typing
+from typing import Generic, TypeVar
+from types import TracebackType
 
 import httpx
 
@@ -14,7 +16,7 @@ class HttpResponse(Generic[T]):
         self._data = data
 
     @property
-    def headers(self) -> Dict[str, str]:
+    def headers(self) -> typing.Dict[str, str]:
         return dict(self._response.headers)
 
     @property
@@ -34,7 +36,7 @@ class AsyncHttpResponse(Generic[T]):
         self._data = data
 
     @property
-    def headers(self) -> Dict[str, str]:
+    def headers(self) -> typing.Dict[str, str]:
         return dict(self._response.headers)
 
     @property
@@ -43,3 +45,41 @@ class AsyncHttpResponse(Generic[T]):
 
     async def close(self) -> None:
         await self._response.aclose()
+
+
+class HttpResponseStreamManager(Generic[T]):
+    def __init__(self, stream_func: typing.Callable[[], HttpResponse[typing.Iterator[T]]]) -> None:
+        self._stream_func = stream_func
+        self.__response: typing.Optional[HttpResponse[typing.Iterator[T]]] = None
+
+    def __enter__(self) -> HttpResponse[typing.Iterator[T]]:
+        self.__response = self._stream_func()
+        return self.__response
+
+    def __exit__(
+        self,
+        exc_type: typing.Optional[typing.Type[BaseException]],
+        exc: typing.Optional[BaseException],
+        exc_tb: typing.Optional[TracebackType],
+    ) -> None:
+        if self.__response is not None:
+            self.__response.close()
+
+
+class AsyncHttpResponseStreamManager(Generic[T]):
+    def __init__(self, stream_func: typing.Callable[[], typing.Awaitable[AsyncHttpResponse[typing.AsyncIterator[T]]]]) -> None:
+        self._stream_func = stream_func
+        self.__response: typing.Optional[AsyncHttpResponse[typing.AsyncIterator[T]]] = None
+
+    async def __aenter__(self) -> AsyncHttpResponse[typing.AsyncIterator[T]]:
+        self.__response = await self._stream_func()
+        return self.__response
+
+    async def __aexit__(
+        self,
+        exc_type: typing.Optional[typing.Type[BaseException]],
+        exc: typing.Optional[BaseException],
+        exc_tb: typing.Optional[TracebackType],
+    ) -> None:
+        if self.__response is not None:
+            await self.__response.close()

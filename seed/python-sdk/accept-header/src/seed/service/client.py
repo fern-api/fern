@@ -44,10 +44,10 @@ class ServiceClient:
         )
         client.service.endpoint()
         """
-        response = self._raw_client.endpoint(
+        _response = self._raw_client.endpoint(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -94,7 +94,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.endpoint(
+        _response = await self._raw_client.endpoint(
             request_options=request_options,
         )
-        return response.data
+        return _response.data

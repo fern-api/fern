@@ -69,79 +69,135 @@ class EndpointResponseCodeWriter:
         # Since we're not supporting streaming in raw clients, we only need the non-raw client code
         # For raw clients, this function should never be called
         if self._is_raw_client:
-            # TODO(hughhan1): support streaming methods in raw clients.
-            raise NotImplementedError("generating streaming methods for raw clients is not yet supported")
+            def write_iter_body(writer: AST.NodeWriter) -> None:
+                writer.write("async " if self._is_async else "")
+                writer.write_line(f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in _response.{self._get_iter_lines_method(is_async=self._is_async)}():")
+                with writer.indent():
+                    writer.write_line("try:")
+                    with writer.indent():
+                        writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+                        with writer.indent():
+                            writer.write_line("continue")
+                        writer.write("yield ")
+                        writer.write_node(
+                            self._context.core_utilities.get_construct(
+                                self._get_streaming_response_data_type(stream_response),
+                                AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
+                            ),
+                        )
+                        writer.write_newline_if_last_line_not()
+                    writer.write_line("except:")
+                    with writer.indent():
+                        writer.write_line("pass")
+                writer.write_line("return")
 
-        stream_response_union = stream_response.get_as_union()
-        if stream_response_union.type == "sse":
-            writer.write(f"{EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE} = ")
+            writer.write_node(
+                AST.FunctionDeclaration(
+                    name="_iter",
+                    signature=AST.FunctionSignature(
+                        return_type=AST.TypeHint(
+                            type=AST.ClassReference(
+                                qualified_name_excluding_import=("AsyncIterator" if self._is_async else "Iterator",),
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",)))
+                            ),
+                            type_parameters=[AST.TypeParameter(self._get_streaming_response_data_type(stream_response))]
+                        )
+                    ),
+                    body=AST.CodeWriter(write_iter_body),
+                    is_async=self._is_async
+                )
+            )
+            writer.write("return ")
+            response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
             writer.write_node(
                 AST.ClassInstantiation(
-                    HttpxSSE.EVENT_SOURCE, [AST.Expression(EndpointResponseCodeWriter.RESPONSE_VARIABLE)]
+                    class_=AST.ClassReference(
+                        qualified_name_excluding_import=(),
+                        import_=AST.ReferenceImport(
+                            module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
+                            named_import=response_class,
+                        ),
+                    ),
+                    kwargs=[
+                        ("response", AST.Expression(EndpointResponseCodeWriter.RESPONSE_VARIABLE)),
+                        ("data", AST.Expression("_iter()")),
+                    ],
                 )
             )
             writer.write_newline_if_last_line_not()
-            if self._is_async:
-                writer.write("async ")
-            writer.write_line(
-                f"for {EndpointResponseCodeWriter.SSE_VARIABLE} in {EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE}.{self._get_iter_sse_method(is_async=self._is_async)}():"
-            )
-            with writer.indent():
-                if stream_response_union.terminator is not None:
-                    writer.write_line(
-                        f'if {EndpointResponseCodeWriter.SSE_VARIABLE}.data == "{stream_response_union.terminator}":'
-                    )
-                    with writer.indent():
-                        writer.write_line("return")
-                writer.write_line("try:")
-                with writer.indent():
-                    writer.write("yield ")
-                    writer.write_node(
-                        self._context.core_utilities.get_construct(
-                            self._get_streaming_response_data_type(stream_response),
-                            AST.Expression(
-                                Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))
-                            ),
-                        ),
-                    )
-                    writer.write_newline_if_last_line_not()
-                writer.write_line("except:")
-                with writer.indent():
-                    writer.write_line("pass")
+            return 
         else:
-            if self._is_async:
-                writer.write("async ")
-            writer.write_line(
-                f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_lines_method(is_async=self._is_async)}(): "
-            )
-            with writer.indent():
-                writer.write_line("try:")
+            # This is mostly code that will be removed once we support streaming in raw clients
+            stream_response_union = stream_response.get_as_union()
+            if stream_response_union.type == "sse":
+                writer.write(f"{EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        HttpxSSE.EVENT_SOURCE, [AST.Expression(EndpointResponseCodeWriter.RESPONSE_VARIABLE)]
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+                if self._is_async:
+                    writer.write("async ")
+                writer.write_line(
+                    f"for {EndpointResponseCodeWriter.SSE_VARIABLE} in {EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE}.{self._get_iter_sse_method(is_async=self._is_async)}():"
+                )
                 with writer.indent():
-                    # handle stream termination
-                    if stream_response_union.type == "json" and stream_response_union.terminator is not None:
+                    if stream_response_union.terminator is not None:
                         writer.write_line(
-                            f'if {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == "{stream_response_union.terminator}":'
+                            f'if {EndpointResponseCodeWriter.SSE_VARIABLE}.data == "{stream_response_union.terminator}":'
                         )
                         with writer.indent():
                             writer.write_line("return")
-                    # handle stream message that is empty
-                    writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+                    writer.write_line("try:")
                     with writer.indent():
-                        writer.write_line("continue")
-                    # handle message
-                    writer.write("yield ")
-                    writer.write_node(
-                        self._context.core_utilities.get_construct(
-                            self._get_streaming_response_data_type(stream_response),
-                            AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
-                        ),
-                    )
-                    writer.write_newline_if_last_line_not()
-                writer.write_line("except Exception:")
+                        writer.write("yield ")
+                        writer.write_node(
+                            self._context.core_utilities.get_construct(
+                                self._get_streaming_response_data_type(stream_response),
+                                AST.Expression(
+                                    Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))
+                                ),
+                            ),
+                        )
+                        writer.write_newline_if_last_line_not()
+                    writer.write_line("except:")
+                    with writer.indent():
+                        writer.write_line("pass")
+            else:
+                if self._is_async:
+                    writer.write("async ")
+                writer.write_line(
+                    f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_lines_method(is_async=self._is_async)}(): "
+                )
                 with writer.indent():
-                    writer.write_line("pass")
+                    writer.write_line("try:")
+                    with writer.indent():
+                        # handle stream termination
+                        if stream_response_union.type == "json" and stream_response_union.terminator is not None:
+                            writer.write_line(
+                                f'if {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == "{stream_response_union.terminator}":'
+                            )
+                            with writer.indent():
+                                writer.write_line("return")
+                        # handle stream message that is empty
+                        writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+                        with writer.indent():
+                            writer.write_line("continue")
+                        # handle message
+                        writer.write("yield ")
+                        writer.write_node(
+                            self._context.core_utilities.get_construct(
+                                self._get_streaming_response_data_type(stream_response),
+                                AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
+                            ),
+                        )
+                        writer.write_newline_if_last_line_not()
+                    writer.write_line("except Exception:")
+                    with writer.indent():
+                        writer.write_line("pass")
 
-        writer.write_line("return")
+            writer.write_line("return")
 
     def _get_iter_lines_method(self, *, is_async: bool) -> str:
         if is_async:

@@ -34,44 +34,12 @@ class ClientGenerator(BaseWrappedClientGenerator):
 
         if self._package.service is not None:
             service = self._context.ir.services[self._package.service]
-            for endpoint in service.endpoints:
-                # Handle stream parameter endpoints specially to ensure all overloads are included
-                if self._is_stream_parameter_endpoint(endpoint):
-                    endpoint_generator = EndpointFunctionGenerator(
-                        context=self._context,
-                        package=self._package,
-                        service=service,
-                        endpoint=endpoint,
-                        idempotency_headers=self._context.ir.idempotency_headers,
-                        is_async=is_async,
-                        client_wrapper_member_name=f"{self._get_raw_client_member_name()}.{self._get_client_wrapper_member_name()}",
-                        generated_root_client=self._generated_root_client,
-                        snippet_writer=self._snippet_writer,
-                        endpoint_metadata_collector=self._endpoint_metadata_collector,
-                        is_raw_client=False,
-                    )
-
-                    # Generate all functions (overloads + implementation)
-                    generated_endpoint_functions = endpoint_generator.generate()
-
-                    # Check if any generated function needs DEFAULT_BODY_PARAMETER
-                    for generated_function in generated_endpoint_functions:
-                        if generated_function.is_default_body_parameter_used:
-                            self._is_default_body_parameter_used = True
-                            break
-
-                    # Add all overloads first
-                    for overload_function in generated_endpoint_functions[:-1]:
-                        class_declaration.add_method(overload_function.function)
-
-                    # Then add the implementation
-                    class_declaration.add_method(generated_endpoint_functions[-1].function)
-                else:
-                    # For non-stream parameter endpoints, use the regular approach
-                    wrapper_method = self._create_wrapper_method(
-                        endpoint=endpoint, is_async=is_async, generated_root_client=self._generated_root_client
-                    )
-                    class_declaration.add_method(wrapper_method)
+            self._add_wrapped_client_methods(
+                is_async=is_async,
+                service=service,
+                class_declaration=class_declaration,
+                generated_root_client=self._generated_root_client,
+            )
 
         if self._websocket is not None and self._context.custom_config.should_generate_websocket_clients:
             websocket_connect_method_generator = WebsocketConnectMethodGenerator(

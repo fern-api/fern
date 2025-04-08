@@ -47,11 +47,11 @@ class PackageClient:
             for_="for",
         )
         """
-        response = self._raw_client.test(
+        _response = self._raw_client.test(
             for_=for_,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncPackageClient:
@@ -101,8 +101,8 @@ class AsyncPackageClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test(
+        _response = await self._raw_client.test(
             for_=for_,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

@@ -73,7 +73,7 @@ class NullableClient:
             extra=True,
         )
         """
-        response = self._raw_client.get_users(
+        _response = self._raw_client.get_users(
             usernames=usernames,
             avatar=avatar,
             activated=activated,
@@ -81,7 +81,7 @@ class NullableClient:
             extra=extra,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def create_user(
         self,
@@ -137,14 +137,14 @@ class NullableClient:
             avatar="avatar",
         )
         """
-        response = self._raw_client.create_user(
+        _response = self._raw_client.create_user(
             username=username,
             tags=tags,
             metadata=metadata,
             avatar=avatar,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def delete_user(
         self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -173,11 +173,11 @@ class NullableClient:
             username="xy",
         )
         """
-        response = self._raw_client.delete_user(
+        _response = self._raw_client.delete_user(
             username=username,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncNullableClient:
@@ -248,7 +248,7 @@ class AsyncNullableClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_users(
+        _response = await self._raw_client.get_users(
             usernames=usernames,
             avatar=avatar,
             activated=activated,
@@ -256,7 +256,7 @@ class AsyncNullableClient:
             extra=extra,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def create_user(
         self,
@@ -319,14 +319,14 @@ class AsyncNullableClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_user(
+        _response = await self._raw_client.create_user(
             username=username,
             tags=tags,
             metadata=metadata,
             avatar=avatar,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def delete_user(
         self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -363,8 +363,8 @@ class AsyncNullableClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.delete_user(
+        _response = await self._raw_client.delete_user(
             username=username,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

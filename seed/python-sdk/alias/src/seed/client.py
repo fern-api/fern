@@ -94,11 +94,11 @@ class SeedAlias:
             type_id="typeId",
         )
         """
-        response = self._raw_client.get(
+        _response = self._raw_client.get(
             type_id,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncSeedAlias:
@@ -193,8 +193,8 @@ class AsyncSeedAlias:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get(
+        _response = await self._raw_client.get(
             type_id,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

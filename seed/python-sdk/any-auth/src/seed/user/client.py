@@ -46,10 +46,10 @@ class UserClient:
         )
         client.user.get()
         """
-        response = self._raw_client.get(
+        _response = self._raw_client.get(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncUserClient:
@@ -97,7 +97,7 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get(
+        _response = await self._raw_client.get(
             request_options=request_options,
         )
-        return response.data
+        return _response.data

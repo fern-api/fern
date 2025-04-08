@@ -74,7 +74,7 @@ class AuthClient:
             scope="scope",
         )
         """
-        response = self._raw_client.get_token_with_client_credentials(
+        _response = self._raw_client.get_token_with_client_credentials(
             cid=cid,
             csr=csr,
             scp=scp,
@@ -82,7 +82,7 @@ class AuthClient:
             scope=scope,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def refresh_token(
         self,
@@ -127,14 +127,14 @@ class AuthClient:
             scope="scope",
         )
         """
-        response = self._raw_client.refresh_token(
+        _response = self._raw_client.refresh_token(
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
             scope=scope,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncAuthClient:
@@ -207,7 +207,7 @@ class AsyncAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_token_with_client_credentials(
+        _response = await self._raw_client.get_token_with_client_credentials(
             cid=cid,
             csr=csr,
             scp=scp,
@@ -215,7 +215,7 @@ class AsyncAuthClient:
             scope=scope,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def refresh_token(
         self,
@@ -268,11 +268,11 @@ class AsyncAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.refresh_token(
+        _response = await self._raw_client.refresh_token(
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
             scope=scope,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

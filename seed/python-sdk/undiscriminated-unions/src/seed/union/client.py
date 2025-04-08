@@ -52,11 +52,11 @@ class UnionClient:
             request="string",
         )
         """
-        response = self._raw_client.get(
+        _response = self._raw_client.get(
             request=request,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
         """
@@ -78,10 +78,10 @@ class UnionClient:
         )
         client.union.get_metadata()
         """
-        response = self._raw_client.get_metadata(
+        _response = self._raw_client.get_metadata(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncUnionClient:
@@ -131,11 +131,11 @@ class AsyncUnionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get(
+        _response = await self._raw_client.get(
             request=request,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
         """
@@ -165,7 +165,7 @@ class AsyncUnionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_metadata(
+        _response = await self._raw_client.get_metadata(
             request_options=request_options,
         )
-        return response.data
+        return _response.data

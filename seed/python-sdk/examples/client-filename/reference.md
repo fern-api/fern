@@ -1027,5 +1027,3 @@ client.service.create_big_entity(
 
 </dd>
 </dl>
-</details>
-

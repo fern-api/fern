@@ -3,10 +3,12 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..core.request_options import RequestOptions
+from ..core.http_response import HttpResponseStreamManager
 from ..core.http_response import HttpResponse
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from ..core.http_response import AsyncHttpResponseStreamManager
 from ..core.http_response import AsyncHttpResponse
 
 
@@ -14,7 +16,9 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.Iterator[bytes]]:
+    def get(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponseStreamManager[typing.Iterator[bytes]]:
         """
         Parameters
         ----------
@@ -23,24 +27,28 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[typing.Iterator[bytes]]
+        HttpResponseStreamManager[typing.Iterator[bytes]]
         """
-        with self._client_wrapper.httpx_client.stream(
-            "helloworld.txt",
-            method="GET",
-            request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
-                    return HttpResponse(
-                        response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
-                    )
-                _response.read()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+
+        def _stream_func() -> HttpResponse[typing.Iterator[typing.Iterator[bytes]]]:
+            with self._client_wrapper.httpx_client.stream(
+                "helloworld.txt",
+                method="GET",
+                request_options=request_options,
+            ) as _response:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                        return HttpResponse(
+                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
+                        )
+                    _response.read()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(status_code=_response.status_code, body=_response.text)
+                raise ApiError(status_code=_response.status_code, body=_response_json)
+
+        return HttpResponseStreamManager(stream_func=_stream_func)
 
 
 class AsyncRawServiceClient:
@@ -49,7 +57,7 @@ class AsyncRawServiceClient:
 
     async def get(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+    ) -> AsyncHttpResponseStreamManager[typing.AsyncIterator[bytes]]:
         """
         Parameters
         ----------
@@ -58,22 +66,26 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.AsyncIterator[bytes]]
+        AsyncHttpResponseStreamManager[typing.AsyncIterator[bytes]]
         """
-        async with self._client_wrapper.httpx_client.stream(
-            "helloworld.txt",
-            method="GET",
-            request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
-                    return AsyncHttpResponse(
-                        response=_response,
-                        data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
-                    )
-                await _response.aread()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+
+        async def _stream_func() -> AsyncHttpResponse[typing.AsyncIterator[typing.AsyncIterator[bytes]]]:
+            async with self._client_wrapper.httpx_client.stream(
+                "helloworld.txt",
+                method="GET",
+                request_options=request_options,
+            ) as _response:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                        return AsyncHttpResponse(
+                            response=_response,
+                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        )
+                    await _response.aread()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(status_code=_response.status_code, body=_response.text)
+                raise ApiError(status_code=_response.status_code, body=_response_json)
+
+        return AsyncHttpResponseStreamManager(stream_func=_stream_func)

@@ -23,7 +23,9 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def download_file(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
+    def download_file(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[typing.Iterator[bytes]]:
         """
         Parameters
         ----------
@@ -32,12 +34,12 @@ class ServiceClient:
 
         Returns
         -------
-        typing.Iterator[bytes]
+        typing.Iterator[typing.Iterator[bytes]]
         """
-        response = self._raw_client.download_file(
+        _response = self._raw_client.download_file(
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -57,7 +59,7 @@ class AsyncServiceClient:
 
     async def download_file(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> typing.AsyncIterator[typing.AsyncIterator[bytes]]:
         """
         Parameters
         ----------
@@ -66,9 +68,9 @@ class AsyncServiceClient:
 
         Returns
         -------
-        typing.AsyncIterator[bytes]
+        typing.AsyncIterator[typing.AsyncIterator[bytes]]
         """
-        response = await self._raw_client.download_file(
+        _response = await self._raw_client.download_file(
             request_options=request_options,
         )
-        return response.data
+        return _response.data

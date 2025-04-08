@@ -50,11 +50,11 @@ class S3Client:
             s_3_key="s3Key",
         )
         """
-        response = self._raw_client.get_presigned_url(
+        _response = self._raw_client.get_presigned_url(
             s_3_key=s_3_key,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncS3Client:
@@ -104,8 +104,8 @@ class AsyncS3Client:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_presigned_url(
+        _response = await self._raw_client.get_presigned_url(
             s_3_key=s_3_key,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
