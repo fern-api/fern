@@ -290,6 +290,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
+        const listFnName = "list";
         const body = [
             ...this.request.getBuildRequestStatements(context),
             ...this.invokeFetcherAndReturnResponse(context)
@@ -302,7 +303,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             const listFn = ts.factory.createVariableDeclarationList(
                 [
                     ts.factory.createVariableDeclaration(
-                        ts.factory.createIdentifier("list"),
+                        ts.factory.createIdentifier(listFnName),
                         undefined,
                         undefined,
                         context.coreUtilities.fetcher.HttpResponsePromise.interceptFunction(
@@ -337,16 +338,43 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             if (paginationInfo.type === "offset" || paginationInfo.type === "offset-step") {
                 statements.push(paginationInfo.initializeOffset);
             }
+            const initialResponseVar = ts.factory.createIdentifier("dataWithRawResponse");
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                initialResponseVar,
+                                undefined,
+                                undefined,
+                                ts.factory.createAwaitExpression(
+                                    ts.factory.createCallExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createCallExpression(
+                                                ts.factory.createIdentifier(listFnName),
+                                                undefined,
+                                                [ts.factory.createIdentifier("request")]
+                                            ),
+                                            ts.factory.createIdentifier("withRawResponse")
+                                        ),
+                                        undefined,
+                                        []
+                                    )
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
             statements.push(
                 ts.factory.createReturnStatement(
                     context.coreUtilities.pagination.Pageable._construct({
                         responseType: paginationInfo.responseType,
                         itemType: paginationInfo.itemType,
-                        response: ts.factory.createAwaitExpression(
-                            ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
-                                ts.factory.createIdentifier("request")
-                            ])
-                        ),
+                        response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
+                        rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
                         hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
                         getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
                         loadPage: this.createLambdaWithResponse({

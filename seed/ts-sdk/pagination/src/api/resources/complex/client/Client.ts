@@ -115,8 +115,10 @@ export class Complex {
                 }
             },
         );
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.PaginatedConversationResponse, SeedPagination.Conversation>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => response?.pages?.next?.startingAfter != null,
             getItems: (response) => response?.conversations ?? [],
             loadPage: (response) => {
