@@ -19,7 +19,7 @@ describe("HttpResponsePromise", () => {
     };
 
     describe("fromFunction", () => {
-        it("should create a ResponsePromise from a function", async () => {
+        it("should create an HttpResponsePromise from a function", async () => {
             const mockFn = jest
                 .fn<(arg1: string, arg2: string) => Promise<WithRawResponse<typeof mockData>>>()
                 .mockResolvedValue(mockWithRawResponse);
@@ -39,7 +39,7 @@ describe("HttpResponsePromise", () => {
     });
 
     describe("fromPromise", () => {
-        it("should create a ResponsePromise from a promise", async () => {
+        it("should create an HttpResponsePromise from a promise", async () => {
             const promise = Promise.resolve(mockWithRawResponse);
 
             const responsePromise = HttpResponsePromise.fromPromise(promise);
@@ -56,7 +56,7 @@ describe("HttpResponsePromise", () => {
     });
 
     describe("fromExecutor", () => {
-        it("should create a ResponsePromise from an executor function", async () => {
+        it("should create an HttpResponsePromise from an executor function", async () => {
             const responsePromise = HttpResponsePromise.fromExecutor((resolve) => {
                 resolve(mockWithRawResponse);
             });
@@ -73,7 +73,7 @@ describe("HttpResponsePromise", () => {
     });
 
     describe("fromResult", () => {
-        it("should create a ResponsePromise from a result", async () => {
+        it("should create an HttpResponsePromise from a result", async () => {
             const responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse);
 
             const result = await responsePromise;

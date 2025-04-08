@@ -16,11 +16,11 @@ export class HttpResponsePromise<T> extends Promise<T> {
     }
 
     /**
-     * Creates a `ResponsePromise` from a function that returns a promise.
+     * Creates an `HttpResponsePromise` from a function that returns a promise.
      *
      * @param fn - A function that returns a promise resolving to a `WithRawResponse` object.
      * @param args - Arguments to pass to the function.
-     * @returns A `ResponsePromise` instance.
+     * @returns An `HttpResponsePromise` instance.
      */
     public static fromFunction<F extends (...args: never[]) => Promise<WithRawResponse<T>>, T>(
         fn: F,
@@ -30,10 +30,10 @@ export class HttpResponsePromise<T> extends Promise<T> {
     }
 
     /**
-     * Creates a function that returns a `ResponsePromise` from a function that returns a promise.
+     * Creates a function that returns an `HttpResponsePromise` from a function that returns a promise.
      *
      * @param fn - A function that returns a promise resolving to a `WithRawResponse` object.
-     * @returns A function that returns a `ResponsePromise` instance.
+     * @returns A function that returns an `HttpResponsePromise` instance.
      */
     public static interceptFunction<
         F extends (...args: never[]) => Promise<WithRawResponse<T>>,
@@ -45,20 +45,20 @@ export class HttpResponsePromise<T> extends Promise<T> {
     }
 
     /**
-     * Creates a `ResponsePromise` from an existing promise.
+     * Creates an `HttpResponsePromise` from an existing promise.
      *
      * @param promise - A promise resolving to a `WithRawResponse` object.
-     * @returns A `ResponsePromise` instance.
+     * @returns An `HttpResponsePromise` instance.
      */
     public static fromPromise<T>(promise: Promise<WithRawResponse<T>>): HttpResponsePromise<T> {
         return new HttpResponsePromise<T>(promise);
     }
 
     /**
-     * Creates a `ResponsePromise` from an executor function.
+     * Creates an `HttpResponsePromise` from an executor function.
      *
      * @param executor - A function that takes resolve and reject callbacks to create a promise.
-     * @returns A `ResponsePromise` instance.
+     * @returns An `HttpResponsePromise` instance.
      */
     public static fromExecutor<T>(
         executor: (resolve: (value: WithRawResponse<T>) => void, reject: (reason?: unknown) => void) => void,
@@ -68,10 +68,10 @@ export class HttpResponsePromise<T> extends Promise<T> {
     }
 
     /**
-     * Creates a `ResponsePromise` from a resolved result.
+     * Creates an `HttpResponsePromise` from a resolved result.
      *
      * @param result - A `WithRawResponse` object to resolve immediately.
-     * @returns A `ResponsePromise` instance.
+     * @returns An `HttpResponsePromise` instance.
      */
     public static fromResult<T>(result: WithRawResponse<T>): HttpResponsePromise<T> {
         const promise = Promise.resolve(result);
