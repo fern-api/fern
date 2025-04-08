@@ -1,8 +1,10 @@
 import { NamedFullExample, Source, Webhook, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir";
 
+import { getExtension } from "../../../../getExtension";
 import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { convertParameters } from "../endpoint/convertParameters";
 import { convertRequest } from "../endpoint/convertRequest";
@@ -59,6 +61,7 @@ export function convertWebhookOperation({
 
     return {
         summary: operation.summary,
+        audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
         sdkName: sdkMethodName,
         namespace: context.namespace,
         method,

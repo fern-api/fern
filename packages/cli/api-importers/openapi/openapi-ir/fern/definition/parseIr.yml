@@ -68,6 +68,7 @@ types:
       - commons.WithSource
       - commons.WithNamespace
     properties:
+      audiences: list<string>
       sdkName: optional<finalIr.EndpointSdkName>
       method: finalIr.WebhookHttpMethod
       summary: optional<string>
