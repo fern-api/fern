@@ -1,16 +1,39 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.10.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for using TypedDicts for file upload request parameters. This flag should
+        be used in conjunction with the `use_typeddict_requests` flag like so:
+
+        ```yaml
+        config:
+          use_typeddict_requests: true
+          use_typeddict_requests_for_file_upload: true
+        ```
+
+- version: 4.9.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Implement raw client support for accessing response headers and data in unary endpoints.
+
 - version: 4.8.0
   irVersion: 57
   changelogEntry:
     - type: feat
       summary: |
         Add support for inlining path parameters
+
 - version: 4.7.0
   irVersion: 57
   changelogEntry:
     - type: feat
       summary: |
         Add support for user-agent header
+
 - version: 4.6.0
   irVersion: 57
   changelogEntry:

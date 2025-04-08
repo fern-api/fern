@@ -81,6 +81,14 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Models for request objects.
     use_typeddict_requests: bool = False
 
+    # Whether or not to generate TypedDicts instead of Pydantic
+    # Models for file upload request objects.
+    #
+    # Note that this flag was only introduced due to an oversight in
+    # the `use_typeddict_requests` flag implementation; it should be
+    # removed in the future.
+    use_typeddict_requests_for_file_upload: bool = False
+
     pyproject_toml: Optional[str] = None
 
     # The chunk size to use (if any) when processing a response bytes stream within `iter_bytes` or `aiter_bytes`
