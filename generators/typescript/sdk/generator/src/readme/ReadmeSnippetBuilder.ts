@@ -182,10 +182,10 @@ const request: ${requestTypeName} = {
         return rawResponseEndpoints.map((rawResponseEndpoint) =>
             this.writeCode(
                 code`
-const response = await ${this.getMethodCall(rawResponseEndpoint)}(...).asRaw();
+const { data, rawResponse } = await ${this.getMethodCall(rawResponseEndpoint)}(...).withRawResponse();
 
-console.log(response.headers['X-My-Header']);
-console.log(response.body);
+console.log(data);
+console.log(rawResponse.headers['X-My-Header']);
 `
             )
         );
