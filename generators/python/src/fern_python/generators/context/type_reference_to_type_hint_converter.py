@@ -154,16 +154,6 @@ class TypeReferenceToTypeHintConverter:
                     in_endpoint=in_endpoint,
                     for_typeddict=for_typeddict,
                 )
-            )
-            if not for_typeddict
-            else AST.TypeHint.not_required(
-                self.get_type_hint_for_type_reference(
-                    type_reference=wrapped_type,
-                    must_import_after_current_declaration=must_import_after_current_declaration,
-                    as_if_type_checking_import=as_if_type_checking_import,
-                    in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
-                )
             ),
             optional=lambda wrapped_type: AST.TypeHint.optional(
                 self.get_type_hint_for_type_reference(

@@ -3,8 +3,8 @@
 from __future__ import annotations
 import typing_extensions
 import typing
-import typing_extensions
 import datetime as dt
+import typing_extensions
 
 
 class Status_ActiveParams(typing_extensions.TypedDict):
@@ -12,7 +12,7 @@ class Status_ActiveParams(typing_extensions.TypedDict):
 
 
 class Status_ArchivedParams(typing_extensions.TypedDict):
-    value: typing_extensions.NotRequired[dt.datetime]
+    value: typing.Optional[dt.datetime]
     type: typing.Literal["archived"]
 
 

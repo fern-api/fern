@@ -2,8 +2,8 @@
 
 import typing_extensions
 from ..types.user_id import UserId
-import typing_extensions
 import typing
+import typing_extensions
 from .metadata import MetadataParams
 from ..types.email import Email
 from .weird_number import WeirdNumberParams
@@ -13,9 +13,9 @@ from ...core.serialization import FieldMetadata
 class UserParams(typing_extensions.TypedDict):
     name: str
     id: UserId
-    tags: typing_extensions.NotRequired[typing.Sequence[str]]
-    metadata: typing_extensions.NotRequired[typing_extensions.NotRequired[MetadataParams]]
+    tags: typing.Optional[typing.Sequence[str]]
+    metadata: typing_extensions.NotRequired[typing.Optional[MetadataParams]]
     email: Email
     favorite_number: typing_extensions.Annotated[WeirdNumberParams, FieldMetadata(alias="favorite-number")]
-    numbers: typing_extensions.NotRequired[typing_extensions.NotRequired[typing.Sequence[int]]]
-    strings: typing_extensions.NotRequired[typing_extensions.NotRequired[typing.Dict[str, typing.Optional[typing.Any]]]]
+    numbers: typing_extensions.NotRequired[typing.Optional[typing.Sequence[int]]]
+    strings: typing_extensions.NotRequired[typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]]

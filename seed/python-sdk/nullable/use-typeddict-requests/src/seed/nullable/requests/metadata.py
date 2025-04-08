@@ -4,12 +4,13 @@ import typing_extensions
 import typing_extensions
 import datetime as dt
 from ...core.serialization import FieldMetadata
+import typing
 from .status import StatusParams
 
 
 class MetadataParams(typing_extensions.TypedDict):
     created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
     updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
-    avatar: typing_extensions.NotRequired[str]
-    activated: typing_extensions.NotRequired[typing_extensions.NotRequired[bool]]
+    avatar: typing.Optional[str]
+    activated: typing_extensions.NotRequired[typing.Optional[bool]]
     status: StatusParams
