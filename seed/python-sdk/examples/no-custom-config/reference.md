@@ -836,4 +836,196 @@ client.service.create_big_entity(
         directories=[
             Directory(
                 name="name",
-               
+                files=[
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                ],
+                directories=[
+                    Directory(
+                        name="name",
+                        files=[],
+                        directories=[],
+                    ),
+                    Directory(
+                        name="name",
+                        files=[],
+                        directories=[],
+                    ),
+                ],
+            ),
+            Directory(
+                name="name",
+                files=[
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                ],
+                directories=[
+                    Directory(
+                        name="name",
+                        files=[],
+                        directories=[],
+                    ),
+                    Directory(
+                        name="name",
+                        files=[],
+                        directories=[],
+                    ),
+                ],
+            ),
+        ],
+    ),
+    moment=Moment(
+        id=uuid.UUID(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        date=datetime.date.fromisoformat(
+            "2023-01-15",
+        ),
+        datetime=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cast_member:** `typing.Optional[CastMember]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extended_movie:** `typing.Optional[ExtendedMovie]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity:** `typing.Optional[Entity]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `typing.Optional[Metadata]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**common_metadata:** `typing.Optional[Metadata]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_info:** `typing.Optional[EventInfo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**data:** `typing.Optional[Data]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**migration:** `typing.Optional[Migration]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exception:** `typing.Optional[Exception]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**test:** `typing.Optional[Test]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**node:** `typing.Optional[Node]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**directory:** `typing.Optional[Directory]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moment:** `typing.Optional[Moment]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

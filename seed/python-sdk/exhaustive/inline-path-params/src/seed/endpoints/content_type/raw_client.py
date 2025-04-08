@@ -2,31 +2,22 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .raw_client import RawContentTypeClient
 import datetime as dt
 import uuid
 from ...core.request_options import RequestOptions
+from ...core.http_response import HttpResponse
+from json.decoder import JSONDecodeError
+from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawContentTypeClient
+from ...core.http_response import AsyncHttpResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class ContentTypeClient:
+class RawContentTypeClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawContentTypeClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawContentTypeClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawContentTypeClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def post_json_patch_content_type(
         self,
@@ -45,7 +36,7 @@ class ContentTypeClient:
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
         bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> HttpResponse[None]:
         """
         Parameters
         ----------
@@ -81,58 +72,36 @@ class ContentTypeClient:
 
         Returns
         -------
-        None
-
-        Examples
-        --------
-        import datetime
-        import uuid
-
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.content_type.post_json_patch_content_type(
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base_64="SGVsbG8gd29ybGQh",
-            list_=["list", "list"],
-            set_={"set"},
-            map_={1: "map"},
-            bigint=1000000,
-        )
+        HttpResponse[None]
         """
-        response = self._raw_client.post_json_patch_content_type(
-            string=string,
-            integer=integer,
-            long_=long_,
-            double=double,
-            bool_=bool_,
-            datetime=datetime,
-            date=date,
-            uuid_=uuid_,
-            base_64=base_64,
-            list_=list_,
-            set_=set_,
-            map_=map_,
-            bigint=bigint,
+        _response = self._client_wrapper.httpx_client.request(
+            "foo/bar",
+            method="POST",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_json_patch_content_with_charset_type(
         self,
@@ -151,7 +120,7 @@ class ContentTypeClient:
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
         bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> HttpResponse[None]:
         """
         Parameters
         ----------
@@ -187,74 +156,41 @@ class ContentTypeClient:
 
         Returns
         -------
-        None
-
-        Examples
-        --------
-        import datetime
-        import uuid
-
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.content_type.post_json_patch_content_with_charset_type(
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base_64="SGVsbG8gd29ybGQh",
-            list_=["list", "list"],
-            set_={"set"},
-            map_={1: "map"},
-            bigint=1000000,
-        )
+        HttpResponse[None]
         """
-        response = self._raw_client.post_json_patch_content_with_charset_type(
-            string=string,
-            integer=integer,
-            long_=long_,
-            double=double,
-            bool_=bool_,
-            datetime=datetime,
-            date=date,
-            uuid_=uuid_,
-            base_64=base_64,
-            list_=list_,
-            set_=set_,
-            map_=map_,
-            bigint=bigint,
+        _response = self._client_wrapper.httpx_client.request(
+            "foo/baz",
+            method="POST",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncContentTypeClient:
+class AsyncRawContentTypeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawContentTypeClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawContentTypeClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawContentTypeClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def post_json_patch_content_type(
         self,
@@ -273,7 +209,7 @@ class AsyncContentTypeClient:
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
         bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
@@ -309,65 +245,36 @@ class AsyncContentTypeClient:
 
         Returns
         -------
-        None
-
-        Examples
-        --------
-        import asyncio
-        import datetime
-        import uuid
-
-        from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.endpoints.content_type.post_json_patch_content_type(
-                string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base_64="SGVsbG8gd29ybGQh",
-                list_=["list", "list"],
-                set_={"set"},
-                map_={1: "map"},
-                bigint=1000000,
-            )
-
-
-        asyncio.run(main())
+        AsyncHttpResponse[None]
         """
-        response = await self._raw_client.post_json_patch_content_type(
-            string=string,
-            integer=integer,
-            long_=long_,
-            double=double,
-            bool_=bool_,
-            datetime=datetime,
-            date=date,
-            uuid_=uuid_,
-            base_64=base_64,
-            list_=list_,
-            set_=set_,
-            map_=map_,
-            bigint=bigint,
+        _response = await self._client_wrapper.httpx_client.request(
+            "foo/bar",
+            method="POST",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_json_patch_content_with_charset_type(
         self,
@@ -386,7 +293,7 @@ class AsyncContentTypeClient:
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
         bigint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
@@ -422,62 +329,33 @@ class AsyncContentTypeClient:
 
         Returns
         -------
-        None
-
-        Examples
-        --------
-        import asyncio
-        import datetime
-        import uuid
-
-        from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.endpoints.content_type.post_json_patch_content_with_charset_type(
-                string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base_64="SGVsbG8gd29ybGQh",
-                list_=["list", "list"],
-                set_={"set"},
-                map_={1: "map"},
-                bigint=1000000,
-            )
-
-
-        asyncio.run(main())
+        AsyncHttpResponse[None]
         """
-        response = await self._raw_client.post_json_patch_content_with_charset_type(
-            string=string,
-            integer=integer,
-            long_=long_,
-            double=double,
-            bool_=bool_,
-            datetime=datetime,
-            date=date,
-            uuid_=uuid_,
-            base_64=base_64,
-            list_=list_,
-            set_=set_,
-            map_=map_,
-            bigint=bigint,
+        _response = await self._client_wrapper.httpx_client.request(
+            "foo/baz",
+            method="POST",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base_64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
