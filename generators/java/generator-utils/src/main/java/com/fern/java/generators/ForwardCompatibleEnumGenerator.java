@@ -234,7 +234,8 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
 
     private TypeSpec getNestedValueEnum() {
         TypeSpec.Builder nestedValueEnumBuilder =
-                TypeSpec.enumBuilder(VALUE_TYPE_NAME).addModifiers(Modifier.PUBLIC);
+                TypeSpec.enumBuilder(VALUE_TYPE_NAME).addModifiers(Modifier.STATIC);
+
         enumTypeDeclaration
                 .getValues()
                 .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
