@@ -1411,7 +1411,7 @@ public final class GetUndiscriminatedUnionRequest {
                 }
             }
 
-            enum Value {
+            public enum Value {
                 SUNNY,
 
                 CLOUDY,

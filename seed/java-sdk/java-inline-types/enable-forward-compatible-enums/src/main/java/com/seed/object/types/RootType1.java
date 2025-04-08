@@ -855,7 +855,7 @@ public final class RootType1 {
                     }
                 }
 
-                enum Value {
+                public enum Value {
                     SUNNY,
 
                     CLOUDY,
