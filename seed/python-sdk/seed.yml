@@ -246,6 +246,11 @@ fixtures:
     - customConfig:
         should_generate_websocket_clients: true
       outputFolder: websocket-with_generated_clients
+  nullable:
+    - outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use-typeddict-requests
 scripts:
   # Test Pydantic V2
   - docker: fernapi/python-seed

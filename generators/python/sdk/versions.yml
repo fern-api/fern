@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.11.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Always represent nullable as Optional rather than NotRequired, only use
+        NotRequired for optional in typeddicts.
 - version: 4.10.0
   irVersion: 57
   changelogEntry:
