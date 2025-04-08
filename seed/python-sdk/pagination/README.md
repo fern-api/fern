@@ -38,10 +38,10 @@ response = client.complex_.search(
         value="value",
     ),
 )
-for item in response:
+for item in response.data:
     yield item
 # alternatively, you can paginate page-by-page
-for page in response.iter_pages():
+for page in response.data.iter_pages():
     yield page
 ```
 
@@ -73,10 +73,10 @@ async def main() -> None:
             value="value",
         ),
     )
-    async for item in response:
+    async for item in response.data:
         yield item
     # alternatively, you can paginate page-by-page
-    async for page in response.iter_pages():
+    async for page in response.data.iter_pages():
         yield page
 
 
@@ -121,10 +121,10 @@ response = client.complex_.search(
         value="value",
     ),
 )
-for item in response:
+for item in response.data:
     yield item
 # alternatively, you can paginate page-by-page
-for page in response.iter_pages():
+for page in response.data.iter_pages():
     yield page
 ```
 
@@ -174,6 +174,7 @@ client.complex_.search(..., request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedPagination

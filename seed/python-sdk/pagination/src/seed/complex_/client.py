@@ -2,13 +2,16 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawComplexClient
 from .types.search_request_query import SearchRequestQuery
 from .types.starting_after_paging import StartingAfterPaging
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
-from .types.conversation import Conversation
+from .types.paginated_conversation_response import PaginatedConversationResponse
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import RawComplexClient, AsyncRawComplexClient
+from .raw_client import AsyncRawComplexClient
+from ..core.pagination import AsyncPager
+
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
@@ -17,13 +20,24 @@ class ComplexClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawComplexClient(client_wrapper=client_wrapper)
 
+    @property
+    def with_raw_response(self) -> RawComplexClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawComplexClient
+        """
+        return self._raw_client
+
     def search(
         self,
         *,
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Conversation]:
+    ) -> SyncPager[PaginatedConversationResponse]:
         """
         Parameters
         ----------
@@ -36,7 +50,7 @@ class ComplexClient:
 
         Returns
         -------
-        SyncPager[Conversation]
+        SyncPager[PaginatedConversationResponse]
 
         Examples
         --------
@@ -64,16 +78,28 @@ class ComplexClient:
         for page in response.iter_pages():
             yield page
         """
-        return self._raw_client.search(
+        response = self._raw_client.search(
             query=query,
             pagination=pagination,
             request_options=request_options,
-        ).data
+        )
+        return response.data
 
 
 class AsyncComplexClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawComplexClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawComplexClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawComplexClient
+        """
+        return self._raw_client
 
     async def search(
         self,
@@ -81,7 +107,7 @@ class AsyncComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[Conversation]:
+    ) -> AsyncPager[PaginatedConversationResponse]:
         """
         Parameters
         ----------
@@ -94,7 +120,7 @@ class AsyncComplexClient:
 
         Returns
         -------
-        AsyncPager[Conversation]
+        AsyncPager[PaginatedConversationResponse]
 
         Examples
         --------
@@ -130,9 +156,9 @@ class AsyncComplexClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.search(
+        response = await self._raw_client.search(
             query=query,
             pagination=pagination,
             request_options=request_options,
         )
-        return _response.data
+        return response.data
