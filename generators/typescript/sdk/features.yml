@@ -47,7 +47,7 @@ features:
     description: |
       The SDK allows users to abort requests at any point by passing in an abort signal.
 
-  - id: RAW_RESPONSES
+  - id: ACCESS_RAW_RESPONSE_DATA
     advanced: true
     description: |
       The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.

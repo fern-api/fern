@@ -124,7 +124,7 @@ const response = await client.auth.getToken(..., {
 controller.abort(); // aborts the request
 ```
 
-### Raw Responses
+### Access Raw Response Data
 
 The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
