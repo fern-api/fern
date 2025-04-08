@@ -86,9 +86,9 @@ export class Service {
 
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                {for (const _item of request.optionalMetadata) {
+                for (const _item of request.optionalMetadata) {
                     _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
-                }}
+                }
         }
 
         if (request.optionalObjectType != null) {
@@ -673,9 +673,9 @@ export class Service {
 
         if (request.request != null) {
             if (Array.isArray(request.request) || request.request instanceof Set)
-                {for (const _item of request.request) {
+                for (const _item of request.request) {
                     _request.append("request", typeof _item === "string" ? _item : toJson(_item));
-                }}
+                }
         }
 
         const _maybeEncodedRequest = await _request.getRequest();

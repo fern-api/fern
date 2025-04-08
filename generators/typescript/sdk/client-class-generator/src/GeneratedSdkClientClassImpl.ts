@@ -702,7 +702,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const internalMethodName = `__${publicMethodName}`;
             const publicStatements = [
                 ts.factory.createReturnStatement(
-                    context.coreUtilities.fetcher.RawResponse.HttpResponsePromise.fromFunction([
+                    context.coreUtilities.fetcher.HttpResponsePromise.fromFunction([
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createThis(),
                             ts.factory.createIdentifier(internalMethodName)
@@ -718,7 +718,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 name: publicMethodName,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
-                    context.coreUtilities.fetcher.RawResponse.HttpResponsePromise._getReferenceToType(
+                    context.coreUtilities.fetcher.HttpResponsePromise._getReferenceToType(
                         signature.returnTypeWithoutPromise
                     )
                 ),
@@ -746,7 +746,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 scope: Scope.Private,
                 isAsync: true,
                 statements: internalResponseStatements.map(getTextOfTsNode),
-                overloads: overloads.map((overload, index) => ({
+                overloads: overloads.map((overload) => ({
                     parameters: overload.parameters,
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])

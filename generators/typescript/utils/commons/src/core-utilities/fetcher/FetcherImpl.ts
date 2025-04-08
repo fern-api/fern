@@ -34,7 +34,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
                 "../stream-wrappers/chooseStreamWrapper":
                     "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
-                "../RawResponse": "../../../src/core/fetcher/RawResponse"
+                "../RawResponse": "../../../src/core/fetcher/RawResponse",
+                "../HttpResponsePromise": "../../../src/core/fetcher/HttpResponsePromise"
             }
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
@@ -354,32 +355,32 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         ts.factory.createTypeReferenceNode(RawResponse.getEntityName(), typeArg ? [typeArg] : undefined)
                 )();
             }
+        }
+    };
+    public readonly HttpResponsePromise = {
+        _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createTypeReferenceNode(
+                        HttpResponsePromise.getEntityName(),
+                        typeArg ? [typeArg] : undefined
+                    )
+            )();
         },
-        HttpResponsePromise: {
-            _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
-                return this.withExportedName(
-                    "HttpResponsePromise",
-                    (HttpResponsePromise) => () =>
-                        ts.factory.createTypeReferenceNode(
-                            HttpResponsePromise.getEntityName(),
-                            typeArg ? [typeArg] : undefined
-                        )
-                )();
-            },
-            fromFunction: (params: ts.Expression[]): ts.Expression => {
-                return this.withExportedName(
-                    "HttpResponsePromise",
-                    (HttpResponsePromise) => () =>
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                HttpResponsePromise.getExpression(),
-                                ts.factory.createIdentifier("fromFunction")
-                            ),
-                            undefined,
-                            params
-                        )
-                )();
-            }
+        fromFunction: (params: ts.Expression[]): ts.Expression => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            HttpResponsePromise.getExpression(),
+                            ts.factory.createIdentifier("fromFunction")
+                        ),
+                        undefined,
+                        params
+                    )
+            )();
         }
     };
 }

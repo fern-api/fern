@@ -99,10 +99,11 @@ export interface Fetcher {
         readonly WithRawResponse: {
             _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
         };
-        readonly HttpResponsePromise: {
-            _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
-            fromFunction: (params: ts.Expression[]) => ts.Expression;
-        };
+    };
+
+    readonly HttpResponsePromise: {
+        _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
+        fromFunction: (params: ts.Expression[]) => ts.Expression;
     };
 }
 
