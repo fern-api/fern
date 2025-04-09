@@ -32,7 +32,7 @@ export declare namespace ReadmeImporter {
     }
 }
 
-export class ReadmeImporter extends DocsImporter<{}> {
+export class ReadmeImporter extends DocsImporter<object> {
     private readonly url: URL;
     private readonly logger: Logger;
     private readonly absolutePathToFernDirectory: AbsoluteFilePath;
