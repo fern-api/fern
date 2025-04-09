@@ -7,8 +7,9 @@ from .types.search_request_query import SearchRequestQuery
 from .types.starting_after_paging import StartingAfterPaging
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
-from .types.paginated_conversation_response import PaginatedConversationResponse
+from .types.conversation import Conversation
 from ..core.serialization import convert_and_respect_annotation_metadata
+from .types.paginated_conversation_response import PaginatedConversationResponse
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -41,7 +42,7 @@ class ComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PaginatedConversationResponse]:
+    ) -> SyncPager[Conversation]:
         """
         Parameters
         ----------
@@ -54,7 +55,7 @@ class ComplexClient:
 
         Returns
         -------
-        SyncPager[PaginatedConversationResponse]
+        SyncPager[Conversation]
 
         Examples
         --------
@@ -144,7 +145,7 @@ class AsyncComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PaginatedConversationResponse]:
+    ) -> AsyncPager[Conversation]:
         """
         Parameters
         ----------
@@ -157,7 +158,7 @@ class AsyncComplexClient:
 
         Returns
         -------
-        AsyncPager[PaginatedConversationResponse]
+        AsyncPager[Conversation]
 
         Examples
         --------
