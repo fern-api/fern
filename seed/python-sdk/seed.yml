@@ -281,8 +281,6 @@ allowedFailures:
   - exhaustive:additional_init_exports
   - exhaustive:pydantic-v1-wrapped
   - exhaustive:pydantic-v1-with-utils
-  - file-upload:no-custom-config
-  - file-upload:use_typeddict_requests
   - oauth-client-credentials-custom
   - pagination
   - pagination-custom

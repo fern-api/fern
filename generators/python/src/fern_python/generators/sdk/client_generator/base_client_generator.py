@@ -153,7 +153,7 @@ class BaseClientGenerator(ABC):
         )
 
     def _treat_as_paginated(self, endpoint: ir_types.HttpEndpoint) -> bool:
-        return endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients 
+        return endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients
 
     def _get_raw_client_member_name(self) -> str:
         return "_raw_client"

@@ -27,7 +27,7 @@ class UserClient:
         """
         return self._raw_client
 
-    def list_(
+    def list(
         self, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[User]:
         """
@@ -79,7 +79,7 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def list_(
+    async def list(
         self, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[User]:
         """

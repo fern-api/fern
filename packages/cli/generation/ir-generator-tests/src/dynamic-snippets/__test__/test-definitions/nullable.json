@@ -965,6 +965,50 @@
                         "type": "named",
                         "value": "type_nullable:Status"
                     }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "values",
+                            "camelCase": {
+                                "unsafeName": "values",
+                                "safeName": "values"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "values",
+                                "safeName": "values"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "VALUES",
+                                "safeName": "VALUES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Values",
+                                "safeName": "Values"
+                            }
+                        },
+                        "wireValue": "values"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "map",
+                            "key": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "value": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             ],
             "additionalProperties": false

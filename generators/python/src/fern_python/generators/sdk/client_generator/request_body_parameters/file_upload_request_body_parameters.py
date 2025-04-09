@@ -173,21 +173,38 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                             )
                             writer.write_line(f', "{property_as_union.content_type}"),')
                     elif property_as_union.type == "file":
-                        file_property_as_union = property_as_union.value.get_as_union()
-                        if file_property_as_union.content_type is not None:
-                            writer.write(f'"{file_property_as_union.key.wire_value}": ')
-                            writer.write_node(
-                                self._context.core_utilities.with_content_type(
-                                    AST.Expression(
-                                        f'file={file_property_as_union.key.wire_value}, default_content_type="{file_property_as_union.content_type}"'
+
+                        def write_file_property(writer: AST.NodeWriter, file_property: ir_types.FileProperty) -> None:
+                            file_property_as_union = file_property.get_as_union()
+                            if file_property_as_union.content_type is not None:
+                                writer.write(f'"{file_property_as_union.key.wire_value}": ')
+                                writer.write_node(
+                                    self._context.core_utilities.with_content_type(
+                                        AST.Expression(
+                                            f'file={file_property_as_union.key.wire_value}, default_content_type="{file_property_as_union.content_type}"'
+                                        )
                                     )
                                 )
-                            )
-                            writer.write_line(",")
+                            else:
+                                writer.write(
+                                    f'"{file_property_as_union.key.wire_value}": {self._get_file_property_name(file_property)}'
+                                )
+
+                        if type_hint.is_optional:
+                            writer.write_line("**(")
+                            with writer.indent():
+                                writer.write("{")
+                                write_file_property(writer, property_as_union.value)
+                                writer.write("} ")
+                                writer.write_line(
+                                    f"if {property_as_union.value.get_as_union().key.wire_value} is not None "
+                                )
+                                writer.write_line("else {}")
+                            writer.write_line("),")
                         else:
-                            writer.write_line(
-                                f'"{file_property_as_union.key.wire_value}": {self._get_file_property_name(property_as_union.value)},'
-                            )
+                            write_file_property(writer, property_as_union.value)
+                            writer.write_line(",")
+
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))
