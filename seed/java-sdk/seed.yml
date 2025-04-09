@@ -146,6 +146,11 @@ fixtures:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - outputFolder: no-custom-config
+  version:
+    - customConfig:
+        enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - outputFolder: no-custom-config
 scripts:
   - docker: fernapi/java-seed
     commands:
