@@ -41,10 +41,10 @@
     "remark-gfm": "^4.0.0",
     "remark-mdx": "^3.0.1",
     "remark-stringify": "^11.0.0",
-    "traverse": "^0.6.10",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
-    "zod": "^3.20.6"
+    "zod": "^3.20.6",
+    "@fern-api/logger": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
@@ -55,7 +55,6 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
-    "@types/traverse": "^0.6.37",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
   }
