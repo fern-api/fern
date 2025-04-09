@@ -29,7 +29,7 @@ client.nullable.create_user(
 		"avatar": "avatar",
 		"activated": true,
 		"values": {
-			"values": {"key":"value"}
+			"values": "values"
 		}
 	},
 	avatar="avatar"

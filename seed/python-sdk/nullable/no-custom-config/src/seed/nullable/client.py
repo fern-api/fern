@@ -133,7 +133,7 @@ class NullableClient:
                 avatar="avatar",
                 activated=True,
                 status=Status(),
-                values={"values": {"key": "value"}},
+                values={"values": "values"},
             ),
             avatar="avatar",
         )
@@ -313,7 +313,7 @@ class AsyncNullableClient:
                     avatar="avatar",
                     activated=True,
                     status=Status(),
-                    values={"values": {"key": "value"}},
+                    values={"values": "values"},
                 ),
                 avatar="avatar",
             )

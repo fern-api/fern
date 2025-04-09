@@ -125,7 +125,7 @@ client.nullable.create_user(
         "avatar": "avatar",
         "activated": True,
         "status": {"type": "active"},
-        "values": {"values": {"key": "value"}},
+        "values": {"values": "values"},
     },
     avatar="avatar",
 )
