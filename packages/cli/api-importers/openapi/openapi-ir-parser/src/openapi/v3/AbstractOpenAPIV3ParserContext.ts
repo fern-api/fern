@@ -114,7 +114,20 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } as any as OpenAPIV3.SchemaObject;
             }
-            resolvedSchema = resolvedSchema[key];
+            
+            // Handle both objects and arrays
+            if (Array.isArray(resolvedSchema)) {
+                const index = parseInt(key, 10);
+                if (isNaN(index) || index < 0 || index >= resolvedSchema.length) {
+                    return {
+                        "x-fern-type": "unknown"
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    } as any as OpenAPIV3.SchemaObject;
+                }
+                resolvedSchema = resolvedSchema[index];
+            } else {
+                resolvedSchema = resolvedSchema[key];
+            }
         }
         if (resolvedSchema == null) {
             this.logger.warn(`Encountered undefined reference: ${schema.$ref}`);
