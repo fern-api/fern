@@ -44,7 +44,7 @@ export class ReadmeImporter extends DocsImporter<object> {
         this.absolutePathToFernDirectory = args.absolutePathToFernDirectory;
     }
 
-    public async import({ args, builder }: { args: {}; builder: FernDocsBuilder }): Promise<void> {
+    public async import({ args, builder }: { args: object; builder: FernDocsBuilder }): Promise<void> {
         builder.setLayout({ layout: DEFAULT_LAYOUT });
 
         const hast = await this.getHastForUrl(this.url);
