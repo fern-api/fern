@@ -109,8 +109,8 @@ class RawServiceClient:
             files={
                 "file": file,
                 "file_list": file_list,
-                "maybe_file": maybe_file,
-                "maybe_file_list": maybe_file_list,
+                **({"maybe_file": maybe_file} if maybe_file is not None else {}),
+                **({"maybe_file_list": maybe_file_list} if maybe_file_list is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -397,8 +397,8 @@ class RawServiceClient:
             files={
                 "file": file,
                 "file_list": file_list,
-                "maybe_file": maybe_file,
-                "maybe_file_list": maybe_file_list,
+                **({"maybe_file": maybe_file} if maybe_file is not None else {}),
+                **({"maybe_file_list": maybe_file_list} if maybe_file_list is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -438,7 +438,11 @@ class RawServiceClient:
             method="POST",
             data={},
             files={
-                "image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg"),
+                **(
+                    {"image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg")}
+                    if image_file is not None
+                    else {}
+                ),
                 **(
                     {"request": (None, json.dumps(jsonable_encoder(request)), "application/json; charset=utf-8")}
                     if request is not OMIT
@@ -550,8 +554,8 @@ class AsyncRawServiceClient:
             files={
                 "file": file,
                 "file_list": file_list,
-                "maybe_file": maybe_file,
-                "maybe_file_list": maybe_file_list,
+                **({"maybe_file": maybe_file} if maybe_file is not None else {}),
+                **({"maybe_file_list": maybe_file_list} if maybe_file_list is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -838,8 +842,8 @@ class AsyncRawServiceClient:
             files={
                 "file": file,
                 "file_list": file_list,
-                "maybe_file": maybe_file,
-                "maybe_file_list": maybe_file_list,
+                **({"maybe_file": maybe_file} if maybe_file is not None else {}),
+                **({"maybe_file_list": maybe_file_list} if maybe_file_list is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -879,7 +883,11 @@ class AsyncRawServiceClient:
             method="POST",
             data={},
             files={
-                "image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg"),
+                **(
+                    {"image_file": core.with_content_type(file=image_file, default_content_type="image/jpeg")}
+                    if image_file is not None
+                    else {}
+                ),
                 **(
                     {"request": (None, json.dumps(jsonable_encoder(request)), "application/json; charset=utf-8")}
                     if request is not OMIT

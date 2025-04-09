@@ -40,6 +40,7 @@ client.nullable.create_user(
         "avatar": "avatar",
         "activated": True,
         "status": {"type": "active"},
+        "values": {"values": "values"},
     },
     avatar="avatar",
 )
@@ -74,6 +75,7 @@ async def main() -> None:
             "avatar": "avatar",
             "activated": True,
             "status": {"type": "active"},
+            "values": {"values": "values"},
         },
         avatar="avatar",
     )

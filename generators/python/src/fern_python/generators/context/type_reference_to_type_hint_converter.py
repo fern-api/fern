@@ -85,7 +85,7 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    for_typeddict=False,
                 )
             )
             if in_endpoint
@@ -95,7 +95,7 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    for_typeddict=False,
                 )
             ),
             map_=lambda map_type: AST.TypeHint.dict(
@@ -104,14 +104,14 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    for_typeddict=False,
                 ),
                 value_type=self.get_type_hint_for_type_reference(
                     type_reference=map_type.value_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    for_typeddict=False,
                 ),
             ),
             # Fern sets become Pydanic lists, since Pydantic models aren't hashable
@@ -122,7 +122,7 @@ class TypeReferenceToTypeHintConverter:
                         must_import_after_current_declaration=must_import_after_current_declaration,
                         as_if_type_checking_import=as_if_type_checking_import,
                         in_endpoint=in_endpoint,
-                        for_typeddict=for_typeddict,
+                        for_typeddict=False,
                     )
                 )
                 if in_endpoint
@@ -132,7 +132,7 @@ class TypeReferenceToTypeHintConverter:
                         must_import_after_current_declaration=must_import_after_current_declaration,
                         as_if_type_checking_import=as_if_type_checking_import,
                         in_endpoint=in_endpoint,
-                        for_typeddict=for_typeddict,
+                        for_typeddict=False,
                     )
                 ),
                 named=lambda type_reference: self._get_set_type_hint_for_named(
@@ -171,7 +171,10 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    # As soon as we handle the top-level typing_extensions.NotRequired, we don't
+                    # want to propagate the TypedDict handling any further. The remaining nested
+                    # type references should be handled as normal.
+                    for_typeddict=False,
                 )
             ),
             literal=self.visit_literal,

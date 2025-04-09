@@ -126,6 +126,7 @@ client.nullable.create_user(
         avatar="avatar",
         activated=True,
         status=Status(),
+        values={"values": "values"},
     ),
     avatar="avatar",
 )

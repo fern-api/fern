@@ -14,3 +14,4 @@ class MetadataParams(typing_extensions.TypedDict):
     avatar: typing.Optional[str]
     activated: typing_extensions.NotRequired[typing.Optional[bool]]
     status: StatusParams
+    values: typing_extensions.NotRequired[typing.Dict[str, typing.Optional[str]]]

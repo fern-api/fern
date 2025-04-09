@@ -132,6 +132,7 @@ class NullableClient:
                 "avatar": "avatar",
                 "activated": True,
                 "status": {"type": "active"},
+                "values": {"values": "values"},
             },
             avatar="avatar",
         )
@@ -310,6 +311,7 @@ class AsyncNullableClient:
                     "avatar": "avatar",
                     "activated": True,
                     "status": {"type": "active"},
+                    "values": {"values": "values"},
                 },
                 avatar="avatar",
             )
