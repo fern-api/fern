@@ -74,14 +74,18 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaConverter.Output | undefined> {
-        if (this.schema.type == null || !Array.isArray(this.schema.type)) {
+        if (this.schema.type == null || !Array.isArray(this.schema.type) || this.schema.type.length === 0) {
+            errorCollector.collect({
+                message: "Received unexpected schema type array type with no types.",
+                path: this.breadcrumbs
+            });
             return undefined;
         }
         const wrapAsNullable = this.schema.type.includes("null");
         this.schema.type = this.schema.type.filter((type) => type !== "null");
         if (this.schema.type.length === 0) {
             errorCollector.collect({
-                message: "Received unexpected array type with single 'null' type.",
+                message: "Received unexpected schema type array type with single 'null' type.",
                 path: this.breadcrumbs
             });
             return undefined;
