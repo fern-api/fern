@@ -15,6 +15,8 @@ import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
+import com.fern.java.JavaV2Adapter;
+import com.fern.java.JavaV2Arguments;
 import com.fern.java.client.generators.AbstractRootClientGenerator;
 import com.fern.java.client.generators.AbstractSubpackageClientGenerator;
 import com.fern.java.client.generators.ApiErrorGenerator;
@@ -101,6 +103,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                         .artifact("jackson-datatype-jsr310")
                         .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
                         .build()));
+    }
+
+    @Override
+    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
+        JavaV2Adapter.run(defaultGeneratorExecClient, new JavaV2Arguments(args[0]));
     }
 
     @Override

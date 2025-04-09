@@ -146,7 +146,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     throw new RuntimeException("Encountered unknown output mode: " + unknownType);
                 }
             });
-            JavaV2Adapter.run(generatorExecClient, new JavaV2Arguments(args[0]));
+            runV2Generator(generatorExecClient, args);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
@@ -156,6 +156,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             throw new RuntimeException(e);
         }
     }
+
+    public abstract void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args);
 
     public final void runInDownloadFilesMode(
             DefaultGeneratorExecClient generatorExecClient,

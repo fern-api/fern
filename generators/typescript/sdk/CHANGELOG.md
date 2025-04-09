@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.50.1] - 2025-04-08
+
+- Feat: Add `"packageManager": "yarn@1.22.22"` to _package.json_.
+
 ## [0.50.0] - 2025-04-07
 
 - Feat: All endpoint functions now return an `HttpResponsePromise<T>` instead of a `Promise<T>`.
@@ -22,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       ...
   } = rawResponse;
   ```
+
 
 ## [0.49.7] - 2025-03-27
 
