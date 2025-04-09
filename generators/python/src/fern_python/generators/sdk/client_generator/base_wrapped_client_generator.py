@@ -79,6 +79,17 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
                 if generated_function.is_default_body_parameter_used:
                     self._is_default_body_parameter_used = True
                     break
+                # TODO: Remove this. Currently, we need to preserve snippets for paginated endpoints (since we're not doing this in the raw client generator)
+                if self._treat_as_paginated(endpoint):
+                    for snippet in generated_function.snippets or []:
+                        if is_async:
+                            self._snippet_registry.register_async_client_endpoint_snippet(
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            )
+                        else:
+                            self._snippet_registry.register_sync_client_endpoint_snippet(
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            )
 
             # For regular streaming endpoints (not stream parameter), return the function directly
             return generated_endpoint_functions[0].function
@@ -97,7 +108,7 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
             generated_root_client=generated_root_client,
             snippet_writer=self._snippet_writer,
             endpoint_metadata_collector=self._endpoint_metadata_collector,
-            is_raw_client=False,  # Use False here to get clean unwrapped return types in docs
+            is_raw_client=False,
         )
 
         # Check if any generated function needs DEFAULT_BODY_PARAMETER
