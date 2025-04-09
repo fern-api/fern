@@ -1,9 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import * as FernIr from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext, ErrorCollector, Extensions } from "../..";
+import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
 import { EnumSchemaConverter } from "./EnumSchemaConverter";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
@@ -61,6 +61,87 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
         }
 
+        if (Array.isArray(this.schema.type)) {
+            return this.convertPrimitiveTypeArraySchema({ context, errorCollector });
+        }
+        return this.convertSchema({ context, errorCollector });
+    }
+
+    private async convertPrimitiveTypeArraySchema({
+        context,
+        errorCollector
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<SchemaConverter.Output | undefined> {
+        if (this.schema.type == null || !Array.isArray(this.schema.type)) {
+            return undefined;
+        }
+        const wrapAsNullable = this.schema.type.includes("null");
+        this.schema.type = this.schema.type.filter((type) => type !== "null");
+        if (this.schema.type.length === 0) {
+            errorCollector.collect({
+                message: "Received unexpected array type with single 'null' type.",
+                path: this.breadcrumbs
+            });
+            return undefined;
+        }
+
+        if (this.schema.type.length === 1) {
+            this.schema.type = this.schema.type[0];
+            const primitiveConverter = new PrimitiveSchemaConverter({ schema: this.schema });
+            const primitiveType = primitiveConverter.convert({ context, errorCollector });
+            if (primitiveType != null) {
+                const maybeWrappedType = wrapAsNullable ? this.wrapAsNullable(primitiveType) : primitiveType;
+                return {
+                    typeDeclaration: await this.createTypeDeclaration({
+                        shape: FernIr.Type.alias({
+                            aliasOf: maybeWrappedType,
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            resolvedType: maybeWrappedType as any
+                        }),
+                        context,
+                        errorCollector
+                    }),
+                    inlinedTypes: {}
+                };
+            }
+        } else {
+            this.schema.oneOf = this.schema.type.map((type) => ({
+                // Array schema types must be NonArraySchemaObjectType values.
+                type: type as OpenAPIV3_1.NonArraySchemaObjectType
+            }));
+            const oneOfConverter = new OneOfSchemaConverter({
+                breadcrumbs: this.breadcrumbs,
+                schema: this.schema,
+                inlinedTypes: {}
+            });
+            const oneOfType = await oneOfConverter.convert({ context, errorCollector });
+            if (oneOfType != null && oneOfType.union.type === "undiscriminatedUnion") {
+                oneOfType.union.members = oneOfType.union.members.map((member) => ({
+                    ...member,
+                    type: wrapAsNullable ? this.wrapAsNullable(member.type) : member.type
+                }));
+                return {
+                    typeDeclaration: await this.createTypeDeclaration({
+                        shape: oneOfType.union,
+                        context,
+                        errorCollector
+                    }),
+                    inlinedTypes: oneOfType.inlinedTypes ?? {}
+                };
+            }
+        }
+        return undefined;
+    }
+
+    private async convertSchema({
+        context,
+        errorCollector
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<SchemaConverter.Output | undefined> {
         if (this.schema.enum?.length) {
             const fernEnumConverter = new Extensions.FernEnumExtension({
                 breadcrumbs: this.breadcrumbs,
@@ -215,7 +296,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<FernIr.TypeDeclaration | undefined> {
-        const typeReference = this.createTypeReferenceFromFernType(fernType);
+        const typeReference = createTypeReferenceFromFernType(fernType);
         if (typeReference == null) {
             return undefined;
         }
@@ -243,153 +324,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         };
     }
 
-    private createTypeReferenceFromFernType(fernType: string): FernIr.TypeReference | undefined {
-        return recursivelyVisitRawTypeReference<FernIr.TypeReference | undefined>({
-            type: fernType,
-            _default: undefined,
-            validation: undefined,
-            visitor: {
-                primitive: (primitive) => {
-                    switch (primitive.v1) {
-                        case "BASE_64":
-                            return FernIr.TypeReference.primitive({
-                                v1: "BASE_64",
-                                v2: FernIr.PrimitiveTypeV2.base64({})
-                            });
-                        case "BOOLEAN":
-                            return FernIr.TypeReference.primitive({
-                                v1: "BOOLEAN",
-                                v2: FernIr.PrimitiveTypeV2.boolean({
-                                    default: undefined
-                                })
-                            });
-                        case "DATE":
-                            return FernIr.TypeReference.primitive({
-                                v1: "DATE",
-                                v2: FernIr.PrimitiveTypeV2.date({})
-                            });
-                        case "DATE_TIME":
-                            return FernIr.TypeReference.primitive({
-                                v1: "DATE_TIME",
-                                v2: FernIr.PrimitiveTypeV2.dateTime({})
-                            });
-                        case "FLOAT":
-                            return FernIr.TypeReference.primitive({
-                                v1: "FLOAT",
-                                v2: FernIr.PrimitiveTypeV2.float({})
-                            });
-                        case "DOUBLE":
-                            return FernIr.TypeReference.primitive({
-                                v1: "DOUBLE",
-                                v2: FernIr.PrimitiveTypeV2.double({
-                                    default: undefined,
-                                    validation: undefined
-                                })
-                            });
-                        case "UINT":
-                            return FernIr.TypeReference.primitive({
-                                v1: "UINT",
-                                v2: FernIr.PrimitiveTypeV2.uint({})
-                            });
-                        case "UINT_64":
-                            return FernIr.TypeReference.primitive({
-                                v1: "UINT_64",
-                                v2: FernIr.PrimitiveTypeV2.uint64({})
-                            });
-                        case "INTEGER":
-                            return FernIr.TypeReference.primitive({
-                                v1: "INTEGER",
-                                v2: FernIr.PrimitiveTypeV2.integer({
-                                    default: undefined,
-                                    validation: undefined
-                                })
-                            });
-                        case "LONG":
-                            return FernIr.TypeReference.primitive({
-                                v1: "LONG",
-                                v2: FernIr.PrimitiveTypeV2.long({
-                                    default: undefined
-                                })
-                            });
-                        case "STRING":
-                            return FernIr.TypeReference.primitive({
-                                v1: "STRING",
-                                v2: FernIr.PrimitiveTypeV2.string({
-                                    default: undefined,
-                                    validation: undefined
-                                })
-                            });
-                        case "UUID":
-                            return FernIr.TypeReference.primitive({
-                                v1: "UUID",
-                                v2: FernIr.PrimitiveTypeV2.uuid({})
-                            });
-                        case "BIG_INTEGER":
-                            return FernIr.TypeReference.primitive({
-                                v1: "BIG_INTEGER",
-                                v2: FernIr.PrimitiveTypeV2.bigInteger({
-                                    default: undefined
-                                })
-                            });
-                        default:
-                            return undefined;
-                    }
-                },
-                unknown: () => {
-                    return FernIr.TypeReference.unknown();
-                },
-                map: ({ keyType, valueType }) => {
-                    if (keyType == null || valueType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(
-                        FernIr.ContainerType.map({
-                            keyType,
-                            valueType
-                        })
-                    );
-                },
-                list: (itemType) => {
-                    if (itemType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(FernIr.ContainerType.list(itemType));
-                },
-                optional: (itemType) => {
-                    if (itemType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(FernIr.ContainerType.optional(itemType));
-                },
-                nullable: (itemType) => {
-                    if (itemType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(FernIr.ContainerType.nullable(itemType));
-                },
-                set: (itemType) => {
-                    if (itemType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(FernIr.ContainerType.set(itemType));
-                },
-                literal: (literal) => {
-                    return FernIr.TypeReference.container(
-                        FernIr.ContainerType.literal(
-                            literal._visit<FernIr.Literal>({
-                                string: (value) => FernIr.Literal.string(value),
-                                boolean: (value) => FernIr.Literal.boolean(value),
-                                _other: () => {
-                                    throw new Error("Unexpected literal type");
-                                }
-                            })
-                        )
-                    );
-                },
-                named: () => {
-                    return undefined;
-                }
-            }
-        });
+    private wrapAsNullable(type: FernIr.TypeReference): FernIr.TypeReference {
+        return FernIr.TypeReference.container(FernIr.ContainerType.nullable(type));
     }
 }

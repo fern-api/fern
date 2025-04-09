@@ -200,10 +200,7 @@ export class RequestBodyConverter extends AbstractConverter<
 
             return {
                 requestBody,
-                inlinedTypes: context.removeSchemaFromInlinedTypes({
-                    id: schemaId,
-                    inlinedTypes: convertedSchema.inlinedTypes
-                })
+                inlinedTypes: convertedSchema.inlinedTypes ?? {}
             };
         }
     }

@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Correctly parse primitive type arrays in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.19
+
+- changelogEntry:
+  - summary: |
       Improve the ReadMe migrator to respect the original navigation structure when creating the file hierarchy. Previously, nested navigation groups were 
       flattened, but now the file structure will mirror the navigation hierarchy, preserving the original organization of documentation.
     type: fix
