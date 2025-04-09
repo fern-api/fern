@@ -321,9 +321,9 @@ export class ReadmeImporter extends DocsImporter<object> {
                         )
                     });
                 } else {
-                    const nestedItems = await this.getNavigationItems({
+                    const nestedItems =  await this.getNavigationItems({
                         absolutePathToOutputDirectory: absolutePathToOutputDirectoryForSection,
-                        sections: [page]
+                        sections: [ page ]
                     });
                     sectionItem.contents.push(...nestedItems);
                 }

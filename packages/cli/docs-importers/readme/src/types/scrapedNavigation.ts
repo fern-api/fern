@@ -26,6 +26,6 @@ export type scrapedNavigationPage = {
     type: "page";
     page: string;
     slug: string;
-};
+}
 
 export type scrapedNavigationEntry = scrapedNavigationGroup | scrapedNavigationPage;
