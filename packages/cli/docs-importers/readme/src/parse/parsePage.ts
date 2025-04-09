@@ -6,8 +6,8 @@ import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-
 import { Logger } from "@fern-api/logger";
+
 import { unifiedRemoveBreaks } from "../cleaners/breaks";
 import { unifiedRemoveClassNames } from "../cleaners/className";
 import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis";
@@ -44,16 +44,15 @@ import { htmlToHast } from "../utils/hast";
 import { normalizePath } from "../utils/strings";
 
 export declare namespace parsePage {
-
     interface Args {
-        logger: Logger,
-        html: string,
-        url: URL
+        logger: Logger;
+        html: string;
+        url: URL;
     }
 
     interface Output {
         mdx: string;
-        images: getImagesUsedInFile.Output
+        images: getImagesUsedInFile.Output;
     }
 }
 
@@ -213,7 +212,7 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
                 mdx,
                 images
             }
-        }
+        };
     } catch (error) {}
 
     return { success: false };

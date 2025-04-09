@@ -22,7 +22,6 @@ export async function runReadmeMigration({
     versionOfCli,
     organization
 }: RunReadmeMigrationParams): Promise<void> {
-    
     const builder = new FernDocsBuilderImpl();
     builder.setInstance({ companyName: organization });
 
@@ -30,7 +29,7 @@ export async function runReadmeMigration({
         url: readmeUrl,
         context: taskContext,
         builder,
-        absolutePathToFernDirectory: join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of("fern")),
+        absolutePathToFernDirectory: join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of("fern"))
     });
 
     await readmeImporter.import({

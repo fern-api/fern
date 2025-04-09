@@ -2,20 +2,14 @@ import type { Root as MdastRoot } from "mdast";
 import type { MdxJsxAttribute } from "mdast-util-mdx-jsx";
 import { CONTINUE, visit } from "unist-util-visit";
 
-
 export declare namespace getImagesUsedInFile {
-
     interface Output {
         imageURLs: string[];
         imageURLToFilename: Record<string, string>;
     }
-
 }
 
-export async function getImagesUsedInFile(
-    root: MdastRoot,
-    url: string | URL
-): Promise<getImagesUsedInFile.Output> {
+export async function getImagesUsedInFile(root: MdastRoot, url: string | URL): Promise<getImagesUsedInFile.Output> {
     url = new URL(url);
     const imageURLs: string[] = [];
     const imageURLToFilename: Record<string, string> = {};
@@ -47,12 +41,12 @@ export async function getImagesUsedInFile(
             // Extract the filename from the URL
             const urlObj = new URL(imageUrl);
             const pathname = urlObj.pathname;
-            
+
             // Get the filename from the path
-            let filename = pathname.split('/').pop() || '';
-            
+            let filename = pathname.split("/").pop() || "";
+
             // Clean the filename and ensure it has an extension
-            if (!filename.includes('.')) {
+            if (!filename.includes(".")) {
                 // If no extension, default to .png
                 filename = `${filename}.png`;
             }

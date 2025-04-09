@@ -1,12 +1,12 @@
 import { mkdir, writeFile } from "fs/promises";
 import type { Root as HastRoot } from "hast";
 
-import { AbsoluteFilePath, RelativeFilePath, dirname, join as fsUtilsJoin, relativize } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
-
 import { docsYml } from "@fern-api/configuration";
 import { DEFAULT_LAYOUT, DocsImporter, FernDocsBuilder } from "@fern-api/docs-importer-commons";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join as fsUtilsJoin, relativize } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
+
 import { getFavicon } from "./extract/favicon";
 import { getTitle } from "./extract/title";
 import { parsePage } from "./parse/parsePage";
@@ -30,23 +30,21 @@ export declare namespace ReadmeImporter {
 
         builder: FernDocsBuilder;
     }
-
 }
 
 export class ReadmeImporter extends DocsImporter<{}> {
-
     private readonly url: URL;
     private readonly logger: Logger;
     private readonly absolutePathToFernDirectory: AbsoluteFilePath;
 
     constructor(args: ReadmeImporter.Args) {
-        super({ context: args.context })
+        super({ context: args.context });
         this.url = typeof args.url === "string" ? new URL(args.url) : args.url;
         this.logger = args.context.logger;
         this.absolutePathToFernDirectory = args.absolutePathToFernDirectory;
     }
 
-    public async import({ args, builder }: { args: {}; builder: FernDocsBuilder; }): Promise<void> {
+    public async import({ args, builder }: { args: {}; builder: FernDocsBuilder }): Promise<void> {
         builder.setLayout({ layout: DEFAULT_LAYOUT });
 
         const hast = await this.getHastForUrl(this.url);
@@ -71,9 +69,9 @@ export class ReadmeImporter extends DocsImporter<{}> {
             }
             const nav = builder.getNavigationBuilder({
                 tabId: this.kebabCaseWithoutEmojies(tab.name),
-                tabConfig: { 
-                    slug: tab.url, 
-                    displayName: tab.name 
+                tabConfig: {
+                    slug: tab.url,
+                    displayName: tab.name
                 }
             });
             const absolutePathToOutputDirectory = fsUtilsJoin(
@@ -91,7 +89,7 @@ export class ReadmeImporter extends DocsImporter<{}> {
         }
 
         const browser = await startPuppeteer();
-        
+
         const logo = await getLogos(this.url, browser);
         if (logo != null) {
             builder.setLogo({ logo });
@@ -99,7 +97,7 @@ export class ReadmeImporter extends DocsImporter<{}> {
 
         const title = await getTitle(hast);
         builder.setTitle({ title });
-        
+
         const favicon = await getFavicon(hast);
         if (favicon != null) {
             const assetsDirectory = await this.getAndCreateAssetsDirectory();
@@ -114,7 +112,7 @@ export class ReadmeImporter extends DocsImporter<{}> {
 
         const colors = await getColors(hast);
         builder.setColors({ colors });
-        
+
         if (browser) {
             await browser.close();
         }
@@ -127,14 +125,11 @@ export class ReadmeImporter extends DocsImporter<{}> {
      * @returns The absolute path to the assets directory
      */
     private async getAndCreateAssetsDirectory(): Promise<AbsoluteFilePath> {
-        const assetsDirectory = fsUtilsJoin(
-            this.absolutePathToFernDirectory,
-            RelativeFilePath.of("assets")
-        );
-        
+        const assetsDirectory = fsUtilsJoin(this.absolutePathToFernDirectory, RelativeFilePath.of("assets"));
+
         // Create the directory if it doesn't exist
         await mkdir(assetsDirectory, { recursive: true });
-        
+
         return assetsDirectory;
     }
 
@@ -201,7 +196,10 @@ export class ReadmeImporter extends DocsImporter<{}> {
     }): Promise<void> {
         for (const section of sections) {
             this.logger.debug(`Processing section: ${section.group}`);
-            const absolutePathToOutputDirectoryForSection = this.getAbsolutePathToOutputDirectoryForSection({ absolutePathToOutputDirectory, section });
+            const absolutePathToOutputDirectoryForSection = this.getAbsolutePathToOutputDirectoryForSection({
+                absolutePathToOutputDirectory,
+                section
+            });
 
             await mkdir(absolutePathToOutputDirectoryForSection, { recursive: true });
 
@@ -219,46 +217,54 @@ export class ReadmeImporter extends DocsImporter<{}> {
                             html,
                             url
                         });
-                        
+
                         // If parsing was successful, use the MDX content instead of raw HTML
                         if (result.success && result.data) {
-                            const absolutePathForPage = this.getAbsolutePathToOutputFileForPage({ absolutePathToOutputDirectoryForSection, page })
+                            const absolutePathForPage = this.getAbsolutePathToOutputFileForPage({
+                                absolutePathToOutputDirectoryForSection,
+                                page
+                            });
 
-                            await writeFile(
-                                absolutePathForPage,
-                                result.data.mdx
-                            );
+                            await writeFile(absolutePathForPage, result.data.mdx);
 
                             // Download and save images used in the page
                             if (result.data.images.imageURLs.length > 0) {
-                                this.logger.debug(`Found ${result.data.images.imageURLs.length} images to download for ${url.toString()}`);
-                                
+                                this.logger.debug(
+                                    `Found ${result.data.images.imageURLs.length} images to download for ${url.toString()}`
+                                );
+
                                 // Download each image
                                 await Promise.all(
-                                    Object.entries(result.data.images.imageURLToFilename).map(async ([imageUrl, filename]) => {
-                                        try {
-                                            const response = await fetch(imageUrl);
-                                            if (!response.ok) {
-                                                this.logger.warn(`Failed to download image ${imageUrl}, status: ${response.status}`);
-                                                return;
-                                            }
-                                            
-                                            const imageBuffer = Buffer.from(await response.arrayBuffer());
-                                            const imagePath = fsUtilsJoin(absolutePathToOutputDirectoryForSection, RelativeFilePath.of(filename));
+                                    Object.entries(result.data.images.imageURLToFilename).map(
+                                        async ([imageUrl, filename]) => {
+                                            try {
+                                                const response = await fetch(imageUrl);
+                                                if (!response.ok) {
+                                                    this.logger.warn(
+                                                        `Failed to download image ${imageUrl}, status: ${response.status}`
+                                                    );
+                                                    return;
+                                                }
 
-                                            // Ensure the directory exists for the image
-                                            const imageDir = dirname(imagePath);
-                                            await mkdir(imageDir, { recursive: true });
-                                            
-                                            await writeFile(imagePath, new Uint8Array(imageBuffer));
-                                            this.logger.debug(`Saved image to ${imagePath}`);
-                                        } catch (error) {
-                                            this.logger.warn(`Error downloading image ${imageUrl}: ${error}`);
+                                                const imageBuffer = Buffer.from(await response.arrayBuffer());
+                                                const imagePath = fsUtilsJoin(
+                                                    absolutePathToOutputDirectoryForSection,
+                                                    RelativeFilePath.of(filename)
+                                                );
+
+                                                // Ensure the directory exists for the image
+                                                const imageDir = dirname(imagePath);
+                                                await mkdir(imageDir, { recursive: true });
+
+                                                await writeFile(imagePath, new Uint8Array(imageBuffer));
+                                                this.logger.debug(`Saved image to ${imagePath}`);
+                                            } catch (error) {
+                                                this.logger.warn(`Error downloading image ${imageUrl}: ${error}`);
+                                            }
                                         }
-                                    })
+                                    )
                                 );
                             }
-
                         } else {
                             this.logger.warn(`Failed to parse page ${url.toString()}, skipping`);
                         }
@@ -273,18 +279,27 @@ export class ReadmeImporter extends DocsImporter<{}> {
                         this.logger.debug(`Processing nested group: ${nestedGroup.group}`);
                         await this.downloadMarkdownPages({
                             absolutePathToOutputDirectory: absolutePathToOutputDirectoryForSection,
-                            sections: [{ group: nestedGroup.group, pages: nestedGroup.pages }],
+                            sections: [{ group: nestedGroup.group, pages: nestedGroup.pages }]
                         });
                     })
             );
         }
     }
 
-    private async getNavigationItems({ absolutePathToOutputDirectory, sections }: { absolutePathToOutputDirectory: AbsoluteFilePath, sections: Array<scrapedNavigationSection>; }): Promise<docsYml.RawSchemas.NavigationItem[]> {
+    private async getNavigationItems({
+        absolutePathToOutputDirectory,
+        sections
+    }: {
+        absolutePathToOutputDirectory: AbsoluteFilePath;
+        sections: Array<scrapedNavigationSection>;
+    }): Promise<docsYml.RawSchemas.NavigationItem[]> {
         const navigationItems: docsYml.RawSchemas.NavigationItem[] = [];
 
-        for (const section of sections) { 
-            const absolutePathToOutputDirectoryForSection = this.getAbsolutePathToOutputDirectoryForSection({ absolutePathToOutputDirectory, section });
+        for (const section of sections) {
+            const absolutePathToOutputDirectoryForSection = this.getAbsolutePathToOutputDirectoryForSection({
+                absolutePathToOutputDirectory,
+                section
+            });
 
             // Create a navigation item for the section
             const sectionItem: docsYml.RawSchemas.SectionConfiguration = {
@@ -292,36 +307,43 @@ export class ReadmeImporter extends DocsImporter<{}> {
                 contents: [],
                 slug: this.kebabCaseWithoutEmojies(section.group)
             };
-            
+
             // Process string pages (direct links)
             for (const page of section.pages.filter((page): page is string => typeof page === "string")) {
-                const pageName = page.split('/').pop() || page;
+                const pageName = page.split("/").pop() || page;
                 sectionItem.contents.push({
                     page: pageName,
-                    path: relativize(this.getAbsolutePathToOutputFileForPage({
-                        absolutePathToOutputDirectoryForSection,
-                        page
-                    }), this.absolutePathToFernDirectory)
+                    path: relativize(
+                        this.getAbsolutePathToOutputFileForPage({
+                            absolutePathToOutputDirectoryForSection,
+                            page
+                        }),
+                        this.absolutePathToFernDirectory
+                    )
                 });
             }
-            
+
             // Process nested groups recursively
-            for (const nestedGroup of section.pages.filter((page): page is scrapedNavigationGroup => typeof page !== "string")) {
+            for (const nestedGroup of section.pages.filter(
+                (page): page is scrapedNavigationGroup => typeof page !== "string"
+            )) {
                 const nestedSection: docsYml.RawSchemas.SectionConfiguration = {
                     section: nestedGroup.group,
-                    contents: await this.getNavigationItems({ 
+                    contents: await this.getNavigationItems({
                         absolutePathToOutputDirectory: absolutePathToOutputDirectoryForSection,
-                        sections: [{ 
-                            group: nestedGroup.group, 
-                            pages: nestedGroup.pages.filter((page): page is string => typeof page === "string") 
-                        }]
+                        sections: [
+                            {
+                                group: nestedGroup.group,
+                                pages: nestedGroup.pages.filter((page): page is string => typeof page === "string")
+                            }
+                        ]
                     }),
                     slug: this.kebabCaseWithoutEmojies(nestedGroup.group)
                 };
-                
+
                 sectionItem.contents.push(nestedSection);
             }
-            
+
             navigationItems.push(sectionItem);
         }
 
@@ -334,13 +356,16 @@ export class ReadmeImporter extends DocsImporter<{}> {
      * @param page The page name or path
      * @returns The absolute path to the output file for the page
      */
-    private getAbsolutePathToOutputFileForPage({ absolutePathToOutputDirectoryForSection, page }: {
-        absolutePathToOutputDirectoryForSection: AbsoluteFilePath,
-        page: string
+    private getAbsolutePathToOutputFileForPage({
+        absolutePathToOutputDirectoryForSection,
+        page
+    }: {
+        absolutePathToOutputDirectoryForSection: AbsoluteFilePath;
+        page: string;
     }): AbsoluteFilePath {
         return fsUtilsJoin(
             absolutePathToOutputDirectoryForSection,
-            RelativeFilePath.of(`${this.kebabCaseWithoutEmojies(page.split('/').pop() || page)}.mdx`)
+            RelativeFilePath.of(`${this.kebabCaseWithoutEmojies(page.split("/").pop() || page)}.mdx`)
         );
     }
 
@@ -349,7 +374,10 @@ export class ReadmeImporter extends DocsImporter<{}> {
      * @param params The parameters for creating the output directory path
      * @returns The absolute path to the output directory for the section
      */
-    private getAbsolutePathToOutputDirectoryForSection({ absolutePathToOutputDirectory, section }: {
+    private getAbsolutePathToOutputDirectoryForSection({
+        absolutePathToOutputDirectory,
+        section
+    }: {
         absolutePathToOutputDirectory: AbsoluteFilePath;
         section: scrapedNavigationSection;
     }): AbsoluteFilePath {
