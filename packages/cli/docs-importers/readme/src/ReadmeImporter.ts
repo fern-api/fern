@@ -298,10 +298,10 @@ export class ReadmeImporter extends DocsImporter<{}> {
                 const pageName = page.split('/').pop() || page;
                 sectionItem.contents.push({
                     page: pageName,
-                    path: this.getAbsolutePathToOutputFileForPage({
+                    path: relativize(this.getAbsolutePathToOutputFileForPage({
                         absolutePathToOutputDirectoryForSection,
                         page
-                    })
+                    }), this.absolutePathToFernDirectory)
                 });
             }
             
