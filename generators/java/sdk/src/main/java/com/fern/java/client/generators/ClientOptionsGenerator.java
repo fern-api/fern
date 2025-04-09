@@ -329,7 +329,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 .getName()
                                 .getName()
                                 .getScreamingSnakeCase()
-                                .getUnsafeName();
+                                .getSafeName();
 
                         constructorBuilder.addStatement(
                                 "this.$L = $L.orElse($L)",

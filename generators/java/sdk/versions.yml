@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Use safe name for version enum
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.8
+- changelogEntry:
+    - summary: |
         Run v2 generation for SDK generator only
       type: fix
   createdAt: '2025-04-09'
