@@ -21,13 +21,22 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPagination
+from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_mixed_type_cursor_pagination(
-    cursor="cursor",
+response = client.complex_.search(
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
 )
 for item in response:
     yield item
@@ -44,6 +53,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedPagination
+from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
@@ -52,8 +62,16 @@ client = AsyncSeedPagination(
 
 
 async def main() -> None:
-    response = await client.users.list_with_mixed_type_cursor_pagination(
-        cursor="cursor",
+    response = await client.complex_.search(
+        pagination=StartingAfterPaging(
+            per_page=1,
+            starting_after="starting_after",
+        ),
+        query=SingleFilterSearchRequest(
+            field="field",
+            operator="=",
+            value="value",
+        ),
     )
     async for item in response:
         yield item
@@ -74,7 +92,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.users.list_with_mixed_type_cursor_pagination(...)
+    client.complex_.search(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -86,16 +104,22 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from seed import SeedPagination
+from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="starting_after",
+response = client.complex_.search(
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
 )
 for item in response:
     yield item
@@ -121,7 +145,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_mixed_type_cursor_pagination(..., request_options={
+client.complex_.search(..., request_options={
     "max_retries": 1
 })
 ```
@@ -141,7 +165,7 @@ client = SeedPagination(
 
 
 # Override timeout for a specific method
-client.users.list_with_mixed_type_cursor_pagination(..., request_options={
+client.complex_.search(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

@@ -78,7 +78,6 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
             for generated_function in generated_endpoint_functions:
                 if generated_function.is_default_body_parameter_used:
                     self._is_default_body_parameter_used = True
-                    break
                 # TODO: Remove this. Currently, we need to preserve snippets for paginated endpoints (since we're not doing this in the raw client generator)
                 if self._treat_as_paginated(endpoint):
                     for snippet in generated_function.snippets or []:
