@@ -409,6 +409,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const objectTypeReference = context.createNamedTypeReference(this.id);
         return FernIr.Type.alias({
             aliasOf: this.wrapTypeReferenceAsNullable(objectTypeReference),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             resolvedType: objectTypeReference as any
         });
     }
