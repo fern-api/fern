@@ -8,11 +8,9 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
-import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.types.EnumTypeDeclaration;
-import com.fern.ir.model.types.EnumValue;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -218,17 +216,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .ifPresent(irDeclaration -> {
                     EnumTypeDeclaration.Builder enumTypeDeclaration =
                             EnumTypeDeclaration.builder().from(irDeclaration);
-
-                    irDeclaration.getDefault().ifPresent(defaultValue -> {
-                        enumTypeDeclaration.addValues(EnumValue.builder()
-                                .from(defaultValue)
-                                .name(NameAndWireValue.builder()
-                                        .from(defaultValue.getName())
-                                        .name(ApiVersionConstants.CURRENT_API_VERSION_NAME)
-                                        .build())
-                                .build());
-                    });
-
                     EnumGenerator apiVersionsGenerator = new EnumGenerator(
                             context.getPoetClassNameFactory().getApiVersionClassName(),
                             context,

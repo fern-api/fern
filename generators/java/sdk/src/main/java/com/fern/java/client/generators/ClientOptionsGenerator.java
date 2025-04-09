@@ -17,18 +17,22 @@
 package com.fern.java.client.generators;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.PlatformHeaders;
+import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.variables.VariableDeclaration;
 import com.fern.ir.model.variables.VariableId;
-import com.fern.java.client.ApiVersionConstants;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -324,6 +328,53 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                                 .getDefault()
                                                 .get())
                                 .build());
+
+                        Optional<String> configuredDefaultVersion = headerApiVersionScheme
+                                .getValue()
+                                .getDefault()
+                                .map(EnumValue::getName)
+                                .map(NameAndWireValue::getName)
+                                .map(Name::getScreamingSnakeCase)
+                                .map(SafeAndUnsafeString::getUnsafeName);
+
+                        String defaultVersion = configuredDefaultVersion.orElseGet(() -> {
+                            // If the default version is not configured, get the last declared version
+                            // preferring versions that start with a number.
+                            clientGeneratorContext.getIr().getApiVersion().get();
+
+                            Optional<String> lastVersionStartingWithNumber = Lists.reverse(
+                                            headerApiVersionScheme.getValue().getValues().stream()
+                                                    .map(EnumValue::getName)
+                                                    .filter(name -> {
+                                                        String wireValue = name.getWireValue();
+
+                                                        if (wireValue.isEmpty()) {
+                                                            return false;
+                                                        }
+
+                                                        char firstChar = wireValue.charAt(0);
+                                                        return '0' <= firstChar && firstChar <= '9';
+                                                    })
+                                                    .map(NameAndWireValue::getName)
+                                                    .map(Name::getScreamingSnakeCase)
+                                                    .map(SafeAndUnsafeString::getUnsafeName)
+                                                    .collect(Collectors.toList()))
+                                    .stream()
+                                    .findFirst();
+
+                            String lastVersion = Lists.reverse(headerApiVersionScheme.getValue().getValues().stream()
+                                            .map(EnumValue::getName)
+                                            .map(NameAndWireValue::getName)
+                                            .map(Name::getScreamingSnakeCase)
+                                            .map(SafeAndUnsafeString::getUnsafeName)
+                                            .collect(Collectors.toList()))
+                                    .stream()
+                                    .findFirst()
+                                    .orElseThrow(() -> new RuntimeException("Got empty versions enum."));
+
+                            return lastVersionStartingWithNumber.orElse(lastVersion);
+                        });
+
                         constructorBuilder.addStatement(
                                 "this.$L = $L.orElse($L)",
                                 apiVersionField.name,
@@ -333,7 +384,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         clientGeneratorContext
                                                 .getPoetClassNameFactory()
                                                 .getApiVersionClassName(),
-                                        ApiVersionConstants.CURRENT_API_VERSION));
+                                        defaultVersion));
                     } else {
                         constructorBuilder.addParameter(ParameterSpec.builder(
                                         clientGeneratorContext

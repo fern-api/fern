@@ -71,7 +71,7 @@ public final class ClientOptions {
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.timeout = timeout;
-        this.version = version.orElse(ApiVersion.CURRENT);
+        this.version = version.orElse(ApiVersion.V_2);
         this.headers.put("X-API-Version", this.version.toString());
     }
 
