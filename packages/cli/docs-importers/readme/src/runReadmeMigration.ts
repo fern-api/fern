@@ -24,6 +24,7 @@ export async function runReadmeMigration({
 }: RunReadmeMigrationParams): Promise<void> {
     
     const builder = new FernDocsBuilderImpl();
+    builder.setInstance({ companyName: organization });
 
     const readmeImporter = new ReadmeImporter({
         url: readmeUrl,

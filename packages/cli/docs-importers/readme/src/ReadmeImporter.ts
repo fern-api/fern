@@ -38,18 +38,16 @@ export class ReadmeImporter extends DocsImporter<{}> {
     private readonly url: URL;
     private readonly logger: Logger;
     private readonly absolutePathToFernDirectory: AbsoluteFilePath;
-    private readonly builder: FernDocsBuilder;
 
     constructor(args: ReadmeImporter.Args) {
         super({ context: args.context })
         this.url = typeof args.url === "string" ? new URL(args.url) : args.url;
         this.logger = args.context.logger;
         this.absolutePathToFernDirectory = args.absolutePathToFernDirectory;
-        this.builder = args.builder;
     }
 
     public async import({ args, builder }: { args: {}; builder: FernDocsBuilder; }): Promise<void> {
-        this.builder.setLayout({ layout: DEFAULT_LAYOUT });
+        builder.setLayout({ layout: DEFAULT_LAYOUT });
 
         const hast = await this.getHastForUrl(this.url);
         const tabs = parseTabLinks(hast) ?? [];
@@ -71,21 +69,22 @@ export class ReadmeImporter extends DocsImporter<{}> {
             if (!sidebar) {
                 continue;
             }
-            const nav = this.builder.getNavigationBuilder({
+            const nav = builder.getNavigationBuilder({
                 tabId: this.kebabCaseWithoutEmojies(tab.name),
                 tabConfig: { 
                     slug: tab.url, 
                     displayName: tab.name 
                 }
             });
+            const absolutePathToOutputDirectory = fsUtilsJoin(
+                this.absolutePathToFernDirectory,
+                RelativeFilePath.of(this.kebabCaseWithoutEmojies(tab.name))
+            );
             await this.downloadMarkdownPages({
-                absolutePathToOutputDirectory: fsUtilsJoin(
-                    this.absolutePathToFernDirectory,
-                    RelativeFilePath.of(this.kebabCaseWithoutEmojies(tab.name))
-                ),
+                absolutePathToOutputDirectory,
                 sections: sidebar
             });
-            const navigationItems = await this.getNavigationItems(sidebar);
+            const navigationItems = await this.getNavigationItems({ absolutePathToOutputDirectory, sections: sidebar });
             for (const item of navigationItems) {
                 nav.addItem({ item });
             }
@@ -95,11 +94,11 @@ export class ReadmeImporter extends DocsImporter<{}> {
         
         const logo = await getLogos(this.url, browser);
         if (logo != null) {
-            this.builder.setLogo({ logo });
+            builder.setLogo({ logo });
         }
 
         const title = await getTitle(hast);
-        this.builder.setTitle({ title });
+        builder.setTitle({ title });
         
         const favicon = await getFavicon(hast);
         if (favicon != null) {
@@ -109,17 +108,18 @@ export class ReadmeImporter extends DocsImporter<{}> {
                 const imageBuffer = Buffer.from(await response.arrayBuffer());
                 const faviconPath = fsUtilsJoin(assetsDirectory, RelativeFilePath.of("favicon"));
                 await writeFile(faviconPath, new Uint8Array(imageBuffer));
-                this.builder.setFavicon({ favicon: relativize(this.absolutePathToFernDirectory, faviconPath) });
+                builder.setFavicon({ favicon: relativize(this.absolutePathToFernDirectory, faviconPath) });
             }
         }
 
         const colors = await getColors(hast);
-        this.builder.setColors({ colors });
+        builder.setColors({ colors });
         
         if (browser) {
             await browser.close();
         }
 
+        builder.build({ outputDirectory: this.absolutePathToFernDirectory });
     }
 
     /**
@@ -324,6 +324,8 @@ export class ReadmeImporter extends DocsImporter<{}> {
             
             navigationItems.push(sectionItem);
         }
+
+        return navigationItems;
     }
 
     /**
