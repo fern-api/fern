@@ -310,6 +310,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 @Override
                 public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
                     if (headerApiVersionScheme.getValue().getDefault().isPresent()) {
+                        EnumValue configuredDefaultVersion =
+                                headerApiVersionScheme.getValue().getDefault().get();
+
                         constructorBuilder.addParameter(ParameterSpec.builder(
                                         ParameterizedTypeName.get(
                                                 ClassName.get(Optional.class),
@@ -319,14 +322,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         apiVersionField.name)
                                 .addJavadoc(
                                         "Defaults to $S if empty",
-                                        headerApiVersionScheme
-                                                .getValue()
-                                                .getDefault()
-                                                .get())
+                                        configuredDefaultVersion.getName().getWireValue())
                                 .build());
-
-                        EnumValue configuredDefaultVersion =
-                                headerApiVersionScheme.getValue().getDefault().get();
 
                         String configuredDefaultVersionString = configuredDefaultVersion
                                 .getName()
