@@ -4,7 +4,7 @@ import { CONTINUE, EXIT, SKIP, visit } from "unist-util-visit";
 import { getFirstChild } from "../extract/firstChild";
 import { getText } from "../extract/text";
 import { findTitle } from "../extract/title";
-import { scrapedNavigationEntry, scrapedNavigationSection } from "../types/scrapedNavigation";
+import { scrapedNavigationEntry, scrapedNavigationPage, scrapedNavigationSection } from "../types/scrapedNavigation";
 
 export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection> {
     const result: Array<scrapedNavigationSection> = [];
@@ -21,13 +21,14 @@ export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection>
             const items = parseNavItems(node);
 
             const flattenedItems = items.flatMap((item) => {
-                if (typeof item === "string") {
-                    return item;
+                if (item.type === "group") {
+                    return item.pages;
                 }
-                return item.pages;
+                return item;
             });
 
             result.push({
+                type: "group",
                 group: headingText,
                 pages: flattenedItems
             });
@@ -144,7 +145,11 @@ export function parseListItem({
     const sectionHeader = getFirstChild({ node, tagName: sectionTagName });
     const childList = getFirstChild({ node, tagName: childListTagName });
     if (!childList) {
-        return linkHref;
+        return {
+            type: "page",
+            page: getText(link) || getText(sectionHeader) || "",
+            slug: linkHref
+        };
     }
 
     let groupTitle = title;
@@ -156,17 +161,25 @@ export function parseListItem({
     const newLink = linkHref;
 
     if (linkHref !== "#") {
-        if (childEntries.includes(linkHref)) {
-            childEntries.forEach((child, index) => {
-                if (child === linkHref) {
-                    childEntries[index] = newLink;
-                }
-            });
-        }
-        if (!childEntries.includes(newLink)) {
-            childEntries.unshift(newLink);
+        const newPage: scrapedNavigationPage = {
+            type: "page",
+            page: getText(link) || getText(sectionHeader) || "",
+            slug: newLink
+        };
+        
+        // Check if the link already exists in child entries
+        const existingPageIndex = childEntries.findIndex(
+            (child) => child.type === "page" && child.slug === linkHref
+        );
+        
+        if (existingPageIndex !== -1) {
+            // Replace the existing page with the new one
+            childEntries[existingPageIndex] = newPage;
+        } else if (!childEntries.some((child) => child.type === "page" && child.slug === newLink)) {
+            // Add the new page if it doesn't exist
+            childEntries.unshift(newPage);
         }
     }
 
-    return { group: groupTitle, pages: childEntries };
+    return { type: "group", group: groupTitle, pages: childEntries };
 }

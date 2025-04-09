@@ -1,9 +1,11 @@
 export type scrapedNavigationSection = {
+    type: "group";
     group: string;
     pages: scrapedNavigationEntry[];
 };
 export type scrapedNavigation = scrapedNavigationSection[];
 export type scrapedNavigationGroup = {
+    type: "group";
     group: string;
     pages: scrapedNavigationEntry[];
     version?: string;
@@ -20,4 +22,10 @@ export type scrapedNavigationGroup = {
         | "solid"
         | "thin";
 };
-export type scrapedNavigationEntry = scrapedNavigationGroup | string;
+export type scrapedNavigationPage = {
+    type: "page";
+    page: string;
+    slug: string;
+}
+
+export type scrapedNavigationEntry = scrapedNavigationGroup | scrapedNavigationPage;
