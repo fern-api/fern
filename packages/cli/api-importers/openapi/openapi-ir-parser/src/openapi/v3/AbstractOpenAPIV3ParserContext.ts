@@ -114,7 +114,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } as any as OpenAPIV3.SchemaObject;
             }
-            
+
             // Handle both objects and arrays
             if (Array.isArray(resolvedSchema)) {
                 const index = parseInt(key, 10);
