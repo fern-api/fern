@@ -1,9 +1,9 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
+import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
 
-public class Example13 {
+public class Example0 {
     public static void main(String[] args) {
         SeedPaginationClient client = SeedPaginationClient
             .builder()
@@ -11,10 +11,10 @@ public class Example13 {
             .url("https://api.fern.com")
             .build();
 
-        client.users().listWithGlobalConfig(
-            ListWithGlobalConfigRequest
+        client.users().listUsernamesCustom(
+            ListUsernamesRequestCustom
                 .builder()
-                .offset(1)
+                .startingAfter("starting_after")
                 .build()
         );
     }
