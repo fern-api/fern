@@ -108,7 +108,7 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
             generated_root_client=generated_root_client,
             snippet_writer=self._snippet_writer,
             endpoint_metadata_collector=self._endpoint_metadata_collector,
-            is_raw_client=False,
+            is_raw_client=False,  # Use False here to get clean unwrapped return types in docs
         )
 
         # Check if any generated function needs DEFAULT_BODY_PARAMETER
