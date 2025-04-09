@@ -1,4 +1,15 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.12.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixes an issue where dictionary types defined within TypedDicts incorrectly used the
+        `typing_extensions.NotRequired` type.
+    - type: fix
+      summary: |
+        Fixes an issue where optional `core.File` parameters would cause `mypy` failures.
+
 - version: 4.12.0
   irVersion: 57
   changelogEntry:
