@@ -24,7 +24,7 @@ export declare namespace SchemaConverter {
 }
 
 export class SchemaConverter extends AbstractConverter<AbstractConverterContext<object>, SchemaConverter.Output> {
-    private readonly SUPPORTED_PRIMITIVE_TYPES = ["boolean", "number", "string", "integer"];
+    private readonly SUPPORTED_UNION_PRIMITIVE_TYPES = ["boolean", "number", "string", "integer"];
 
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly id: string;
@@ -76,61 +76,132 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaConverter.Output | undefined> {
-        if (this.schema.type == null || !Array.isArray(this.schema.type) || this.schema.type.length === 0) {
+        if (this.schema.type == null) {
             errorCollector.collect({
-                message: "Received unexpected schema type array type with no types.",
+                message: `Received invalid array schema: ${JSON.stringify(this.schema.type)}`,
                 path: this.breadcrumbs
             });
             return undefined;
         }
-        const wrapAsNullable = this.schema.type.includes("null");
-        this.schema.type = this.schema.type.filter((type) => !this.SUPPORTED_PRIMITIVE_TYPES.includes(type));
-        if (this.schema.type.length === 0) {
+        if (!Array.isArray(this.schema.type) || this.schema.type.length === 0) {
             errorCollector.collect({
-                message: "Received schema type array type with no supported primitive types.",
+                message: `Received empty array schema: ${JSON.stringify(this.schema.type)}`,
+                path: this.breadcrumbs
+            });
+            return undefined;
+        }
+        const updatedSchema: OpenAPIV3_1.SchemaObject = this.schema;
+        const wrapAsNullable = this.schema.type.includes("null");
+        updatedSchema.type = this.schema.type.filter((type) => type !== "null");
+        if (updatedSchema.type.length === 0) {
+            errorCollector.collect({
+                message: `Received array schema with no non-null types: ${JSON.stringify(this.schema.type)}`,
                 path: this.breadcrumbs
             });
             return undefined;
         }
 
-        if (this.schema.type.length === 1) {
-            this.schema.type = this.schema.type[0];
-            const primitiveConverter = new PrimitiveSchemaConverter({ schema: this.schema });
-            const primitiveType = primitiveConverter.convert({ context, errorCollector });
-            if (primitiveType != null) {
-                const maybeWrappedType = wrapAsNullable ? this.wrapAsNullable(primitiveType) : primitiveType;
-                return {
-                    typeDeclaration: await this.createTypeDeclaration({
-                        shape: FernIr.Type.alias({
-                            aliasOf: maybeWrappedType,
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            resolvedType: maybeWrappedType as any
+        if (updatedSchema.type.length === 1) {
+            updatedSchema.type = updatedSchema.type[0];
+            if (updatedSchema.type == null) {
+                return undefined;
+            }
+            if (this.SUPPORTED_UNION_PRIMITIVE_TYPES.includes(updatedSchema.type)) {
+                const primitiveConverter = new PrimitiveSchemaConverter({ schema: updatedSchema });
+                const primitiveType = primitiveConverter.convert({ context, errorCollector });
+                if (primitiveType != null) {
+                    const maybeWrappedType = wrapAsNullable
+                        ? this.wrapTypeReferenceAsNullable(primitiveType)
+                        : primitiveType;
+                    return {
+                        typeDeclaration: await this.createTypeDeclaration({
+                            shape: FernIr.Type.alias({
+                                aliasOf: maybeWrappedType,
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                resolvedType: maybeWrappedType as any
+                            }),
+                            context,
+                            errorCollector
                         }),
+                        inlinedTypes: {}
+                    };
+                }
+            } else if (updatedSchema.type === "object") {
+                const objectConverter = new ObjectSchemaConverter({
+                    breadcrumbs: this.breadcrumbs,
+                    schema: updatedSchema,
+                    inlinedTypes: {}
+                });
+                const objectType = await objectConverter.convert({ context, errorCollector });
+                if (objectType != null) {
+                    const typeDeclaration = await this.createTypeDeclaration({
+                        shape: objectType.object,
                         context,
                         errorCollector
-                    }),
-                    inlinedTypes: {}
-                };
+                    });
+                    return {
+                        typeDeclaration: {
+                            ...typeDeclaration,
+                            shape: wrapAsNullable
+                                ? this.wrapObjectTypeAsNullable(context, typeDeclaration.shape)
+                                : typeDeclaration.shape
+                        },
+                        inlinedTypes: {
+                            ...objectType.inlinedTypes,
+                            [this.id]: typeDeclaration
+                        }
+                    };
+                }
+            } else if (updatedSchema.type === "array") {
+                const arrayConverter = new ArraySchemaConverter({
+                    breadcrumbs: this.breadcrumbs,
+                    schema: updatedSchema
+                });
+                const arrayType = await arrayConverter.convert({ context, errorCollector });
+                if (arrayType != null) {
+                    return {
+                        typeDeclaration: await this.createTypeDeclaration({
+                            shape: FernIr.Type.alias({
+                                aliasOf: wrapAsNullable
+                                    ? this.wrapTypeReferenceAsNullable(arrayType.typeReference)
+                                    : arrayType.typeReference,
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                resolvedType: arrayType.typeReference as any
+                            }),
+                            context,
+                            errorCollector
+                        }),
+                        inlinedTypes: arrayType.inlinedTypes ?? {}
+                    };
+                }
             }
         } else {
-            this.schema.oneOf = this.schema.type.map((type) => ({
+            updatedSchema.type = updatedSchema.type.filter((type) =>
+                this.SUPPORTED_UNION_PRIMITIVE_TYPES.includes(type)
+            );
+            updatedSchema.oneOf = updatedSchema.type.map((type) => ({
                 // Array schema types must be NonArraySchemaObjectType values.
                 type: type as OpenAPIV3_1.NonArraySchemaObjectType
             }));
             const oneOfConverter = new OneOfSchemaConverter({
                 breadcrumbs: this.breadcrumbs,
-                schema: this.schema,
+                schema: updatedSchema,
                 inlinedTypes: {}
             });
             const oneOfType = await oneOfConverter.convert({ context, errorCollector });
             if (oneOfType != null && oneOfType.union.type === "undiscriminatedUnion") {
-                oneOfType.union.members = oneOfType.union.members.map((member) => ({
-                    ...member,
-                    type: wrapAsNullable ? this.wrapAsNullable(member.type) : member.type
-                }));
+                let wrappedUnion = oneOfType.union;
+                if (wrapAsNullable) {
+                    wrappedUnion = FernIr.Type.undiscriminatedUnion({
+                        members: wrappedUnion.members.map((member) => ({
+                            ...member,
+                            type: this.wrapTypeReferenceAsNullable(member.type)
+                        }))
+                    });
+                }
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
-                        shape: oneOfType.union,
+                        shape: wrappedUnion,
                         context,
                         errorCollector
                     }),
@@ -330,7 +401,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         };
     }
 
-    private wrapAsNullable(type: FernIr.TypeReference): FernIr.TypeReference {
-        return FernIr.TypeReference.container(FernIr.ContainerType.nullable(type));
+    private wrapTypeReferenceAsNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        return FernIr.TypeReference.container(FernIr.ContainerType.nullable(typeReference));
+    }
+
+    private wrapObjectTypeAsNullable(context: AbstractConverterContext<object>, object: FernIr.Type): FernIr.Type {
+        const objectTypeReference = context.createNamedTypeReference(this.id);
+        return FernIr.Type.alias({
+            aliasOf: this.wrapTypeReferenceAsNullable(objectTypeReference),
+            resolvedType: objectTypeReference as any
+        });
     }
 }
