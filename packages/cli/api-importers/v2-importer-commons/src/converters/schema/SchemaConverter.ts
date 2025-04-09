@@ -78,14 +78,14 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }): Promise<SchemaConverter.Output | undefined> {
         if (this.schema.type == null) {
             errorCollector.collect({
-                message: `Received invalid array schema: ${JSON.stringify(this.schema.type)}`,
+                message: `Received null schema type: ${JSON.stringify(this.schema)}`,
                 path: this.breadcrumbs
             });
             return undefined;
         }
         if (!Array.isArray(this.schema.type) || this.schema.type.length === 0) {
             errorCollector.collect({
-                message: `Received empty array schema: ${JSON.stringify(this.schema.type)}`,
+                message: `Received invalid array schema: ${JSON.stringify(this.schema.type)}`,
                 path: this.breadcrumbs
             });
             return undefined;
@@ -95,7 +95,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         updatedSchema.type = this.schema.type.filter((type) => type !== "null");
         if (updatedSchema.type.length === 0) {
             errorCollector.collect({
-                message: `Received array schema with no non-null types: ${JSON.stringify(this.schema.type)}`,
+                message: `Received schema ${JSON.stringify(this.schema)} with unsupported primitive types: ${JSON.stringify(this.schema.type)}`,
                 path: this.breadcrumbs
             });
             return undefined;
