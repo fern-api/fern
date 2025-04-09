@@ -24,6 +24,8 @@ export declare namespace SchemaConverter {
 }
 
 export class SchemaConverter extends AbstractConverter<AbstractConverterContext<object>, SchemaConverter.Output> {
+    private readonly SUPPORTED_PRIMITIVE_TYPES = ["boolean", "number", "string", "integer"];
+
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly id: string;
     private readonly inlined: boolean;
@@ -82,10 +84,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return undefined;
         }
         const wrapAsNullable = this.schema.type.includes("null");
-        this.schema.type = this.schema.type.filter((type) => type !== "null");
+        this.schema.type = this.schema.type.filter((type) => !this.SUPPORTED_PRIMITIVE_TYPES.includes(type));
         if (this.schema.type.length === 0) {
             errorCollector.collect({
-                message: "Received unexpected schema type array type with single 'null' type.",
+                message: "Received schema type array type with no supported primitive types.",
                 path: this.breadcrumbs
             });
             return undefined;
