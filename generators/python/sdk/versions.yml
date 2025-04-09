@@ -1,4 +1,18 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.13.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Adds support for overriding literal global headers in the client constructor (e.g. `version`).
+
+        ```python
+        client = Acme(
+          ...
+          version="1.0.0",
+        )
+        ```
+
 - version: 4.12.1
   irVersion: 57
   changelogEntry:
