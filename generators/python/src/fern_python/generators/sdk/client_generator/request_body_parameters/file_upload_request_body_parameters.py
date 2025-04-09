@@ -173,6 +173,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                             )
                             writer.write_line(f', "{property_as_union.content_type}"),')
                     elif property_as_union.type == "file":
+
                         def write_file_property(writer: AST.NodeWriter, file_property: ir_types.FileProperty) -> None:
                             file_property_as_union = file_property.get_as_union()
                             if file_property_as_union.content_type is not None:
@@ -195,7 +196,9 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                                 writer.write("{")
                                 write_file_property(writer, property_as_union.value)
                                 writer.write("} ")
-                                writer.write_line(f"if {property_as_union.value.get_as_union().key.wire_value} is not None ")
+                                writer.write_line(
+                                    f"if {property_as_union.value.get_as_union().key.wire_value} is not None "
+                                )
                                 writer.write_line("else {}")
                             writer.write_line("),")
                         else:

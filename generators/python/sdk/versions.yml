@@ -9,6 +9,10 @@
     - type: fix
       summary: |
         Fixes an issue where optional `core.File` parameters would cause `mypy` failures.
+    - type: fix
+      summary: |
+        Fixes a regression introduced in 4.12.0, where the non raw response client endpoints
+        did not respect the allowed method keywords (e.g. `list` was generated as `list_`).
 
 - version: 4.12.0
   irVersion: 57

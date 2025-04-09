@@ -1551,7 +1551,7 @@ class EndpointFunctionGenerator:
                 writer.write_line("return response.data")
 
         return AST.FunctionDeclaration(
-            name=self._endpoint.name.snake_case.safe_name,
+            name=get_endpoint_name(self._endpoint),
             is_async=self._is_async,
             signature=function.signature,
             docstring=function.docstring,
