@@ -314,11 +314,11 @@ export class ReadmeImporter extends DocsImporter<object> {
                 sectionItem.contents.push({
                     page: pageName,
                     path: relativize(
+                        this.absolutePathToFernDirectory,
                         this.getAbsolutePathToOutputFileForPage({
                             absolutePathToOutputDirectoryForSection,
                             page
                         }),
-                        this.absolutePathToFernDirectory
                     )
                 });
             }
