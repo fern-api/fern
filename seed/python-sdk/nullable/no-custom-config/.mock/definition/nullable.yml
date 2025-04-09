@@ -34,6 +34,7 @@ types:
       avatar: nullable<string>
       activated: optional<nullable<boolean>>
       status: Status
+      values: optional<map<string, optional<nullable<unknown>>>>
 
 service:
   base-path: /users

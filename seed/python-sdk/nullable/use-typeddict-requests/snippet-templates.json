@@ -433,6 +433,47 @@
                                         },
                                         "type": "discriminatedUnion"
                                     }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "\"values\": {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "delimiter": ",\n\t\t\t",
+                                        "keyTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "path": null,
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "valueTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "RELATIVE",
+                                                    "path": null,
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "keyValueSeparator": ": ",
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "metadata.values"
+                                        },
+                                        "type": "dict"
+                                    }
                                 }
                             ],
                             "inputDelimiter": ",\n\t\t",
@@ -666,6 +707,47 @@
                                                 "location": "RELATIVE"
                                             },
                                             "type": "discriminatedUnion"
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "containerTemplateString": "\"values\": {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "delimiter": ",\n\t\t\t",
+                                            "keyTemplate": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "RELATIVE",
+                                                        "path": null,
+                                                        "type": "payload"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            },
+                                            "valueTemplate": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "RELATIVE",
+                                                        "path": null,
+                                                        "type": "payload"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            },
+                                            "keyValueSeparator": ": ",
+                                            "templateInput": {
+                                                "location": "BODY",
+                                                "path": "metadata.values"
+                                            },
+                                            "type": "dict"
                                         }
                                     }
                                 ],
