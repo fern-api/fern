@@ -56,7 +56,7 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
                 decorators=[],
             )
 
-        if self._is_streaming_endpoint(endpoint):
+        if self._is_streaming_endpoint(endpoint) or self._treat_as_paginated(endpoint):
             # Use EndpointFunctionGenerator but generate the function directly
             endpoint_generator = EndpointFunctionGenerator(
                 context=self._context,
@@ -78,7 +78,17 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
             for generated_function in generated_endpoint_functions:
                 if generated_function.is_default_body_parameter_used:
                     self._is_default_body_parameter_used = True
-                    break
+                # TODO: Remove this. Currently, we need to preserve snippets for paginated endpoints (since we're not doing this in the raw client generator)
+                if self._treat_as_paginated(endpoint):
+                    for snippet in generated_function.snippets or []:
+                        if is_async:
+                            self._snippet_registry.register_async_client_endpoint_snippet(
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            )
+                        else:
+                            self._snippet_registry.register_sync_client_endpoint_snippet(
+                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                            )
 
             # For regular streaming endpoints (not stream parameter), return the function directly
             return generated_endpoint_functions[0].function

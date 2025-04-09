@@ -1050,7 +1050,7 @@ class EndpointFunctionGenerator:
 
         # If not a raw client, return the underlying type directly
         if not self._is_raw_client:
-            return underlying_type
+            return self._get_pagination_results_type(underlying_type) if self.is_paginated else underlying_type
 
         response_class = "AsyncHttpResponse" if is_async else "HttpResponse"
 

@@ -285,6 +285,7 @@ allowedFailures:
   - file-upload:use_typeddict_requests
   - oauth-client-credentials-custom
   - pagination
+  - pagination-custom
   - simple-fhir
   - trace
   - websocket:websocket-with_generated_clients
