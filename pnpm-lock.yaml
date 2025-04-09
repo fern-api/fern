@@ -5974,6 +5974,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../logger
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context

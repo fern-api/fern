@@ -6,8 +6,8 @@ import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-import { TaskContext } from "@fern-api/task-context";
 
+import { Logger } from "@fern-api/logger";
 import { unifiedRemoveBreaks } from "../cleaners/breaks";
 import { unifiedRemoveClassNames } from "../cleaners/className";
 import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis";
@@ -35,38 +35,29 @@ import {
 } from "../customComponents/create";
 import { rehypeToRemarkCustomComponents } from "../customComponents/plugin";
 import { selectiveRehypeRemark } from "../customComponents/selective";
-import { downloadImagesFromFile } from "../extract/images";
+import { getImagesUsedInFile } from "../extract/images";
 import { findSourceElement } from "../extract/source";
 import { getDescriptionFromRoot, getTitleFromHeading } from "../extract/title";
 import type { Result } from "../types/result";
-import { writePage } from "../utils/files/file";
+import { formatPageWithFrontmatter } from "../utils/files/file";
 import { htmlToHast } from "../utils/hast";
-import { normalizePath, removeTrailingSlash } from "../utils/strings";
+import { normalizePath } from "../utils/strings";
 
-export async function parsePage(
-    context: TaskContext,
-    html: string,
-    url: string | URL,
-    opts: {
-        externalLink: boolean;
-        rootPath?: string;
-    } = { externalLink: false }
-): Promise<Result<[string, string]>> {
-    let urlObj = new URL(url);
+export declare namespace parsePage {
 
-    if (opts.externalLink) {
-        const filename = html;
-        const filenameWithExt = `${filename}.mdx`;
-        writePage({
-            filename: filenameWithExt,
-            title: "",
-            description: "",
-            markdown: "",
-            url: urlObj.toString()
-        });
-        return { success: true, data: [urlObj.toString(), filename] };
+    interface Args {
+        logger: Logger,
+        html: string,
+        url: URL
     }
 
+    interface Output {
+        mdx: string;
+        images: getImagesUsedInFile.Output
+    }
+}
+
+export async function parsePage({ logger, html, url }: parsePage.Args): Promise<Result<parsePage.Output>> {
     // Remove secondary navigation (sidebar) from HTML before processing
     const removeSecondaryNavigation = (html: string): string => {
         // Create a temporary DOM element to manipulate the HTML
@@ -94,7 +85,7 @@ export async function parsePage(
     const hast = htmlToHast(html);
     removeHastComments(hast);
 
-    const urlStr = urlObj.toString();
+    const urlStr = url.toString();
     const source = findSourceElement(hast);
 
     if (!source) {
@@ -133,7 +124,7 @@ export async function parsePage(
         .use(remarkRemoveCodeBlocksInCells)
         .runSync(contentAsRoot) as MdastRoot;
 
-    await downloadImagesFromFile(mdastTree, url);
+    const images = await getImagesUsedInFile(mdastTree, url);
 
     // First try to get title and description from HTML
     let title = "";
@@ -174,7 +165,7 @@ export async function parsePage(
         description = getDescriptionFromRoot(mdastTree);
     }
 
-    const slug = normalizePath(urlObj.pathname);
+    const slug = normalizePath(url.pathname);
 
     try {
         const mdxContent = unified().use(remarkMdx).use(remarkGfm).use(remarkStringify).stringify(mdastTree);
@@ -208,25 +199,22 @@ export async function parsePage(
 
         const resultStr = String(mdxContentNoDuplicateTitleSubtitle).replace(/\n{3,}/g, "\n\n");
 
-        if (opts.rootPath) {
-            urlObj = new URL(opts.rootPath, urlObj.origin);
-        } else if (urlObj.origin === removeTrailingSlash(urlObj.toString())) {
-            urlObj = new URL("home", new URL(urlObj).origin);
-        }
-
-        writePage({
-            filename: url,
+        const mdx = formatPageWithFrontmatter({
             title,
             description,
             markdown: resultStr,
+            url: urlStr,
             slug
         });
+
         return {
             success: true,
-            data: opts.rootPath ? [normalizePath(new URL(urlStr).pathname), opts.rootPath] : undefined
-        };
-    } catch (error) {
-        context.logger.debug(`Error parsing page ${urlStr}: ${error}`);
-        return { success: false, data: [urlStr, ""] };
-    }
+            data: {
+                mdx,
+                images
+            }
+        }
+    } catch (error) {}
+
+    return { success: false };
 }
