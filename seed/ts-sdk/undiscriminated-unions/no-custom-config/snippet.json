@@ -21,6 +21,28 @@
                 "type": "typescript",
                 "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.getMetadata();\n"
             }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "PUT",
+                "identifier_override": "endpoint_union.updateMetadata"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.updateMetadata({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/call",
+                "method": "POST",
+                "identifier_override": "endpoint_union.call"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.call({\n    union: {\n        \"union\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
+            }
         }
     ],
     "types": {}
