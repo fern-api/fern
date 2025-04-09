@@ -318,7 +318,7 @@ export class ReadmeImporter extends DocsImporter<object> {
                         this.getAbsolutePathToOutputFileForPage({
                             absolutePathToOutputDirectoryForSection,
                             page
-                        }),
+                        })
                     )
                 });
             }
