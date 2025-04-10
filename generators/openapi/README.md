@@ -44,7 +44,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern) by d
     path: ../generated/openapi
 ```
 
-By default, Fern runs the generators in the cloud. To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
+By default, Fern runs the generators in the cloud. To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/learn/cli-reference#running-locally)
 
 ## Configuration
 

@@ -54,7 +54,7 @@ By default, Fern runs the generators in the cloud.
 
 ## Using local file generation
 
-To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
+To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/learn/cli-reference#running-locally)
 
 When Fern is configured to generate code locally, it can write its output anywhere
 on the local filesystem. The Go generator needs to know where to resolve its import
