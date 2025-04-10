@@ -22,7 +22,10 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./generators/python
-        run: poetry install
+        run: |
+          poetry add pydantic=^2.8.2
+          poetry lock
+          poetry install
 
       - name: Type check
         working-directory: ./generators/python
@@ -68,6 +71,7 @@ jobs:
         run: |
           poetry add pydantic=^1.10
           poetry add setuptools
+          poetry add imp
           poetry lock
           poetry install
       - name: Unit Test - Pydantic V1
