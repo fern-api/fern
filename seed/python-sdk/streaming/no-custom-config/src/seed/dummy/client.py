@@ -55,11 +55,8 @@ class DummyClient:
         for chunk in response:
             yield chunk
         """
-        with self._raw_client.generate_stream(
-            num_events=num_events,
-            request_options=request_options,
-        ) as r:
-            return r.data
+        with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
+            yield from r.data
 
     def generate(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> StreamResponse:
         """
@@ -85,10 +82,7 @@ class DummyClient:
             num_events=5,
         )
         """
-        response = self._raw_client.generate(
-            num_events=num_events,
-            request_options=request_options,
-        )
+        response = self._raw_client.generate(num_events=num_events, request_options=request_options)
         return response.data
 
 
@@ -143,11 +137,9 @@ class AsyncDummyClient:
 
         asyncio.run(main())
         """
-        async with self._raw_client.generate_stream(
-            num_events=num_events,
-            request_options=request_options,
-        ) as r:
-            return r.data
+        async with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
+            async for data in r.data:
+                yield data
 
     async def generate(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
@@ -183,8 +175,5 @@ class AsyncDummyClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.generate(
-            num_events=num_events,
-            request_options=request_options,
-        )
+        response = await self._raw_client.generate(num_events=num_events, request_options=request_options)
         return response.data

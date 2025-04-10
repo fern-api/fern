@@ -51,10 +51,7 @@ class ServiceClient:
             request="string",
         )
         """
-        response = self._raw_client.get_movie(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_movie(request=request, request_options=request_options)
         return response.data
 
     def get_movie_docs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -81,10 +78,7 @@ class ServiceClient:
             request="string",
         )
         """
-        response = self._raw_client.get_movie_docs(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_movie_docs(request=request, request_options=request_options)
         return response.data
 
     def get_movie_name(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -111,10 +105,7 @@ class ServiceClient:
             request="string",
         )
         """
-        response = self._raw_client.get_movie_name(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_movie_name(request=request, request_options=request_options)
         return response.data
 
     def get_movie_metadata(
@@ -143,10 +134,7 @@ class ServiceClient:
             request="string",
         )
         """
-        response = self._raw_client.get_movie_metadata(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_movie_metadata(request=request, request_options=request_options)
         return response.data
 
     def get_optional_movie(
@@ -175,10 +163,7 @@ class ServiceClient:
             request="string",
         )
         """
-        response = self._raw_client.get_optional_movie(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_optional_movie(request=request, request_options=request_options)
         return response.data
 
     def get_optional_movie_docs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -205,10 +190,7 @@ class ServiceClient:
             request="string",
         )
         """
-        response = self._raw_client.get_optional_movie_docs(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_optional_movie_docs(request=request, request_options=request_options)
         return response.data
 
     def get_optional_movie_name(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -235,10 +217,7 @@ class ServiceClient:
             request="string",
         )
         """
-        response = self._raw_client.get_optional_movie_name(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_optional_movie_name(request=request, request_options=request_options)
         return response.data
 
 
@@ -289,10 +268,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_movie(request=request, request_options=request_options)
         return response.data
 
     async def get_movie_docs(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -327,10 +303,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie_docs(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_movie_docs(request=request, request_options=request_options)
         return response.data
 
     async def get_movie_name(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -365,10 +338,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie_name(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_movie_name(request=request, request_options=request_options)
         return response.data
 
     async def get_movie_metadata(
@@ -405,10 +375,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie_metadata(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_movie_metadata(request=request, request_options=request_options)
         return response.data
 
     async def get_optional_movie(
@@ -445,10 +412,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_optional_movie(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_optional_movie(request=request, request_options=request_options)
         return response.data
 
     async def get_optional_movie_docs(
@@ -485,10 +449,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_optional_movie_docs(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_optional_movie_docs(request=request, request_options=request_options)
         return response.data
 
     async def get_optional_movie_name(
@@ -525,8 +486,5 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_optional_movie_name(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_optional_movie_name(request=request, request_options=request_options)
         return response.data

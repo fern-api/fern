@@ -54,11 +54,7 @@ class OrganizationsClient:
             organization_id="organization_id",
         )
         """
-        response = self._raw_client.get_organization(
-            tenant_id,
-            organization_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_organization(tenant_id, organization_id, request_options=request_options)
         return response.data
 
     def get_organization_user(
@@ -99,10 +95,7 @@ class OrganizationsClient:
         )
         """
         response = self._raw_client.get_organization_user(
-            tenant_id,
-            organization_id,
-            user_id,
-            request_options=request_options,
+            tenant_id, organization_id, user_id, request_options=request_options
         )
         return response.data
 
@@ -144,10 +137,7 @@ class OrganizationsClient:
         )
         """
         response = self._raw_client.search_organizations(
-            tenant_id,
-            organization_id,
-            limit=limit,
-            request_options=request_options,
+            tenant_id, organization_id, limit=limit, request_options=request_options
         )
         return response.data
 
@@ -204,11 +194,7 @@ class AsyncOrganizationsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_organization(
-            tenant_id,
-            organization_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_organization(tenant_id, organization_id, request_options=request_options)
         return response.data
 
     async def get_organization_user(
@@ -257,10 +243,7 @@ class AsyncOrganizationsClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_organization_user(
-            tenant_id,
-            organization_id,
-            user_id,
-            request_options=request_options,
+            tenant_id, organization_id, user_id, request_options=request_options
         )
         return response.data
 
@@ -310,9 +293,6 @@ class AsyncOrganizationsClient:
         asyncio.run(main())
         """
         response = await self._raw_client.search_organizations(
-            tenant_id,
-            organization_id,
-            limit=limit,
-            request_options=request_options,
+            tenant_id, organization_id, limit=limit, request_options=request_options
         )
         return response.data

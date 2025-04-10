@@ -75,12 +75,7 @@ class AuthClient:
         )
         """
         response = self._raw_client.get_token_with_client_credentials(
-            cid=cid,
-            csr=csr,
-            scp=scp,
-            entity_id=entity_id,
-            scope=scope,
-            request_options=request_options,
+            cid=cid, csr=csr, scp=scp, entity_id=entity_id, scope=scope, request_options=request_options
         )
         return response.data
 
@@ -208,12 +203,7 @@ class AsyncAuthClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_token_with_client_credentials(
-            cid=cid,
-            csr=csr,
-            scp=scp,
-            entity_id=entity_id,
-            scope=scope,
-            request_options=request_options,
+            cid=cid, csr=csr, scp=scp, entity_id=entity_id, scope=scope, request_options=request_options
         )
         return response.data
 

@@ -27,7 +27,7 @@ class UserClient:
         """
         return self._raw_client
 
-    def list(
+    def list_(
         self, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[User]:
         """
@@ -56,10 +56,7 @@ class UserClient:
             limit=1,
         )
         """
-        response = self._raw_client.list(
-            limit=limit,
-            request_options=request_options,
-        )
+        response = self._raw_client.list(limit=limit, request_options=request_options)
         return response.data
 
 
@@ -79,7 +76,7 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def list(
+    async def list_(
         self, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[User]:
         """
@@ -116,8 +113,5 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.list(
-            limit=limit,
-            request_options=request_options,
-        )
+        response = await self._raw_client.list(limit=limit, request_options=request_options)
         return response.data

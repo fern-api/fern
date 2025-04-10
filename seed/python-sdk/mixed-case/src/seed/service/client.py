@@ -49,10 +49,7 @@ class ServiceClient:
             resource_id="rsc-xyz",
         )
         """
-        response = self._raw_client.get_resource(
-            resource_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_resource(resource_id, request_options=request_options)
         return response.data
 
     def list_resources(
@@ -89,9 +86,7 @@ class ServiceClient:
         )
         """
         response = self._raw_client.list_resources(
-            page_limit=page_limit,
-            before_date=before_date,
-            request_options=request_options,
+            page_limit=page_limit, before_date=before_date, request_options=request_options
         )
         return response.data
 
@@ -145,10 +140,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_resource(
-            resource_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_resource(resource_id, request_options=request_options)
         return response.data
 
     async def list_resources(
@@ -192,8 +184,6 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         response = await self._raw_client.list_resources(
-            page_limit=page_limit,
-            before_date=before_date,
-            request_options=request_options,
+            page_limit=page_limit, before_date=before_date, request_options=request_options
         )
         return response.data

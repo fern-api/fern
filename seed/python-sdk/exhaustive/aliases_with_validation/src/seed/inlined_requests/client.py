@@ -92,10 +92,7 @@ class InlinedRequestsClient:
         )
         """
         response = self._raw_client.post_with_object_bodyand_response(
-            string=string,
-            integer=integer,
-            nested_object=nested_object,
-            request_options=request_options,
+            string=string, integer=integer, nested_object=nested_object, request_options=request_options
         )
         return response.data
 
@@ -187,9 +184,6 @@ class AsyncInlinedRequestsClient:
         asyncio.run(main())
         """
         response = await self._raw_client.post_with_object_bodyand_response(
-            string=string,
-            integer=integer,
-            nested_object=nested_object,
-            request_options=request_options,
+            string=string, integer=integer, nested_object=nested_object, request_options=request_options
         )
         return response.data
