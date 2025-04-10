@@ -74,10 +74,7 @@ class ReferenceClient:
         )
         """
         response = self._raw_client.send(
-            query=query,
-            container_object=container_object,
-            maybe_context=maybe_context,
-            request_options=request_options,
+            query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
         )
         return response.data
 
@@ -150,9 +147,6 @@ class AsyncReferenceClient:
         asyncio.run(main())
         """
         response = await self._raw_client.send(
-            query=query,
-            container_object=container_object,
-            maybe_context=maybe_context,
-            request_options=request_options,
+            query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
         )
         return response.data

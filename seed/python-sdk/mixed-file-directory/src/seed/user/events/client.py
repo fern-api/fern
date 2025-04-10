@@ -56,10 +56,7 @@ class EventsClient:
             limit=1,
         )
         """
-        response = self._raw_client.list_events(
-            limit=limit,
-            request_options=request_options,
-        )
+        response = self._raw_client.list_events(limit=limit, request_options=request_options)
         return response.data
 
 
@@ -116,8 +113,5 @@ class AsyncEventsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.list_events(
-            limit=limit,
-            request_options=request_options,
-        )
+        response = await self._raw_client.list_events(limit=limit, request_options=request_options)
         return response.data

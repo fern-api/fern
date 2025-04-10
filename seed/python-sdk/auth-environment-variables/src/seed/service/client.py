@@ -48,9 +48,7 @@ class ServiceClient:
         )
         client.service.get_with_api_key()
         """
-        response = self._raw_client.get_with_api_key(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_with_api_key(request_options=request_options)
         return response.data
 
     def get_with_header(
@@ -88,8 +86,7 @@ class ServiceClient:
         )
         """
         response = self._raw_client.get_with_header(
-            x_endpoint_header=x_endpoint_header,
-            request_options=request_options,
+            x_endpoint_header=x_endpoint_header, request_options=request_options
         )
         return response.data
 
@@ -141,9 +138,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_api_key(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_with_api_key(request_options=request_options)
         return response.data
 
     async def get_with_header(
@@ -189,7 +184,6 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_with_header(
-            x_endpoint_header=x_endpoint_header,
-            request_options=request_options,
+            x_endpoint_header=x_endpoint_header, request_options=request_options
         )
         return response.data

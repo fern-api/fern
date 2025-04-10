@@ -50,9 +50,7 @@ class HomepageClient:
         )
         client.homepage.get_homepage_problems()
         """
-        response = self._raw_client.get_homepage_problems(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_homepage_problems(request_options=request_options)
         return response.data
 
     def set_homepage_problems(
@@ -82,10 +80,7 @@ class HomepageClient:
             request=["string", "string"],
         )
         """
-        response = self._raw_client.set_homepage_problems(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.set_homepage_problems(request=request, request_options=request_options)
         return response.data
 
 
@@ -135,9 +130,7 @@ class AsyncHomepageClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_homepage_problems(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_homepage_problems(request_options=request_options)
         return response.data
 
     async def set_homepage_problems(
@@ -175,8 +168,5 @@ class AsyncHomepageClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.set_homepage_problems(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.set_homepage_problems(request=request, request_options=request_options)
         return response.data
