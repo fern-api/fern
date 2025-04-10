@@ -1050,7 +1050,7 @@ class EndpointFunctionGenerator:
                     if is_async
                     else AST.TypeHint.iterator(underlying_type_hint)
                 )
-            return underlying_type_hint
+            return self._get_pagination_results_type(underlying_type_hint) if self.is_paginated else underlying_type_hint
 
         if is_streaming:
             type_hint = self._get_stream_func_return_type()
