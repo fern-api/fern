@@ -30,7 +30,7 @@ Fern handles transforming a Fern specification into Fern _intermediate represent
 
 Fern is a toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
 
-Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-openapi&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/docs/intro?utm_source=github&utm_medium=readme&utm_campaign=fern-openapi&utm_content=documentation) to dive straight in and find out what Fern can do for you!
+Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-openapi&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/learn?utm_source=github&utm_medium=readme&utm_campaign=fern-openapi&utm_content=documentation) to dive straight in and find out what Fern can do for you!
 
 ## Generating an OpenAPI specification
 
