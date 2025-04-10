@@ -227,8 +227,4 @@ Fern will handle the rest automatically.
 
 ## Contributing
 
-We greatly value community contributions. All the work on Fern generators happens right here on GitHub, both Fern developers and community contributors work together through submitting code via Pull Requests. See the contribution guidelines in [CONTRIBUTING](./CONTRIBUTING.md) on how you can contribute to Fern!
-
-<a href="https://github.com/fern-api/fern-go/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=fern-api/fern-go" />
-</a>
+We greatly value community contributions. All the work on Fern generators happens right here on GitHub, both Fern developers and community contributors work together through submitting code via Pull Requests. See the contribution guidelines in [CONTRIBUTING](../../CONTRIBUTING.md) on how you can contribute to Fern!
