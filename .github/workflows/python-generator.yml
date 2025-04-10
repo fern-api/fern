@@ -22,10 +22,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./generators/python
-        run: |
-          poetry add pydantic=^2.8.2
-          poetry lock
-          poetry install
+        run: poetry install
 
       - name: Type check
         working-directory: ./generators/python
@@ -40,6 +37,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -70,8 +72,6 @@ jobs:
         working-directory: ./generators/python
         run: |
           poetry add pydantic=^1.10
-          poetry add setuptools
-          poetry add imp
           poetry lock
           poetry install
       - name: Unit Test - Pydantic V1
