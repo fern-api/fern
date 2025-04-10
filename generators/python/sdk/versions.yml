@@ -4,6 +4,9 @@
   changelogEntry:
     - type: feat
       summary: |
+        Add support for receiving raw responses from streaming endpoints.
+    - type: feat
+      summary: |
         Add support for excluding types from the generated `__init__.py` files.
 
         ```yaml
