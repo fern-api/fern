@@ -76,6 +76,9 @@ runs:
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
+    - name: Cleanup swap files
+      run: find . -type f -name "*.swp" -delete
+
     - name: Validate results
       if: inputs.validate-git-diff == 'true'
       id: validate
