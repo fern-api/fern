@@ -533,6 +533,7 @@ function getAudiences({ operation }: { operation: ConvertedOperation }): string[
             endpointAudiences = operation.streaming.audiences;
             break;
         case "webhook":
+            endpointAudiences = operation.value.audiences;
             break;
         default:
             assertNever(operation);
