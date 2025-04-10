@@ -118,7 +118,7 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add support for websocket code generation.
+        Add support for websocket code generation. 
 
 - version: 4.4.0
   irVersion: 57
@@ -153,8 +153,8 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix an issue where the `request_options` parameter name is now properly respected when it's
-        renamed due to conflicts with other parameter names. Previously, the code would still reference the
+        Fix an issue where the `request_options` parameter name is now properly respected when it's 
+        renamed due to conflicts with other parameter names. Previously, the code would still reference the 
         original parameter name internally, causing errors.
 
 - version: 4.3.17
@@ -162,7 +162,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
         prepending an underscore to the `request_options` parameter name.
 
 - version: 4.3.16
