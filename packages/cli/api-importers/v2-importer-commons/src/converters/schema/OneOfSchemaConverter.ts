@@ -21,7 +21,7 @@ export declare namespace OneOfSchemaConverter {
     }
 
     export interface Output {
-        union: Type;
+        type: Type;
         inlinedTypes?: Record<TypeId, TypeDeclaration>;
     }
 }
@@ -136,7 +136,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         }
 
         return {
-            union: Type.union({
+            type: Type.union({
                 baseProperties,
                 discriminant: context.casingsGenerator.generateNameAndWireValue({
                     name: this.schema.discriminator.propertyName,
@@ -204,7 +204,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         }
 
         return {
-            union: Type.undiscriminatedUnion({
+            type: Type.undiscriminatedUnion({
                 members: unionTypes
             }),
             inlinedTypes

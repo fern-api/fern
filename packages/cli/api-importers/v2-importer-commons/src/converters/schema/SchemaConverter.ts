@@ -6,6 +6,7 @@ import { AbstractConverter, AbstractConverterContext, ErrorCollector, Extensions
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
 import { EnumSchemaConverter } from "./EnumSchemaConverter";
+import { MapSchemaConverter } from "./MapSchemaConverter";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
 import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
@@ -135,7 +136,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 const objectType = await objectConverter.convert({ context, errorCollector });
                 if (objectType != null) {
                     const typeDeclaration = await this.createTypeDeclaration({
-                        shape: objectType.object,
+                        shape: objectType.type,
                         context,
                         errorCollector
                     });
@@ -189,8 +190,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 inlinedTypes: {}
             });
             const oneOfType = await oneOfConverter.convert({ context, errorCollector });
-            if (oneOfType != null && oneOfType.union.type === "undiscriminatedUnion") {
-                let wrappedUnion = oneOfType.union;
+            if (oneOfType != null && oneOfType.type.type === "undiscriminatedUnion") {
+                let wrappedUnion = oneOfType.type;
                 if (wrapAsNullable) {
                     wrappedUnion = FernIr.Type.undiscriminatedUnion({
                         members: wrappedUnion.members.map((member) => ({
@@ -293,11 +294,35 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             if (oneOfType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
-                        shape: oneOfType.union,
+                        shape: oneOfType.type,
                         context,
                         errorCollector
                     }),
                     inlinedTypes: oneOfType.inlinedTypes ?? {}
+                };
+            }
+        }
+
+        if (
+            typeof this.schema.additionalProperties === "object" &&
+            this.schema.additionalProperties != null &&
+            !this.schema.properties &&
+            !this.schema.allOf
+        ) {
+            const additionalPropertiesConverter = new MapSchemaConverter({
+                breadcrumbs: this.breadcrumbs,
+                schema: this.schema.additionalProperties,
+                inlinedTypes: {}
+            });
+            const additionalPropertiesType = await additionalPropertiesConverter.convert({ context, errorCollector });
+            if (additionalPropertiesType != null) {
+                return {
+                    typeDeclaration: await this.createTypeDeclaration({
+                        shape: additionalPropertiesType.type,
+                        context,
+                        errorCollector
+                    }),
+                    inlinedTypes: additionalPropertiesType.inlinedTypes ?? {}
                 };
             }
         }
@@ -312,7 +337,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             if (objectType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
-                        shape: objectType.object,
+                        shape: objectType.type,
                         context,
                         errorCollector
                     }),

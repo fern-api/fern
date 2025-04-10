@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Correctly parse schema-valued additionalProperties in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.21
+
+- changelogEntry:
+  - summary: |
       Correctly parse primitive type arrays in the v3 OpenAPI parser.
     type: fix
   irVersion: 57
@@ -19,6 +26,7 @@
       flattened, but now the file structure will mirror the navigation hierarchy, preserving the original organization of documentation.
     type: fix
   irVersion: 57
+
   version: 0.57.18
 
 - changelogEntry:
