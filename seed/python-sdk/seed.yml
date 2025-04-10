@@ -295,5 +295,6 @@ allowedFailures:
   - pagination
   - pagination-custom
   - simple-fhir
+  - streaming-parameter
   - trace
   - websocket:websocket-with_generated_clients

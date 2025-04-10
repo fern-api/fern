@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.metadata import Metadata
+from .types.metadata_union import MetadataUnion
 from ..core.client_wrapper import AsyncClientWrapper
 from ..core.http_response import AsyncHttpResponse
 
@@ -88,6 +89,84 @@ class RawUnionClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def update_metadata(
+        self, *, request: MetadataUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[bool]:
+        """
+        Parameters
+        ----------
+        request : MetadataUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[bool]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "metadata",
+            method="PUT",
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=MetadataUnion, direction="write"),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def call(
+        self, *, union: typing.Optional[MetadataUnion] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[bool]:
+        """
+        Parameters
+        ----------
+        union : typing.Optional[MetadataUnion]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[bool]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "call",
+            method="POST",
+            json={
+                "union": convert_and_respect_annotation_metadata(
+                    object_=union, annotation=MetadataUnion, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncRawUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -153,6 +232,84 @@ class AsyncRawUnionClient:
                     Metadata,
                     parse_obj_as(
                         type_=Metadata,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_metadata(
+        self, *, request: MetadataUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[bool]:
+        """
+        Parameters
+        ----------
+        request : MetadataUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[bool]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "metadata",
+            method="PUT",
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=MetadataUnion, direction="write"),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def call(
+        self, *, union: typing.Optional[MetadataUnion] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[bool]:
+        """
+        Parameters
+        ----------
+        union : typing.Optional[MetadataUnion]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[bool]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "call",
+            method="POST",
+            json={
+                "union": convert_and_respect_annotation_metadata(
+                    object_=union, annotation=MetadataUnion, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    bool,
+                    parse_obj_as(
+                        type_=bool,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

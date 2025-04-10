@@ -25,9 +25,11 @@ from seed import SeedStreaming
 client = SeedStreaming(
     base_url="https://yourhost.com/path/to/api",
 )
-client.dummy.generate(
-    num_events=5,
+response = client.dummy.generate_stream(
+    num_events=1,
 )
+for chunk in response.data:
+    yield chunk
 ```
 
 ## Async Client
@@ -45,9 +47,11 @@ client = AsyncSeedStreaming(
 
 
 async def main() -> None:
-    await client.dummy.generate(
-        num_events=5,
+    response = await client.dummy.generate_stream(
+        num_events=1,
     )
+    async for chunk in response.data:
+        yield chunk
 
 
 asyncio.run(main())
@@ -62,10 +66,27 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.dummy.generate(...)
+    client.dummy.generate_stream(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
+```
+
+## Streaming
+
+The SDK supports streaming responses, as well, the response will be a generator that you can loop over.
+
+```python
+from seed import SeedStreaming
+
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.dummy.generate_stream(
+    num_events=1,
+)
+for chunk in response.data:
+    yield chunk
 ```
 
 ## Advanced
@@ -85,7 +106,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.dummy.generate(..., request_options={
+client.dummy.generate_stream(..., request_options={
     "max_retries": 1
 })
 ```
@@ -105,7 +126,7 @@ client = SeedStreaming(
 
 
 # Override timeout for a specific method
-client.dummy.generate(..., request_options={
+client.dummy.generate_stream(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

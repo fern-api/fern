@@ -77,9 +77,7 @@ class AdminClient:
         )
         """
         response = self._raw_client.update_test_submission_status(
-            submission_id,
-            request=request,
-            request_options=request_options,
+            submission_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -130,10 +128,7 @@ class AdminClient:
         )
         """
         response = self._raw_client.send_test_submission_update(
-            submission_id,
-            update_time=update_time,
-            update_info=update_info,
-            request_options=request_options,
+            submission_id, update_time=update_time, update_info=update_info, request_options=request_options
         )
         return response.data
 
@@ -177,9 +172,7 @@ class AdminClient:
         )
         """
         response = self._raw_client.update_workspace_submission_status(
-            submission_id,
-            request=request,
-            request_options=request_options,
+            submission_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -232,10 +225,7 @@ class AdminClient:
         )
         """
         response = self._raw_client.send_workspace_submission_update(
-            submission_id,
-            update_time=update_time,
-            update_info=update_info,
-            request_options=request_options,
+            submission_id, update_time=update_time, update_info=update_info, request_options=request_options
         )
         return response.data
 
@@ -380,11 +370,7 @@ class AdminClient:
         )
         """
         response = self._raw_client.store_traced_test_case(
-            submission_id,
-            test_case_id,
-            result=result,
-            trace_responses=trace_responses,
-            request_options=request_options,
+            submission_id, test_case_id, result=result, trace_responses=trace_responses, request_options=request_options
         )
         return response.data
 
@@ -519,10 +505,7 @@ class AdminClient:
         )
         """
         response = self._raw_client.store_traced_test_case_v_2(
-            submission_id,
-            test_case_id,
-            request=request,
-            request_options=request_options,
+            submission_id, test_case_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -797,9 +780,7 @@ class AdminClient:
         )
         """
         response = self._raw_client.store_traced_workspace_v_2(
-            submission_id,
-            request=request,
-            request_options=request_options,
+            submission_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -866,9 +847,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         response = await self._raw_client.update_test_submission_status(
-            submission_id,
-            request=request,
-            request_options=request_options,
+            submission_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -928,10 +907,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         response = await self._raw_client.send_test_submission_update(
-            submission_id,
-            update_time=update_time,
-            update_info=update_info,
-            request_options=request_options,
+            submission_id, update_time=update_time, update_info=update_info, request_options=request_options
         )
         return response.data
 
@@ -982,9 +958,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         response = await self._raw_client.update_workspace_submission_status(
-            submission_id,
-            request=request,
-            request_options=request_options,
+            submission_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -1044,10 +1018,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         response = await self._raw_client.send_workspace_submission_update(
-            submission_id,
-            update_time=update_time,
-            update_info=update_info,
-            request_options=request_options,
+            submission_id, update_time=update_time, update_info=update_info, request_options=request_options
         )
         return response.data
 
@@ -1199,11 +1170,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         response = await self._raw_client.store_traced_test_case(
-            submission_id,
-            test_case_id,
-            result=result,
-            trace_responses=trace_responses,
-            request_options=request_options,
+            submission_id, test_case_id, result=result, trace_responses=trace_responses, request_options=request_options
         )
         return response.data
 
@@ -1345,10 +1312,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         response = await self._raw_client.store_traced_test_case_v_2(
-            submission_id,
-            test_case_id,
-            request=request,
-            request_options=request_options,
+            submission_id, test_case_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -1637,8 +1601,6 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         response = await self._raw_client.store_traced_workspace_v_2(
-            submission_id,
-            request=request,
-            request_options=request_options,
+            submission_id, request=request, request_options=request_options
         )
         return response.data

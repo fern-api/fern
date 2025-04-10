@@ -166,10 +166,7 @@ class ObjectClient:
             string="string",
         )
         """
-        response = self._raw_client.get_and_return_with_required_field(
-            string=string,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_and_return_with_required_field(string=string, request_options=request_options)
         return response.data
 
     def get_and_return_with_map_of_map(
@@ -199,10 +196,7 @@ class ObjectClient:
             map_={"map": {"map": "map"}},
         )
         """
-        response = self._raw_client.get_and_return_with_map_of_map(
-            map_=map_,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
         return response.data
 
     def get_and_return_nested_with_optional_field(
@@ -264,9 +258,7 @@ class ObjectClient:
         )
         """
         response = self._raw_client.get_and_return_nested_with_optional_field(
-            string=string,
-            nested_object=nested_object,
-            request_options=request_options,
+            string=string, nested_object=nested_object, request_options=request_options
         )
         return response.data
 
@@ -333,10 +325,7 @@ class ObjectClient:
         )
         """
         response = self._raw_client.get_and_return_nested_with_required_field(
-            string_,
-            string=string,
-            nested_object=nested_object,
-            request_options=request_options,
+            string_, string=string, nested_object=nested_object, request_options=request_options
         )
         return response.data
 
@@ -427,8 +416,7 @@ class ObjectClient:
         )
         """
         response = self._raw_client.get_and_return_nested_with_required_field_as_list(
-            request=request,
-            request_options=request_options,
+            request=request, request_options=request_options
         )
         return response.data
 
@@ -597,8 +585,7 @@ class AsyncObjectClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_and_return_with_required_field(
-            string=string,
-            request_options=request_options,
+            string=string, request_options=request_options
         )
         return response.data
 
@@ -637,10 +624,7 @@ class AsyncObjectClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_with_map_of_map(
-            map_=map_,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
         return response.data
 
     async def get_and_return_nested_with_optional_field(
@@ -709,9 +693,7 @@ class AsyncObjectClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_and_return_nested_with_optional_field(
-            string=string,
-            nested_object=nested_object,
-            request_options=request_options,
+            string=string, nested_object=nested_object, request_options=request_options
         )
         return response.data
 
@@ -785,10 +767,7 @@ class AsyncObjectClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_and_return_nested_with_required_field(
-            string_,
-            string=string,
-            nested_object=nested_object,
-            request_options=request_options,
+            string_, string=string, nested_object=nested_object, request_options=request_options
         )
         return response.data
 
@@ -886,7 +865,6 @@ class AsyncObjectClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
-            request=request,
-            request_options=request_options,
+            request=request, request_options=request_options
         )
         return response.data

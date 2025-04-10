@@ -46,9 +46,7 @@ class ServiceClient:
         )
         client.folder.service.endpoint()
         """
-        response = self._raw_client.endpoint(
-            request_options=request_options,
-        )
+        response = self._raw_client.endpoint(request_options=request_options)
         return response.data
 
     def unknown_request(
@@ -77,10 +75,7 @@ class ServiceClient:
             request={"key": "value"},
         )
         """
-        response = self._raw_client.unknown_request(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.unknown_request(request=request, request_options=request_options)
         return response.data
 
 
@@ -127,9 +122,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.endpoint(
-            request_options=request_options,
-        )
+        response = await self._raw_client.endpoint(request_options=request_options)
         return response.data
 
     async def unknown_request(
@@ -166,8 +159,5 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.unknown_request(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.unknown_request(request=request, request_options=request_options)
         return response.data

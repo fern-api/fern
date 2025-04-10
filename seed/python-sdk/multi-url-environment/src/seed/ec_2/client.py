@@ -50,10 +50,7 @@ class Ec2Client:
             size="size",
         )
         """
-        response = self._raw_client.boot_instance(
-            size=size,
-            request_options=request_options,
-        )
+        response = self._raw_client.boot_instance(size=size, request_options=request_options)
         return response.data
 
 
@@ -104,8 +101,5 @@ class AsyncEc2Client:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.boot_instance(
-            size=size,
-            request_options=request_options,
-        )
+        response = await self._raw_client.boot_instance(size=size, request_options=request_options)
         return response.data

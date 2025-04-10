@@ -60,9 +60,7 @@ class ServiceClient:
         )
         """
         response = self._raw_client.patch(
-            application=application,
-            require_auth=require_auth,
-            request_options=request_options,
+            application=application, require_auth=require_auth, request_options=request_options
         )
         return response.data
 
@@ -124,8 +122,6 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         response = await self._raw_client.patch(
-            application=application,
-            require_auth=require_auth,
-            request_options=request_options,
+            application=application, require_auth=require_auth, request_options=request_options
         )
         return response.data
