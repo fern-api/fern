@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.14.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generated GitHub workflow now uses `ubuntu-latest` instead of `ubuntu-20.04`
+
 - version: 4.14.0
   irVersion: 57
   changelogEntry:

@@ -131,10 +131,7 @@ class ServiceClient:
         -------
         None
         """
-        response = self._raw_client.just_file(
-            file=file,
-            request_options=request_options,
-        )
+        response = self._raw_client.just_file(file=file, request_options=request_options)
         return response.data
 
     def just_file_with_query_params(
@@ -211,11 +208,7 @@ class ServiceClient:
         None
         """
         response = self._raw_client.with_content_type(
-            file=file,
-            foo=foo,
-            bar=bar,
-            foo_bar=foo_bar,
-            request_options=request_options,
+            file=file, foo=foo, bar=bar, foo_bar=foo_bar, request_options=request_options
         )
         return response.data
 
@@ -239,12 +232,7 @@ class ServiceClient:
         -------
         None
         """
-        response = self._raw_client.with_form_encoding(
-            file=file,
-            foo=foo,
-            bar=bar,
-            request_options=request_options,
-        )
+        response = self._raw_client.with_form_encoding(file=file, foo=foo, bar=bar, request_options=request_options)
         return response.data
 
     def with_form_encoded_containers(
@@ -358,9 +346,7 @@ class ServiceClient:
         str
         """
         response = self._raw_client.optional_args(
-            image_file=image_file,
-            request=request,
-            request_options=request_options,
+            image_file=image_file, request=request, request_options=request_options
         )
         return response.data
 
@@ -478,10 +464,7 @@ class AsyncServiceClient:
         -------
         None
         """
-        response = await self._raw_client.just_file(
-            file=file,
-            request_options=request_options,
-        )
+        response = await self._raw_client.just_file(file=file, request_options=request_options)
         return response.data
 
     async def just_file_with_query_params(
@@ -558,11 +541,7 @@ class AsyncServiceClient:
         None
         """
         response = await self._raw_client.with_content_type(
-            file=file,
-            foo=foo,
-            bar=bar,
-            foo_bar=foo_bar,
-            request_options=request_options,
+            file=file, foo=foo, bar=bar, foo_bar=foo_bar, request_options=request_options
         )
         return response.data
 
@@ -587,10 +566,7 @@ class AsyncServiceClient:
         None
         """
         response = await self._raw_client.with_form_encoding(
-            file=file,
-            foo=foo,
-            bar=bar,
-            request_options=request_options,
+            file=file, foo=foo, bar=bar, request_options=request_options
         )
         return response.data
 
@@ -705,8 +681,6 @@ class AsyncServiceClient:
         str
         """
         response = await self._raw_client.optional_args(
-            image_file=image_file,
-            request=request,
-            request_options=request_options,
+            image_file=image_file, request=request, request_options=request_options
         )
         return response.data

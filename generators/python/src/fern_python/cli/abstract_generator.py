@@ -212,7 +212,7 @@ poetry.toml
 on: [push]
 jobs:
   compile:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -228,7 +228,7 @@ jobs:
       - name: Compile
         run: poetry run mypy .
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -267,7 +267,7 @@ jobs:
   publish:
     needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
