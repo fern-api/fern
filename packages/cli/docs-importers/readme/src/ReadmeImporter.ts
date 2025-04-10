@@ -13,7 +13,7 @@ import { parsePage } from "./parse/parsePage";
 import { retrieveRootNavElement } from "./parse/parseRootNav";
 import { parseSidebar } from "./parse/parseSidebar";
 import { parseTabLinks } from "./parse/parseTabs";
-import { scrapedNavigationGroup, scrapedNavigationSection } from "./types/scrapedNavigation";
+import { scrapedNavigationGroup, scrapedNavigationPage, scrapedNavigationSection } from "./types/scrapedNavigation";
 import { getColors } from "./utils/colors";
 import { getLogos } from "./utils/files/logo";
 import { htmlToHast } from "./utils/hast";
@@ -78,10 +78,10 @@ export class ReadmeImporter extends DocsImporter<object> {
                 this.absolutePathToFernDirectory,
                 RelativeFilePath.of(this.kebabCaseWithoutEmojies(tab.name))
             );
-            await this.downloadMarkdownPages({
-                absolutePathToOutputDirectory,
-                sections: sidebar
-            });
+            // await this.downloadMarkdownPages({
+            //     absolutePathToOutputDirectory,
+            //     sections: sidebar
+            // });
             const navigationItems = await this.getNavigationItems({ absolutePathToOutputDirectory, sections: sidebar });
             for (const item of navigationItems) {
                 nav.addItem({ item });
@@ -205,9 +205,9 @@ export class ReadmeImporter extends DocsImporter<object> {
 
             await Promise.all(
                 section.pages
-                    .filter((page): page is string => typeof page === "string")
+                    .filter((page): page is scrapedNavigationPage => page.type === "page")
                     .map(async (page) => {
-                        const url = new URL(page.toString(), this.url);
+                        const url = new URL(page.slug.toString(), this.url);
                         this.logger.debug(`Fetching page: ${url.toString()}`);
                         const html = await fetchPageHtml({ url });
 
@@ -222,7 +222,7 @@ export class ReadmeImporter extends DocsImporter<object> {
                         if (result.success && result.data) {
                             const absolutePathForPage = this.getAbsolutePathToOutputFileForPage({
                                 absolutePathToOutputDirectoryForSection,
-                                page
+                                page: page.slug
                             });
 
                             await writeFile(absolutePathForPage, result.data.mdx);
@@ -274,12 +274,12 @@ export class ReadmeImporter extends DocsImporter<object> {
             // Process nested navigation groups recursively
             await Promise.all(
                 section.pages
-                    .filter((page): page is scrapedNavigationGroup => typeof page !== "string")
+                    .filter((page): page is scrapedNavigationGroup => page.type === "group")
                     .map(async (nestedGroup) => {
                         this.logger.debug(`Processing nested group: ${nestedGroup.group}`);
                         await this.downloadMarkdownPages({
                             absolutePathToOutputDirectory: absolutePathToOutputDirectoryForSection,
-                            sections: [{ group: nestedGroup.group, pages: nestedGroup.pages }]
+                            sections: [{ type: "group", group: nestedGroup.group, pages: nestedGroup.pages }]
                         });
                     })
             );
@@ -308,40 +308,25 @@ export class ReadmeImporter extends DocsImporter<object> {
                 slug: this.kebabCaseWithoutEmojies(section.group)
             };
 
-            // Process string pages (direct links)
-            for (const page of section.pages.filter((page): page is string => typeof page === "string")) {
-                const pageName = page.split("/").pop() || page;
-                sectionItem.contents.push({
-                    page: pageName,
-                    path: relativize(
-                        this.absolutePathToFernDirectory,
-                        this.getAbsolutePathToOutputFileForPage({
-                            absolutePathToOutputDirectoryForSection,
-                            page
-                        })
-                    )
-                });
-            }
-
-            // Process nested groups recursively
-            for (const nestedGroup of section.pages.filter(
-                (page): page is scrapedNavigationGroup => typeof page !== "string"
-            )) {
-                const nestedSection: docsYml.RawSchemas.SectionConfiguration = {
-                    section: nestedGroup.group,
-                    contents: await this.getNavigationItems({
+            for (const page of section.pages) {
+                if (page.type === "page") {
+                    sectionItem.contents.push({
+                        page: page.page,
+                        path: relativize(
+                            this.absolutePathToFernDirectory,
+                            this.getAbsolutePathToOutputFileForPage({
+                                absolutePathToOutputDirectoryForSection,
+                                page: page.slug
+                            })
+                        )
+                    });
+                } else {
+                    const nestedItems =  await this.getNavigationItems({
                         absolutePathToOutputDirectory: absolutePathToOutputDirectoryForSection,
-                        sections: [
-                            {
-                                group: nestedGroup.group,
-                                pages: nestedGroup.pages.filter((page): page is string => typeof page === "string")
-                            }
-                        ]
-                    }),
-                    slug: this.kebabCaseWithoutEmojies(nestedGroup.group)
-                };
-
-                sectionItem.contents.push(nestedSection);
+                        sections: [ page ]
+                    });
+                    sectionItem.contents.push(...nestedItems);
+                }
             }
 
             navigationItems.push(sectionItem);
