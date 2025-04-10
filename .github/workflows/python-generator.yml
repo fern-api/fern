@@ -67,6 +67,7 @@ jobs:
         working-directory: ./generators/python
         run: |
           poetry add pydantic=^1.10
+          poetry add setuptools
           poetry lock
           poetry install
       - name: Unit Test - Pydantic V1
