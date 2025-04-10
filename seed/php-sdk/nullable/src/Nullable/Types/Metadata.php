@@ -51,6 +51,8 @@ class Metadata extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        parent::__construct($values);
+
         $this->createdAt = $values['createdAt'];
         $this->updatedAt = $values['updatedAt'];
         $this->avatar = $values['avatar'] ?? null;
