@@ -1,15 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { isNonNullish } from "@fern-api/core-utils";
-import {
-    ContainerType,
-    ObjectProperty,
-    PrimitiveTypeV2,
-    Type,
-    TypeDeclaration,
-    TypeId,
-    TypeReference
-} from "@fern-api/ir-sdk";
+import { ContainerType, PrimitiveTypeV2, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
@@ -17,12 +8,11 @@ import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 export declare namespace MapSchemaConverter {
     export interface Args extends AbstractConverter.Args {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
     }
 
     export interface Output {
         type: Type;
-        inlinedTypes?: Record<TypeId, TypeDeclaration>;
+        inlinedTypes: Record<TypeId, TypeDeclaration>;
     }
 }
 

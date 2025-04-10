@@ -45,172 +45,14 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaConverter.Output | undefined> {
-        const fernTypeConverter = new Extensions.FernTypeExtension({
-            breadcrumbs: this.breadcrumbs,
-            schema: this.schema
-        });
-        const fernType = fernTypeConverter.convert({ context, errorCollector });
-        if (fernType != null) {
-            const typeDeclaration = await this.createTypeDeclarationFromFernType({
-                fernType,
-                context,
-                errorCollector
-            });
-            if (typeDeclaration != null) {
-                return {
-                    typeDeclaration,
-                    inlinedTypes: {}
-                };
-            }
-        }
-
-        if (Array.isArray(this.schema.type)) {
-            return this.convertPrimitiveTypeArraySchema({ context, errorCollector });
+        const maybeFernTypeDeclaration = await this.tryConvertFernTypeDeclaration({ context, errorCollector });
+        if (maybeFernTypeDeclaration != null) {
+            return {
+                typeDeclaration: maybeFernTypeDeclaration,
+                inlinedTypes: {}
+            };
         }
         return this.convertSchema({ context, errorCollector });
-    }
-
-    private async convertPrimitiveTypeArraySchema({
-        context,
-        errorCollector
-    }: {
-        context: AbstractConverterContext<object>;
-        errorCollector: ErrorCollector;
-    }): Promise<SchemaConverter.Output | undefined> {
-        if (this.schema.type == null) {
-            errorCollector.collect({
-                message: `Received null schema type: ${JSON.stringify(this.schema)}`,
-                path: this.breadcrumbs
-            });
-            return undefined;
-        }
-        if (!Array.isArray(this.schema.type) || this.schema.type.length === 0) {
-            errorCollector.collect({
-                message: `Received invalid array schema: ${JSON.stringify(this.schema.type)}`,
-                path: this.breadcrumbs
-            });
-            return undefined;
-        }
-        const updatedSchema: OpenAPIV3_1.SchemaObject = this.schema;
-        const wrapAsNullable = this.schema.type.includes("null");
-        updatedSchema.type = this.schema.type.filter((type) => type !== "null");
-        if (updatedSchema.type.length === 0) {
-            errorCollector.collect({
-                message: `Received schema ${JSON.stringify(this.schema)} with unsupported primitive types: ${JSON.stringify(this.schema.type)}`,
-                path: this.breadcrumbs
-            });
-            return undefined;
-        }
-
-        if (updatedSchema.type.length === 1) {
-            updatedSchema.type = updatedSchema.type[0];
-            if (updatedSchema.type == null) {
-                return undefined;
-            }
-            if (this.SUPPORTED_UNION_PRIMITIVE_TYPES.includes(updatedSchema.type)) {
-                const primitiveConverter = new PrimitiveSchemaConverter({ schema: updatedSchema });
-                const primitiveType = primitiveConverter.convert({ context, errorCollector });
-                if (primitiveType != null) {
-                    const maybeWrappedType = wrapAsNullable
-                        ? this.wrapTypeReferenceAsNullable(primitiveType)
-                        : primitiveType;
-                    return {
-                        typeDeclaration: await this.createTypeDeclaration({
-                            shape: FernIr.Type.alias({
-                                aliasOf: maybeWrappedType,
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                resolvedType: maybeWrappedType as any
-                            }),
-                            context,
-                            errorCollector
-                        }),
-                        inlinedTypes: {}
-                    };
-                }
-            } else if (updatedSchema.type === "object") {
-                const objectConverter = new ObjectSchemaConverter({
-                    breadcrumbs: this.breadcrumbs,
-                    schema: updatedSchema,
-                    inlinedTypes: {}
-                });
-                const objectType = await objectConverter.convert({ context, errorCollector });
-                if (objectType != null) {
-                    const typeDeclaration = await this.createTypeDeclaration({
-                        shape: objectType.type,
-                        context,
-                        errorCollector
-                    });
-                    return {
-                        typeDeclaration: {
-                            ...typeDeclaration,
-                            shape: wrapAsNullable
-                                ? this.wrapObjectTypeAsNullable(context, typeDeclaration.shape)
-                                : typeDeclaration.shape
-                        },
-                        inlinedTypes: {
-                            ...objectType.inlinedTypes,
-                            [this.id]: typeDeclaration
-                        }
-                    };
-                }
-            } else if (updatedSchema.type === "array") {
-                const arrayConverter = new ArraySchemaConverter({
-                    breadcrumbs: this.breadcrumbs,
-                    schema: updatedSchema
-                });
-                const arrayType = await arrayConverter.convert({ context, errorCollector });
-                if (arrayType != null) {
-                    return {
-                        typeDeclaration: await this.createTypeDeclaration({
-                            shape: FernIr.Type.alias({
-                                aliasOf: wrapAsNullable
-                                    ? this.wrapTypeReferenceAsNullable(arrayType.typeReference)
-                                    : arrayType.typeReference,
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                resolvedType: arrayType.typeReference as any
-                            }),
-                            context,
-                            errorCollector
-                        }),
-                        inlinedTypes: arrayType.inlinedTypes ?? {}
-                    };
-                }
-            }
-        } else {
-            updatedSchema.type = updatedSchema.type.filter((type) =>
-                this.SUPPORTED_UNION_PRIMITIVE_TYPES.includes(type)
-            );
-            updatedSchema.oneOf = updatedSchema.type.map((type) => ({
-                // Array schema types must be NonArraySchemaObjectType values.
-                type: type as OpenAPIV3_1.NonArraySchemaObjectType
-            }));
-            const oneOfConverter = new OneOfSchemaConverter({
-                breadcrumbs: this.breadcrumbs,
-                schema: updatedSchema,
-                inlinedTypes: {}
-            });
-            const oneOfType = await oneOfConverter.convert({ context, errorCollector });
-            if (oneOfType != null && oneOfType.type.type === "undiscriminatedUnion") {
-                let wrappedUnion = oneOfType.type;
-                if (wrapAsNullable) {
-                    wrappedUnion = FernIr.Type.undiscriminatedUnion({
-                        members: wrappedUnion.members.map((member) => ({
-                            ...member,
-                            type: this.wrapTypeReferenceAsNullable(member.type)
-                        }))
-                    });
-                }
-                return {
-                    typeDeclaration: await this.createTypeDeclaration({
-                        shape: wrappedUnion,
-                        context,
-                        errorCollector
-                    }),
-                    inlinedTypes: oneOfType.inlinedTypes ?? {}
-                };
-            }
-        }
-        return undefined;
     }
 
     private async convertSchema({
@@ -236,7 +78,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             if (enumType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
-                        shape: enumType.enum,
+                        shape: enumType.type,
                         context,
                         errorCollector
                     }),
@@ -279,9 +121,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         context,
                         errorCollector
                     }),
-                    inlinedTypes: arrayType.inlinedTypes ?? {}
+                    inlinedTypes: arrayType.inlinedTypes
                 };
             }
+        }
+
+        if (Array.isArray(this.schema.type)) {
+            const schemaTypeArray = this.schema.type;
+            this.schema.type = undefined;
+            this.schema.oneOf = schemaTypeArray.map((type) => ({ type: type as OpenAPIV3_1.NonArraySchemaObjectType }));
         }
 
         if (this.schema.oneOf != null || this.schema.anyOf != null) {
@@ -298,7 +146,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         context,
                         errorCollector
                     }),
-                    inlinedTypes: oneOfType.inlinedTypes ?? {}
+                    inlinedTypes: oneOfType.inlinedTypes
                 };
             }
         }
@@ -311,8 +159,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         ) {
             const additionalPropertiesConverter = new MapSchemaConverter({
                 breadcrumbs: this.breadcrumbs,
-                schema: this.schema.additionalProperties,
-                inlinedTypes: {}
+                schema: this.schema.additionalProperties
             });
             const additionalPropertiesType = await additionalPropertiesConverter.convert({ context, errorCollector });
             if (additionalPropertiesType != null) {
@@ -322,7 +169,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         context,
                         errorCollector
                     }),
-                    inlinedTypes: additionalPropertiesType.inlinedTypes ?? {}
+                    inlinedTypes: additionalPropertiesType.inlinedTypes
                 };
             }
         }
@@ -330,8 +177,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
                 breadcrumbs: this.breadcrumbs,
-                schema: this.schema,
-                inlinedTypes: {}
+                schema: this.schema
             });
             const objectType = await objectConverter.convert({ context, errorCollector });
             if (objectType != null) {
@@ -341,11 +187,36 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         context,
                         errorCollector
                     }),
-                    inlinedTypes: objectType.inlinedTypes ?? {}
+                    inlinedTypes: objectType.inlinedTypes
                 };
             }
         }
 
+        return undefined;
+    }
+
+    private async tryConvertFernTypeDeclaration({
+        context,
+        errorCollector
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<FernIr.TypeDeclaration | undefined> {
+        const fernTypeConverter = new Extensions.FernTypeExtension({
+            breadcrumbs: this.breadcrumbs,
+            schema: this.schema
+        });
+        const fernType = fernTypeConverter.convert({ context, errorCollector });
+        if (fernType != null) {
+            const typeDeclaration = await this.createTypeDeclarationFromFernType({
+                fernType,
+                context,
+                errorCollector
+            });
+            if (typeDeclaration != null) {
+                return typeDeclaration;
+            }
+        }
         return undefined;
     }
 

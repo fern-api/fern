@@ -1,0 +1,56 @@
+import { OpenAPIV3_1 } from "openapi-types";
+
+import { ObjectProperty, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
+
+import { AbstractConverterContext } from "../AbstractConverterContext";
+import { ErrorCollector } from "../ErrorCollector";
+import { SchemaOrReferenceConverter } from "../converters/schema/SchemaOrReferenceConverter";
+
+export async function convertProperties({
+    properties,
+    required,
+    breadcrumbs,
+    context,
+    errorCollector
+}: {
+    properties: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>;
+    required: string[];
+    breadcrumbs: string[];
+    context: AbstractConverterContext<object>;
+    errorCollector: ErrorCollector;
+}): Promise<{ convertedProperties: ObjectProperty[]; inlinedTypesFromProperties: Record<TypeId, TypeDeclaration> }> {
+    const convertedProperties: ObjectProperty[] = [];
+    let inlinedTypesFromProperties: Record<TypeId, TypeDeclaration> = {};
+    for (const [propertyName, propertySchema] of Object.entries(properties ?? {})) {
+        const propertyBreadcrumbs = [...breadcrumbs, "properties", propertyName];
+        const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
+        const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
+
+        const propertySchemaConverter = new SchemaOrReferenceConverter({
+            breadcrumbs: propertyBreadcrumbs,
+            schemaOrReference: propertySchema,
+            schemaIdOverride: propertyId,
+            wrapAsOptional: !required.includes(propertyName),
+            wrapAsNullable: isNullable
+        });
+        const convertedProperty = await propertySchemaConverter.convert({ context, errorCollector });
+        if (convertedProperty != null) {
+            convertedProperties.push({
+                name: context.casingsGenerator.generateNameAndWireValue({
+                    name: propertyName,
+                    wireValue: propertyName
+                }),
+                valueType: convertedProperty.type,
+                docs: propertySchema.description,
+                availability: convertedProperty.availability,
+                propertyAccess: await context.getPropertyAccess(propertySchema),
+                example: undefined
+            });
+            inlinedTypesFromProperties = {
+                ...inlinedTypesFromProperties,
+                ...convertedProperty.inlinedTypes
+            };
+        }
+    }
+    return { convertedProperties, inlinedTypesFromProperties };
+}
