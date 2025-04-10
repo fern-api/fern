@@ -210,6 +210,9 @@ fixtures:
         use_typeddict_requests: true
         use_typeddict_requests_for_file_upload: true
       outputFolder: use_typeddict_requests
+    - customConfig:
+        exclude_types_from_init_exports: true
+      outputFolder: exclude_types_from_init_exports
   unions:
     - customConfig: null
       outputFolder: no-custom-config
