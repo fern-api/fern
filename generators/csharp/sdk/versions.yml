@@ -7,6 +7,38 @@
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
 
+- version: 1.16.00
+  createdAt: "2025-04-10"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add read-only and writeable additional properties for request and response types.
+
+        Example:
+        ```csharp
+        var request = new FooRequest
+        {
+            Id = "123",
+            AdditionalProperties =
+            {
+                ["extra1"] = new { value = 42 },
+                ["extra2"] = DateTime.Now,
+                ["extra3"] = 99
+            }
+        };
+
+        var response = await client.Foo.CreateAsync(request);
+
+        Dictionary<string, JsonElement> jsonElements = response.AdditionalProperties.ToJsonElementDictionary();
+        Dictionary<string, int> extra1 = jsonElements["extra1"].Deserialize<Dictionary<string, int>>();
+        DateTime extra2 = jsonElements["extra2"].GetDateTime();
+        int extra3 = jsonElements["extra3"].GetInt32();
+        ````
+
+        To enable this feature, configure `experimental-additional-properties: true` in the `config` section of your C# generator in generators.yml.
+        This will become the default in the future.
+
 - version: 1.15.14
   createdAt: "2025-04-07"
   irVersion: 57
