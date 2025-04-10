@@ -1050,7 +1050,7 @@ class EndpointFunctionGenerator:
                     if is_async
                     else AST.TypeHint.iterator(underlying_type_hint)
                 )
-            return underlying_type_hint
+            return self._get_pagination_results_type(underlying_type_hint) if self.is_paginated else underlying_type_hint
 
         if is_streaming:
             type_hint = self._get_stream_func_return_type()
@@ -1566,7 +1566,7 @@ class EndpointFunctionGenerator:
                 writer.write_node(AST.ReturnStatement(f"{response_alias}.{data_attribute}"))
 
         return AST.FunctionDeclaration(
-            name=self._endpoint.name.snake_case.safe_name,
+            name=get_endpoint_name(self._endpoint),
             is_async=self._is_async,
             signature=function.signature,
             docstring=function.docstring,

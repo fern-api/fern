@@ -1249,7 +1249,7 @@
                 "docs": "Access level"
               }
             ],
-            "extraProperties": true,
+            "extraProperties": false,
             "type": "inlinedRequestBody"
           },
           "response": {
