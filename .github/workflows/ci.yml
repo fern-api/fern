@@ -78,9 +78,6 @@ jobs:
       - name: Install protoc-gen-openapi
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
-      - name: Compile
-        run: pnpm compile
-
       - name: Run tests
         run: pnpm test
 
