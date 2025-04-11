@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: Test spec for `description` settings defined in anyOf.
+  version: 1.0.0
+
+paths:
+  /test:
+    get:
+      operationId: Get
+      requestBody:
+        required: true
+        description: A simple API request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestOne"
+      responses:
+        '200':
+          description: A simple API response.
+          content:
+            application/json:
+              schema:
+                type: string
+    post:
+      operationId: Post
+      requestBody:
+        required: true
+        description: A simple API request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SampleUnion"
+      responses:
+        '200':
+          description: A simple API response.
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    RequestOne:
+      title: A simple request title
+      description: |
+        A generic request type used throughout the API.
+      properties:
+        variant:
+          type: string
+          const: request
+        foo:
+          type: integer
+
+    RequestTwo:
+      title: A simple response title
+      description: |
+        A generic response type used throughout the API.
+      properties:
+        variant:
+          type: string
+          const: response
+        bar:
+          type: integer
+    
+    SampleUnion:
+      oneOf:
+        - $ref: "#/components/schemas/RequestOne"
+        - $ref: "#/components/schemas/RequestTwo"
+      discriminator:
+        propertyName: variant
+        mapping:
+          request: "#/components/schemas/RequestOne"
+          response: "#/components/schemas/RequestTwo"

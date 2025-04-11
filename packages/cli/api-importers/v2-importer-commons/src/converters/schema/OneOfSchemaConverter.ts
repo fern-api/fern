@@ -201,61 +201,42 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return false;
     }
 
-    private simplifySchema({
+    private removeNullFromOneOfOrAnyOf({
         context,
         errorCollector
     }: {
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): OpenAPIV3_1.SchemaObject | undefined {
-        if (this.schema.oneOf != null) {
-            const oneOfWithoutNull = this.schema.oneOf.filter(
-                (subSchema) => "type" in subSchema && subSchema.type !== "null"
-            );
-            if (oneOfWithoutNull.length === 0) {
-                errorCollector.collect({
-                    message: `Received oneOf schema with no valid non-null types: ${JSON.stringify(this.schema)}`,
-                    path: this.breadcrumbs
-                });
-                return undefined;
-            }
-            if (oneOfWithoutNull.length === 1) {
-                return {
-                    ...this.schema,
-                    oneOf: undefined,
-                    ...oneOfWithoutNull[0]
-                };
-            } else {
-                return {
-                    ...this.schema,
-                    oneOf: oneOfWithoutNull
-                };
-            }
-        } else if (this.schema.anyOf != null) {
-            const anyOfWithoutNull = this.schema.anyOf.filter(
-                (subSchema) => "type" in subSchema && subSchema.type !== "null"
-            );
-            if (anyOfWithoutNull.length === 0) {
-                errorCollector.collect({
-                    message: `Received anyOf schema with no valid non-null types: ${JSON.stringify(this.schema)}`,
-                    path: this.breadcrumbs
-                });
-                return undefined;
-            }
-            if (anyOfWithoutNull.length === 1) {
-                return {
-                    ...this.schema,
-                    anyOf: undefined,
-                    ...anyOfWithoutNull[0]
-                };
-            } else {
-                return {
-                    ...this.schema,
-                    anyOf: anyOfWithoutNull
-                };
-            }
+        const schemaArray = this.schema.oneOf ?? this.schema.anyOf;
+        const schemaType = this.schema.oneOf != null ? "oneOf" : "anyOf";
+
+        if (schemaArray == null) {
+            return undefined;
         }
-        return undefined;
+
+        const withoutNull = schemaArray.filter((subSchema) => !("type" in subSchema && subSchema.type === "null"));
+
+        if (withoutNull.length === 0) {
+            errorCollector.collect({
+                message: `Received ${schemaType} schema with no valid non-null types: ${JSON.stringify(this.schema)}`,
+                path: this.breadcrumbs
+            });
+            return undefined;
+        }
+
+        if (withoutNull.length === 1) {
+            return {
+                ...this.schema,
+                [schemaType]: undefined,
+                ...withoutNull[0]
+            };
+        }
+
+        return {
+            ...this.schema,
+            [schemaType]: withoutNull
+        };
     }
 
     private async convertAsNullableSchemaOrReference({
@@ -265,7 +246,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<OneOfSchemaConverter.Output | undefined> {
-        const simplifiedSchema = this.simplifySchema({ context, errorCollector });
+        const simplifiedSchema = this.removeNullFromOneOfOrAnyOf({ context, errorCollector });
         if (simplifiedSchema == null) {
             return undefined;
         }
