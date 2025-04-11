@@ -558,7 +558,8 @@ function getRequest({
                 declarationDepth: 0
             });
             return getTypeFromTypeReference(allOfTypeReference);
-        });
+        }).filter(schema => schema !== "unknown");
+
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
         };
