@@ -59,7 +59,8 @@
     "docs:generate": "pnpm fern generate --local --api docs-yml",
     "definition:generate": "pnpm fern generate --local --api fern-definition",
     "generators:generate": "pnpm fern generate --local --api generators-yml",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docs:preview": "concurrently \"pnpm --filter @fern-api/docs-preview run start -- --port 3001\" \"pnpm --filter @fern-docs/bundle run docs:preview\""
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -75,6 +76,7 @@
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "chalk": "^5.3.0",
+    "concurrently": "^9.1.2",
     "cspell": "^8.17.2",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",

@@ -99,6 +99,18 @@ export async function runPreviewServer({
     const httpServer = http.createServer(app);
     const wss = new WebSocketServer({ server: httpServer });
 
+    // Enable CORS for all routes to allow Next.js server to communicate
+    app.use(cors({
+        origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+        methods: ['GET', 'POST', 'OPTIONS'],
+        credentials: true,
+        allowedHeaders: ['Content-Type', 'Authorization']
+    }));
+
+    // Add body parsing middleware
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+
     const connections = new Set<WebSocket>();
     function sendData(data: unknown) {
         for (const connection of connections) {
@@ -113,12 +125,6 @@ export async function runPreviewServer({
             connections.delete(ws);
         });
     });
-
-    app.use(cors());
-
-    const instance = new URL(
-        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `http://localhost:${port}`)
-    );
 
     let project = initialProject;
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
@@ -215,6 +221,16 @@ export async function runPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
+
+    app.use((req, _res, next) => {
+        context.logger.debug(`[Preview Server] ${req.method} ${req.url}`);
+        next();
+    });
+
+    const instance = new URL(
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `http://localhost:${port}`)
+    );
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
@@ -263,5 +279,5 @@ export async function runPreviewServer({
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    await new Promise(() => {});
+    await new Promise(() => { });
 }
