@@ -134,6 +134,15 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getJsonElementType(): csharp.Type {
+        return csharp.Type.reference(
+            csharp.classReference({
+                namespace: "System.Text.Json",
+                name: "JsonElement"
+            })
+        );
+    }
+
     public getJsonExtensionDataAttribute(): csharp.Annotation {
         return csharp.annotation({
             reference: csharp.classReference({
@@ -143,11 +152,12 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
-    public getAdditionalPropertiesType(): csharp.Type {
-        return csharp.Type.idictionary(
-            csharp.Type.string(),
-            csharp.Type.reference(this.getJsonElementClassReference())
-        );
+    public getAdditionalPropertiesType(genericType?: csharp.Type): csharp.Type {
+        return csharp.Type.reference(this.getAdditionalPropertiesClassReference(genericType));
+    }
+
+    public getReadOnlyAdditionalPropertiesType(genericType?: csharp.Type): csharp.Type {
+        return csharp.Type.reference(this.getReadOnlyAdditionalPropertiesClassReference(genericType));
     }
 
     public getValueConvertReference(): csharp.ClassReference {
@@ -168,28 +178,8 @@ export abstract class AbstractCsharpGeneratorContext<
         return this.customConfig["experimental-enable-forward-compatible-enums"] ?? false;
     }
 
-    public createAdditionalPropertiesField(): csharp.Field {
-        return csharp.field({
-            doc: {
-                summary: "Additional properties received from the response, if any.",
-                remarks: "[EXPERIMENTAL] This API is experimental and may change in future releases."
-            },
-            name: "AdditionalProperties",
-            type: this.getAdditionalPropertiesType(),
-            access: csharp.Access.Public,
-            set: csharp.Access.Internal,
-            get: csharp.Access.Public,
-            initializer: csharp.codeblock((writer) =>
-                writer.writeNode(
-                    csharp.dictionary({
-                        keyType: csharp.Type.string(),
-                        valueType: csharp.Type.reference(this.getJsonElementClassReference()),
-                        values: undefined
-                    })
-                )
-            ),
-            annotations: [this.getJsonExtensionDataAttribute()]
-        });
+    public generateNewAdditionalProperties(): boolean {
+        return this.customConfig["experimental-additional-properties"] ?? false;
     }
 
     public getProtoAnyMapperClassReference(): csharp.ClassReference {
@@ -469,6 +459,36 @@ export abstract class AbstractCsharpGeneratorContext<
             name: "KeyValuePair",
             namespace: "System.Collections.Generic",
             generics: [key, value]
+        });
+    }
+
+    public getAdditionalPropertiesClassReference(genericType?: csharp.Type): csharp.ClassReference {
+        return csharp.classReference({
+            name: "AdditionalProperties",
+            namespace: this.getPublicCoreNamespace(),
+            generics: genericType ? [genericType] : undefined
+        });
+    }
+
+    public getReadOnlyAdditionalPropertiesClassReference(genericType?: csharp.Type): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ReadOnlyAdditionalProperties",
+            namespace: this.getPublicCoreNamespace(),
+            generics: genericType ? [genericType] : undefined
+        });
+    }
+
+    public getIJsonOnDeserializedInterfaceReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "IJsonOnDeserialized",
+            namespace: "System.Text.Json.Serialization"
+        });
+    }
+
+    public getIJsonOnSerializingInterfaceReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "IJsonOnSerializing",
+            namespace: "System.Text.Json.Serialization"
         });
     }
 
