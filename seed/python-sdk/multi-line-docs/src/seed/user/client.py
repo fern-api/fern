@@ -56,10 +56,7 @@ class UserClient:
             user_id="userId",
         )
         """
-        response = self._raw_client.get_user(
-            user_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_user(user_id, request_options=request_options)
         return response.data
 
     def create_user(
@@ -98,11 +95,7 @@ class UserClient:
             age=1,
         )
         """
-        response = self._raw_client.create_user(
-            name=name,
-            age=age,
-            request_options=request_options,
-        )
+        response = self._raw_client.create_user(name=name, age=age, request_options=request_options)
         return response.data
 
 
@@ -158,10 +151,7 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_user(
-            user_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_user(user_id, request_options=request_options)
         return response.data
 
     async def create_user(
@@ -208,9 +198,5 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_user(
-            name=name,
-            age=age,
-            request_options=request_options,
-        )
+        response = await self._raw_client.create_user(name=name, age=age, request_options=request_options)
         return response.data

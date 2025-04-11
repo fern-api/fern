@@ -118,12 +118,26 @@ interface Map {
     type: "map";
     keyType: Type;
     valueType: Type;
+    options?: Map.Options;
+}
+
+export namespace Map {
+    export interface Options {
+        dontSimplify?: boolean;
+    }
 }
 
 interface IDictionary {
     type: "idictionary";
     keyType: Type;
     valueType: Type;
+    options?: IDictionary.Options;
+}
+
+export namespace IDictionary {
+    export interface Options {
+        dontSimplify?: boolean;
+    }
 }
 
 interface KeyValuePair {
@@ -262,6 +276,7 @@ export class Type extends AstNode {
                 const keyType = this.internalType.keyType;
                 const valueType = this.internalType.valueType;
                 if (
+                    this.internalType.options?.dontSimplify !== true &&
                     writer.getSimplifyObjectDictionaries() &&
                     keyType.internalType.type === "string" &&
                     valueType.internalType.type === "optional" &&
@@ -582,19 +597,21 @@ export class Type extends AstNode {
         });
     }
 
-    public static map(keyType: Type, valueType: Type): Type {
+    public static map(keyType: Type, valueType: Type, options?: Map.Options): Type {
         return new this({
             type: "map",
             keyType,
-            valueType
+            valueType,
+            options
         });
     }
 
-    public static idictionary(keyType: Type, valueType: Type): Type {
+    public static idictionary(keyType: Type, valueType: Type, options?: IDictionary.Options): Type {
         return new this({
             type: "idictionary",
             keyType,
-            valueType
+            valueType,
+            options
         });
     }
     public static keyValuePair(keyType: Type, valueType: Type): Type {

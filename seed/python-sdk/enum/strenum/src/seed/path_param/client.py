@@ -58,11 +58,7 @@ class PathParamClient:
             operand_or_color="red",
         )
         """
-        response = self._raw_client.send(
-            operand,
-            operand_or_color,
-            request_options=request_options,
-        )
+        response = self._raw_client.send(operand, operand_or_color, request_options=request_options)
         return response.data
 
 
@@ -122,9 +118,5 @@ class AsyncPathParamClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
-            operand,
-            operand_or_color,
-            request_options=request_options,
-        )
+        response = await self._raw_client.send(operand, operand_or_color, request_options=request_options)
         return response.data

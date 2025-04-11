@@ -102,10 +102,7 @@ class PaymentClient:
             payment_id="paymentId",
         )
         """
-        response = self._raw_client.delete(
-            payment_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.delete(payment_id, request_options=request_options)
         return response.data
 
 
@@ -214,8 +211,5 @@ class AsyncPaymentClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.delete(
-            payment_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.delete(payment_id, request_options=request_options)
         return response.data

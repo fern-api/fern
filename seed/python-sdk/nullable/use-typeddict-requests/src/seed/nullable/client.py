@@ -138,11 +138,7 @@ class NullableClient:
         )
         """
         response = self._raw_client.create_user(
-            username=username,
-            tags=tags,
-            metadata=metadata,
-            avatar=avatar,
-            request_options=request_options,
+            username=username, tags=tags, metadata=metadata, avatar=avatar, request_options=request_options
         )
         return response.data
 
@@ -173,10 +169,7 @@ class NullableClient:
             username="xy",
         )
         """
-        response = self._raw_client.delete_user(
-            username=username,
-            request_options=request_options,
-        )
+        response = self._raw_client.delete_user(username=username, request_options=request_options)
         return response.data
 
 
@@ -320,11 +313,7 @@ class AsyncNullableClient:
         asyncio.run(main())
         """
         response = await self._raw_client.create_user(
-            username=username,
-            tags=tags,
-            metadata=metadata,
-            avatar=avatar,
-            request_options=request_options,
+            username=username, tags=tags, metadata=metadata, avatar=avatar, request_options=request_options
         )
         return response.data
 
@@ -363,8 +352,5 @@ class AsyncNullableClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.delete_user(
-            username=username,
-            request_options=request_options,
-        )
+        response = await self._raw_client.delete_user(username=username, request_options=request_options)
         return response.data

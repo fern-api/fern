@@ -28,8 +28,8 @@ class RawClientGenerator(BaseClientGenerator):
         if self._package.service is not None:
             service = self._context.ir.services[self._package.service]
             for endpoint in service.endpoints:
-                # TODO(hughhan1): support streaming methods in raw clients.
-                if self._is_streaming_endpoint(endpoint) or self._treat_as_paginated(endpoint):
+                # TODO(hughhan1): support pagination methods in raw clients.
+                if self._treat_as_paginated(endpoint):
                     continue
 
                 endpoint_function_generator = EndpointFunctionGenerator(
