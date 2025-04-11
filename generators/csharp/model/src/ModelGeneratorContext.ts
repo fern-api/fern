@@ -82,6 +82,9 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests
         ];
+        if (this.generateNewAdditionalProperties()) {
+            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
+        }
         if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
@@ -92,7 +95,11 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        return [AsIsFiles.FileParameter];
+        const files = [AsIsFiles.FileParameter];
+        if (this.generateNewAdditionalProperties()) {
+            files.push(AsIsFiles.Json.AdditionalProperties);
+        }
+        return files;
     }
 
     public getPublicCoreTestAsIsFiles(): string[] {

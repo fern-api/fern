@@ -6,6 +6,7 @@ from ..core.request_options import RequestOptions
 from ..core.http_response import HttpResponse
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+import contextlib
 from ..core.client_wrapper import AsyncClientWrapper
 from ..core.http_response import AsyncHttpResponse
 
@@ -14,9 +15,10 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    @contextlib.contextmanager
     def download_file(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Iterator[bytes]]:
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
         Parameters
         ----------
@@ -25,32 +27,37 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[typing.Iterator[bytes]]
+        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
         """
         with self._client_wrapper.httpx_client.stream(
             method="POST",
             request_options=request_options,
         ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    return HttpResponse(
-                        response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
-                    )
-                _response.read()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            def stream() -> HttpResponse[typing.Iterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return HttpResponse(
+                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
+                        )
+                    _response.read()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(status_code=_response.status_code, body=_response.text)
+                raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            yield stream()
 
 
 class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    @contextlib.asynccontextmanager
     async def download_file(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
         Parameters
         ----------
@@ -59,21 +66,25 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.AsyncIterator[bytes]]
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
         """
         async with self._client_wrapper.httpx_client.stream(
             method="POST",
             request_options=request_options,
         ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                    return AsyncHttpResponse(
-                        response=_response,
-                        data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
-                    )
-                await _response.aread()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            async def stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return AsyncHttpResponse(
+                            response=_response,
+                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        )
+                    await _response.aread()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(status_code=_response.status_code, body=_response.text)
+                raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            yield await stream()

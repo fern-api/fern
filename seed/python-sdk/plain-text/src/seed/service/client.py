@@ -43,9 +43,7 @@ class ServiceClient:
         )
         client.service.get_text()
         """
-        response = self._raw_client.get_text(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_text(request_options=request_options)
         return response.data
 
 
@@ -92,7 +90,5 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_text(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_text(request_options=request_options)
         return response.data

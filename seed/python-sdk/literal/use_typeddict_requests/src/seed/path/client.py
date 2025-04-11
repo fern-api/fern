@@ -44,9 +44,7 @@ class PathClient:
         )
         client.path.send()
         """
-        response = self._raw_client.send(
-            request_options=request_options,
-        )
+        response = self._raw_client.send(request_options=request_options)
         return response.data
 
 
@@ -93,7 +91,5 @@ class AsyncPathClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
-            request_options=request_options,
-        )
+        response = await self._raw_client.send(request_options=request_options)
         return response.data
