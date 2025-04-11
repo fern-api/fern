@@ -4,13 +4,58 @@
 
 The Seed Go library provides convenient access to the Seed API from Go.
 
+## Usage
+
+Instantiate and use the client with the following:
+
+```go
+package example
+
+import (
+    client "github.com/pagination/fern/client"
+    option "github.com/pagination/fern/option"
+    context "context"
+    fern "github.com/pagination/fern"
+)
+
+func do() () {
+    client := client.NewClient(
+        option.WithToken(
+            "<token>",
+        ),
+    )
+    client.Complex.Search(
+        context.TODO(),
+        &fern.SearchRequest{
+            Pagination: &fern.StartingAfterPaging{
+                PerPage: 1,
+                StartingAfter: fern.String(
+                    "starting_after",
+                ),
+            },
+            Query: &fern.SearchRequestQuery{
+                SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{
+                    Field: fern.String(
+                        "field",
+                    ),
+                    Operator: fern.SingleFilterSearchRequestOperatorEquals.Ptr(),
+                    Value: fern.String(
+                        "value",
+                    ),
+                },
+            },
+        },
+    )
+}
+```
+
 ## Environments
 
 You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
 URL, which is particularly useful in test environments.
 
 ```go
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithBaseURL("https://example.com"),
 )
 ```
@@ -32,7 +77,8 @@ if err != nil {
 iter := page.Iterator()
 for iter.Next(ctx) {
     item := iter.Current()
-    fmt.Printf("Got item: %v\n", *item)
+    fmt.Printf("Got item: %v\
+", *item)
 }
 if err := iter.Err(); err != nil {
     // Handle the error!
@@ -41,7 +87,8 @@ if err := iter.Err(); err != nil {
 // Alternatively, iterate page-by-page.
 for page != nil {
     for _, item := range page.Results {
-        fmt.Printf("Got item: %v\n", *item)
+        fmt.Printf("Got item: %v\
+", *item)
     }
     page, err = page.GetNextPage(ctx)
     if errors.Is(err, core.ErrNoPages) {
@@ -83,7 +130,7 @@ specified on the client so that they're applied on every request, or for an indi
 
 ```go
 // Specify default options applied on every request.
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithToken("<YOUR_API_KEY>"),
     option.WithHTTPClient(
         &http.Client{
@@ -116,7 +163,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
 ```go
-client := seedclient.NewClient(
+client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 

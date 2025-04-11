@@ -32,11 +32,12 @@ type GetUsersRequest struct {
 type Email = *string
 
 type Metadata struct {
-	CreatedAt time.Time `json:"createdAt" url:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt" url:"updatedAt"`
-	Avatar    *string   `json:"avatar,omitempty" url:"avatar,omitempty"`
-	Activated *bool     `json:"activated,omitempty" url:"activated,omitempty"`
-	Status    *Status   `json:"status,omitempty" url:"status,omitempty"`
+	CreatedAt time.Time          `json:"createdAt" url:"createdAt"`
+	UpdatedAt time.Time          `json:"updatedAt" url:"updatedAt"`
+	Avatar    *string            `json:"avatar,omitempty" url:"avatar,omitempty"`
+	Activated *bool              `json:"activated,omitempty" url:"activated,omitempty"`
+	Status    *Status            `json:"status,omitempty" url:"status,omitempty"`
+	Values    map[string]*string `json:"values,omitempty" url:"values,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -75,6 +76,13 @@ func (m *Metadata) GetStatus() *Status {
 		return nil
 	}
 	return m.Status
+}
+
+func (m *Metadata) GetValues() map[string]*string {
+	if m == nil {
+		return nil
+	}
+	return m.Values
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {

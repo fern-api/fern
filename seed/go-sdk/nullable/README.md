@@ -43,6 +43,11 @@ func do() () {
                 Status: &fern.Status{
                     Active: "active",
                 },
+                Values: map[string]*string{
+                    "values": fern.String(
+                        "values",
+                    ),
+                },
             },
             Avatar: fern.String(
                 "avatar",

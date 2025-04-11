@@ -97,6 +97,68 @@ func (k KeyType) Ptr() *KeyType {
 // (i.e. do they have a valid string representation).
 type Metadata = map[*Key]string
 
+type MetadataUnion struct {
+	OptionalMetadata OptionalMetadata
+	NamedMetadata    *NamedMetadata
+
+	typ string
+}
+
+func (m *MetadataUnion) GetOptionalMetadata() OptionalMetadata {
+	if m == nil {
+		return nil
+	}
+	return m.OptionalMetadata
+}
+
+func (m *MetadataUnion) GetNamedMetadata() *NamedMetadata {
+	if m == nil {
+		return nil
+	}
+	return m.NamedMetadata
+}
+
+func (m *MetadataUnion) UnmarshalJSON(data []byte) error {
+	var valueOptionalMetadata OptionalMetadata
+	if err := json.Unmarshal(data, &valueOptionalMetadata); err == nil {
+		m.typ = "OptionalMetadata"
+		m.OptionalMetadata = valueOptionalMetadata
+		return nil
+	}
+	valueNamedMetadata := new(NamedMetadata)
+	if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+		m.typ = "NamedMetadata"
+		m.NamedMetadata = valueNamedMetadata
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, m)
+}
+
+func (m MetadataUnion) MarshalJSON() ([]byte, error) {
+	if m.typ == "OptionalMetadata" || m.OptionalMetadata != nil {
+		return json.Marshal(m.OptionalMetadata)
+	}
+	if m.typ == "NamedMetadata" || m.NamedMetadata != nil {
+		return json.Marshal(m.NamedMetadata)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
+type MetadataUnionVisitor interface {
+	VisitOptionalMetadata(OptionalMetadata) error
+	VisitNamedMetadata(*NamedMetadata) error
+}
+
+func (m *MetadataUnion) Accept(visitor MetadataUnionVisitor) error {
+	if m.typ == "OptionalMetadata" || m.OptionalMetadata != nil {
+		return visitor.VisitOptionalMetadata(m.OptionalMetadata)
+	}
+	if m.typ == "NamedMetadata" || m.NamedMetadata != nil {
+		return visitor.VisitNamedMetadata(m.NamedMetadata)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
 // Several different types are accepted.
 type MyUnion struct {
 	String          string
@@ -242,6 +304,108 @@ func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
 		return visitor.VisitStringSet(m.StringSet)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
+type NamedMetadata struct {
+	Name  string                 `json:"name" url:"name"`
+	Value map[string]interface{} `json:"value,omitempty" url:"value,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NamedMetadata) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *NamedMetadata) GetValue() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.Value
+}
+
+func (n *NamedMetadata) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *NamedMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler NamedMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NamedMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NamedMetadata) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+type OptionalMetadata = map[string]interface{}
+
+type Request struct {
+	Union *MetadataUnion `json:"union,omitempty" url:"union,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *Request) GetUnion() *MetadataUnion {
+	if r == nil {
+		return nil
+	}
+	return r.Union
+}
+
+func (r *Request) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *Request) UnmarshalJSON(data []byte) error {
+	type unmarshaler Request
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Request(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *Request) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type TypeWithOptionalUnion struct {
