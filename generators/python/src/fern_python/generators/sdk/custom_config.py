@@ -51,6 +51,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     flat_layout: bool = False
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
     additional_init_exports: Optional[List[ModuleExport]] = None
+    exclude_types_from_init_exports: Optional[bool] = False
     # Feature flag that improves imports in the
     # Python SDK by removing nested `resources` directory
     improved_imports: bool = True

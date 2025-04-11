@@ -59,9 +59,7 @@ class ServiceClient:
         )
         """
         response = self._raw_client.get_file(
-            filename,
-            x_file_api_version=x_file_api_version,
-            request_options=request_options,
+            filename, x_file_api_version=x_file_api_version, request_options=request_options
         )
         return response.data
 
@@ -124,8 +122,6 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_file(
-            filename,
-            x_file_api_version=x_file_api_version,
-            request_options=request_options,
+            filename, x_file_api_version=x_file_api_version, request_options=request_options
         )
         return response.data

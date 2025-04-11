@@ -119,10 +119,7 @@ class SeedExamples:
             request="Hello world!\\n\\nwith\\n\\tnewlines",
         )
         """
-        response = self._raw_client.echo(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.echo(request=request, request_options=request_options)
         return response.data
 
     def create_type(self, *, request: Type, request_options: typing.Optional[RequestOptions] = None) -> Identifier:
@@ -151,10 +148,7 @@ class SeedExamples:
             request="primitive",
         )
         """
-        response = self._raw_client.create_type(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.create_type(request=request, request_options=request_options)
         return response.data
 
 
@@ -264,10 +258,7 @@ class AsyncSeedExamples:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.echo(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.echo(request=request, request_options=request_options)
         return response.data
 
     async def create_type(
@@ -306,10 +297,7 @@ class AsyncSeedExamples:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_type(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.create_type(request=request, request_options=request_options)
         return response.data
 
 

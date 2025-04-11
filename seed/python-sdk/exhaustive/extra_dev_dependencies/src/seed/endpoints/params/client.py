@@ -53,10 +53,7 @@ class ParamsClient:
             param="param",
         )
         """
-        response = self._raw_client.get_with_path(
-            param,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_with_path(param, request_options=request_options)
         return response.data
 
     def get_with_inline_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -86,10 +83,7 @@ class ParamsClient:
             param="param",
         )
         """
-        response = self._raw_client.get_with_inline_path(
-            param,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_with_inline_path(param, request_options=request_options)
         return response.data
 
     def get_with_query(
@@ -124,11 +118,7 @@ class ParamsClient:
             number=1,
         )
         """
-        response = self._raw_client.get_with_query(
-            query=query,
-            number=number,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_with_query(query=query, number=number, request_options=request_options)
         return response.data
 
     def get_with_allow_multiple_query(
@@ -168,9 +158,7 @@ class ParamsClient:
         )
         """
         response = self._raw_client.get_with_allow_multiple_query(
-            query=query,
-            number=number,
-            request_options=request_options,
+            query=query, number=number, request_options=request_options
         )
         return response.data
 
@@ -206,11 +194,7 @@ class ParamsClient:
             query="query",
         )
         """
-        response = self._raw_client.get_with_path_and_query(
-            param,
-            query=query,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_with_path_and_query(param, query=query, request_options=request_options)
         return response.data
 
     def get_with_inline_path_and_query(
@@ -245,11 +229,7 @@ class ParamsClient:
             query="query",
         )
         """
-        response = self._raw_client.get_with_inline_path_and_query(
-            param,
-            query=query,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_with_inline_path_and_query(param, query=query, request_options=request_options)
         return response.data
 
     def modify_with_path(
@@ -284,11 +264,7 @@ class ParamsClient:
             request="string",
         )
         """
-        response = self._raw_client.modify_with_path(
-            param,
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.modify_with_path(param, request=request, request_options=request_options)
         return response.data
 
     def modify_with_inline_path(
@@ -323,11 +299,7 @@ class ParamsClient:
             request="string",
         )
         """
-        response = self._raw_client.modify_with_inline_path(
-            param,
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.modify_with_inline_path(param, request=request, request_options=request_options)
         return response.data
 
 
@@ -381,10 +353,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_path(
-            param,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_with_path(param, request_options=request_options)
         return response.data
 
     async def get_with_inline_path(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
@@ -422,10 +391,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_inline_path(
-            param,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_with_inline_path(param, request_options=request_options)
         return response.data
 
     async def get_with_query(
@@ -468,11 +434,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_query(
-            query=query,
-            number=number,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_with_query(query=query, number=number, request_options=request_options)
         return response.data
 
     async def get_with_allow_multiple_query(
@@ -520,9 +482,7 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_with_allow_multiple_query(
-            query=query,
-            number=number,
-            request_options=request_options,
+            query=query, number=number, request_options=request_options
         )
         return response.data
 
@@ -566,11 +526,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_path_and_query(
-            param,
-            query=query,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_with_path_and_query(param, query=query, request_options=request_options)
         return response.data
 
     async def get_with_inline_path_and_query(
@@ -614,9 +570,7 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_with_inline_path_and_query(
-            param,
-            query=query,
-            request_options=request_options,
+            param, query=query, request_options=request_options
         )
         return response.data
 
@@ -660,11 +614,7 @@ class AsyncParamsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.modify_with_path(
-            param,
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.modify_with_path(param, request=request, request_options=request_options)
         return response.data
 
     async def modify_with_inline_path(
@@ -708,8 +658,6 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         response = await self._raw_client.modify_with_inline_path(
-            param,
-            request=request,
-            request_options=request_options,
+            param, request=request, request_options=request_options
         )
         return response.data

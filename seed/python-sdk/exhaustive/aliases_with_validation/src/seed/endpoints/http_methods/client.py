@@ -54,10 +54,7 @@ class HttpMethodsClient:
             id="id",
         )
         """
-        response = self._raw_client.test_get(
-            id,
-            request_options=request_options,
-        )
+        response = self._raw_client.test_get(id, request_options=request_options)
         return response.data
 
     def test_post(
@@ -87,10 +84,7 @@ class HttpMethodsClient:
             string="string",
         )
         """
-        response = self._raw_client.test_post(
-            string=string,
-            request_options=request_options,
-        )
+        response = self._raw_client.test_post(string=string, request_options=request_options)
         return response.data
 
     def test_put(
@@ -123,11 +117,7 @@ class HttpMethodsClient:
             string="string",
         )
         """
-        response = self._raw_client.test_put(
-            id,
-            string=string,
-            request_options=request_options,
-        )
+        response = self._raw_client.test_put(id, string=string, request_options=request_options)
         return response.data
 
     def test_patch(
@@ -266,10 +256,7 @@ class HttpMethodsClient:
             id="id",
         )
         """
-        response = self._raw_client.test_delete(
-            id,
-            request_options=request_options,
-        )
+        response = self._raw_client.test_delete(id, request_options=request_options)
         return response.data
 
 
@@ -321,10 +308,7 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_get(
-            id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.test_get(id, request_options=request_options)
         return response.data
 
     async def test_post(
@@ -362,10 +346,7 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_post(
-            string=string,
-            request_options=request_options,
-        )
+        response = await self._raw_client.test_post(string=string, request_options=request_options)
         return response.data
 
     async def test_put(
@@ -406,11 +387,7 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_put(
-            id,
-            string=string,
-            request_options=request_options,
-        )
+        response = await self._raw_client.test_put(id, string=string, request_options=request_options)
         return response.data
 
     async def test_patch(
@@ -564,8 +541,5 @@ class AsyncHttpMethodsClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.test_delete(
-            id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.test_delete(id, request_options=request_options)
         return response.data
