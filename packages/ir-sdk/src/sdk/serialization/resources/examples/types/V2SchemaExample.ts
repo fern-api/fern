@@ -6,13 +6,9 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const V2SchemaExample: core.serialization.ObjectSchema<serializers.V2SchemaExample.Raw, FernIr.V2SchemaExample> =
-    core.serialization.objectWithoutOptionalProperties({
-        value: core.serialization.unknown(),
-    });
+export const V2SchemaExample: core.serialization.Schema<serializers.V2SchemaExample.Raw, FernIr.V2SchemaExample> =
+    core.serialization.unknown();
 
 export declare namespace V2SchemaExample {
-    export interface Raw {
-        value?: unknown;
-    }
+    export type Raw = unknown;
 }

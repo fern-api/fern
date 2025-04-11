@@ -9,8 +9,8 @@ export interface V2HttpEndpointRequest extends FernIr.WithDocs {
     baseUrl: string | undefined;
     environment: FernIr.V2EnvironmentValues | undefined;
     auth: FernIr.V2AuthValues | undefined;
-    pathParameters: FernIr.V2ExampleValues | undefined;
-    queryParameters: FernIr.V2ExampleValues | undefined;
-    headers: FernIr.V2ExampleValues | undefined;
+    pathParameters: FernIr.V2ValueExamples | undefined;
+    queryParameters: FernIr.V2ValueExamples | undefined;
+    headers: FernIr.V2ValueExamples | undefined;
     requestBody: unknown | undefined;
 }
