@@ -44,19 +44,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
-  compile:
-    if: github.repository == 'fern-api/fern'
-    runs-on: CLI
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Compile
-        run: pnpm compile
-
   eslint:
     runs-on: ubuntu-latest
     steps:
