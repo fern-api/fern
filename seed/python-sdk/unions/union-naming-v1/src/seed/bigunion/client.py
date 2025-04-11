@@ -51,10 +51,7 @@ class BigunionClient:
             id="id",
         )
         """
-        response = self._raw_client.get(
-            id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get(id, request_options=request_options)
         return response.data
 
     def update(self, *, request: BigUnion, request_options: typing.Optional[RequestOptions] = None) -> bool:
@@ -84,10 +81,7 @@ class BigunionClient:
             ),
         )
         """
-        response = self._raw_client.update(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.update(request=request, request_options=request_options)
         return response.data
 
     def update_many(
@@ -124,10 +118,7 @@ class BigunionClient:
             ],
         )
         """
-        response = self._raw_client.update_many(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.update_many(request=request, request_options=request_options)
         return response.data
 
 
@@ -178,10 +169,7 @@ class AsyncBigunionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get(
-            id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get(id, request_options=request_options)
         return response.data
 
     async def update(self, *, request: BigUnion, request_options: typing.Optional[RequestOptions] = None) -> bool:
@@ -219,10 +207,7 @@ class AsyncBigunionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.update(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.update(request=request, request_options=request_options)
         return response.data
 
     async def update_many(
@@ -267,8 +252,5 @@ class AsyncBigunionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.update_many(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.update_many(request=request, request_options=request_options)
         return response.data

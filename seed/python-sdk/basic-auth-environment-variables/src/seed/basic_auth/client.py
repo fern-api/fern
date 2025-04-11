@@ -50,9 +50,7 @@ class BasicAuthClient:
         )
         client.basic_auth.get_with_basic_auth()
         """
-        response = self._raw_client.get_with_basic_auth(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_with_basic_auth(request_options=request_options)
         return response.data
 
     def post_with_basic_auth(
@@ -85,10 +83,7 @@ class BasicAuthClient:
             request={"key": "value"},
         )
         """
-        response = self._raw_client.post_with_basic_auth(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
         return response.data
 
 
@@ -139,9 +134,7 @@ class AsyncBasicAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_basic_auth(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_with_basic_auth(request_options=request_options)
         return response.data
 
     async def post_with_basic_auth(
@@ -182,8 +175,5 @@ class AsyncBasicAuthClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.post_with_basic_auth(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
         return response.data

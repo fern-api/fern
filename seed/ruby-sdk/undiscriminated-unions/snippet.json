@@ -24,6 +24,28 @@
         },
         {
             "id": {
+                "path": "/metadata",
+                "method": "PUT",
+                "identifierOverride": "endpoint_union.updateMetadata"
+            },
+            "snippet": {
+                "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.update_metadata(request: { \"string\": {\"key\":\"value\"} })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/call",
+                "method": "POST",
+                "identifierOverride": "endpoint_union.call"
+            },
+            "snippet": {
+                "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.call(request: { union: { \"union\": {\"key\":\"value\"} } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/",
                 "method": "POST",
                 "identifierOverride": "endpoint_union.get"
@@ -41,6 +63,28 @@
             },
             "snippet": {
                 "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.get_metadata",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "PUT",
+                "identifierOverride": "endpoint_union.updateMetadata"
+            },
+            "snippet": {
+                "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.update_metadata(request: { \"string\": {\"key\":\"value\"} })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/call",
+                "method": "POST",
+                "identifierOverride": "endpoint_union.call"
+            },
+            "snippet": {
+                "client": "require \"fern_undiscriminated_unions\"\n\nundiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: \"https://api.example.com\")\nundiscriminated_unions.union.call(request: { union: { \"union\": {\"key\":\"value\"} } })",
                 "type": "ruby"
             }
         }

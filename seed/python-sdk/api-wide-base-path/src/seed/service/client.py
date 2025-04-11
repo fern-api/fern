@@ -65,11 +65,7 @@ class ServiceClient:
         )
         """
         response = self._raw_client.post(
-            path_param,
-            service_param,
-            resource_param,
-            endpoint_param,
-            request_options=request_options,
+            path_param, service_param, resource_param, endpoint_param, request_options=request_options
         )
         return response.data
 
@@ -139,10 +135,6 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         response = await self._raw_client.post(
-            path_param,
-            service_param,
-            resource_param,
-            endpoint_param,
-            request_options=request_options,
+            path_param, service_param, resource_param, endpoint_param, request_options=request_options
         )
         return response.data

@@ -51,10 +51,7 @@ class HeadersClient:
             query="What is the weather today",
         )
         """
-        response = self._raw_client.send(
-            query=query,
-            request_options=request_options,
-        )
+        response = self._raw_client.send(query=query, request_options=request_options)
         return response.data
 
 
@@ -105,8 +102,5 @@ class AsyncHeadersClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
-            query=query,
-            request_options=request_options,
-        )
+        response = await self._raw_client.send(query=query, request_options=request_options)
         return response.data

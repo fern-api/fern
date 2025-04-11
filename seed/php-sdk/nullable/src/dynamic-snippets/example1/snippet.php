@@ -26,6 +26,9 @@ $client->nullable->createUser(
             'avatar' => 'avatar',
             'activated' => true,
             'status' => Status::active(),
+            'values' => [
+                'values' => 'values',
+            ],
         ]),
         'avatar' => 'avatar',
     ]),

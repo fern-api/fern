@@ -51,9 +51,7 @@ class ProblemClient:
         )
         client.v_2.problem.get_lightweight_problems()
         """
-        response = self._raw_client.get_lightweight_problems(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_lightweight_problems(request_options=request_options)
         return response.data
 
     def get_problems(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ProblemInfoV2]:
@@ -79,9 +77,7 @@ class ProblemClient:
         )
         client.v_2.problem.get_problems()
         """
-        response = self._raw_client.get_problems(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_problems(request_options=request_options)
         return response.data
 
     def get_latest_problem(
@@ -113,10 +109,7 @@ class ProblemClient:
             problem_id="problemId",
         )
         """
-        response = self._raw_client.get_latest_problem(
-            problem_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_latest_problem(problem_id, request_options=request_options)
         return response.data
 
     def get_problem_version(
@@ -151,11 +144,7 @@ class ProblemClient:
             problem_version=1,
         )
         """
-        response = self._raw_client.get_problem_version(
-            problem_id,
-            problem_version,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_problem_version(problem_id, problem_version, request_options=request_options)
         return response.data
 
 
@@ -207,9 +196,7 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_lightweight_problems(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_lightweight_problems(request_options=request_options)
         return response.data
 
     async def get_problems(
@@ -245,9 +232,7 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_problems(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_problems(request_options=request_options)
         return response.data
 
     async def get_latest_problem(
@@ -287,10 +272,7 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_latest_problem(
-            problem_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_latest_problem(problem_id, request_options=request_options)
         return response.data
 
     async def get_problem_version(
@@ -334,8 +316,6 @@ class AsyncProblemClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_problem_version(
-            problem_id,
-            problem_version,
-            request_options=request_options,
+            problem_id, problem_version, request_options=request_options
         )
         return response.data

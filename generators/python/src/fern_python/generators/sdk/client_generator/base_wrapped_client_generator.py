@@ -34,66 +34,71 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
             decorators=[AST.Expression(AST.Reference(qualified_name_excluding_import=("property",), import_=None))],
         )
 
+    def _add_wrapped_client_methods(
+        self,
+        *,
+        is_async: bool,
+        service: ir_types.HttpService,
+        class_declaration: AST.ClassDeclaration,
+        generated_root_client: GeneratedRootClient,
+    ) -> None:
+        for endpoint in service.endpoints:
+            # TODO: Roll out Stream Parameter endpoints.
+            if self._is_stream_parameter_endpoint(endpoint) or self._treat_as_paginated(endpoint):
+                endpoint_generator = EndpointFunctionGenerator(
+                    context=self._context,
+                    package=self._package,
+                    service=service,
+                    endpoint=endpoint,
+                    idempotency_headers=self._context.ir.idempotency_headers,
+                    is_async=is_async,
+                    client_wrapper_member_name=f"{self._get_raw_client_member_name()}.{self._get_client_wrapper_member_name()}",
+                    generated_root_client=generated_root_client,
+                    snippet_writer=self._snippet_writer,
+                    endpoint_metadata_collector=self._endpoint_metadata_collector,
+                    is_raw_client=False,
+                )
+
+                generated_endpoint_functions = endpoint_generator.generate()
+                for generated_function in generated_endpoint_functions:
+                    if generated_function.is_default_body_parameter_used:
+                        self._is_default_body_parameter_used = True
+
+                    # TODO: Remove this. Currently, we need to preserve snippets for paginated endpoints (since we're not doing this in the raw client generator)
+                    if self._treat_as_paginated(endpoint):
+                        for snippet in generated_function.snippets or []:
+                            if is_async:
+                                self._snippet_registry.register_async_client_endpoint_snippet(
+                                    endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                                )
+                            else:
+                                self._snippet_registry.register_sync_client_endpoint_snippet(
+                                    endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
+                                )
+
+                for overload_function in generated_endpoint_functions[:-1]:
+                    class_declaration.add_method(overload_function.function)
+
+                class_declaration.add_method(generated_endpoint_functions[-1].function)
+            else:
+                wrapper_method = self._create_wrapper_method(
+                    endpoint=endpoint, is_async=is_async, generated_root_client=generated_root_client
+                )
+                class_declaration.add_method(wrapper_method)
+
     def _create_wrapper_method(
         self, endpoint: ir_types.HttpEndpoint, is_async: bool, generated_root_client: GeneratedRootClient
     ) -> AST.FunctionDeclaration:
         """Create a method that delegates to the raw client and extracts the data property."""
-
-        # Skip stream parameter endpoints as they're handled separately in _create_class_declaration
-        is_stream_parameter_endpoint = (
-            endpoint.response is not None
-            and endpoint.response.body is not None
-            and endpoint.response.body.get_as_union().type == "streamParameter"
-        )
-        if is_stream_parameter_endpoint:
-            # This should not happen, but we need to return something
-            # Create an empty placeholder function
+        if self._is_stream_parameter_endpoint(endpoint):
             return AST.FunctionDeclaration(
                 name="placeholder",
                 is_async=is_async,
-                signature=AST.FunctionSignature(parameters=[], return_type=AST.TypeHint.optional(AST.TypeHint.str_())),
+                signature=AST.FunctionSignature(parameters=[], return_type=AST.TypeHint.none()),
                 body=AST.CodeWriter(lambda writer: writer.write_line("pass")),
                 decorators=[],
             )
 
-        if self._is_streaming_endpoint(endpoint) or self._treat_as_paginated(endpoint):
-            # Use EndpointFunctionGenerator but generate the function directly
-            endpoint_generator = EndpointFunctionGenerator(
-                context=self._context,
-                package=self._package,
-                service=self._context.ir.services[self._package.service],
-                endpoint=endpoint,
-                idempotency_headers=self._context.ir.idempotency_headers,
-                is_async=is_async,
-                # Use raw_client's client_wrapper instead of direct client_wrapper
-                client_wrapper_member_name=f"{self._get_raw_client_member_name()}.{self._get_client_wrapper_member_name()}",
-                generated_root_client=generated_root_client,
-                snippet_writer=self._snippet_writer,
-                endpoint_metadata_collector=self._endpoint_metadata_collector,
-                is_raw_client=False,
-            )
-
-            # Check if any generated function needs DEFAULT_BODY_PARAMETER
-            generated_endpoint_functions = endpoint_generator.generate()
-            for generated_function in generated_endpoint_functions:
-                if generated_function.is_default_body_parameter_used:
-                    self._is_default_body_parameter_used = True
-                # TODO: Remove this. Currently, we need to preserve snippets for paginated endpoints (since we're not doing this in the raw client generator)
-                if self._treat_as_paginated(endpoint):
-                    for snippet in generated_function.snippets or []:
-                        if is_async:
-                            self._snippet_registry.register_async_client_endpoint_snippet(
-                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
-                            )
-                        else:
-                            self._snippet_registry.register_sync_client_endpoint_snippet(
-                                endpoint=endpoint, expr=snippet.snippet, example_id=snippet.example_id
-                            )
-
-            # For regular streaming endpoints (not stream parameter), return the function directly
-            return generated_endpoint_functions[0].function
-
-        # For non-streaming endpoints, use the existing wrapper method approach
         # Use EndpointFunctionGenerator to create the wrapper method
         endpoint_generator = EndpointFunctionGenerator(
             context=self._context,
@@ -107,7 +112,7 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
             generated_root_client=generated_root_client,
             snippet_writer=self._snippet_writer,
             endpoint_metadata_collector=self._endpoint_metadata_collector,
-            is_raw_client=False,  # Use False here to get clean unwrapped return types in docs
+            is_raw_client=False,
         )
 
         # Check if any generated function needs DEFAULT_BODY_PARAMETER

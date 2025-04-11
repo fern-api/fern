@@ -43,9 +43,7 @@ class DummyClient:
         )
         client.dummy.get_dummy()
         """
-        response = self._raw_client.get_dummy(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_dummy(request_options=request_options)
         return response.data
 
 
@@ -92,7 +90,5 @@ class AsyncDummyClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_dummy(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_dummy(request_options=request_options)
         return response.data
