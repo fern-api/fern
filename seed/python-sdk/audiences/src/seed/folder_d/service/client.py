@@ -45,9 +45,7 @@ class ServiceClient:
         )
         client.folder_d.service.get_direct_thread()
         """
-        response = self._raw_client.get_direct_thread(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_direct_thread(request_options=request_options)
         return response.data
 
 
@@ -95,7 +93,5 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_direct_thread(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_direct_thread(request_options=request_options)
         return response.data

@@ -55,9 +55,7 @@ class SyspropClient:
         )
         """
         response = self._raw_client.set_num_warm_instances(
-            language,
-            num_warm_instances,
-            request_options=request_options,
+            language, num_warm_instances, request_options=request_options
         )
         return response.data
 
@@ -84,9 +82,7 @@ class SyspropClient:
         )
         client.sysprop.get_num_warm_instances()
         """
-        response = self._raw_client.get_num_warm_instances(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_num_warm_instances(request_options=request_options)
         return response.data
 
 
@@ -144,9 +140,7 @@ class AsyncSyspropClient:
         asyncio.run(main())
         """
         response = await self._raw_client.set_num_warm_instances(
-            language,
-            num_warm_instances,
-            request_options=request_options,
+            language, num_warm_instances, request_options=request_options
         )
         return response.data
 
@@ -181,7 +175,5 @@ class AsyncSyspropClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_num_warm_instances(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_num_warm_instances(request_options=request_options)
         return response.data

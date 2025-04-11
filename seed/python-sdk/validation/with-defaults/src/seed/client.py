@@ -116,11 +116,7 @@ class SeedValidation:
         )
         """
         response = self._raw_client.create(
-            decimal=decimal,
-            even=even,
-            name=name,
-            shape=shape,
-            request_options=request_options,
+            decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
         )
         return response.data
 
@@ -161,12 +157,7 @@ class SeedValidation:
             name="foo",
         )
         """
-        response = self._raw_client.get(
-            decimal=decimal,
-            even=even,
-            name=name,
-            request_options=request_options,
-        )
+        response = self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
         return response.data
 
 
@@ -280,11 +271,7 @@ class AsyncSeedValidation:
         asyncio.run(main())
         """
         response = await self._raw_client.create(
-            decimal=decimal,
-            even=even,
-            name=name,
-            shape=shape,
-            request_options=request_options,
+            decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
         )
         return response.data
 
@@ -333,10 +320,5 @@ class AsyncSeedValidation:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get(
-            decimal=decimal,
-            even=even,
-            name=name,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
         return response.data

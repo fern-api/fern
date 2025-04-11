@@ -34,10 +34,8 @@ class ServiceClient:
         -------
         typing.Iterator[bytes]
         """
-        response = self._raw_client.download_file(
-            request_options=request_options,
-        )
-        return response.data
+        with self._raw_client.download_file(request_options=request_options) as r:
+            yield from r.data
 
 
 class AsyncServiceClient:
@@ -68,7 +66,6 @@ class AsyncServiceClient:
         -------
         typing.AsyncIterator[bytes]
         """
-        response = await self._raw_client.download_file(
-            request_options=request_options,
-        )
-        return response.data
+        async with self._raw_client.download_file(request_options=request_options) as r:
+            async for data in r.data:
+                yield data

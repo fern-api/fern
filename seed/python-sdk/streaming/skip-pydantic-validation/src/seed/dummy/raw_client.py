@@ -6,8 +6,10 @@ from ..core.request_options import RequestOptions
 from ..core.http_response import HttpResponse
 from .types.stream_response import StreamResponse
 from ..core.unchecked_base_model import construct_type
+import json
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+import contextlib
 from ..core.client_wrapper import AsyncClientWrapper
 from ..core.http_response import AsyncHttpResponse
 
@@ -18,6 +20,62 @@ OMIT = typing.cast(typing.Any, ...)
 class RawDummyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    @contextlib.contextmanager
+    def generate_stream(
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamResponse]]]:
+        """
+        Parameters
+        ----------
+        num_events : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[HttpResponse[typing.Iterator[StreamResponse]]]
+        """
+        with self._client_wrapper.httpx_client.stream(
+            "generate-stream",
+            method="POST",
+            json={
+                "num_events": num_events,
+                "stream": True,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        ) as _response:
+
+            def stream() -> HttpResponse[typing.Iterator[StreamResponse]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+
+                        def _iter():
+                            for _text in _response.iter_lines():
+                                try:
+                                    if len(_text) == 0:
+                                        continue
+                                    yield typing.cast(
+                                        StreamResponse,
+                                        construct_type(
+                                            type_=StreamResponse,  # type: ignore
+                                            object_=json.loads(_text),
+                                        ),
+                                    )
+                                except Exception:
+                                    pass
+                            return
+
+                        return HttpResponse(response=_response, data=_iter())
+                    _response.read()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(status_code=_response.status_code, body=_response.text)
+                raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            yield stream()
 
     def generate(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
@@ -63,6 +121,62 @@ class RawDummyClient:
 class AsyncRawDummyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    @contextlib.asynccontextmanager
+    async def generate_stream(
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamResponse]]]:
+        """
+        Parameters
+        ----------
+        num_events : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamResponse]]]
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            "generate-stream",
+            method="POST",
+            json={
+                "num_events": num_events,
+                "stream": True,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        ) as _response:
+
+            async def stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamResponse]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+
+                        async def _iter():
+                            async for _text in _response.aiter_lines():
+                                try:
+                                    if len(_text) == 0:
+                                        continue
+                                    yield typing.cast(
+                                        StreamResponse,
+                                        construct_type(
+                                            type_=StreamResponse,  # type: ignore
+                                            object_=json.loads(_text),
+                                        ),
+                                    )
+                                except Exception:
+                                    pass
+                            return
+
+                        return AsyncHttpResponse(response=_response, data=_iter())
+                    await _response.aread()
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(status_code=_response.status_code, body=_response.text)
+                raise ApiError(status_code=_response.status_code, body=_response_json)
+
+            yield await stream()
 
     async def generate(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None

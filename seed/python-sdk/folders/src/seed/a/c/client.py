@@ -43,9 +43,7 @@ class CClient:
         )
         client.a.c.foo()
         """
-        response = self._raw_client.foo(
-            request_options=request_options,
-        )
+        response = self._raw_client.foo(request_options=request_options)
         return response.data
 
 
@@ -92,7 +90,5 @@ class AsyncCClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.foo(
-            request_options=request_options,
-        )
+        response = await self._raw_client.foo(request_options=request_options)
         return response.data

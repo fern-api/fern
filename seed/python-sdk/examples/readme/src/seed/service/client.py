@@ -69,10 +69,7 @@ class ServiceClient:
             movie_id="movie-c06a4ad7",
         )
         """
-        response = self._raw_client.get_movie(
-            movie_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_movie(movie_id, request_options=request_options)
         return response.data
 
     def create_movie(
@@ -196,10 +193,7 @@ class ServiceClient:
         )
         """
         response = self._raw_client.get_metadata(
-            x_api_version=x_api_version,
-            shallow=shallow,
-            tag=tag,
-            request_options=request_options,
+            x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
         return response.data
 
@@ -554,10 +548,7 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie(
-            movie_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_movie(movie_id, request_options=request_options)
         return response.data
 
     async def create_movie(
@@ -697,10 +688,7 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_metadata(
-            x_api_version=x_api_version,
-            shallow=shallow,
-            tag=tag,
-            request_options=request_options,
+            x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
         return response.data
 

@@ -39,6 +39,7 @@ class CoreUtilities:
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
         self._should_generate_websocket_clients = custom_config.should_generate_websocket_clients
+        self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -48,7 +49,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
-            exports={"serialize_datetime"},
+            exports={"serialize_datetime"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -57,7 +58,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="api_error"),
             ),
-            exports={"ApiError"},
+            exports={"ApiError"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -66,7 +67,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="jsonable_encoder"),
             ),
-            exports={"jsonable_encoder"},
+            exports={"jsonable_encoder"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -75,7 +76,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="remove_none_from_dict"),
             ),
-            exports={"remove_none_from_dict"},
+            exports={"remove_none_from_dict"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -84,7 +85,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="request_options"),
             ),
-            exports={"RequestOptions"},
+            exports={"RequestOptions"} if not self._exclude_types_from_init_exports else set(),
         )
 
         self._copy_file_to_project(
@@ -94,7 +95,16 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="file"),
             ),
-            exports={"File", "convert_file_dict_to_httpx_tuples", "with_content_type"},
+            exports={
+                "File",
+                "convert_file_dict_to_httpx_tuples",
+                "with_content_type",
+            }
+            if not self._exclude_types_from_init_exports
+            else {
+                "File",
+                "with_content_type",
+            },
         )
         self._copy_file_to_project(
             project=project,
@@ -103,7 +113,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
-            exports={"HttpClient", "AsyncHttpClient"},
+            exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
         )
 
         self._copy_file_to_project(
@@ -113,7 +123,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="http_response"),
             ),
-            exports={"HttpResponse", "AsyncHttpResponse"},
+            exports={"HttpResponse", "AsyncHttpResponse"} if not self._exclude_types_from_init_exports else set(),
         )
 
         is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
@@ -147,7 +157,9 @@ class CoreUtilities:
                 "universal_field_validator",
                 "update_forward_refs",
                 "UniversalRootModel",
-            },
+            }
+            if not self._exclude_types_from_init_exports
+            else set(),
         )
         project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
@@ -158,7 +170,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="query_encoder"),
             ),
-            exports={"encode_query"},
+            exports={"encode_query"} if not self._exclude_types_from_init_exports else set(),
         )
 
         self._copy_file_to_project(
@@ -168,7 +180,12 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="serialization"),
             ),
-            exports={"FieldMetadata", "convert_and_respect_annotation_metadata"},
+            exports={
+                "FieldMetadata",
+                "convert_and_respect_annotation_metadata",
+            }
+            if not self._exclude_types_from_init_exports
+            else set(),
         )
 
         if self._has_paginated_endpoints:
@@ -179,7 +196,7 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="pagination"),
                 ),
-                exports={"SyncPager", "AsyncPager"},
+                exports={"SyncPager", "AsyncPager"} if not self._exclude_types_from_init_exports else set(),
             )
 
         if self._allow_skipping_validation:
@@ -190,7 +207,13 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="unchecked_base_model"),
                 ),
-                exports={"UncheckedBaseModel", "UnionMetadata", "construct_type"},
+                exports={
+                    "UncheckedBaseModel",
+                    "UnionMetadata",
+                    "construct_type",
+                }
+                if not self._exclude_types_from_init_exports
+                else set(),
             )
 
         if self._should_generate_websocket_clients:
@@ -201,7 +224,7 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="events"),
                 ),
-                exports={"EventType", "EventEmitterMixin"},
+                exports={"EventType", "EventEmitterMixin"} if not self._exclude_types_from_init_exports else set(),
             )
 
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
