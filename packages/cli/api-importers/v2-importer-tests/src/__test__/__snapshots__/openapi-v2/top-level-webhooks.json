@@ -430,10 +430,82 @@
       "Update"
     ],
     "errors": [],
-    "subpackages": [],
+    "subpackages": [
+      "status"
+    ],
     "hasEndpointsInTree": false
   },
-  "subpackages": {},
+  "subpackages": {
+    "status": {
+      "name": {
+        "originalName": "status",
+        "camelCase": {
+          "unsafeName": "status",
+          "safeName": "status"
+        },
+        "snakeCase": {
+          "unsafeName": "status",
+          "safeName": "status"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "STATUS",
+          "safeName": "STATUS"
+        },
+        "pascalCase": {
+          "unsafeName": "Status",
+          "safeName": "Status"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "status",
+            "camelCase": {
+              "unsafeName": "status",
+              "safeName": "status"
+            },
+            "snakeCase": {
+              "unsafeName": "status",
+              "safeName": "status"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "STATUS",
+              "safeName": "STATUS"
+            },
+            "pascalCase": {
+              "unsafeName": "Status",
+              "safeName": "Status"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "status",
+          "camelCase": {
+            "unsafeName": "status",
+            "safeName": "status"
+          },
+          "snakeCase": {
+            "unsafeName": "status",
+            "safeName": "status"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "STATUS",
+            "safeName": "STATUS"
+          },
+          "pascalCase": {
+            "unsafeName": "Status",
+            "safeName": "Status"
+          }
+        }
+      },
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "webhooks": "status",
+      "hasEndpointsInTree": false
+    }
+  },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
