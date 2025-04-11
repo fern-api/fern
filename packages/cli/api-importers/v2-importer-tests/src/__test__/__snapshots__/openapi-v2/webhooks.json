@@ -235,6 +235,7 @@
     ],
     "errors": [],
     "subpackages": [],
+    "webhooks": "CreatePet",
     "hasEndpointsInTree": false
   },
   "subpackages": {},
