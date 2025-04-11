@@ -56,11 +56,7 @@ class UserClient:
             user_id="user_id",
         )
         """
-        response = self._raw_client.get_user(
-            tenant_id,
-            user_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
         return response.data
 
     def create_user(
@@ -100,12 +96,7 @@ class UserClient:
             tags=["tags", "tags"],
         )
         """
-        response = self._raw_client.create_user(
-            tenant_id,
-            name=name,
-            tags=tags,
-            request_options=request_options,
-        )
+        response = self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
         return response.data
 
     def update_user(
@@ -150,11 +141,7 @@ class UserClient:
         )
         """
         response = self._raw_client.update_user(
-            tenant_id,
-            user_id,
-            name=name,
-            tags=tags,
-            request_options=request_options,
+            tenant_id, user_id, name=name, tags=tags, request_options=request_options
         )
         return response.data
 
@@ -195,12 +182,7 @@ class UserClient:
             limit=1,
         )
         """
-        response = self._raw_client.search_users(
-            tenant_id,
-            user_id,
-            limit=limit,
-            request_options=request_options,
-        )
+        response = self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)
         return response.data
 
 
@@ -256,11 +238,7 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_user(
-            tenant_id,
-            user_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
         return response.data
 
     async def create_user(
@@ -308,12 +286,7 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_user(
-            tenant_id,
-            name=name,
-            tags=tags,
-            request_options=request_options,
-        )
+        response = await self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
         return response.data
 
     async def update_user(
@@ -366,11 +339,7 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         response = await self._raw_client.update_user(
-            tenant_id,
-            user_id,
-            name=name,
-            tags=tags,
-            request_options=request_options,
+            tenant_id, user_id, name=name, tags=tags, request_options=request_options
         )
         return response.data
 
@@ -419,10 +388,5 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.search_users(
-            tenant_id,
-            user_id,
-            limit=limit,
-            request_options=request_options,
-        )
+        response = await self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)
         return response.data

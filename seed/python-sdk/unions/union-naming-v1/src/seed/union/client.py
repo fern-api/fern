@@ -51,10 +51,7 @@ class UnionClient:
             id="id",
         )
         """
-        response = self._raw_client.get(
-            id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get(id, request_options=request_options)
         return response.data
 
     def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
@@ -84,10 +81,7 @@ class UnionClient:
             ),
         )
         """
-        response = self._raw_client.update(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.update(request=request, request_options=request_options)
         return response.data
 
 
@@ -138,10 +132,7 @@ class AsyncUnionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get(
-            id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get(id, request_options=request_options)
         return response.data
 
     async def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
@@ -179,8 +170,5 @@ class AsyncUnionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.update(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.update(request=request, request_options=request_options)
         return response.data

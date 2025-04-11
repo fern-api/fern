@@ -193,11 +193,7 @@ class PlaylistClient:
             playlist_id="playlistId",
         )
         """
-        response = self._raw_client.get_playlist(
-            service_param,
-            playlist_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_playlist(service_param, playlist_id, request_options=request_options)
         return response.data
 
     def update_playlist(
@@ -245,10 +241,7 @@ class PlaylistClient:
         )
         """
         response = self._raw_client.update_playlist(
-            service_param,
-            playlist_id,
-            request=request,
-            request_options=request_options,
+            service_param, playlist_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -284,11 +277,7 @@ class PlaylistClient:
             playlist_id="playlist_id",
         )
         """
-        response = self._raw_client.delete_playlist(
-            service_param,
-            playlist_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.delete_playlist(service_param, playlist_id, request_options=request_options)
         return response.data
 
 
@@ -492,11 +481,7 @@ class AsyncPlaylistClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_playlist(
-            service_param,
-            playlist_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_playlist(service_param, playlist_id, request_options=request_options)
         return response.data
 
     async def update_playlist(
@@ -552,10 +537,7 @@ class AsyncPlaylistClient:
         asyncio.run(main())
         """
         response = await self._raw_client.update_playlist(
-            service_param,
-            playlist_id,
-            request=request,
-            request_options=request_options,
+            service_param, playlist_id, request=request, request_options=request_options
         )
         return response.data
 
@@ -599,9 +581,5 @@ class AsyncPlaylistClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.delete_playlist(
-            service_param,
-            playlist_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.delete_playlist(service_param, playlist_id, request_options=request_options)
         return response.data

@@ -599,6 +599,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                 docs="The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.",
             )
         )
+        parameters.extend(self._get_literal_header_parameters())
         return parameters
 
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
@@ -618,6 +619,21 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             writer.write_newline_if_last_line_not()
 
         return _write_parameter_validation
+
+    def _get_literal_header_parameters(self) -> List[RootClientConstructorParameter]:
+        parameters: List[RootClientConstructorParameter] = []
+        for header in self._context.ir.headers:
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(header.value_type)
+            if not type_hint.is_literal:
+                continue
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=header.name.name.snake_case.safe_name,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    initializer=AST.Expression(AST.TypeHint.none()),
+                )
+            )
+        return parameters
 
     def _get_write_constructor_body(
         self, *, is_async: bool, constructor_parameters: List[RootClientConstructorParameter]
@@ -807,9 +823,10 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                 )
             )
 
-        for wrapper_param in client_wrapper_generator._get_constructor_info(
+        constructor_info = client_wrapper_generator._get_constructor_info(
             exclude_auth=exclude_auth if exclude_auth else use_oauth_token_provider
-        ).constructor_parameters:
+        )
+        for wrapper_param in constructor_info.constructor_parameters:
             client_wrapper_constructor_kwargs.append(
                 (
                     wrapper_param.constructor_parameter_name,
@@ -905,6 +922,14 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                 AST.Expression(timeout_local_variable),
             )
         )
+
+        for wrapper_param in constructor_info.literal_headers:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    wrapper_param.header.name.name.snake_case.safe_name,
+                    AST.Expression(wrapper_param.header.name.name.snake_case.safe_name),
+                )
+            )
 
         return client_wrapper_constructor_kwargs
 

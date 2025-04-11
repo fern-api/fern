@@ -52,8 +52,7 @@ class MigrationClient:
         )
         """
         response = self._raw_client.get_attempted_migrations(
-            admin_key_header=admin_key_header,
-            request_options=request_options,
+            admin_key_header=admin_key_header, request_options=request_options
         )
         return response.data
 
@@ -109,7 +108,6 @@ class AsyncMigrationClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_attempted_migrations(
-            admin_key_header=admin_key_header,
-            request_options=request_options,
+            admin_key_header=admin_key_header, request_options=request_options
         )
         return response.data

@@ -334,10 +334,7 @@ class ProblemClient:
             problem_id="problemId",
         )
         """
-        response = self._raw_client.delete_problem(
-            problem_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.delete_problem(problem_id, request_options=request_options)
         return response.data
 
     def get_default_starter_files(
@@ -398,10 +395,7 @@ class ProblemClient:
         )
         """
         response = self._raw_client.get_default_starter_files(
-            input_params=input_params,
-            output_type=output_type,
-            method_name=method_name,
-            request_options=request_options,
+            input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
         )
         return response.data
 
@@ -745,10 +739,7 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.delete_problem(
-            problem_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.delete_problem(problem_id, request_options=request_options)
         return response.data
 
     async def get_default_starter_files(
@@ -817,9 +808,6 @@ class AsyncProblemClient:
         asyncio.run(main())
         """
         response = await self._raw_client.get_default_starter_files(
-            input_params=input_params,
-            output_type=output_type,
-            method_name=method_name,
-            request_options=request_options,
+            input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
         )
         return response.data
