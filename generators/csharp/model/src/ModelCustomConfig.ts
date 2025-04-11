@@ -5,6 +5,7 @@ export const ModelCustomConfigSchema = z.object({
     "simplify-object-dictionaries": z.boolean().optional(),
     "read-only-memory-types": z.optional(z.array(z.string())),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
+    "experimental-additional-properties": z.boolean().optional(),
     "package-id": z.string().optional(),
     "use-discriminated-unions": z.boolean().optional()
 });
