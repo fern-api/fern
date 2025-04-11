@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: pagination
+  version: ''
+paths:
+  /users:
+    get:
+      operationId: users_listUsernamesCustom
+      tags:
+        - Users
+      parameters:
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameCursor'
+components:
+  schemas:
+    UsernameCursor:
+      title: UsernameCursor
+      type: object
+      properties:
+        cursor:
+          $ref: '#/components/schemas/UsernamePage'
+      required:
+        - cursor
+    UsernamePage:
+      title: UsernamePage
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            type: string
+      required:
+        - data
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

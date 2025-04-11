@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Parse `anyOf` and `oneOf` schemas with "null" in a first class manner in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.22
+
+- changelogEntry:
+  - summary: |
       Correctly parse schema-valued additionalProperties in the v3 OpenAPI parser.
     type: fix
   irVersion: 57

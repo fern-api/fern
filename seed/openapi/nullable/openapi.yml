@@ -218,6 +218,12 @@ components:
           nullable: true
         status:
           $ref: '#/components/schemas/Status'
+        values:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
       required:
         - createdAt
         - updatedAt

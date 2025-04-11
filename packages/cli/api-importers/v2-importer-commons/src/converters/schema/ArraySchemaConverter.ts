@@ -12,7 +12,7 @@ export declare namespace ArraySchemaConverter {
 
     export interface Output {
         typeReference: TypeReference;
-        inlinedTypes?: Record<TypeId, TypeDeclaration>;
+        inlinedTypes: Record<TypeId, TypeDeclaration>;
     }
 }
 
@@ -37,7 +37,7 @@ export class ArraySchemaConverter extends AbstractConverter<
         errorCollector: ErrorCollector;
     }): Promise<ArraySchemaConverter.Output | undefined> {
         if (this.schema.items == null) {
-            return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
+            return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, inlinedTypes: {} };
         }
 
         const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
@@ -54,6 +54,6 @@ export class ArraySchemaConverter extends AbstractConverter<
         }
 
         // fallback
-        return { typeReference: ArraySchemaConverter.LIST_UNKNOWN };
+        return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, inlinedTypes: {} };
     }
 }
