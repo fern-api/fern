@@ -6,12 +6,43 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive;
 
-public record ReadOnlyAdditionalProperties : ReadOnlyAdditionalProperties<JsonElement>;
+public record ReadOnlyAdditionalProperties : ReadOnlyAdditionalProperties<JsonElement>
+{
+    internal ReadOnlyAdditionalProperties() { }
+
+    internal ReadOnlyAdditionalProperties(IDictionary<string, JsonElement> properties)
+        : base(properties) { }
+}
 
 public record ReadOnlyAdditionalProperties<T> : IReadOnlyDictionary<string, T>
 {
     private readonly Dictionary<string, JsonElement> _extensionData = new();
     private readonly Dictionary<string, T> _convertedCache = new();
+
+    internal ReadOnlyAdditionalProperties()
+    {
+        _extensionData = new Dictionary<string, JsonElement>();
+        _convertedCache = new Dictionary<string, T>();
+    }
+
+    internal ReadOnlyAdditionalProperties(IDictionary<string, T> properties)
+    {
+        _extensionData = new Dictionary<string, JsonElement>(properties.Count);
+        _convertedCache = new Dictionary<string, T>(properties.Count);
+        foreach (var kvp in properties)
+        {
+            if (kvp.Value is JsonElement element)
+            {
+                _extensionData.Add(kvp.Key, element);
+            }
+            else
+            {
+                _extensionData[kvp.Key] = JsonUtils.SerializeToElement(kvp.Value);
+            }
+
+            _convertedCache[kvp.Key] = kvp.Value;
+        }
+    }
 
     private static T ConvertToT(JsonElement value)
     {
@@ -23,7 +54,7 @@ public record ReadOnlyAdditionalProperties<T> : IReadOnlyDictionary<string, T>
         return value.Deserialize<T>(JsonOptions.JsonSerializerOptions)!;
     }
 
-    public void CopyFromExtensionData(IDictionary<string, JsonElement> extensionData)
+    internal void CopyFromExtensionData(IDictionary<string, JsonElement> extensionData)
     {
         _extensionData.Clear();
         _convertedCache.Clear();
@@ -86,27 +117,33 @@ public record ReadOnlyAdditionalProperties<T> : IReadOnlyDictionary<string, T>
     public IEnumerable<T> Values => Keys.Select(GetCached);
 }
 
-public record AdditionalProperties : AdditionalProperties<object?>;
+public record AdditionalProperties : AdditionalProperties<object?>
+{
+    public AdditionalProperties() { }
+
+    public AdditionalProperties(IDictionary<string, object?> properties)
+        : base(properties) { }
+}
 
 public record AdditionalProperties<T> : IDictionary<string, T>
 {
     private readonly Dictionary<string, object?> _extensionData;
-    private readonly Dictionary<string, T> _convertedExtensionDataCache;
+    private readonly Dictionary<string, T> _convertedCache;
 
     public AdditionalProperties()
     {
         _extensionData = new Dictionary<string, object?>();
-        _convertedExtensionDataCache = new Dictionary<string, T>();
+        _convertedCache = new Dictionary<string, T>();
     }
 
     public AdditionalProperties(IDictionary<string, T> properties)
     {
         _extensionData = new Dictionary<string, object?>(properties.Count);
-        _convertedExtensionDataCache = new Dictionary<string, T>(properties.Count);
+        _convertedCache = new Dictionary<string, T>(properties.Count);
         foreach (var kvp in properties)
         {
             _extensionData[kvp.Key] = kvp.Value;
-            _convertedExtensionDataCache[kvp.Key] = kvp.Value;
+            _convertedCache[kvp.Key] = kvp.Value;
         }
     }
 
@@ -128,13 +165,13 @@ public record AdditionalProperties<T> : IDictionary<string, T>
     internal void CopyFromExtensionData(IDictionary<string, object?> extensionData)
     {
         _extensionData.Clear();
-        _convertedExtensionDataCache.Clear();
+        _convertedCache.Clear();
         foreach (var kvp in extensionData)
         {
             _extensionData[kvp.Key] = kvp.Value;
             if (kvp.Value is T value)
             {
-                _convertedExtensionDataCache[kvp.Key] = value;
+                _convertedCache[kvp.Key] = value;
             }
         }
     }
@@ -203,32 +240,32 @@ public record AdditionalProperties<T> : IDictionary<string, T>
 
     private T GetCached(string key)
     {
-        if (_convertedExtensionDataCache.TryGetValue(key, out var value))
+        if (_convertedCache.TryGetValue(key, out var value))
         {
             return value;
         }
 
         value = ConvertToT(_extensionData[key]);
-        _convertedExtensionDataCache.Add(key, value);
+        _convertedCache.Add(key, value);
         return value;
     }
 
     private void SetCached(string key, T value)
     {
         _extensionData[key] = value;
-        _convertedExtensionDataCache[key] = value;
+        _convertedCache[key] = value;
     }
 
     private void AddCached(string key, T value)
     {
         _extensionData.Add(key, value);
-        _convertedExtensionDataCache.Add(key, value);
+        _convertedCache.Add(key, value);
     }
 
     private bool RemoveCached(string key)
     {
         var isRemoved = _extensionData.Remove(key);
-        _convertedExtensionDataCache.Remove(key);
+        _convertedCache.Remove(key);
         return isRemoved;
     }
 
@@ -259,7 +296,7 @@ public record AdditionalProperties<T> : IDictionary<string, T>
 
     public bool TryGetValue(string key, out T value)
     {
-        if (_convertedExtensionDataCache.TryGetValue(key, out value!))
+        if (_convertedCache.TryGetValue(key, out value!))
         {
             return true;
         }
@@ -267,7 +304,7 @@ public record AdditionalProperties<T> : IDictionary<string, T>
         if (_extensionData.TryGetValue(key, out var extensionDataValue))
         {
             value = ConvertToT(extensionDataValue);
-            _convertedExtensionDataCache[key] = value;
+            _convertedCache[key] = value;
             return true;
         }
 
@@ -277,7 +314,7 @@ public record AdditionalProperties<T> : IDictionary<string, T>
     public void Clear()
     {
         _extensionData.Clear();
-        _convertedExtensionDataCache.Clear();
+        _convertedCache.Clear();
     }
 
     public void CopyTo(KeyValuePair<string, T>[] array, int arrayIndex)
