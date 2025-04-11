@@ -1,1 +1,8 @@
 npx lint-staged
+swpCount=`find . -type f -name "*.swp" | wc -l`
+if [ $swpCount != 0 ]
+then 
+echo "swp files included in commit, deleting now, try again"
+find . -type f -name "*.swp" -delete
+exit 1
+fi 
