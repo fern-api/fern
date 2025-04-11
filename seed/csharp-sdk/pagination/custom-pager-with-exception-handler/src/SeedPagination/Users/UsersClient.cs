@@ -1203,64 +1203,6 @@ public partial class UsersClient
     }
 
     /// <example><code>
-    /// await client.Users.ListUsernamesCustomAsync(
-    ///     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
-    /// );
-    /// </code></example>
-    public async Task<MyPager<string>> ListUsernamesCustomAsync(
-        ListUsernamesRequestCustom request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var _query = new Dictionary<string, object>();
-                if (request.StartingAfter != null)
-                {
-                    _query["starting_after"] = request.StartingAfter;
-                }
-                var httpRequest = _client.CreateHttpRequest(
-                    new JsonRequest
-                    {
-                        BaseUrl = _client.Options.BaseUrl,
-                        Method = HttpMethod.Get,
-                        Path = "/users",
-                        Query = _query,
-                        Options = options,
-                    }
-                );
-                var sendRequest = async (
-                    HttpRequestMessage httpRequest,
-                    CancellationToken cancellationToken
-                ) =>
-                {
-                    var response = await _client
-                        .SendRequestAsync(httpRequest, options, cancellationToken)
-                        .ConfigureAwait(false);
-                    if (response.StatusCode is >= 200 and < 400)
-                    {
-                        return response.Raw;
-                    }
-
-                    {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                        throw new SeedPaginationApiException(
-                            $"Error with status code {response.StatusCode}",
-                            response.StatusCode,
-                            responseBody
-                        );
-                    }
-                };
-                return await MyPagerFactory
-                    .CreateAsync<string>(sendRequest, httpRequest, cancellationToken)
-                    .ConfigureAwait(false);
-            })
-            .ConfigureAwait(false);
-    }
-
-    /// <example><code>
     /// await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
     /// </code></example>
     public async Task<Pager<string>> ListWithGlobalConfigAsync(

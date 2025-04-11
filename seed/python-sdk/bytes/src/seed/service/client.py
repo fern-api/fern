@@ -44,10 +44,7 @@ class ServiceClient:
         -------
         None
         """
-        response = self._raw_client.upload(
-            request=request,
-            request_options=request_options,
-        )
+        response = self._raw_client.upload(request=request, request_options=request_options)
         return response.data
 
     def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bytes:
@@ -63,10 +60,7 @@ class ServiceClient:
         -------
         bytes
         """
-        response = self._raw_client.download(
-            id,
-            request_options=request_options,
-        )
+        response = self._raw_client.download(id, request_options=request_options)
         return response.data
 
 
@@ -103,10 +97,7 @@ class AsyncServiceClient:
         -------
         None
         """
-        response = await self._raw_client.upload(
-            request=request,
-            request_options=request_options,
-        )
+        response = await self._raw_client.upload(request=request, request_options=request_options)
         return response.data
 
     async def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bytes:
@@ -122,8 +113,5 @@ class AsyncServiceClient:
         -------
         bytes
         """
-        response = await self._raw_client.download(
-            id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.download(id, request_options=request_options)
         return response.data

@@ -55,10 +55,7 @@ class SubmissionClient:
             language="JAVA",
         )
         """
-        response = self._raw_client.create_execution_session(
-            language,
-            request_options=request_options,
-        )
+        response = self._raw_client.create_execution_session(language, request_options=request_options)
         return response.data
 
     def get_execution_session(
@@ -90,10 +87,7 @@ class SubmissionClient:
             session_id="sessionId",
         )
         """
-        response = self._raw_client.get_execution_session(
-            session_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.get_execution_session(session_id, request_options=request_options)
         return response.data
 
     def stop_execution_session(
@@ -125,10 +119,7 @@ class SubmissionClient:
             session_id="sessionId",
         )
         """
-        response = self._raw_client.stop_execution_session(
-            session_id,
-            request_options=request_options,
-        )
+        response = self._raw_client.stop_execution_session(session_id, request_options=request_options)
         return response.data
 
     def get_execution_sessions_state(
@@ -154,9 +145,7 @@ class SubmissionClient:
         )
         client.submission.get_execution_sessions_state()
         """
-        response = self._raw_client.get_execution_sessions_state(
-            request_options=request_options,
-        )
+        response = self._raw_client.get_execution_sessions_state(request_options=request_options)
         return response.data
 
 
@@ -212,10 +201,7 @@ class AsyncSubmissionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.create_execution_session(
-            language,
-            request_options=request_options,
-        )
+        response = await self._raw_client.create_execution_session(language, request_options=request_options)
         return response.data
 
     async def get_execution_session(
@@ -255,10 +241,7 @@ class AsyncSubmissionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_execution_session(
-            session_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_execution_session(session_id, request_options=request_options)
         return response.data
 
     async def stop_execution_session(
@@ -298,10 +281,7 @@ class AsyncSubmissionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.stop_execution_session(
-            session_id,
-            request_options=request_options,
-        )
+        response = await self._raw_client.stop_execution_session(session_id, request_options=request_options)
         return response.data
 
     async def get_execution_sessions_state(
@@ -335,7 +315,5 @@ class AsyncSubmissionClient:
 
         asyncio.run(main())
         """
-        response = await self._raw_client.get_execution_sessions_state(
-            request_options=request_options,
-        )
+        response = await self._raw_client.get_execution_sessions_state(request_options=request_options)
         return response.data
