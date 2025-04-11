@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.patch"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/content-type/fern\"\n\tfernclient \"github.com/content-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Patch(\n\tcontext.TODO(),\n\t\u0026fern.PatchProxyRequest{\n\t\tApplication: fern.String(\n\t\t\t\"application\",\n\t\t),\n\t\tRequireAuth: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        }
+    ]
+}
