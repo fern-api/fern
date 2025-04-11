@@ -21,14 +21,8 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedExhaustive
-
-client = SeedExhaustive(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.endpoints.container.get_and_return_list_of_primitives(
-    request=["string", "string"],
-)
+client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+client.endpoints.container.get_and_return_list_of_primitives(request=['string', 'string'], )
 ```
 
 ## Async Client
@@ -36,24 +30,12 @@ client.endpoints.container.get_and_return_list_of_primitives(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedExhaustive
-
-client = AsyncSeedExhaustive(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.endpoints.container.get_and_return_list_of_primitives(
-        request=["string", "string"],
-    )
-
-
-asyncio.run(main())
-```
+    await client.endpoints.container.get_and_return_list_of_primitives(request=['string', 'string'], )
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -62,7 +44,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.endpoints.container.get_and_return_list_of_primitives(...)
 except ApiError as e:
@@ -99,12 +80,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedExhaustive
-
-client = SeedExhaustive(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedExhaustive(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
@@ -118,17 +94,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedExhaustive
-
-client = SeedExhaustive(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedExhaustive(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

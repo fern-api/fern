@@ -13,11 +13,11 @@ from .types import (
     UnionWithMultipleNoProperties,
     UnionWithNoProperties,
     UnionWithOptionalTime,
+    UnionWithoutKey,
     UnionWithPrimitive,
     UnionWithSingleElement,
     UnionWithSubTypes,
     UnionWithTime,
-    UnionWithoutKey,
 )
 
 __all__ = [

@@ -21,10 +21,7 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedLicense
-
-client = SeedLicense(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedLicense(base_url="https://yourhost.com/path/to/api", )
 client.get()
 ```
 
@@ -33,21 +30,12 @@ client.get()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedLicense
-
-client = AsyncSeedLicense(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedLicense(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.get()
-
-
-asyncio.run(main())
-```
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -56,7 +44,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.get()
 except ApiError as e:
@@ -93,12 +80,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedLicense
-
-client = SeedLicense(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedLicense(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.get(request_options={
@@ -112,17 +94,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedLicense
-
-client = SeedLicense(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedLicense(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

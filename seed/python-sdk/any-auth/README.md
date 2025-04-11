@@ -21,17 +21,8 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedAnyAuth
-
-client = SeedAnyAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
-client.auth.get_token(
-    client_id="client_id",
-    client_secret="client_secret",
-    scope="scope",
-)
+client = SeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
+client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )
 ```
 
 ## Async Client
@@ -39,27 +30,12 @@ client.auth.get_token(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedAnyAuth
-
-client = AsyncSeedAnyAuth(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
-
-
+import asyncio
+client = AsyncSeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
 async def main() -> None:
-    await client.auth.get_token(
-        client_id="client_id",
-        client_secret="client_secret",
-        scope="scope",
-    )
-
-
-asyncio.run(main())
-```
+    await client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -68,7 +44,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.auth.get_token(...)
 except ApiError as e:
@@ -105,12 +80,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedAnyAuth
-
-client = SeedAnyAuth(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedAnyAuth(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.auth.get_token(..., request_options={
@@ -124,17 +94,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedAnyAuth
-
-client = SeedAnyAuth(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedAnyAuth(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 
