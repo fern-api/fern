@@ -6,9 +6,9 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const V2SchemaExample: core.serialization.Schema<serializers.V2SchemaExample.Raw, FernIr.V2SchemaExample> =
+export const V2ValueExample: core.serialization.Schema<serializers.V2ValueExample.Raw, FernIr.V2ValueExample> =
     core.serialization.unknown();
 
-export declare namespace V2SchemaExample {
+export declare namespace V2ValueExample {
     export type Raw = unknown;
 }
