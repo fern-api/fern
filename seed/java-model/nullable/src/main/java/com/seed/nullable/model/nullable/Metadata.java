@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nullable.core.ObjectMappers;
 import java.time.OffsetDateTime;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,17 +28,21 @@ public final class Metadata {
 
     private final Status status;
 
+    private final Optional<Map<String, Optional<String>>> values;
+
     private Metadata(
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Optional<String> avatar,
             Optional<Boolean> activated,
-            Status status) {
+            Status status,
+            Optional<Map<String, Optional<String>>> values) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.avatar = avatar;
         this.activated = activated;
         this.status = status;
+        this.values = values;
     }
 
     @JsonProperty("createdAt")
@@ -65,6 +70,11 @@ public final class Metadata {
         return status;
     }
 
+    @JsonProperty("values")
+    public Optional<Map<String, Optional<String>>> getValues() {
+        return values;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -76,12 +86,13 @@ public final class Metadata {
                 && updatedAt.equals(other.updatedAt)
                 && avatar.equals(other.avatar)
                 && activated.equals(other.activated)
-                && status.equals(other.status);
+                && status.equals(other.status)
+                && values.equals(other.values);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.createdAt, this.updatedAt, this.avatar, this.activated, this.status);
+        return Objects.hash(this.createdAt, this.updatedAt, this.avatar, this.activated, this.status, this.values);
     }
 
     @java.lang.Override
@@ -117,6 +128,10 @@ public final class Metadata {
         _FinalStage activated(Optional<Boolean> activated);
 
         _FinalStage activated(Boolean activated);
+
+        _FinalStage values(Optional<Map<String, Optional<String>>> values);
+
+        _FinalStage values(Map<String, Optional<String>> values);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -126,6 +141,8 @@ public final class Metadata {
         private OffsetDateTime updatedAt;
 
         private Status status;
+
+        private Optional<Map<String, Optional<String>>> values = Optional.empty();
 
         private Optional<Boolean> activated = Optional.empty();
 
@@ -140,6 +157,7 @@ public final class Metadata {
             avatar(other.getAvatar());
             activated(other.getActivated());
             status(other.getStatus());
+            values(other.getValues());
             return this;
         }
 
@@ -161,6 +179,19 @@ public final class Metadata {
         @JsonSetter("status")
         public _FinalStage status(Status status) {
             this.status = Objects.requireNonNull(status, "status must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage values(Map<String, Optional<String>> values) {
+            this.values = Optional.ofNullable(values);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "values", nulls = Nulls.SKIP)
+        public _FinalStage values(Optional<Map<String, Optional<String>>> values) {
+            this.values = values;
             return this;
         }
 
@@ -192,7 +223,7 @@ public final class Metadata {
 
         @java.lang.Override
         public Metadata build() {
-            return new Metadata(createdAt, updatedAt, avatar, activated, status);
+            return new Metadata(createdAt, updatedAt, avatar, activated, status, values);
         }
     }
 }
