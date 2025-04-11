@@ -282,6 +282,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return {
             type: Type.alias({
                 aliasOf: wrappedType,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 resolvedType: wrappedType as any
             }),
             inlinedTypes: convertedSchema.inlinedTypes
