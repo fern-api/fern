@@ -6,7 +6,9 @@ package com.seed.undiscriminatedUnions.resources.union;
 import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
+import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.Request;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -41,5 +43,25 @@ public class AsyncUnionClient {
 
     public CompletableFuture<Map<Key, String>> getMetadata(RequestOptions requestOptions) {
         return this.rawClient.getMetadata(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Boolean> updateMetadata(MetadataUnion request) {
+        return this.rawClient.updateMetadata(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Boolean> updateMetadata(MetadataUnion request, RequestOptions requestOptions) {
+        return this.rawClient.updateMetadata(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Boolean> call() {
+        return this.rawClient.call().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Boolean> call(Request request) {
+        return this.rawClient.call(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Boolean> call(Request request, RequestOptions requestOptions) {
+        return this.rawClient.call(request, requestOptions).thenApply(response -> response.body());
     }
 }

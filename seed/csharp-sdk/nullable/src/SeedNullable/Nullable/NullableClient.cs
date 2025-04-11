@@ -95,6 +95,7 @@ public partial class NullableClient
     ///             Avatar = "avatar",
     ///             Activated = true,
     ///             Status = "no-properties-union",
+    ///             Values = new Dictionary&lt;string, string?&gt;() { { "values", "values" } },
     ///         },
     ///         Avatar = "avatar",
     ///     }

@@ -54,10 +54,17 @@ export class Object_ {
      *         bigint: BigInt("1000000")
      *     })
      */
-    public async getAndReturnWithOptionalField(
+    public getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithOptionalField(request, requestOptions));
+    }
+
+    private async __getAndReturnWithOptionalField(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -83,12 +90,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -124,10 +134,17 @@ export class Object_ {
      *         string: "string"
      *     })
      */
-    public async getAndReturnWithRequiredField(
+    public getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithRequiredField(request, requestOptions));
+    }
+
+    private async __getAndReturnWithRequiredField(
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -153,12 +170,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -198,10 +218,17 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnWithMapOfMap(
+    public getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithMapOfMap> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithMapOfMap(request, requestOptions));
+    }
+
+    private async __getAndReturnWithMapOfMap(
+        request: SeedExhaustive.types.ObjectWithMapOfMap,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMapOfMap>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -227,12 +254,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -285,10 +315,19 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithOptionalField(
+    public getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithOptionalField(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnNestedWithOptionalField(
+        request: SeedExhaustive.types.NestedObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -316,12 +355,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -375,11 +417,21 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithRequiredField(
+    public getAndReturnNestedWithRequiredField(
         string_: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithRequiredField(string_, request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnNestedWithRequiredField(
+        string_: string,
+        request: SeedExhaustive.types.NestedObjectWithRequiredField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -407,12 +459,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -484,10 +539,19 @@ export class Object_ {
      *             }
      *         }])
      */
-    public async getAndReturnNestedWithRequiredFieldAsList(
+    public getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithRequiredFieldAsList(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnNestedWithRequiredFieldAsList(
+        request: SeedExhaustive.types.NestedObjectWithRequiredField[],
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -515,12 +579,15 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

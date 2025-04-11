@@ -40,10 +40,19 @@ export class Union {
      *         likesToWoof: true
      *     }))
      */
-    public async getAndReturnUnion(
+    public getAndReturnUnion(
         request: Fiddle.types.Animal,
         requestOptions?: Union.RequestOptions,
-    ): Promise<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
+    }
+
+    private async __getAndReturnUnion(
+        request: Fiddle.types.Animal,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<Fiddle.types.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -70,19 +79,28 @@ export class Union {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.Animal.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.Animal.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.union.getAndReturnUnion.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.union.getAndReturnUnion.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

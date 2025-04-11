@@ -7,7 +7,6 @@ import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -20,7 +19,6 @@ import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginatio
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.User;
-import com.seed.pagination.types.UsernameCursor;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncUsersClient {
@@ -204,19 +202,6 @@ public class AsyncUsersClient {
     public CompletableFuture<SyncPagingIterable<String>> listUsernames(
             ListUsernamesRequest request, RequestOptions requestOptions) {
         return this.rawClient.listUsernames(request, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<UsernameCursor> listUsernamesCustom() {
-        return this.rawClient.listUsernamesCustom().thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<UsernameCursor> listUsernamesCustom(ListUsernamesRequestCustom request) {
-        return this.rawClient.listUsernamesCustom(request).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<UsernameCursor> listUsernamesCustom(
-            ListUsernamesRequestCustom request, RequestOptions requestOptions) {
-        return this.rawClient.listUsernamesCustom(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig() {

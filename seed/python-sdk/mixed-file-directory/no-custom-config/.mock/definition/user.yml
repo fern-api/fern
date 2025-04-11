@@ -1,0 +1,26 @@
+imports:
+  root: __package__.yml
+
+types:
+  User:
+    properties:
+      id: root.Id
+      name: string
+      age: integer
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    list:
+      path: /
+      method: GET
+      auth: false
+      docs: List all users.
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: The maximum number of results to return.
+      response: list<User>

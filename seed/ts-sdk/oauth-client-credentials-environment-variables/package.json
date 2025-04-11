@@ -39,5 +39,6 @@
         "fs": false,
         "os": false,
         "path": false
-    }
+    },
+    "packageManager": "yarn@1.22.22"
 }

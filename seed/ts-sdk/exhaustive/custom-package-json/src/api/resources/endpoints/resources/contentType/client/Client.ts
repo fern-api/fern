@@ -53,10 +53,19 @@ export class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    public async postJsonPatchContentType(
+    public postJsonPatchContentType(
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
+    }
+
+    private async __postJsonPatchContentType(
+        request: Fiddle.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentType.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -83,14 +92,23 @@ export class ContentType {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.contentType.postJsonPatchContentType.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -117,10 +135,25 @@ export class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    public async postJsonPatchContentWithCharsetType(
+    public postJsonPatchContentWithCharsetType(
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: ContentType.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(
+            this.__postJsonPatchContentWithCharsetType(request, requestOptions),
+        );
+    }
+
+    private async __postJsonPatchContentWithCharsetType(
+        request: Fiddle.types.ObjectWithOptionalField,
+        requestOptions?: ContentType.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<void, Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -147,14 +180,23 @@ export class ContentType {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.contentType.postJsonPatchContentWithCharsetType.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -38,10 +38,17 @@ export class Organizations {
      * @example
      *     await client.organizations.getOrganization("organization_id")
      */
-    public async getOrganization(
+    public getOrganization(
         organization_id: string,
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.Organization> {
+    ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organization_id, requestOptions));
+    }
+
+    private async __getOrganization(
+        organization_id: string,
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -65,12 +72,15 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Organization.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Organization.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -107,10 +117,17 @@ export class Organizations {
      *         user_id: "user_id"
      *     })
      */
-    public async getOrganizationUser(
+    public getOrganizationUser(
         request: SeedPathParameters.GetOrganizationUserRequest,
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganizationUser(request, requestOptions));
+    }
+
+    private async __getOrganizationUser(
+        request: SeedPathParameters.GetOrganizationUserRequest,
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { organization_id: organizationId, user_id: userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -135,12 +152,15 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -177,11 +197,21 @@ export class Organizations {
      *         limit: 1
      *     })
      */
-    public async searchOrganizations(
+    public searchOrganizations(
         organization_id: string,
         request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.Organization[]> {
+    ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__searchOrganizations(organization_id, request, requestOptions),
+        );
+    }
+
+    private async __searchOrganizations(
+        organization_id: string,
+        request: SeedPathParameters.SearchOrganizationsRequest = {},
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -212,12 +242,15 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.organizations.searchOrganizations.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.organizations.searchOrganizations.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

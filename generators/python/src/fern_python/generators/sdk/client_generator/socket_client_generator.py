@@ -60,7 +60,7 @@ class SocketClientGenerator:
         )
 
     def _get_response_type_name(self) -> str:
-        return f"{self._context.get_socket_class_name_for_subpackage_service(self._subpackage_id)}Response"
+        return f"{self._context.get_socket_client_class_name_for_subpackage_service(self._subpackage_id)}Response"
 
     def _create_response_type_declaration(self) -> AST.TypeAliasDeclaration:
         receive_message_types = []

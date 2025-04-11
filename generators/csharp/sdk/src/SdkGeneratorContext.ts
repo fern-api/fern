@@ -251,6 +251,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.Test.RawClientTests.MultipartFormTests,
             AsIsFiles.Test.RawClientTests.RetriesTests
         ];
+        if (this.generateNewAdditionalProperties()) {
+            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
+        }
         if (this.isForwardCompatibleEnumsEnabled()) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
@@ -265,6 +268,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getPublicCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.FileParameter];
+        if (this.generateNewAdditionalProperties()) {
+            files.push(AsIsFiles.Json.AdditionalProperties);
+        }
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.GrpcRequestOptions);
         }

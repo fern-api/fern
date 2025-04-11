@@ -2,13 +2,12 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawFooClient
 from .types.optional_string import OptionalString
 from ..core.request_options import RequestOptions
 from .types.importing_type import ImportingType
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawFooClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -16,7 +15,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class FooClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawFooClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawFooClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawFooClient
+        """
+        return self._raw_client
 
     def find(
         self,
@@ -56,36 +66,29 @@ class FooClient:
             private_property=1,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            method="POST",
-            params={
-                "optionalString": optional_string,
-            },
-            json={
-                "publicProperty": public_property,
-                "privateProperty": private_property,
-            },
+        response = self._raw_client.find(
+            optional_string=optional_string,
+            public_property=public_property,
+            private_property=private_property,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ImportingType,
-                    parse_obj_as(
-                        type_=ImportingType,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncFooClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawFooClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawFooClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawFooClient
+        """
+        return self._raw_client
 
     async def find(
         self,
@@ -133,28 +136,10 @@ class AsyncFooClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="POST",
-            params={
-                "optionalString": optional_string,
-            },
-            json={
-                "publicProperty": public_property,
-                "privateProperty": private_property,
-            },
+        response = await self._raw_client.find(
+            optional_string=optional_string,
+            public_property=public_property,
+            private_property=private_property,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ImportingType,
-                    parse_obj_as(
-                        type_=ImportingType,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

@@ -62,10 +62,17 @@ export class InlinedRequests {
      *         }
      *     })
      */
-    public async postWithObjectBodyandResponse(
+    public postWithObjectBodyandResponse(
         request: SeedExhaustive.PostWithObjectBody,
         requestOptions?: InlinedRequests.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
+    }
+
+    private async __postWithObjectBodyandResponse(
+        request: SeedExhaustive.PostWithObjectBody,
+        requestOptions?: InlinedRequests.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -91,12 +98,15 @@ export class InlinedRequests {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

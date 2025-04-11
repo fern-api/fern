@@ -2,12 +2,12 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
+from .raw_client import RawContentTypeClient
 import datetime as dt
 import uuid
 from ...core.request_options import RequestOptions
-from json.decoder import JSONDecodeError
-from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawContentTypeClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -15,7 +15,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ContentTypeClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawContentTypeClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawContentTypeClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawContentTypeClient
+        """
+        return self._raw_client
 
     def post_json_patch_content_type(
         self,
@@ -105,34 +116,23 @@ class ContentTypeClient:
             bigint=1000000,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "foo/bar",
-            method="POST",
-            json={
-                "string": string,
-                "integer": integer,
-                "long": long_,
-                "double": double,
-                "bool": bool_,
-                "datetime": datetime,
-                "date": date,
-                "uuid": uuid_,
-                "base64": base_64,
-                "list": list_,
-                "set": set_,
-                "map": map_,
-                "bigint": bigint,
-            },
+        response = self._raw_client.post_json_patch_content_type(
+            string=string,
+            integer=integer,
+            long_=long_,
+            double=double,
+            bool_=bool_,
+            datetime=datetime,
+            date=date,
+            uuid_=uuid_,
+            base_64=base_64,
+            list_=list_,
+            set_=set_,
+            map_=map_,
+            bigint=bigint,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def post_json_patch_content_with_charset_type(
         self,
@@ -222,39 +222,39 @@ class ContentTypeClient:
             bigint=1000000,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "foo/baz",
-            method="POST",
-            json={
-                "string": string,
-                "integer": integer,
-                "long": long_,
-                "double": double,
-                "bool": bool_,
-                "datetime": datetime,
-                "date": date,
-                "uuid": uuid_,
-                "base64": base_64,
-                "list": list_,
-                "set": set_,
-                "map": map_,
-                "bigint": bigint,
-            },
+        response = self._raw_client.post_json_patch_content_with_charset_type(
+            string=string,
+            integer=integer,
+            long_=long_,
+            double=double,
+            bool_=bool_,
+            datetime=datetime,
+            date=date,
+            uuid_=uuid_,
+            base_64=base_64,
+            list_=list_,
+            set_=set_,
+            map_=map_,
+            bigint=bigint,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncContentTypeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawContentTypeClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawContentTypeClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawContentTypeClient
+        """
+        return self._raw_client
 
     async def post_json_patch_content_type(
         self,
@@ -351,34 +351,23 @@ class AsyncContentTypeClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "foo/bar",
-            method="POST",
-            json={
-                "string": string,
-                "integer": integer,
-                "long": long_,
-                "double": double,
-                "bool": bool_,
-                "datetime": datetime,
-                "date": date,
-                "uuid": uuid_,
-                "base64": base_64,
-                "list": list_,
-                "set": set_,
-                "map": map_,
-                "bigint": bigint,
-            },
+        response = await self._raw_client.post_json_patch_content_type(
+            string=string,
+            integer=integer,
+            long_=long_,
+            double=double,
+            bool_=bool_,
+            datetime=datetime,
+            date=date,
+            uuid_=uuid_,
+            base_64=base_64,
+            list_=list_,
+            set_=set_,
+            map_=map_,
+            bigint=bigint,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def post_json_patch_content_with_charset_type(
         self,
@@ -475,31 +464,20 @@ class AsyncContentTypeClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "foo/baz",
-            method="POST",
-            json={
-                "string": string,
-                "integer": integer,
-                "long": long_,
-                "double": double,
-                "bool": bool_,
-                "datetime": datetime,
-                "date": date,
-                "uuid": uuid_,
-                "base64": base_64,
-                "list": list_,
-                "set": set_,
-                "map": map_,
-                "bigint": bigint,
-            },
+        response = await self._raw_client.post_json_patch_content_with_charset_type(
+            string=string,
+            integer=integer,
+            long_=long_,
+            double=double,
+            bool_=bool_,
+            datetime=datetime,
+            date=date,
+            uuid_=uuid_,
+            base_64=base_64,
+            list_=list_,
+            set_=set_,
+            map_=map_,
+            bigint=bigint,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

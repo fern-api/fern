@@ -21,6 +21,9 @@ public record Metadata
     [JsonPropertyName("status")]
     public required object Status { get; set; }
 
+    [JsonPropertyName("values")]
+    public Dictionary<string, string?>? Values { get; set; }
+
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>

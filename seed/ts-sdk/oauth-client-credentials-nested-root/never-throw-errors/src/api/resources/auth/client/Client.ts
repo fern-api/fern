@@ -41,11 +41,25 @@ export class Auth {
      *         scope: "scope"
      *     })
      */
-    public async getToken(
+    public getToken(
+        request: SeedOauthClientCredentials.auth.GetTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedOauthClientCredentials.auth.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
+    }
+
+    private async __getToken(
         request: SeedOauthClientCredentials.auth.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
     ): Promise<
-        core.APIResponse<SeedOauthClientCredentials.auth.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error>
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedOauthClientCredentials.auth.TokenResponse,
+                SeedOauthClientCredentials.auth.getToken.Error
+            >
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -77,19 +91,28 @@ export class Auth {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.auth.TokenResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.auth.TokenResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedOauthClientCredentials.auth.getToken.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedOauthClientCredentials.auth.getToken.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

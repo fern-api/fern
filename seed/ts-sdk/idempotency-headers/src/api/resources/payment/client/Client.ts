@@ -46,10 +46,17 @@ export class Payment {
      *         currency: "USD"
      *     })
      */
-    public async create(
+    public create(
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
         requestOptions?: Payment.IdempotentRequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: SeedIdempotencyHeaders.CreatePaymentRequest,
+        requestOptions?: Payment.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -77,12 +84,15 @@ export class Payment {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.payment.create.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.payment.create.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -114,7 +124,14 @@ export class Payment {
      * @example
      *     await client.payment.delete("paymentId")
      */
-    public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
+    public delete(paymentId: string, requestOptions?: Payment.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(paymentId, requestOptions));
+    }
+
+    private async __delete(
+        paymentId: string,
+        requestOptions?: Payment.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -139,7 +156,7 @@ export class Payment {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -13,6 +13,7 @@ from .declarations import (
 )
 from .docstring import Docstring
 from .expressions import (
+    AwaitExpression,
     ClassInstantiation,
     ConditionalExpression,
     ConditionalTree,
@@ -23,9 +24,21 @@ from .expressions import (
     IfConditionLeaf,
 )
 from .reference_node import ReferenceNode
+from .statements import (
+    ContinueStatement,
+    ExceptHandler,
+    ForStatement,
+    PassStatement,
+    ReturnStatement,
+    TryStatement,
+    WithContextManager,
+    WithStatement,
+    YieldStatement,
+)
 from .type_hint import TypeHint, TypeParameter
 
 __all__ = [
+    "AwaitExpression",
     "TypeParameter",
     "ClassConstructor",
     "ClassDeclaration",
@@ -51,4 +64,13 @@ __all__ = [
     "ConditionalExpression",
     "ConditionalTree",
     "IfConditionLeaf",
+    "ReturnStatement",
+    "WithStatement",
+    "WithContextManager",
+    "ForStatement",
+    "YieldStatement",
+    "ContinueStatement",
+    "PassStatement",
+    "TryStatement",
+    "ExceptHandler",
 ]

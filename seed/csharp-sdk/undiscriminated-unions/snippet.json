@@ -24,6 +24,30 @@
                 "type": "csharp",
                 "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.GetMetadataAsync();\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/metadata",
+                "method": "PUT",
+                "identifier_override": "endpoint_union.updateMetadata"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.UpdateMetadataAsync(\n    new Dictionary<string, object>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/call",
+                "method": "POST",
+                "identifier_override": "endpoint_union.call"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.CallAsync(\n    new Request\n    {\n        Union = new Dictionary<string, object>()\n        {\n            {\n                \"union\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
+            }
         }
     ]
 }

@@ -40,6 +40,11 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
     private final List<String> subprojects = new ArrayList<>();
 
     @Override
+    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
+        // V2 is not yet supported for the spring generator
+    }
+
+    @Override
     public void runInDownloadFilesModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,

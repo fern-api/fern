@@ -1,7 +1,15 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { isNonNullish } from "@fern-api/core-utils";
-import { ObjectProperty, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import {
+    ContainerType,
+    ObjectProperty,
+    PrimitiveTypeV2,
+    Type,
+    TypeDeclaration,
+    TypeId,
+    TypeReference
+} from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
@@ -13,7 +21,7 @@ export declare namespace ObjectSchemaConverter {
     }
 
     export interface Output {
-        object: Type;
+        type: Type;
         inlinedTypes?: Record<TypeId, TypeDeclaration>;
     }
 }
@@ -36,14 +44,16 @@ export class ObjectSchemaConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ObjectSchemaConverter.Output | undefined> {
-        // TODO (eden): Refine this logic to handle more complex cases
+        const hasAdditionalProperties =
+            typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties;
+
         if (!this.schema.properties && !this.schema.allOf) {
             return {
-                object: Type.object({
+                type: Type.object({
                     properties: [],
                     extends: [],
                     extendedProperties: [],
-                    extraProperties: this.schema.additionalProperties != null
+                    extraProperties: hasAdditionalProperties
                 })
             };
         }
@@ -131,11 +141,11 @@ export class ObjectSchemaConverter extends AbstractConverter<
         }
 
         return {
-            object: Type.object({
+            type: Type.object({
                 properties,
                 extends: extends_.map((ext) => context.typeReferenceToDeclaredTypeName(ext)).filter(isNonNullish),
                 extendedProperties: [],
-                extraProperties: this.schema.additionalProperties != null
+                extraProperties: hasAdditionalProperties
             }),
             inlinedTypes
         };

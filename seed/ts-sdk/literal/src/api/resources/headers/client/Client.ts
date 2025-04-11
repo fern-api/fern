@@ -47,10 +47,17 @@ export class Headers {
      *         query: "What is the weather today"
      *     })
      */
-    public async send(
+    public send(
         request: SeedLiteral.SendLiteralsInHeadersRequest,
         requestOptions?: Headers.RequestOptions,
-    ): Promise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
+    }
+
+    private async __send(
+        request: SeedLiteral.SendLiteralsInHeadersRequest,
+        requestOptions?: Headers.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -83,12 +90,15 @@ export class Headers {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SendResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SendResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

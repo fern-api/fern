@@ -42,10 +42,17 @@ export class SeedValidationClient {
      *         shape: "SQUARE"
      *     })
      */
-    public async create(
+    public create(
         request: SeedValidation.CreateRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
-    ): Promise<SeedValidation.Type> {
+    ): core.HttpResponsePromise<SeedValidation.Type> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: SeedValidation.CreateRequest,
+        requestOptions?: SeedValidationClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedValidation.Type>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -70,12 +77,15 @@ export class SeedValidationClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Type.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Type.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -111,10 +121,17 @@ export class SeedValidationClient {
      *         name: "foo"
      *     })
      */
-    public async get(
+    public get(
         request: SeedValidation.GetRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
-    ): Promise<SeedValidation.Type> {
+    ): core.HttpResponsePromise<SeedValidation.Type> {
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    }
+
+    private async __get(
+        request: SeedValidation.GetRequest,
+        requestOptions?: SeedValidationClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedValidation.Type>> {
         const { decimal, even, name } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["decimal"] = decimal.toString();
@@ -142,12 +159,15 @@ export class SeedValidationClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Type.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Type.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

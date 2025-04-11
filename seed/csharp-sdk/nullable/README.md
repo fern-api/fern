@@ -31,6 +31,7 @@ await client.Nullable.CreateUserAsync(
             Avatar = "avatar",
             Activated = true,
             Status = "no-properties-union",
+            Values = new Dictionary<string, string?>() { { "values", "values" } },
         },
         Avatar = "avatar",
     }

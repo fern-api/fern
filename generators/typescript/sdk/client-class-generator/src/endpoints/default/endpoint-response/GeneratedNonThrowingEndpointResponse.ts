@@ -92,7 +92,32 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                 ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                 ts.factory.createIdentifier("ok")
             ),
-            ts.factory.createBlock([ts.factory.createReturnStatement(this.getReturnValueForOkResponse(context))], true)
+            ts.factory.createBlock(
+                [
+                    ts.factory.createReturnStatement(
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("data"),
+                                    this.getReturnValueForOkResponse(context) ??
+                                        ts.factory.createIdentifier("undefined")
+                                ),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("rawResponse"),
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier(
+                                            GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                        ),
+                                        ts.factory.createIdentifier("rawResponse")
+                                    )
+                                )
+                            ],
+                            false
+                        )
+                    )
+                ],
+                true
+            )
         );
     }
 
@@ -129,7 +154,15 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
             this.endpoint.response?.body != null
                 ? this.getOkResponseBody(context)
-                : ts.factory.createIdentifier("undefined")
+                : ts.factory.createIdentifier("undefined"),
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.headers
+            ),
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.rawResponse
+            )
         );
     }
 
@@ -190,6 +223,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                   .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                   .getErrorUnion()
                   .getReferenceTo(context);
+        const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
+        );
 
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessChain(
@@ -207,11 +244,27 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                             ? []
                             : [
                                   ts.factory.createReturnStatement(
-                                      context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                                          generatedEndpointTypeSchemas.deserializeError(
-                                              ts.factory.createAsExpression(referenceToErrorBody, errorBodyType),
-                                              context
-                                          )
+                                      ts.factory.createObjectLiteralExpression(
+                                          [
+                                              ts.factory.createPropertyAssignment(
+                                                  ts.factory.createIdentifier("data"),
+                                                  context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
+                                                      generatedEndpointTypeSchemas.deserializeError(
+                                                          ts.factory.createAsExpression(
+                                                              referenceToErrorBody,
+                                                              errorBodyType
+                                                          ),
+                                                          context
+                                                      ),
+                                                      rawResponseAccessor
+                                                  )
+                                              ),
+                                              ts.factory.createPropertyAssignment(
+                                                  ts.factory.createIdentifier("rawResponse"),
+                                                  rawResponseAccessor
+                                              )
+                                          ],
+                                          false
                                       )
                                   )
                               ]
@@ -226,6 +279,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     }
 
     private getSwitchStatementForStatusCodeDiscriminatedErrors(context: SdkContext) {
+        const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
+        );
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToError(context),
@@ -237,20 +294,33 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                     const generatedSdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(error.error);
                     return ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
                         ts.factory.createReturnStatement(
-                            context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                                context.endpointErrorUnion
-                                    .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
-                                    .getErrorUnion()
-                                    .buildWithBuilder({
-                                        discriminantValueToBuild: errorDeclaration.statusCode,
-                                        builderArgument:
-                                            generatedSdkErrorSchema != null
-                                                ? generatedSdkErrorSchema.deserializeBody(context, {
-                                                      referenceToBody: this.getReferenceToErrorBody(context)
-                                                  })
-                                                : undefined,
-                                        context
-                                    })
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("data"),
+                                        context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
+                                            context.endpointErrorUnion
+                                                .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
+                                                .getErrorUnion()
+                                                .buildWithBuilder({
+                                                    discriminantValueToBuild: errorDeclaration.statusCode,
+                                                    builderArgument:
+                                                        generatedSdkErrorSchema != null
+                                                            ? generatedSdkErrorSchema.deserializeBody(context, {
+                                                                  referenceToBody: this.getReferenceToErrorBody(context)
+                                                              })
+                                                            : undefined,
+                                                    context
+                                                }),
+                                            rawResponseAccessor
+                                        )
+                                    ),
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("rawResponse"),
+                                        rawResponseAccessor
+                                    )
+                                ],
+                                false
                             )
                         )
                     ]);
@@ -260,14 +330,27 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     }
 
     private getReturnResponseForUnknownError(context: SdkContext): ts.Statement {
+        const referenceToError = this.getReferenceToError(context);
+        const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
+        );
         return ts.factory.createReturnStatement(
-            context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                this.getGeneratedEndpointErrorUnion(context)
-                    .getErrorUnion()
-                    .buildUnknown({
-                        existingValue: this.getReferenceToError(context),
-                        context
-                    })
+            ts.factory.createObjectLiteralExpression(
+                [
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier("data"),
+                        context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
+                            this.getGeneratedEndpointErrorUnion(context).getErrorUnion().buildUnknown({
+                                existingValue: referenceToError,
+                                context
+                            }),
+                            rawResponseAccessor
+                        )
+                    ),
+                    ts.factory.createPropertyAssignment(ts.factory.createIdentifier("rawResponse"), rawResponseAccessor)
+                ],
+                false
             )
         );
     }

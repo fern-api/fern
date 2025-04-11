@@ -4,6 +4,8 @@ require_relative "../../requests"
 require_relative "types/my_union"
 require_relative "types/metadata"
 require "json"
+require_relative "types/metadata_union"
+require_relative "types/request"
 require "async"
 
 module SeedUndiscriminatedUnionsClient
@@ -60,6 +62,53 @@ module SeedUndiscriminatedUnionsClient
           req.body = { **(request_options&.additional_body_parameters || {}) }.compact
         end
         req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
+      end
+      JSON.parse(response.body)
+    end
+
+    # @param request [SeedUndiscriminatedUnionsClient::Union::OPTIONAL_METADATA, SeedUndiscriminatedUnionsClient::Union::NamedMetadata]
+    # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
+    # @return [Boolean]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.update_metadata(request: { "string": {"key":"value"} })
+    def update_metadata(request:, request_options: nil)
+      response = @request_client.conn.put do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
+      end
+      JSON.parse(response.body)
+    end
+
+    # @param request [Hash] Request of type SeedUndiscriminatedUnionsClient::Union::Request, as a Hash
+    #   * :union (Hash)
+    # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
+    # @return [Boolean]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.call(request: { union: { "union": {"key":"value"} } })
+    def call(request:, request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/call"
       end
       JSON.parse(response.body)
     end
@@ -121,6 +170,59 @@ module SeedUndiscriminatedUnionsClient
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact
           end
           req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
+        end
+        parsed_json = JSON.parse(response.body)
+        parsed_json
+      end
+    end
+
+    # @param request [SeedUndiscriminatedUnionsClient::Union::OPTIONAL_METADATA, SeedUndiscriminatedUnionsClient::Union::NamedMetadata]
+    # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
+    # @return [Boolean]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.update_metadata(request: { "string": {"key":"value"} })
+    def update_metadata(request:, request_options: nil)
+      Async do
+        response = @request_client.conn.put do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
+        end
+        parsed_json = JSON.parse(response.body)
+        parsed_json
+      end
+    end
+
+    # @param request [Hash] Request of type SeedUndiscriminatedUnionsClient::Union::Request, as a Hash
+    #   * :union (Hash)
+    # @param request_options [SeedUndiscriminatedUnionsClient::RequestOptions]
+    # @return [Boolean]
+    # @example
+    #  undiscriminated_unions = SeedUndiscriminatedUnionsClient::Client.new(base_url: "https://api.example.com")
+    #  undiscriminated_unions.union.call(request: { union: { "union": {"key":"value"} } })
+    def call(request:, request_options: nil)
+      Async do
+        response = @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/call"
         end
         parsed_json = JSON.parse(response.body)
         parsed_json

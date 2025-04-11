@@ -3,12 +3,11 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .raw_client import RawSeedAlias
 from .types.type_id import TypeId
 from .core.request_options import RequestOptions
-from .core.jsonable_encoder import jsonable_encoder
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawSeedAlias
 
 
 class SeedAlias:
@@ -58,6 +57,18 @@ class SeedAlias:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawSeedAlias(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSeedAlias:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSeedAlias
+        """
+        return self._raw_client
 
     def get(self, type_id: TypeId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -83,18 +94,8 @@ class SeedAlias:
             type_id="typeId",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(type_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(type_id, request_options=request_options)
+        return response.data
 
 
 class AsyncSeedAlias:
@@ -144,6 +145,18 @@ class AsyncSeedAlias:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawSeedAlias(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSeedAlias:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSeedAlias
+        """
+        return self._raw_client
 
     async def get(self, type_id: TypeId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -177,15 +190,5 @@ class AsyncSeedAlias:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(type_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(type_id, request_options=request_options)
+        return response.data

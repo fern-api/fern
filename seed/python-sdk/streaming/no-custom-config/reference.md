@@ -21,7 +21,7 @@ client = SeedStreaming(
 response = client.dummy.generate_stream(
     num_events=1,
 )
-for chunk in response:
+for chunk in response.data:
     yield chunk
 
 ```

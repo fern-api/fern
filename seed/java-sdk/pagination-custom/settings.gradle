@@ -1,0 +1,3 @@
+rootProject.name = 'pagination-custom'
+
+include 'sample-app'

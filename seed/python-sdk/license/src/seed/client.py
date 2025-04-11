@@ -3,10 +3,10 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .raw_client import RawSeedLicense
 from .core.request_options import RequestOptions
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawSeedLicense
 
 
 class SeedLicense:
@@ -56,6 +56,18 @@ class SeedLicense:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawSeedLicense(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSeedLicense:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSeedLicense
+        """
+        return self._raw_client
 
     def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -77,18 +89,8 @@ class SeedLicense:
         )
         client.get()
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(request_options=request_options)
+        return response.data
 
 
 class AsyncSeedLicense:
@@ -138,6 +140,18 @@ class AsyncSeedLicense:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawSeedLicense(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSeedLicense:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSeedLicense
+        """
+        return self._raw_client
 
     async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -167,15 +181,5 @@ class AsyncSeedLicense:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(request_options=request_options)
+        return response.data

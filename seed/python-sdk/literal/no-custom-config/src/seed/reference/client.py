@@ -2,15 +2,13 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawReferenceClient
 from .types.container_object import ContainerObject
 from .types.some_literal import SomeLiteral
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
-from ..core.serialization import convert_and_respect_annotation_metadata
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawReferenceClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -18,7 +16,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ReferenceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawReferenceClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawReferenceClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawReferenceClient
+        """
+        return self._raw_client
 
     def send(
         self,
@@ -63,41 +72,26 @@ class ReferenceClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "reference",
-            method="POST",
-            json={
-                "query": query,
-                "maybeContext": maybe_context,
-                "containerObject": convert_and_respect_annotation_metadata(
-                    object_=container_object, annotation=ContainerObject, direction="write"
-                ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "ending": "$ending",
-                "context": "You're super wise",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.send(
+            query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    SendResponse,
-                    parse_obj_as(
-                        type_=SendResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncReferenceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawReferenceClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawReferenceClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawReferenceClient
+        """
+        return self._raw_client
 
     async def send(
         self,
@@ -150,33 +144,7 @@ class AsyncReferenceClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "reference",
-            method="POST",
-            json={
-                "query": query,
-                "maybeContext": maybe_context,
-                "containerObject": convert_and_respect_annotation_metadata(
-                    object_=container_object, annotation=ContainerObject, direction="write"
-                ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "ending": "$ending",
-                "context": "You're super wise",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.send(
+            query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    SendResponse,
-                    parse_obj_as(
-                        type_=SendResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

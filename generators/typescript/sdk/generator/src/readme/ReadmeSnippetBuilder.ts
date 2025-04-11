@@ -26,7 +26,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
     private static STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
-    private static RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSES";
+    private static RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
 
     private readonly context: SdkContext;
@@ -182,10 +182,10 @@ const request: ${requestTypeName} = {
         return rawResponseEndpoints.map((rawResponseEndpoint) =>
             this.writeCode(
                 code`
-const response = await ${this.getMethodCall(rawResponseEndpoint)}(...).asRaw();
+const { data, rawResponse } = await ${this.getMethodCall(rawResponseEndpoint)}(...).withRawResponse();
 
-console.log(response.headers['X-My-Header']);
-console.log(response.body);
+console.log(data);
+console.log(rawResponse.headers['X-My-Header']);
 `
             )
         );

@@ -14,6 +14,7 @@ class Metadata(UniversalBaseModel):
     avatar: typing.Optional[str] = None
     activated: typing.Optional[bool] = None
     status: Status
+    values: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

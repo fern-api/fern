@@ -1,3 +1,4 @@
+<% if (customConfig["experimental-additional-properties"]) { %>using global::System.Reflection; <% } %>
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
@@ -13,14 +14,11 @@ internal static partial class JsonOptions
     {
         var options = new JsonSerializerOptions
         {
-            Converters =
-            {
-                new DateTimeSerializer(),
+            Converters = { new DateTimeSerializer(),
 #if USE_PORTABLE_DATE_ONLY
                 new DateOnlyConverter(),
 #endif
-                new OneOfSerializer()
-            },
+                new OneOfSerializer() },
 #if DEBUG
             WriteIndented = true,
 #endif
@@ -73,6 +71,31 @@ internal static partial class JsonOptions
                                 propertyInfo.IsRequired = false;
                             }
                         }
+                        <% if (customConfig["experimental-additional-properties"]) { %>
+                        if (
+                            typeInfo.Kind == JsonTypeInfoKind.Object
+                            && typeInfo.Properties.All(prop => !prop.IsExtensionData)
+                        )
+                        {
+                            var extensionProp = typeInfo
+                                .Type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
+                                .FirstOrDefault(prop =>
+                                    prop.GetCustomAttribute<JsonExtensionDataAttribute>() != null
+                                );
+
+                            if (extensionProp is not null)
+                            {
+                                var jsonPropertyInfo = typeInfo.CreateJsonPropertyInfo(
+                                    extensionProp.FieldType,
+                                    extensionProp.Name
+                                );
+                                jsonPropertyInfo.Get = extensionProp.GetValue;
+                                jsonPropertyInfo.Set = extensionProp.SetValue;
+                                jsonPropertyInfo.IsExtensionData = true;
+                                typeInfo.Properties.Add(jsonPropertyInfo);
+                            }
+                        }
+                        <% } %>
                     },
                 },
             },
@@ -101,7 +124,10 @@ internal static class JsonUtils
     internal static byte[] SerializeToUtf8Bytes<T>(T obj) =>
         JsonSerializer.SerializeToUtf8Bytes(obj, JsonOptions.JsonSerializerOptions);
 
-    internal static string SerializeWithAdditionalProperties<T>(T obj, object? additionalProperties = null)
+    internal static string SerializeWithAdditionalProperties<T>(
+        T obj,
+        object? additionalProperties = null
+    )
     {
         if (additionalProperties == null)
         {
@@ -110,12 +136,16 @@ internal static class JsonUtils
         var additionalPropertiesJsonNode = SerializeToNode(additionalProperties);
         if (additionalPropertiesJsonNode is not JsonObject additionalPropertiesJsonObject)
         {
-            throw new InvalidOperationException("The additional properties must serialize to a JSON object.");
+            throw new InvalidOperationException(
+                "The additional properties must serialize to a JSON object."
+            );
         }
         var jsonNode = SerializeToNode(obj);
         if (jsonNode is not JsonObject jsonObject)
         {
-            throw new InvalidOperationException("The serialized object must be a JSON object to add properties.");
+            throw new InvalidOperationException(
+                "The serialized object must be a JSON object to add properties."
+            );
         }
         MergeJsonObjects(jsonObject, additionalPropertiesJsonObject);
         return jsonObject.ToJsonString(JsonOptions.JsonSerializerOptions);
@@ -127,17 +157,22 @@ internal static class JsonUtils
         {
             if (!baseObject.TryGetPropertyValue(property.Key, out JsonNode? existingValue))
             {
-                baseObject[property.Key] = property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
+                baseObject[property.Key] =
+                    property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
                 continue;
             }
-            if (existingValue is JsonObject nestedBaseObject && property.Value is JsonObject nestedOverrideObject)
+            if (
+                existingValue is JsonObject nestedBaseObject
+                && property.Value is JsonObject nestedOverrideObject
+            )
             {
                 // If both values are objects, recursively merge them.
                 MergeJsonObjects(nestedBaseObject, nestedOverrideObject);
                 continue;
             }
             // Otherwise, the overrideObject takes precedence.
-            baseObject[property.Key] = property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
+            baseObject[property.Key] =
+                property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
         }
     }
 

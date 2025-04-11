@@ -6,6 +6,7 @@ from .datetime_utils import serialize_datetime
 from .events import EventEmitterMixin, EventType
 from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
 from .http_client import AsyncHttpClient, HttpClient
+from .http_response import AsyncHttpResponse, HttpResponse
 from .jsonable_encoder import jsonable_encoder
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
@@ -25,12 +26,14 @@ __all__ = [
     "ApiError",
     "AsyncClientWrapper",
     "AsyncHttpClient",
+    "AsyncHttpResponse",
     "BaseClientWrapper",
     "EventEmitterMixin",
     "EventType",
     "FieldMetadata",
     "File",
     "HttpClient",
+    "HttpResponse",
     "IS_PYDANTIC_V2",
     "RequestOptions",
     "SyncClientWrapper",

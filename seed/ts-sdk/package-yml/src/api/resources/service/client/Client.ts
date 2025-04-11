@@ -36,7 +36,14 @@ export class Service {
      * @example
      *     await client.service.nop("id-219xca8")
      */
-    public async nop(nestedId: string, requestOptions?: Service.RequestOptions): Promise<void> {
+    public nop(nestedId: string, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__nop(nestedId, requestOptions));
+    }
+
+    private async __nop(
+        nestedId: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -60,7 +67,7 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

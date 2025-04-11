@@ -41,7 +41,8 @@ class TypeddictUndiscriminatedUnionGenerator(AbstractUndiscriminatedUnionGenerat
                         self._context.get_type_hint_for_type_reference(
                             member.type,
                             in_endpoint=True,
-                            for_typeddict=True,
+                            # NOTE: Do not use NotRequired inside a Union generic
+                            for_typeddict=False,
                             as_if_type_checking_import=member.is_circular_reference,
                         )
                         for member in self._members

@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Union
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import Module, Reference, ReferenceImport
@@ -19,7 +19,7 @@ class FunctionDeclaration(AstNode):
         *,
         name: str,
         signature: FunctionSignature,
-        body: CodeWriter,
+        body: Union[CodeWriter, Sequence[AstNode]],
         overloads: Optional[Sequence[FunctionSignature]] = None,
         decorators: Optional[Sequence[AstNode]] = None,
         docstring: Optional[CodeWriter] = None,
@@ -41,7 +41,11 @@ class FunctionDeclaration(AstNode):
         metadata.update(self.signature.get_metadata())
         for overload in self.overloads:
             metadata.update(overload.get_metadata())
-        metadata.update(self.body.get_metadata())
+        if isinstance(self.body, CodeWriter):
+            metadata.update(self.body.get_metadata())
+        else:
+            for stmt in self.body:
+                metadata.update(stmt.get_metadata())
         for decorator in self.decorators:
             metadata.update(decorator.get_metadata())
         if self.docstring is not None:
@@ -53,7 +57,9 @@ class FunctionDeclaration(AstNode):
             self._write(writer, signature=overload, body=None)
         self._write(writer, signature=self.signature, body=self.body)
 
-    def _write(self, writer: NodeWriter, signature: FunctionSignature, body: Optional[CodeWriter]) -> None:
+    def _write(
+        self, writer: NodeWriter, signature: FunctionSignature, body: Optional[Union[CodeWriter, Sequence[AstNode]]]
+    ) -> None:
         if body is None:
             writer.write("@")
             writer.write_reference(OVERLOAD_DECORATOR)
@@ -81,6 +87,9 @@ class FunctionDeclaration(AstNode):
 
             if body is None:
                 writer.write("...")
-            else:
+            elif isinstance(body, CodeWriter):
                 body.write(writer=writer)
+            else:
+                for stmt in body:
+                    writer.write_node(stmt)
         writer.write_newline_if_last_line_not()

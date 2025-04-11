@@ -1,0 +1,3 @@
+rootProject.name = 'java-inline-types'
+
+include 'sample-app'

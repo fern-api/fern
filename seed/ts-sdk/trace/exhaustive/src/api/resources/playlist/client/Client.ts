@@ -52,11 +52,19 @@ export class Playlist {
      *         }
      *     })
      */
-    public async createPlaylist(
+    public createPlaylist(
         serviceParam: number,
         request: SeedTrace.CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__createPlaylist(serviceParam, request, requestOptions));
+    }
+
+    private async __createPlaylist(
+        serviceParam: number,
+        request: SeedTrace.CreatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>>> {
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["datetime"] = datetime.toISOString();
@@ -97,19 +105,28 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.Playlist.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.Playlist.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.createPlaylist.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.createPlaylist.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -129,11 +146,19 @@ export class Playlist {
      *         multipleField: "multipleField"
      *     })
      */
-    public async getPlaylists(
+    public getPlaylists(
         serviceParam: number,
         request: SeedTrace.GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getPlaylists(serviceParam, request, requestOptions));
+    }
+
+    private async __getPlaylists(
+        serviceParam: number,
+        request: SeedTrace.GetPlaylistsRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -188,19 +213,28 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.getPlaylists.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.getPlaylists.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -214,11 +248,19 @@ export class Playlist {
      * @example
      *     await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("playlistId"))
      */
-    public async getPlaylist(
+    public getPlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getPlaylist(serviceParam, playlistId, requestOptions));
+    }
+
+    private async __getPlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -250,13 +292,18 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.Playlist.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.Playlist.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -265,23 +312,31 @@ export class Playlist {
                 case "PlaylistIdNotFoundError":
                 case "UnauthorizedError":
                     return {
-                        ok: false,
-                        error: serializers.playlist.getPlaylist.Error.parseOrThrow(
-                            _response.error.body as serializers.playlist.getPlaylist.Error.Raw,
-                            {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                breadcrumbsPrefix: ["response"],
-                            },
-                        ),
+                        data: {
+                            ok: false,
+                            error: serializers.playlist.getPlaylist.Error.parseOrThrow(
+                                _response.error.body as serializers.playlist.getPlaylist.Error.Raw,
+                                {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    breadcrumbsPrefix: ["response"],
+                                },
+                            ),
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.getPlaylist.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.getPlaylist.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -299,12 +354,27 @@ export class Playlist {
      *         problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")]
      *     })
      */
-    public async updatePlaylist(
+    public updatePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         request?: SeedTrace.UpdatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updatePlaylist(serviceParam, playlistId, request, requestOptions),
+        );
+    }
+
+    private async __updatePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        request?: SeedTrace.UpdatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -342,13 +412,18 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -356,23 +431,31 @@ export class Playlist {
             switch ((_response.error.body as serializers.playlist.updatePlaylist.Error.Raw)?.errorName) {
                 case "PlaylistIdNotFoundError":
                     return {
-                        ok: false,
-                        error: serializers.playlist.updatePlaylist.Error.parseOrThrow(
-                            _response.error.body as serializers.playlist.updatePlaylist.Error.Raw,
-                            {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                breadcrumbsPrefix: ["response"],
-                            },
-                        ),
+                        data: {
+                            ok: false,
+                            error: serializers.playlist.updatePlaylist.Error.parseOrThrow(
+                                _response.error.body as serializers.playlist.updatePlaylist.Error.Raw,
+                                {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    breadcrumbsPrefix: ["response"],
+                                },
+                            ),
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.updatePlaylist.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.updatePlaylist.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -386,11 +469,19 @@ export class Playlist {
      * @example
      *     await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("playlist_id"))
      */
-    public async deletePlaylist(
+    public deletePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__deletePlaylist(serviceParam, playlistId, requestOptions));
+    }
+
+    private async __deletePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -422,14 +513,23 @@ export class Playlist {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.playlist.deletePlaylist.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.playlist.deletePlaylist.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

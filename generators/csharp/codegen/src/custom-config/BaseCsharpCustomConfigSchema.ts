@@ -17,6 +17,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     // General options.
     "custom-pager-name": z.string().optional(),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
+    "experimental-additional-properties": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),

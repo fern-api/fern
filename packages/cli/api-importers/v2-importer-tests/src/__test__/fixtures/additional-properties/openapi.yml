@@ -1,0 +1,50 @@
+openapi: 3.1.0
+info:
+  title: Primitive Array API
+  version: 1.0.0
+paths:
+  /object-with-array-of-objects:
+    get:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    foo:
+                      type: string
+                    bar:
+                      type: number
+      responses:
+        200:
+          description: Successful search response
+          content:
+            application/json:
+              schema:
+                type: string
+  /implicit-object-with-array-of-objects:
+    get:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    foo:
+                      type: string
+                    bar:
+                      type: number
+      responses:
+        200:
+          description: Successful search response
+          content:
+            application/json:
+              schema:
+                type: string

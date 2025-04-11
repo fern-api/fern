@@ -38,10 +38,17 @@ export class Enum {
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
-    public async getAndReturnEnum(
+    public getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: Enum.RequestOptions,
-    ): Promise<SeedExhaustive.types.WeatherReport> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
+    }
+
+    private async __getAndReturnEnum(
+        request: SeedExhaustive.types.WeatherReport,
+        requestOptions?: Enum.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,12 +74,15 @@ export class Enum {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.WeatherReport.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.WeatherReport.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

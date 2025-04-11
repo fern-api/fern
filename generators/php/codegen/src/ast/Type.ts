@@ -218,52 +218,18 @@ export class Type extends AstNode {
                 break;
             }
             case "union": {
-                const types = this.getUniqueTypes({ types: this.internalType.types, comment, writer });
-
-                const hasMixed = types.filter((type) => type.underlyingType().internalType.type === "mixed").length > 0;
-                if (hasMixed && !comment) {
-                    writer.write("mixed");
-                    break;
-                }
-
-                if (types.length > 0 && comment) {
-                    writer.writeLine("(");
-                    types.forEach((type, index) => {
-                        if (index > 0) {
-                            writer.write(" *   |");
-                        } else {
-                            writer.write(" *    ");
-                        }
-                        if (hasMixed) {
-                            type = type.underlyingType();
-                        }
-                        type.write(writer, { comment });
-                        writer.writeLine();
-                        index++;
-                    });
-                    writer.write(" * )");
-                } else {
-                    types.forEach((type, index) => {
-                        if (index > 0) {
-                            writer.write("|");
-                        }
-                        if (hasMixed) {
-                            type = type.underlyingType();
-                        }
-                        type.write(writer, { comment });
-                        index++;
-                    });
-                }
+                this.writeUnion({ writer, unionTypes: this.internalType.types, comment });
                 break;
             }
             case "optional": {
-                const isMixed = this.internalType.value.internalType.type === "mixed";
-                const isUnion = this.internalType.value.internalType.type === "union";
+                const internalType = this.internalType.value.internalType;
+                const isMixed = internalType.type === "mixed";
+                const isUnion = internalType.type === "union";
                 if (!isUnion && !isMixed) {
                     writer.write("?");
                 }
                 this.internalType.value.write(writer, { comment });
-                if (isUnion) {
+                if (isUnion && !this.unionHasOptional(internalType.types)) {
                     writer.write("|");
                     writer.writeNode(Type.null());
                 }
@@ -500,6 +466,55 @@ export class Type extends AstNode {
         return value.internalType.type === "optional";
     }
 
+    private writeUnion({
+        writer,
+        unionTypes,
+        comment
+    }: {
+        writer: Writer;
+        unionTypes: Type[];
+        comment: boolean | undefined;
+    }): void {
+        const uniqueTypes = this.getUniqueTypes({ types: unionTypes, comment, writer });
+        const types = this.unwrapOptionalTypes(uniqueTypes);
+
+        const hasMixed = types.filter((type) => type.underlyingType().internalType.type === "mixed").length > 0;
+        if (hasMixed && !comment) {
+            writer.write("mixed");
+            return;
+        }
+
+        if (types.length > 0 && comment) {
+            writer.writeLine("(");
+            types.forEach((type, index) => {
+                if (index > 0) {
+                    writer.write(" *   |");
+                } else {
+                    writer.write(" *    ");
+                }
+                if (hasMixed) {
+                    type = type.underlyingType();
+                }
+                type.write(writer, { comment });
+                writer.writeLine();
+                index++;
+            });
+            writer.write(" * )");
+            return;
+        }
+
+        types.forEach((type, index) => {
+            if (index > 0) {
+                writer.write("|");
+            }
+            if (hasMixed) {
+                type = type.underlyingType();
+            }
+            type.write(writer, { comment });
+            index++;
+        });
+    }
+
     private writeTypeDictEntry({
         writer,
         entry,
@@ -534,13 +549,38 @@ export class Type extends AstNode {
                 customConfig: writer.customConfig,
                 comment
             });
-            // handle potential duplicates, such as strings (due to enums) and arrays
+            // Handle potential duplicates, such as strings (due to enums) and arrays.
             if (typeStrings.has(typeString)) {
                 return false;
             }
             typeStrings.add(typeString);
             return true;
         });
+    }
+
+    /**
+     * Unwraps optional types and adds the 'null' type if there are any optional types.
+     */
+    private unwrapOptionalTypes(types: Type[]): Type[] {
+        let hasOptional = false;
+        const result = types.map((type) => {
+            if (type.internalType.type === "optional") {
+                hasOptional = true;
+                return type.internalType.value;
+            }
+            return type;
+        });
+        if (hasOptional) {
+            result.push(Type.null());
+        }
+        return result;
+    }
+
+    /**
+     * Determines if the union has one or more optional types.
+     */
+    private unionHasOptional(types: Type[]): boolean {
+        return types.filter((type) => type.internalType.type === "optional").length > 0;
     }
 
     /**

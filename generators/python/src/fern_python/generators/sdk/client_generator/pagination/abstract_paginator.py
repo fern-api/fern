@@ -116,6 +116,7 @@ class Paginator:
                 is_async=self._is_async,
             )
         )
+        writer.write_newline_if_last_line_not()
 
     def _get_none_safe_property_condition(self, response_property: ir_types.ResponseProperty) -> Optional[str]:
         if response_property.property_path is None or len(response_property.property_path) == 0:

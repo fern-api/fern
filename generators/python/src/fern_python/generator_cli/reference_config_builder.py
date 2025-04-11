@@ -158,7 +158,7 @@ class ReferenceConfigBuilder:
 
     def get_package_location(self, package_id: ir_types.SubpackageId) -> str:
         return self._project.get_relative_source_file_filepath(
-            filepath=self._context.get_filepath_for_subpackage_service(subpackage_id=package_id)
+            filepath=self._context.get_client_filepath_for_subpackage_service(subpackage_id=package_id)
         )
 
     def build_reference_section(self, service: ir_types.HttpService, package_location: str) -> ReferenceSectionBuilder:

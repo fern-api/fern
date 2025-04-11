@@ -41,8 +41,52 @@ paths:
                     name: exampleName
                     value: exampleValue
                     default: exampleDefault
+    put:
+      operationId: union_updateMetadata
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetadataUnion'
+  /call:
+    post:
+      operationId: union_call
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
 components:
   schemas:
+    Request:
+      title: Request
+      type: object
+      properties:
+        union:
+          $ref: '#/components/schemas/MetadataUnion'
+          nullable: true
     TypeWithOptionalUnion:
       title: TypeWithOptionalUnion
       type: object
@@ -70,6 +114,28 @@ components:
           items:
             type: string
       description: Several different types are accepted.
+    MetadataUnion:
+      title: MetadataUnion
+      oneOf:
+        - $ref: '#/components/schemas/OptionalMetadata'
+        - $ref: '#/components/schemas/NamedMetadata'
+    NamedMetadata:
+      title: NamedMetadata
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: object
+          additionalProperties: true
+      required:
+        - name
+        - value
+    OptionalMetadata:
+      title: OptionalMetadata
+      type: object
+      additionalProperties: true
+      nullable: true
     Metadata:
       title: Metadata
       type: object

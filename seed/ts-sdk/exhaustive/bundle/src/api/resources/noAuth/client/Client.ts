@@ -41,10 +41,17 @@ export class NoAuth {
      *         "key": "value"
      *     })
      */
-    public async postWithNoAuth(
+    public postWithNoAuth(
         request?: unknown,
         requestOptions?: NoAuth.RequestOptions,
-    ): Promise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoAuth(request, requestOptions));
+    }
+
+    private async __postWithNoAuth(
+        request?: unknown,
+        requestOptions?: NoAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<boolean, Fiddle.noAuth.postWithNoAuth.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -71,13 +78,18 @@ export class NoAuth {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -85,22 +97,30 @@ export class NoAuth {
             switch (_response.error.statusCode) {
                 case 400:
                     return {
-                        ok: false,
-                        error: Fiddle.noAuth.postWithNoAuth.Error.badRequestBody(
-                            serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                breadcrumbsPrefix: ["response"],
-                            }),
-                        ),
+                        data: {
+                            ok: false,
+                            error: Fiddle.noAuth.postWithNoAuth.Error.badRequestBody(
+                                serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    breadcrumbsPrefix: ["response"],
+                                }),
+                            ),
+                            rawResponse: _response.rawResponse,
+                        },
+                        rawResponse: _response.rawResponse,
                     };
             }
         }
 
         return {
-            ok: false,
-            error: Fiddle.noAuth.postWithNoAuth.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.noAuth.postWithNoAuth.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

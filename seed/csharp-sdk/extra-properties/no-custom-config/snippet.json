@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/user",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExtraProperties;\n\nvar client = new SeedExtraPropertiesClient();\nawait client.User.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Type = \"CreateUserRequest\",\n        Version = \"v1\",\n        Name = \"name\",\n    }\n);\n"
+            }
+        }
+    ]
+}

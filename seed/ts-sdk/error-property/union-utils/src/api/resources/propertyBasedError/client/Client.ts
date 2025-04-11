@@ -40,7 +40,13 @@ export class PropertyBasedError {
      * @example
      *     await client.propertyBasedError.throwError()
      */
-    public async throwError(requestOptions?: PropertyBasedError.RequestOptions): Promise<string> {
+    public throwError(requestOptions?: PropertyBasedError.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__throwError(requestOptions));
+    }
+
+    private async __throwError(
+        requestOptions?: PropertyBasedError.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -64,12 +70,15 @@ export class PropertyBasedError {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.propertyBasedError.throwError.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.propertyBasedError.throwError.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

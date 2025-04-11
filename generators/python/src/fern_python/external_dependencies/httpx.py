@@ -56,7 +56,7 @@ class HttpX:
         response_variable_name: str,
         request_options_variable_name: str,
         is_async: bool,
-        is_streaming: bool,
+        stream_response_type: Optional[AST.TypeHint],
         response_code_writer: AST.CodeWriter,
         reference_to_client: AST.Expression,
         is_default_body_parameter_used: bool,
@@ -141,26 +141,30 @@ class HttpX:
             writer.write_line(f") as {response_variable_name}:")
 
             with writer.indent():
-                response_code_writer.write(writer=writer)
+                writer.write_node(
+                    AST.FunctionDeclaration(
+                        name="stream",
+                        signature=AST.FunctionSignature(
+                            return_type=stream_response_type,
+                        ),
+                        body=response_code_writer,
+                        is_async=is_async,
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+                if is_async:
+                    writer.write("yield await stream()")
+                else:
+                    writer.write("yield stream()")
 
         def write(writer: AST.NodeWriter) -> None:
-            if is_async:
-                if is_streaming:
-                    write_streaming_call(
-                        writer=writer,
-                    )
-                else:
-                    write_non_streaming_call(
-                        writer=writer,
-                    )
+            if stream_response_type is not None:
+                write_streaming_call(
+                    writer=writer,
+                )
             else:
-                if is_streaming:
-                    write_streaming_call(
-                        writer=writer,
-                    )
-                else:
-                    write_non_streaming_call(
-                        writer=writer,
-                    )
+                write_non_streaming_call(
+                    writer=writer,
+                )
 
         return AST.Expression(AST.CodeWriter(write))

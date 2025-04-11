@@ -46,6 +46,7 @@ class Project:
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
         user_defined_toml: Optional[str] = None,
+        exclude_types_from_init_exports: Optional[bool] = False,
     ) -> None:
         if flat_layout:
             self._project_relative_filepath = relative_path_to_project
@@ -68,6 +69,7 @@ class Project:
         self.license_ = license_
         self._extras: typing.Dict[str, List[str]] = {}
         self._user_defined_toml = user_defined_toml
+        self._exclude_types_from_init_exports = exclude_types_from_init_exports
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
@@ -91,8 +93,9 @@ class Project:
         """
 
         def on_finish(source_file: SourceFileImpl) -> None:
+            include_exports = not self._exclude_types_from_init_exports
             self._module_manager.register_exports(
-                filepath=filepath, exports=source_file.get_exports() if from_src else set(), from_src=from_src
+                filepath=filepath, exports=source_file.get_exports() if include_exports else set(), from_src=from_src
             )
 
         module = filepath.to_module()

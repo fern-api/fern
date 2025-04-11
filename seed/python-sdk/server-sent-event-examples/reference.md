@@ -21,7 +21,7 @@ client = SeedServerSentEvents(
 response = client.completions.stream(
     query="foo",
 )
-for chunk in response:
+for chunk in response.data:
     yield chunk
 
 ```

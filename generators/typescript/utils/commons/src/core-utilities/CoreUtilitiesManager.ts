@@ -25,7 +25,6 @@ import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
 import { FetcherImpl } from "./fetcher/FetcherImpl";
 import { FormDataUtilsImpl } from "./form-data-utils/FormDataUtilsImpl";
 import { PaginationImpl } from "./pagination/PaginationImpl";
-import { PromiseUtilsImpl } from "./promise/PromiseUtilsImpl";
 import { RuntimeImpl } from "./runtime/RuntimeImpl";
 import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
 import { UtilsImpl } from "./utils/UtilsImpl";
@@ -58,7 +57,6 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
-            promiseUtils: new PromiseUtilsImpl({ getReferenceToExport }),
             websocket: new WebsocketImpl({ getReferenceToExport })
         };
     }

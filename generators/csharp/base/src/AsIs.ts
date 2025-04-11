@@ -51,6 +51,7 @@ export const AsIsFiles = {
     RawClient: "RawClient.Template.cs",
     StreamRequest: "StreamRequest.Template.cs",
     Json: {
+        AdditionalProperties: "AdditionalProperties.Template.cs",
         CollectionItemSerializer: "CollectionItemSerializer.Template.cs",
         DateOnlyConverter: "DateOnlyConverter.Template.cs",
         DateTimeSerializer: "DateTimeSerializer.Template.cs",
@@ -89,6 +90,7 @@ export const AsIsFiles = {
             "test/Pagination/StringCursorTest.Template.cs"
         ],
         Json: {
+            AdditionalPropertiesTests: "test/Json/AdditionalPropertiesTests.Template.cs",
             DateOnlyJsonTests: "test/Json/DateOnlyJsonTests.Template.cs",
             DateTimeJsonTests: "test/Json/DateTimeJsonTests.Template.cs",
             EnumSerializerTests: "test/Json/EnumSerializerTests.Template.cs",

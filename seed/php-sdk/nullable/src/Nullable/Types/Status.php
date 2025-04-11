@@ -25,6 +25,7 @@ class Status extends JsonSerializableType
      *    null
      *   |DateTime
      *   |mixed
+     *   |null
      * ) $value
      */
     public readonly mixed $value;
@@ -41,6 +42,7 @@ class Status extends JsonSerializableType
      *    null
      *   |DateTime
      *   |mixed
+     *   |null
      * ),
      * } $values
      */

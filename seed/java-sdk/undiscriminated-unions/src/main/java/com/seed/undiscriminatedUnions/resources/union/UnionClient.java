@@ -6,7 +6,9 @@ package com.seed.undiscriminatedUnions.resources.union;
 import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
+import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.Request;
 import java.util.Map;
 
 public class UnionClient {
@@ -40,5 +42,25 @@ public class UnionClient {
 
     public Map<Key, String> getMetadata(RequestOptions requestOptions) {
         return this.rawClient.getMetadata(requestOptions).body();
+    }
+
+    public boolean updateMetadata(MetadataUnion request) {
+        return this.rawClient.updateMetadata(request).body();
+    }
+
+    public boolean updateMetadata(MetadataUnion request, RequestOptions requestOptions) {
+        return this.rawClient.updateMetadata(request, requestOptions).body();
+    }
+
+    public boolean call() {
+        return this.rawClient.call().body();
+    }
+
+    public boolean call(Request request) {
+        return this.rawClient.call(request).body();
+    }
+
+    public boolean call(Request request, RequestOptions requestOptions) {
+        return this.rawClient.call(request, requestOptions).body();
     }
 }

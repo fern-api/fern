@@ -41,10 +41,17 @@ export class ReqWithHeaders {
      *         body: "string"
      *     })
      */
-    public async getWithCustomHeader(
+    public getWithCustomHeader(
         request: Fiddle.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions,
-    ): Promise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
+    }
+
+    private async __getWithCustomHeader(
+        request: Fiddle.ReqWithHeaders,
+        requestOptions?: ReqWithHeaders.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>>> {
         const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -76,14 +83,23 @@ export class ReqWithHeaders {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.reqWithHeaders.getWithCustomHeader.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.reqWithHeaders.getWithCustomHeader.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

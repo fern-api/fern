@@ -227,7 +227,7 @@ errors:
 Checkout open source projects that are using Fern Definitions:
 
 - [Metriport](https://github.com/metriport/metriport/tree/develop/fern/definition)
-- [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
+- [Rivet](https://github.com/rivet-gg/rivet/tree/main/sdks/api/fern/definition)
 
 ## Inspiration
 

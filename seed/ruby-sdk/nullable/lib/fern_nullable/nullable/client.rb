@@ -69,6 +69,7 @@ module SeedNullableClient
     #   * :avatar (String)
     #   * :activated (Boolean)
     #   * :status (Hash)
+    #   * :values (Hash{String => String})
     # @param avatar [String]
     # @param request_options [SeedNullableClient::RequestOptions]
     # @return [SeedNullableClient::Nullable::User]
@@ -77,7 +78,7 @@ module SeedNullableClient
     #  nullable.nullable.create_user(
     #    username: "username",
     #    tags: ["tags", "tags"],
-    #    metadata: { created_at: DateTime.parse("2024-01-15T09:30:00.000Z"), updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"), avatar: "avatar", activated: true },
+    #    metadata: { created_at: DateTime.parse("2024-01-15T09:30:00.000Z"), updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"), avatar: "avatar", activated: true, values: { "values": "values" } },
     #    avatar: "avatar"
     #  )
     def create_user(username:, tags: nil, metadata: nil, avatar: nil, request_options: nil)
@@ -191,6 +192,7 @@ module SeedNullableClient
     #   * :avatar (String)
     #   * :activated (Boolean)
     #   * :status (Hash)
+    #   * :values (Hash{String => String})
     # @param avatar [String]
     # @param request_options [SeedNullableClient::RequestOptions]
     # @return [SeedNullableClient::Nullable::User]
@@ -199,7 +201,7 @@ module SeedNullableClient
     #  nullable.nullable.create_user(
     #    username: "username",
     #    tags: ["tags", "tags"],
-    #    metadata: { created_at: DateTime.parse("2024-01-15T09:30:00.000Z"), updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"), avatar: "avatar", activated: true },
+    #    metadata: { created_at: DateTime.parse("2024-01-15T09:30:00.000Z"), updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"), avatar: "avatar", activated: true, values: { "values": "values" } },
     #    avatar: "avatar"
     #  )
     def create_user(username:, tags: nil, metadata: nil, avatar: nil, request_options: nil)

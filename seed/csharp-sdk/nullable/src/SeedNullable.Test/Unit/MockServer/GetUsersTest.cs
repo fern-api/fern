@@ -27,6 +27,9 @@ public class GetUsersTest : BaseMockServerTest
                   "activated": true,
                   "status": {
                     "type": "active"
+                  },
+                  "values": {
+                    "values": "values"
                   }
                 },
                 "email": "email",
@@ -55,6 +58,9 @@ public class GetUsersTest : BaseMockServerTest
                   "activated": true,
                   "status": {
                     "type": "active"
+                  },
+                  "values": {
+                    "values": "values"
                   }
                 },
                 "email": "email",

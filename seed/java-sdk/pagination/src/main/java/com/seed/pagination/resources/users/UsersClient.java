@@ -7,7 +7,6 @@ import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -20,7 +19,6 @@ import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginatio
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.User;
-import com.seed.pagination.types.UsernameCursor;
 
 public class UsersClient {
     protected final ClientOptions clientOptions;
@@ -196,18 +194,6 @@ public class UsersClient {
 
     public SyncPagingIterable<String> listUsernames(ListUsernamesRequest request, RequestOptions requestOptions) {
         return this.rawClient.listUsernames(request, requestOptions).body();
-    }
-
-    public UsernameCursor listUsernamesCustom() {
-        return this.rawClient.listUsernamesCustom().body();
-    }
-
-    public UsernameCursor listUsernamesCustom(ListUsernamesRequestCustom request) {
-        return this.rawClient.listUsernamesCustom(request).body();
-    }
-
-    public UsernameCursor listUsernamesCustom(ListUsernamesRequestCustom request, RequestOptions requestOptions) {
-        return this.rawClient.listUsernamesCustom(request, requestOptions).body();
     }
 
     public SyncPagingIterable<String> listWithGlobalConfig() {

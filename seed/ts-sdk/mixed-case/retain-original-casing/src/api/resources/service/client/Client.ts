@@ -37,10 +37,17 @@ export class Service {
      * @example
      *     await client.service.getResource("rsc-xyz")
      */
-    public async getResource(
+    public getResource(
         ResourceID: string,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedMixedCase.Resource> {
+    ): core.HttpResponsePromise<SeedMixedCase.Resource> {
+        return core.HttpResponsePromise.fromPromise(this.__getResource(ResourceID, requestOptions));
+    }
+
+    private async __getResource(
+        ResourceID: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -64,12 +71,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Resource.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Resource.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -104,10 +114,17 @@ export class Service {
      *         beforeDate: "2023-01-01"
      *     })
      */
-    public async listResources(
+    public listResources(
         request: SeedMixedCase.ListResourcesRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedMixedCase.Resource[]> {
+    ): core.HttpResponsePromise<SeedMixedCase.Resource[]> {
+        return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
+    }
+
+    private async __listResources(
+        request: SeedMixedCase.ListResourcesRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedCase.Resource[]>> {
         const { page_limit: pageLimit, beforeDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["page_limit"] = pageLimit.toString();
@@ -136,12 +153,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.listResources.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.service.listResources.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

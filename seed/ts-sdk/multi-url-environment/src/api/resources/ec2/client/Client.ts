@@ -43,10 +43,17 @@ export class Ec2 {
      *         size: "size"
      *     })
      */
-    public async bootInstance(
+    public bootInstance(
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__bootInstance(request, requestOptions));
+    }
+
+    private async __bootInstance(
+        request: SeedMultiUrlEnvironment.BootInstanceRequest,
+        requestOptions?: Ec2.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,7 +82,7 @@ export class Ec2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

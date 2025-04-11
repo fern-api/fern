@@ -6,10 +6,14 @@ from ..declaration_referencers import (
     EnvironmentsEnumDeclarationReferencer,
     ErrorDeclarationReferencer,
     OAuthTokenProviderDeclarationReferencer,
+    RootAsyncRawClientDeclarationReferencer,
     RootClientDeclarationReferencer,
+    RootRawClientDeclarationReferencer,
     SubpackageAsyncClientDeclarationReferencer,
+    SubpackageAsyncRawClientDeclarationReferencer,
     SubpackageAsyncSocketClientDeclarationReferencer,
     SubpackageClientDeclarationReferencer,
+    SubpackageRawClientDeclarationReferencer,
     SubpackageSocketClientDeclarationReferencer,
 )
 from .sdk_generator_context import SdkGeneratorContext
@@ -43,6 +47,17 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             client_filename=client_filename,
             skip_resources_module=custom_config.improved_imports,
         )
+        self._root_generated_raw_client_declaration_referencer = RootRawClientDeclarationReferencer(
+            client_class_name=client_class_name,
+            client_filename=client_filename,
+            skip_resources_module=custom_config.improved_imports,
+        )
+        self._root_generated_async_raw_client_declaration_referencer = RootAsyncRawClientDeclarationReferencer(
+            client_class_name=client_class_name,
+            client_filename=client_filename,
+            skip_resources_module=custom_config.improved_imports,
+        )
+
         self._root_exported_client_declaration_referencer = RootClientDeclarationReferencer(
             client_class_name=exported_client_class_name,
             client_filename=custom_config.client.exported_filename or client_filename,
@@ -66,13 +81,19 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         self._subpackage_client_declaration_referencer = SubpackageClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
-        self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
-            skip_resources_module=custom_config.improved_imports
-        )
-        self._subpackage_async_socket_client_declaration_referencer = SubpackageAsyncSocketClientDeclarationReferencer(
+        self._subpackage_raw_client_declaration_referencer = SubpackageRawClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
         self._subpackage_socket_client_declaration_referencer = SubpackageSocketClientDeclarationReferencer(
+            skip_resources_module=custom_config.improved_imports
+        )
+        self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
+            skip_resources_module=custom_config.improved_imports
+        )
+        self._subpackage_async_raw_client_declaration_referencer = SubpackageAsyncRawClientDeclarationReferencer(
+            skip_resources_module=custom_config.improved_imports
+        )
+        self._subpackage_async_socket_client_declaration_referencer = SubpackageAsyncSocketClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
         self._oauth_generated_client_declaration_referencer = OAuthTokenProviderDeclarationReferencer(
@@ -101,27 +122,45 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_reference_to_environments_class(self) -> AST.ClassReference:
         return self._environments_enum_declaration_referencer.get_class_reference(name=None, as_request=False)
 
-    def get_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
+    def get_client_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_client_declaration_referencer.get_filepath(name=subpackage)
 
-    def get_socket_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
+    def get_raw_client_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_raw_client_declaration_referencer.get_filepath(name=subpackage)
+
+    def get_socket_client_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_socket_client_declaration_referencer.get_filepath(name=subpackage)
 
-    def get_class_name_of_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+    def get_client_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_client_declaration_referencer.get_class_name(name=subpackage)
 
-    def get_socket_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+    def get_raw_client_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_raw_client_declaration_referencer.get_class_name(name=subpackage)
+
+    def get_socket_client_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_socket_client_declaration_referencer.get_class_name(name=subpackage)
 
-    def get_async_socket_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+    def get_async_raw_client_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_raw_client_declaration_referencer.get_class_name(name=subpackage)
+
+    def get_async_socket_client_class_name_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_async_socket_client_declaration_referencer.get_class_name(name=subpackage)
 
-    def get_socket_class_reference_for_subpackage_service(
+    def get_raw_client_class_reference_for_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId
+    ) -> AST.ClassReference:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_raw_client_declaration_referencer.get_class_reference(name=subpackage, as_request=False)
+
+    def get_socket_client_class_reference_for_subpackage_service(
         self, subpackage_id: ir_types.SubpackageId
     ) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
@@ -129,12 +168,28 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             name=subpackage, as_request=False
         )
 
-    def get_async_socket_class_reference_for_subpackage_service(
+    def get_async_raw_client_class_reference_for_subpackage_service(
+        self, subpackage_id: ir_types.SubpackageId
+    ) -> AST.ClassReference:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_raw_client_declaration_referencer.get_class_reference(
+            name=subpackage, as_request=False
+        )
+
+    def get_async_socket_client_class_reference_for_subpackage_service(
         self, subpackage_id: ir_types.SubpackageId
     ) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_async_socket_client_declaration_referencer.get_class_reference(
             name=subpackage, as_request=False
+        )
+
+    def get_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
+        return self._root_generated_raw_client_declaration_referencer.get_class_reference(name=None, as_request=False)
+
+    def get_async_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
+        return self._root_generated_async_raw_client_declaration_referencer.get_class_reference(
+            name=None, as_request=False
         )
 
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
@@ -150,8 +205,17 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_filepath_for_generated_root_client(self) -> Filepath:
         return self._root_generated_client_declaration_referencer.get_filepath(name=None)
 
+    def get_filepath_for_generated_raw_root_client(self) -> Filepath:
+        return self._root_generated_raw_client_declaration_referencer.get_filepath(name=None)
+
     def get_class_name_for_generated_root_client(self) -> str:
         return self._root_generated_client_declaration_referencer.get_class_name(name=None)
+
+    def get_class_name_for_generated_raw_root_client(self) -> str:
+        return self._root_generated_raw_client_declaration_referencer.get_class_name(name=None)
+
+    def get_class_name_for_generated_async_raw_root_client(self) -> str:
+        return self._root_generated_async_raw_client_declaration_referencer.get_class_name(name=None)
 
     def get_filepath_for_exported_root_client(self) -> Filepath:
         return self._root_exported_client_declaration_referencer.get_filepath(name=None)

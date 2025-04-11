@@ -105,6 +105,11 @@ fixtures:
         enable-inline-types: true
         wrapped-aliases: false
       outputFolder: no-wrapped-aliases
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: false
+        enable-forward-compatible-enums: true
+      outputFolder: enable-forward-compatible-enums
   imdb:
     - customConfig:
         disable-required-property-builder-checks: true
@@ -137,6 +142,11 @@ fixtures:
       outputFolder: wrapped-aliases
     - outputFolder: no-custom-config
   enum:
+    - customConfig:
+        enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - outputFolder: no-custom-config
+  version:
     - customConfig:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums

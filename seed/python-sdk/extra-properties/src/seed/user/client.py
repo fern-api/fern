@@ -2,12 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawUserClient
 from ..core.request_options import RequestOptions
 from .types.user import User
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawUserClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -15,7 +14,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class UserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawUserClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawUserClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawUserClient
+        """
+        return self._raw_client
 
     def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
@@ -41,35 +51,24 @@ class UserClient:
             name="name",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "user",
-            method="POST",
-            json={
-                "name": name,
-                "_type": "CreateUserRequest",
-                "_version": "v1",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.create_user(name=name, request_options=request_options)
+        return response.data
 
 
 class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawUserClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawUserClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawUserClient
+        """
+        return self._raw_client
 
     async def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
@@ -103,27 +102,5 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "user",
-            method="POST",
-            json={
-                "name": name,
-                "_type": "CreateUserRequest",
-                "_version": "v1",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.create_user(name=name, request_options=request_options)
+        return response.data

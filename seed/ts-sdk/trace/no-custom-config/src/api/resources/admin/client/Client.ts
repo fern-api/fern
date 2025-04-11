@@ -46,11 +46,21 @@ export class Admin {
      *         type: "stopped"
      *     })
      */
-    public async updateTestSubmissionStatus(
+    public updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateTestSubmissionStatus(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __updateTestSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionStatus,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -81,7 +91,7 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -122,11 +132,21 @@ export class Admin {
      *         }
      *     })
      */
-    public async sendTestSubmissionUpdate(
+    public sendTestSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendTestSubmissionUpdate(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __sendTestSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionUpdate,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -157,7 +177,7 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -194,11 +214,21 @@ export class Admin {
      *         type: "stopped"
      *     })
      */
-    public async updateWorkspaceSubmissionStatus(
+    public updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateWorkspaceSubmissionStatus(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __updateWorkspaceSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionStatus,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -229,7 +259,7 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -270,11 +300,21 @@ export class Admin {
      *         }
      *     })
      */
-    public async sendWorkspaceSubmissionUpdate(
+    public sendWorkspaceSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __sendWorkspaceSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionUpdate,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -305,7 +345,7 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -428,12 +468,23 @@ export class Admin {
      *             }]
      *     })
      */
-    public async storeTracedTestCase(
+    public storeTracedTestCase(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: string,
         request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCase(submissionId, testCaseId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedTestCase(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: string,
+        request: SeedTrace.StoreTracedTestCaseRequest,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -464,7 +515,7 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -576,12 +627,23 @@ export class Admin {
      *             stdout: "stdout"
      *         }])
      */
-    public async storeTracedTestCaseV2(
+    public storeTracedTestCaseV2(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: SeedTrace.v2.TestCaseId,
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedTestCaseV2(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: SeedTrace.v2.TestCaseId,
+        request: SeedTrace.TraceResponseV2[],
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -614,7 +676,7 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -733,11 +795,19 @@ export class Admin {
      *             }]
      *     })
      */
-    public async storeTracedWorkspace(
+    public storeTracedWorkspace(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__storeTracedWorkspace(submissionId, request, requestOptions));
+    }
+
+    private async __storeTracedWorkspace(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.StoreTracedWorkspaceRequest,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -768,7 +838,7 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -879,11 +949,21 @@ export class Admin {
      *             stdout: "stdout"
      *         }])
      */
-    public async storeTracedWorkspaceV2(
+    public storeTracedWorkspaceV2(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedWorkspaceV2(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedWorkspaceV2(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TraceResponseV2[],
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -916,7 +996,7 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

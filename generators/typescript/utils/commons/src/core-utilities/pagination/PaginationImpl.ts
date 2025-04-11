@@ -33,6 +33,7 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                     responseType,
                     itemType,
                     response,
+                    rawResponse,
                     hasNextPage,
                     getItems,
                     loadPage
@@ -40,6 +41,7 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                     responseType: ts.TypeNode;
                     itemType: ts.TypeNode;
                     response: ts.Expression;
+                    rawResponse: ts.Expression;
                     hasNextPage: ts.Expression;
                     getItems: ts.Expression;
                     loadPage: ts.Expression;
@@ -53,6 +55,10 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                                     ts.factory.createPropertyAssignment(
                                         ts.factory.createIdentifier("response"),
                                         response
+                                    ),
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("rawResponse"),
+                                        rawResponse
                                     ),
                                     ts.factory.createPropertyAssignment(
                                         ts.factory.createIdentifier("hasNextPage"),

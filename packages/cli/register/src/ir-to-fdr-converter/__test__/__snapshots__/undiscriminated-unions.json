@@ -1,5 +1,24 @@
 {
   "types": {
+    "type_union:Request": {
+      "name": "Request",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "union",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_union:MetadataUnion"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_union:TypeWithOptionalUnion": {
       "name": "TypeWithOptionalUnion",
       "shape": {
@@ -89,6 +108,82 @@
             }
           }
         ]
+      }
+    },
+    "type_union:MetadataUnion": {
+      "name": "MetadataUnion",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "OptionalMetadata",
+            "type": {
+              "type": "id",
+              "value": "type_union:OptionalMetadata"
+            }
+          },
+          {
+            "typeName": "NamedMetadata",
+            "type": {
+              "type": "id",
+              "value": "type_union:NamedMetadata"
+            }
+          }
+        ]
+      }
+    },
+    "type_union:NamedMetadata": {
+      "name": "NamedMetadata",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_union:OptionalMetadata": {
+      "name": "OptionalMetadata",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "map",
+            "keyType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "valueType": {
+              "type": "unknown"
+            }
+          }
+        }
       }
     },
     "type_union:Metadata": {
@@ -273,13 +368,149 @@
               }
             }
           ]
+        },
+        {
+          "auth": false,
+          "method": "PUT",
+          "id": "updateMetadata",
+          "originalEndpointId": "endpoint_union.updateMetadata",
+          "name": "Update Metadata",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/metadata"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_union:MetadataUnion"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/metadata",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "call",
+          "originalEndpointId": "endpoint_union.call",
+          "name": "Call",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/"
+              },
+              {
+                "type": "literal",
+                "value": "/call"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_union:Request"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/call",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": true,
+              "responseBodyV3": {
+                "type": "json",
+                "value": true
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
       "websockets": [],
       "types": [
+        "type_union:Request",
         "type_union:TypeWithOptionalUnion",
         "type_union:MyUnion",
+        "type_union:MetadataUnion",
+        "type_union:NamedMetadata",
+        "type_union:OptionalMetadata",
         "type_union:Metadata",
         "type_union:Key",
         "type_union:KeyType"

@@ -22,6 +22,7 @@ class ContainerValue extends JsonSerializableType
      *    array<FieldValue>
      *   |FieldValue
      *   |mixed
+     *   |null
      * ) $value
      */
     public readonly mixed $value;
@@ -37,6 +38,7 @@ class ContainerValue extends JsonSerializableType
      *    array<FieldValue>
      *   |FieldValue
      *   |mixed
+     *   |null
      * ),
      * } $values
      */

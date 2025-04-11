@@ -23,6 +23,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      * @var (
      *    DateTime
      *   |mixed
+     *   |null
      * ) $value
      */
     private readonly mixed $value;
@@ -37,6 +38,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      *   value: (
      *    DateTime
      *   |mixed
+     *   |null
      * ),
      * } $values
      */
@@ -63,6 +65,7 @@ class UnionWithOptionalTime extends JsonSerializableType
      * @return (
      *    DateTime
      *   |mixed
+     *   |null
      * )
      */
     public function getValue(): mixed

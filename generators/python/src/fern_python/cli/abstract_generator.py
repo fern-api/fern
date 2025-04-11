@@ -50,6 +50,11 @@ class AbstractGenerator(ABC):
         user_defined_toml = None
         if generator_config.custom_config is not None and "pyproject_toml" in generator_config.custom_config:
             user_defined_toml = generator_config.custom_config.get("pyproject_toml")
+
+        exclude_types_from_init_exports = False
+        if generator_config.custom_config is not None and "exclude_types_from_init_exports" in generator_config.custom_config:
+            exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -69,6 +74,7 @@ class AbstractGenerator(ABC):
             github_output_mode=maybe_github_output_mode,
             license_=generator_config.license,
             user_defined_toml=user_defined_toml,
+            exclude_types_from_init_exports=exclude_types_from_init_exports,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -206,7 +212,7 @@ poetry.toml
 on: [push]
 jobs:
   compile:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -222,7 +228,7 @@ jobs:
       - name: Compile
         run: poetry run mypy .
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -261,7 +267,7 @@ jobs:
   publish:
     needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3

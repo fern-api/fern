@@ -1,0 +1,5 @@
+types:
+  Failure:
+    extra-properties: true
+    properties:
+      status: literal<"failure">

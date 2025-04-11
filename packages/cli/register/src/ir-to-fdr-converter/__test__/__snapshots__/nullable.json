@@ -295,6 +295,33 @@
               "type": "id",
               "value": "type_nullable:Status"
             }
+          },
+          {
+            "key": "values",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         ]
       }
@@ -428,6 +455,9 @@
                     "activated": true,
                     "status": {
                       "type": "active"
+                    },
+                    "values": {
+                      "values": "values"
                     }
                   },
                   "email": "email",
@@ -456,6 +486,9 @@
                     "activated": true,
                     "status": {
                       "type": "active"
+                    },
+                    "values": {
+                      "values": "values"
                     }
                   },
                   "email": "email",
@@ -488,6 +521,9 @@
                       "activated": true,
                       "status": {
                         "type": "active"
+                      },
+                      "values": {
+                        "values": "values"
                       }
                     },
                     "email": "email",
@@ -516,6 +552,9 @@
                       "activated": true,
                       "status": {
                         "type": "active"
+                      },
+                      "values": {
+                        "values": "values"
                       }
                     },
                     "email": "email",
@@ -658,6 +697,9 @@
                   "activated": true,
                   "status": {
                     "type": "active"
+                  },
+                  "values": {
+                    "values": "values"
                   }
                 },
                 "email": "email",
@@ -688,6 +730,9 @@
                     "activated": true,
                     "status": {
                       "type": "active"
+                    },
+                    "values": {
+                      "values": "values"
                     }
                   },
                   "email": "email",

@@ -13,10 +13,12 @@ class BaseClientWrapper:
         api_key: typing.Union[str, typing.Callable[[], str]],
         base_url: str,
         timeout: typing.Optional[float] = None,
+        version: typing.Optional[str] = None,
     ):
         self._api_key = api_key
         self._base_url = base_url
         self._timeout = timeout
+        self._version = version
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
@@ -26,7 +28,7 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
         }
         headers["Authorization"] = f"Bearer {self._get_api_key()}"
-        headers["X-API-Version"] = "1.0.0"
+        headers["X-API-Version"] = self._version if self._version is not None else "1.0.0"
         return headers
 
     def _get_api_key(self) -> str:
@@ -49,9 +51,10 @@ class SyncClientWrapper(BaseClientWrapper):
         api_key: typing.Union[str, typing.Callable[[], str]],
         base_url: str,
         timeout: typing.Optional[float] = None,
+        version: typing.Optional[str] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout, version=version)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -67,9 +70,10 @@ class AsyncClientWrapper(BaseClientWrapper):
         api_key: typing.Union[str, typing.Callable[[], str]],
         base_url: str,
         timeout: typing.Optional[float] = None,
+        version: typing.Optional[str] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout, version=version)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
