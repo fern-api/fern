@@ -321,30 +321,30 @@
       "referencedTypes": {},
       "inline": false
     },
-    "getSearchWithUnionAndNull_Request": {
+    "SearchWithUnionAndNullGetRequestBodySchema": {
       "name": {
-        "typeId": "getSearchWithUnionAndNull_Request",
+        "typeId": "SearchWithUnionAndNullGetRequestBodySchema",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
         "name": {
-          "originalName": "getSearchWithUnionAndNull_Request",
+          "originalName": "SearchWithUnionAndNullGetRequestBodySchema",
           "camelCase": {
-            "unsafeName": "getSearchWithUnionAndNullRequest",
-            "safeName": "getSearchWithUnionAndNullRequest"
+            "unsafeName": "searchWithUnionAndNullGetRequestBodySchema",
+            "safeName": "searchWithUnionAndNullGetRequestBodySchema"
           },
           "snakeCase": {
-            "unsafeName": "get_search_with_union_and_null_request",
-            "safeName": "get_search_with_union_and_null_request"
+            "unsafeName": "search_with_union_and_null_get_request_body_schema",
+            "safeName": "search_with_union_and_null_get_request_body_schema"
           },
           "screamingSnakeCase": {
-            "unsafeName": "GET_SEARCH_WITH_UNION_AND_NULL_REQUEST",
-            "safeName": "GET_SEARCH_WITH_UNION_AND_NULL_REQUEST"
+            "unsafeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA",
+            "safeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA"
           },
           "pascalCase": {
-            "unsafeName": "GetSearchWithUnionAndNullRequest",
-            "safeName": "GetSearchWithUnionAndNullRequest"
+            "unsafeName": "SearchWithUnionAndNullGetRequestBodySchema",
+            "safeName": "SearchWithUnionAndNullGetRequestBodySchema"
           }
         }
       },
@@ -352,74 +352,62 @@
         "members": [
           {
             "type": {
-              "container": {
-                "nullable": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "name": {
-                    "originalName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-                    "camelCase": {
-                      "unsafeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-                      "safeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfZero"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "search_with_union_and_null_get_request_body_schema_one_of_zero",
-                      "safeName": "search_with_union_and_null_get_request_body_schema_one_of_zero"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ZERO",
-                      "safeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ZERO"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-                      "safeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero"
-                    }
-                  },
-                  "typeId": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-                  "inline": false,
-                  "type": "named"
-                },
-                "type": "nullable"
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
               },
-              "type": "container"
+              "name": {
+                "originalName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
+                "camelCase": {
+                  "unsafeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfZero",
+                  "safeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfZero"
+                },
+                "snakeCase": {
+                  "unsafeName": "search_with_union_and_null_get_request_body_schema_one_of_zero",
+                  "safeName": "search_with_union_and_null_get_request_body_schema_one_of_zero"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ZERO",
+                  "safeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ZERO"
+                },
+                "pascalCase": {
+                  "unsafeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
+                  "safeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero"
+                }
+              },
+              "typeId": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
+              "inline": false,
+              "type": "named"
             }
           },
           {
             "type": {
-              "container": {
-                "nullable": {
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "name": {
-                    "originalName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
-                    "camelCase": {
-                      "unsafeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfOne",
-                      "safeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfOne"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "search_with_union_and_null_get_request_body_schema_one_of_one",
-                      "safeName": "search_with_union_and_null_get_request_body_schema_one_of_one"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ONE",
-                      "safeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ONE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
-                      "safeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne"
-                    }
-                  },
-                  "typeId": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
-                  "inline": false,
-                  "type": "named"
-                },
-                "type": "nullable"
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
               },
-              "type": "container"
+              "name": {
+                "originalName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
+                "camelCase": {
+                  "unsafeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfOne",
+                  "safeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfOne"
+                },
+                "snakeCase": {
+                  "unsafeName": "search_with_union_and_null_get_request_body_schema_one_of_one",
+                  "safeName": "search_with_union_and_null_get_request_body_schema_one_of_one"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ONE",
+                  "safeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ONE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
+                  "safeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne"
+                }
+              },
+              "typeId": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
+              "inline": false,
+              "type": "named"
             }
           }
         ],
@@ -576,8 +564,8 @@
           },
           "allPathParameters": [],
           "v2Examples": {
-            "autogeneratedExamples": [],
-            "userSpecifiedExamples": []
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {}
           }
         },
         {
@@ -787,8 +775,8 @@
           },
           "allPathParameters": [],
           "v2Examples": {
-            "autogeneratedExamples": [],
-            "userSpecifiedExamples": []
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {}
           }
         },
         {
@@ -823,32 +811,38 @@
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
+              "container": {
+                "nullable": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "name": {
+                    "originalName": "SearchWithUnionAndNullGetRequestBodySchema",
+                    "camelCase": {
+                      "unsafeName": "searchWithUnionAndNullGetRequestBodySchema",
+                      "safeName": "searchWithUnionAndNullGetRequestBodySchema"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "search_with_union_and_null_get_request_body_schema",
+                      "safeName": "search_with_union_and_null_get_request_body_schema"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA",
+                      "safeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "SearchWithUnionAndNullGetRequestBodySchema",
+                      "safeName": "SearchWithUnionAndNullGetRequestBodySchema"
+                    }
+                  },
+                  "typeId": "SearchWithUnionAndNullGetRequestBodySchema",
+                  "inline": false,
+                  "type": "named"
+                },
+                "type": "nullable"
               },
-              "name": {
-                "originalName": "getSearchWithUnionAndNull_Request",
-                "camelCase": {
-                  "unsafeName": "getSearchWithUnionAndNullRequest",
-                  "safeName": "getSearchWithUnionAndNullRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_search_with_union_and_null_request",
-                  "safeName": "get_search_with_union_and_null_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_SEARCH_WITH_UNION_AND_NULL_REQUEST",
-                  "safeName": "GET_SEARCH_WITH_UNION_AND_NULL_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetSearchWithUnionAndNullRequest",
-                  "safeName": "GetSearchWithUnionAndNullRequest"
-                }
-              },
-              "typeId": "getSearchWithUnionAndNull_Request",
-              "inline": false,
-              "type": "named"
+              "type": "container"
             },
             "type": "reference"
           },
@@ -878,7 +872,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "9cfdb2e1",
+                "id": "4eed8fc8",
                 "url": "/search-with-union-and-null",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -888,73 +882,38 @@
                 "rootPathParameters": [],
                 "request": {
                   "shape": {
-                    "shape": {
-                      "index": 0,
-                      "singleUnionType": {
-                        "shape": {
-                          "container": {
-                            "valueType": {
-                              "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                              },
-                              "name": {
-                                "originalName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-                                "camelCase": {
-                                  "unsafeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-                                  "safeName": "searchWithUnionAndNullGetRequestBodySchemaOneOfZero"
-                                },
-                                "snakeCase": {
-                                  "unsafeName": "search_with_union_and_null_get_request_body_schema_one_of_zero",
-                                  "safeName": "search_with_union_and_null_get_request_body_schema_one_of_zero"
-                                },
-                                "screamingSnakeCase": {
-                                  "unsafeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ZERO",
-                                  "safeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA_ONE_OF_ZERO"
-                                },
-                                "pascalCase": {
-                                  "unsafeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-                                  "safeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero"
-                                }
-                              },
-                              "typeId": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-                              "inline": false,
-                              "type": "named"
-                            },
-                            "type": "nullable"
+                    "container": {
+                      "valueType": {
+                        "fernFilepath": {
+                          "allParts": [],
+                          "packagePath": []
+                        },
+                        "name": {
+                          "originalName": "SearchWithUnionAndNullGetRequestBodySchema",
+                          "camelCase": {
+                            "unsafeName": "searchWithUnionAndNullGetRequestBodySchema",
+                            "safeName": "searchWithUnionAndNullGetRequestBodySchema"
                           },
-                          "type": "container"
-                        }
+                          "snakeCase": {
+                            "unsafeName": "search_with_union_and_null_get_request_body_schema",
+                            "safeName": "search_with_union_and_null_get_request_body_schema"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA",
+                            "safeName": "SEARCH_WITH_UNION_AND_NULL_GET_REQUEST_BODY_SCHEMA"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "SearchWithUnionAndNullGetRequestBodySchema",
+                            "safeName": "SearchWithUnionAndNullGetRequestBodySchema"
+                          }
+                        },
+                        "typeId": "SearchWithUnionAndNullGetRequestBodySchema",
+                        "inline": false,
+                        "type": "named"
                       },
-                      "type": "undiscriminatedUnion"
+                      "type": "nullable"
                     },
-                    "typeName": {
-                      "typeId": "getSearchWithUnionAndNull_Request",
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "name": {
-                        "originalName": "getSearchWithUnionAndNull_Request",
-                        "camelCase": {
-                          "unsafeName": "getSearchWithUnionAndNullRequest",
-                          "safeName": "getSearchWithUnionAndNullRequest"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "get_search_with_union_and_null_request",
-                          "safeName": "get_search_with_union_and_null_request"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "GET_SEARCH_WITH_UNION_AND_NULL_REQUEST",
-                          "safeName": "GET_SEARCH_WITH_UNION_AND_NULL_REQUEST"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "GetSearchWithUnionAndNullRequest",
-                          "safeName": "GetSearchWithUnionAndNullRequest"
-                        }
-                      }
-                    },
-                    "type": "named"
+                    "type": "container"
                   },
                   "type": "reference"
                 },
@@ -986,8 +945,8 @@
           },
           "allPathParameters": [],
           "v2Examples": {
-            "autogeneratedExamples": [],
-            "userSpecifiedExamples": []
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {}
           }
         }
       ]

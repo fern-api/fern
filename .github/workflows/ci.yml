@@ -44,19 +44,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
-  compile:
-    if: github.repository == 'fern-api/fern'
-    runs-on: CLI
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Compile
-        run: pnpm compile
-
   eslint:
     runs-on: ubuntu-latest
     steps:
@@ -69,7 +56,7 @@ jobs:
       - name: lint:eslint
         run: pnpm lint:eslint
 
-  test:
+  check:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
     steps:
@@ -86,28 +73,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: "stable"
+          cache-dependency-path: generators/go/go.sum
 
       - name: Install protoc-gen-openapi
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Run tests
         run: pnpm test
-
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
-
-  ete-tests:
-    if: github.repository == 'fern-api/fern'
-    runs-on: CLI
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Compile
-        run: pnpm compile
 
       - name: Run ETE tests
         env:

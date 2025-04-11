@@ -11,7 +11,7 @@ export declare namespace EnumSchemaConverter {
     }
 
     export interface Output {
-        enum: Type;
+        type: Type;
     }
 }
 
@@ -40,7 +40,6 @@ export class EnumSchemaConverter extends AbstractConverter<
         }
 
         const stringEnumValues = this.schema.enum.filter((value) => typeof value === "string");
-
         const values = stringEnumValues.map((value) => {
             const fernEnumValue = this.maybeFernEnum?.[value];
             const name = fernEnumValue?.name ?? value.toString();
@@ -57,12 +56,16 @@ export class EnumSchemaConverter extends AbstractConverter<
         });
 
         if (values.length === 0) {
+            errorCollector.collect({
+                message: `Received enum schema with no valid values: ${JSON.stringify(this.schema)}`,
+                path: this.breadcrumbs
+            });
             return undefined;
         }
 
         const default_ = context.getAsString(this.schema.default);
         return {
-            enum: Type.enum({
+            type: Type.enum({
                 default: default_ != null ? values.find((v) => v.name.wireValue === default_) : undefined,
                 values
             })

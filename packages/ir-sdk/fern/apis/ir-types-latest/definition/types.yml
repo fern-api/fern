@@ -118,7 +118,7 @@ types:
       name: commons.NameAndWireValue
       valueType: TypeReference
       propertyAccess: optional<ObjectPropertyAccess>
-      example: optional<examples.V2SchemaExample>
+      v2Examples: optional<examples.V2SchemaExamples>
 
   ObjectPropertyAccess:
     enum:
