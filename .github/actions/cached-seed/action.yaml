@@ -77,6 +77,8 @@ runs:
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
     - name: Cleanup swap files
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
       run: find . -type f -name "*.swp" -delete
 
     - name: Validate results
