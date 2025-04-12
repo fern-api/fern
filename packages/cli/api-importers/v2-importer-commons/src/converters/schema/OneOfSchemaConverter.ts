@@ -50,10 +50,32 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return await this.convertAsNullableSchemaOrReference({ context, errorCollector });
         }
 
-        if (this.schema.discriminator != null) {
+        if (
+            this.schema.discriminator != null &&
+            !(await this.unionVariantsContainLiteral({
+                context,
+                discriminantProperty: this.schema.discriminator.propertyName
+            }))
+        ) {
             return await this.convertAsDiscriminatedUnion({ context, errorCollector });
         }
         return this.convertAsUndiscriminatedUnion({ context, errorCollector });
+    }
+
+    private async unionVariantsContainLiteral({
+        context,
+        discriminantProperty
+    }: {
+        context: AbstractConverterContext<object>;
+        discriminantProperty: string;
+    }): Promise<boolean> {
+        for (const [_, reference] of Object.entries(this.schema.discriminator?.mapping ?? {})) {
+            const schema = await context.resolveReference<OpenAPIV3_1.SchemaObject>({ $ref: reference });
+            if (schema.resolved && !Object.keys(schema.value.properties ?? {}).includes(discriminantProperty)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private async convertAsDiscriminatedUnion({
