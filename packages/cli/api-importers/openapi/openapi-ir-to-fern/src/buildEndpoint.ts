@@ -549,16 +549,18 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
-        const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
-            const allOfTypeReference = buildTypeReference({
-                schema: Schema.reference(referencedSchema),
-                fileContainingReference: declarationFile,
-                context,
-                namespace,
-                declarationDepth: 0
-            });
-            return getTypeFromTypeReference(allOfTypeReference);
-        }).filter(schema => schema !== "unknown");
+        const extendedSchemas: string[] = resolvedSchema.allOf
+            .map((referencedSchema) => {
+                const allOfTypeReference = buildTypeReference({
+                    schema: Schema.reference(referencedSchema),
+                    fileContainingReference: declarationFile,
+                    context,
+                    namespace,
+                    declarationDepth: 0
+                });
+                return getTypeFromTypeReference(allOfTypeReference);
+            })
+            .filter((schema) => schema !== "unknown");
 
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
