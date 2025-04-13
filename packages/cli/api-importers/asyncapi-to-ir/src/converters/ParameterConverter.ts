@@ -56,7 +56,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             inlinedTypes = converted.inlinedTypes ?? {};
         }
 
-        return this.returnOutput({
+        return this.convertToOutput({
             typeReference,
             inlinedTypes,
             context,

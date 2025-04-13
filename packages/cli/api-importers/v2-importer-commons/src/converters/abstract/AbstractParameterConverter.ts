@@ -68,7 +68,7 @@ export abstract class AbstractParameterConverter<
         errorCollector: ErrorCollector;
     }): Promise<AbstractParameterConverter.Output | undefined>;
 
-    protected async returnOutput({
+    protected async convertToOutput({
         typeReference,
         inlinedTypes,
         context,
@@ -152,27 +152,32 @@ export abstract class AbstractParameterConverter<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<Record<string, unknown>> {
+        let userSpecifiedExamples: Record<string, unknown> = {};
         const parameterExample = this.parameter.example;
         const parameterExamples = this.parameter.examples;
-        const resolvedParameterExamples: Record<string, unknown> = {};
         for (const [key, example] of Object.entries(parameterExamples ?? {})) {
             if (context.isReferenceObject(example)) {
                 const resolved = await context.resolveReference(example);
                 if (resolved.resolved) {
-                    resolvedParameterExamples[key] = resolved.value;
+                    if (typeof resolved.value === "object" && resolved.value != null && "value" in resolved.value) {
+                        userSpecifiedExamples[key] = resolved.value.value;
+                    }
                 }
             } else if (example != null) {
-                resolvedParameterExamples[key] = example;
+                userSpecifiedExamples[key] = example;
             }
         }
-        const schemaExampleName = context.generateUniqueName("schemaExample", Object.keys(parameterExamples ?? {}));
-        const userSpecifiedExamples =
+        const parameterExampleName = context.generateUniqueName({
+            prefix: `${this.parameter.name}_example`,
+            existingNames: Object.keys(userSpecifiedExamples)
+        });
+        userSpecifiedExamples =
             parameterExample != null
                 ? {
-                      [schemaExampleName]: parameterExample,
-                      ...resolvedParameterExamples
+                      [parameterExampleName]: parameterExample,
+                      ...userSpecifiedExamples
                   }
-                : resolvedParameterExamples;
+                : userSpecifiedExamples;
         return userSpecifiedExamples;
     }
 }

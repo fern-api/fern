@@ -20,7 +20,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             | OpenAPIV3.RequestBodyObject
             | OpenAPIV3.SecuritySchemeObject
     ): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
-        return parameter != null && "$ref" in parameter;
+        return parameter != null && typeof parameter === "object" && "$ref" in parameter;
     }
 
     public async convertReferenceToTypeReference(

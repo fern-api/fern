@@ -348,7 +348,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return value;
     }
 
-    public generateUniqueName(prefix: string, existingNames: string[]): string {
+    public generateUniqueName({ prefix, existingNames }: { prefix: string; existingNames: string[] }): string {
         if (!existingNames.includes(prefix)) {
             return prefix;
         }

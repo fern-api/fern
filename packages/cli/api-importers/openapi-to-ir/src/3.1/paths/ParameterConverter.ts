@@ -37,7 +37,7 @@ export class ParameterConverter extends Converters.AbstractConverters
             }
         }
 
-        return this.returnOutput({
+        return this.convertToOutput({
             typeReference,
             inlinedTypes,
             context,
