@@ -348,6 +348,17 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return value;
     }
 
+    public generateUniqueName({ prefix, existingNames }: { prefix: string; existingNames: string[] }): string {
+        if (!existingNames.includes(prefix)) {
+            return prefix;
+        }
+        let i = 0;
+        while (existingNames.includes(`${prefix}_${i}`)) {
+            i++;
+        }
+        return `${prefix}_${i}`;
+    }
+
     public isReferenceObject(value: unknown): value is OpenAPIV3_1.ReferenceObject {
         return typeof value === "object" && value !== null && "$ref" in value;
     }
