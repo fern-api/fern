@@ -159,7 +159,7 @@ export abstract class AbstractParameterConverter<
             if (context.isReferenceObject(example)) {
                 const resolved = await context.resolveReference(example);
                 if (resolved.resolved) {
-                    if (typeof resolved.value === "object" && resolved.value != null && "value" in resolved.value) {
+                    if (this.isExampleWithValue(resolved.value)) {
                         userSpecifiedExamples[key] = resolved.value.value;
                     }
                 }
@@ -179,5 +179,9 @@ export abstract class AbstractParameterConverter<
                   }
                 : userSpecifiedExamples;
         return userSpecifiedExamples;
+    }
+
+    private isExampleWithValue(example: unknown): example is { value: unknown } {
+        return typeof example === "object" && example != null && "value" in example;
     }
 }
