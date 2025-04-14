@@ -367,6 +367,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
         reference: OpenAPIV3_1.ReferenceObject
     ): Promise<{ ok: true; reference: TypeReference } | { ok: false }>;
 
+    public isExampleWithValue(example: unknown): example is { value: unknown } {
+        return typeof example === "object" && example != null && "value" in example;
+    }
+
     /**
      * TypeReference helper methods to check various properties
      */
