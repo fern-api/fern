@@ -78,6 +78,7 @@ export class SeedAliasClient {
             throw new errors.SeedAliasError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 

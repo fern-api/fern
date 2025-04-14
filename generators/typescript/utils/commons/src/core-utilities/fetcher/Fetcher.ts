@@ -16,14 +16,12 @@ export interface Fetcher {
             _reasonLiteralValue: "status-code";
             statusCode: "statusCode";
             body: "body";
-            rawResponse: "rawResponse";
         };
         NonJsonError: {
             _getReferenceToType: () => ts.TypeNode;
             _reasonLiteralValue: "non-json";
             statusCode: "statusCode";
             rawBody: "rawBody";
-            rawResponse: "rawResponse";
         };
         TimeoutSdkError: {
             _getReferenceToType: () => ts.TypeNode;

@@ -48,7 +48,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
 }
 
 export class GeneratedThrowingEndpointResponse implements GeneratedEndpointResponse {
-    private static RESPONSE_VARIABLE_NAME = "_response";
+    public static readonly RESPONSE_VARIABLE_NAME = "_response";
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
@@ -681,6 +681,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
     }
 
+    private getReferenceToRawResponse(context: SdkContext): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            ts.factory.createIdentifier(context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.rawResponse)
+        );
+    }
+
     private getReturnFailedResponse(context: SdkContext): ts.Statement[] {
         return [...this.getThrowsForStatusCodeErrors(context), ...this.getThrowsForNonStatusCodeErrors(context)];
     }
@@ -688,6 +695,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getThrowsForStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
         const referenceToErrorBody = this.getReferenceToErrorBody(context);
+        const referenceToRawResponse = this.getReferenceToRawResponse(context);
 
         const defaultThrow = ts.factory.createThrowStatement(
             context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
@@ -699,7 +707,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 responseBody: ts.factory.createPropertyAccessExpression(
                     referenceToError,
                     context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
-                )
+                ),
+                rawResponse: referenceToRawResponse
             })
         );
 
@@ -736,7 +745,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                                           ? generatedSdkErrorSchema.deserializeBody(context, {
                                                                 referenceToBody: referenceToErrorBody
                                                             })
-                                                          : undefined
+                                                          : undefined,
+                                                  referenceToRawResponse
                                               })
                                           )
                                       ];
@@ -843,6 +853,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
+        const referenceToRawResponse = this.getReferenceToRawResponse(context);
         return [
             ts.factory.createSwitchStatement(
                 ts.factory.createPropertyAccessExpression(
@@ -865,7 +876,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     responseBody: ts.factory.createPropertyAccessExpression(
                                         referenceToError,
                                         context.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
-                                    )
+                                    ),
+                                    rawResponse: referenceToRawResponse
                                 })
                             )
                         ]
@@ -899,7 +911,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                         context.coreUtilities.fetcher.Fetcher.UnknownError.message
                                     ),
                                     statusCode: undefined,
-                                    responseBody: undefined
+                                    responseBody: undefined,
+                                    rawResponse: referenceToRawResponse
                                 })
                             )
                         ]
