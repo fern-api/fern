@@ -10,6 +10,7 @@ import { DeclaredTypeName } from "../../types/types/DeclaredTypeName";
 import { InlinedRequestBodyProperty } from "./InlinedRequestBodyProperty";
 import { ObjectProperty } from "../../types/types/ObjectProperty";
 import { WithDocs } from "../../commons/types/WithDocs";
+import { WithV2Examples } from "../../examples/types/WithV2Examples";
 
 export const InlinedRequestBody: core.serialization.ObjectSchema<
     serializers.InlinedRequestBody.Raw,
@@ -23,10 +24,11 @@ export const InlinedRequestBody: core.serialization.ObjectSchema<
         contentType: core.serialization.string().optional(),
         extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
     })
-    .extend(WithDocs);
+    .extend(WithDocs)
+    .extend(WithV2Examples);
 
 export declare namespace InlinedRequestBody {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
         name: Name.Raw;
         extends: DeclaredTypeName.Raw[];
         properties: InlinedRequestBodyProperty.Raw[];

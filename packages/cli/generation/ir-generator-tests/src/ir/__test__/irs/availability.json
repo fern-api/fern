@@ -337,7 +337,8 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
-                        "docs": null
+                        "docs": null,
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -420,7 +421,8 @@
                                         }
                                     }
                                 },
-                                "docs": null
+                                "docs": null,
+                                "v2Examples": null
                             }
                         },
                         "status-code": null

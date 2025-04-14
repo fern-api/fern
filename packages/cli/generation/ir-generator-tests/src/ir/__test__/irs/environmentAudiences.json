@@ -1696,7 +1696,8 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null
+                                "docs": null,
+                                "v2Examples": null
                             }
                         },
                         "status-code": null
@@ -2415,7 +2416,8 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null
+                                "docs": null,
+                                "v2Examples": null
                             }
                         },
                         "status-code": null

@@ -331,7 +331,8 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
-                        "docs": "This is a test description"
+                        "docs": "This is a test description",
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -471,7 +472,8 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null
+                                "docs": null,
+                                "v2Examples": null
                             }
                         },
                         "status-code": null

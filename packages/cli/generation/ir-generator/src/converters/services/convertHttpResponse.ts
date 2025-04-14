@@ -114,15 +114,18 @@ export function convertNonStreamHttpResponseBody({
         if (responseType != null) {
             if (parseRawFileType(responseType) != null) {
                 return HttpResponseBody.fileDownload({
-                    docs
+                    docs,
+                    v2Examples: undefined
                 });
             } else if (parseRawTextType(responseType) != null) {
                 return HttpResponseBody.text({
-                    docs
+                    docs,
+                    v2Examples: undefined
                 });
             } else if (parseRawBytesType(responseType) != null) {
                 return HttpResponseBody.bytes({
-                    docs
+                    docs,
+                    v2Examples: undefined
                 });
             } else {
                 return convertJsonResponse(response, docs, file, typeResolver);
@@ -150,19 +153,22 @@ export function convertStreamHttpResponseBody({
         const streamFormat = typeof responseStream === "string" ? "json" : (responseStream.format ?? "json");
         if (isRawTextType(typeReference)) {
             return StreamingResponse.text({
-                docs
+                docs,
+                v2Examples: undefined
             });
         } else if (typeof responseStream !== "string" && streamFormat === "sse") {
             return StreamingResponse.sse({
                 docs,
                 payload: file.parseTypeReference(typeReference),
-                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
+                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+                v2Examples: undefined
             });
         } else {
             return StreamingResponse.json({
                 docs,
                 payload: file.parseTypeReference(typeReference),
-                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
+                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+                v2Examples: undefined
             });
         }
     }
@@ -198,14 +204,16 @@ function convertJsonResponse(
                     file,
                     resolvedType,
                     property: responseProperty
-                })
+                }),
+                v2Examples: undefined
             })
         );
     }
     return HttpResponseBody.json(
         JsonResponse.response({
             docs,
-            responseBodyType
+            responseBodyType,
+            v2Examples: undefined
         })
     );
 }
