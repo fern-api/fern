@@ -322,7 +322,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 examples = [...examples, ...schemaExamples];
             } else {
                 errorCollector.collect({
-                    message: "Expected examples to be an array",
+                    message: "Received non-array schema examples",
                     path: this.breadcrumbs
                 });
             }
