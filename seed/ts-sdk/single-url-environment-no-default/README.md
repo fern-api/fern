@@ -47,6 +47,7 @@ try {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
+        console.log(err.rawResponse);
     }
 }
 ```
