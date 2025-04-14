@@ -92,6 +92,7 @@ export class SeedValidationClient {
             throw new errors.SeedValidationError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -100,12 +101,14 @@ export class SeedValidationClient {
                 throw new errors.SeedValidationError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling POST /create.");
             case "unknown":
                 throw new errors.SeedValidationError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -174,6 +177,7 @@ export class SeedValidationClient {
             throw new errors.SeedValidationError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -182,12 +186,14 @@ export class SeedValidationClient {
                 throw new errors.SeedValidationError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedValidationError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

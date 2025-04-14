@@ -65,6 +65,7 @@ export class Service {
             throw new errors.SeedPublicObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -73,12 +74,14 @@ export class Service {
                 throw new errors.SeedPublicObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPublicObjectTimeoutError("Timeout exceeded when calling GET /helloworld.txt.");
             case "unknown":
                 throw new errors.SeedPublicObjectError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

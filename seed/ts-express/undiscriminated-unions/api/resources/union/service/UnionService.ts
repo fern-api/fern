@@ -26,6 +26,24 @@ export interface UnionServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    updateMetadata(
+        req: express.Request<never, boolean, SeedUndiscriminatedUnions.MetadataUnion, never>,
+        res: {
+            send: (responseBody: boolean) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    call(
+        req: express.Request<never, boolean, SeedUndiscriminatedUnions.Request, never>,
+        res: {
+            send: (responseBody: boolean) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class UnionService {
@@ -118,6 +136,92 @@ export class UnionService {
                     res.status(500).json("Internal Server Error");
                 }
                 next(error);
+            }
+        });
+        this.router.put("/metadata", async (req, res, next) => {
+            const request = serializers.MetadataUnion.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateMetadata(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.union.updateMetadata.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedUndiscriminatedUnionsError) {
+                        console.warn(
+                            `Endpoint 'updateMetadata' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/call", async (req, res, next) => {
+            const request = serializers.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.call(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.union.call.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedUndiscriminatedUnionsError) {
+                        console.warn(
+                            `Endpoint 'call' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
             }
         });
         return this.router;

@@ -93,6 +93,7 @@ export class Service {
             throw new errors.SeedAuthEnvironmentVariablesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -101,12 +102,14 @@ export class Service {
                 throw new errors.SeedAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAuthEnvironmentVariablesTimeoutError("Timeout exceeded when calling GET /apiKey.");
             case "unknown":
                 throw new errors.SeedAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -176,6 +179,7 @@ export class Service {
             throw new errors.SeedAuthEnvironmentVariablesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -184,6 +188,7 @@ export class Service {
                 throw new errors.SeedAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
@@ -192,6 +197,7 @@ export class Service {
             case "unknown":
                 throw new errors.SeedAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

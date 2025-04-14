@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as SeedTrace from "../../../index";
+import * as core from "../../../../core";
 
 export class PlaylistIdNotFoundError extends errors.SeedTraceError {
-    constructor(body: SeedTrace.PlaylistIdNotFoundErrorBody) {
+    constructor(body: SeedTrace.PlaylistIdNotFoundErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "PlaylistIdNotFoundError",
             statusCode: 404,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, PlaylistIdNotFoundError.prototype);
     }

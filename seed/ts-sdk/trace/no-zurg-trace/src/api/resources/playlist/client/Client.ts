@@ -110,6 +110,7 @@ export class Playlist {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -118,6 +119,7 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -126,6 +128,7 @@ export class Playlist {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -218,6 +221,7 @@ export class Playlist {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -226,6 +230,7 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -234,6 +239,7 @@ export class Playlist {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -301,13 +307,15 @@ export class Playlist {
                 case "PlaylistIdNotFoundError":
                     throw new SeedTrace.PlaylistIdNotFoundError(
                         _response.error.body as SeedTrace.PlaylistIdNotFoundErrorBody,
+                        _response.rawResponse,
                     );
                 case "UnauthorizedError":
-                    throw new SeedTrace.UnauthorizedError();
+                    throw new SeedTrace.UnauthorizedError(_response.rawResponse);
                 default:
                     throw new errors.SeedTraceError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -317,6 +325,7 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -325,6 +334,7 @@ export class Playlist {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -400,11 +410,13 @@ export class Playlist {
                 case "PlaylistIdNotFoundError":
                     throw new SeedTrace.PlaylistIdNotFoundError(
                         _response.error.body as SeedTrace.PlaylistIdNotFoundErrorBody,
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedTraceError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -414,6 +426,7 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -422,6 +435,7 @@ export class Playlist {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -485,6 +499,7 @@ export class Playlist {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -493,6 +508,7 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -501,6 +517,7 @@ export class Playlist {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

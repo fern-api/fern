@@ -95,6 +95,7 @@ export class Auth {
             throw new errors.SeedOauthClientCredentialsDefaultError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -103,6 +104,7 @@ export class Auth {
                 throw new errors.SeedOauthClientCredentialsDefaultError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsDefaultTimeoutError(
@@ -111,6 +113,7 @@ export class Auth {
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsDefaultError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

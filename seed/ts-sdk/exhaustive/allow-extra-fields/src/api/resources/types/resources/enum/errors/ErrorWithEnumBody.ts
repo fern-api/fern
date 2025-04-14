@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../../../errors/index";
 import * as SeedExhaustive from "../../../../../index";
+import * as core from "../../../../../../core";
 
 export class ErrorWithEnumBody extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.types.WeatherReport) {
+    constructor(body: SeedExhaustive.types.WeatherReport, rawResponse?: core.RawResponse) {
         super({
             message: "ErrorWithEnumBody",
             statusCode: 400,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, ErrorWithEnumBody.prototype);
     }
