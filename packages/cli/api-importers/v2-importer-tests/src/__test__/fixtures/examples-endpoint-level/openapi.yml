@@ -98,12 +98,21 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                type: object
+                properties:
+                  message:
+                    type: string
+                  code:
+                    type: integer
               examples:
                 fernResponseExample:
-                  value: "RedFern created"
+                  value:
+                    message: "RedFern created"
+                    code: 42
                 fernResponseExample2:
-                  value: "GreenFern created"
+                  value:
+                    message: "GreenFern created"
+                    code: 84
 
   /ferns/{fernId}:
     get:
