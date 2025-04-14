@@ -51,10 +51,10 @@ navigation:
 The viewers are inherited by nested pieces of content. For example, if a section can only be viewed by `admins`, then all its
 pages and nested sections can also only be viewed by admins.
 
-### Configure authentication via a `FERN_TOKEN`
+### Configure authentication via a `fern_token`
 
 In this step, we will configure authentication so that Fern can understand what roles a particular user has. Fern expects the user's
-browser session to have a cookie called `FERN_TOKEN`. If the cookie is not present, the user will be redirected to your company's
+browser session to have a cookie called `fern_token`. If the cookie is not present, the user will be redirected to your company's
 login page.
 
 Upon login, you must set a JWT for the user using a secret key that we will provide you with. The JWT must have a `fern` claim
