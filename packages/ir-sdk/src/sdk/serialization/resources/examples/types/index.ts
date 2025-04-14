@@ -1,3 +1,4 @@
+export * from "./WithV2Examples";
 export * from "./V2HttpEndpointExamples";
 export * from "./V2HttpEndpointExample";
 export * from "./V2HttpEndpointRequest";

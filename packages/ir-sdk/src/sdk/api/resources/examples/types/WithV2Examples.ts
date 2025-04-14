@@ -4,4 +4,6 @@
 
 import * as FernIr from "../../../index";
 
-export interface TextResponse extends FernIr.WithDocs, FernIr.WithV2Examples {}
+export interface WithV2Examples {
+    v2Examples: FernIr.V2SchemaExamples | undefined;
+}

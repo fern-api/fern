@@ -123,7 +123,9 @@ types:
       bytes: BytesRequest
 
   InlinedRequestBody:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
     properties:
       name: commons.Name
       extends: list<types.DeclaredTypeName>
@@ -144,13 +146,17 @@ types:
       v2Examples: optional<examples.V2ValueExamples>
 
   FileUploadRequest:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
     properties:
       name: commons.Name
       properties: list<FileUploadRequestProperty>
 
   BytesRequest:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
     properties:
       isOptional: boolean
       contentType: optional<string>
@@ -254,12 +260,16 @@ types:
       nestedPropertyAsResponse: JsonResponseBodyWithProperty
 
   JsonResponseBody:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
     properties:
       responseBodyType: types.TypeReference
 
   JsonResponseBodyWithProperty:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
     properties:
       responseBodyType: types.TypeReference
       responseProperty:
@@ -272,13 +282,19 @@ types:
         type: optional<types.ObjectProperty>
 
   FileDownloadResponse:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
 
   TextResponse:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
 
   BytesResponse:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
 
   StreamParameterResponse:
     properties:
@@ -292,17 +308,23 @@ types:
       sse: SseStreamChunk
 
   TextStreamChunk:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
     properties: {}
 
   JsonStreamChunk:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
     properties:
       payload: types.TypeReference
       terminator: optional<string>
 
   SseStreamChunk:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - examples.WithV2Examples
     properties:
       payload: types.TypeReference
       terminator: optional<string>

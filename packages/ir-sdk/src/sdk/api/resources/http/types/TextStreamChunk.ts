@@ -4,4 +4,4 @@
 
 import * as FernIr from "../../../index";
 
-export interface TextStreamChunk extends FernIr.WithDocs {}
+export interface TextStreamChunk extends FernIr.WithDocs, FernIr.WithV2Examples {}

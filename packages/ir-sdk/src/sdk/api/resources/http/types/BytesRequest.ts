@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface BytesRequest extends FernIr.WithDocs {
+export interface BytesRequest extends FernIr.WithDocs, FernIr.WithV2Examples {
     isOptional: boolean;
     contentType: string | undefined;
 }

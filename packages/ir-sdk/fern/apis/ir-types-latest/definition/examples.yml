@@ -9,6 +9,12 @@ imports:
 
 types:
 
+  # Extended Examples
+
+  WithV2Examples:
+    properties:
+      v2Examples: optional<V2SchemaExamples>
+
   # HTTP Endpoint Examples
 
   V2HttpEndpointExamples: 

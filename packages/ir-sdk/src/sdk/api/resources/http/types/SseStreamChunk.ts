@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface SseStreamChunk extends FernIr.WithDocs {
+export interface SseStreamChunk extends FernIr.WithDocs, FernIr.WithV2Examples {
     payload: FernIr.TypeReference;
     terminator: string | undefined;
 }
