@@ -8,4 +8,5 @@ export interface HttpInlineFileRequestBodyPropertySchema extends FernDefinition.
     /** Defaults to json encoding */
     style?: FernDefinition.FormDataBodyEncodingStyle;
     "content-type"?: string;
+    explodeParts?: boolean;
 }

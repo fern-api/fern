@@ -2137,11 +2137,13 @@ service:
                       "docs": "User consent information in JSON format: {"fullName": "", "email": ""}
 For example, {"fullName": "John Doe", "email": "john@example.com"}
 This should include the fullName and email of the consenting individual.",
+                      "explodeParts": undefined,
                       "style": "form",
                       "type": "string",
                     },
                     "name": {
                       "docs": "Name of the personal voice",
+                      "explodeParts": undefined,
                       "style": "form",
                       "type": "string",
                     },

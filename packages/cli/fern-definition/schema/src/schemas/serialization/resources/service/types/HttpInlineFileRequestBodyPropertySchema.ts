@@ -15,6 +15,7 @@ export const HttpInlineFileRequestBodyPropertySchema: core.serialization.ObjectS
     .object({
         style: FormDataBodyEncodingStyle.optional(),
         "content-type": core.serialization.string().optional(),
+        explodeParts: core.serialization.boolean().optional(),
     })
     .extend(TypeReferenceDeclarationWithName);
 
@@ -22,5 +23,6 @@ export declare namespace HttpInlineFileRequestBodyPropertySchema {
     export interface Raw extends TypeReferenceDeclarationWithName.Raw {
         style?: FormDataBodyEncodingStyle.Raw | null;
         "content-type"?: string | null;
+        explodeParts?: boolean | null;
     }
 }

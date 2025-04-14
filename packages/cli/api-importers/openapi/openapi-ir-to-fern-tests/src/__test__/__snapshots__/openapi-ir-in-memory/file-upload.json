@@ -97,6 +97,18 @@
                       "type": "object",
                       "description": "This is a metadata field"
                     },
+                    "metadatas": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "metadatas-exploded": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
                     "data": {
                       "type": "object",
                       "properties": {
@@ -115,6 +127,13 @@
                     "contentType": "application/octet-stream"
                   },
                   "metadata": {
+                    "contentType": "application/json"
+                  },
+                  "metadatas": {
+                    "contentType": "application/json",
+                    "x-fern-explode-parts": false
+                  },
+                  "metadatas-exploded": {
                     "contentType": "application/json"
                   },
                   "data": {

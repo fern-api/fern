@@ -89,6 +89,7 @@
                 "body": {
                   "properties": {
                     "data": {
+                      "explodeParts": undefined,
                       "style": "exploded",
                       "type": "optional<UploadWithContentTypeRequestData>",
                     },
@@ -104,7 +105,18 @@
                     "metadata": {
                       "content-type": "application/json",
                       "docs": "This is a metadata field",
+                      "explodeParts": undefined,
                       "type": "optional<map<string, unknown>>",
+                    },
+                    "metadatas": {
+                      "content-type": "application/json",
+                      "explodeParts": undefined,
+                      "type": "optional<list<map<string, unknown>>>",
+                    },
+                    "metadatas-exploded": {
+                      "content-type": "application/json",
+                      "explodeParts": undefined,
+                      "type": "optional<list<map<string, unknown>>>",
                     },
                   },
                 },
@@ -197,6 +209,12 @@
             metadata:
               type: optional<map<string, unknown>>
               docs: This is a metadata field
+              content-type: application/json
+            metadatas:
+              type: optional<list<map<string, unknown>>>
+              content-type: application/json
+            metadatas-exploded:
+              type: optional<list<map<string, unknown>>>
               content-type: application/json
             data:
               type: optional<UploadWithContentTypeRequestData>

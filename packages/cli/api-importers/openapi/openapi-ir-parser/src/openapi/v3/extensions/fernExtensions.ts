@@ -468,7 +468,13 @@ export const FernOpenAPIExtension = {
      *   grpc:
      *     service-name: UserService
      */
-    TRANSPORT: "x-fern-transport"
+    TRANSPORT: "x-fern-transport",
+
+    /**
+     * Whether a list is exploded into multiple multipart/form-data parts.
+     * This only applies to certain content-types within the request body.
+     */
+    EXPLODE_PARTS: "x-fern-explode-parts",
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

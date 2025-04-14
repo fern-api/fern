@@ -124,6 +124,7 @@ types:
         type: optional<FormDataBodyEncodingStyle>
         docs: Defaults to json encoding
       content-type: optional<string>
+      explodeParts: optional<boolean>
   
   FormDataBodyEncodingStyle: 
     enum: 

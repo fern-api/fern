@@ -1,18 +1,22 @@
 import { OpenAPIV3 } from "openapi-types";
+import { z } from "zod";
 
 import { MediaType } from "@fern-api/core-utils";
 import {
     MultipartRequestProperty,
     MultipartSchema,
     NamedFullExample,
+    ObjectPropertyWithExample,
     RequestWithExample,
     Source
 } from "@fern-api/openapi-ir";
 
+import { getExtensionAndValidate } from "../../../../getExtension";
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { SCHEMA_REFERENCE_PREFIX, convertSchema, getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getApplicationJsonSchemaMediaObject, getExamples } from "./getApplicationJsonSchema";
 
 function getApplicationUrlFormEncodedRequest(
@@ -49,6 +53,31 @@ function getMultipartFormDataRequest(requestBody: OpenAPIV3.RequestBodyObject):
         }
     }
     return undefined;
+}
+
+function getExplodeParts(
+    property: ObjectPropertyWithExample,
+    encoding: Record<string, OpenAPIV3.EncodingObject> | undefined,
+    context: AbstractOpenAPIV3ParserContext,
+    breadcrumbs: string[]
+): boolean | undefined {
+    if (encoding == null) {
+        return undefined;
+    }
+    const encodingObject = encoding[property.key];
+    if (encodingObject == null) {
+        return undefined;
+    }
+
+    const explodeParts = getExtensionAndValidate<boolean>(
+        encoding,
+        FernOpenAPIExtension.EXPLODE_PARTS,
+        z.boolean().optional(),
+        context.logger,
+        [...breadcrumbs, `encoding.${property.key}["${FernOpenAPIExtension.EXPLODE_PARTS}"]`]
+    );
+    console.log("explodeParts", explodeParts);
+    return explodeParts;
 }
 
 function isOctetStreamRequest(requestBody: OpenAPIV3.RequestBodyObject): boolean {
@@ -134,6 +163,8 @@ export function convertRequest({
         const properties: MultipartRequestProperty[] = [];
         if (convertedMultipartSchema.type === "object") {
             for (const property of convertedMultipartSchema.properties) {
+                const contentType =
+                    multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined;
                 if (
                     property.schema.type === "primitive" &&
                     property.schema.schema.type === "string" &&
@@ -143,9 +174,9 @@ export function convertRequest({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: false, isArray: false, description: undefined }),
                         description: property.schema.description,
-                        contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        contentType,
                         exploded: false,
+                        explodeParts: undefined,
                         encoding: undefined
                     });
                     continue;
@@ -165,9 +196,9 @@ export function convertRequest({
                             description: property.schema.value.description
                         }),
                         description: property.schema.value.description,
-                        contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        contentType,
                         exploded: false,
+                        explodeParts: undefined,
                         encoding: undefined
                     });
                     continue;
@@ -187,9 +218,9 @@ export function convertRequest({
                             description: property.schema.value.description
                         }),
                         description: property.schema.description,
-                        contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        contentType,
                         exploded: false,
+                        explodeParts: undefined,
                         encoding: undefined
                     });
                     continue;
@@ -210,22 +241,21 @@ export function convertRequest({
                             description: property.schema.value.value.description
                         }),
                         description: property.schema.value.description,
-                        contentType:
-                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                        contentType,
                         exploded: false,
+                        explodeParts: undefined,
                         encoding: undefined
                     });
                     continue;
                 }
 
-                const contentType =
-                    multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined;
                 properties.push({
                     key: property.key,
                     schema: MultipartSchema.json(property.schema),
                     description: undefined,
-                    contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined,
+                    contentType,
                     exploded: multipartEncoding != null ? multipartEncoding[property.key]?.explode : undefined,
+                    explodeParts: getExplodeParts(property, multipartEncoding, context, requestBreadcrumbs),
                     encoding: contentType == null ? context.options.defaultFormParameterEncoding : undefined
                 });
             }

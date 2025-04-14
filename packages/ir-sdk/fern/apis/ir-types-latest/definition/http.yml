@@ -165,6 +165,7 @@ types:
     properties:
       contentType: optional<string>
       style: optional<FileUploadBodyPropertyEncoding>
+      explodeParts: optional<boolean>
 
   FileUploadBodyPropertyEncoding:
     enum:

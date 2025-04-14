@@ -194,6 +194,74 @@
             "contentType": "application/json"
           },
           {
+            "key": "metadatas",
+            "schema": {
+              "value": {
+                "generatedName": "uploadWithContentTypeRequestMetadatas",
+                "value": {
+                  "generatedName": "UploadWithContentTypeRequestMetadatas",
+                  "value": {
+                    "generatedName": "UploadWithContentTypeRequestMetadatasItem",
+                    "key": {
+                      "generatedName": "UploadWithContentTypeRequestMetadatasItemKey",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "groupName": []
+                    },
+                    "value": {
+                      "generatedName": "UploadWithContentTypeRequestMetadatasItemValue",
+                      "groupName": [],
+                      "type": "unknown"
+                    },
+                    "groupName": [],
+                    "type": "map"
+                  },
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            },
+            "contentType": "application/json"
+          },
+          {
+            "key": "metadatas-exploded",
+            "schema": {
+              "value": {
+                "generatedName": "uploadWithContentTypeRequestMetadatasExploded",
+                "value": {
+                  "generatedName": "UploadWithContentTypeRequestMetadatasExploded",
+                  "value": {
+                    "generatedName": "UploadWithContentTypeRequestMetadatasExplodedItem",
+                    "key": {
+                      "generatedName": "UploadWithContentTypeRequestMetadatasExplodedItemKey",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "groupName": []
+                    },
+                    "value": {
+                      "generatedName": "UploadWithContentTypeRequestMetadatasExplodedItemValue",
+                      "groupName": [],
+                      "type": "unknown"
+                    },
+                    "groupName": [],
+                    "type": "map"
+                  },
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            },
+            "contentType": "application/json"
+          },
+          {
             "key": "data",
             "schema": {
               "value": {

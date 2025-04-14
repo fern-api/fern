@@ -144,6 +144,78 @@ service:
               type: MyCollectionAliasObject
               style: form
 
+    withJsonContainers:
+      path: ""
+      method: POST
+      request:
+        name: MyOtherRequest
+        body:
+          properties:
+            maybe_string: 
+              type: optional<string>
+              style: json
+            integer: 
+              type: integer
+              style: json
+            maybe_integer: 
+              type: optional<integer>
+              style: json
+            optional_list_of_strings: 
+              type: optional<list<string>>
+              style: json
+            list_of_objects: 
+              type: list<MyObject>
+              style: json
+            optional_metadata: 
+              type: optional<unknown>
+              style: json
+            optional_object_type: 
+              type: optional<ObjectType>
+              style: json
+            optional_id: 
+              type: optional<Id>
+              style: json
+            list_of_objects_with_optionals:
+              type: list<MyObjectWithOptional>
+              style: json
+            alias_object: 
+              type: MyAliasObject
+              style: json
+            list_of_alias_object: 
+              type: list<MyAliasObject>
+              style: json
+            alias_list_of_object: 
+              type: MyCollectionAliasObject
+              style: json
+
+    withJsonDontExplodePartsContainers:
+      path: ""
+      method: POST
+      request:
+        name: MyOtherRequest
+        body:
+          properties:
+            optional_list_of_strings: 
+              type: optional<list<string>>
+              style: json
+              explodeParts: false
+            list_of_objects: 
+              type: list<MyObject>
+              style: json
+              explodeParts: false
+            list_of_objects_with_optionals:
+              type: list<MyObjectWithOptional>
+              style: json
+              explodeParts: false
+            list_of_alias_object: 
+              type: list<MyAliasObject>
+              style: json
+              explodeParts: false
+            alias_list_of_object: 
+              type: MyCollectionAliasObject
+              style: json
+              explodeParts: false
+
     optionalArgs:
       path: /optional-args
       method: POST

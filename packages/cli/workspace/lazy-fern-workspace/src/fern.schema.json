@@ -1864,6 +1864,16 @@
               "type": "null"
             }
           ]
+        },
+        "explodeParts": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

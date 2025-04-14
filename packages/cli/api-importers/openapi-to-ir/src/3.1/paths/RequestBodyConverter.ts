@@ -276,7 +276,8 @@ export class RequestBodyConverter extends AbstractConverter<
             ...property,
             contentType,
             style: undefined,
-            name: property.name
+            name: property.name,
+            explodeParts: undefined
         });
     }
 }

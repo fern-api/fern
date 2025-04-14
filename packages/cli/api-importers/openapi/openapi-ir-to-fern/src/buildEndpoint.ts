@@ -643,6 +643,7 @@ function getRequest({
                         } else if (property.exploded) {
                             propertySchema.style = "exploded";
                         }
+                        propertySchema.explodeParts = property.explodeParts;
 
                         propertyTypeReference = propertySchema;
                     }
