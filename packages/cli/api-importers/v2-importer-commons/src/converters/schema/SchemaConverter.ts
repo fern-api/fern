@@ -312,8 +312,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         // https://stackoverflow.com/questions/73714802/multiple-examples-for-object-properties-swagger
         const schemaExample = this.schema.example;
         const schemaExamples = this.schema.examples;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let examples: any[] = [];
+        let examples: unknown[] = [];
         if (schemaExample != null) {
             examples = [schemaExample];
         }
