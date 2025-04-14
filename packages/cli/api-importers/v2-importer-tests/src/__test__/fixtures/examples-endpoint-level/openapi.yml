@@ -84,11 +84,11 @@ paths:
                   type: string
                   example: "Fern"
             examples:
-              fernExample:
+              fernRequestExample:
                 value:
                   color: "red"
                   name: "RedFern"
-              fernExample2:
+              fernRequestExample2:
                 value:
                   color: "green" 
                   name: "GreenFern"
@@ -99,6 +99,11 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                fernResponseExample:
+                  value: "RedFern created"
+                fernResponseExample2:
+                  value: "GreenFern created"
 
   /ferns/{fernId}:
     get:
@@ -222,6 +227,20 @@ components:
 
     treeList:
       value:
-        - $ref: '#/components/examples/oakTree/value'
-        - $ref: '#/components/examples/mapleTree/value'
+        - id: "123e4567-e89b-12d3-a456-426614174000"
+          species: "Quercus alba"
+          height: 25.4
+          age: 50
+          plantedDate: "2020-01-01T00:00:00Z"
+          location:
+            latitude: 40.7128
+            longitude: -74.0060
+        - id: "987fcdeb-51a2-43d7-9012-345678901234"
+          species: "Acer saccharum"
+          height: 18.3
+          age: 35
+          plantedDate: "2018-03-15T00:00:00Z"
+          location:
+            latitude: 42.3601
+            longitude: -71.0589
       summary: Example list of trees
