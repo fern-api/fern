@@ -94,11 +94,13 @@ export class BasicAuth {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedBasicAuthError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -108,12 +110,14 @@ export class BasicAuth {
                 throw new errors.SeedBasicAuthError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling GET /basic-auth.");
             case "unknown":
                 throw new errors.SeedBasicAuthError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -189,13 +193,15 @@ export class BasicAuth {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 case 400:
-                    throw new SeedBasicAuth.BadRequest();
+                    throw new SeedBasicAuth.BadRequest(_response.rawResponse);
                 default:
                     throw new errors.SeedBasicAuthError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -205,12 +211,14 @@ export class BasicAuth {
                 throw new errors.SeedBasicAuthError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling POST /basic-auth.");
             case "unknown":
                 throw new errors.SeedBasicAuthError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

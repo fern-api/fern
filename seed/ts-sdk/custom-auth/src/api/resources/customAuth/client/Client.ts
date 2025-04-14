@@ -93,11 +93,13 @@ export class CustomAuth {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedCustomAuthError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -107,12 +109,14 @@ export class CustomAuth {
                 throw new errors.SeedCustomAuthError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling GET /custom-auth.");
             case "unknown":
                 throw new errors.SeedCustomAuthError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -188,13 +192,15 @@ export class CustomAuth {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 case 400:
-                    throw new SeedCustomAuth.BadRequest();
+                    throw new SeedCustomAuth.BadRequest(_response.rawResponse);
                 default:
                     throw new errors.SeedCustomAuthError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -204,12 +210,14 @@ export class CustomAuth {
                 throw new errors.SeedCustomAuthError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling POST /custom-auth.");
             case "unknown":
                 throw new errors.SeedCustomAuthError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

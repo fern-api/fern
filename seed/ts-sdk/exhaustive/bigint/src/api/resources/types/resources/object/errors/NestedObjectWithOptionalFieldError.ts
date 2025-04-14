@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../../../errors/index";
 import * as SeedExhaustive from "../../../../../index";
+import * as core from "../../../../../../core";
 
 export class NestedObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.types.NestedObjectWithOptionalField) {
+    constructor(body: SeedExhaustive.types.NestedObjectWithOptionalField, rawResponse?: core.RawResponse) {
         super({
             message: "NestedObjectWithOptionalFieldError",
             statusCode: 400,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, NestedObjectWithOptionalFieldError.prototype);
     }

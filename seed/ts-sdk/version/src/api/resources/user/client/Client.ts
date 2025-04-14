@@ -91,6 +91,7 @@ export class User {
             throw new errors.SeedVersionError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -99,12 +100,14 @@ export class User {
                 throw new errors.SeedVersionError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedVersionTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
             case "unknown":
                 throw new errors.SeedVersionError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

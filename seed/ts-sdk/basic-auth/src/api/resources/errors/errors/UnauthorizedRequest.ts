@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as SeedBasicAuth from "../../../index";
+import * as core from "../../../../core";
 
 export class UnauthorizedRequest extends errors.SeedBasicAuthError {
-    constructor(body: SeedBasicAuth.UnauthorizedRequestErrorBody) {
+    constructor(body: SeedBasicAuth.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "UnauthorizedRequest",
             statusCode: 401,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, UnauthorizedRequest.prototype);
     }

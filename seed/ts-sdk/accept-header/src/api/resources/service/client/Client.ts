@@ -73,11 +73,12 @@ export class Service {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new SeedAccept.NotFoundError(_response.error.body);
+                    throw new SeedAccept.NotFoundError(_response.error.body, _response.rawResponse);
                 default:
                     throw new errors.SeedAcceptError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -87,12 +88,14 @@ export class Service {
                 throw new errors.SeedAcceptError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAcceptTimeoutError("Timeout exceeded when calling DELETE /container/.");
             case "unknown":
                 throw new errors.SeedAcceptError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

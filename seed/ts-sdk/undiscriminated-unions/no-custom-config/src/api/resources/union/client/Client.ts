@@ -85,6 +85,7 @@ export class Union {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -93,12 +94,14 @@ export class Union {
                 throw new errors.SeedUndiscriminatedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedUndiscriminatedUnionsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -156,6 +159,7 @@ export class Union {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -164,12 +168,180 @@ export class Union {
                 throw new errors.SeedUndiscriminatedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling GET /metadata.");
             case "unknown":
                 throw new errors.SeedUndiscriminatedUnionsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.MetadataUnion} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.updateMetadata({
+     *         "string": {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    public updateMetadata(
+        request: SeedUndiscriminatedUnions.MetadataUnion,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__updateMetadata(request, requestOptions));
+    }
+
+    private async __updateMetadata(
+        request: SeedUndiscriminatedUnions.MetadataUnion,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/metadata",
+            ),
+            method: "PUT",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/undiscriminated-unions",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/undiscriminated-unions/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.MetadataUnion.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.union.updateMetadata.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling PUT /metadata.");
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.Request} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.call({
+     *         union: {
+     *             "union": {
+     *                 "key": "value"
+     *             }
+     *         }
+     *     })
+     */
+    public call(
+        request: SeedUndiscriminatedUnions.Request,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__call(request, requestOptions));
+    }
+
+    private async __call(
+        request: SeedUndiscriminatedUnions.Request,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/call",
+            ),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/undiscriminated-unions",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/undiscriminated-unions/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.union.call.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /call.");
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

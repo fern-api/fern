@@ -97,6 +97,7 @@ export class Auth {
             throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -105,6 +106,7 @@ export class Auth {
                 throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsEnvironmentVariablesTimeoutError(
@@ -113,6 +115,7 @@ export class Auth {
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -184,6 +187,7 @@ export class Auth {
             throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -192,6 +196,7 @@ export class Auth {
                 throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsEnvironmentVariablesTimeoutError(
@@ -200,6 +205,7 @@ export class Auth {
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

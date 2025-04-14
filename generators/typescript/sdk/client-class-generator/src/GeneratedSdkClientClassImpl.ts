@@ -1628,6 +1628,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     private getAuthorizationHeaderStatements(context: SdkContext): ts.Statement[] {
+        const referenceToRawResponse = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
+        );
         const statements: ts.Statement[] = [];
 
         if (this.oauthAuthScheme != null) {
@@ -1731,7 +1735,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                                 `Please specify a ${BEARER_TOKEN_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.bearerAuthScheme.tokenEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
-                                            responseBody: undefined
+                                            responseBody: undefined,
+                                            rawResponse: undefined
                                         })
                                     )
                                 ],
@@ -1909,7 +1914,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                                 `Please specify a ${USERNAME_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.usernameEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
-                                            responseBody: undefined
+                                            responseBody: undefined,
+                                            rawResponse: undefined
                                         })
                                     )
                                 ],
@@ -1947,7 +1953,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                                 `Please specify a ${PASSWORD_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.passwordEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
-                                            responseBody: undefined
+                                            responseBody: undefined,
+                                            rawResponse: undefined
                                         })
                                     )
                                 ],

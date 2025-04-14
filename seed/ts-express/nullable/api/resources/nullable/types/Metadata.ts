@@ -10,4 +10,5 @@ export interface Metadata {
     avatar?: string;
     activated?: boolean;
     status: SeedNullable.Status;
+    values?: Record<string, string | undefined>;
 }

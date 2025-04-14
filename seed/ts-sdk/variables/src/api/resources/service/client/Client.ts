@@ -70,6 +70,7 @@ export class Service {
             throw new errors.SeedVariablesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -78,12 +79,14 @@ export class Service {
                 throw new errors.SeedVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedVariablesTimeoutError("Timeout exceeded when calling POST /{endpointParam}.");
             case "unknown":
                 throw new errors.SeedVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

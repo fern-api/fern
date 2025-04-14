@@ -81,6 +81,7 @@ export class Dummy {
             throw new errors.SeedSingleUrlEnvironmentNoDefaultError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -89,6 +90,7 @@ export class Dummy {
                 throw new errors.SeedSingleUrlEnvironmentNoDefaultError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedSingleUrlEnvironmentNoDefaultTimeoutError(
@@ -97,6 +99,7 @@ export class Dummy {
             case "unknown":
                 throw new errors.SeedSingleUrlEnvironmentNoDefaultError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

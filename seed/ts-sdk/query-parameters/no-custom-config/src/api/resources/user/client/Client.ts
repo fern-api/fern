@@ -205,6 +205,7 @@ export class User {
             throw new errors.SeedQueryParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -213,12 +214,14 @@ export class User {
                 throw new errors.SeedQueryParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedQueryParametersTimeoutError("Timeout exceeded when calling GET /user.");
             case "unknown":
                 throw new errors.SeedQueryParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
