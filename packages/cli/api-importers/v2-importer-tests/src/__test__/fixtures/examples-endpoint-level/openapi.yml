@@ -1,0 +1,246 @@
+openapi: 3.1.0
+info:
+  title: Tree API
+  version: 1.0.0
+  description: API for working with tree data structures
+
+paths:
+  /trees:
+    post:
+      summary: Create a new tree
+      operationId: createTree
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TreeCreate'
+      responses:
+        '201':
+          description: Tree created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tree'
+              examples:
+                oak:
+                  $ref: '#/components/examples/oakTree'
+                maple:
+                  $ref: '#/components/examples/mapleTree'
+    
+    get:
+      summary: List all trees
+      operationId: listTrees
+      responses:
+        '200':
+          description: List of trees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tree'
+              examples:
+                treeList:
+                  $ref: '#/components/examples/treeList'
+
+  /trees/{treeId}:
+    get:
+      summary: Get a tree by ID
+      operationId: getTree
+      parameters:
+        - name: treeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Tree details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tree'
+              examples:
+                oak:
+                  $ref: '#/components/examples/oakTree'
+
+  /ferns:
+    post:
+      summary: Create a new fern
+      operationId: createFern
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                color:
+                  type: string
+                  example: "red"
+                name:
+                  type: string
+                  example: "Fern"
+            examples:
+              fernRequestExample:
+                value:
+                  color: "red"
+                  name: "RedFern"
+              fernRequestExample2:
+                value:
+                  color: "green" 
+                  name: "GreenFern"
+      responses:
+        '201':
+          description: Fern created successfully
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                fernResponseExample:
+                  value: "RedFern created"
+                fernResponseExample2:
+                  value: "GreenFern created"
+
+  /ferns/{fernId}:
+    get:
+      summary: Get a fern by ID
+      operationId: getFern
+      parameters:
+        - name: fernId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Fern details
+          content:
+            application/json:
+              schema:
+                type: object
+              properties:
+                color:
+                  type: string
+                  example: "red"
+                name:
+                  type: string
+                  example: "Fern"
+            example:
+              color: "blue"
+              name: "BlueFern"
+
+  /grasses:
+    post:
+      summary: Create a new grass
+      operationId: createGrass
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                annual:
+                  type: boolean
+                  example: true
+                foo:
+                  type: string
+                bar:
+                  type: number
+              example:
+                annual: true
+                foo: "bar"
+                bar: 123
+
+components:
+  schemas:
+    TreeCreate:
+      type: object
+      required:
+        - species
+        - height
+      properties:
+        species:
+          type: string
+          example: "Quercus alba"
+        height:
+          type: number
+          format: float
+          example: 25.4
+        age:
+          type: integer
+          example: 50
+        location:
+          type: object
+          properties:
+            latitude:
+              type: number
+              format: float
+            longitude: 
+              type: number
+              format: float
+      
+    Tree:
+      allOf:
+        - $ref: '#/components/schemas/TreeCreate'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+            plantedDate:
+              type: string
+              format: date-time
+
+
+  examples:
+    oakTree:
+      value:
+        id: "123e4567-e89b-12d3-a456-426614174000"
+        species: "Quercus alba"
+        height: 25.4
+        age: 50
+        plantedDate: "2020-01-01T00:00:00Z"
+        location:
+          latitude: 40.7128
+          longitude: -74.0060
+      summary: Example oak tree
+      
+    mapleTree:
+      value:
+        id: "987fcdeb-51a2-43d7-9012-345678901234"
+        species: "Acer saccharum"
+        height: 18.3
+        age: 35
+        plantedDate: "2018-03-15T00:00:00Z"
+        location:
+          latitude: 42.3601
+          longitude: -71.0589
+      summary: Example maple tree
+
+    treeList:
+      value:
+        - id: "123e4567-e89b-12d3-a456-426614174000"
+          species: "Quercus alba"
+          height: 25.4
+          age: 50
+          plantedDate: "2020-01-01T00:00:00Z"
+          location:
+            latitude: 40.7128
+            longitude: -74.0060
+        - id: "987fcdeb-51a2-43d7-9012-345678901234"
+          species: "Acer saccharum"
+          height: 18.3
+          age: 35
+          plantedDate: "2018-03-15T00:00:00Z"
+          location:
+            latitude: 42.3601
+            longitude: -71.0589
+      summary: Example list of trees
