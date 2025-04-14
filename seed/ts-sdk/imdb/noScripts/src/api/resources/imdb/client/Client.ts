@@ -76,18 +76,21 @@ export class Imdb {
         if (_response.error.reason === "status-code") {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.body
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
             case "non-json": throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
             });
             case "timeout": throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /movies/create-movie.");
             case "unknown": throw new errors.SeedApiError({
-                message: _response.error.errorMessage
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
             });
         }
     }
@@ -131,10 +134,11 @@ export class Imdb {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 404: throw new SeedApi.MovieDoesNotExistError(serializers.MovieId.parseOrThrow(_response.error.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }));
+                case 404: throw new SeedApi.MovieDoesNotExistError(serializers.MovieId.parseOrThrow(_response.error.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, breadcrumbsPrefix: ["response"] }), _response.rawResponse);
                 default: throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
-                    body: _response.error.body
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse
                 });
             }
         }
@@ -142,11 +146,13 @@ export class Imdb {
         switch (_response.error.reason) {
             case "non-json": throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
-                body: _response.error.rawBody
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
             });
             case "timeout": throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /movies/{movieId}.");
             case "unknown": throw new errors.SeedApiError({
-                message: _response.error.errorMessage
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
             });
         }
     }

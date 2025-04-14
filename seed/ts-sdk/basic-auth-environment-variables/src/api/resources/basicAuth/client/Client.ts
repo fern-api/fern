@@ -94,11 +94,13 @@ export class BasicAuth {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedBasicAuthEnvironmentVariablesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -108,6 +110,7 @@ export class BasicAuth {
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError(
@@ -116,6 +119,7 @@ export class BasicAuth {
             case "unknown":
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -191,13 +195,15 @@ export class BasicAuth {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 case 400:
-                    throw new SeedBasicAuthEnvironmentVariables.BadRequest();
+                    throw new SeedBasicAuthEnvironmentVariables.BadRequest(_response.rawResponse);
                 default:
                     throw new errors.SeedBasicAuthEnvironmentVariablesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -207,6 +213,7 @@ export class BasicAuth {
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError(
@@ -215,6 +222,7 @@ export class BasicAuth {
             case "unknown":
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -237,7 +245,7 @@ export class BasicAuth {
         }
 
         return core.BasicAuth.toAuthorizationHeader({
-            username,
+            username: username,
             password: accessToken,
         });
     }

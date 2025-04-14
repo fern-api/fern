@@ -34,6 +34,9 @@ await client.nullable.createUser({
         status: {
             type: "active",
         },
+        values: {
+            values: "values",
+        },
     },
     avatar: "avatar",
 });
@@ -67,6 +70,7 @@ try {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
+        console.log(err.rawResponse);
     }
 }
 ```

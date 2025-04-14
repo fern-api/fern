@@ -127,6 +127,7 @@ export class Nullable {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -135,12 +136,14 @@ export class Nullable {
                 throw new errors.SeedNullableError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling GET /users.");
             case "unknown":
                 throw new errors.SeedNullableError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -160,6 +163,9 @@ export class Nullable {
      *             activated: true,
      *             status: {
      *                 type: "active"
+     *             },
+     *             values: {
+     *                 "values": "values"
      *             }
      *         },
      *         avatar: "avatar"
@@ -215,6 +221,7 @@ export class Nullable {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -223,12 +230,14 @@ export class Nullable {
                 throw new errors.SeedNullableError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":
                 throw new errors.SeedNullableError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -292,6 +301,7 @@ export class Nullable {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -300,12 +310,14 @@ export class Nullable {
                 throw new errors.SeedNullableError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling DELETE /users.");
             case "unknown":
                 throw new errors.SeedNullableError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

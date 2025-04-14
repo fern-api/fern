@@ -99,6 +99,7 @@ export class Auth {
             throw new errors.SeedOauthClientCredentialsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -107,12 +108,14 @@ export class Auth {
                 throw new errors.SeedOauthClientCredentialsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsTimeoutError("Timeout exceeded when calling POST /token.");
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -184,6 +187,7 @@ export class Auth {
             throw new errors.SeedOauthClientCredentialsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -192,12 +196,14 @@ export class Auth {
                 throw new errors.SeedOauthClientCredentialsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsTimeoutError("Timeout exceeded when calling POST /token.");
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -91,11 +91,13 @@ export class PropertyBasedError {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedErrorPropertyError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -105,6 +107,7 @@ export class PropertyBasedError {
                 throw new errors.SeedErrorPropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedErrorPropertyTimeoutError(
@@ -113,6 +116,7 @@ export class PropertyBasedError {
             case "unknown":
                 throw new errors.SeedErrorPropertyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

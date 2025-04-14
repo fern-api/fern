@@ -29,7 +29,10 @@ await client.nullable.createUser(
 			updatedAt: "2024-01-15T09:30:00Z",
 			avatar: "avatar",
 			activated: true,
-			status: status: { type : "active" }
+			status: status: { type : "active" },
+			values: {
+				"values": "values"
+			}
 		},
 		avatar: "avatar"
 	}

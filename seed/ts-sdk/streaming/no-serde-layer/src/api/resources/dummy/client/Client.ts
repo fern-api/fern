@@ -95,6 +95,7 @@ export class Dummy {
             throw new errors.SeedStreamingError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -103,12 +104,14 @@ export class Dummy {
                 throw new errors.SeedStreamingError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate-stream.");
             case "unknown":
                 throw new errors.SeedStreamingError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -175,6 +178,7 @@ export class Dummy {
             throw new errors.SeedStreamingError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -183,12 +187,14 @@ export class Dummy {
                 throw new errors.SeedStreamingError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate.");
             case "unknown":
                 throw new errors.SeedStreamingError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -83,6 +83,7 @@ export class SeedObjectClient {
             throw new errors.SeedObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -91,12 +92,14 @@ export class SeedObjectClient {
                 throw new errors.SeedObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError("Timeout exceeded when calling POST /root/root.");
             case "unknown":
                 throw new errors.SeedObjectError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -165,6 +168,7 @@ export class SeedObjectClient {
             throw new errors.SeedObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -173,6 +177,7 @@ export class SeedObjectClient {
                 throw new errors.SeedObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError(
@@ -181,6 +186,7 @@ export class SeedObjectClient {
             case "unknown":
                 throw new errors.SeedObjectError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -248,6 +254,7 @@ export class SeedObjectClient {
             throw new errors.SeedObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -256,6 +263,7 @@ export class SeedObjectClient {
                 throw new errors.SeedObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError(
@@ -264,6 +272,7 @@ export class SeedObjectClient {
             case "unknown":
                 throw new errors.SeedObjectError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

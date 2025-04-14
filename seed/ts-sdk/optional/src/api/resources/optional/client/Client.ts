@@ -95,6 +95,7 @@ export class Optional {
             throw new errors.SeedObjectsWithImportsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -103,6 +104,7 @@ export class Optional {
                 throw new errors.SeedObjectsWithImportsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedObjectsWithImportsTimeoutError(
@@ -111,6 +113,7 @@ export class Optional {
             case "unknown":
                 throw new errors.SeedObjectsWithImportsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

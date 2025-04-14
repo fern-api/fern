@@ -99,6 +99,7 @@ export class Payment {
             throw new errors.SeedIdempotencyHeadersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -107,12 +108,14 @@ export class Payment {
                 throw new errors.SeedIdempotencyHeadersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedIdempotencyHeadersTimeoutError("Timeout exceeded when calling POST /payment.");
             case "unknown":
                 throw new errors.SeedIdempotencyHeadersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -163,6 +166,7 @@ export class Payment {
             throw new errors.SeedIdempotencyHeadersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -171,6 +175,7 @@ export class Payment {
                 throw new errors.SeedIdempotencyHeadersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedIdempotencyHeadersTimeoutError(
@@ -179,6 +184,7 @@ export class Payment {
             case "unknown":
                 throw new errors.SeedIdempotencyHeadersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

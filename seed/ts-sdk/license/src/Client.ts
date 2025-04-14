@@ -69,6 +69,7 @@ export class SeedLicenseClient {
             throw new errors.SeedLicenseError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -77,12 +78,14 @@ export class SeedLicenseClient {
                 throw new errors.SeedLicenseError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedLicenseTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedLicenseError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

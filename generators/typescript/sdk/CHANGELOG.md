@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.51.0] - 2025-04-14
+
+- Feat: Add `rawResponse` property to JavaScript errors. 
+
+  ```ts
+  try {
+    const fooBar = await client.foo.bar("id", options);
+  } catch (e) {
+    if (error instanceof FooError) {
+      console.log(error.rawResponse);
+    } else {
+      // ...
+    }
+  }
+  ```
+
 ## [0.50.1] - 2025-04-08
 
 - Feat: Add `"packageManager": "yarn@1.22.22"` to _package.json_.

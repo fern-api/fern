@@ -86,6 +86,7 @@ export class Service {
             throw new errors.SeedMixedCaseError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -94,12 +95,14 @@ export class Service {
                 throw new errors.SeedMixedCaseError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource/{ResourceID}.");
             case "unknown":
                 throw new errors.SeedMixedCaseError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -168,6 +171,7 @@ export class Service {
             throw new errors.SeedMixedCaseError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -176,12 +180,14 @@ export class Service {
                 throw new errors.SeedMixedCaseError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource.");
             case "unknown":
                 throw new errors.SeedMixedCaseError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

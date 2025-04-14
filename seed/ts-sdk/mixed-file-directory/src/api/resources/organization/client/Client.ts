@@ -91,6 +91,7 @@ export class Organization {
             throw new errors.SeedMixedFileDirectoryError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -99,6 +100,7 @@ export class Organization {
                 throw new errors.SeedMixedFileDirectoryError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedMixedFileDirectoryTimeoutError(
@@ -107,6 +109,7 @@ export class Organization {
             case "unknown":
                 throw new errors.SeedMixedFileDirectoryError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
