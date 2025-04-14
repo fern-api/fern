@@ -2001,6 +2001,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               },
             ],
             "type": "inlinedRequestBody",
+            "v2Examples": null,
           },
           "response": {
             "body": {
@@ -2076,6 +2077,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                   "typeId": "type_auth:TokenResponse",
                 },
                 "type": "response",
+                "v2Examples": null,
               },
             },
             "status-code": null,
@@ -5230,6 +5232,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                   "typeId": "type_service:ListUsersResponse",
                 },
                 "type": "response",
+                "v2Examples": null,
               },
             },
             "status-code": null,
