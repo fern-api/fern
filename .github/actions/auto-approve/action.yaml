@@ -32,7 +32,7 @@ runs:
     - name: Approving PR
       shell: bash
       env:
-        GH_TOKEN: ${{ inputs.gh-token }}
+        GH_TOKEN: ${{ inputs.approver-gh-token }}
       run: |
         echo "Approving PR"
         gh pr review ${{ inputs.pull-request-number }} --approve
