@@ -18,6 +18,7 @@
   "endpoints": [],
   "webhooks": [
     {
+      "audiences": [],
       "sdkName": {
         "groupName": [
           "status"
@@ -60,6 +61,7 @@
       }
     },
     {
+      "audiences": [],
       "sdkName": {
         "groupName": [
           "status"

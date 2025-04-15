@@ -49,6 +49,7 @@
         },
         "webhooks": {
           "update": {
+            "audiences": [],
             "display-name": undefined,
             "examples": [
               {
@@ -64,6 +65,7 @@
             "payload": "root.Update",
           },
           "updateInlined": {
+            "audiences": [],
             "display-name": undefined,
             "examples": [
               {
@@ -82,6 +84,7 @@
   root: __package__.yml
 webhooks:
   update:
+    audiences: []
     method: POST
     headers: {}
     payload: root.Update
@@ -89,6 +92,7 @@ webhooks:
       - payload:
           message: message
   updateInlined:
+    audiences: []
     method: POST
     headers: {}
     payload: StatusUpdateInlinedPayload
