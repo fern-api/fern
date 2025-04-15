@@ -40,6 +40,7 @@ jobs:
       ruby: ${{ steps.filter.outputs.ruby }}
       openapi: ${{ steps.filter.outputs.openapi }}
       python: ${{ steps.filter.outputs.python }}
+      fastapi: ${{ steps.filter.outputs.fastapi }}
       postman: ${{ steps.filter.outputs.postman }}
       java: ${{ steps.filter.outputs.java }}
       typescript: ${{ steps.filter.outputs.typescript }}
@@ -70,6 +71,7 @@ jobs:
               - 'generators/python/**'
               - 'seed/pydantic/**'
               - 'seed/python-sdk/**'
+            fastapi:
               - 'seed/fastapi/**'
             postman:
               - 'generators/postman/**'
@@ -155,7 +157,7 @@ jobs:
   fastapi:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ needs.changes.outputs.fastapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
