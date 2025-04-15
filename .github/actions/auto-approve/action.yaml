@@ -1,0 +1,38 @@
+name: Auto-approve
+description: Will monitor a PR and approve when the checks on that PR are passing
+
+inputs:
+  approver-gh-token:
+    descriptions: GitHub Token used to approve the PR (must be different from the user creating the PR)
+    required: true
+  pull-request-number:
+    descriptions: The ID of the PR to approve
+    required: true
+  enforce-checks:
+    description: Require checks to pass before approving PR
+    required: false
+    default: 'false'
+runs:
+  using: "composite"
+  steps:
+    - name: Check status
+      if: inputs.enforce-checks == 'true'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.approver-gh-token }}
+      run: |
+        echo "Waiting for jobs to finish running"
+        while echo $(gh pr checks ${{ inputs.pull-request-number }}) | grep -q 'pending'; do echo "job still running"; sleep 30s; done
+
+        echo "Jobs done, checking for failures"
+        if echo $(gh pr checks ${{ inputs.pull-request-number }}) | grep -q 'fail'; then echo "PR CI Failed"; exit 1; else echo "PR CI Succeeded"; fi
+
+        echo "PR Ready for approval"
+
+    - name: Approving PR
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.gh-token }}
+      run: |
+        echo "Approving PR"
+        gh pr review ${{ inputs.pull-request-number }} --approve
