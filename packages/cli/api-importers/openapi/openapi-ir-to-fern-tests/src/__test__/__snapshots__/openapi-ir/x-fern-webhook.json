@@ -137,6 +137,51 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "audiences": [
+        "private"
+      ],
+      "sdkName": {
+        "groupName": [
+          "status2"
+        ],
+        "methodName": "update"
+      },
+      "method": "POST",
+      "operationId": "update-status2",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "Status2UpdatePayload",
+      "payload": {
+        "generatedName": "Status2UpdatePayload",
+        "schema": "Update",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "message": {
+                "value": {
+                  "value": "message",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "channels": {},
