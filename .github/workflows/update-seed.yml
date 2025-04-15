@@ -273,6 +273,7 @@ jobs:
       - name: Check PR
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
+        timeout-minutes: 30
         with:
           # FIXME Move to this to a different PAT once testing is complete
           approver-gh-token: ${{ secrets.DAK_GH_PAT }}
