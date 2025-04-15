@@ -270,6 +270,14 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Check PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          # FIXME Move to this to a different PAT once testing is complete
+          approver-gh-token: ${{ secrets.DAK_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+
   openapi:
     needs: changes
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
