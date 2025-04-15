@@ -127,7 +127,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -170,7 +169,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -213,7 +211,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -256,7 +253,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -299,7 +295,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -342,7 +337,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -385,7 +379,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -428,7 +421,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -471,7 +463,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -514,7 +505,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -557,7 +547,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -600,7 +589,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -643,7 +631,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -686,7 +673,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -729,7 +715,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -772,7 +757,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -815,7 +799,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -858,7 +841,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
@@ -901,7 +883,6 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
