@@ -8,11 +8,15 @@ inputs:
   pull-request-number:
     descriptions: The ID of the PR to approve
     required: true
-
+  enforce-checks:
+    description: Require checks to pass before approving PR
+    required: false
+    default: 'false'
 runs:
   using: "composite"
   steps:
     - name: Check status
+      if: inputs.enforce-checks == 'true'
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.approver-gh-token }}
