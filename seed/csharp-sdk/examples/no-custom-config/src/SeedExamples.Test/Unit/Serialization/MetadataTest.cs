@@ -27,7 +27,7 @@ public class MetadataTest
             JsonString = "{\"foo\": \"bar\", \"baz\": \"qux\"}",
         };
         var deserializedObject = JsonUtils.Deserialize<Commons.Metadata>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [NUnit.Framework.Test]

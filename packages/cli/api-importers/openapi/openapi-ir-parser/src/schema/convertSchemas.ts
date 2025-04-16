@@ -226,9 +226,10 @@ export function convertSchemaObject(
                 schema.nullable = true;
             }
             if (schema.oneOf == null) {
-                schema.oneOf = schema.type;
+                schema.oneOf = [...new Set(schema.type)];
             } else {
-                schema.oneOf.push(...schema.type);
+                const uniqueTypes = new Set([...schema.oneOf, ...schema.type]);
+                schema.oneOf = [...uniqueTypes];
             }
         }
     }
@@ -250,7 +251,10 @@ export function convertSchemaObject(
     }
 
     // enums
-    if (schema.enum != null && (schema.type === "string" || schema.type == null)) {
+    if (
+        schema.enum != null &&
+        (schema.type === "string" || schema.type == null || (schema.type as string) === "enum")
+    ) {
         if (!isListOfStrings(schema.enum)) {
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.

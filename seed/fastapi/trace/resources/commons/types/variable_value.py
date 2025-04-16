@@ -3,9 +3,7 @@
 from __future__ import annotations
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-from .binary_tree_value import (
-    BinaryTreeValue as resources_commons_types_binary_tree_value_BinaryTreeValue,
-)
+from .binary_tree_value import BinaryTreeValue as resources_commons_types_binary_tree_value_BinaryTreeValue
 from .singly_linked_list_value import (
     SinglyLinkedListValue as resources_commons_types_singly_linked_list_value_SinglyLinkedListValue,
 )
@@ -24,99 +22,58 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def integer_value(self, value: int) -> VariableValue:
         if IS_PYDANTIC_V2:
-            return VariableValue(
-                root=_VariableValue.IntegerValue(type="integerValue", value=value)
-            )  # type: ignore
+            return VariableValue(root=_VariableValue.IntegerValue(type="integerValue", value=value))  # type: ignore
         else:
-            return VariableValue(
-                __root__=_VariableValue.IntegerValue(type="integerValue", value=value)
-            )  # type: ignore
+            return VariableValue(__root__=_VariableValue.IntegerValue(type="integerValue", value=value))  # type: ignore
 
     def boolean_value(self, value: bool) -> VariableValue:
         if IS_PYDANTIC_V2:
-            return VariableValue(
-                root=_VariableValue.BooleanValue(type="booleanValue", value=value)
-            )  # type: ignore
+            return VariableValue(root=_VariableValue.BooleanValue(type="booleanValue", value=value))  # type: ignore
         else:
-            return VariableValue(
-                __root__=_VariableValue.BooleanValue(type="booleanValue", value=value)
-            )  # type: ignore
+            return VariableValue(__root__=_VariableValue.BooleanValue(type="booleanValue", value=value))  # type: ignore
 
     def double_value(self, value: float) -> VariableValue:
         if IS_PYDANTIC_V2:
-            return VariableValue(
-                root=_VariableValue.DoubleValue(type="doubleValue", value=value)
-            )  # type: ignore
+            return VariableValue(root=_VariableValue.DoubleValue(type="doubleValue", value=value))  # type: ignore
         else:
-            return VariableValue(
-                __root__=_VariableValue.DoubleValue(type="doubleValue", value=value)
-            )  # type: ignore
+            return VariableValue(__root__=_VariableValue.DoubleValue(type="doubleValue", value=value))  # type: ignore
 
     def string_value(self, value: str) -> VariableValue:
         if IS_PYDANTIC_V2:
-            return VariableValue(
-                root=_VariableValue.StringValue(type="stringValue", value=value)
-            )  # type: ignore
+            return VariableValue(root=_VariableValue.StringValue(type="stringValue", value=value))  # type: ignore
         else:
-            return VariableValue(
-                __root__=_VariableValue.StringValue(type="stringValue", value=value)
-            )  # type: ignore
+            return VariableValue(__root__=_VariableValue.StringValue(type="stringValue", value=value))  # type: ignore
 
     def char_value(self, value: str) -> VariableValue:
         if IS_PYDANTIC_V2:
-            return VariableValue(
-                root=_VariableValue.CharValue(type="charValue", value=value)
-            )  # type: ignore
+            return VariableValue(root=_VariableValue.CharValue(type="charValue", value=value))  # type: ignore
         else:
-            return VariableValue(
-                __root__=_VariableValue.CharValue(type="charValue", value=value)
-            )  # type: ignore
+            return VariableValue(__root__=_VariableValue.CharValue(type="charValue", value=value))  # type: ignore
 
-    def map_value(
-        self, value: resources_commons_types_map_value_MapValue
-    ) -> VariableValue:
+    def map_value(self, value: resources_commons_types_map_value_MapValue) -> VariableValue:
         if IS_PYDANTIC_V2:
-            return VariableValue(
-                root=_VariableValue.MapValue(
-                    **value.dict(exclude_unset=True), type="mapValue"
-                )
-            )  # type: ignore
+            return VariableValue(root=_VariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))  # type: ignore
         else:
-            return VariableValue(
-                __root__=_VariableValue.MapValue(
-                    **value.dict(exclude_unset=True), type="mapValue"
-                )
-            )  # type: ignore
+            return VariableValue(__root__=_VariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))  # type: ignore
 
     def list_value(self, value: typing.List[VariableValue]) -> VariableValue:
         if IS_PYDANTIC_V2:
-            return VariableValue(
-                root=_VariableValue.ListValue(type="listValue", value=value)
-            )  # type: ignore
+            return VariableValue(root=_VariableValue.ListValue(type="listValue", value=value))  # type: ignore
         else:
-            return VariableValue(
-                __root__=_VariableValue.ListValue(type="listValue", value=value)
-            )  # type: ignore
+            return VariableValue(__root__=_VariableValue.ListValue(type="listValue", value=value))  # type: ignore
 
-    def binary_tree_value(
-        self, value: resources_commons_types_binary_tree_value_BinaryTreeValue
-    ) -> VariableValue:
+    def binary_tree_value(self, value: resources_commons_types_binary_tree_value_BinaryTreeValue) -> VariableValue:
         if IS_PYDANTIC_V2:
             return VariableValue(
-                root=_VariableValue.BinaryTreeValue(
-                    **value.dict(exclude_unset=True), type="binaryTreeValue"
-                )
+                root=_VariableValue.BinaryTreeValue(**value.dict(exclude_unset=True), type="binaryTreeValue")
             )  # type: ignore
         else:
             return VariableValue(
-                __root__=_VariableValue.BinaryTreeValue(
-                    **value.dict(exclude_unset=True), type="binaryTreeValue"
-                )
+                __root__=_VariableValue.BinaryTreeValue(**value.dict(exclude_unset=True), type="binaryTreeValue")
             )  # type: ignore
 
     def singly_linked_list_value(
-        self,
-        value: resources_commons_types_singly_linked_list_value_SinglyLinkedListValue,
+        self, value: resources_commons_types_singly_linked_list_value_SinglyLinkedListValue
     ) -> VariableValue:
         if IS_PYDANTIC_V2:
             return VariableValue(
@@ -132,8 +89,7 @@ class _Factory:
             )  # type: ignore
 
     def doubly_linked_list_value(
-        self,
-        value: resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue,
+        self, value: resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue
     ) -> VariableValue:
         if IS_PYDANTIC_V2:
             return VariableValue(
@@ -240,20 +196,14 @@ class VariableValue(UniversalRootModel):
         double_value: typing.Callable[[float], T_Result],
         string_value: typing.Callable[[str], T_Result],
         char_value: typing.Callable[[str], T_Result],
-        map_value: typing.Callable[
-            ["resources_commons_types_map_value_MapValue"], T_Result
-        ],
+        map_value: typing.Callable[["resources_commons_types_map_value_MapValue"], T_Result],
         list_value: typing.Callable[[typing.List["VariableValue"]], T_Result],
-        binary_tree_value: typing.Callable[
-            [resources_commons_types_binary_tree_value_BinaryTreeValue], T_Result
-        ],
+        binary_tree_value: typing.Callable[[resources_commons_types_binary_tree_value_BinaryTreeValue], T_Result],
         singly_linked_list_value: typing.Callable[
-            [resources_commons_types_singly_linked_list_value_SinglyLinkedListValue],
-            T_Result,
+            [resources_commons_types_singly_linked_list_value_SinglyLinkedListValue], T_Result
         ],
         doubly_linked_list_value: typing.Callable[
-            [resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue],
-            T_Result,
+            [resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue], T_Result
         ],
         null_value: typing.Callable[[], T_Result],
     ) -> T_Result:
@@ -270,9 +220,7 @@ class VariableValue(UniversalRootModel):
             return char_value(unioned_value.value)
         if unioned_value.type == "mapValue":
             return map_value(
-                resources_commons_types_map_value_MapValue(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                resources_commons_types_map_value_MapValue(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
         if unioned_value.type == "listValue":
             return list_value(unioned_value.value)
@@ -333,14 +281,10 @@ class _VariableValue:
     class BinaryTreeValue(resources_commons_types_binary_tree_value_BinaryTreeValue):
         type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
 
-    class SinglyLinkedListValue(
-        resources_commons_types_singly_linked_list_value_SinglyLinkedListValue
-    ):
+    class SinglyLinkedListValue(resources_commons_types_singly_linked_list_value_SinglyLinkedListValue):
         type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
-    class DoublyLinkedListValue(
-        resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue
-    ):
+    class DoublyLinkedListValue(resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue):
         type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
     class NullValue(UniversalBaseModel):

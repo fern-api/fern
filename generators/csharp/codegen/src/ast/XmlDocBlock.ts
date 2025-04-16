@@ -7,9 +7,17 @@ export declare namespace XmlDocBlock {
         summary?: XmlDocNode;
         codeExample?: XmlDocNode;
         exceptions?: Map<string | AstNode, XmlDocNode>;
+        inheritdoc?: InheritdocNode;
+        remarks?: XmlDocNode;
     };
     type Arg = XmlDocProps | XmlDocNode;
     type XmlDocNode = string | ((writer: XmlDocWriter) => void) | null | undefined;
+    type InheritdocNode =
+        | {
+              cref: string | undefined;
+              path: string | undefined;
+          }
+        | true;
 }
 
 export class XmlDocBlock extends AstNode {
@@ -46,7 +54,7 @@ export class XmlDocBlock extends AstNode {
             docWriter.writePrefix();
             docWriter.writeOpenXmlNode("summary");
             docWriter.writeLine();
-            this.writeXmlDocNode(docWriter, this.arg.summary);
+            this.writeXmlDocNodeWithEscaping(docWriter, this.arg.summary);
             docWriter.writeNewLineIfLastLineNot();
             docWriter.writePrefix();
             docWriter.writeCloseXmlNode("summary");
@@ -74,6 +82,31 @@ export class XmlDocBlock extends AstNode {
                 docWriter.write("</exception>");
                 docWriter.writeNewLineIfLastLineNot();
             });
+        }
+        if (this.arg.inheritdoc) {
+            docWriter.writePrefix();
+            docWriter.write("<inheritdoc");
+            if (this.arg.inheritdoc !== true) {
+                if (this.arg.inheritdoc.cref) {
+                    docWriter.write(` cref="${this.arg.inheritdoc.cref}"`);
+                }
+                if (this.arg.inheritdoc.path) {
+                    docWriter.write(` path="${this.arg.inheritdoc.path}"`);
+                }
+            }
+            docWriter.write(" />");
+
+            docWriter.writeNewLineIfLastLineNot();
+        }
+        if (this.arg.remarks) {
+            docWriter.writePrefix();
+            docWriter.writeOpenXmlNode("remarks");
+            docWriter.writeLine();
+            this.writeXmlDocNodeWithEscaping(docWriter, this.arg.remarks);
+            docWriter.writeNewLineIfLastLineNot();
+            docWriter.writePrefix();
+            docWriter.writeCloseXmlNode("remarks");
+            docWriter.writeNewLineIfLastLineNot();
         }
     }
 

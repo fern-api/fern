@@ -52,12 +52,11 @@ public class GetTokenTest : BaseMockServerTest
                 Audience = "https://api.example.com",
                 GrantType = "client_credentials",
                 Scope = "scope",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

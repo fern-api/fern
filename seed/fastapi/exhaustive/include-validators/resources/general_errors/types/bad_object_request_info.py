@@ -25,34 +25,24 @@ class BadObjectRequestInfo(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[BadObjectRequestInfo.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[BadObjectRequestInfo.Validators._RootValidator]
-        ] = []
-        _message_pre_validators: typing.ClassVar[
-            typing.List[BadObjectRequestInfo.Validators.PreMessageValidator]
-        ] = []
-        _message_post_validators: typing.ClassVar[
-            typing.List[BadObjectRequestInfo.Validators.MessageValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[BadObjectRequestInfo.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[BadObjectRequestInfo.Validators._RootValidator]] = []
+        _message_pre_validators: typing.ClassVar[typing.List[BadObjectRequestInfo.Validators.PreMessageValidator]] = []
+        _message_post_validators: typing.ClassVar[typing.List[BadObjectRequestInfo.Validators.MessageValidator]] = []
 
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [BadObjectRequestInfo.Validators._RootValidator],
-            BadObjectRequestInfo.Validators._RootValidator,
+            [BadObjectRequestInfo.Validators._RootValidator], BadObjectRequestInfo.Validators._RootValidator
         ]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [BadObjectRequestInfo.Validators._PreRootValidator],
-            BadObjectRequestInfo.Validators._PreRootValidator,
+            [BadObjectRequestInfo.Validators._PreRootValidator], BadObjectRequestInfo.Validators._PreRootValidator
         ]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
@@ -70,19 +60,14 @@ class BadObjectRequestInfo(UniversalBaseModel):
         def field(
             cls, field_name: typing.Literal["message"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [BadObjectRequestInfo.Validators.PreMessageValidator],
-            BadObjectRequestInfo.Validators.PreMessageValidator,
+            [BadObjectRequestInfo.Validators.PreMessageValidator], BadObjectRequestInfo.Validators.PreMessageValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["message"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["message"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [BadObjectRequestInfo.Validators.MessageValidator],
-            BadObjectRequestInfo.Validators.MessageValidator,
+            [BadObjectRequestInfo.Validators.MessageValidator], BadObjectRequestInfo.Validators.MessageValidator
         ]: ...
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
@@ -97,22 +82,16 @@ class BadObjectRequestInfo(UniversalBaseModel):
             return decorator
 
         class PreMessageValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: BadObjectRequestInfo.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: BadObjectRequestInfo.Partial) -> typing.Any: ...
 
         class MessageValidator(typing.Protocol):
-            def __call__(
-                self, __v: str, __values: BadObjectRequestInfo.Partial
-            ) -> str: ...
+            def __call__(self, __v: str, __values: BadObjectRequestInfo.Partial) -> str: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
 
         class _RootValidator(typing.Protocol):
-            def __call__(
-                self, __values: BadObjectRequestInfo.Partial
-            ) -> BadObjectRequestInfo.Partial: ...
+            def __call__(self, __values: BadObjectRequestInfo.Partial) -> BadObjectRequestInfo.Partial: ...
 
     @universal_root_validator(pre=True)
     def _pre_validate_bad_object_request_info(
@@ -137,17 +116,13 @@ class BadObjectRequestInfo(UniversalBaseModel):
         return v
 
     @universal_field_validator("message", pre=False)
-    def _post_validate_message(
-        cls, v: str, values: BadObjectRequestInfo.Partial
-    ) -> str:
+    def _post_validate_message(cls, v: str, values: BadObjectRequestInfo.Partial) -> str:
         for validator in BadObjectRequestInfo.Validators._message_post_validators:
             v = validator(v, values)
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

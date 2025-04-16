@@ -25,11 +25,11 @@ public partial class ServiceClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/movie/{JsonUtils.SerializeAsString(movieId)}",
+                    Path = string.Format("/movie/{0}", ValueConvert.ToPathParameterString(movieId)),
                     Options = options,
                 },
                 cancellationToken
@@ -93,7 +93,7 @@ public partial class ServiceClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -154,7 +154,7 @@ public partial class ServiceClient
         );
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -408,7 +408,7 @@ public partial class ServiceClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,

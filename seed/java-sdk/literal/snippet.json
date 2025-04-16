@@ -1,0 +1,135 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "973e1804",
+            "id": {
+                "method": "POST",
+                "path": "/headers",
+                "identifier_override": "endpoint_headers.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.headers().send(\n            SendLiteralsInHeadersRequest\n                .builder()\n                .endpointVersion(\"02-12-2024\")\n                .async(true)\n                .query(\"What is the weather today\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.headers().send(\n            SendLiteralsInHeadersRequest\n                .builder()\n                .endpointVersion(\"02-12-2024\")\n                .async(true)\n                .query(\"What is the weather today\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5195b2f2",
+            "id": {
+                "method": "POST",
+                "path": "/headers",
+                "identifier_override": "endpoint_headers.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.headers().send(\n            SendLiteralsInHeadersRequest\n                .builder()\n                .endpointVersion(\"02-12-2024\")\n                .async(true)\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.headers().send(\n            SendLiteralsInHeadersRequest\n                .builder()\n                .endpointVersion(\"02-12-2024\")\n                .async(true)\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "4400cce9",
+            "id": {
+                "method": "POST",
+                "path": "/inlined",
+                "identifier_override": "endpoint_inlined.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.inlined.requests.SendLiteralsInlinedRequest;\nimport com.seed.literal.resources.inlined.types.ANestedLiteral;\nimport com.seed.literal.resources.inlined.types.ATopLevelLiteral;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.inlined().send(\n            SendLiteralsInlinedRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .aliasedContext(\"You're super wise\")\n                .objectWithLiteral(\n                    ATopLevelLiteral\n                        .builder()\n                        .nestedLiteral(\n                            ANestedLiteral\n                                .builder()\n                                .myLiteral(\"How super cool\")\n                                .build()\n                        )\n                        .build()\n                )\n                .stream(false)\n                .query(\"What is the weather today\")\n                .temperature(10.1)\n                .context(\"You're super wise\")\n                .maybeContext(\"You're super wise\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.inlined.requests.SendLiteralsInlinedRequest;\nimport com.seed.literal.resources.inlined.types.ANestedLiteral;\nimport com.seed.literal.resources.inlined.types.ATopLevelLiteral;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.inlined().send(\n            SendLiteralsInlinedRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .aliasedContext(\"You're super wise\")\n                .objectWithLiteral(\n                    ATopLevelLiteral\n                        .builder()\n                        .nestedLiteral(\n                            ANestedLiteral\n                                .builder()\n                                .myLiteral(\"How super cool\")\n                                .build()\n                        )\n                        .build()\n                )\n                .stream(false)\n                .query(\"What is the weather today\")\n                .temperature(10.1)\n                .context(\"You're super wise\")\n                .maybeContext(\"You're super wise\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ce93d2b4",
+            "id": {
+                "method": "POST",
+                "path": "/inlined",
+                "identifier_override": "endpoint_inlined.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.inlined.requests.SendLiteralsInlinedRequest;\nimport com.seed.literal.resources.inlined.types.ANestedLiteral;\nimport com.seed.literal.resources.inlined.types.ATopLevelLiteral;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.inlined().send(\n            SendLiteralsInlinedRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .query(\"query\")\n                .stream(false)\n                .aliasedContext(\"You're super wise\")\n                .objectWithLiteral(\n                    ATopLevelLiteral\n                        .builder()\n                        .nestedLiteral(\n                            ANestedLiteral\n                                .builder()\n                                .myLiteral(\"How super cool\")\n                                .build()\n                        )\n                        .build()\n                )\n                .context(\"You're super wise\")\n                .temperature(1.1)\n                .maybeContext(\"You're super wise\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.inlined.requests.SendLiteralsInlinedRequest;\nimport com.seed.literal.resources.inlined.types.ANestedLiteral;\nimport com.seed.literal.resources.inlined.types.ATopLevelLiteral;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.inlined().send(\n            SendLiteralsInlinedRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .query(\"query\")\n                .stream(false)\n                .aliasedContext(\"You're super wise\")\n                .objectWithLiteral(\n                    ATopLevelLiteral\n                        .builder()\n                        .nestedLiteral(\n                            ANestedLiteral\n                                .builder()\n                                .myLiteral(\"How super cool\")\n                                .build()\n                        )\n                        .build()\n                )\n                .context(\"You're super wise\")\n                .temperature(1.1)\n                .maybeContext(\"You're super wise\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6e94d4eb",
+            "id": {
+                "method": "POST",
+                "path": "/path/{id}",
+                "identifier_override": "endpoint_path.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.path().send(\"123\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.path().send(\"123\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3f43625c",
+            "id": {
+                "method": "POST",
+                "path": "/path/{id}",
+                "identifier_override": "endpoint_path.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.path().send(\"123\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.path().send(\"123\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c0851fed",
+            "id": {
+                "method": "POST",
+                "path": "/query",
+                "identifier_override": "endpoint_query.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.query().send(\n            SendLiteralsInQueryRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .aliasPrompt(\"You are a helpful assistant\")\n                .stream(false)\n                .aliasStream(false)\n                .query(\"What is the weather today\")\n                .optionalPrompt(\"You are a helpful assistant\")\n                .aliasOptionalPrompt(\"You are a helpful assistant\")\n                .optionalStream(false)\n                .aliasOptionalStream(false)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.query().send(\n            SendLiteralsInQueryRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .aliasPrompt(\"You are a helpful assistant\")\n                .stream(false)\n                .aliasStream(false)\n                .query(\"What is the weather today\")\n                .optionalPrompt(\"You are a helpful assistant\")\n                .aliasOptionalPrompt(\"You are a helpful assistant\")\n                .optionalStream(false)\n                .aliasOptionalStream(false)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8520afa1",
+            "id": {
+                "method": "POST",
+                "path": "/query",
+                "identifier_override": "endpoint_query.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.query().send(\n            SendLiteralsInQueryRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .aliasPrompt(\"You are a helpful assistant\")\n                .query(\"query\")\n                .stream(false)\n                .aliasStream(false)\n                .optionalPrompt(\"You are a helpful assistant\")\n                .aliasOptionalPrompt(\"You are a helpful assistant\")\n                .optionalStream(false)\n                .aliasOptionalStream(false)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.query().send(\n            SendLiteralsInQueryRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .aliasPrompt(\"You are a helpful assistant\")\n                .query(\"query\")\n                .stream(false)\n                .aliasStream(false)\n                .optionalPrompt(\"You are a helpful assistant\")\n                .aliasOptionalPrompt(\"You are a helpful assistant\")\n                .optionalStream(false)\n                .aliasOptionalStream(false)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2874f920",
+            "id": {
+                "method": "POST",
+                "path": "/reference",
+                "identifier_override": "endpoint_reference.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.reference.types.ContainerObject;\nimport com.seed.literal.resources.reference.types.NestedObjectWithLiterals;\nimport com.seed.literal.resources.reference.types.SendRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.reference().send(\n            SendRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .stream(false)\n                .context(\"You're super wise\")\n                .query(\"What is the weather today\")\n                .containerObject(\n                    ContainerObject\n                        .builder()\n                        .nestedObjects(\n                            new ArrayList<NestedObjectWithLiterals>(\n                                Arrays.asList(\n                                    NestedObjectWithLiterals\n                                        .builder()\n                                        .literal1(\"literal1\")\n                                        .literal2(\"literal2\")\n                                        .strProp(\"strProp\")\n                                        .build()\n                                )\n                            )\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.reference.types.ContainerObject;\nimport com.seed.literal.resources.reference.types.NestedObjectWithLiterals;\nimport com.seed.literal.resources.reference.types.SendRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.reference().send(\n            SendRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .stream(false)\n                .context(\"You're super wise\")\n                .query(\"What is the weather today\")\n                .containerObject(\n                    ContainerObject\n                        .builder()\n                        .nestedObjects(\n                            new ArrayList<NestedObjectWithLiterals>(\n                                Arrays.asList(\n                                    NestedObjectWithLiterals\n                                        .builder()\n                                        .literal1(\"literal1\")\n                                        .literal2(\"literal2\")\n                                        .strProp(\"strProp\")\n                                        .build()\n                                )\n                            )\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "1b4971fc",
+            "id": {
+                "method": "POST",
+                "path": "/reference",
+                "identifier_override": "endpoint_reference.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.reference.types.ContainerObject;\nimport com.seed.literal.resources.reference.types.NestedObjectWithLiterals;\nimport com.seed.literal.resources.reference.types.SendRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.reference().send(\n            SendRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .query(\"query\")\n                .stream(false)\n                .ending(\"$ending\")\n                .context(\"You're super wise\")\n                .containerObject(\n                    ContainerObject\n                        .builder()\n                        .nestedObjects(\n                            new ArrayList<NestedObjectWithLiterals>(\n                                Arrays.asList(\n                                    NestedObjectWithLiterals\n                                        .builder()\n                                        .literal1(\"literal1\")\n                                        .literal2(\"literal2\")\n                                        .strProp(\"strProp\")\n                                        .build(),\n                                    NestedObjectWithLiterals\n                                        .builder()\n                                        .literal1(\"literal1\")\n                                        .literal2(\"literal2\")\n                                        .strProp(\"strProp\")\n                                        .build()\n                                )\n                            )\n                        )\n                        .build()\n                )\n                .maybeContext(\"You're super wise\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.literal.SeedLiteralClient;\nimport com.seed.literal.resources.reference.types.ContainerObject;\nimport com.seed.literal.resources.reference.types.NestedObjectWithLiterals;\nimport com.seed.literal.resources.reference.types.SendRequest;\nimport java.util.ArrayList;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedLiteralClient client = SeedLiteralClient\n            .builder()\n            .build();\n\n        client.reference().send(\n            SendRequest\n                .builder()\n                .prompt(\"You are a helpful assistant\")\n                .query(\"query\")\n                .stream(false)\n                .ending(\"$ending\")\n                .context(\"You're super wise\")\n                .containerObject(\n                    ContainerObject\n                        .builder()\n                        .nestedObjects(\n                            new ArrayList<NestedObjectWithLiterals>(\n                                Arrays.asList(\n                                    NestedObjectWithLiterals\n                                        .builder()\n                                        .literal1(\"literal1\")\n                                        .literal2(\"literal2\")\n                                        .strProp(\"strProp\")\n                                        .build(),\n                                    NestedObjectWithLiterals\n                                        .builder()\n                                        .literal1(\"literal1\")\n                                        .literal2(\"literal2\")\n                                        .strProp(\"strProp\")\n                                        .build()\n                                )\n                            )\n                        )\n                        .build()\n                )\n                .maybeContext(\"You're super wise\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

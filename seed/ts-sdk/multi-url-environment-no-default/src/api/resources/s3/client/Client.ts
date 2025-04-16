@@ -44,10 +44,17 @@ export class S3 {
      *         s3Key: "s3Key"
      *     })
      */
-    public async getPresignedUrl(
+    public getPresignedUrl(
         request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
         requestOptions?: S3.RequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getPresignedUrl(request, requestOptions));
+    }
+
+    private async __getPresignedUrl(
+        request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
+        requestOptions?: S3.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -73,18 +80,22 @@ export class S3 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.s3.getPresignedUrl.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.s3.getPresignedUrl.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -93,6 +104,7 @@ export class S3 {
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
@@ -101,6 +113,7 @@ export class S3 {
             case "unknown":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

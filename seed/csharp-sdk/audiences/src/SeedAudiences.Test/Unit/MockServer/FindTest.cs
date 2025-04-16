@@ -46,12 +46,11 @@ public class FindTest : BaseMockServerTest
                 OptionalString = "optionalString",
                 PublicProperty = "publicProperty",
                 PrivateProperty = 1,
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<ImportingType>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<ImportingType>(mockResponse)).UsingDefaults()
         );
     }
 }

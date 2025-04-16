@@ -48,20 +48,14 @@ class AbstractOrganizationsService(AbstractFernService):
     def __init_get_organization(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_organization)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_organization,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_organization, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_organization)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Organization:
@@ -90,9 +84,7 @@ class AbstractOrganizationsService(AbstractFernService):
     def __init_get_organization_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_organization_user)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
@@ -101,11 +93,7 @@ class AbstractOrganizationsService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_organization_user,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_organization_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_organization_user)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> User:
@@ -134,29 +122,19 @@ class AbstractOrganizationsService(AbstractFernService):
     def __init_search_organizations(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.search_organizations)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "limit":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.search_organizations,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.search_organizations, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.search_organizations)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Sequence[Organization]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[Organization]:
             try:
                 return cls.search_organizations(*args, **kwargs)
             except FernHTTPException as e:

@@ -27,10 +27,22 @@ public class GetUsersTest : BaseMockServerTest
                   "activated": true,
                   "status": {
                     "type": "active"
+                  },
+                  "values": {
+                    "values": "values"
                   }
                 },
                 "email": "email",
-                "favorite-number": 1
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
+                }
               },
               {
                 "name": "name",
@@ -46,10 +58,22 @@ public class GetUsersTest : BaseMockServerTest
                   "activated": true,
                   "status": {
                     "type": "active"
+                  },
+                  "values": {
+                    "values": "values"
                   }
                 },
                 "email": "email",
-                "favorite-number": 1
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
+                }
               }
             ]
             """;
@@ -79,13 +103,11 @@ public class GetUsersTest : BaseMockServerTest
                 Activated = [true],
                 Tags = ["tags"],
                 Extra = true,
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
         );
     }
 }

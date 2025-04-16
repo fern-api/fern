@@ -7979,16 +7979,16 @@ The parameter should map to a JSON encoded list of strings.
       name: authentication
       docs: Authenticate using your AssemblyAI API key.
   messages:
-    subscribe:
-      origin: server
-      body:
-        type: receiveMessage
-        docs: Receive messages from the WebSocket
     publish:
       origin: client
       body:
         type: sendMessage
         docs: Send messages to the WebSocket
+    subscribe:
+      origin: server
+      body:
+        type: receiveMessage
+        docs: Receive messages from the WebSocket
   examples:
     - messages:
         - type: publish
@@ -8001,6 +8001,14 @@ The parameter should map to a JSON encoded list of strings.
 imports:
   root: __package__.yml
 types:
+  sendMessage:
+    discriminated: false
+    docs: Send messages to the WebSocket
+    union:
+      - root.AudioData
+      - root.TerminateSession
+    source:
+      openapi: ../asyncapi.yml
   receiveMessage:
     discriminated: false
     docs: Receive messages from the WebSocket
@@ -8010,14 +8018,6 @@ types:
       - root.FinalTranscript
       - root.SessionTerminated
       - root.RealtimeError
-    source:
-      openapi: ../asyncapi.yml
-  sendMessage:
-    discriminated: false
-    docs: Send messages to the WebSocket
-    union:
-      - root.AudioData
-      - root.TerminateSession
     source:
       openapi: ../asyncapi.yml
 ",

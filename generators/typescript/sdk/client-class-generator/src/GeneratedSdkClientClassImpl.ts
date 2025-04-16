@@ -16,6 +16,7 @@ import {
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import {
     ClassDeclarationStructure,
+    GetAccessorDeclarationStructure,
     InterfaceDeclarationStructure,
     MethodDeclarationStructure,
     ModuleDeclarationStructure,
@@ -499,7 +500,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ? [this.generatedWebsocketImplementation.getModuleStatement(context)]
                 : [])
         ];
-        context.sourceFile.addModule(serviceModule);
 
         const serviceClass: SetRequired<
             ClassDeclarationStructure,
@@ -693,36 +693,86 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const signature = endpoint.getSignature(context);
             const docs = endpoint.getDocs(context);
             const overloads = endpoint.getOverloads(context);
+            const isPaginated = endpoint.isPaginated(context);
 
             if (!isIdempotent && endpoint.endpoint.idempotent) {
                 isIdempotent = true;
             }
 
-            const statements = endpoint.getStatements(context);
-            // const returnsAPIPromise = !context.neverThrowErrors && !endpoint.isPaginated(context);
+            const publicMethodName = endpoint.endpoint.name.camelCase.unsafeName;
+            const internalMethodName = `__${publicMethodName}`;
+            const publicStatements = [
+                ts.factory.createReturnStatement(
+                    context.coreUtilities.fetcher.HttpResponsePromise.fromPromise(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createThis(),
+                                ts.factory.createIdentifier(internalMethodName)
+                            ),
+                            undefined,
+                            signature.parameters.map((p) => ts.factory.createIdentifier(p.name))
+                        )
+                    )
+                )
+            ];
 
-            const method: MethodDeclarationStructure = {
+            const publicMethod: MethodDeclarationStructure = {
                 kind: StructureKind.Method,
-                name: endpoint.endpoint.name.camelCase.unsafeName,
+                scope: Scope.Public,
+                name: publicMethodName,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                    context.coreUtilities.fetcher.HttpResponsePromise._getReferenceToType(
+                        signature.returnTypeWithoutPromise
+                    )
                 ),
-                scope: Scope.Public,
-                isAsync: true, // if not returnsAPIPromise we return an `APIPromise`
-                statements: statements.map(getTextOfTsNode),
-                overloads: overloads.map((overload, index) => ({
-                    docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
+                statements: publicStatements.map(getTextOfTsNode)
+            };
+
+            if (overloads.length === 0) {
+                maybeAddDocsStructure(publicMethod, docs);
+            }
+
+            const internalResponseStatements = endpoint.getStatements(context);
+            const internalMethod: MethodDeclarationStructure = {
+                kind: StructureKind.Method,
+                name: internalMethodName,
+                parameters: signature.parameters,
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode("Promise", [
+                        isPaginated
+                            ? signature.returnTypeWithoutPromise
+                            : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                  signature.returnTypeWithoutPromise
+                              )
+                    ])
+                ),
+                scope: Scope.Private,
+                isAsync: true,
+                statements: internalResponseStatements.map(getTextOfTsNode),
+                overloads: overloads.map((overload) => ({
                     parameters: overload.parameters,
                     returnType: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
+                        ts.factory.createTypeReferenceNode("Promise", [
+                            isPaginated
+                                ? overload.returnTypeWithoutPromise
+                                : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                      overload.returnTypeWithoutPromise
+                                  )
+                        ])
                     )
                 }))
             };
-            serviceClass.methods.push(method);
 
-            if (overloads.length === 0) {
-                maybeAddDocsStructure(method, docs);
+            if (isPaginated) {
+                // paginated only has one implementation, so copy the implementation from internal to public
+                Object.assign(publicMethod, internalMethod);
+                publicMethod.name = publicMethodName;
+                publicMethod.scope = Scope.Public;
+                serviceClass.methods.push(publicMethod);
+            } else {
+                serviceClass.methods.push(publicMethod);
+                serviceClass.methods.push(internalMethod);
             }
         }
 
@@ -789,6 +839,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
+        context.sourceFile.addModule(serviceModule);
         context.sourceFile.addClass(serviceClass);
     }
 
@@ -1577,6 +1628,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     private getAuthorizationHeaderStatements(context: SdkContext): ts.Statement[] {
+        const referenceToRawResponse = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
+        );
         const statements: ts.Statement[] = [];
 
         if (this.oauthAuthScheme != null) {
@@ -1680,7 +1735,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                                 `Please specify a ${BEARER_TOKEN_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.bearerAuthScheme.tokenEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
-                                            responseBody: undefined
+                                            responseBody: undefined,
+                                            rawResponse: undefined
                                         })
                                     )
                                 ],
@@ -1858,7 +1914,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                                 `Please specify a ${USERNAME_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.usernameEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
-                                            responseBody: undefined
+                                            responseBody: undefined,
+                                            rawResponse: undefined
                                         })
                                     )
                                 ],
@@ -1896,7 +1953,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                                 `Please specify a ${PASSWORD_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.passwordEnvVar} environment variable`
                                             ),
                                             statusCode: undefined,
-                                            responseBody: undefined
+                                            responseBody: undefined,
+                                            rawResponse: undefined
                                         })
                                     )
                                 ],

@@ -117,7 +117,7 @@ public class TypeTest
             Twentyfive = new DateOnly(1994, 1, 1),
         };
         var deserializedObject = JsonUtils.Deserialize<Type>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

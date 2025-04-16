@@ -76,10 +76,17 @@ export class User {
      *         filter: "filter"
      *     })
      */
-    public async getUsername(
+    public getUsername(
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedQueryParameters.User> {
+    ): core.HttpResponsePromise<SeedQueryParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
+    }
+
+    private async __getUsername(
+        request: SeedQueryParameters.GetUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
         const {
             limit,
             id,
@@ -183,18 +190,22 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedQueryParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -203,12 +214,14 @@ export class User {
                 throw new errors.SeedQueryParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedQueryParametersTimeoutError("Timeout exceeded when calling GET /user.");
             case "unknown":
                 throw new errors.SeedQueryParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

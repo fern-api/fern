@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedNullable;
-using SeedNullable.Core;
 using System.Globalization;
 
 namespace Usage;
@@ -28,6 +27,9 @@ public class Example1
                     Activated = true,
                     Status = new Dictionary<string, object>() {
                         ["type"] = "active",
+                    },
+                    Values = new Dictionary<string, string?>(){
+                        ["values"] = "values",
                     }
                 },
                 Avatar = "avatar"

@@ -26,7 +26,7 @@ public class MetadataTest
             Data = new Dictionary<string, string>() { { "foo", "bar" }, { "baz", "qux" } },
         };
         var deserializedObject = JsonUtils.Deserialize<Metadata>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

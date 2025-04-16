@@ -56,12 +56,3 @@ body:
         - "Yes"
     validations:
       required: true
-
-  - type: textarea
-    id: file-attachment
-    attributes:
-      label: "Attach Files (Optional)"
-      description: "Screenshots or relevant files to clarify the issue."
-      placeholder: "Drag and drop files or paste links here..."
-    validations:
-      required: false

@@ -4,6 +4,8 @@ from ....core.abstract_fern_service import AbstractFernService
 from ..types.my_union import MyUnion
 import abc
 from ..types.metadata import Metadata
+from ..types.metadata_union import MetadataUnion
+from ..types.request import Request
 import fastapi
 import inspect
 import typing
@@ -28,6 +30,12 @@ class AbstractUnionService(AbstractFernService):
     @abc.abstractmethod
     def get_metadata(self) -> Metadata: ...
 
+    @abc.abstractmethod
+    def update_metadata(self, *, body: MetadataUnion) -> bool: ...
+
+    @abc.abstractmethod
+    def call(self, *, body: Request) -> bool: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -37,25 +45,21 @@ class AbstractUnionService(AbstractFernService):
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_get(router=router)
         cls.__init_get_metadata(router=router)
+        cls.__init_update_metadata(router=router)
+        cls.__init_call(router=router)
 
     @classmethod
     def __init_get(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> MyUnion:
@@ -84,18 +88,12 @@ class AbstractUnionService(AbstractFernService):
     def __init_get_metadata(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_metadata)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_metadata,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_metadata)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Metadata:
@@ -118,4 +116,76 @@ class AbstractUnionService(AbstractFernService):
             response_model=Metadata,
             description=AbstractUnionService.get_metadata.__doc__,
             **get_route_args(cls.get_metadata, default_tag="union"),
+        )(wrapper)
+
+    @classmethod
+    def __init_update_metadata(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.update_metadata)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.update_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.update_metadata)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:
+            try:
+                return cls.update_metadata(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'update_metadata' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.update_metadata.__globals__)
+
+        router.put(
+            path="/metadata",
+            response_model=bool,
+            description=AbstractUnionService.update_metadata.__doc__,
+            **get_route_args(cls.update_metadata, default_tag="union"),
+        )(wrapper)
+
+    @classmethod
+    def __init_call(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.call)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.call, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.call)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:
+            try:
+                return cls.call(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'call' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.call.__globals__)
+
+        router.post(
+            path="/call",
+            response_model=bool,
+            description=AbstractUnionService.call.__doc__,
+            **get_route_args(cls.call, default_tag="union"),
         )(wrapper)

@@ -19,7 +19,7 @@ public class NameTest
             """;
         var expectedObject = new Name { Id = "name-sdfg8ajk", Value = "name" };
         var deserializedObject = JsonUtils.Deserialize<Name>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

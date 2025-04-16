@@ -16,6 +16,9 @@ import * as SeedNullable from "../../../../index";
  *             activated: true,
  *             status: {
  *                 type: "active"
+ *             },
+ *             values: {
+ *                 "values": "values"
  *             }
  *         },
  *         avatar: "avatar"

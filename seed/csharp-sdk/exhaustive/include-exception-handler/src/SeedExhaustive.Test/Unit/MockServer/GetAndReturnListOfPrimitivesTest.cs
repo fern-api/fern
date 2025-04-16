@@ -40,13 +40,11 @@ public class GetAndReturnListOfPrimitivesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
-            new List<string>() { "string", "string" },
-            RequestOptions
+            new List<string>() { "string", "string" }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse)).UsingDefaults()
         );
     }
 }

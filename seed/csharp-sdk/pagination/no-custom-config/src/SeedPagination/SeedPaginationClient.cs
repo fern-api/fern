@@ -31,7 +31,7 @@ public partial class SeedPaginationClient
         Users = new UsersClient(_client);
     }
 
-    public ComplexClient Complex { get; init; }
+    public ComplexClient Complex { get; }
 
-    public UsersClient Users { get; init; }
+    public UsersClient Users { get; }
 }

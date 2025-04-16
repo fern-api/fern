@@ -1,8 +1,7 @@
-import fern.ir.resources as ir_types
-
+from .fastapi_declaration_referencer import FastApiDeclarationReferencer
 from fern_python.codegen import ExportStrategy, Filepath
 
-from .fastapi_declaration_referencer import FastApiDeclarationReferencer
+import fern.ir.resources as ir_types
 
 
 class TypeDeclarationReferencer(FastApiDeclarationReferencer[ir_types.DeclaredTypeName]):

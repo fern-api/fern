@@ -26,6 +26,48 @@ components:
       properties: {}
       allOf:
         - $ref: '#/components/schemas/RootType'
+    FirstUnion:
+      title: FirstUnion
+      oneOf:
+        - $ref: '#/components/schemas/FirstUnionFirstElement'
+        - $ref: '#/components/schemas/FirstUnionSecondElement'
+    SecondUnion:
+      title: SecondUnion
+      oneOf:
+        - $ref: '#/components/schemas/SecondUnionFirstElement'
+        - $ref: '#/components/schemas/SecondUnionSecondElement'
+    FirstUnionFirstElement:
+      title: FirstUnionFirstElement
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/SecondUnion'
+      required:
+        - child
+    FirstUnionSecondElement:
+      title: FirstUnionSecondElement
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/SecondUnion'
+      required:
+        - child
+    SecondUnionFirstElement:
+      title: SecondUnionFirstElement
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/FirstUnion'
+      required:
+        - child
+    SecondUnionSecondElement:
+      title: SecondUnionSecondElement
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/FirstUnion'
+      required:
+        - child
     ContainerValue:
       title: ContainerValue
       oneOf:

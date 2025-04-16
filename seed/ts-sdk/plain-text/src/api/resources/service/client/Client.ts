@@ -34,7 +34,11 @@ export class Service {
      * @example
      *     await client.service.getText()
      */
-    public async getText(requestOptions?: Service.RequestOptions): Promise<string> {
+    public getText(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getText(requestOptions));
+    }
+
+    private async __getText(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -59,13 +63,14 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as string;
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPlainTextError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -74,12 +79,14 @@ export class Service {
                 throw new errors.SeedPlainTextError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPlainTextTimeoutError("Timeout exceeded when calling POST /text.");
             case "unknown":
                 throw new errors.SeedPlainTextError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

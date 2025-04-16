@@ -43,10 +43,17 @@ export class Imdb {
      *         rating: 1.1
      *     })
      */
-    public async createMovie(
+    public createMovie(
         request: SeedApi.CreateMovieRequest,
         requestOptions?: Imdb.RequestOptions,
-    ): Promise<SeedApi.MovieId> {
+    ): core.HttpResponsePromise<SeedApi.MovieId> {
+        return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
+    }
+
+    private async __createMovie(
+        request: SeedApi.CreateMovieRequest,
+        requestOptions?: Imdb.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.MovieId>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,18 +82,22 @@ export class Imdb {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.MovieId.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.MovieId.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -95,12 +106,14 @@ export class Imdb {
                 throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /movies/create-movie.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -114,7 +127,17 @@ export class Imdb {
      * @example
      *     await client.imdb.getMovie("movieId")
      */
-    public async getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<SeedApi.Movie> {
+    public getMovie(
+        movieId: SeedApi.MovieId,
+        requestOptions?: Imdb.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.Movie> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
+    }
+
+    private async __getMovie(
+        movieId: SeedApi.MovieId,
+        requestOptions?: Imdb.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.Movie>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -139,12 +162,15 @@ export class Imdb {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Movie.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Movie.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -157,11 +183,13 @@ export class Imdb {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -171,12 +199,14 @@ export class Imdb {
                 throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /movies/{movieId}.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

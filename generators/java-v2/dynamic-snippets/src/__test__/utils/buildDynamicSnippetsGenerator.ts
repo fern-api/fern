@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { FernGeneratorExec, Style } from "@fern-api/browser-compatible-base-generator";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 
 import { DynamicSnippetsGenerator } from "../../DynamicSnippetsGenerator";
@@ -14,5 +14,5 @@ export function buildDynamicSnippetsGenerator({
 }): DynamicSnippetsGenerator {
     const content = readFileSync(irFilepath, "utf-8");
     const ir = JSON.parse(content);
-    return new DynamicSnippetsGenerator({ ir, config });
+    return new DynamicSnippetsGenerator({ ir, config, options: { style: Style.Concise } });
 }

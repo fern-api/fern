@@ -13,14 +13,16 @@ export async function generateDynamicSnippetTests({
     ir,
     config,
     language,
-    outputDir
+    outputDir,
+    skipUnstable
 }: {
     context: TaskContext;
     ir: IntermediateRepresentation;
     config: FernGeneratorExec.GeneratorConfig;
     language: generatorsYml.GenerationLanguage;
     outputDir: AbsoluteFilePath;
+    skipUnstable?: boolean;
 }): Promise<void> {
     const testSuite = await generateDynamicSnippetsTestSuite({ ir, config });
-    return new DynamicSnippetsTestGenerator(context, testSuite).generateTests({ language, outputDir });
+    return new DynamicSnippetsTestGenerator(context, testSuite).generateTests({ language, outputDir, skipUnstable });
 }

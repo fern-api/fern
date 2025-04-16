@@ -29,10 +29,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(
             async () =>
-                await Client.ExtendedInlineRequestBodyAsync(
-                    new Inlined { Unique = "unique" },
-                    RequestOptions
-                )
+                await Client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" })
         );
     }
 }

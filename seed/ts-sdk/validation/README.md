@@ -59,6 +59,7 @@ try {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
+        console.log(err.rawResponse);
     }
 }
 ```
@@ -117,6 +118,18 @@ const response = await client.create(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
+```
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
+The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
+
+```typescript
+const { data, rawResponse } = await client.create(...).withRawResponse();
+
+console.log(data);
+console.log(rawResponse.headers['X-My-Header']);
 ```
 
 ### Runtime Compatibility

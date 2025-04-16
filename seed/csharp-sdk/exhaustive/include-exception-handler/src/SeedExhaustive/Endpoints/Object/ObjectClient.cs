@@ -47,7 +47,7 @@ public partial class ObjectClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
@@ -99,7 +99,7 @@ public partial class ObjectClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
@@ -160,7 +160,7 @@ public partial class ObjectClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
@@ -231,7 +231,7 @@ public partial class ObjectClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
@@ -304,12 +304,14 @@ public partial class ObjectClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"/object/get-and-return-nested-with-required-field/{JsonUtils.SerializeAsString(string_)}",
+                            Path = string.Format(
+                                "/object/get-and-return-nested-with-required-field/{0}",
+                                ValueConvert.ToPathParameterString(string_)
+                            ),
                             Body = request,
                             Options = options,
                         },
@@ -399,7 +401,7 @@ public partial class ObjectClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
                             BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,

@@ -1,4 +1,178 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.14.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where TypedDicts with circular references were not correctly serialized.
+        This issue only affected users that enabled `use_typeddict_requests`.
+
+- version: 4.14.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generated GitHub workflow now uses `ubuntu-latest` instead of `ubuntu-20.04`
+
+- version: 4.14.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for receiving raw responses from streaming endpoints.
+    - type: feat
+      summary: |
+        Add support for excluding types from the generated `__init__.py` files.
+
+        ```yaml
+        config:
+          exclude_types_from_init_exports: true
+        ```
+
+- version: 4.13.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Adds support for overriding literal global headers in the client constructor (e.g. `version`).
+
+        ```python
+        client = Acme(
+          ...
+          version="1.0.0",
+        )
+        ```
+
+- version: 4.12.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixes an issue where dictionary types defined within TypedDicts incorrectly used the
+        `typing_extensions.NotRequired` type.
+    - type: fix
+      summary: |
+        Fixes an issue where optional `core.File` parameters would cause `mypy` failures.
+    - type: fix
+      summary: |
+        Fixes a regression introduced in 4.12.0, where the non raw response client endpoints
+        did not respect the allowed method keywords (e.g. `list` was generated as `list_`).
+
+- version: 4.12.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Resolve issues with paginated endpoints generating incorrect endpoint return types.
+
+- version: 4.11.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Always represent nullable as Optional rather than NotRequired, only use
+        NotRequired for optional in typeddicts.
+
+- version: 4.10.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for using TypedDicts for file upload request parameters. This flag should
+        be used in conjunction with the `use_typeddict_requests` flag like so:
+
+        ```yaml
+        config:
+          use_typeddict_requests: true
+          use_typeddict_requests_for_file_upload: true
+        ```
+
+- version: 4.9.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Implement raw client support for accessing response headers and data in unary endpoints.
+
+- version: 4.8.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for inlining path parameters
+
+- version: 4.7.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for user-agent header
+
+- version: 4.6.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for generating legacy wire tests, and disable them by default. These tests will be restored and improved in the future.
+        Users can opt-in to generating legacy wire tests by setting the `include_legacy_wire_tests` flag to `true` in their configuration.
+
+        ```yaml
+        config:
+          include_legacy_wire_tests: true
+        ```
+
+- version: 4.5.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for websocket code generation. 
+
+- version: 4.4.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for raw bytes responses.
+
+- version: 4.3.21
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the default `timeout` was not being respected when a custom `httpx_client` was provided.
+
+- version: 4.3.20
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update formatting across all generated files. There are no behavioral changes, but large diffs are expected.
+
+- version: 4.3.19
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
+
+- version: 4.3.18
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where the `request_options` parameter name is now properly respected when it's 
+        renamed due to conflicts with other parameter names. Previously, the code would still reference the 
+        original parameter name internally, causing errors.
+
+- version: 4.3.17
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
+        prepending an underscore to the `request_options` parameter name.
+
 - version: 4.3.16
   irVersion: 53
   changelogEntry:

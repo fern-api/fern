@@ -35,9 +35,9 @@ public partial class SeedApiClient
         Folder = new FolderClient(_client);
     }
 
-    public AClient A { get; init; }
+    public AClient A { get; }
 
-    public FolderClient Folder { get; init; }
+    public FolderClient Folder { get; }
 
     /// <example><code>
     /// await client.FooAsync();
@@ -49,7 +49,7 @@ public partial class SeedApiClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,

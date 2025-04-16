@@ -40,13 +40,11 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
             );
 
         var response = await Client.Migration.GetAttemptedMigrationsAsync(
-            new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" },
-            RequestOptions
+            new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Migration>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Migration>>(mockResponse)).UsingDefaults()
         );
     }
 }

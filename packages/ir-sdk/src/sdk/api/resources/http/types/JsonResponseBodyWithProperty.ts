@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface JsonResponseBodyWithProperty extends FernIr.WithDocs {
+export interface JsonResponseBodyWithProperty extends FernIr.WithDocs, FernIr.WithV2Examples {
     responseBodyType: FernIr.TypeReference;
     /**
      * If set, the SDK will return this property from

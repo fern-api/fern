@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedPagination;
-using SeedPagination.Core;
 
 namespace Usage;
 
@@ -14,9 +13,9 @@ public class Example12
             }
         );
 
-        await client.Users.ListWithCursorPaginationAsync(
-            new ListUsersCursorPaginationRequest{
-                StartingAfter = "starting_after"
+        await client.Users.ListWithGlobalConfigAsync(
+            new ListWithGlobalConfigRequest{
+                Offset = 1
             }
         );
     }

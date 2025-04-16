@@ -28,7 +28,7 @@ public partial class ImdbClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -73,11 +73,14 @@ public partial class ImdbClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/movies/{JsonUtils.SerializeAsString(movieId)}",
+                    Path = string.Format(
+                        "/movies/{0}",
+                        ValueConvert.ToPathParameterString(movieId)
+                    ),
                     Options = options,
                 },
                 cancellationToken

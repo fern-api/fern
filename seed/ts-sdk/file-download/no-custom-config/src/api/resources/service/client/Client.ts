@@ -28,7 +28,13 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async downloadFile(requestOptions?: Service.RequestOptions): Promise<stream.Readable> {
+    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<stream.Readable> {
+        return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
+    }
+
+    private async __downloadFile(
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<stream.Readable>> {
         const _response = await core.fetcher<stream.Readable>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -51,13 +57,14 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body;
+            return { data: _response.body, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedFileDownloadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -66,12 +73,14 @@ export class Service {
                 throw new errors.SeedFileDownloadError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedFileDownloadError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -30,39 +30,23 @@ class Cat(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[Cat.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[Cat.Validators._RootValidator]
-        ] = []
-        _name_pre_validators: typing.ClassVar[
-            typing.List[Cat.Validators.PreNameValidator]
-        ] = []
-        _name_post_validators: typing.ClassVar[
-            typing.List[Cat.Validators.NameValidator]
-        ] = []
-        _likes_to_meow_pre_validators: typing.ClassVar[
-            typing.List[Cat.Validators.PreLikesToMeowValidator]
-        ] = []
-        _likes_to_meow_post_validators: typing.ClassVar[
-            typing.List[Cat.Validators.LikesToMeowValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[Cat.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[Cat.Validators._RootValidator]] = []
+        _name_pre_validators: typing.ClassVar[typing.List[Cat.Validators.PreNameValidator]] = []
+        _name_post_validators: typing.ClassVar[typing.List[Cat.Validators.NameValidator]] = []
+        _likes_to_meow_pre_validators: typing.ClassVar[typing.List[Cat.Validators.PreLikesToMeowValidator]] = []
+        _likes_to_meow_post_validators: typing.ClassVar[typing.List[Cat.Validators.LikesToMeowValidator]] = []
 
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[False] = False
-        ) -> typing.Callable[
-            [Cat.Validators._RootValidator], Cat.Validators._RootValidator
-        ]: ...
+        ) -> typing.Callable[[Cat.Validators._RootValidator], Cat.Validators._RootValidator]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Cat.Validators._PreRootValidator], Cat.Validators._PreRootValidator
-        ]: ...
+        ) -> typing.Callable[[Cat.Validators._PreRootValidator], Cat.Validators._PreRootValidator]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -78,40 +62,22 @@ class Cat(UniversalBaseModel):
         @classmethod
         def field(
             cls, field_name: typing.Literal["name"], *, pre: typing.Literal[True]
-        ) -> typing.Callable[
-            [Cat.Validators.PreNameValidator], Cat.Validators.PreNameValidator
-        ]: ...
+        ) -> typing.Callable[[Cat.Validators.PreNameValidator], Cat.Validators.PreNameValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["name"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [Cat.Validators.NameValidator], Cat.Validators.NameValidator
-        ]: ...
+            cls, field_name: typing.Literal["name"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Cat.Validators.NameValidator], Cat.Validators.NameValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["likes_to_meow"],
-            *,
-            pre: typing.Literal[True],
-        ) -> typing.Callable[
-            [Cat.Validators.PreLikesToMeowValidator],
-            Cat.Validators.PreLikesToMeowValidator,
-        ]: ...
+            cls, field_name: typing.Literal["likes_to_meow"], *, pre: typing.Literal[True]
+        ) -> typing.Callable[[Cat.Validators.PreLikesToMeowValidator], Cat.Validators.PreLikesToMeowValidator]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["likes_to_meow"],
-            *,
-            pre: typing.Literal[False] = False,
-        ) -> typing.Callable[
-            [Cat.Validators.LikesToMeowValidator], Cat.Validators.LikesToMeowValidator
-        ]: ...
+            cls, field_name: typing.Literal["likes_to_meow"], *, pre: typing.Literal[False] = False
+        ) -> typing.Callable[[Cat.Validators.LikesToMeowValidator], Cat.Validators.LikesToMeowValidator]: ...
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -130,17 +96,13 @@ class Cat(UniversalBaseModel):
             return decorator
 
         class PreNameValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: Cat.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: Cat.Partial) -> typing.Any: ...
 
         class NameValidator(typing.Protocol):
             def __call__(self, __v: str, __values: Cat.Partial) -> str: ...
 
         class PreLikesToMeowValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: Cat.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: Cat.Partial) -> typing.Any: ...
 
         class LikesToMeowValidator(typing.Protocol):
             def __call__(self, __v: bool, __values: Cat.Partial) -> bool: ...
@@ -188,9 +150,7 @@ class Cat(UniversalBaseModel):
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

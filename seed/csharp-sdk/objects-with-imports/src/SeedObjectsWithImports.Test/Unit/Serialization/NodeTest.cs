@@ -36,7 +36,7 @@ public class NodeTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Node>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -97,7 +97,7 @@ public class NodeTest
             },
         };
         var deserializedObject = JsonUtils.Deserialize<Node>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

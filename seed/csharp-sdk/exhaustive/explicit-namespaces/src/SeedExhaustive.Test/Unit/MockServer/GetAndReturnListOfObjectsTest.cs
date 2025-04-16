@@ -53,13 +53,12 @@ public class GetAndReturnListOfObjectsTest : BaseMockServerTest
             {
                 new ObjectWithRequiredField { String = "string" },
                 new ObjectWithRequiredField { String = "string" },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

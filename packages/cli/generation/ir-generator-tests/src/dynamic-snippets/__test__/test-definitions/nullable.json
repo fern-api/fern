@@ -225,6 +225,16 @@
                     }
                 },
                 {
+                    "type": "optional",
+                    "value": {
+                        "type": "nullable",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                },
+                {
                     "type": "primitive",
                     "value": "DOUBLE"
                 }
@@ -475,6 +485,83 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_nullable:WeirdNumber"
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "numbers",
+                            "camelCase": {
+                                "unsafeName": "numbers",
+                                "safeName": "numbers"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "numbers",
+                                "safeName": "numbers"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NUMBERS",
+                                "safeName": "NUMBERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Numbers",
+                                "safeName": "Numbers"
+                            }
+                        },
+                        "wireValue": "numbers"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "list",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "strings",
+                            "camelCase": {
+                                "unsafeName": "strings",
+                                "safeName": "strings"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "strings",
+                                "safeName": "strings"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STRINGS",
+                                "safeName": "STRINGS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Strings",
+                                "safeName": "Strings"
+                            }
+                        },
+                        "wireValue": "strings"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "map",
+                                "key": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "value": {
+                                    "type": "unknown"
+                                }
+                            }
+                        }
                     }
                 }
             ],
@@ -877,6 +964,50 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_nullable:Status"
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "values",
+                            "camelCase": {
+                                "unsafeName": "values",
+                                "safeName": "values"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "values",
+                                "safeName": "values"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "VALUES",
+                                "safeName": "VALUES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Values",
+                                "safeName": "Values"
+                            }
+                        },
+                        "wireValue": "values"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "map",
+                            "key": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "value": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             ],

@@ -1,5 +1,162 @@
 - changelogEntry:
     - summary: |
+        Use safe name for version enum
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.8
+- changelogEntry:
+    - summary: |
+        Run v2 generation for SDK generator only
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.7
+- changelogEntry:
+    - summary: |
+        Fix getting the default version of an api versions enum to not require the `CURRENT` entry
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.6
+- changelogEntry:
+    - summary: |
+        Fix inlining forward-compatible enums
+      type: fix
+  createdAt: '2025-04-08'
+  irVersion: 55
+  version: 2.32.5
+- changelogEntry:
+    - summary: |
+        Fix typos in README generator
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.4
+- changelogEntry:
+    - summary: |
+        Add logging for Java v2 generator call
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.3
+- changelogEntry:
+    - summary: |
+        Add fallback snippet renderer for readme generation
+      type: fix
+  createdAt: '2025-04-01'
+  irVersion: 55
+  version: 2.32.2
+- changelogEntry:
+    - summary: |
+        Fix pagination in raw clients
+      type: fix
+  createdAt: '2025-03-31'
+  irVersion: 55
+  version: 2.32.1
+- changelogEntry:
+    - summary: |
+        Generate snippet.json
+      type: feat
+  createdAt: '2025-03-29'
+  irVersion: 55
+  version: 2.32.0
+- changelogEntry:
+    - summary: |
+        Apply content type to request body creation
+      type: fix
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.31.0
+- changelogEntry:
+    - summary: |
+        Include response headers in API exceptions
+      type: feat
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.30.0
+- changelogEntry:
+    - summary: |
+        Query params respect allow-multiple
+      type: fix
+  createdAt: '2025-03-27'
+  irVersion: 55
+  version: 2.29.0
+- changelogEntry:
+    - summary: |
+        Expose response headers
+      type: feat
+  createdAt: '2025-03-26'
+  irVersion: 55
+  version: 2.28.0
+- changelogEntry:
+    - summary: |
+        Change method to `public static void main(String[] args)` in snippet generation
+      type: fix
+  createdAt: '2025-03-24'
+  irVersion: 55
+  version: 2.27.1
+- changelogEntry:
+    - summary: |
+        Support automatic README.md generation
+      type: feat
+  createdAt: '2025-03-21'
+  irVersion: 55
+  version: 2.27.0
+- changelogEntry:
+    - summary: |
+        Expose max retries for clients
+      type: feat
+  createdAt: '2025-03-13'
+  irVersion: 55
+  version: 2.26.0
+- changelogEntry:
+    - summary: |
+        Add config to inline file properties
+      type: feat
+  createdAt: '2025-03-13'
+  irVersion: 55
+  version: 2.25.0
+- changelogEntry:
+    - summary: |
+        Prevent put requests from generating without a request body
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.4
+- changelogEntry:
+    - summary: |
+        Fix double unknown in forward-compatible enums
+      type: fix
+    - summary: |
+        Prevent enum keyword use in package paths
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.3
+- changelogEntry:
+    - summary: |
+        Remove 'object' from Java reserved strings list
+      type: fix
+  createdAt: '2025-03-12'
+  irVersion: 55
+  version: 2.24.2
+- changelogEntry:
+    - summary: |
+        Add @JsonIgnore to non-serialization getters for nullables
+      type: fix
+  createdAt: '2025-03-11'
+  irVersion: 55
+  version: 2.24.1
+- changelogEntry:
+    - summary: |
+        Fix wrapped request paths in flat mode
+      type: fix
+  createdAt: '2025-03-11'
+  irVersion: 55
+  version: 2.24.0
+- changelogEntry:
+    - summary: |
         Fix async client builder generation
       type: fix
   createdAt: '2025-03-07'

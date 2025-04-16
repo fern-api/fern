@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -164,7 +165,12 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
         class_.addFields(
             this.unionDeclaration.types.map((type) => {
                 return csharp.field({
-                    summary: `Returns true if <see cref="${this.discriminantPropertyName}"/> is "${type.discriminantValue.wireValue}"`,
+                    doc: {
+                        summary: (writer) =>
+                            writer.write(
+                                `Returns true if <see cref="${this.discriminantPropertyName}"/> is "${type.discriminantValue.wireValue}"`
+                            )
+                    },
                     access: csharp.Access.Public,
                     type: csharp.Type.boolean(),
                     name: `Is${type.discriminantValue.name.pascalCase.unsafeName}`,

@@ -1,4 +1,9 @@
-import { AbstractAstNode, Arguments, hasNamedArgument, isNamedArgument } from "@fern-api/base-generator";
+import {
+    AbstractAstNode,
+    Arguments,
+    hasNamedArgument,
+    isNamedArgument
+} from "@fern-api/browser-compatible-base-generator";
 
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
@@ -101,18 +106,30 @@ export class ClassInstantiation extends AstNode {
             writer.write(")");
         }
         if (this.properties.length > 0) {
-            writer.write("{ ");
+            writer.write("{");
+            if (this.multiline) {
+                writer.newLine();
+                writer.indent();
+            } else {
+                writer.write(" ");
+            }
             this.properties.forEach((property, idx) => {
                 writer.writeNodeOrString(property.name);
                 writer.write(" = ");
                 writer.writeNodeOrString(property.value);
                 if (idx < this.properties.length - 1) {
-                    writer.write(", ");
+                    writer.write(",");
                     if (this.multiline) {
                         writer.newLine();
+                    } else {
+                        writer.write(" ");
                     }
                 }
             });
+            if (this.multiline) {
+                writer.dedent();
+                writer.newLine();
+            }
             writer.write("}");
         }
     }

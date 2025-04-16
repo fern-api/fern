@@ -53,6 +53,20 @@
           },
           {
             "type": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": {
               "type": "primitive",
               "value": {
                 "type": "double"
@@ -124,6 +138,45 @@
             "valueType": {
               "type": "id",
               "value": "type_nullable:WeirdNumber"
+            }
+          },
+          {
+            "key": "numbers",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "strings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
+                }
+              }
             }
           }
         ]
@@ -241,6 +294,33 @@
             "valueType": {
               "type": "id",
               "value": "type_nullable:Status"
+            }
+          },
+          {
+            "key": "values",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         ]
@@ -375,10 +455,22 @@
                     "activated": true,
                     "status": {
                       "type": "active"
+                    },
+                    "values": {
+                      "values": "values"
                     }
                   },
                   "email": "email",
-                  "favorite-number": 1
+                  "favorite-number": 1,
+                  "numbers": [
+                    1,
+                    1
+                  ],
+                  "strings": {
+                    "strings": {
+                      "key": "value"
+                    }
+                  }
                 },
                 {
                   "name": "name",
@@ -394,10 +486,22 @@
                     "activated": true,
                     "status": {
                       "type": "active"
+                    },
+                    "values": {
+                      "values": "values"
                     }
                   },
                   "email": "email",
-                  "favorite-number": 1
+                  "favorite-number": 1,
+                  "numbers": [
+                    1,
+                    1
+                  ],
+                  "strings": {
+                    "strings": {
+                      "key": "value"
+                    }
+                  }
                 }
               ],
               "responseBodyV3": {
@@ -417,10 +521,22 @@
                       "activated": true,
                       "status": {
                         "type": "active"
+                      },
+                      "values": {
+                        "values": "values"
                       }
                     },
                     "email": "email",
-                    "favorite-number": 1
+                    "favorite-number": 1,
+                    "numbers": [
+                      1,
+                      1
+                    ],
+                    "strings": {
+                      "strings": {
+                        "key": "value"
+                      }
+                    }
                   },
                   {
                     "name": "name",
@@ -436,10 +552,22 @@
                       "activated": true,
                       "status": {
                         "type": "active"
+                      },
+                      "values": {
+                        "values": "values"
                       }
                     },
                     "email": "email",
-                    "favorite-number": 1
+                    "favorite-number": 1,
+                    "numbers": [
+                      1,
+                      1
+                    ],
+                    "strings": {
+                      "strings": {
+                        "key": "value"
+                      }
+                    }
                   }
                 ]
               },
@@ -569,10 +697,22 @@
                   "activated": true,
                   "status": {
                     "type": "active"
+                  },
+                  "values": {
+                    "values": "values"
                   }
                 },
                 "email": "email",
-                "favorite-number": 1
+                "favorite-number": 1,
+                "numbers": [
+                  1,
+                  1
+                ],
+                "strings": {
+                  "strings": {
+                    "key": "value"
+                  }
+                }
               },
               "responseBodyV3": {
                 "type": "json",
@@ -590,10 +730,22 @@
                     "activated": true,
                     "status": {
                       "type": "active"
+                    },
+                    "values": {
+                      "values": "values"
                     }
                   },
                   "email": "email",
-                  "favorite-number": 1
+                  "favorite-number": 1,
+                  "numbers": [
+                    1,
+                    1
+                  ],
+                  "strings": {
+                    "strings": {
+                      "key": "value"
+                    }
+                  }
                 }
               },
               "codeSamples": []

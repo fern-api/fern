@@ -38,13 +38,11 @@ public class GetAndReturnSetOfPrimitivesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
-            new HashSet<string>() { "string" },
-            RequestOptions
+            new HashSet<string>() { "string" }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<HashSet<string>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<HashSet<string>>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -14,15 +14,11 @@ class _Factory:
     def foo(self, value: resources_types_types_foo_Foo) -> UnionWithSingleElement:
         if IS_PYDANTIC_V2:
             return UnionWithSingleElement(
-                root=_UnionWithSingleElement.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                root=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
             )  # type: ignore
         else:
             return UnionWithSingleElement(
-                __root__=_UnionWithSingleElement.Foo(
-                    **value.dict(exclude_unset=True), type="foo"
-                )
+                __root__=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
             )  # type: ignore
 
 
@@ -56,16 +52,10 @@ class UnionWithSingleElement(UniversalRootModel):
         else:
             return self.__root__.dict(**kwargs)
 
-    def visit(
-        self, foo: typing.Callable[[resources_types_types_foo_Foo], T_Result]
-    ) -> T_Result:
+    def visit(self, foo: typing.Callable[[resources_types_types_foo_Foo], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(
-                resources_types_types_foo_Foo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return foo(resources_types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
 
 class _UnionWithSingleElement:

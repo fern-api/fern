@@ -27,11 +27,7 @@ export async function validateWorkspaces({
                 workspace: docsWorkspace,
                 context,
                 logWarnings,
-                fernWorkspaces: await Promise.all(
-                    project.apiWorkspaces.map(async (workspace) => {
-                        return workspace.toFernWorkspace({ context });
-                    })
-                ),
+                apiWorkspaces: project.apiWorkspaces,
                 ossWorkspaces: await filterOssWorkspaces(project),
                 errorOnBrokenLinks,
                 excludeRules
@@ -41,6 +37,10 @@ export async function validateWorkspaces({
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
+            if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type != "fern") {
+                return;
+            }
+
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
                 await validateAPIWorkspaceAndLogIssues({

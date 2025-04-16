@@ -18,21 +18,15 @@ class ProblemInfoV2(UniversalBaseModel):
     problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
     problem_name: str = pydantic.Field(alias="problemName")
     problem_version: int = pydantic.Field(alias="problemVersion")
-    supported_languages: typing.Set[Language] = pydantic.Field(
-        alias="supportedLanguages"
-    )
+    supported_languages: typing.Set[Language] = pydantic.Field(alias="supportedLanguages")
     custom_files: CustomFiles = pydantic.Field(alias="customFiles")
     generated_files: GeneratedFiles = pydantic.Field(alias="generatedFiles")
-    custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic.Field(
-        alias="customTestCaseTemplates"
-    )
+    custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic.Field(alias="customTestCaseTemplates")
     testcases: typing.List[TestCaseV2]
     is_public: bool = pydantic.Field(alias="isPublic")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

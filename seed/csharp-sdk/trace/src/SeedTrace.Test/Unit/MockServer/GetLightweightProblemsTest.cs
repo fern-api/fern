@@ -49,13 +49,13 @@ public class GetLightweightProblemsTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.V2.V3.Problem.GetLightweightProblemsAsync(RequestOptions);
+        var response = await Client.V2.V3.Problem.GetLightweightProblemsAsync();
         Assert.That(
             response,
             Is.EqualTo(
                     JsonUtils.Deserialize<IEnumerable<V2.V3.LightweightProblemInfoV2>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

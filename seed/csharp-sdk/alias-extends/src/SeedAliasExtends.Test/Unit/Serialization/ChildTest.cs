@@ -23,7 +23,7 @@ public class ChildTest
             Child_ = "Property from the child",
         };
         var deserializedObject = JsonUtils.Deserialize<Child>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

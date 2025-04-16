@@ -13,7 +13,6 @@ colors:
     light: '#7e9be5'
   background:
     dark: '#090014'
-    light: null
 layout:
   searchbar-placement: header
   page-width: full
@@ -31,7 +30,6 @@ navigation:
       - section: Businesses
         contents:
           - page: Business object
-            icon: null
             path: api-reference/business.mdx
           - section: Plaid Configuration
             contents: []
@@ -40,7 +38,6 @@ navigation:
           - section: Transactions
             contents:
               - page: Bank Transaction object
-                icon: null
                 path: api-reference/bank-transaction.mdx
           - section: Payouts
             contents: []
@@ -49,27 +46,22 @@ navigation:
               - section: Invoices
                 contents:
                   - page: Invoice object
-                    icon: null
                     path: api-reference/invoice.mdx
               - section: Payments
                 contents:
                   - page: Invoice Payment object
-                    icon: null
                     path: api-reference/payments.mdx
               - section: Refunds
                 contents:
                   - page: Refunds object
-                    icon: null
                     path: api-reference/refunds.mdx
       - section: Reporting
         contents:
           - page: Profit and Loss object
-            icon: null
             path: api-reference/pnl.mdx
       - section: General Ledger
         contents:
           - page: General Ledger objects
-            icon: null
             path: api-reference/ledger.mdx
       - section: External Accounts
         contents:
@@ -82,45 +74,34 @@ navigation:
           - section: Configuration
             contents:
               - page: Plaid Configuration object
-                icon: null
                 path: api-reference/plaid.mdx
   - tab: documentation
     layout:
       - section: Get Started
         contents:
           - page: Overview
-            icon: null
             path: introduction.mdx
           - page: Authentication
-            icon: null
             path: authentication.mdx
           - page: Onboarding a Business
-            icon: null
             path: guides/business-onboarding.mdx
       - section: Importing Financial Data
         contents:
           - page: Overview
-            icon: null
             path: guides/importing-data-overview.mdx
           - page: Invoices and Payments
-            icon: null
             path: guides/importing-invoices.mdx
           - page: Bank Accounts and Credit Cards
-            icon: null
             path: guides/importing-bank-transactions.mdx
       - section: Offering Accounting
         contents:
           - page: Overview
-            icon: null
             path: guides/offering-accounting-overview.mdx
           - page: Transaction Categorization
-            icon: null
             path: guides/transaction-categorization.mdx
           - page: Accounting Reports
-            icon: null
             path: guides/reporting.mdx
       - section: Embedded Components
         contents:
           - page: Overview
-            icon: null
             path: guides/embedded-components.mdx

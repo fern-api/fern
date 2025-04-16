@@ -26,6 +26,9 @@ public class CreateUserTest : BaseMockServerTest
                 "activated": true,
                 "status": {
                   "type": "active"
+                },
+                "values": {
+                  "values": "values"
                 }
               },
               "avatar": "avatar"
@@ -47,10 +50,22 @@ public class CreateUserTest : BaseMockServerTest
                 "activated": true,
                 "status": {
                   "type": "active"
+                },
+                "values": {
+                  "values": "values"
                 }
               },
               "email": "email",
-              "favorite-number": 1
+              "favorite-number": 1,
+              "numbers": [
+                1,
+                1
+              ],
+              "strings": {
+                "strings": {
+                  "key": "value"
+                }
+              }
             }
             """;
 
@@ -89,14 +104,14 @@ public class CreateUserTest : BaseMockServerTest
                     Avatar = "avatar",
                     Activated = true,
                     Status = "no-properties-union",
+                    Values = new Dictionary<string, string?>() { { "values", "values" } },
                 },
                 Avatar = "avatar",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
         );
     }
 }

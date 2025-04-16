@@ -81,7 +81,7 @@ public partial class ProblemClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -183,11 +183,14 @@ public partial class ProblemClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/problem-crud/update/{JsonUtils.SerializeAsString(problemId)}",
+                    Path = string.Format(
+                        "/problem-crud/update/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
                     Body = request,
                     Options = options,
                 },
@@ -231,11 +234,14 @@ public partial class ProblemClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/problem-crud/delete/{JsonUtils.SerializeAsString(problemId)}",
+                    Path = string.Format(
+                        "/problem-crud/delete/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -280,7 +286,7 @@ public partial class ProblemClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,

@@ -4,66 +4,38 @@
 package com.seed.mixedFileDirectory.resources.user.events.metadata;
 
 import com.seed.mixedFileDirectory.core.ClientOptions;
-import com.seed.mixedFileDirectory.core.ObjectMappers;
-import com.seed.mixedFileDirectory.core.QueryStringMapper;
 import com.seed.mixedFileDirectory.core.RequestOptions;
-import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
-import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryException;
 import com.seed.mixedFileDirectory.resources.user.events.metadata.requests.GetEventMetadataRequest;
 import com.seed.mixedFileDirectory.resources.user.events.metadata.types.Metadata;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class MetadataClient {
     protected final ClientOptions clientOptions;
 
+    private final RawMetadataClient rawClient;
+
     public MetadataClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawMetadataClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawMetadataClient withRawResponse() {
+        return this.rawClient;
     }
 
     /**
      * Get event metadata.
      */
     public Metadata getMetadata(GetEventMetadataRequest request) {
-        return getMetadata(request, null);
+        return this.rawClient.getMetadata(request).body();
     }
 
     /**
      * Get event metadata.
      */
     public Metadata getMetadata(GetEventMetadataRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("users/events/metadata");
-        QueryStringMapper.addQueryParameter(httpUrl, "id", request.getId(), false);
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Metadata.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedMixedFileDirectoryApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedMixedFileDirectoryException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getMetadata(request, requestOptions).body();
     }
 }

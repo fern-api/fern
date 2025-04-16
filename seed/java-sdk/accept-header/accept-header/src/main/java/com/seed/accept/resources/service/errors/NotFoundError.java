@@ -4,6 +4,7 @@
 package com.seed.accept.resources.service.errors;
 
 import com.seed.accept.core.SeedAcceptApiException;
+import okhttp3.Response;
 
 public final class NotFoundError extends SeedAcceptApiException {
     /**
@@ -13,6 +14,11 @@ public final class NotFoundError extends SeedAcceptApiException {
 
     public NotFoundError(Object body) {
         super("NotFoundError", 404, body);
+        this.body = body;
+    }
+
+    public NotFoundError(Object body, Response rawResponse) {
+        super("NotFoundError", 404, body, rawResponse);
         this.body = body;
     }
 

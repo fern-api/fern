@@ -43,12 +43,11 @@ public class GetTest : BaseMockServerTest
                 Decimal = 2.2,
                 Even = 100,
                 Name = "foo",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingDefaults()
         );
     }
 }

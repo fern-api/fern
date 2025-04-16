@@ -5,6 +5,7 @@ package com.seed.nullable.resources.nullable.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +15,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nullable.core.Nullable;
 import com.seed.nullable.core.NullableNonemptyFilter;
 import com.seed.nullable.core.ObjectMappers;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,36 +25,49 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetUsersRequest.Builder.class)
 public final class GetUsersRequest {
-    private final Optional<String> usernames;
+    private final Optional<List<String>> usernames;
+
+    private final Optional<List<Boolean>> activated;
+
+    private final Optional<List<String>> tags;
 
     private final Optional<String> avatar;
-
-    private final Optional<Boolean> activated;
-
-    private final Optional<String> tags;
 
     private final Optional<Boolean> extra;
 
     private final Map<String, Object> additionalProperties;
 
     private GetUsersRequest(
-            Optional<String> usernames,
+            Optional<List<String>> usernames,
+            Optional<List<Boolean>> activated,
+            Optional<List<String>> tags,
             Optional<String> avatar,
-            Optional<Boolean> activated,
-            Optional<String> tags,
             Optional<Boolean> extra,
             Map<String, Object> additionalProperties) {
         this.usernames = usernames;
-        this.avatar = avatar;
         this.activated = activated;
         this.tags = tags;
+        this.avatar = avatar;
         this.extra = extra;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("usernames")
-    public Optional<String> getUsernames() {
+    public Optional<List<String>> getUsernames() {
         return usernames;
+    }
+
+    @JsonProperty("activated")
+    public Optional<List<Boolean>> getActivated() {
+        return activated;
+    }
+
+    @JsonIgnore
+    public Optional<List<String>> getTags() {
+        if (tags == null) {
+            return Optional.empty();
+        }
+        return tags;
     }
 
     @JsonProperty("avatar")
@@ -59,18 +75,7 @@ public final class GetUsersRequest {
         return avatar;
     }
 
-    @JsonProperty("activated")
-    public Optional<Boolean> getActivated() {
-        return activated;
-    }
-
-    public Optional<String> getTags() {
-        if (tags == null) {
-            return Optional.empty();
-        }
-        return tags;
-    }
-
+    @JsonIgnore
     public Optional<Boolean> getExtra() {
         if (extra == null) {
             return Optional.empty();
@@ -80,7 +85,7 @@ public final class GetUsersRequest {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("tags")
-    private Optional<String> _getTags() {
+    private Optional<List<String>> _getTags() {
         return tags;
     }
 
@@ -103,15 +108,15 @@ public final class GetUsersRequest {
 
     private boolean equalTo(GetUsersRequest other) {
         return usernames.equals(other.usernames)
-                && avatar.equals(other.avatar)
                 && activated.equals(other.activated)
                 && tags.equals(other.tags)
+                && avatar.equals(other.avatar)
                 && extra.equals(other.extra);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.usernames, this.avatar, this.activated, this.tags, this.extra);
+        return Objects.hash(this.usernames, this.activated, this.tags, this.avatar, this.extra);
     }
 
     @java.lang.Override
@@ -125,13 +130,13 @@ public final class GetUsersRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> usernames = Optional.empty();
+        private Optional<List<String>> usernames = Optional.empty();
+
+        private Optional<List<Boolean>> activated = Optional.empty();
+
+        private Optional<List<String>> tags = Optional.empty();
 
         private Optional<String> avatar = Optional.empty();
-
-        private Optional<Boolean> activated = Optional.empty();
-
-        private Optional<String> tags = Optional.empty();
 
         private Optional<Boolean> extra = Optional.empty();
 
@@ -142,21 +147,69 @@ public final class GetUsersRequest {
 
         public Builder from(GetUsersRequest other) {
             usernames(other.getUsernames());
-            avatar(other.getAvatar());
             activated(other.getActivated());
             tags(other.getTags());
+            avatar(other.getAvatar());
             extra(other.getExtra());
             return this;
         }
 
         @JsonSetter(value = "usernames", nulls = Nulls.SKIP)
-        public Builder usernames(Optional<String> usernames) {
+        public Builder usernames(Optional<List<String>> usernames) {
             this.usernames = usernames;
             return this;
         }
 
-        public Builder usernames(String usernames) {
+        public Builder usernames(List<String> usernames) {
             this.usernames = Optional.ofNullable(usernames);
+            return this;
+        }
+
+        public Builder usernames(String usernames) {
+            this.usernames = Optional.of(Collections.singletonList(usernames));
+            return this;
+        }
+
+        @JsonSetter(value = "activated", nulls = Nulls.SKIP)
+        public Builder activated(Optional<List<Boolean>> activated) {
+            this.activated = activated;
+            return this;
+        }
+
+        public Builder activated(List<Boolean> activated) {
+            this.activated = Optional.ofNullable(activated);
+            return this;
+        }
+
+        public Builder activated(Boolean activated) {
+            this.activated = Optional.of(Collections.singletonList(activated));
+            return this;
+        }
+
+        @JsonSetter(value = "tags", nulls = Nulls.SKIP)
+        public Builder tags(Optional<List<String>> tags) {
+            this.tags = tags;
+            return this;
+        }
+
+        public Builder tags(List<String> tags) {
+            this.tags = Optional.ofNullable(tags);
+            return this;
+        }
+
+        public Builder tags(Nullable<List<String>> tags) {
+            if (tags.isNull()) {
+                this.tags = null;
+            } else if (tags.isEmpty()) {
+                this.tags = Optional.empty();
+            } else {
+                this.tags = Optional.of(tags.get());
+            }
+            return this;
+        }
+
+        public Builder tags(String tags) {
+            this.tags = Optional.of(Collections.singletonList(tags));
             return this;
         }
 
@@ -168,39 +221,6 @@ public final class GetUsersRequest {
 
         public Builder avatar(String avatar) {
             this.avatar = Optional.ofNullable(avatar);
-            return this;
-        }
-
-        @JsonSetter(value = "activated", nulls = Nulls.SKIP)
-        public Builder activated(Optional<Boolean> activated) {
-            this.activated = activated;
-            return this;
-        }
-
-        public Builder activated(Boolean activated) {
-            this.activated = Optional.ofNullable(activated);
-            return this;
-        }
-
-        @JsonSetter(value = "tags", nulls = Nulls.SKIP)
-        public Builder tags(Optional<String> tags) {
-            this.tags = tags;
-            return this;
-        }
-
-        public Builder tags(String tags) {
-            this.tags = Optional.ofNullable(tags);
-            return this;
-        }
-
-        public Builder tags(Nullable<String> tags) {
-            if (tags.isNull()) {
-                this.tags = null;
-            } else if (tags.isEmpty()) {
-                this.tags = Optional.empty();
-            } else {
-                this.tags = Optional.of(tags.get());
-            }
             return this;
         }
 
@@ -227,7 +247,7 @@ public final class GetUsersRequest {
         }
 
         public GetUsersRequest build() {
-            return new GetUsersRequest(usernames, avatar, activated, tags, extra, additionalProperties);
+            return new GetUsersRequest(usernames, activated, tags, avatar, extra, additionalProperties);
         }
     }
 }

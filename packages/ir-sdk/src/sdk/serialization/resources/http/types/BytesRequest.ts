@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDocs } from "../../commons/types/WithDocs";
+import { WithV2Examples } from "../../examples/types/WithV2Examples";
 
 export const BytesRequest: core.serialization.ObjectSchema<serializers.BytesRequest.Raw, FernIr.BytesRequest> =
     core.serialization
@@ -13,10 +14,11 @@ export const BytesRequest: core.serialization.ObjectSchema<serializers.BytesRequ
             isOptional: core.serialization.boolean(),
             contentType: core.serialization.string().optional(),
         })
-        .extend(WithDocs);
+        .extend(WithDocs)
+        .extend(WithV2Examples);
 
 export declare namespace BytesRequest {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
         isOptional: boolean;
         contentType?: string | null;
     }

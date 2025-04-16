@@ -3,13 +3,15 @@
  */
 
 import * as errors from "../../../../../../errors/index";
+import * as core from "../../../../../../core";
 
 export class NotFoundError extends errors.SeedApiError {
-    constructor(body: string) {
+    constructor(body: string, rawResponse?: core.RawResponse) {
         super({
             message: "NotFoundError",
             statusCode: 404,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, NotFoundError.prototype);
     }

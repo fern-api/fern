@@ -4,4 +4,4 @@
 
 import * as FernIr from "../../../index";
 
-export interface FileDownloadResponse extends FernIr.WithDocs {}
+export interface FileDownloadResponse extends FernIr.WithDocs, FernIr.WithV2Examples {}

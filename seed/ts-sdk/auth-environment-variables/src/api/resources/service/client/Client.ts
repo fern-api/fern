@@ -47,7 +47,11 @@ export class Service {
      * @example
      *     await client.service.getWithApiKey()
      */
-    public async getWithApiKey(requestOptions?: Service.RequestOptions): Promise<string> {
+    public getWithApiKey(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithApiKey(requestOptions));
+    }
+
+    private async __getWithApiKey(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -74,18 +78,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAuthEnvironmentVariablesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -94,12 +102,14 @@ export class Service {
                 throw new errors.SeedAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAuthEnvironmentVariablesTimeoutError("Timeout exceeded when calling GET /apiKey.");
             case "unknown":
                 throw new errors.SeedAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -115,10 +125,17 @@ export class Service {
      *         xEndpointHeader: "X-Endpoint-Header"
      *     })
      */
-    public async getWithHeader(
+    public getWithHeader(
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithHeader(request, requestOptions));
+    }
+
+    private async __getWithHeader(
+        request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const { xEndpointHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -147,18 +164,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.getWithHeader.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.service.getWithHeader.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAuthEnvironmentVariablesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -167,6 +188,7 @@ export class Service {
                 throw new errors.SeedAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAuthEnvironmentVariablesTimeoutError(
@@ -175,6 +197,7 @@ export class Service {
             case "unknown":
                 throw new errors.SeedAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

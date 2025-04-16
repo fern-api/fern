@@ -1,4 +1,4 @@
-import { AbstractWriter } from "@fern-api/base-generator";
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
 import { ClassReference } from "..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";

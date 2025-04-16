@@ -43,3 +43,8 @@ features:
     description: |
       You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
       and transports.
+
+  - id: WEBSOCKETS
+    description: |
+      The SDK supports both sync and async websocket connections for real-time, low-latency communication. Sockets can be created using the `connect` method, which returns a context manager. 
+      You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.

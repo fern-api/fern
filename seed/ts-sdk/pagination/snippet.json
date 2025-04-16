@@ -136,17 +136,6 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
-                "identifier_override": "endpoint_users.listUsernamesCustom"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listUsernamesCustom({\n    startingAfter: \"starting_after\"\n});\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/users",
-                "method": "GET",
                 "identifier_override": "endpoint_users.listWithGlobalConfig"
             },
             "snippet": {

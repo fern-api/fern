@@ -63,8 +63,7 @@ public class ListWithBodyCursorPaginationTest : BaseMockServerTest
             new ListUsersBodyCursorPaginationRequest
             {
                 Pagination = new WithCursor { Cursor = "cursor" },
-            },
-            RequestOptions
+            }
         );
         await foreach (var item in pager)
         {

@@ -80,6 +80,9 @@ await client.nullable.createUser({
         status: {
             type: "active",
         },
+        values: {
+            values: "values",
+        },
     },
     avatar: "avatar",
 });

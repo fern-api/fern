@@ -48,7 +48,7 @@ public partial class NullableClient
         }
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -95,6 +95,7 @@ public partial class NullableClient
     ///             Avatar = "avatar",
     ///             Activated = true,
     ///             Status = "no-properties-union",
+    ///             Values = new Dictionary&lt;string, string?&gt;() { { "values", "values" } },
     ///         },
     ///         Avatar = "avatar",
     ///     }
@@ -108,7 +109,7 @@ public partial class NullableClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -153,7 +154,7 @@ public partial class NullableClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,

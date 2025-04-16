@@ -324,11 +324,6 @@ navigation:
               - page: Packagist (PHP)
                 slug: packagist
                 path: ./pages/sdks/integration/packagist.mdx
-      - section: Alternatives
-        hidden: true
-        contents:
-          - page: Speakeasy
-            path: ./pages/sdks/comparison/speakeasy.mdx
   - tab: docs
     layout:
       - section: Getting Started
@@ -388,7 +383,7 @@ navigation:
             icon: fa-regular fa-palette
             path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
-            icon: fa-regular fa-magnifying-glass
+            icon: fa-regular fa-code-pull-request
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Custom Domain
             icon: fa-regular fa-globe
@@ -400,6 +395,10 @@ navigation:
             icon: fa-regular fa-lock
             path: ./pages/docs/building-your-docs/rbac.mdx
             slug: rbac
+          - page: Search
+            icon: fa-regular fa-magnifying-glass
+            path: ./pages/docs/building-your-docs/search.mdx
+            slug: search
 
       - section: Writing Content
         slug: content
@@ -487,6 +486,9 @@ navigation:
           - page: Changelog
             path: ./pages/docs/writing-content/changelog.mdx
             icon: fa-regular fa-clock-rotate-left
+          - page: Visual Editor (Beta)
+            path: ./pages/docs/writing-content/visual-editor.mdx
+            icon: fa-regular fa-paintbrush
 
       - section: API References
         contents:
@@ -563,6 +565,9 @@ navigation:
             slug: postman
             path: ./pages/docs/integrations/postman.mdx
             icon: fa-solid fa-user-astronaut
+          - page: Feature Flags
+            path: ./pages/docs/integrations/launchdarkly.mdx
+            icon: fa-regular fa-flag
 
       - section: Developer Tools
         contents:
@@ -650,18 +655,24 @@ logo:
   href: https://www.buildwithfern.com
   light: ./images/logo-primary.svg
   dark: ./images/logo-white.svg
-  height: 30
+  height: 20
 colors:
   accent-primary:
-    dark: "#1BA32A"
-    light: "#1BA32A"
+    dark: "#70E155"
+    light: "#008700"
   background:
-    dark: "#081008"
-    light: "#FBFFFA"
+    dark: "#111113"
+    light: "#F9F9FB"
+  border: 
+    dark: "#393A40"
+    light: "#E0E1E6"
   header-background:
-    dark: "#081008"
-    light: "#FBFFFA"
-favicon: ./images/favicon.ico
+    dark: "#19191B"
+    light: "#FFFFFF"
+  card-background:
+    dark: "#222325"
+    light: "#FFFFFF"
+favicon: ./images/favicon_32.png
 
 layout:
   page-width: 1504px

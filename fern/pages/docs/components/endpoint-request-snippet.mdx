@@ -41,7 +41,6 @@ to the name of the example. See the steps below:
                     $ref: '#/components/schemas/Pet'
                   examples:
                     ExampleWithMarkley:
-                      summary: This is an example of a Pet
                       value: 
                         name: Markley
                         id: 44
@@ -60,7 +59,6 @@ to the name of the example. See the steps below:
           request: Pet
           examples:
             - name: ExampleWithMarkley
-              docs: This is an example of a Pet
               request:
                 name: Markley
                 id: 44
@@ -79,6 +77,10 @@ to the name of the example. See the steps below:
       example="ExampleWithMarkley"
     />
   ```
+
+  <Note title="Referencing examples">
+    If the example includes a `summary` or `docs` field, use that for the `example` prop. If not summary is set, use the example name. 
+  </Note>
 </Steps>
 
 {/* ### Props

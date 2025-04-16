@@ -107,13 +107,12 @@ public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
                     Map = new Dictionary<int, string>() { { 1, "map" } },
                     Bigint = "1000000",
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<NestedObjectWithOptionalField>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

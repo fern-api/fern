@@ -26,6 +26,7 @@ export declare namespace LazyFernWorkspace {
 }
 
 export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
+    public type: string = "fern";
     private context: TaskContext;
     private fernWorkspaces: Record<string, FernWorkspace> = {};
     private loadAPIWorkspace?: LoadAPIWorkspace;

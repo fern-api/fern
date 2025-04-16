@@ -17,6 +17,7 @@ public record CreateRequest
     [JsonPropertyName("shape")]
     public required Shape Shape { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

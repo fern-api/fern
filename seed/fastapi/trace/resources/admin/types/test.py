@@ -30,16 +30,12 @@ class Test(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
-        root: typing_extensions.Annotated[
-            typing.Union[_Test.And, _Test.Or], pydantic.Field(discriminator="type")
-        ]
+        root: typing_extensions.Annotated[typing.Union[_Test.And, _Test.Or], pydantic.Field(discriminator="type")]
 
         def get_as_union(self) -> typing.Union[_Test.And, _Test.Or]:
             return self.root
     else:
-        __root__: typing_extensions.Annotated[
-            typing.Union[_Test.And, _Test.Or], pydantic.Field(discriminator="type")
-        ]
+        __root__: typing_extensions.Annotated[typing.Union[_Test.And, _Test.Or], pydantic.Field(discriminator="type")]
 
         def get_as_union(self) -> typing.Union[_Test.And, _Test.Or]:
             return self.__root__
@@ -50,11 +46,7 @@ class Test(UniversalRootModel):
         else:
             return self.__root__.dict(**kwargs)
 
-    def visit(
-        self,
-        and_: typing.Callable[[bool], T_Result],
-        or_: typing.Callable[[bool], T_Result],
-    ) -> T_Result:
+    def visit(self, and_: typing.Callable[[bool], T_Result], or_: typing.Callable[[bool], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "and":
             return and_(unioned_value.value)

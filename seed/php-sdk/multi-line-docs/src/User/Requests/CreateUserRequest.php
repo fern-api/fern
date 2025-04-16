@@ -11,7 +11,6 @@ class CreateUserRequest extends JsonSerializableType
      * The name of the user to create.
      * This name is unique to each user.
      *
-     *
      * @var string $name
      */
     #[JsonProperty('name')]
@@ -20,7 +19,6 @@ class CreateUserRequest extends JsonSerializableType
     /**
      * The age of the user.
      * This property is not required.
-     *
      *
      * @var ?int $age
      */

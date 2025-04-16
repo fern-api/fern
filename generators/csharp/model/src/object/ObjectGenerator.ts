@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -30,16 +31,28 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
     }
 
     public doGenerate(): CSharpFile {
+        const interfaces = [];
+        if (this.context.generateNewAdditionalProperties()) {
+            interfaces.push(this.context.getIJsonOnDeserializedInterfaceReference());
+            if (this.objectDeclaration.extraProperties) {
+                interfaces.push(this.context.getIJsonOnSerializingInterfaceReference());
+            }
+        }
+
         const class_ = csharp.class_({
             ...this.classReference,
             summary: this.typeDeclaration.docs,
             access: csharp.Access.Public,
-            type: csharp.Class.ClassType.Record
+            type: csharp.Class.ClassType.Record,
+            interfaceReferences: interfaces
         });
         const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
         class_.addFields(generateFields({ properties, className: this.classReference.name, context: this.context }));
 
-        class_.addField(this.context.createAdditionalPropertiesField());
+        this.addExtensionDataField(class_);
+        this.addAdditionalPropertiesProperty(class_);
+        this.addOnDeserialized(class_);
+        this.addOnSerializing(class_);
 
         class_.addMethod(this.context.getToStringMethod());
 
@@ -58,6 +71,95 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
         });
+    }
+
+    private addExtensionDataField(class_: csharp.Class): void {
+        if (this.context.generateNewAdditionalProperties()) {
+            class_.addField(
+                csharp.field({
+                    annotations: [this.context.getJsonExtensionDataAttribute()],
+                    access: csharp.Access.Private,
+                    readonly: true,
+                    type: csharp.Type.idictionary(
+                        csharp.Type.string(),
+                        this.objectDeclaration.extraProperties
+                            ? csharp.Type.object().toOptionalIfNotAlready()
+                            : this.context.getJsonElementType(),
+                        {
+                            dontSimplify: true
+                        }
+                    ),
+                    name: "_extensionData",
+                    initializer: this.objectDeclaration.extraProperties
+                        ? csharp.codeblock("new Dictionary<string, object?>()")
+                        : csharp.codeblock("new Dictionary<string, JsonElement>()")
+                })
+            );
+        }
+    }
+
+    private addAdditionalPropertiesProperty(class_: csharp.Class): void {
+        if (this.context.generateNewAdditionalProperties()) {
+            class_.addField(
+                csharp.field({
+                    annotations: [this.context.getJsonIgnoreAnnotation()],
+                    access: csharp.Access.Public,
+                    type: this.objectDeclaration.extraProperties
+                        ? this.context.getAdditionalPropertiesType()
+                        : this.context.getReadOnlyAdditionalPropertiesType(),
+                    name: "AdditionalProperties",
+                    get: true,
+                    set: this.objectDeclaration.extraProperties ? true : csharp.Access.Private,
+                    initializer: csharp.codeblock("new()")
+                })
+            );
+        } else {
+            class_.addField(
+                csharp.field({
+                    doc: {
+                        summary: "Additional properties received from the response, if any.",
+                        remarks: "[EXPERIMENTAL] This API is experimental and may change in future releases."
+                    },
+                    annotations: [this.context.getJsonExtensionDataAttribute()],
+                    access: csharp.Access.Public,
+                    type: csharp.Type.idictionary(csharp.Type.string(), this.context.getJsonElementType()),
+                    name: "AdditionalProperties",
+                    set: csharp.Access.Internal,
+                    get: csharp.Access.Public,
+                    initializer: csharp.codeblock("new Dictionary<string, JsonElement>()")
+                })
+            );
+        }
+    }
+
+    private addOnSerializing(class_: csharp.Class): void {
+        if (this.context.generateNewAdditionalProperties()) {
+            if (this.objectDeclaration.extraProperties) {
+                class_.addMethod(
+                    csharp.method({
+                        interfaceReference: this.context.getIJsonOnSerializingInterfaceReference(),
+                        name: "OnSerializing",
+                        parameters: [],
+                        bodyType: csharp.Method.BodyType.Expression,
+                        body: csharp.codeblock("AdditionalProperties.CopyToExtensionData(_extensionData)")
+                    })
+                );
+            }
+        }
+    }
+
+    private addOnDeserialized(class_: csharp.Class): void {
+        if (this.context.generateNewAdditionalProperties()) {
+            class_.addMethod(
+                csharp.method({
+                    interfaceReference: this.context.getIJsonOnDeserializedInterfaceReference(),
+                    name: "OnDeserialized",
+                    parameters: [],
+                    bodyType: csharp.Method.BodyType.Expression,
+                    body: csharp.codeblock("AdditionalProperties.CopyFromExtensionData(_extensionData)")
+                })
+            );
+        }
     }
 
     public doGenerateSnippet({

@@ -23,7 +23,7 @@ public class JsonTest
             Raw = "{\"docs\": true, \"json\": true}",
         };
         var deserializedObject = JsonUtils.Deserialize<Json>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

@@ -41,15 +41,15 @@ public partial class SeedExamplesClient
         Types = new TypesClient(_client);
     }
 
-    public CommonsClient Commons { get; init; }
+    public CommonsClient Commons { get; }
 
-    public FileClient File { get; init; }
+    public FileClient File { get; }
 
-    public HealthClient Health { get; init; }
+    public HealthClient Health { get; }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 
-    public TypesClient Types { get; init; }
+    public TypesClient Types { get; }
 
     /// <example><code>
     /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
@@ -62,7 +62,7 @@ public partial class SeedExamplesClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -107,7 +107,7 @@ public partial class SeedExamplesClient
     {
         var response = await _client
             .SendRequestAsync(
-                new RawClient.JsonApiRequest
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,

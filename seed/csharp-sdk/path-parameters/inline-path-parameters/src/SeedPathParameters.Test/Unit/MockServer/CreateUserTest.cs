@@ -52,12 +52,11 @@ public class CreateUserTest : BaseMockServerTest
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
         );
     }
 }

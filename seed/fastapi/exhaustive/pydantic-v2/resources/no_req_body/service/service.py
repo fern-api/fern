@@ -2,9 +2,7 @@
 
 from ....core.abstract_fern_service import AbstractFernService
 from ....security import ApiAuth
-from ...types.resources.object.types.object_with_optional_field import (
-    ObjectWithOptionalField,
-)
+from ...types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 import abc
 import fastapi
 import inspect
@@ -45,22 +43,14 @@ class AbstractNoReqBodyService(AbstractFernService):
     def __init_get_with_no_request_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_no_request_body)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_with_no_request_body,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_with_no_request_body, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_with_no_request_body)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ObjectWithOptionalField:
@@ -89,22 +79,14 @@ class AbstractNoReqBodyService(AbstractFernService):
     def __init_post_with_no_request_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_with_no_request_body)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.post_with_no_request_body,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.post_with_no_request_body, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.post_with_no_request_body)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:

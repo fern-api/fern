@@ -22,9 +22,12 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectReadonlySchemas: undefined,
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
+    useBytesForBinaryResponse: undefined,
+    respectForwardCompatibleEnums: undefined,
     filter: undefined,
     exampleGeneration: undefined,
-    defaultFormParameterEncoding: undefined
+    defaultFormParameterEncoding: undefined,
+    additionalPropertiesDefaultsTo: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -97,7 +100,10 @@ function parseOpenApiDefinitionSettingsSchema(
         inlinePathParameters: settings?.["inline-path-parameters"],
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
-        defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"]
+        defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
+        useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
+        respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
+        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"]
     };
 }
 

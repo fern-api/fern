@@ -31,11 +31,13 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
+    "lodash-es": "^4.17.21",
     "ts-morph": "^15.1.0",
     "ts-poet": "^6.7.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/lodash-es": "^4.17.12",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

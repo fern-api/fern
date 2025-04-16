@@ -24,57 +24,39 @@ class _Factory:
             )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
-                __root__=_WorkspaceSubmissionUpdateInfo.Running(
-                    type="running", value=value
-                )
+                __root__=_WorkspaceSubmissionUpdateInfo.Running(type="running", value=value)
             )  # type: ignore
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionUpdateInfo(
-                root=_WorkspaceSubmissionUpdateInfo.Ran(
-                    **value.dict(exclude_unset=True), type="ran"
-                )
+                root=_WorkspaceSubmissionUpdateInfo.Ran(**value.dict(exclude_unset=True), type="ran")
             )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
-                __root__=_WorkspaceSubmissionUpdateInfo.Ran(
-                    **value.dict(exclude_unset=True), type="ran"
-                )
+                __root__=_WorkspaceSubmissionUpdateInfo.Ran(**value.dict(exclude_unset=True), type="ran")
             )  # type: ignore
 
     def stopped(self) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
-            return WorkspaceSubmissionUpdateInfo(
-                root=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped")
-            )  # type: ignore
+            return WorkspaceSubmissionUpdateInfo(root=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped"))  # type: ignore
         else:
-            return WorkspaceSubmissionUpdateInfo(
-                __root__=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped")
-            )  # type: ignore
+            return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped"))  # type: ignore
 
     def traced(self) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
-            return WorkspaceSubmissionUpdateInfo(
-                root=_WorkspaceSubmissionUpdateInfo.Traced(type="traced")
-            )  # type: ignore
+            return WorkspaceSubmissionUpdateInfo(root=_WorkspaceSubmissionUpdateInfo.Traced(type="traced"))  # type: ignore
         else:
-            return WorkspaceSubmissionUpdateInfo(
-                __root__=_WorkspaceSubmissionUpdateInfo.Traced(type="traced")
-            )  # type: ignore
+            return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Traced(type="traced"))  # type: ignore
 
     def traced_v_2(self, value: WorkspaceTracedUpdate) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionUpdateInfo(
-                root=_WorkspaceSubmissionUpdateInfo.TracedV2(
-                    **value.dict(exclude_unset=True), type="tracedV2"
-                )
+                root=_WorkspaceSubmissionUpdateInfo.TracedV2(**value.dict(exclude_unset=True), type="tracedV2")
             )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
-                __root__=_WorkspaceSubmissionUpdateInfo.TracedV2(
-                    **value.dict(exclude_unset=True), type="tracedV2"
-                )
+                __root__=_WorkspaceSubmissionUpdateInfo.TracedV2(**value.dict(exclude_unset=True), type="tracedV2")
             )  # type: ignore
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionUpdateInfo:
@@ -84,20 +66,14 @@ class _Factory:
             )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
-                __root__=_WorkspaceSubmissionUpdateInfo.Errored(
-                    type="errored", value=value
-                )
+                __root__=_WorkspaceSubmissionUpdateInfo.Errored(type="errored", value=value)
             )  # type: ignore
 
     def finished(self) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
-            return WorkspaceSubmissionUpdateInfo(
-                root=_WorkspaceSubmissionUpdateInfo.Finished(type="finished")
-            )  # type: ignore
+            return WorkspaceSubmissionUpdateInfo(root=_WorkspaceSubmissionUpdateInfo.Finished(type="finished"))  # type: ignore
         else:
-            return WorkspaceSubmissionUpdateInfo(
-                __root__=_WorkspaceSubmissionUpdateInfo.Finished(type="finished")
-            )  # type: ignore
+            return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Finished(type="finished"))  # type: ignore
 
 
 class WorkspaceSubmissionUpdateInfo(UniversalRootModel):
@@ -176,21 +152,13 @@ class WorkspaceSubmissionUpdateInfo(UniversalRootModel):
         if unioned_value.type == "running":
             return running(unioned_value.value)
         if unioned_value.type == "ran":
-            return ran(
-                WorkspaceRunDetails(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return ran(WorkspaceRunDetails(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "stopped":
             return stopped()
         if unioned_value.type == "traced":
             return traced()
         if unioned_value.type == "tracedV2":
-            return traced_v_2(
-                WorkspaceTracedUpdate(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return traced_v_2(WorkspaceTracedUpdate(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "errored":
             return errored(unioned_value.value)
         if unioned_value.type == "finished":

@@ -37,7 +37,15 @@ export class Service {
      * @example
      *     await client.folderD.service.getDirectThread()
      */
-    public async getDirectThread(requestOptions?: Service.RequestOptions): Promise<SeedAudiences.folderD.Response> {
+    public getDirectThread(
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedAudiences.folderD.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__getDirectThread(requestOptions));
+    }
+
+    private async __getDirectThread(
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedAudiences.folderD.Response>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,18 +69,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.folderD.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.folderD.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAudiencesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -81,12 +93,14 @@ export class Service {
                 throw new errors.SeedAudiencesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling GET /partner-path.");
             case "unknown":
                 throw new errors.SeedAudiencesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

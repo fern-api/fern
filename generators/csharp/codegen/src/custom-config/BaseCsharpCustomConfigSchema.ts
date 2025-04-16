@@ -12,15 +12,16 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "inline-path-parameters": z.boolean().optional(),
     "read-only-memory-types": z.optional(z.array(z.string())),
     "root-namespace-for-core-classes": z.boolean().optional(),
+    "use-discriminated-unions": z.boolean().optional(),
 
     // General options.
     "custom-pager-name": z.string().optional(),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
+    "experimental-additional-properties": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),
-    "use-discriminated-unions": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z

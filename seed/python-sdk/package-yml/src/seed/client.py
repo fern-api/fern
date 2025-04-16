@@ -3,13 +3,11 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .raw_client import RawSeedPackageYml
 from .service.client import ServiceClient
 from .core.request_options import RequestOptions
-from .core.jsonable_encoder import jsonable_encoder
-from .core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawSeedPackageYml
 from .service.client import AsyncServiceClient
 
 # this is used as the default value for optional parameters
@@ -51,7 +49,9 @@ class SeedPackageYml:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -61,7 +61,19 @@ class SeedPackageYml:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawSeedPackageYml(client_wrapper=self._client_wrapper)
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSeedPackageYml:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSeedPackageYml
+        """
+        return self._raw_client
 
     def echo(self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -93,29 +105,8 @@ class SeedPackageYml:
             size=20,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}/",
-            method="POST",
-            json={
-                "name": name,
-                "size": size,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.echo(id, name=name, size=size, request_options=request_options)
+        return response.data
 
 
 class AsyncSeedPackageYml:
@@ -153,7 +144,9 @@ class AsyncSeedPackageYml:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -163,7 +156,19 @@ class AsyncSeedPackageYml:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawSeedPackageYml(client_wrapper=self._client_wrapper)
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSeedPackageYml:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSeedPackageYml
+        """
+        return self._raw_client
 
     async def echo(
         self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
@@ -205,26 +210,5 @@ class AsyncSeedPackageYml:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}/",
-            method="POST",
-            json={
-                "name": name,
-                "size": size,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.echo(id, name=name, size=size, request_options=request_options)
+        return response.data

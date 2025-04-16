@@ -10,5 +10,4 @@ class ValidatorGenerator(ABC):
         self._reference_to_validators_class = reference_to_validators_class
 
     @abstractmethod
-    def add_validator_to_model(self) -> None:
-        ...
+    def add_validator_to_model(self) -> None: ...

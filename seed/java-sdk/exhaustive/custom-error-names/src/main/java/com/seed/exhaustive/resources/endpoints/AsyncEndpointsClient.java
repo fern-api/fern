@@ -12,6 +12,7 @@ import com.seed.exhaustive.resources.endpoints.httpmethods.AsyncHttpMethodsClien
 import com.seed.exhaustive.resources.endpoints.object.AsyncObjectClient;
 import com.seed.exhaustive.resources.endpoints.params.AsyncParamsClient;
 import com.seed.exhaustive.resources.endpoints.primitive.AsyncPrimitiveClient;
+import com.seed.exhaustive.resources.endpoints.put.AsyncPutClient;
 import com.seed.exhaustive.resources.endpoints.union.AsyncUnionClient;
 import java.util.function.Supplier;
 
@@ -32,6 +33,8 @@ public class AsyncEndpointsClient {
 
     protected final Supplier<AsyncPrimitiveClient> primitiveClient;
 
+    protected final Supplier<AsyncPutClient> putClient;
+
     protected final Supplier<AsyncUnionClient> unionClient;
 
     public AsyncEndpointsClient(ClientOptions clientOptions) {
@@ -43,6 +46,7 @@ public class AsyncEndpointsClient {
         this.objectClient = Suppliers.memoize(() -> new AsyncObjectClient(clientOptions));
         this.paramsClient = Suppliers.memoize(() -> new AsyncParamsClient(clientOptions));
         this.primitiveClient = Suppliers.memoize(() -> new AsyncPrimitiveClient(clientOptions));
+        this.putClient = Suppliers.memoize(() -> new AsyncPutClient(clientOptions));
         this.unionClient = Suppliers.memoize(() -> new AsyncUnionClient(clientOptions));
     }
 
@@ -72,6 +76,10 @@ public class AsyncEndpointsClient {
 
     public AsyncPrimitiveClient primitive() {
         return this.primitiveClient.get();
+    }
+
+    public AsyncPutClient put() {
+        return this.putClient.get();
     }
 
     public AsyncUnionClient union() {

@@ -34,7 +34,7 @@ public class GetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Union.GetAsync("string", RequestOptions);
+        var response = await Client.Union.GetAsync("string");
         Assert.That(
             response.Value,
             Is.EqualTo(
@@ -51,7 +51,7 @@ public class GetTest : BaseMockServerTest
                         >(mockResponse)
                         .Value
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

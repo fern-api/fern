@@ -37,18 +37,12 @@ class AbstractFolderDServiceService(AbstractFernService):
     def __init_get_direct_thread(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_direct_thread)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_direct_thread,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_direct_thread, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_direct_thread)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Response:

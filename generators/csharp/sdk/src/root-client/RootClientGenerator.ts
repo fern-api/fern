@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
@@ -110,7 +111,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 csharp.field({
                     access: csharp.Access.Public,
                     get: true,
-                    init: true,
                     name: subpackage.name.pascalCase.safeName,
                     type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
@@ -120,8 +120,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         const rootServiceId = this.context.ir.rootPackage.service;
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
-            for (const endpoint of service.endpoints) {
-                const methods = this.context.endpointGenerator.generate({
+            const methods = service.endpoints.flatMap((endpoint) => {
+                return this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     endpoint,
                     rawClientReference: CLIENT_MEMBER_NAME,
@@ -129,8 +129,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
                     grpcClientInfo: this.grpcClientInfo
                 });
-                class_.addMethods(methods);
-            }
+            });
+            class_.addMethods(methods);
         }
 
         const { optionalParameters } = this.getConstructorParameters();
@@ -259,6 +259,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     })
                 );
 
+                writer.write("clientOptions ??= ");
+                writer.writeNodeStatement(
+                    csharp.instantiateClass({
+                        classReference: this.context.getClientOptionsClassReference(),
+                        arguments_: []
+                    })
+                );
+
                 for (const param of literalParameters) {
                     if (param.header != null) {
                         writer.controlFlow("if", csharp.codeblock(`clientOptions.${param.name} != null`));
@@ -272,14 +280,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         writer.endControlFlow();
                     }
                 }
-
-                writer.write("clientOptions ??= ");
-                writer.writeNodeStatement(
-                    csharp.instantiateClass({
-                        classReference: this.context.getClientOptionsClassReference(),
-                        arguments_: []
-                    })
-                );
 
                 writer.controlFlow("foreach", csharp.codeblock("var header in defaultHeaders"));
                 writer.controlFlow("if", csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));

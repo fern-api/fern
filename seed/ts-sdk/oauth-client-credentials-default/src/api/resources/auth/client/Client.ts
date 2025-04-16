@@ -41,10 +41,17 @@ export class Auth {
      *         clientSecret: "client_secret"
      *     })
      */
-    public async getToken(
+    public getToken(
         request: SeedOauthClientCredentialsDefault.GetTokenRequest,
         requestOptions?: Auth.RequestOptions,
-    ): Promise<SeedOauthClientCredentialsDefault.TokenResponse> {
+    ): core.HttpResponsePromise<SeedOauthClientCredentialsDefault.TokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
+    }
+
+    private async __getToken(
+        request: SeedOauthClientCredentialsDefault.GetTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedOauthClientCredentialsDefault.TokenResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -73,18 +80,22 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.TokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.TokenResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedOauthClientCredentialsDefaultError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -93,6 +104,7 @@ export class Auth {
                 throw new errors.SeedOauthClientCredentialsDefaultError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsDefaultTimeoutError(
@@ -101,6 +113,7 @@ export class Auth {
             case "unknown":
                 throw new errors.SeedOauthClientCredentialsDefaultError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

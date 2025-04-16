@@ -21,7 +21,7 @@ public class UnionWithMultipleNoPropertiesTest
             new UnionWithMultipleNoProperties.Foo(new Foo { Name = "example" })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithMultipleNoProperties>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class UnionWithMultipleNoPropertiesTest
             new UnionWithMultipleNoProperties.Empty1()
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithMultipleNoProperties>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -84,7 +84,7 @@ public class UnionWithMultipleNoPropertiesTest
             new UnionWithMultipleNoProperties.Empty2()
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithMultipleNoProperties>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

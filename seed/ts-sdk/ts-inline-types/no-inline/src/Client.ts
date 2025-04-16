@@ -41,10 +41,17 @@ export class SeedObjectClient {
      *         foo: "foo"
      *     })
      */
-    public async getRoot(
+    public getRoot(
         request: SeedObject.PostRootRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
-    ): Promise<SeedObject.RootType1> {
+    ): core.HttpResponsePromise<SeedObject.RootType1> {
+        return core.HttpResponsePromise.fromPromise(this.__getRoot(request, requestOptions));
+    }
+
+    private async __getRoot(
+        request: SeedObject.PostRootRequest,
+        requestOptions?: SeedObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedObject.RootType1>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -69,13 +76,14 @@ export class SeedObjectClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedObject.RootType1;
+            return { data: _response.body as SeedObject.RootType1, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -84,12 +92,14 @@ export class SeedObjectClient {
                 throw new errors.SeedObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError("Timeout exceeded when calling POST /root/root.");
             case "unknown":
                 throw new errors.SeedObjectError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -116,10 +126,17 @@ export class SeedObjectClient {
      *         foo: "foo"
      *     })
      */
-    public async getDiscriminatedUnion(
+    public getDiscriminatedUnion(
         request: SeedObject.GetDiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getDiscriminatedUnion(request, requestOptions));
+    }
+
+    private async __getDiscriminatedUnion(
+        request: SeedObject.GetDiscriminatedUnionRequest,
+        requestOptions?: SeedObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -144,13 +161,14 @@ export class SeedObjectClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -159,6 +177,7 @@ export class SeedObjectClient {
                 throw new errors.SeedObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError(
@@ -167,6 +186,7 @@ export class SeedObjectClient {
             case "unknown":
                 throw new errors.SeedObjectError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -192,10 +212,17 @@ export class SeedObjectClient {
      *         foo: "foo"
      *     })
      */
-    public async getUndiscriminatedUnion(
+    public getUndiscriminatedUnion(
         request: SeedObject.GetUndiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getUndiscriminatedUnion(request, requestOptions));
+    }
+
+    private async __getUndiscriminatedUnion(
+        request: SeedObject.GetUndiscriminatedUnionRequest,
+        requestOptions?: SeedObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -220,13 +247,14 @@ export class SeedObjectClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -235,6 +263,7 @@ export class SeedObjectClient {
                 throw new errors.SeedObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError(
@@ -243,6 +272,7 @@ export class SeedObjectClient {
             case "unknown":
                 throw new errors.SeedObjectError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

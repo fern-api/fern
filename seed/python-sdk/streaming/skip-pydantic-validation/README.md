@@ -28,7 +28,7 @@ client = SeedStreaming(
 response = client.dummy.generate_stream(
     num_events=1,
 )
-for chunk in response:
+for chunk in response.data:
     yield chunk
 ```
 
@@ -50,7 +50,7 @@ async def main() -> None:
     response = await client.dummy.generate_stream(
         num_events=1,
     )
-    async for chunk in response:
+    async for chunk in response.data:
         yield chunk
 
 
@@ -85,7 +85,7 @@ client = SeedStreaming(
 response = client.dummy.generate_stream(
     num_events=1,
 )
-for chunk in response:
+for chunk in response.data:
     yield chunk
 ```
 
@@ -135,6 +135,7 @@ client.dummy.generate_stream(..., request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedStreaming

@@ -5,6 +5,7 @@ package com.seed.trace.resources.playlist.errors;
 
 import com.seed.trace.core.SeedTraceApiException;
 import com.seed.trace.resources.playlist.types.PlaylistIdNotFoundErrorBody;
+import okhttp3.Response;
 
 public final class PlaylistIdNotFoundError extends SeedTraceApiException {
     /**
@@ -14,6 +15,11 @@ public final class PlaylistIdNotFoundError extends SeedTraceApiException {
 
     public PlaylistIdNotFoundError(PlaylistIdNotFoundErrorBody body) {
         super("PlaylistIdNotFoundError", 404, body);
+        this.body = body;
+    }
+
+    public PlaylistIdNotFoundError(PlaylistIdNotFoundErrorBody body, Response rawResponse) {
+        super("PlaylistIdNotFoundError", 404, body, rawResponse);
         this.body = body;
     }
 

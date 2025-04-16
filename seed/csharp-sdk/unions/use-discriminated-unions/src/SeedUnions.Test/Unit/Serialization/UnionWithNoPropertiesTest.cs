@@ -21,7 +21,7 @@ public class UnionWithNoPropertiesTest
             new UnionWithNoProperties.Foo(new Foo { Name = "example" })
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithNoProperties>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -51,7 +51,7 @@ public class UnionWithNoPropertiesTest
             """;
         var expectedObject = new UnionWithNoProperties(new UnionWithNoProperties.Empty());
         var deserializedObject = JsonUtils.Deserialize<UnionWithNoProperties>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

@@ -3,6 +3,9 @@ using NUnit.Framework.Constraints;
 
 namespace NUnit.Framework;
 
+/// <summary>
+/// Extensions for EqualConstraint to handle JsonElement objects.
+/// </summary>
 public static class JsonElementComparerExtensions
 {
     /// <summary>
@@ -27,12 +30,14 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
 {
     private string _failurePath = string.Empty;
 
+    /// <inheritdoc />
     public bool Equals(JsonElement x, JsonElement y)
     {
         _failurePath = string.Empty;
         return CompareJsonElements(x, y, string.Empty);
     }
 
+    /// <inheritdoc />
     public int GetHashCode(JsonElement obj)
     {
         return JsonSerializer.Serialize(obj).GetHashCode();
@@ -218,6 +223,7 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
         return true;
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         if (!string.IsNullOrEmpty(_failurePath))

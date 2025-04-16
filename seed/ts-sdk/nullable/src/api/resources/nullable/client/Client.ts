@@ -43,10 +43,17 @@ export class Nullable {
      *         extra: true
      *     })
      */
-    public async getUsers(
+    public getUsers(
         request: SeedNullable.GetUsersRequest = {},
         requestOptions?: Nullable.RequestOptions,
-    ): Promise<SeedNullable.User[]> {
+    ): core.HttpResponsePromise<SeedNullable.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getUsers(request, requestOptions));
+    }
+
+    private async __getUsers(
+        request: SeedNullable.GetUsersRequest = {},
+        requestOptions?: Nullable.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedNullable.User[]>> {
         const { usernames, avatar, activated, tags, extra } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (usernames != null) {
@@ -105,18 +112,22 @@ export class Nullable {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.nullable.getUsers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.nullable.getUsers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -125,12 +136,14 @@ export class Nullable {
                 throw new errors.SeedNullableError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling GET /users.");
             case "unknown":
                 throw new errors.SeedNullableError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -150,15 +163,25 @@ export class Nullable {
      *             activated: true,
      *             status: {
      *                 type: "active"
+     *             },
+     *             values: {
+     *                 "values": "values"
      *             }
      *         },
      *         avatar: "avatar"
      *     })
      */
-    public async createUser(
+    public createUser(
         request: SeedNullable.CreateUserRequest,
         requestOptions?: Nullable.RequestOptions,
-    ): Promise<SeedNullable.User> {
+    ): core.HttpResponsePromise<SeedNullable.User> {
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
+    }
+
+    private async __createUser(
+        request: SeedNullable.CreateUserRequest,
+        requestOptions?: Nullable.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedNullable.User>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -183,18 +206,22 @@ export class Nullable {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -203,12 +230,14 @@ export class Nullable {
                 throw new errors.SeedNullableError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":
                 throw new errors.SeedNullableError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -222,10 +251,17 @@ export class Nullable {
      *         username: "xy"
      *     })
      */
-    public async deleteUser(
+    public deleteUser(
         request: SeedNullable.DeleteUserRequest = {},
         requestOptions?: Nullable.RequestOptions,
-    ): Promise<boolean> {
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteUser(request, requestOptions));
+    }
+
+    private async __deleteUser(
+        request: SeedNullable.DeleteUserRequest = {},
+        requestOptions?: Nullable.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -250,18 +286,22 @@ export class Nullable {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.nullable.deleteUser.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.nullable.deleteUser.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -270,12 +310,14 @@ export class Nullable {
                 throw new errors.SeedNullableError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling DELETE /users.");
             case "unknown":
                 throw new errors.SeedNullableError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/base-python-generator",
+  "name": "@fern-api/python-base",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/pythonv2/codegen"
+    "directory": "generators/python-v2/base"
   },
   "files": [
     "lib"
@@ -30,8 +30,9 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/python-ast": "workspace:*",
+    "@fern-api/python-browser-compatible-base": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-fern/ir-sdk": "53.7.0",
+    "@fern-fern/ir-sdk": "57.0.0",
     "lodash-es": "^4.17.21",
     "zod": "^3.22.4"
   },

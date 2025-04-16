@@ -50,9 +50,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec endpointWithRequestOptions,
             List<String> paramNames) {
         endpointWithoutRequestOptionsBuilder.addStatement(
-                endpointWithRequestOptions.returnType.equals(TypeName.VOID)
-                        ? endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")"
-                        : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")",
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")",
                 endpointWithRequestOptions.name);
     }
 
@@ -63,9 +61,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec) {
         endpointWithoutRequestBuilder.addStatement(
-                endpointWithRequestOptions.returnType.equals(TypeName.VOID)
-                        ? endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")"
-                        : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
                 bodyParameterSpec.type);
     }
 
@@ -98,7 +94,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
 
     @Override
     public void handleSuccessfulResult(CodeBlock.Builder httpResponseBuilder, CodeBlock resultExpression) {
-        httpResponseBuilder.addStatement("return $L", resultExpression);
+        httpResponseBuilder.addStatement("return new $T<>($L, response)", rawHttpResponseClassName(), resultExpression);
     }
 
     @Override
@@ -113,7 +109,7 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
 
     @Override
     public void addNoBodySuccessResponse(CodeBlock.Builder httpResponseBuilder) {
-        httpResponseBuilder.addStatement("return");
+        httpResponseBuilder.addStatement("return new $T<>(null, response)", rawHttpResponseClassName());
     }
 
     @Override
@@ -162,6 +158,6 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
 
     @Override
     public CodeBlock getNextPageGetter(String endpointName, String methodParameters) {
-        return CodeBlock.of("() -> $L($L)", endpointName, methodParameters);
+        return CodeBlock.of("() -> $L($L).body()", endpointName, methodParameters);
     }
 }

@@ -37,8 +37,7 @@ public class GetPresignedUrlTest : BaseMockServerTest
             );
 
         var response = await Client.S3.GetPresignedUrlAsync(
-            new GetPresignedUrlRequest { S3Key = "s3Key" },
-            RequestOptions
+            new GetPresignedUrlRequest { S3Key = "s3Key" }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }

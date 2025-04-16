@@ -2,7 +2,6 @@ using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
 using global::System.Text.Json.Serialization.Metadata;
-using CultureInfo = global::System.Globalization.CultureInfo;
 
 namespace SeedPlainText.Core;
 
@@ -48,7 +47,6 @@ internal static partial class JsonOptions
                                 switch (jsonAccessAttribute.AccessType)
                                 {
                                     case JsonAccessType.ReadOnly:
-                                        propertyInfo.Get = null;
                                         propertyInfo.ShouldSerialize = (_, _) => false;
                                         break;
                                     case JsonAccessType.WriteOnly:
@@ -100,27 +98,56 @@ internal static class JsonUtils
     internal static byte[] SerializeToUtf8Bytes<T>(T obj) =>
         JsonSerializer.SerializeToUtf8Bytes(obj, JsonOptions.JsonSerializerOptions);
 
-    internal static string SerializeAsString<T>(T obj)
+    internal static string SerializeWithAdditionalProperties<T>(
+        T obj,
+        object? additionalProperties = null
+    )
     {
-        return obj switch
+        if (additionalProperties == null)
         {
-            null => "null",
-            string str => str,
-            true => "true",
-            false => "false",
-            int i => i.ToString(CultureInfo.InvariantCulture),
-            long l => l.ToString(CultureInfo.InvariantCulture),
-            float f => f.ToString(CultureInfo.InvariantCulture),
-            double d => d.ToString(CultureInfo.InvariantCulture),
-            decimal dec => dec.ToString(CultureInfo.InvariantCulture),
-            short s => s.ToString(CultureInfo.InvariantCulture),
-            ushort u => u.ToString(CultureInfo.InvariantCulture),
-            uint u => u.ToString(CultureInfo.InvariantCulture),
-            ulong u => u.ToString(CultureInfo.InvariantCulture),
-            char c => c.ToString(CultureInfo.InvariantCulture),
-            Guid guid => guid.ToString("D"),
-            _ => Serialize(obj).Trim('"'),
-        };
+            return Serialize(obj);
+        }
+        var additionalPropertiesJsonNode = SerializeToNode(additionalProperties);
+        if (additionalPropertiesJsonNode is not JsonObject additionalPropertiesJsonObject)
+        {
+            throw new InvalidOperationException(
+                "The additional properties must serialize to a JSON object."
+            );
+        }
+        var jsonNode = SerializeToNode(obj);
+        if (jsonNode is not JsonObject jsonObject)
+        {
+            throw new InvalidOperationException(
+                "The serialized object must be a JSON object to add properties."
+            );
+        }
+        MergeJsonObjects(jsonObject, additionalPropertiesJsonObject);
+        return jsonObject.ToJsonString(JsonOptions.JsonSerializerOptions);
+    }
+
+    private static void MergeJsonObjects(JsonObject baseObject, JsonObject overrideObject)
+    {
+        foreach (var property in overrideObject)
+        {
+            if (!baseObject.TryGetPropertyValue(property.Key, out JsonNode? existingValue))
+            {
+                baseObject[property.Key] =
+                    property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
+                continue;
+            }
+            if (
+                existingValue is JsonObject nestedBaseObject
+                && property.Value is JsonObject nestedOverrideObject
+            )
+            {
+                // If both values are objects, recursively merge them.
+                MergeJsonObjects(nestedBaseObject, nestedOverrideObject);
+                continue;
+            }
+            // Otherwise, the overrideObject takes precedence.
+            baseObject[property.Key] =
+                property.Value != null ? JsonNode.Parse(property.Value.ToJsonString()) : null;
+        }
     }
 
     internal static T Deserialize<T>(string json) =>

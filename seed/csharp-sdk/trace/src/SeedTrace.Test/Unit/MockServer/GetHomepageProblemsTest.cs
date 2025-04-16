@@ -28,11 +28,10 @@ public class GetHomepageProblemsTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Homepage.GetHomepageProblemsAsync(RequestOptions);
+        var response = await Client.Homepage.GetHomepageProblemsAsync();
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse))
-                .UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse)).UsingDefaults()
         );
     }
 }

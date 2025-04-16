@@ -38,22 +38,14 @@ class AbstractDummyService(AbstractFernService):
     def __init_get_dummy(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_dummy)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_dummy,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_dummy, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_dummy)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:

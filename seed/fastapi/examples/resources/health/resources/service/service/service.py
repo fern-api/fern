@@ -51,24 +51,16 @@ class AbstractHealthServiceService(AbstractFernService):
     def __init_check(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.check)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.check,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.check, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.check)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -98,22 +90,14 @@ class AbstractHealthServiceService(AbstractFernService):
     def __init_ping(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.ping)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.ping,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.ping, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.ping)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> bool:

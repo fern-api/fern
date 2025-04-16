@@ -99,7 +99,7 @@ async function getIntermediateRepresentation({
             smartCasing,
             disableExamples,
             readme,
-            includeDynamicExamples: false
+            disableDynamicExamples: true
         });
     }
 

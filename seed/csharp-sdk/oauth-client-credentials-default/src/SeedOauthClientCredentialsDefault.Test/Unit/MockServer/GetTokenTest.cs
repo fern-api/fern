@@ -47,12 +47,11 @@ public class GetTokenTest : BaseMockServerTest
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
                 GrantType = "client_credentials",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

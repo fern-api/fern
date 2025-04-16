@@ -1,6 +1,5 @@
 using global::System.Threading.Tasks;
 using SeedBearerTokenEnvironmentVariable;
-using SeedBearerTokenEnvironmentVariable.Core;
 
 namespace Usage;
 

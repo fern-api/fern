@@ -18,7 +18,7 @@ public class OrganizationTest
             """;
         var expectedObject = new Organization { Name = "orgName" };
         var deserializedObject = JsonUtils.Deserialize<Organization>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

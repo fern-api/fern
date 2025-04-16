@@ -20,7 +20,7 @@ const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
-    create: async ({ workspace, fernWorkspaces, ossWorkspaces }) => {
+    create: async ({ workspace, apiWorkspaces, ossWorkspaces }) => {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
@@ -30,7 +30,7 @@ export const ValidMarkdownLinks: Rule = {
             url,
             workspace,
             ossWorkspaces,
-            fernWorkspaces,
+            apiWorkspaces,
             NOOP_CONTEXT
         );
 

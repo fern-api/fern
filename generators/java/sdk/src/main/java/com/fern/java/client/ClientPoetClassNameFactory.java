@@ -70,8 +70,7 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         String packageName;
         switch (packageLayout) {
             case FLAT:
-                packageName =
-                        getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
+                packageName = getTypesPackageName(httpService.getName().getFernFilepath());
                 break;
             case NESTED:
             default:
@@ -98,6 +97,13 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 .orElseGet(() ->
                         customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
                                 + "Exception");
+        return getCoreClassName(name);
+    }
+
+    public ClassName getHttpResponseClassName(
+            String organization, String workspaceName, JavaSdkCustomConfig customConfig) {
+        String name = customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
+                + "HttpResponse";
         return getCoreClassName(name);
     }
 

@@ -300,6 +300,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }
     ): void {
+        // No-op for types in api.yml
+        if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
+            return;
+        }
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.types == null) {
             fernFile.types = {};

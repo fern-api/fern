@@ -4,10 +4,24 @@ import uuid
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
-from fern.generator_exec.config import GeneratorConfig
-
+from .client_generator.client_generator import ClientGenerator
+from .client_generator.generated_root_client import GeneratedRootClient
+from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
+from .client_generator.raw_client_generator import RawClientGenerator
+from .client_generator.root_client_generator import RootClientGenerator
+from .client_generator.socket_client_generator import SocketClientGenerator
+from .custom_config import (
+    BaseDependencyCustomConfig,
+    DependencyCustomConfig,
+    SDKCustomConfig,
+)
+from .environment_generators import (
+    GeneratedEnvironment,
+    MultipleBaseUrlsEnvironmentGenerator,
+    SingleBaseUrlEnvironmentGenerator,
+)
+from .error_generator.error_generator import ErrorGenerator
+from .v2.generator import PythonV2Generator
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
@@ -15,7 +29,7 @@ from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generator_cli import README_FILENAME, GeneratorCli
 from fern_python.generator_cli.generator_cli import REFERENCE_FILENAME
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model import PydanticModelGenerator
+from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
@@ -32,21 +46,9 @@ from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import build_snippet_writer
 
-from .client_generator.client_generator import ClientGenerator
-from .client_generator.generated_root_client import GeneratedRootClient
-from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
-from .client_generator.root_client_generator import RootClientGenerator
-from .custom_config import (
-    BaseDependencyCustomConfig,
-    DependencyCustomConfig,
-    SDKCustomConfig,
-)
-from .environment_generators import (
-    GeneratedEnvironment,
-    MultipleBaseUrlsEnvironmentGenerator,
-    SingleBaseUrlEnvironmentGenerator,
-)
-from .error_generator.error_generator import ErrorGenerator
+import fern.ir.resources as ir_types
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
+from fern.generator_exec.config import GeneratorConfig
 
 
 class SdkGenerator(AbstractGenerator):
@@ -156,9 +158,9 @@ class SdkGenerator(AbstractGenerator):
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
-        base_environment: Optional[
-            Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]
-        ] = None
+        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]] = (
+            None
+        )
         if ir.environments is not None:
             base_environment = self._generate_environments_base(
                 context=context, environments=ir.environments.environments
@@ -237,14 +239,25 @@ class SdkGenerator(AbstractGenerator):
             ],
         )
 
+        write_websocket_snippets = False
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
-            if subpackage.has_endpoints_in_tree:
+            if subpackage.has_endpoints_in_tree or (
+                subpackage.websocket is not None and context.custom_config.should_generate_websocket_clients
+            ):
+                channel_websocket = (
+                    ir.websocket_channels[subpackage.websocket]
+                    if ir.websocket_channels and subpackage.websocket
+                    else None
+                )
+                if channel_websocket is not None and context.custom_config.should_generate_websocket_clients:
+                    write_websocket_snippets = True
                 self._generate_subpackage_client(
                     context=context,
                     generator_exec_wrapper=generator_exec_wrapper,
                     subpackage_id=subpackage_id,
                     subpackage=subpackage,
+                    websocket=channel_websocket,
                     project=project,
                     generated_root_client=generated_root_client,
                     snippet_registry=snippet_registry,
@@ -261,7 +274,6 @@ class SdkGenerator(AbstractGenerator):
             )
 
         if generator_config.output.mode.get_as_union().type != "downloadFiles":
-
             generator_cli = GeneratorCli(
                 organization=generator_config.organization,
                 project_config=project._project_config,
@@ -286,6 +298,7 @@ class SdkGenerator(AbstractGenerator):
                         snippets=snippets,
                         project=project,
                         generated_root_client=generated_root_client,
+                        write_websocket_snippets=write_websocket_snippets,
                     )
                 except Exception as e:
                     generator_exec_wrapper.send_update(
@@ -346,12 +359,18 @@ class SdkGenerator(AbstractGenerator):
         )
 
         # Only write unit tests if specified in config
-        if generator_config.write_unit_tests:
+        if context.custom_config.include_legacy_wire_tests and generator_config.write_unit_tests:
             self._write_snippet_tests(
                 snippet_test_factory=test_fac,
                 snippet_writer=snippet_writer,
                 ir=ir,
             )
+
+        # Finally, run the python-v2 generator.
+        pythonv2 = PythonV2Generator(
+            coordinator=generator_exec_wrapper,
+        )
+        pythonv2.run()
 
     def _generate_environments_base(
         self,
@@ -449,8 +468,28 @@ class SdkGenerator(AbstractGenerator):
             snippet_writer=snippet_writer,
             oauth_scheme=oauth_scheme,
             endpoint_metadata_collector=endpoint_metadata_collector,
+            websocket=None,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
+
+        if ir.root_package.service is not None:
+            raw_client_filepath = context.get_filepath_for_generated_raw_root_client()
+            raw_client_source_file = context.source_file_factory.create(
+                project=project, filepath=raw_client_filepath, generator_exec_wrapper=generator_exec_wrapper
+            )
+            RawClientGenerator(
+                context=context,
+                package=ir.root_package,
+                subpackage_id=ir.root_package.service,
+                class_name=context.get_class_name_for_generated_raw_root_client(),
+                async_class_name=context.get_class_name_for_generated_async_raw_root_client(),
+                generated_root_client=generated_root_client,
+                snippet_registry=snippet_registry,
+                snippet_writer=snippet_writer,
+                endpoint_metadata_collector=endpoint_metadata_collector,
+                websocket=None,
+            ).generate(source_file=raw_client_source_file)
+            project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
         return generated_root_client
 
     def _generate_subpackage_client(
@@ -459,27 +498,63 @@ class SdkGenerator(AbstractGenerator):
         generator_exec_wrapper: GeneratorExecWrapper,
         subpackage_id: ir_types.SubpackageId,
         subpackage: ir_types.Subpackage,
+        websocket: Optional[ir_types.WebSocketChannel],
         project: Project,
         generated_root_client: GeneratedRootClient,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
         endpoint_metadata_collector: EndpointMetadataCollector,
     ) -> None:
-        filepath = context.get_filepath_for_subpackage_service(subpackage_id)
-        source_file = context.source_file_factory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        if websocket is not None and context.custom_config.should_generate_websocket_clients:
+            socket_client_filepath = context.get_socket_client_filepath_for_subpackage_service(subpackage_id)
+            socket_source_file = context.source_file_factory.create(
+                project=project, filepath=socket_client_filepath, generator_exec_wrapper=generator_exec_wrapper
+            )
+            SocketClientGenerator(
+                context=context,
+                subpackage_id=subpackage_id,
+                websocket=websocket,
+                class_name=context.get_socket_client_class_name_for_subpackage_service(subpackage_id),
+                async_class_name=context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id),
+                generated_root_client=generated_root_client,
+            ).generate(source_file=socket_source_file)
+            project.write_source_file(source_file=socket_source_file, filepath=socket_client_filepath)
+
+        client_filepath = context.get_client_filepath_for_subpackage_service(subpackage_id)
+        client_source_file = context.source_file_factory.create(
+            project=project, filepath=client_filepath, generator_exec_wrapper=generator_exec_wrapper
         )
         ClientGenerator(
             context=context,
             package=subpackage,
-            class_name=context.get_class_name_of_subpackage_service(subpackage_id),
+            subpackage_id=subpackage_id,
+            class_name=context.get_client_class_name_for_subpackage_service(subpackage_id),
             async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
             generated_root_client=generated_root_client,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
-        ).generate(source_file=source_file)
-        project.write_source_file(source_file=source_file, filepath=filepath)
+            websocket=websocket,
+        ).generate(source_file=client_source_file)
+        project.write_source_file(source_file=client_source_file, filepath=client_filepath)
+
+        raw_client_filepath = context.get_raw_client_filepath_for_subpackage_service(subpackage_id)
+        raw_client_source_file = context.source_file_factory.create(
+            project=project, filepath=raw_client_filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+        RawClientGenerator(
+            context=context,
+            package=subpackage,
+            subpackage_id=subpackage_id,
+            class_name=context.get_raw_client_class_name_for_subpackage_service(subpackage_id),
+            async_class_name=context.get_async_raw_client_class_name_for_subpackage_service(subpackage_id),
+            generated_root_client=generated_root_client,
+            snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
+            endpoint_metadata_collector=endpoint_metadata_collector,
+            websocket=websocket,
+        ).generate(source_file=raw_client_source_file)
+        project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
 
     def _generate_error(
         self,
@@ -568,7 +643,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
                     )
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message=f"Uploaded snippet templates to FDR.")
+                            LogUpdate(level=LogLevel.DEBUG, message="Uploaded snippet templates to FDR.")
                         )
                     )
                 except Exception as e:
@@ -589,7 +664,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 )
                 generator_exec_wrapper.send_update(
                     GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message=f"Wrote snippet templates to disk.")
+                        LogUpdate(level=LogLevel.DEBUG, message="Wrote snippet templates to disk.")
                     )
                 )
 
@@ -609,6 +684,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
         snippets: Snippets,
         project: Project,
         generated_root_client: GeneratedRootClient,
+        write_websocket_snippets: bool,
     ) -> None:
         contents = generator_cli.generate_readme(
             snippets=snippets,
@@ -617,6 +693,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 project._github_output_mode.installation_token if project._github_output_mode is not None else None
             ),
             pagination_enabled=context.generator_config.generate_paginated_clients,
+            websocket_enabled=write_websocket_snippets,
             generated_root_client=generated_root_client,
         )
         project.add_file(

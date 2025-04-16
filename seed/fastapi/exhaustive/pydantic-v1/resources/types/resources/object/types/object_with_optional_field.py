@@ -21,13 +21,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
     date: typing.Optional[dt.date] = None
     uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
     base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
-    list_: typing.Optional[typing.List[str]] = pydantic.Field(
-        alias="list", default=None
-    )
+    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
     set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
-    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(
-        alias="map", default=None
-    )
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
     bigint: typing.Optional[str] = None
 
     class Config:

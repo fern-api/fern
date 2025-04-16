@@ -327,6 +327,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 path: false
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any;
+
+            draft["packageManager"] = "yarn@1.22.22";
         });
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs);

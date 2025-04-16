@@ -1,3 +1,5 @@
+import { HttpResponsePromise, RawResponse } from "../fetcher";
+
 /**
  * A page of results from a paginated API.
  *
@@ -5,24 +7,28 @@
  */
 export class Page<T> implements AsyncIterable<T> {
     public data: T[];
+    public rawResponse: RawResponse;
 
     private response: unknown;
     private _hasNextPage: (response: unknown) => boolean;
     private getItems: (response: unknown) => T[];
-    private loadNextPage: (response: unknown) => Promise<unknown>;
+    private loadNextPage: (response: unknown) => HttpResponsePromise<unknown>;
 
     constructor({
         response,
+        rawResponse,
         hasNextPage,
         getItems,
         loadPage,
     }: {
         response: unknown;
+        rawResponse: RawResponse;
         hasNextPage: (response: unknown) => boolean;
         getItems: (response: unknown) => T[];
-        loadPage: (response: unknown) => Promise<any>;
+        loadPage: (response: unknown) => HttpResponsePromise<any>;
     }) {
         this.response = response;
+        this.rawResponse = rawResponse;
         this.data = getItems(response);
         this._hasNextPage = hasNextPage;
         this.getItems = getItems;
@@ -34,7 +40,9 @@ export class Page<T> implements AsyncIterable<T> {
      * @returns this
      */
     public async getNextPage(): Promise<this> {
-        this.response = await this.loadNextPage(this.response);
+        const { data, rawResponse } = await this.loadNextPage(this.response).withRawResponse();
+        this.response = data;
+        this.rawResponse = rawResponse;
         this.data = this.getItems(this.response);
         return this;
     }

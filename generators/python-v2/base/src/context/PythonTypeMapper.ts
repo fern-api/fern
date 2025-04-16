@@ -65,6 +65,8 @@ export class PythonTypeMapper {
                 return python.Type.set(this.convert({ reference: container.set }));
             case "optional":
                 return python.Type.optional(this.convert({ reference: container.optional }));
+            case "nullable":
+                return python.Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:

@@ -39,7 +39,7 @@ export const Pagination = {
         return {
             ...value,
             type: "cursor",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.Pagination.Cursor,
                 visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
             ) {
@@ -52,7 +52,7 @@ export const Pagination = {
         return {
             ...value,
             type: "offset",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.Pagination.Offset,
                 visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
             ) {
@@ -65,7 +65,7 @@ export const Pagination = {
         return {
             ...value,
             type: "custom",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernOpenapiIr.Pagination.Custom,
                 visitor: FernOpenapiIr.Pagination._Visitor<_Result>,
             ) {

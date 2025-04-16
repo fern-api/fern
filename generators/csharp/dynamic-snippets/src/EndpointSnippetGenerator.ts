@@ -468,10 +468,7 @@ export class EndpointSnippetGenerator {
 
         // TODO: Add support for file properties.
         this.context.errors.scope(Scope.RequestBody);
-        const filePropertyInfo = {
-            fileFields: [],
-            bodyPropertyFields: []
-        };
+        const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
         if (
@@ -497,6 +494,25 @@ export class EndpointSnippetGenerator {
             })
         );
         return args;
+    }
+
+    private getFilePropertyInfo({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): FilePropertyInfo {
+        if (request.body == null || !this.context.isFileUploadRequestBody(request.body)) {
+            return {
+                fileFields: [],
+                bodyPropertyFields: []
+            };
+        }
+        return this.context.filePropertyMapper.getFilePropertyInfo({
+            body: request.body,
+            value: snippet.requestBody
+        });
     }
 
     private getInlinedRequestArg({
@@ -688,7 +704,7 @@ export class EndpointSnippetGenerator {
             });
             return csharp.TypeLiteral.nop();
         }
-        return this.context.getMemoryStreamForString(str);
+        return csharp.TypeLiteral.reference(this.context.getMemoryStreamForString(str));
     }
 
     private getRootClientConstructorInvocation(arguments_: NamedArgument[]): csharp.ClassInstantiation {

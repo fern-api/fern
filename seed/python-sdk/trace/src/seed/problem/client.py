@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawProblemClient
 from .types.problem_description import ProblemDescription
 from ..commons.types.language import Language
 from .types.problem_files import ProblemFiles
@@ -10,15 +11,11 @@ from ..commons.types.variable_type import VariableType
 from ..commons.types.test_case_with_expected_result import TestCaseWithExpectedResult
 from ..core.request_options import RequestOptions
 from .types.create_problem_response import CreateProblemResponse
-from ..core.serialization import convert_and_respect_annotation_metadata
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
-from ..core.pydantic_utilities import parse_obj_as
 from ..commons.types.problem_id import ProblemId
 from .types.update_problem_response import UpdateProblemResponse
-from ..core.jsonable_encoder import jsonable_encoder
 from .types.get_default_starter_files_response import GetDefaultStarterFilesResponse
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawProblemClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,7 +23,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ProblemClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawProblemClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawProblemClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawProblemClient
+        """
+        return self._raw_client
 
     def create_problem(
         self,
@@ -149,44 +157,17 @@ class ProblemClient:
             method_name="methodName",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "problem-crud/create",
-            method="POST",
-            json={
-                "problemName": problem_name,
-                "problemDescription": convert_and_respect_annotation_metadata(
-                    object_=problem_description, annotation=ProblemDescription, direction="write"
-                ),
-                "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
-                ),
-                "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
-                ),
-                "outputType": convert_and_respect_annotation_metadata(
-                    object_=output_type, annotation=VariableType, direction="write"
-                ),
-                "testcases": convert_and_respect_annotation_metadata(
-                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
-                ),
-                "methodName": method_name,
-            },
+        response = self._raw_client.create_problem(
+            problem_name=problem_name,
+            problem_description=problem_description,
+            files=files,
+            input_params=input_params,
+            output_type=output_type,
+            testcases=testcases,
+            method_name=method_name,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return typing.cast(
-                CreateProblemResponse,
-                parse_obj_as(
-                    type_=CreateProblemResponse,  # type: ignore
-                    object_=_response_json,
-                ),
-            )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def update_problem(
         self,
@@ -313,44 +294,18 @@ class ProblemClient:
             method_name="methodName",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"problem-crud/update/{jsonable_encoder(problem_id)}",
-            method="POST",
-            json={
-                "problemName": problem_name,
-                "problemDescription": convert_and_respect_annotation_metadata(
-                    object_=problem_description, annotation=ProblemDescription, direction="write"
-                ),
-                "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
-                ),
-                "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
-                ),
-                "outputType": convert_and_respect_annotation_metadata(
-                    object_=output_type, annotation=VariableType, direction="write"
-                ),
-                "testcases": convert_and_respect_annotation_metadata(
-                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
-                ),
-                "methodName": method_name,
-            },
+        response = self._raw_client.update_problem(
+            problem_id,
+            problem_name=problem_name,
+            problem_description=problem_description,
+            files=files,
+            input_params=input_params,
+            output_type=output_type,
+            testcases=testcases,
+            method_name=method_name,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return typing.cast(
-                UpdateProblemResponse,
-                parse_obj_as(
-                    type_=UpdateProblemResponse,  # type: ignore
-                    object_=_response_json,
-                ),
-            )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def delete_problem(self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -379,18 +334,8 @@ class ProblemClient:
             problem_id="problemId",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"problem-crud/delete/{jsonable_encoder(problem_id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete_problem(problem_id, request_options=request_options)
+        return response.data
 
     def get_default_starter_files(
         self,
@@ -449,39 +394,26 @@ class ProblemClient:
             method_name="methodName",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "problem-crud/default-starter-files",
-            method="POST",
-            json={
-                "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
-                ),
-                "outputType": convert_and_respect_annotation_metadata(
-                    object_=output_type, annotation=VariableType, direction="write"
-                ),
-                "methodName": method_name,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.get_default_starter_files(
+            input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
         )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return typing.cast(
-                GetDefaultStarterFilesResponse,
-                parse_obj_as(
-                    type_=GetDefaultStarterFilesResponse,  # type: ignore
-                    object_=_response_json,
-                ),
-            )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncProblemClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawProblemClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawProblemClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawProblemClient
+        """
+        return self._raw_client
 
     async def create_problem(
         self,
@@ -612,44 +544,17 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "problem-crud/create",
-            method="POST",
-            json={
-                "problemName": problem_name,
-                "problemDescription": convert_and_respect_annotation_metadata(
-                    object_=problem_description, annotation=ProblemDescription, direction="write"
-                ),
-                "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
-                ),
-                "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
-                ),
-                "outputType": convert_and_respect_annotation_metadata(
-                    object_=output_type, annotation=VariableType, direction="write"
-                ),
-                "testcases": convert_and_respect_annotation_metadata(
-                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
-                ),
-                "methodName": method_name,
-            },
+        response = await self._raw_client.create_problem(
+            problem_name=problem_name,
+            problem_description=problem_description,
+            files=files,
+            input_params=input_params,
+            output_type=output_type,
+            testcases=testcases,
+            method_name=method_name,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return typing.cast(
-                CreateProblemResponse,
-                parse_obj_as(
-                    type_=CreateProblemResponse,  # type: ignore
-                    object_=_response_json,
-                ),
-            )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def update_problem(
         self,
@@ -784,44 +689,18 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"problem-crud/update/{jsonable_encoder(problem_id)}",
-            method="POST",
-            json={
-                "problemName": problem_name,
-                "problemDescription": convert_and_respect_annotation_metadata(
-                    object_=problem_description, annotation=ProblemDescription, direction="write"
-                ),
-                "files": convert_and_respect_annotation_metadata(
-                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
-                ),
-                "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
-                ),
-                "outputType": convert_and_respect_annotation_metadata(
-                    object_=output_type, annotation=VariableType, direction="write"
-                ),
-                "testcases": convert_and_respect_annotation_metadata(
-                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
-                ),
-                "methodName": method_name,
-            },
+        response = await self._raw_client.update_problem(
+            problem_id,
+            problem_name=problem_name,
+            problem_description=problem_description,
+            files=files,
+            input_params=input_params,
+            output_type=output_type,
+            testcases=testcases,
+            method_name=method_name,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return typing.cast(
-                UpdateProblemResponse,
-                parse_obj_as(
-                    type_=UpdateProblemResponse,  # type: ignore
-                    object_=_response_json,
-                ),
-            )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def delete_problem(
         self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
@@ -860,18 +739,8 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"problem-crud/delete/{jsonable_encoder(problem_id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete_problem(problem_id, request_options=request_options)
+        return response.data
 
     async def get_default_starter_files(
         self,
@@ -938,31 +807,7 @@ class AsyncProblemClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "problem-crud/default-starter-files",
-            method="POST",
-            json={
-                "inputParams": convert_and_respect_annotation_metadata(
-                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
-                ),
-                "outputType": convert_and_respect_annotation_metadata(
-                    object_=output_type, annotation=VariableType, direction="write"
-                ),
-                "methodName": method_name,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.get_default_starter_files(
+            input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
         )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return typing.cast(
-                GetDefaultStarterFilesResponse,
-                parse_obj_as(
-                    type_=GetDefaultStarterFilesResponse,  # type: ignore
-                    object_=_response_json,
-                ),
-            )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

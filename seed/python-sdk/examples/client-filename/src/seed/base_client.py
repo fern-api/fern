@@ -4,17 +4,15 @@ import typing
 from .environment import SeedExhaustiveEnvironment
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .raw_base_client import RawBaseSeedExhaustive
 from .file.client import FileClient
 from .health.client import HealthClient
 from .service.client import ServiceClient
 from .core.request_options import RequestOptions
-from .core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .types.type import Type
 from .types.identifier import Identifier
-from .core.serialization import convert_and_respect_annotation_metadata
 from .core.client_wrapper import AsyncClientWrapper
+from .raw_base_client import AsyncRawBaseSeedExhaustive
 from .file.client import AsyncFileClient
 from .health.client import AsyncHealthClient
 from .service.client import AsyncServiceClient
@@ -66,7 +64,9 @@ class BaseSeedExhaustive:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
@@ -77,9 +77,21 @@ class BaseSeedExhaustive:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawBaseSeedExhaustive(client_wrapper=self._client_wrapper)
         self.file = FileClient(client_wrapper=self._client_wrapper)
         self.health = HealthClient(client_wrapper=self._client_wrapper)
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawBaseSeedExhaustive:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawBaseSeedExhaustive
+        """
+        return self._raw_client
 
     def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -107,25 +119,8 @@ class BaseSeedExhaustive:
             request="Hello world!\\n\\nwith\\n\\tnewlines",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.echo(request=request, request_options=request_options)
+        return response.data
 
     def create_type(self, *, request: Type, request_options: typing.Optional[RequestOptions] = None) -> Identifier:
         """
@@ -153,25 +148,8 @@ class BaseSeedExhaustive:
             request="primitive",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Identifier,
-                    parse_obj_as(
-                        type_=Identifier,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.create_type(request=request, request_options=request_options)
+        return response.data
 
 
 class AsyncBaseSeedExhaustive:
@@ -217,7 +195,9 @@ class AsyncBaseSeedExhaustive:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
@@ -228,9 +208,21 @@ class AsyncBaseSeedExhaustive:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawBaseSeedExhaustive(client_wrapper=self._client_wrapper)
         self.file = AsyncFileClient(client_wrapper=self._client_wrapper)
         self.health = AsyncHealthClient(client_wrapper=self._client_wrapper)
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawBaseSeedExhaustive:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawBaseSeedExhaustive
+        """
+        return self._raw_client
 
     async def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -266,25 +258,8 @@ class AsyncBaseSeedExhaustive:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.echo(request=request, request_options=request_options)
+        return response.data
 
     async def create_type(
         self, *, request: Type, request_options: typing.Optional[RequestOptions] = None
@@ -322,25 +297,8 @@ class AsyncBaseSeedExhaustive:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Identifier,
-                    parse_obj_as(
-                        type_=Identifier,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.create_type(request=request, request_options=request_options)
+        return response.data
 
 
 def _get_base_url(

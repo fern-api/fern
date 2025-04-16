@@ -139,6 +139,16 @@
         }
       ]
     },
+    "ai-chat": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AIChatConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -2485,6 +2495,40 @@
         "ts",
         "js"
       ]
+    },
+    "docs.AIChatModel": {
+      "type": "string",
+      "enum": [
+        "claude-3.5",
+        "claude-3.7",
+        "command-a"
+      ]
+    },
+    "docs.AIChatConfig": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AIChatModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "system-prompt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "docs.TwitterCardSetting": {
       "type": "string",

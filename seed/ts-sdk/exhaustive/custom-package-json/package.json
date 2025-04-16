@@ -66,5 +66,6 @@
         "path": false,
         "command-exists": false,
         "execa": false
-    }
+    },
+    "packageManager": "yarn@1.22.22"
 }

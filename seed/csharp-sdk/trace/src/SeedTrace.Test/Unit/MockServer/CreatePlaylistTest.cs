@@ -70,12 +70,11 @@ public class CreatePlaylistTest : BaseMockServerTest
                     Name = "name",
                     Problems = new List<string>() { "problems", "problems" },
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<Playlist>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<Playlist>(mockResponse)).UsingDefaults()
         );
     }
 }

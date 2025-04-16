@@ -4,6 +4,4 @@ import typing
 from .single_filter_search_request import SingleFilterSearchRequest
 from .multiple_filter_search_request import MultipleFilterSearchRequest
 
-SearchRequestQuery = typing.Union[
-    SingleFilterSearchRequest, MultipleFilterSearchRequest
-]
+SearchRequestQuery = typing.Union[SingleFilterSearchRequest, MultipleFilterSearchRequest]

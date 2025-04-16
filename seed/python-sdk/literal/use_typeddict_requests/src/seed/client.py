@@ -34,6 +34,8 @@ class SeedLiteral:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    version : typing.Optional[str]
+    audit_logging : typing.Optional[str]
     Examples
     --------
     from seed import SeedLiteral
@@ -50,8 +52,12 @@ class SeedLiteral:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        version: typing.Optional[str] = None,
+        audit_logging: typing.Optional[str] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -60,6 +66,8 @@ class SeedLiteral:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            version=version,
+            audit_logging=audit_logging,
         )
         self.headers = HeadersClient(client_wrapper=self._client_wrapper)
         self.inlined = InlinedClient(client_wrapper=self._client_wrapper)
@@ -86,6 +94,8 @@ class AsyncSeedLiteral:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    version : typing.Optional[str]
+    audit_logging : typing.Optional[str]
     Examples
     --------
     from seed import AsyncSeedLiteral
@@ -102,8 +112,12 @@ class AsyncSeedLiteral:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        version: typing.Optional[str] = None,
+        audit_logging: typing.Optional[str] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -112,6 +126,8 @@ class AsyncSeedLiteral:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            version=version,
+            audit_logging=audit_logging,
         )
         self.headers = AsyncHeadersClient(client_wrapper=self._client_wrapper)
         self.inlined = AsyncInlinedClient(client_wrapper=self._client_wrapper)

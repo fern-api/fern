@@ -38,13 +38,12 @@ public class GetAndReturnMapPrimToPrimTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
-            new Dictionary<string, string>() { { "string", "string" } },
-            RequestOptions
+            new Dictionary<string, string>() { { "string", "string" } }
         );
         Assert.That(
             response,
             Is.EqualTo(JsonUtils.Deserialize<Dictionary<string, string>>(mockResponse))
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

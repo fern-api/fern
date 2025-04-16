@@ -6,6 +6,7 @@ package com.fern.sdk.resources.generalerrors.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
+import okhttp3.Response;
 
 public final class BadRequestBody extends SeedExhaustiveApiException {
   /**
@@ -15,6 +16,11 @@ public final class BadRequestBody extends SeedExhaustiveApiException {
 
   public BadRequestBody(BadObjectRequestInfo body) {
     super("BadRequestBody", 400, body);
+    this.body = body;
+  }
+
+  public BadRequestBody(BadObjectRequestInfo body, Response rawResponse) {
+    super("BadRequestBody", 400, body, rawResponse);
     this.body = body;
   }
 

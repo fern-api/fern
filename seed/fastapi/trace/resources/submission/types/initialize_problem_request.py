@@ -9,14 +9,10 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 class InitializeProblemRequest(UniversalBaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic.Field(
-        alias="problemVersion", default=None
-    )
+    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

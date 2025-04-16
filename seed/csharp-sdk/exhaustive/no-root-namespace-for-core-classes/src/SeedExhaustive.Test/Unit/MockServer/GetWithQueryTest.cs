@@ -23,8 +23,7 @@ public class GetWithQueryTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Endpoints.Params.GetWithQueryAsync(
-                    new GetWithQuery { Query = "query", Number = 1 },
-                    RequestOptions
+                    new GetWithQuery { Query = "query", Number = 1 }
                 )
         );
     }

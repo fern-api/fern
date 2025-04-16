@@ -1,0 +1,173 @@
+{
+    "types": {
+        "type_commons/types:Tag": "\"tag-wf9as23d\"\n",
+        "type_commons/types:Metadata": "from seed.commons.types import Metadata\n\nMetadata(\n    id=\"metadata-js8dg24b\",\n    data={\"foo\": \"bar\", \"baz\": \"qux\"},\n    json_string='{\"foo\": \"bar\", \"baz\": \"qux\"}',\n)\n",
+        "type_commons/types:EventInfo": "from seed.commons.types import EventInfo_Metadata\n\nEventInfo_Metadata(\n    id=\"metadata-alskjfg8\",\n    data={\"one\": \"two\"},\n    json_string='{\"one\": \"two\"}',\n)\n",
+        "type_commons/types:Data": "from seed.commons.types import Data_String\n\nData_String(value=\"data\")\n",
+        "type_file/service:Filename": "\"file.txt\"\n",
+        "type_types:MovieId": "\"movie-c06a4ad7\"\n",
+        "type_types:Movie": "from seed.types import Movie\n\nMovie(\n    id=\"movie-c06a4ad7\",\n    prequel=\"movie-cv9b914f\",\n    title=\"The Boy and the Heron\",\n    from_=\"Hayao Miyazaki\",\n    rating=8.0,\n    tag=\"tag-wf9as23d\",\n    metadata={\n        \"actors\": [\"Christian Bale\", \"Florence Pugh\", \"Willem Dafoe\"],\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n    },\n    revenue=1000000,\n)\n",
+        "type_types:CastMember": "from seed.types import Actor\n\nActor(\n    id=\"actor_123\",\n    name=\"Brad Pitt\",\n)\n",
+        "type_types:Actress": "from seed.types import Actress\n\nActress(\n    name=\"Jennifer Lawrence\",\n    id=\"actor_456\",\n)\n",
+        "type_types:ExtendedMovie": "from seed.types import ExtendedMovie\n\nExtendedMovie(\n    id=\"movie-sda231x\",\n    title=\"Pulp Fiction\",\n    from_=\"Quentin Tarantino\",\n    rating=8.5,\n    tag=\"tag-12efs9dv\",\n    cast=[\"John Travolta\", \"Samuel L. Jackson\", \"Uma Thurman\", \"Bruce Willis\"],\n    metadata={\n        \"academyAward\": True,\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n    },\n    revenue=1000000,\n)\n",
+        "type_types:Moment": "import datetime\nimport uuid\n\nfrom seed.types import Moment\n\nMoment(\n    id=uuid.UUID(\n        \"656f12d6-f592-444c-a1d3-a3cfd46d5b39\",\n    ),\n    date=datetime.date.fromisoformat(\n        \"1994-01-01\",\n    ),\n    datetime=datetime.datetime.fromisoformat(\n        \"1994-01-01 01:01:01+00:00\",\n    ),\n)\n",
+        "type_types:File": "from seed.types import File\n\nFile(\n    name=\"file.txt\",\n    contents=\"...\",\n)\n",
+        "type_types:Directory": "from seed.types import Directory, File\n\nDirectory(\n    name=\"root\",\n    files=[\n        File(\n            name=\"file.txt\",\n            contents=\"...\",\n        )\n    ],\n    directories=[\n        Directory(\n            name=\"tmp\",\n            files=[\n                File(\n                    name=\"another_file.txt\",\n                    contents=\"...\",\n                )\n            ],\n        )\n    ],\n)\n",
+        "type_types:Node": "from seed.types import Node, Tree\n\nNode(\n    name=\"root\",\n    nodes=[\n        Node(\n            name=\"left\",\n        ),\n        Node(\n            name=\"right\",\n        ),\n    ],\n    trees=[\n        Tree(\n            nodes=[\n                Node(\n                    name=\"left\",\n                ),\n                Node(\n                    name=\"right\",\n                ),\n            ],\n        )\n    ],\n)\n",
+        "type_types:Tree": "from seed.types import Node, Tree\n\nTree(\n    nodes=[\n        Node(\n            name=\"left\",\n        ),\n        Node(\n            name=\"right\",\n        ),\n    ],\n)\n",
+        "type_types:Metadata": "from seed.types import Metadata_Html\n\nMetadata_Html(value=\"<head>...</head>\")\n",
+        "type_types:Exception": "from seed.types import Exception_Generic\n\nException_Generic(\n    exception_type=\"Unavailable\",\n    exception_message=\"This component is unavailable!\",\n    exception_stacktrace=\"<logs>\",\n)\n",
+        "type_types:ExceptionInfo": "from seed.types import ExceptionInfo\n\nExceptionInfo(\n    exception_type=\"Unavailable\",\n    exception_message=\"This component is unavailable!\",\n    exception_stacktrace=\"<logs>\",\n)\n",
+        "type_types:MigrationStatus": "\"RUNNING\"\n",
+        "type_types:Migration": "from seed.types import Migration\n\nMigration(\n    name=\"001_init\",\n    status=\"RUNNING\",\n)\n",
+        "type_types:Request": "from seed.types import Request\n\nRequest(\n    request={},\n)\n",
+        "type_types:Response": "from seed import Identifier\nfrom seed.types import Response\n\nResponse(\n    response=\"Initializing...\",\n    identifiers=[\n        Identifier(\n            type=\"primitive\",\n            value=\"example\",\n            label=\"Primitive\",\n        ),\n        Identifier(\n            type=\"unknown\",\n            value=\"{}\",\n            label=\"Unknown\",\n        ),\n    ],\n)\n",
+        "type_types:Test": "from seed.types import Test_And\n\nTest_And(value=True)\n",
+        "type_types:Entity": "from seed.types import Entity\n\nEntity(\n    type=\"unknown\",\n    name=\"unknown\",\n)\n"
+    },
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.echo(\n    request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.echo(\n        request=\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.createType"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.create_type(\n    request=\"primitive\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.create_type(\n        request=\"primitive\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET",
+                "identifier_override": "endpoint_file/notification/service.getException"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.file.notification.service.get_exception(\n    notification_id=\"notification-hsy129x\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.file.notification.service.get_exception(\n        notification_id=\"notification-hsy129x\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET",
+                "identifier_override": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.file.service.get_file(\n    filename=\"file.txt\",\n    x_file_api_version=\"0.0.2\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.file.service.get_file(\n        filename=\"file.txt\",\n        x_file_api_version=\"0.0.2\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Example0",
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-2sdx82h\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.check(\n        id=\"id-2sdx82h\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Example2",
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.check(\n    id=\"id-3tey93i\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.check(\n        id=\"id-3tey93i\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "Example0",
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.ping"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.health.service.ping()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.health.service.ping()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getMovie"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_movie(\n    movie_id=\"movie-c06a4ad7\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_movie(\n        movie_id=\"movie-c06a4ad7\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/movie",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createMovie"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.create_movie(\n    id=\"movie-c06a4ad7\",\n    prequel=\"movie-cv9b914f\",\n    title=\"The Boy and the Heron\",\n    from_=\"Hayao Miyazaki\",\n    rating=8.0,\n    tag=\"tag-wf9as23d\",\n    metadata={\n        \"actors\": [\"Christian Bale\", \"Florence Pugh\", \"Willem Dafoe\"],\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n    },\n    revenue=1000000,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.create_movie(\n        id=\"movie-c06a4ad7\",\n        prequel=\"movie-cv9b914f\",\n        title=\"The Boy and the Heron\",\n        from_=\"Hayao Miyazaki\",\n        rating=8.0,\n        tag=\"tag-wf9as23d\",\n        metadata={\n            \"actors\": [\"Christian Bale\", \"Florence Pugh\", \"Willem Dafoe\"],\n            \"releaseDate\": \"2023-12-08\",\n            \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n        },\n        revenue=1000000,\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/metadata",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getMetadata"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.get_metadata(\n    x_api_version=\"0.0.1\",\n    shallow=False,\n    tag=\"development\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.get_metadata(\n        x_api_version=\"0.0.1\",\n        shallow=False,\n        tag=\"development\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/big-entity",
+                "method": "POST",
+                "identifier_override": "endpoint_service.createBigEntity"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed import SeedExamples\nfrom seed.commons.types import Data_String, EventInfo_Metadata, Metadata\nfrom seed.environment import SeedExamplesEnvironment\nfrom seed.types import (\n    Actor,\n    Directory,\n    Entity,\n    Exception_Generic,\n    ExtendedMovie,\n    File,\n    Metadata_Html,\n    Migration,\n    Moment,\n    Node,\n    Test_And,\n    Tree,\n)\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\nclient.service.create_big_entity(\n    cast_member=Actor(\n        name=\"name\",\n        id=\"id\",\n    ),\n    extended_movie=ExtendedMovie(\n        id=\"id\",\n        prequel=\"prequel\",\n        title=\"title\",\n        from_=\"from\",\n        rating=1.1,\n        tag=\"tag\",\n        book=\"book\",\n        metadata={\"metadata\": {\"key\": \"value\"}},\n        revenue=1000000,\n        cast=[\"cast\", \"cast\"],\n    ),\n    entity=Entity(\n        type=\"primitive\",\n        name=\"name\",\n    ),\n    metadata=Metadata_Html(value=\"metadata\"),\n    common_metadata=Metadata(\n        id=\"id\",\n        data={\"data\": \"data\"},\n        json_string=\"jsonString\",\n    ),\n    event_info=EventInfo_Metadata(\n        id=\"id\",\n        data={\"data\": \"data\"},\n        json_string=\"jsonString\",\n    ),\n    data=Data_String(value=\"data\"),\n    migration=Migration(\n        name=\"name\",\n        status=\"RUNNING\",\n    ),\n    exception=Exception_Generic(\n        exception_type=\"exceptionType\",\n        exception_message=\"exceptionMessage\",\n        exception_stacktrace=\"exceptionStacktrace\",\n    ),\n    test=Test_And(value=True),\n    node=Node(\n        name=\"name\",\n        nodes=[\n            Node(\n                name=\"name\",\n                nodes=[\n                    Node(\n                        name=\"name\",\n                        nodes=[],\n                        trees=[],\n                    ),\n                    Node(\n                        name=\"name\",\n                        nodes=[],\n                        trees=[],\n                    ),\n                ],\n                trees=[\n                    Tree(\n                        nodes=[],\n                    ),\n                    Tree(\n                        nodes=[],\n                    ),\n                ],\n            ),\n            Node(\n                name=\"name\",\n                nodes=[\n                    Node(\n                        name=\"name\",\n                        nodes=[],\n                        trees=[],\n                    ),\n                    Node(\n                        name=\"name\",\n                        nodes=[],\n                        trees=[],\n                    ),\n                ],\n                trees=[\n                    Tree(\n                        nodes=[],\n                    ),\n                    Tree(\n                        nodes=[],\n                    ),\n                ],\n            ),\n        ],\n        trees=[\n            Tree(\n                nodes=[\n                    Node(\n                        name=\"name\",\n                        nodes=[],\n                        trees=[],\n                    ),\n                    Node(\n                        name=\"name\",\n                        nodes=[],\n                        trees=[],\n                    ),\n                ],\n            ),\n            Tree(\n                nodes=[\n                    Node(\n                        name=\"name\",\n                        nodes=[],\n                        trees=[],\n                    ),\n                    Node(\n                        name=\"name\",\n                        nodes=[],\n                        trees=[],\n                    ),\n                ],\n            ),\n        ],\n    ),\n    directory=Directory(\n        name=\"name\",\n        files=[\n            File(\n                name=\"name\",\n                contents=\"contents\",\n            ),\n            File(\n                name=\"name\",\n                contents=\"contents\",\n            ),\n        ],\n        directories=[\n            Directory(\n                name=\"name\",\n                files=[\n                    File(\n                        name=\"name\",\n                        contents=\"contents\",\n                    ),\n                    File(\n                        name=\"name\",\n                        contents=\"contents\",\n                    ),\n                ],\n                directories=[\n                    Directory(\n                        name=\"name\",\n                        files=[],\n                        directories=[],\n                    ),\n                    Directory(\n                        name=\"name\",\n                        files=[],\n                        directories=[],\n                    ),\n                ],\n            ),\n            Directory(\n                name=\"name\",\n                files=[\n                    File(\n                        name=\"name\",\n                        contents=\"contents\",\n                    ),\n                    File(\n                        name=\"name\",\n                        contents=\"contents\",\n                    ),\n                ],\n                directories=[\n                    Directory(\n                        name=\"name\",\n                        files=[],\n                        directories=[],\n                    ),\n                    Directory(\n                        name=\"name\",\n                        files=[],\n                        directories=[],\n                    ),\n                ],\n            ),\n        ],\n    ),\n    moment=Moment(\n        id=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\nimport uuid\n\nfrom seed import AsyncSeedExamples\nfrom seed.commons.types import Data_String, EventInfo_Metadata, Metadata\nfrom seed.environment import SeedExamplesEnvironment\nfrom seed.types import (\n    Actor,\n    Directory,\n    Entity,\n    Exception_Generic,\n    ExtendedMovie,\n    File,\n    Metadata_Html,\n    Migration,\n    Moment,\n    Node,\n    Test_And,\n    Tree,\n)\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)\n\n\nasync def main() -> None:\n    await client.service.create_big_entity(\n        cast_member=Actor(\n            name=\"name\",\n            id=\"id\",\n        ),\n        extended_movie=ExtendedMovie(\n            id=\"id\",\n            prequel=\"prequel\",\n            title=\"title\",\n            from_=\"from\",\n            rating=1.1,\n            tag=\"tag\",\n            book=\"book\",\n            metadata={\"metadata\": {\"key\": \"value\"}},\n            revenue=1000000,\n            cast=[\"cast\", \"cast\"],\n        ),\n        entity=Entity(\n            type=\"primitive\",\n            name=\"name\",\n        ),\n        metadata=Metadata_Html(value=\"metadata\"),\n        common_metadata=Metadata(\n            id=\"id\",\n            data={\"data\": \"data\"},\n            json_string=\"jsonString\",\n        ),\n        event_info=EventInfo_Metadata(\n            id=\"id\",\n            data={\"data\": \"data\"},\n            json_string=\"jsonString\",\n        ),\n        data=Data_String(value=\"data\"),\n        migration=Migration(\n            name=\"name\",\n            status=\"RUNNING\",\n        ),\n        exception=Exception_Generic(\n            exception_type=\"exceptionType\",\n            exception_message=\"exceptionMessage\",\n            exception_stacktrace=\"exceptionStacktrace\",\n        ),\n        test=Test_And(value=True),\n        node=Node(\n            name=\"name\",\n            nodes=[\n                Node(\n                    name=\"name\",\n                    nodes=[\n                        Node(\n                            name=\"name\",\n                            nodes=[],\n                            trees=[],\n                        ),\n                        Node(\n                            name=\"name\",\n                            nodes=[],\n                            trees=[],\n                        ),\n                    ],\n                    trees=[\n                        Tree(\n                            nodes=[],\n                        ),\n                        Tree(\n                            nodes=[],\n                        ),\n                    ],\n                ),\n                Node(\n                    name=\"name\",\n                    nodes=[\n                        Node(\n                            name=\"name\",\n                            nodes=[],\n                            trees=[],\n                        ),\n                        Node(\n                            name=\"name\",\n                            nodes=[],\n                            trees=[],\n                        ),\n                    ],\n                    trees=[\n                        Tree(\n                            nodes=[],\n                        ),\n                        Tree(\n                            nodes=[],\n                        ),\n                    ],\n                ),\n            ],\n            trees=[\n                Tree(\n                    nodes=[\n                        Node(\n                            name=\"name\",\n                            nodes=[],\n                            trees=[],\n                        ),\n                        Node(\n                            name=\"name\",\n                            nodes=[],\n                            trees=[],\n                        ),\n                    ],\n                ),\n                Tree(\n                    nodes=[\n                        Node(\n                            name=\"name\",\n                            nodes=[],\n                            trees=[],\n                        ),\n                        Node(\n                            name=\"name\",\n                            nodes=[],\n                            trees=[],\n                        ),\n                    ],\n                ),\n            ],\n        ),\n        directory=Directory(\n            name=\"name\",\n            files=[\n                File(\n                    name=\"name\",\n                    contents=\"contents\",\n                ),\n                File(\n                    name=\"name\",\n                    contents=\"contents\",\n                ),\n            ],\n            directories=[\n                Directory(\n                    name=\"name\",\n                    files=[\n                        File(\n                            name=\"name\",\n                            contents=\"contents\",\n                        ),\n                        File(\n                            name=\"name\",\n                            contents=\"contents\",\n                        ),\n                    ],\n                    directories=[\n                        Directory(\n                            name=\"name\",\n                            files=[],\n                            directories=[],\n                        ),\n                        Directory(\n                            name=\"name\",\n                            files=[],\n                            directories=[],\n                        ),\n                    ],\n                ),\n                Directory(\n                    name=\"name\",\n                    files=[\n                        File(\n                            name=\"name\",\n                            contents=\"contents\",\n                        ),\n                        File(\n                            name=\"name\",\n                            contents=\"contents\",\n                        ),\n                    ],\n                    directories=[\n                        Directory(\n                            name=\"name\",\n                            files=[],\n                            directories=[],\n                        ),\n                        Directory(\n                            name=\"name\",\n                            files=[],\n                            directories=[],\n                        ),\n                    ],\n                ),\n            ],\n        ),\n        moment=Moment(\n            id=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            date=datetime.date.fromisoformat(\n                \"2023-01-15\",\n            ),\n            datetime=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

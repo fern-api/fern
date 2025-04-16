@@ -23,7 +23,7 @@ public class GetWithApiKeyTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Service.GetWithApiKeyAsync(RequestOptions);
+        var response = await Client.Service.GetWithApiKeyAsync();
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

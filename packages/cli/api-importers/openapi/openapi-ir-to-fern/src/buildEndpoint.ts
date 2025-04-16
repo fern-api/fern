@@ -241,6 +241,13 @@ export function buildEndpoint({
                     "status-code": fileResponse.statusCode
                 };
             },
+            bytes: (bytesResponse) => {
+                convertedEndpoint.response = {
+                    docs: bytesResponse.description ?? undefined,
+                    type: "bytes",
+                    "status-code": bytesResponse.statusCode
+                };
+            },
             streamingText: (textResponse) => {
                 convertedEndpoint["response-stream"] = {
                     docs: textResponse.description ?? undefined,
@@ -542,16 +549,19 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
-        const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
-            const allOfTypeReference = buildTypeReference({
-                schema: Schema.reference(referencedSchema),
-                fileContainingReference: declarationFile,
-                context,
-                namespace,
-                declarationDepth: 0
-            });
-            return getTypeFromTypeReference(allOfTypeReference);
-        });
+        const extendedSchemas: string[] = resolvedSchema.allOf
+            .map((referencedSchema) => {
+                const allOfTypeReference = buildTypeReference({
+                    schema: Schema.reference(referencedSchema),
+                    fileContainingReference: declarationFile,
+                    context,
+                    namespace,
+                    declarationDepth: 0
+                });
+                return getTypeFromTypeReference(allOfTypeReference);
+            })
+            .filter((schema) => schema !== "unknown");
+
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
         };

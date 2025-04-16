@@ -49,15 +49,14 @@ public class GetAndReturnMapOfPrimToObjectTest : BaseMockServerTest
                     "string",
                     new ObjectWithRequiredField { String = "string" }
                 },
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
             Is.EqualTo(
                     JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(mockResponse)
                 )
-                .UsingPropertiesComparer()
+                .UsingDefaults()
         );
     }
 }

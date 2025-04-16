@@ -54,12 +54,11 @@ public class RefreshTokenTest : BaseMockServerTest
                 Audience = "https://api.example.com",
                 GrantType = "refresh_token",
                 Scope = "scope",
-            },
-            RequestOptions
+            }
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingPropertiesComparer()
+            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -31,9 +31,7 @@ class AbstractUserService(AbstractFernService):
     def update_user(self, *, body: User, user_id: str) -> User: ...
 
     @abc.abstractmethod
-    def search_users(
-        self, *, user_id: str, limit: typing.Optional[int] = None
-    ) -> typing.Sequence[User]: ...
+    def search_users(self, *, user_id: str, limit: typing.Optional[int] = None) -> typing.Sequence[User]: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -51,20 +49,14 @@ class AbstractUserService(AbstractFernService):
     def __init_get_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_user)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_user,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_user)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> User:
@@ -93,20 +85,14 @@ class AbstractUserService(AbstractFernService):
     def __init_create_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_user)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.create_user,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.create_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_user)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> User:
@@ -135,9 +121,7 @@ class AbstractUserService(AbstractFernService):
     def __init_update_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_user)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
@@ -146,11 +130,7 @@ class AbstractUserService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.update_user,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.update_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.update_user)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> User:
@@ -179,24 +159,16 @@ class AbstractUserService(AbstractFernService):
     def __init_search_users(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.search_users)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "limit":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.search_users,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.search_users, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.search_users)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[User]:

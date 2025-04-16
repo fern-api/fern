@@ -21,7 +21,7 @@ public class UnionWithDuplicatePrimitiveTest
             new UnionWithDuplicatePrimitive.Integer1(9)
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithDuplicatePrimitive>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -54,7 +54,7 @@ public class UnionWithDuplicatePrimitiveTest
             new UnionWithDuplicatePrimitive.Integer2(5)
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithDuplicatePrimitive>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -87,7 +87,7 @@ public class UnionWithDuplicatePrimitiveTest
             new UnionWithDuplicatePrimitive.String1("bar1")
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithDuplicatePrimitive>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class UnionWithDuplicatePrimitiveTest
             new UnionWithDuplicatePrimitive.String1("bar2")
         );
         var deserializedObject = JsonUtils.Deserialize<UnionWithDuplicatePrimitive>(json);
-        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingPropertiesComparer());
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
     [Test]

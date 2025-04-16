@@ -64,9 +64,12 @@ export interface APIDefinitionSettings {
     respectNullableSchemas: boolean | undefined;
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
+    useBytesForBinaryResponse: boolean | undefined;
+    respectForwardCompatibleEnums: boolean | undefined;
     filter: OpenApiFilterSchema | undefined;
     defaultFormParameterEncoding: "form" | "json" | undefined;
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+    additionalPropertiesDefaultsTo: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

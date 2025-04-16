@@ -72,5 +72,8 @@
     {
       "path": "../sdk-inlined-request-body-schema-generator"
     },
+    {
+      "path": "../websocket-type-schema-generator"
+    }
   ]
 }

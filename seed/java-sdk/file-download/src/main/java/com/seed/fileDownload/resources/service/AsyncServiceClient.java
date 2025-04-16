@@ -4,77 +4,32 @@
 package com.seed.fileDownload.resources.service;
 
 import com.seed.fileDownload.core.ClientOptions;
-import com.seed.fileDownload.core.ObjectMappers;
 import com.seed.fileDownload.core.RequestOptions;
-import com.seed.fileDownload.core.ResponseBodyInputStream;
-import com.seed.fileDownload.core.SeedFileDownloadApiException;
-import com.seed.fileDownload.core.SeedFileDownloadException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jetbrains.annotations.NotNull;
 
 public class AsyncServiceClient {
     protected final ClientOptions clientOptions;
 
+    private final AsyncRawServiceClient rawClient;
+
     public AsyncServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new AsyncRawServiceClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public AsyncRawServiceClient withRawResponse() {
+        return this.rawClient;
     }
 
     public CompletableFuture<InputStream> downloadFile() {
-        return downloadFile(null);
+        return this.rawClient.downloadFile().thenApply(response -> response.body());
     }
 
     public CompletableFuture<InputStream> downloadFile(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<InputStream> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    ResponseBody responseBody = response.body();
-                    if (response.isSuccessful()) {
-                        future.complete(new ResponseBodyInputStream(response));
-                        return;
-                    }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    future.completeExceptionally(new SeedFileDownloadApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class)));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(
-                            new SeedFileDownloadException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedFileDownloadException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
+        return this.rawClient.downloadFile(requestOptions).thenApply(response -> response.body());
     }
 }
