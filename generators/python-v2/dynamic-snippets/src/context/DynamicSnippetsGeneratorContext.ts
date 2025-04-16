@@ -116,7 +116,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public getEnvironmentClassReference(): python.Reference {
         return python.reference({
             name: this.getEnvironmentClassName(),
-            modulePath: this.getRootModulePath()
+            modulePath: this.getEnvironmentModulePath()
         });
     }
 
@@ -177,6 +177,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getCoreModulePath(): string[] {
         return this.getRootModulePath().concat("core");
+    }
+
+    public getEnvironmentModulePath(): string[] {
+        return this.getRootModulePath().concat("environment");
     }
 
     public shouldInlinePathParameters(): boolean {
