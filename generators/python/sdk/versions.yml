@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.14.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where TypedDicts with circular references were not correctly serialized.
+        This issue only affected users that enabled `use_typeddict_requests`.
+
 - version: 4.14.1
   irVersion: 57
   changelogEntry:

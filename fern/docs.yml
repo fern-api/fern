@@ -324,11 +324,6 @@ navigation:
               - page: Packagist (PHP)
                 slug: packagist
                 path: ./pages/sdks/integration/packagist.mdx
-      - section: Alternatives
-        hidden: true
-        contents:
-          - page: Speakeasy
-            path: ./pages/sdks/comparison/speakeasy.mdx
   - tab: docs
     layout:
       - section: Getting Started

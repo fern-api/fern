@@ -105,6 +105,7 @@ export class QueryParam {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -113,12 +114,14 @@ export class QueryParam {
                 throw new errors.SeedEnumError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -235,6 +238,7 @@ export class QueryParam {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -243,12 +247,14 @@ export class QueryParam {
                 throw new errors.SeedEnumError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query-list.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

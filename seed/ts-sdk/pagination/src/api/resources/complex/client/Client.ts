@@ -96,6 +96,7 @@ export class Complex {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
                 }
                 switch (_response.error.reason) {
@@ -103,6 +104,7 @@ export class Complex {
                         throw new errors.SeedPaginationError({
                             statusCode: _response.error.statusCode,
                             body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
                         });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError(
@@ -111,6 +113,7 @@ export class Complex {
                     case "unknown":
                         throw new errors.SeedPaginationError({
                             message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
                         });
                 }
             },

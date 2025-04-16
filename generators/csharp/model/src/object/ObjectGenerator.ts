@@ -109,7 +109,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                         : this.context.getReadOnlyAdditionalPropertiesType(),
                     name: "AdditionalProperties",
                     get: true,
-                    set: true,
+                    set: this.objectDeclaration.extraProperties ? true : csharp.Access.Private,
                     initializer: csharp.codeblock("new()")
                 })
             );

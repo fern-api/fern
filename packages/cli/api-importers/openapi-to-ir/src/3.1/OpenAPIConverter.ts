@@ -290,10 +290,17 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 }
                 groupToWebhooks[group].push(operationId);
 
+                const pkg = this.getOrCreatePackage({
+                    context,
+                    group: convertedWebHook.group
+                });
+
                 if (this.ir.webhookGroups[group] == null) {
                     this.ir.webhookGroups[group] = [];
                 }
                 this.ir.webhookGroups[group].push(convertedWebHook.webhook);
+                pkg.webhooks = group;
+
                 this.ir.types = {
                     ...this.ir.types,
                     ...convertedWebHook.inlinedTypes

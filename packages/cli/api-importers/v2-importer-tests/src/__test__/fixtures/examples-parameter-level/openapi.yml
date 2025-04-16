@@ -1,0 +1,74 @@
+openapi: 3.1.0
+info:
+  title: Tree API
+  version: 1.0.0
+  description: API for working with tree data structures
+
+paths:
+  /simple:
+    get:
+      summary: Simple endpoint
+      operationId: get
+      parameters:
+        - name: some-query-param
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "123"
+          example: test-some-query-param
+        - name: some-header
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            - value: "foo"
+              summary: A summary of foo
+              description: A description of foo
+            - value: "bar"
+              summary: Another summary of bar
+              description: Another description of bar
+        - name: some-path-param
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            first:
+              value: "def"
+              summary: A summary of def
+              description: A description of def
+            second:
+              value: "ghi"
+              summary: Another summary of ghi
+              description: Another description of ghi
+        - name: some-query-param-ref-examples
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            referenced-example-1:
+              $ref: "#/components/examples/ref1"
+            referenced-example-2:
+              $ref: "#/components/examples/ref2"
+              
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  examples:
+    ref1:
+      value: "washington"
+      summary: A summary of washington
+      description: A description of washington
+    ref2:
+      value: "new york"
+      summary: Another summary of new york
+      description: Another description of new york

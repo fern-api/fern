@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 import { V2EndpointLocation } from "./V2EndpointLocation";
 import { V2EnvironmentValues } from "./V2EnvironmentValues";
 import { V2AuthValues } from "./V2AuthValues";
-import { V2ExampleValues } from "./V2ExampleValues";
+import { V2ValueExamples } from "./V2ValueExamples";
 import { WithDocs } from "../../commons/types/WithDocs";
 
 export const V2HttpEndpointRequest: core.serialization.ObjectSchema<
@@ -20,9 +20,9 @@ export const V2HttpEndpointRequest: core.serialization.ObjectSchema<
         baseUrl: core.serialization.property("baseURL", core.serialization.string().optional()),
         environment: V2EnvironmentValues.optional(),
         auth: V2AuthValues.optional(),
-        pathParameters: V2ExampleValues.optional(),
-        queryParameters: V2ExampleValues.optional(),
-        headers: V2ExampleValues.optional(),
+        pathParameters: V2ValueExamples.optional(),
+        queryParameters: V2ValueExamples.optional(),
+        headers: V2ValueExamples.optional(),
         requestBody: core.serialization.unknown().optional(),
     })
     .extend(WithDocs);
@@ -33,9 +33,9 @@ export declare namespace V2HttpEndpointRequest {
         baseURL?: string | null;
         environment?: V2EnvironmentValues.Raw | null;
         auth?: V2AuthValues.Raw | null;
-        pathParameters?: V2ExampleValues.Raw | null;
-        queryParameters?: V2ExampleValues.Raw | null;
-        headers?: V2ExampleValues.Raw | null;
+        pathParameters?: V2ValueExamples.Raw | null;
+        queryParameters?: V2ValueExamples.Raw | null;
+        headers?: V2ValueExamples.Raw | null;
         requestBody?: unknown | null;
     }
 }

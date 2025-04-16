@@ -1,5 +1,34 @@
 - changelogEntry:
   - summary: |
+      Parse schema-level examples in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.25
+
+- changelogEntry:
+  - summary: |
+      Fix an issue in the OpenAPI importer where discriminated unions with literal discriminant values in the variants would render the discriminant property twice. 
+      The importer now correctly checks if union variants contain the discriminant property as a literal value and handles them appropriately.
+    type: fix
+  irVersion: 57
+  version: 0.57.24
+
+- changelogEntry:
+  - summary: |
+      Correctly package webhooks in the `webhooks` section into IR groups.
+    type: fix
+  irVersion: 57
+  version: 0.57.23
+
+- changelogEntry:
+  - summary: |
+      Parse `anyOf` and `oneOf` schemas with "null" in a first class manner in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.22
+
+- changelogEntry:
+  - summary: |
       Correctly parse schema-valued additionalProperties in the v3 OpenAPI parser.
     type: fix
   irVersion: 57

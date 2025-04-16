@@ -95,6 +95,7 @@ export class Foo {
             throw new errors.SeedCrossPackageTypeNamesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -103,12 +104,14 @@ export class Foo {
                 throw new errors.SeedCrossPackageTypeNamesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedCrossPackageTypeNamesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedCrossPackageTypeNamesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

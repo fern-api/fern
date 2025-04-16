@@ -81,6 +81,7 @@ export class SeedExtendsClient {
             throw new errors.SeedExtendsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -89,6 +90,7 @@ export class SeedExtendsClient {
                 throw new errors.SeedExtendsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExtendsTimeoutError(
@@ -97,6 +99,7 @@ export class SeedExtendsClient {
             case "unknown":
                 throw new errors.SeedExtendsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

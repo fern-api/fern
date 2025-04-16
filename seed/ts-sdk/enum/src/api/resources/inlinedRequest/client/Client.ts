@@ -82,6 +82,7 @@ export class InlinedRequest {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -90,12 +91,14 @@ export class InlinedRequest {
                 throw new errors.SeedEnumError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /inlined.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as SeedApi from "../../../index";
+import * as core from "../../../../core";
 
 export class MovieDoesNotExistError extends errors.SeedApiError {
-    constructor(body: SeedApi.MovieId) {
+    constructor(body: SeedApi.MovieId, rawResponse?: core.RawResponse) {
         super({
             message: "MovieDoesNotExistError",
             statusCode: 404,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, MovieDoesNotExistError.prototype);
     }

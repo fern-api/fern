@@ -78,6 +78,7 @@ export class SeedAliasClient {
             throw new errors.SeedAliasError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -86,12 +87,14 @@ export class SeedAliasClient {
                 throw new errors.SeedAliasError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAliasTimeoutError("Timeout exceeded when calling GET /{typeId}.");
             case "unknown":
                 throw new errors.SeedAliasError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

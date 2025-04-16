@@ -76,6 +76,7 @@ export class User {
             throw new errors.SeedMultiLineDocsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -84,12 +85,14 @@ export class User {
                 throw new errors.SeedMultiLineDocsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedMultiLineDocsTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
             case "unknown":
                 throw new errors.SeedMultiLineDocsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -157,6 +160,7 @@ export class User {
             throw new errors.SeedMultiLineDocsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -165,12 +169,14 @@ export class User {
                 throw new errors.SeedMultiLineDocsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedMultiLineDocsTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":
                 throw new errors.SeedMultiLineDocsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

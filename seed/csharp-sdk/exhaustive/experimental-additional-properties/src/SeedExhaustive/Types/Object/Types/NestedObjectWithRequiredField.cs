@@ -18,7 +18,7 @@ public record NestedObjectWithRequiredField : IJsonOnDeserialized
     public required ObjectWithOptionalField NestedObject { get; set; }
 
     [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; set; } = new();
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);

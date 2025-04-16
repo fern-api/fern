@@ -16,7 +16,7 @@ public record ObjectWithMapOfMap : IJsonOnDeserialized
         new Dictionary<string, Dictionary<string, string>>();
 
     [JsonIgnore]
-    public ReadOnlyAdditionalProperties AdditionalProperties { get; set; } = new();
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
     void IJsonOnDeserialized.OnDeserialized() =>
         AdditionalProperties.CopyFromExtensionData(_extensionData);
