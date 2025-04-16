@@ -4,6 +4,6 @@
 
 import * as FernIr from "../../../index";
 
-export interface JsonResponseBody extends FernIr.WithDocs {
+export interface JsonResponseBody extends FernIr.WithDocs, FernIr.WithV2Examples {
     responseBodyType: FernIr.TypeReference;
 }

@@ -7,6 +7,8 @@ import com.seed.nullable.resources.nullable.types.Status;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Optional;
 
 public class Example1 {
     public static void main(String[] args) {
@@ -34,6 +36,11 @@ public class Example1 {
                         )
                         .avatar("avatar")
                         .activated(true)
+                        .values(
+                            new HashMap<String, Optional<String>>() {{
+                                put("values", Optional.of("values"));
+                            }}
+                        )
                         .build()
                 )
                 .avatar("avatar")

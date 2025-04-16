@@ -106,6 +106,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             if (convertedSchemaShape.type === "alias") {
                 return {
                     type: this.wrapTypeReference(convertedSchemaShape.aliasOf),
+                    schema: convertedSchema.typeDeclaration,
                     inlinedTypes: convertedSchema.inlinedTypes,
                     availability
                 };
