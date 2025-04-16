@@ -346,6 +346,13 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
         }
 
+        if ("$ref" in this.schema) {
+            // TODO: Perhaps we should resolve the reference here?
+            // const ref = this.schema.$ref;
+            // const resolved = await context.resolveReference({$ref: ref as string});
+            // if (resolved.resolved) {
+            // }
+        }
         return undefined;
     }
 

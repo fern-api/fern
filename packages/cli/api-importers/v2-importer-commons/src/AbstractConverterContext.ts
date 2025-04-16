@@ -1,3 +1,4 @@
+import { appendFileSync } from "fs";
 import yaml from "js-yaml";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -160,13 +161,78 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @param reference The reference object to resolve
      * @returns Object containing ok status and resolved reference if successful
      */
+    // public async resolveReference<T>(reference: {
+    //     $ref: string;
+    // }): Promise<{ resolved: true; value: T; external?: boolean } | { resolved: false }> {
+    //     // console.log(reference.$ref);
+    //     let resolvedReference: unknown = this.spec;
+    //     let fragment: string | undefined;
+    //     let external: boolean = false;
+    //     appendFileSync("object.txt", JSON.stringify("HERE", null, 2)+"\n");
+    //     appendFileSync("object.txt", JSON.stringify(reference.$ref, null, 2)+"\n");
+    //     if (reference.$ref.startsWith("http://") || reference.$ref.startsWith("https://")) {
+    //         const splitReference = reference.$ref.split("#");
+    //         const url = splitReference[0];
+    //         fragment = splitReference[1];
+    //         external = true;
+    //         if (!url) {
+    //             return { resolved: false };
+    //         }
+
+    //         const response = await fetch(url);
+
+    //         if (!response.ok) {
+    //             return { resolved: false };
+    //         }
+    //         try {
+    //             const responseText = await response.text();
+    //             try {
+    //                 resolvedReference = JSON.parse(responseText);
+    //             } catch {
+    //                 resolvedReference = yaml.load(responseText);
+    //             }
+    //             if (resolvedReference == null) {
+    //                 return { resolved: false };
+    //             }
+    //         } catch (error) {
+    //             return { resolved: false };
+    //         }
+
+    //         if (!fragment) {
+    //             return { resolved: true, value: resolvedReference as T };
+    //         }
+    //     }
+
+    //     const keys = (fragment ?? reference.$ref)
+    //         .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
+    //         .split("/")
+    //         .map((key) => key.replace(/~1/g, "/"));
+
+    //     for (const key of keys) {
+    //         if (typeof resolvedReference !== "object" || resolvedReference == null) {
+    //             return { resolved: false };
+    //         }
+    //         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //         resolvedReference = (resolvedReference as any)[key];
+    //     }
+
+    //     if (resolvedReference == null) {
+    //         return { resolved: false };
+    //     }
+
+    //     return { resolved: true, value: resolvedReference as unknown as T, external };
+    // }
     public async resolveReference<T>(reference: {
         $ref: string;
-    }): Promise<{ resolved: true; value: T } | { resolved: false }> {
+    }): Promise<{ resolved: true; value: T; external?: boolean } | { resolved: false }> {
         let resolvedReference: unknown = this.spec;
         let fragment: string | undefined;
+        let external = false;
+        let externalDoc: unknown | null = null;
 
         if (reference.$ref.startsWith("http://") || reference.$ref.startsWith("https://")) {
+            // Handle external references
+            external = true;
             const splitReference = reference.$ref.split("#");
             const url = splitReference[0];
             fragment = splitReference[1];
@@ -180,13 +246,17 @@ export abstract class AbstractConverterContext<Spec extends object> {
             if (!response.ok) {
                 return { resolved: false };
             }
+
             try {
                 const responseText = await response.text();
                 try {
-                    resolvedReference = JSON.parse(responseText);
+                    externalDoc = JSON.parse(responseText);
+                    resolvedReference = externalDoc;
                 } catch {
-                    resolvedReference = yaml.load(responseText);
+                    externalDoc = yaml.load(responseText);
+                    resolvedReference = externalDoc;
                 }
+
                 if (resolvedReference == null) {
                     return { resolved: false };
                 }
@@ -195,28 +265,110 @@ export abstract class AbstractConverterContext<Spec extends object> {
             }
 
             if (!fragment) {
+                // For external references with no fragment, resolve any nested references
+                if (typeof resolvedReference === "object" && resolvedReference !== null) {
+                    resolvedReference = await this.resolveNestedReferences(resolvedReference, externalDoc);
+                }
                 return { resolved: true, value: resolvedReference as T };
             }
+        } else {
+            // For internal references, the entire $ref is the fragment
+            fragment = reference.$ref;
         }
 
-        const keys = (fragment ?? reference.$ref)
-            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
+        // Process the fragment part consistently for both external and internal references
+        const keys = fragment
+            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "") // Remove leading # or /
             .split("/")
-            .map((key) => key.replace(/~1/g, "/"));
+            .map((key) => key.replace(/~1/g, "/")); // Handle JSON pointer encoding
 
         for (const key of keys) {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 return { resolved: false };
             }
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            resolvedReference = (resolvedReference as any)[key];
+            resolvedReference = (resolvedReference as Record<string, unknown>)[key];
         }
 
         if (resolvedReference == null) {
             return { resolved: false };
         }
 
-        return { resolved: true, value: resolvedReference as unknown as T };
+        // Only resolve nested references for external references
+        if (external && typeof resolvedReference === "object" && resolvedReference !== null) {
+            resolvedReference = await this.resolveNestedReferences(resolvedReference, externalDoc);
+        }
+        return { resolved: true, value: resolvedReference as unknown as T, external };
+    }
+
+    // Helper method to recursively resolve nested references
+    private async resolveNestedReferences(
+        obj: unknown,
+        rootDoc: unknown = this.spec // Default to the main spec for internal refs
+    ): Promise<unknown> {
+        if (obj === null || typeof obj !== "object") {
+            return obj;
+        }
+
+        if (Array.isArray(obj)) {
+            // Handle arrays by resolving each element
+            const result = [];
+            for (const item of obj) {
+                result.push(await this.resolveNestedReferences(item, rootDoc));
+            }
+            return result;
+        }
+
+        // Handle regular objects
+        const result: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(obj)) {
+            if (key === "$ref" && typeof value === "string") {
+                // If this is a reference, we need to resolve it using the root document
+                const refValue = value as string;
+
+                // For local references within the external document
+                if (refValue.startsWith("#/")) {
+                    // Create a temporary object to track through the document
+                    let tempRef = rootDoc;
+                    const refPath = refValue
+                        .substring(2) // Remove the "#/"
+                        .split("/")
+                        .map((seg) => seg.replace(/~1/g, "/")); // Handle JSON pointer encoding
+
+                    // Navigate to the referenced location
+                    for (const segment of refPath) {
+                        if (typeof tempRef !== "object" || tempRef === null) {
+                            // Failed to resolve
+                            result[key] = value; // Keep the original reference
+                            break;
+                        }
+                        tempRef = (tempRef as Record<string, unknown>)[segment];
+                    }
+
+                    if (tempRef !== null && tempRef !== undefined) {
+                        // Successfully resolved the reference
+                        const resolvedNested = await this.resolveNestedReferences(tempRef, rootDoc);
+                        return resolvedNested; // Replace the entire object with the resolved reference
+                    }
+                } else {
+                    // Handle external references (http://, https://, or relative)
+                    const refResult = await this.resolveReference({ $ref: refValue });
+                    if (refResult.resolved) {
+                        return refResult.value; // Replace with resolved value
+                    }
+                }
+
+                // If resolution failed, keep the original reference
+                result[key] = value;
+            } else if (typeof value === "object" && value !== null) {
+                // Recursively process nested objects
+                result[key] = await this.resolveNestedReferences(value, rootDoc);
+            } else {
+                // Keep primitive values as is
+                result[key] = value;
+            }
+        }
+
+        return result;
     }
 
     public async getPropertyAccess(
@@ -354,7 +506,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public abstract convertReferenceToTypeReference(
         reference: OpenAPIV3_1.ReferenceObject
-    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }>;
+    ): Promise<{ ok: true; reference: TypeReference; inlinedTypeSchema?: OpenAPIV3_1.SchemaObject } | { ok: false }>;
 
     /**
      * TypeReference helper methods to check various properties

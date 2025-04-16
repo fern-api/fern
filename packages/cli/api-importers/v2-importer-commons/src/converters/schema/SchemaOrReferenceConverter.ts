@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
+import { Availability, ContainerType, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 import { SchemaConverter } from "./SchemaConverter";
@@ -51,30 +51,47 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
+        const schemaId = this.schemaIdOverride ?? context.convertBreadcrumbsToName(this.breadcrumbs);
+
         if (context.isReferenceObject(this.schemaOrReference)) {
+            const inlinedTypes: Record<TypeId, TypeDeclaration> = {};
             const response = await context.convertReferenceToTypeReference(this.schemaOrReference);
             if (!response.ok) {
                 return undefined;
             }
+            if (response.inlinedTypeSchema != null) {
+                const typeId = context.getTypeIdFromSchemaReference(this.schemaOrReference);
+                if (typeId != null) {
+                    const schemaConverter = new SchemaConverter({
+                        breadcrumbs: this.breadcrumbs,
+                        schema: response.inlinedTypeSchema,
+                        id: schemaId,
+                        inlined: true
+                    });
+                    const convertedInlineTypes = await schemaConverter.convert({ context, errorCollector });
+                    if (convertedInlineTypes != null) {
+                        inlinedTypes[typeId] = convertedInlineTypes.typeDeclaration;
+                    }
+                }
+            }
             return {
                 type: this.wrapTypeReference(response.reference),
-                inlinedTypes: {}
+                inlinedTypes
             };
         }
 
-        const schemaId = this.schemaIdOverride ?? context.convertBreadcrumbsToName(this.breadcrumbs);
         const schemaConverter = new SchemaConverter({
             breadcrumbs: this.breadcrumbs,
             schema: this.schemaOrReference,
             id: schemaId
         });
+
         const availability = await context.getAvailability({
             node: this.schemaOrReference,
             breadcrumbs: this.breadcrumbs,
             errorCollector
         });
         const convertedSchema = await schemaConverter.convert({ context, errorCollector });
-
         if (convertedSchema != null) {
             if (convertedSchema.typeDeclaration.shape.type === "alias") {
                 const type = convertedSchema.typeDeclaration.shape.aliasOf;

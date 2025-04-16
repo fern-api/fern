@@ -1,3 +1,4 @@
+import { appendFileSync } from "fs";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
@@ -25,7 +26,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
     public async convertReferenceToTypeReference(
         reference: OpenAPIV3_1.ReferenceObject
-    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
+    ): Promise<{ ok: true; reference: TypeReference; inlinedTypeSchema?: OpenAPIV3_1.SchemaObject } | { ok: false }> {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
             return { ok: false };
@@ -33,6 +34,24 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
         if (!resolvedReference.resolved) {
             return { ok: false };
+        }
+
+        if (resolvedReference.external) {
+            return {
+                ok: true,
+                reference: TypeReference.named({
+                    fernFilepath: {
+                        allParts: [],
+                        packagePath: [],
+                        file: undefined
+                    },
+                    name: this.casingsGenerator.generateName(typeId),
+                    typeId,
+                    default: undefined,
+                    inline: true
+                }),
+                inlinedTypeSchema: resolvedReference.value
+            };
         }
         return {
             ok: true,
