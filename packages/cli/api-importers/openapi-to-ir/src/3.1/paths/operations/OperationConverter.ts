@@ -27,8 +27,8 @@ export class OperationConverter extends AbstractOperationConverter {
     private readonly servers?: OpenAPIV3_1.ServerObject[];
     private readonly streamingExtensionConverter: FernStreamingExtension;
 
-    constructor({ breadcrumbs, operation, method, path, idempotent, servers }: OperationConverter.Args) {
-        super({ breadcrumbs, operation, method, path });
+    constructor({ context, breadcrumbs, operation, method, path, idempotent, servers }: OperationConverter.Args) {
+        super({ context, breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
         this.servers = servers;
         this.streamingExtensionConverter = new FernStreamingExtension({
@@ -38,10 +38,8 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<OperationConverter.Output | undefined> {
         const httpMethod = this.convertHttpMethod();
@@ -50,19 +48,17 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         const { group, method } =
-            this.computeGroupNameAndLocationFromExtensions({ context, errorCollector }) ??
-            this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
+            this.computeGroupNameAndLocationFromExtensions({ errorCollector }) ??
+            this.computeGroupNameFromTagAndOperationId({ errorCollector });
 
-        const streamingExtension = this.streamingExtensionConverter.convert({ context, errorCollector });
+        const streamingExtension = this.streamingExtensionConverter.convert({ errorCollector });
 
         const { headers, pathParameters, queryParameters } = await this.convertParameters({
-            context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
         const convertedRequestBody = await this.convertRequestBody({
-            context,
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
@@ -70,27 +66,36 @@ export class OperationConverter extends AbstractOperationConverter {
         });
         const requestBody = convertedRequestBody != null ? convertedRequestBody.value : undefined;
 
+<<<<<<< HEAD
         const convertedResponseBody = await this.convertResponseBody({
             context,
+=======
+        const response = await this.convertResponseBody({
+>>>>>>> 524551c8a2 (chore(cli): setup openrpc converter to share getGroup and getOrCreatePackage and removeXFernIgnores)
             errorCollector,
             breadcrumbs: [...this.breadcrumbs, "responses"],
             group,
             method,
             streamingExtension
         });
+<<<<<<< HEAD
         const response = convertedResponseBody != null ? convertedResponseBody.value : undefined;
         const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? context.spec.servers?.[0];
+=======
+
+        const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? this.context.spec.servers?.[0];
+>>>>>>> 524551c8a2 (chore(cli): setup openrpc converter to share getGroup and getOrCreatePackage and removeXFernIgnores)
 
         const endpointId = [];
-        if (context.namespace != null) {
-            endpointId.push(context.namespace);
+        if (this.context.namespace != null) {
+            endpointId.push(this.context.namespace);
         }
         endpointId.push(...(group ?? []));
         endpointId.push(method);
 
         const path = constructHttpPath(this.path);
         const baseUrl =
-            server != null ? ServersConverter.getServerName({ server, context, errorCollector }) : undefined;
+            server != null ? ServersConverter.getServerName({ server, context: this.context, errorCollector }) : undefined;
 
         const fernExamples = this.convertExamples({
             pathHead: path.head,
@@ -106,7 +111,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 id: endpointId.join("."),
                 displayName: this.operation.summary,
                 method: httpMethod,
-                name: context.casingsGenerator.generateName(method),
+                name: this.context.casingsGenerator.generateName(method),
                 baseUrl,
                 path,
                 pathParameters,
@@ -116,8 +121,8 @@ export class OperationConverter extends AbstractOperationConverter {
                 sdkRequest: undefined,
                 response,
                 errors: [],
-                auth: this.operation.security != null || context.spec.security != null,
-                availability: await context.getAvailability({
+                auth: this.operation.security != null || this.context.spec.security != null,
+                availability: await this.context.getAvailability({
                     node: this.operation,
                     breadcrumbs: this.breadcrumbs,
                     errorCollector
@@ -132,8 +137,19 @@ export class OperationConverter extends AbstractOperationConverter {
                 pagination: undefined,
                 transport: undefined,
                 v2Examples: {
+<<<<<<< HEAD
                     autogeneratedExamples: {},
                     userSpecifiedExamples: fernExamples
+=======
+                    autogeneratedExamples: [],
+                    userSpecifiedExamples: this.convertExamples({
+                        pathHead: path.head,
+                        httpMethod,
+                        baseUrl,
+                        context: this.context,
+                        errorCollector
+                    })
+>>>>>>> 524551c8a2 (chore(cli): setup openrpc converter to share getGroup and getOrCreatePackage and removeXFernIgnores)
                 }
             },
             inlinedTypes: this.inlinedTypes,

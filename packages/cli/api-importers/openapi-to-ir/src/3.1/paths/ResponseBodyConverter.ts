@@ -10,9 +10,10 @@ import {
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { OpenAPIConverter } from "../OpenAPIConverter";
 
 export declare namespace ResponseBodyConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends OpenAPIConverter.Args {
         responseBody: OpenAPIV3_1.ResponseObject;
         group: string[];
         method: string;
@@ -43,6 +44,7 @@ export class ResponseBodyConverter extends AbstractConverter<
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
     constructor({
+        context,
         breadcrumbs,
         responseBody,
         group,
@@ -50,7 +52,7 @@ export class ResponseBodyConverter extends AbstractConverter<
         statusCode,
         streamingExtension
     }: ResponseBodyConverter.Args) {
-        super({ breadcrumbs });
+        super({ context, breadcrumbs });
         this.responseBody = responseBody;
         this.group = group;
         this.method = method;
@@ -59,10 +61,8 @@ export class ResponseBodyConverter extends AbstractConverter<
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<ResponseBodyConverter.Output | undefined> {
         if (!this.responseBody.content) {
@@ -71,7 +71,7 @@ export class ResponseBodyConverter extends AbstractConverter<
 
         const jsonContentTypes = Object.keys(this.responseBody.content).filter((type) => type.includes("json"));
         for (const contentType of [...jsonContentTypes]) {
-            const mediaTypeObject = await this.parseMediaTypeObject({ context, errorCollector, contentType });
+            const mediaTypeObject = await this.parseMediaTypeObject({ errorCollector, contentType });
             if (mediaTypeObject == null) {
                 continue;
             }
@@ -100,12 +100,12 @@ export class ResponseBodyConverter extends AbstractConverter<
 
         const nonJsonContentTypes = Object.keys(this.responseBody.content).filter((type) => !type.includes("json"));
         for (const contentType of nonJsonContentTypes) {
-            const mediaTypeObject = await this.parseMediaTypeObject({ context, errorCollector, contentType });
+            const mediaTypeObject = await this.parseMediaTypeObject({ errorCollector, contentType });
             if (mediaTypeObject == null) {
                 continue;
             }
             if (this.isBinarySchema(mediaTypeObject.convertedSchema)) {
-                if (context.settings?.useBytesForBinaryResponse && this.streamingExtension == null) {
+                if (this.context.settings?.useBytesForBinaryResponse && this.streamingExtension == null) {
                     const responseBody = HttpResponseBody.bytes({
                         docs: this.responseBody.description,
                         v2Examples: {
@@ -140,11 +140,9 @@ export class ResponseBodyConverter extends AbstractConverter<
     }
 
     private async parseMediaTypeObject({
-        context,
         errorCollector,
         contentType
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
         contentType: string;
     }): Promise<ResponseBodyConverter.MediaTypeObject | undefined> {
@@ -174,8 +172,8 @@ export class ResponseBodyConverter extends AbstractConverter<
                       await Promise.all(
                           Object.entries(mediaTypeObject.examples).map(async ([key, example]) => [
                               key,
-                              context.isReferenceObject(example)
-                                  ? await context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
+                              this.context.isReferenceObject(example)
+                                  ? await this.context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
                                   : example
                           ])
                       )

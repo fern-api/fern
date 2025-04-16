@@ -3,12 +3,12 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
 
 export declare namespace FernTypeExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         schema: OpenAPIV3_1.SchemaObject;
     }
 }
 
-export class FernTypeExtension extends AbstractExtension<AbstractConverterContext<object>, string> {
+export class FernTypeExtension extends AbstractExtension<string> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
     public readonly key = "x-fern-type";
 
@@ -18,10 +18,8 @@ export class FernTypeExtension extends AbstractExtension<AbstractConverterContex
     }
 
     public convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): string | undefined {
         const extensionValue = this.getExtensionValue(this.schema);

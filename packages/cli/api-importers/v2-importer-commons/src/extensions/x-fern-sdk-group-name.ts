@@ -3,7 +3,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
 
 export declare namespace SdkGroupNameExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         operation: OpenAPIV3_1.SchemaObject;
     }
 
@@ -12,10 +12,7 @@ export declare namespace SdkGroupNameExtension {
     }
 }
 
-export class SdkGroupNameExtension extends AbstractExtension<
-    AbstractConverterContext<object>,
-    SdkGroupNameExtension.Output
-> {
+export class SdkGroupNameExtension extends AbstractExtension<SdkGroupNameExtension.Output> {
     private readonly operation: OpenAPIV3_1.OperationObject;
     public readonly key = "x-fern-sdk-group-name";
 
@@ -24,13 +21,7 @@ export class SdkGroupNameExtension extends AbstractExtension<
         this.operation = operation;
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: AbstractConverterContext<object>;
-        errorCollector: ErrorCollector;
-    }): SdkGroupNameExtension.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): SdkGroupNameExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;

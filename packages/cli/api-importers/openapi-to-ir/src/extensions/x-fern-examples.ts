@@ -4,14 +4,14 @@ import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 
 export declare namespace FernExamplesExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         operation: object;
     }
 
     export type Output = RawSchemas.ExampleEndpointCallArraySchema;
 }
 
-export class FernExamplesExtension extends AbstractExtension<OpenAPIConverterContext3_1, FernExamplesExtension.Output> {
+export class FernExamplesExtension extends AbstractExtension<FernExamplesExtension.Output> {
     private readonly operation: object;
     public readonly key = "x-fern-examples";
 

@@ -10,9 +10,10 @@ import {
 import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { OpenAPIConverter } from "../OpenAPIConverter";
 
 export declare namespace RequestBodyConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends OpenAPIConverter.Args {
         requestBody: OpenAPIV3_1.RequestBodyObject;
         group: string[];
         method: string;
@@ -37,18 +38,16 @@ export class RequestBodyConverter extends AbstractConverter<
     private readonly group: string[];
     private readonly method: string;
 
-    constructor({ breadcrumbs, requestBody, group, method }: RequestBodyConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, requestBody, group, method }: RequestBodyConverter.Args) {
+        super({ context, breadcrumbs });
         this.requestBody = requestBody;
         this.group = group;
         this.method = method;
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<RequestBodyConverter.Output | undefined> {
         if (!this.requestBody.content) {
@@ -81,7 +80,7 @@ export class RequestBodyConverter extends AbstractConverter<
             if (convertedSchema.schema?.shape.type === "object") {
                 const requestBody = HttpRequestBody.fileUpload({
                     docs: this.requestBody.description,
-                    name: context.casingsGenerator.generateName(schemaId),
+                    name: this.context.casingsGenerator.generateName(schemaId),
                     properties: convertedSchema.schema?.shape.properties.map((property) => {
                         return this.convertRequestBodyProperty({ context, property, contentType });
                     }),
@@ -96,7 +95,7 @@ export class RequestBodyConverter extends AbstractConverter<
                 });
                 return {
                     requestBody,
-                    inlinedTypes: context.removeSchemaFromInlinedTypes({
+                    inlinedTypes: this.context.removeSchemaFromInlinedTypes({
                         id: schemaId,
                         inlinedTypes: convertedSchema.inlinedTypes
                     }),
@@ -121,12 +120,10 @@ export class RequestBodyConverter extends AbstractConverter<
     private async convertRequestSchemaForMediaType({
         schemaId,
         contentType,
-        context,
         errorCollector
     }: {
         schemaId: string;
         contentType: string;
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<ConvertedRequestSchema | undefined> {
         const mediaTypeObject = this.requestBody.content[contentType];
@@ -139,7 +136,7 @@ export class RequestBodyConverter extends AbstractConverter<
             schemaOrReference: mediaTypeObject.schema,
             schemaIdOverride: schemaId
         });
-        const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
+        const convertedSchema = await schemaOrReferenceConverter.convert({ errorCollector });
         if (convertedSchema == null) {
             return undefined;
         }
@@ -150,8 +147,8 @@ export class RequestBodyConverter extends AbstractConverter<
                       await Promise.all(
                           Object.entries(mediaTypeObject.examples).map(async ([key, example]) => [
                               key,
-                              context.isReferenceObject(example)
-                                  ? await context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
+                              this.context.isReferenceObject(example)
+                                  ? await this.context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
                                   : example
                           ])
                       )
@@ -174,7 +171,6 @@ export class RequestBodyConverter extends AbstractConverter<
         const convertedSchema = await this.convertRequestSchemaForMediaType({
             schemaId,
             contentType,
-            context,
             errorCollector
         });
         if (convertedSchema == null) {

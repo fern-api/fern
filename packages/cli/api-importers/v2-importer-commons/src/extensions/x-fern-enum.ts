@@ -1,15 +1,15 @@
-import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector, FernEnumConfig } from "../";
+import { AbstractConverterContext, AbstractExtension, ErrorCollector, FernEnumConfig } from "../";
 import { FernEnumConfigSchema } from "../schemas/EnumSchema";
 
 export declare namespace FernEnumExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         schema: object;
     }
 
     export type Output = FernEnumConfig;
 }
 
-export class FernEnumExtension extends AbstractExtension<AbstractConverterContext<object>, FernEnumExtension.Output> {
+export class FernEnumExtension extends AbstractExtension<FernEnumExtension.Output> {
     private readonly schema: object;
     public readonly key = "x-fern-enum";
 
@@ -18,13 +18,7 @@ export class FernEnumExtension extends AbstractExtension<AbstractConverterContex
         this.schema = schema;
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: AbstractConverterContext<object>;
-        errorCollector: ErrorCollector;
-    }): FernEnumExtension.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernEnumExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.schema);
         if (extensionValue == null) {
             return undefined;

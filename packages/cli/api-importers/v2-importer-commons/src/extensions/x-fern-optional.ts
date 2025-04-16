@@ -3,12 +3,12 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
 
 export declare namespace FernOptionalExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         parameter: OpenAPIV3_1.ParameterObject;
     }
 }
 
-export class FernOptionalExtension extends AbstractExtension<AbstractConverterContext<object>, boolean> {
+export class FernOptionalExtension extends AbstractExtension<boolean> {
     private readonly parameter: object;
     public readonly key = "x-fern-optional";
 
@@ -17,13 +17,7 @@ export class FernOptionalExtension extends AbstractExtension<AbstractConverterCo
         this.parameter = parameter;
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: AbstractConverterContext<object>;
-        errorCollector: ErrorCollector;
-    }): boolean | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): boolean | undefined {
         const extensionValue = this.getExtensionValue(this.parameter);
         if (extensionValue == null) {
             return undefined;

@@ -11,11 +11,12 @@ import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons
 
 import { ServerNameExtension } from "../../extensions/x-fern-server-name";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { OpenAPIConverter } from "../OpenAPIConverter";
 
 const DEFAULT_BASE_URL_ID = "Base";
 
 export declare namespace ServersConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends OpenAPIConverter.Args {
         servers?: OpenAPIV3_1.ServerObject[];
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
     }
@@ -33,17 +34,15 @@ export class ServersConverter extends AbstractConverter<
     private readonly servers?: OpenAPIV3_1.ServerObject[];
     private readonly endpointLevelServers?: OpenAPIV3_1.ServerObject[];
 
-    constructor({ breadcrumbs, servers, endpointLevelServers }: ServersConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ breadcrumbs, context, servers, endpointLevelServers }: ServersConverter.Args) {
+        super({ breadcrumbs, context });
         this.servers = servers;
         this.endpointLevelServers = endpointLevelServers;
     }
 
     public convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): ServersConverter.Output | undefined {
         if (this.servers == null || this.servers.length === 0 || this.servers[0] == null) {
@@ -53,14 +52,14 @@ export class ServersConverter extends AbstractConverter<
         if (this.endpointLevelServers != null && this.endpointLevelServers.length > 0) {
             const defaultBaseUrl = {
                 id: DEFAULT_BASE_URL_ID,
-                name: context.casingsGenerator.generateName(DEFAULT_BASE_URL_ID)
+                name: this.context.casingsGenerator.generateName(DEFAULT_BASE_URL_ID)
             };
             const endpointUrls = this.endpointLevelServers
                 .map((server) => {
-                    const serverName = ServersConverter.getServerName({ server, errorCollector, context });
+                    const serverName = ServersConverter.getServerName({ server, errorCollector, context: this.context });
                     return {
                         id: serverName,
-                        name: context.casingsGenerator.generateName(serverName)
+                        name: this.context.casingsGenerator.generateName(serverName)
                     };
                 })
                 .filter((url, index, self) => self.findIndex((t) => t.id === url.id) === index);
@@ -68,14 +67,14 @@ export class ServersConverter extends AbstractConverter<
             const baseUrls = [defaultBaseUrl, ...endpointUrls];
 
             const environments: MultipleBaseUrlsEnvironment[] = this.servers.map((baseUrl) => {
-                const serverName = ServersConverter.getServerName({ server: baseUrl, errorCollector, context });
+                const serverName = ServersConverter.getServerName({ server: baseUrl, errorCollector, context: this.context });
                 const endpointLevelServers = this.endpointLevelServers?.map((server) => [
-                    ServersConverter.getServerName({ server, errorCollector, context }),
+                    ServersConverter.getServerName({ server, errorCollector, context: this.context }),
                     this.getServerUrl(server)
                 ]);
                 return {
                     id: serverName,
-                    name: context.casingsGenerator.generateName(serverName),
+                    name: this.context.casingsGenerator.generateName(serverName),
                     urls: {
                         [DEFAULT_BASE_URL_ID]: this.getServerUrl(baseUrl),
                         ...Object.fromEntries(endpointLevelServers ?? [])
@@ -92,16 +91,16 @@ export class ServersConverter extends AbstractConverter<
                         environments
                     })
                 },
-                defaultUrl: ServersConverter.getServerName({ server: this.servers[0], errorCollector, context })
+                defaultUrl: ServersConverter.getServerName({ server: this.servers[0], errorCollector, context: this.context })
             };
         }
 
         const environments: SingleBaseUrlEnvironment[] = this.servers
             .map((server) => {
-                const serverName = ServersConverter.getServerName({ server, context, errorCollector });
+                const serverName = ServersConverter.getServerName({ server, context: this.context, errorCollector });
                 return {
                     id: serverName,
-                    name: context.casingsGenerator.generateName(serverName),
+                    name: this.context.casingsGenerator.generateName(serverName),
                     url: this.getServerUrl(server),
                     docs: server.description
                 };
@@ -128,7 +127,7 @@ export class ServersConverter extends AbstractConverter<
         errorCollector: ErrorCollector;
     }): string {
         const serverNameExtension = new ServerNameExtension({ breadcrumbs: [], server });
-        const serverName = serverNameExtension.convert({ context, errorCollector });
+        const serverName = serverNameExtension.convert({ errorCollector });
         return serverName ?? server.description ?? server.url;
     }
 

@@ -1,12 +1,12 @@
 import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
 
 export declare namespace FernIgnoreExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         operation: object;
     }
 }
 
-export class FernIgnoreExtension extends AbstractExtension<AbstractConverterContext<object>, boolean> {
+export class FernIgnoreExtension extends AbstractExtension<boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-ignore";
 
@@ -15,13 +15,7 @@ export class FernIgnoreExtension extends AbstractExtension<AbstractConverterCont
         this.operation = operation;
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: AbstractConverterContext<object>;
-        errorCollector: ErrorCollector;
-    }): boolean | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): boolean | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;

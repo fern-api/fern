@@ -13,61 +13,14 @@ import { ServersConverter } from "./servers/ServersConverter";
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
 export declare namespace OpenAPIConverter {
-    export interface Args extends AbstractConverter.Args {
-        context: OpenAPIConverterContext3_1;
-    }
+    
+    type Args = AbstractConverter.Args<OpenAPIConverterContext3_1>
 }
 
 export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3_1, IntermediateRepresentation> {
-    private ir: BaseIntermediateRepresentation;
-
-    constructor({ breadcrumbs, context }: OpenAPIConverter.Args) {
-        super({ breadcrumbs });
-        this.ir = {
-            auth: {
-                docs: undefined,
-                requirement: FernIr.AuthSchemesRequirement.All,
-                schemes: []
-            },
-            types: {},
-            services: {},
-            errors: {},
-            webhookGroups: {},
-            websocketChannels: undefined,
-            headers: [],
-            idempotencyHeaders: [],
-            apiVersion: undefined,
-            apiDisplayName: undefined,
-            apiDocs: undefined,
-            basePath: undefined,
-            pathParameters: [],
-            errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
-            variables: [],
-            serviceTypeReferenceInfo: {
-                sharedTypes: [],
-                typesReferencedOnlyByService: {}
-            },
-            readmeConfig: undefined,
-            sourceConfig: undefined,
-            publishConfig: undefined,
-            dynamic: undefined,
-            environments: undefined,
-            fdrApiDefinitionId: undefined,
-            rootPackage: context.createPackage(),
-            subpackages: {},
-            sdkConfig: {
-                hasFileDownloadEndpoints: false,
-                hasPaginatedEndpoints: false,
-                hasStreamingEndpoints: false,
-                isAuthMandatory: true,
-                platformHeaders: {
-                    language: "",
-                    sdkName: "",
-                    sdkVersion: "",
-                    userAgent: undefined
-                }
-            }
-        };
+    
+    constructor({ breadcrumbs, context }: AbstractConverter.Args<OpenAPIConverterContext3_1>) {
+        super({ breadcrumbs, context });
     }
 
     public async convert({
@@ -87,11 +40,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
         await this.convertSchemas({ context, errorCollector });
 
-        await this.convertWebhooks({ context, errorCollector });
+        await this.convertWebhooks({ errorCollector });
 
-        const { endpointLevelServers } = await this.convertPaths({ context, errorCollector });
+        const { endpointLevelServers } = await this.convertPaths({ errorCollector });
 
-        this.convertServers({ context, errorCollector, endpointLevelServers });
+        this.convertServers({ errorCollector, endpointLevelServers });
 
         let ir = {
             ...this.ir,
@@ -110,58 +63,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         };
 
         return ir;
-    }
-
-    private removeXFernIgnores({
-        document,
-        context,
-        errorCollector,
-        breadcrumbs = []
-    }: {
-        document: unknown;
-        context: OpenAPIConverterContext3_1;
-        errorCollector: ErrorCollector;
-        breadcrumbs?: string[];
-    }): unknown {
-        if (Array.isArray(document)) {
-            return document
-                .filter((item, index) => {
-                    const shouldIgnore = new Extensions.FernIgnoreExtension({
-                        breadcrumbs: [...breadcrumbs, String(index)],
-                        operation: item
-                    }).convert({ context, errorCollector });
-                    return !shouldIgnore;
-                })
-                .map((item, index) =>
-                    this.removeXFernIgnores({
-                        document: item,
-                        context,
-                        errorCollector,
-                        breadcrumbs: [...breadcrumbs, String(index)]
-                    })
-                );
-        } else if (document != null && typeof document === "object") {
-            return Object.fromEntries(
-                Object.entries(document)
-                    .filter(([key, value]) => {
-                        const shouldIgnore = new Extensions.FernIgnoreExtension({
-                            breadcrumbs: [...breadcrumbs, key],
-                            operation: value
-                        }).convert({ context, errorCollector });
-                        return !shouldIgnore;
-                    })
-                    .map(([key, value]) => [
-                        key,
-                        this.removeXFernIgnores({
-                            document: value,
-                            context,
-                            errorCollector,
-                            breadcrumbs: [...breadcrumbs, key]
-                        })
-                    ])
-            );
-        }
-        return document;
     }
 
     private async convertSecuritySchemes({
@@ -187,10 +88,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             }
 
             const securitySchemeConverter = new SecuritySchemeConverter({
+                context: this.context,
                 breadcrumbs: ["components", "securitySchemes", id],
                 securityScheme: resolvedSecurityScheme
             });
-            const convertedScheme = securitySchemeConverter.convert({ context, errorCollector });
+            const convertedScheme = securitySchemeConverter.convert({ errorCollector });
             if (convertedScheme != null) {
                 securitySchemes.push(convertedScheme);
             }
@@ -206,20 +108,19 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
     }
 
     private convertServers({
-        context,
         errorCollector,
         endpointLevelServers
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
     }): void {
         const serversConverter = new ServersConverter({
+            context: this.context,
             breadcrumbs: ["servers"],
-            servers: context.spec.servers,
+            servers: this.context.spec.servers,
             endpointLevelServers
         });
-        const convertedServers = serversConverter.convert({ context, errorCollector });
+        const convertedServers = serversConverter.convert({ errorCollector });
         if (convertedServers != null) {
             this.ir.environments = convertedServers.value;
         }
@@ -232,23 +133,23 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<void> {
-        const group = this.getGroup({
+        const group = context.getGroup({
             groupParts: [],
             namespace: context.namespace
         });
 
         const pkg = this.getOrCreatePackage({
-            context,
             group
         });
 
         for (const [id, schema] of Object.entries(context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
+                context: this.context,
                 id,
                 breadcrumbs: ["components", "schemas", id],
                 schema
             });
-            const convertedSchema = await schemaConverter.convert({ context, errorCollector });
+            const convertedSchema = await schemaConverter.convert({ errorCollector });
             if (convertedSchema != null) {
                 pkg.types.push(id);
                 this.ir.types = {
@@ -261,27 +162,26 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
     }
 
     private async convertWebhooks({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<void> {
         const groupToWebhooks: Record<string, string[]> = {};
 
-        for (const [, webhookItem] of Object.entries(context.spec.webhooks ?? {})) {
+        for (const [, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {
             if (webhookItem == null || !("post" in webhookItem) || !webhookItem.post?.operationId) {
                 continue;
             }
             const operationId = webhookItem.post.operationId;
             const webHookConverter = new WebhookConverter({
+                context: this.context,
                 breadcrumbs: ["webhooks", operationId],
                 operation: webhookItem.post,
                 method: OpenAPIV3.HttpMethods.POST,
                 path: operationId
             });
 
-            const convertedWebHook = await webHookConverter.convert({ context, errorCollector });
+            const convertedWebHook = await webHookConverter.convert({ errorCollector });
 
             if (convertedWebHook != null) {
                 const group = convertedWebHook.group?.join(".") ?? operationId;
@@ -310,39 +210,37 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
     }
 
     private async convertPaths({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<{ endpointLevelServers?: OpenAPIV3_1.ServerObject[] }> {
         const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
 
-        for (const [path, pathItem] of Object.entries(context.spec.paths ?? {})) {
+        for (const [path, pathItem] of Object.entries(this.context.spec.paths ?? {})) {
             if (pathItem == null) {
                 continue;
             }
             const pathConverter = new PathConverter({
+                context: this.context,
                 breadcrumbs: ["paths", path],
                 pathItem,
                 path,
-                servers: context.spec.servers
+                servers: this.context.spec.servers
             });
-            const convertedPath = await pathConverter.convert({ context, errorCollector });
+            const convertedPath = await pathConverter.convert({ errorCollector });
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
-                    const group = this.getGroup({
+                    const group = this.context.getGroup({
                         groupParts: endpoint.group,
-                        namespace: context.namespace
+                        namespace: this.context.namespace
                     });
                     const groupId = group.join(".");
 
                     const pkg = this.getOrCreatePackage({
-                        context,
                         group: endpoint.group
                     });
 
-                    const allParts = [...group].map((part) => context.casingsGenerator.generateName(part));
+                    const allParts = [...group].map((part) => this.context.casingsGenerator.generateName(part));
                     const finalpart = allParts[allParts.length - 1];
 
                     if (pkg.service == null) {
@@ -377,14 +275,13 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 }
 
                 for (const webhook of convertedPath.webhooks) {
-                    const group = this.getGroup({
+                    const group = this.context.getGroup({
                         groupParts: webhook.group,
-                        namespace: context.namespace
+                        namespace: this.context.namespace
                     });
                     const groupId = group.join(".");
 
                     const pkg = this.getOrCreatePackage({
-                        context,
                         group: webhook.group
                     });
 
@@ -401,58 +298,5 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             }
         }
         return { endpointLevelServers };
-    }
-
-    /**
-     * Gets an existing package or creates a new one if it doesn't exist
-     * @param packageName The name of the package to get or create
-     * @param context The converter context
-     * @returns The package object
-     */
-    private getOrCreatePackage({ context, group }: { context: OpenAPIConverterContext3_1; group?: string[] }): Package {
-        const groupParts = [];
-        if (context.namespace != null) {
-            groupParts.push(context.namespace);
-        }
-        groupParts.push(...(group ?? []));
-
-        if (groupParts.length == 0) {
-            return this.ir.rootPackage;
-        }
-
-        let pkg = this.ir.rootPackage;
-        for (let i = 0; i < groupParts.length; i++) {
-            const name = groupParts[i];
-            const subpackageId = groupParts.slice(0, i + 1).join(".");
-            if (this.ir.subpackages[subpackageId] == null) {
-                this.ir.subpackages[subpackageId] = {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    name: context.casingsGenerator.generateName(name!),
-                    ...context.createPackage({ name })
-                };
-            }
-            const curr = this.ir.subpackages[subpackageId];
-            if (!pkg.subpackages.includes(subpackageId)) {
-                pkg.subpackages.push(subpackageId);
-            }
-            pkg = curr;
-        }
-
-        return pkg;
-    }
-
-    /**
-     * Helper function to get a stringified group name from an array of group parts
-     * @param groupParts Array of group name parts
-     * @param namespace Optional namespace to prepend to the group
-     * @returns A dot-separated string representation of the group
-     */
-    private getGroup({ groupParts, namespace }: { groupParts: string[] | undefined; namespace?: string }): string[] {
-        const group = [];
-        if (namespace != null) {
-            group.push(namespace);
-        }
-        group.push(...(groupParts ?? []));
-        return group;
     }
 }

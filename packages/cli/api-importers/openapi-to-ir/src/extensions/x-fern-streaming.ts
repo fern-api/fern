@@ -1,7 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
-import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 
@@ -32,7 +32,7 @@ type StreamConditionEndpoint = {
 };
 
 export declare namespace FernStreamingExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         operation: object;
     }
 
@@ -40,7 +40,6 @@ export declare namespace FernStreamingExtension {
 }
 
 export class FernStreamingExtension extends AbstractExtension<
-    OpenAPIConverterContext3_1,
     FernStreamingExtension.Output
 > {
     private readonly operation: object;
@@ -52,10 +51,8 @@ export class FernStreamingExtension extends AbstractExtension<
     }
 
     public convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): FernStreamingExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
@@ -92,7 +89,7 @@ export class FernStreamingExtension extends AbstractExtension<
             type: "streamCondition",
             format: result.data.format ?? "json",
             streamDescription: result.data["stream-description"],
-            streamConditionProperty: context.maybeTrimPrefix(result.data["stream-condition"], REQUEST_PREFIX),
+            streamConditionProperty: AbstractConverterContext.maybeTrimPrefix(result.data["stream-condition"], REQUEST_PREFIX),
             responseStream: result.data["response-stream"],
             response: result.data.response
         };

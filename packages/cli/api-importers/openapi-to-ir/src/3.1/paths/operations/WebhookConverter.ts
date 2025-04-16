@@ -11,15 +11,13 @@ export declare namespace WebhookConverter {
 }
 
 export class WebhookConverter extends AbstractOperationConverter {
-    constructor({ breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
-        super({ breadcrumbs, operation, method, path });
+    constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
+        super({ context, breadcrumbs, operation, method, path });
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<WebhookConverter.Output | undefined> {
         if (this.operation.operationId == null) {
@@ -51,18 +49,16 @@ export class WebhookConverter extends AbstractOperationConverter {
         }
 
         const { group, method } =
-            this.computeGroupNameAndLocationFromExtensions({ context, errorCollector }) ??
-            this.computeGroupNameFromTagAndOperationId({ context, errorCollector });
+            this.computeGroupNameAndLocationFromExtensions({ errorCollector }) ??
+            this.computeGroupNameFromTagAndOperationId({ errorCollector });
 
         const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"];
         const { headers, pathParameters, queryParameters } = await this.convertParameters({
-            context,
             errorCollector,
             breadcrumbs: payloadBreadcrumbs
         });
 
         const requestBody = await this.convertRequestBody({
-            context,
             errorCollector,
             breadcrumbs: payloadBreadcrumbs,
             group,
@@ -89,13 +85,13 @@ export class WebhookConverter extends AbstractOperationConverter {
             group,
             webhook: {
                 id: `${group?.join(".") ?? ""}.${method}`,
-                name: context.casingsGenerator.generateName(method),
+                name: this.context.casingsGenerator.generateName(method),
                 displayName: this.operation.summary,
                 method: httpMethod,
                 headers,
                 payload,
                 examples: [],
-                availability: await context.getAvailability({
+                availability: await this.context.getAvailability({
                     node: this.operation,
                     breadcrumbs: this.breadcrumbs,
                     errorCollector

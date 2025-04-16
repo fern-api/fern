@@ -1,9 +1,8 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
-import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverterContext, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 import {
     CursorPaginationExtensionSchema,
     OffsetPaginationExtensionSchema,
@@ -14,7 +13,7 @@ const REQUEST_PREFIX = "$request.";
 const RESPONSE_PREFIX = "$response.";
 
 export declare namespace FernPaginationExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         operation: object;
         document: OpenAPIV3.Document;
     }
@@ -36,7 +35,6 @@ export declare namespace FernPaginationExtension {
 }
 
 export class FernPaginationExtension extends AbstractExtension<
-    OpenAPIConverterContext3_1,
     FernPaginationExtension.Output
 > {
     private readonly operation: object;
@@ -50,10 +48,8 @@ export class FernPaginationExtension extends AbstractExtension<
     }
 
     public convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): FernPaginationExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
@@ -98,7 +94,7 @@ export class FernPaginationExtension extends AbstractExtension<
                 });
                 return undefined;
             }
-            return this.convertPaginationConfig(result.data, context);
+            return this.convertPaginationConfig({ config: result.data });
         }
 
         if (typeof result.data === "boolean") {
@@ -109,35 +105,34 @@ export class FernPaginationExtension extends AbstractExtension<
             return undefined;
         }
 
-        return this.convertPaginationConfig(result.data, context);
+        return this.convertPaginationConfig({ config: result.data});
     }
 
-    private convertPaginationConfig(
+    private convertPaginationConfig({ config }: {
         config: z.infer<typeof CursorPaginationExtensionSchema> | z.infer<typeof OffsetPaginationExtensionSchema>,
-        context: OpenAPIConverterContext3_1
-    ): FernPaginationExtension.Output {
+    }): FernPaginationExtension.Output {
         const maybeCursorPagination = config as z.infer<typeof CursorPaginationExtensionSchema>;
         if ("cursor" in maybeCursorPagination) {
             return {
                 type: "cursor",
-                cursor: context.maybeTrimPrefix(maybeCursorPagination.cursor, REQUEST_PREFIX),
-                nextCursor: context.maybeTrimPrefix(maybeCursorPagination.next_cursor, RESPONSE_PREFIX),
-                results: context.maybeTrimPrefix(maybeCursorPagination.results, RESPONSE_PREFIX)
+                cursor: AbstractConverterContext.maybeTrimPrefix(maybeCursorPagination.cursor, REQUEST_PREFIX),
+                nextCursor: AbstractConverterContext.maybeTrimPrefix(maybeCursorPagination.next_cursor, RESPONSE_PREFIX),
+                results: AbstractConverterContext.maybeTrimPrefix(maybeCursorPagination.results, RESPONSE_PREFIX)
             };
         }
 
         const offsetPagination = config as z.infer<typeof OffsetPaginationExtensionSchema>;
         return {
             type: "offset",
-            offset: context.maybeTrimPrefix(offsetPagination.offset, REQUEST_PREFIX),
-            results: context.maybeTrimPrefix(offsetPagination.results, RESPONSE_PREFIX),
+            offset: AbstractConverterContext.maybeTrimPrefix(offsetPagination.offset, REQUEST_PREFIX),
+            results: AbstractConverterContext.maybeTrimPrefix(offsetPagination.results, RESPONSE_PREFIX),
             step:
                 offsetPagination.step != null
-                    ? context.maybeTrimPrefix(offsetPagination.step, REQUEST_PREFIX)
+                    ? AbstractConverterContext.maybeTrimPrefix(offsetPagination.step, REQUEST_PREFIX)
                     : undefined,
             hasNextPage:
                 offsetPagination["has-next-page"] != null
-                    ? context.maybeTrimPrefix(offsetPagination["has-next-page"], RESPONSE_PREFIX)
+                    ? AbstractConverterContext.maybeTrimPrefix(offsetPagination["has-next-page"], RESPONSE_PREFIX)
                     : undefined
         };
     }

@@ -3,12 +3,12 @@ import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 
 export declare namespace FernIdempotentExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         operation: object;
     }
 }
 
-export class FernIdempotentExtension extends AbstractExtension<OpenAPIConverterContext3_1, boolean> {
+export class FernIdempotentExtension extends AbstractExtension<boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-idempotent";
 
@@ -18,10 +18,8 @@ export class FernIdempotentExtension extends AbstractExtension<OpenAPIConverterC
     }
 
     public convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): boolean | undefined {
         const extensionValue = this.getExtensionValue(this.operation);

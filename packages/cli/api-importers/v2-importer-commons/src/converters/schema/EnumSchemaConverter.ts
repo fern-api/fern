@@ -5,7 +5,7 @@ import { Type } from "@fern-api/ir-sdk";
 import { AbstractConverter, AbstractConverterContext, ErrorCollector, FernEnumConfig } from "../..";
 
 export declare namespace EnumSchemaConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         schema: OpenAPIV3_1.SchemaObject;
         maybeFernEnum: FernEnumConfig | undefined;
     }
@@ -22,17 +22,15 @@ export class EnumSchemaConverter extends AbstractConverter<
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly maybeFernEnum: FernEnumConfig | undefined;
 
-    constructor({ breadcrumbs, schema, maybeFernEnum }: EnumSchemaConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, schema, maybeFernEnum }: EnumSchemaConverter.Args) {
+        super({ context, breadcrumbs });
         this.schema = schema;
         this.maybeFernEnum = maybeFernEnum;
     }
 
     public convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): EnumSchemaConverter.Output | undefined {
         if (!this.schema.enum) {
@@ -45,7 +43,7 @@ export class EnumSchemaConverter extends AbstractConverter<
             const name = fernEnumValue?.name ?? value.toString();
 
             return {
-                name: context.casingsGenerator.generateNameAndWireValue({
+                name: this.context.casingsGenerator.generateNameAndWireValue({
                     name,
                     wireValue: value.toString()
                 }),
@@ -63,7 +61,7 @@ export class EnumSchemaConverter extends AbstractConverter<
             return undefined;
         }
 
-        const default_ = context.getAsString(this.schema.default);
+        const default_ = this.context.getAsString(this.schema.default);
         return {
             type: Type.enum({
                 default: default_ != null ? values.find((v) => v.name.wireValue === default_) : undefined,

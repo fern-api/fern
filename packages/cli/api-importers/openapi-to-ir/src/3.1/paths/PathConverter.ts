@@ -11,9 +11,10 @@ import { FernWebhookExtension } from "../../extensions/x-fern-webhook";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { OperationConverter } from "./operations/OperationConverter";
 import { WebhookConverter } from "./operations/WebhookConverter";
+import { OpenAPIConverter } from "../OpenAPIConverter";
 
 export declare namespace PathConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends OpenAPIConverter.Args {
         pathItem: OpenAPIV3_1.PathItemObject;
         path: string;
         servers?: OpenAPIV3_1.ServerObject[];
@@ -31,18 +32,16 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
     private readonly path: string;
     private readonly servers?: OpenAPIV3_1.ServerObject[];
 
-    constructor({ breadcrumbs, pathItem, path, servers }: PathConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, pathItem, path, servers }: PathConverter.Args) {
+        super({ context, breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;
         this.servers = servers;
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<PathConverter.Output | undefined> {
         const endpoints: OperationConverter.Output[] = [];
@@ -63,7 +62,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 operationBreadcrumbs,
                 operation,
                 method,
-                context,
+                context: this.context,
                 errorCollector
             });
             if (convertedWebhook != null) {
@@ -76,7 +75,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 breadcrumbs: operationBreadcrumbs,
                 operation
             });
-            const streamingExtension = streamingExtensionConverter.convert({ context, errorCollector });
+            const streamingExtension = streamingExtensionConverter.convert({ errorCollector });
             if (streamingExtension != null) {
                 // TODO: Use streaming extension to branch between streaming and non-streaming endpoints
                 // Use streamFormat to modify response conversion.
@@ -86,7 +85,6 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 operationBreadcrumbs,
                 operation,
                 method,
-                context,
                 errorCollector
             });
             if (convertedEndpoint != null) {
@@ -125,33 +123,32 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         }
 
         const webhookConverter = new WebhookConverter({
+            context: this.context,
             breadcrumbs: operationBreadcrumbs,
             operation,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path
         });
-        return await webhookConverter.convert({ context, errorCollector });
+        return await webhookConverter.convert({ errorCollector });
     }
 
     private async tryParseAsHttpEndpoint({
         operation,
         method,
         operationBreadcrumbs,
-        context,
         errorCollector
     }: {
         operation: OpenAPIV3_1.OperationObject;
         method: string;
         operationBreadcrumbs: string[];
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<OperationConverter.Output | undefined> {
         const paginationExtensionConverter = new FernPaginationExtension({
             breadcrumbs: operationBreadcrumbs,
             operation,
-            document: context.spec as OpenAPIV3.Document
+            document: this.context.spec as OpenAPIV3.Document
         });
-        const paginationExtension = paginationExtensionConverter.convert({ context, errorCollector });
+        const paginationExtension = paginationExtensionConverter.convert({ errorCollector });
         if (paginationExtension != null) {
             // TODO: Use pagination extension to modify endpoint conversion.
             // Correctly parse out the pagination ResponseProperty objects
@@ -161,15 +158,16 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             breadcrumbs: operationBreadcrumbs,
             operation
         });
-        const isIdempotent = idempotentExtensionConverter.convert({ context, errorCollector });
+        const isIdempotent = idempotentExtensionConverter.convert({ errorCollector });
 
         const operationConverter = new OperationConverter({
+            context: this.context,
             breadcrumbs: operationBreadcrumbs,
             operation,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path,
             idempotent: isIdempotent
         });
-        return await operationConverter.convert({ context, errorCollector });
+        return await operationConverter.convert({ errorCollector });
     }
 }

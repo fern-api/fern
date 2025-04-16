@@ -5,12 +5,12 @@ import { ErrorCollector } from "@fern-api/v2-importer-commons";
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 
 export declare namespace FernWebhookExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         operation: object;
     }
 }
 
-export class FernWebhookExtension extends AbstractExtension<OpenAPIConverterContext3_1, boolean> {
+export class FernWebhookExtension extends AbstractExtension<boolean> {
     private readonly operation: object;
     public readonly key = "x-fern-webhook";
 
