@@ -166,12 +166,10 @@ export function parseListItem({
             page: getText(link) || getText(sectionHeader) || "",
             slug: newLink
         };
-        
+
         // Check if the link already exists in child entries
-        const existingPageIndex = childEntries.findIndex(
-            (child) => child.type === "page" && child.slug === linkHref
-        );
-        
+        const existingPageIndex = childEntries.findIndex((child) => child.type === "page" && child.slug === linkHref);
+
         if (existingPageIndex !== -1) {
             // Replace the existing page with the new one
             childEntries[existingPageIndex] = newPage;
