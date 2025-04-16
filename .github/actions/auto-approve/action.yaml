@@ -1,0 +1,61 @@
+name: Auto-approve
+description: Will monitor a PR and approve when the checks on that PR are passing
+
+inputs:
+  approver-gh-token:
+    descriptions: GitHub Token used to approve the PR (must be different from the user creating the PR)
+    required: true
+  pull-request-number:
+    descriptions: The ID of the PR to approve
+    required: true
+  enforce-checks:
+    description: Require checks to pass before approving PR
+    required: false
+    default: 'false'
+  enforced-checks:
+    description: List of checks to enforce (provided as a comma separated list)
+    type: string
+    default: ''
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check status
+      if: inputs.enforce-checks == 'true' && inputs.enforced-checks == ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.approver-gh-token }}
+      run: |
+        echo "Waiting for all checks to finish running"
+        while echo $(gh pr checks ${{ inputs.pull-request-number }}) | grep -q 'pending'; do echo "$(gh pr checks 63 | grep pending | wc -l) check(s) still running"; sleep 30s; done
+
+        echo "All checks done running, looking for failures"
+        if echo $(gh pr checks ${{ inputs.pull-request-number }}) | grep -q 'fail'; then echo "Some/All Checks Failed"; exit 1; else echo "All Checks Passed"; fi
+
+        echo "PR Ready for approval"
+
+    - name: Specific PR check status
+      if: inputs.enforce-checks == 'true' && inputs.enforced-checks != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.approver-gh-token }}
+      run: |
+        echo "Specifically checking status of: '${{ inputs.enforced-checks }}' checks"
+        for i in $(echo ${{ inputs.enforced-checks }} | sed "s/,/ /g")
+        do
+            echo "Waiting for '$i' check to finish running"
+            while echo $(gh pr checks ${{ inputs.pull-request-number }} | grep $i) | grep -q 'pending'; do echo "$i check still running"; sleep 15s; done
+
+            echo "Checking status of '$i'"
+            if echo $(gh pr checks ${{ inputs.pull-request-number }} | grep $i) | grep -q 'fail'; then echo "'$i' Failed"; exit 1; else echo "'$i' Succeeded"; fi
+        done
+
+        echo "PR Ready for approval"
+
+    - name: Approving PR
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.approver-gh-token }}
+      run: |
+        echo "Approving PR"
+        gh pr review ${{ inputs.pull-request-number }} --approve

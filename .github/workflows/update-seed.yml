@@ -126,6 +126,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+
   ruby-sdk:
     needs: changes
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -161,6 +168,13 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
 
   pydantic-model:
     needs: changes
@@ -198,6 +212,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+
   python-sdk:
     needs: changes
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -233,6 +254,13 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
 
   fastapi:
     needs: changes
@@ -270,6 +298,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+
   openapi:
     needs: changes
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -305,6 +340,13 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
 
   postman:
     needs: changes
@@ -342,6 +384,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+
   java-sdk:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -377,6 +426,13 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
 
   java-model:
     needs: changes
@@ -414,6 +470,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+
   java-spring:
     needs: changes
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -449,6 +512,13 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
 
   typescript-sdk:
     needs: changes
@@ -486,6 +556,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+
   typescript-express:
     needs: changes
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -521,6 +598,13 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
 
   go-fiber:
     needs: changes
@@ -558,6 +642,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+
   go-model:
     needs: changes
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -593,6 +684,13 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
 
   go-sdk:
     needs: changes
@@ -630,6 +728,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+
   csharp-model:
     needs: changes
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -665,6 +770,13 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
 
   csharp-sdk:
     needs: changes
@@ -702,6 +814,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+
   php-model:
     needs: changes
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -738,6 +857,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+
   php-sdk:
     needs: changes
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
@@ -773,3 +899,10 @@ jobs:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     

@@ -285,7 +285,8 @@ client.imdb.create_movie(
 `;
 
 exports[`snippets > multi-url-environment > 'Custom environment' 1`] = `
-"from acme import Acme, AcmeEnvironment
+"from acme import Acme
+from acme.environment import AcmeEnvironment
 
 client = Acme(
     environment=AcmeEnvironment(
@@ -312,7 +313,8 @@ exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] 
 `;
 
 exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
-"from acme import Acme, AcmeEnvironment
+"from acme import Acme
+from acme.environment import AcmeEnvironment
 
 client = Acme(
     environment=AcmeEnvironment.PRODUCTION,
@@ -326,7 +328,8 @@ client.s3.get_presigned_url(
 `;
 
 exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
-"from acme import Acme, AcmeEnvironment
+"from acme import Acme
+from acme.environment import AcmeEnvironment
 
 client = Acme(
     environment=AcmeEnvironment.STAGING,
@@ -406,7 +409,8 @@ client.nullable.get_users(
 `;
 
 exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
-"from acme import Acme, AcmeEnvironment
+"from acme import Acme
+from acme.environment import AcmeEnvironment
 
 client = Acme(
     environment=AcmeEnvironment.PRODUCTION,
@@ -418,7 +422,8 @@ client.dummy.get_dummy()
 `;
 
 exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
-"from acme import Acme, AcmeEnvironment
+"from acme import Acme
+from acme.environment import AcmeEnvironment
 
 client = Acme(
     environment=AcmeEnvironment.STAGING,
