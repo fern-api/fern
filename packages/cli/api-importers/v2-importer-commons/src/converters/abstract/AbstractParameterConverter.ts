@@ -12,6 +12,7 @@ import {
 } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
+import { ExampleConverter } from "../ExampleConverter";
 
 export declare namespace AbstractParameterConverter {
     export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.Args {
@@ -155,22 +156,28 @@ export abstract class AbstractParameterConverter<
         let userSpecifiedExamples: Record<string, unknown> = {};
         const parameterExample = this.parameter.example;
         const parameterExamples = this.parameter.examples;
+
         for (const [key, example] of Object.entries(parameterExamples ?? {})) {
-            if (context.isReferenceObject(example)) {
-                const resolved = await context.resolveReference(example);
-                if (resolved.resolved) {
-                    if (context.isExampleWithValue(resolved.value)) {
-                        userSpecifiedExamples[key] = resolved.value.value;
-                    }
+            const resolvedExample = await context.resolveValuedExample(example);
+            if (resolvedExample != null) {
+                if (this.parameter.schema != null) {
+                    userSpecifiedExamples[key] = await this.generateOrValidateExample({
+                        shouldCollectErrors: true,
+                        schema: this.parameter.schema,
+                        example: resolvedExample,
+                        context,
+                        errorCollector
+                    });
+                } else {
+                    userSpecifiedExamples[key] = resolvedExample;
                 }
-            } else if (example != null) {
-                userSpecifiedExamples[key] = example;
             }
         }
         const parameterExampleName = context.generateUniqueName({
             prefix: `${this.parameter.name}_example`,
             existingNames: Object.keys(userSpecifiedExamples)
         });
+
         userSpecifiedExamples =
             parameterExample != null
                 ? {
@@ -179,5 +186,35 @@ export abstract class AbstractParameterConverter<
                   }
                 : userSpecifiedExamples;
         return userSpecifiedExamples;
+    }
+
+    private async generateOrValidateExample({
+        schema,
+        shouldCollectErrors,
+        example,
+        context,
+        errorCollector
+    }: {
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        shouldCollectErrors: boolean;
+        example: unknown;
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<unknown> {
+        const exampleConverter = new ExampleConverter({
+            breadcrumbs: this.breadcrumbs,
+            schema,
+            example
+        });
+        const { validExample: convertedExample, errors } = await exampleConverter.convert({ context, errorCollector });
+        if (shouldCollectErrors) {
+            errors.forEach((error) => {
+                errorCollector.collect({
+                    message: error.message,
+                    path: error.path
+                });
+            });
+        }
+        return convertedExample;
     }
 }
