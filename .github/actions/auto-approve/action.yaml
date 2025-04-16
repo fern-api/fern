@@ -44,10 +44,10 @@ runs:
         for i in $(echo ${{ inputs.enforced-checks }} | sed "s/,/ /g")
         do
             echo "Waiting for '$i' check to finish running"
-            while echo $(gh pr checks ${{ inputs.pull-request-number }}) | grep '$i' | grep -q 'pending'; do echo "$i check still running"; sleep 15s; done
+            while echo $(gh pr checks ${{ inputs.pull-request-number }} | grep $i) | grep -q 'pending'; do echo "$i check still running"; sleep 15s; done
 
             echo "Checking status of '$i'"
-            if echo $(gh pr checks ${{ inputs.pull-request-number }}) | grep '$i' | grep -q 'fail'; then echo "'$i' Failed"; exit 1; else echo "'$i' Succeeded"; fi
+            if echo $(gh pr checks ${{ inputs.pull-request-number }} | grep $i) | grep -q 'fail'; then echo "'$i' Failed"; exit 1; else echo "'$i' Succeeded"; fi
         done
 
         echo "PR Ready for approval"
