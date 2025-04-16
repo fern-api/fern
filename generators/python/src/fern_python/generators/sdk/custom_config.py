@@ -51,6 +51,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     flat_layout: bool = False
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
     additional_init_exports: Optional[List[ModuleExport]] = None
+    exclude_types_from_init_exports: Optional[bool] = False
     # Feature flag that improves imports in the
     # Python SDK by removing nested `resources` directory
     improved_imports: bool = True
@@ -60,6 +61,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.
     inline_request_params: bool = True
+
+    # If true, treats path parameters as named parameters in endpoint functions
+    inline_path_params: bool = False
 
     # Feature flag that enables generation of Python websocket clients
     should_generate_websocket_clients: bool = False
@@ -77,6 +81,14 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Whether or not to generate TypedDicts instead of Pydantic
     # Models for request objects.
     use_typeddict_requests: bool = False
+
+    # Whether or not to generate TypedDicts instead of Pydantic
+    # Models for file upload request objects.
+    #
+    # Note that this flag was only introduced due to an oversight in
+    # the `use_typeddict_requests` flag implementation; it should be
+    # removed in the future.
+    use_typeddict_requests_for_file_upload: bool = False
 
     pyproject_toml: Optional[str] = None
 

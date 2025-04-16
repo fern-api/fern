@@ -25,6 +25,9 @@
       "path": "../../../../../generators/php/dynamic-snippets"
     },
     {
+      "path": "../../../../../generators/python-v2/dynamic-snippets"
+    },
+    {
       "path": "../../../../../generators/typescript-v2/dynamic-snippets"
     },
     {

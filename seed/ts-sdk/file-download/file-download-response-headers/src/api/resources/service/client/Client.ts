@@ -28,11 +28,21 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async downloadFile(requestOptions?: Service.RequestOptions): Promise<{
+    public downloadFile(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<{
         data: stream.Readable;
         contentLengthInBytes?: number;
         contentType?: string;
     }> {
+        return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
+    }
+
+    private async __downloadFile(requestOptions?: Service.RequestOptions): Promise<
+        core.WithRawResponse<{
+            data: stream.Readable;
+            contentLengthInBytes?: number;
+            contentType?: string;
+        }>
+    > {
         const _response = await core.fetcher<stream.Readable>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -57,9 +67,12 @@ export class Service {
         if (_response.ok) {
             const _contentLength = core.getHeader(_response.headers ?? {}, "Content-Length");
             return {
-                data: _response.body,
-                contentLengthInBytes: _contentLength != null ? Number(_contentLength) : undefined,
-                contentType: core.getHeader(_response.headers ?? {}, "Content-Type"),
+                data: {
+                    data: _response.body,
+                    contentLengthInBytes: _contentLength != null ? Number(_contentLength) : undefined,
+                    contentType: core.getHeader(_response.headers ?? {}, "Content-Type"),
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
@@ -67,6 +80,7 @@ export class Service {
             throw new errors.SeedFileDownloadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -75,12 +89,14 @@ export class Service {
                 throw new errors.SeedFileDownloadError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedFileDownloadError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

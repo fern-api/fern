@@ -37,7 +37,17 @@ export class SeedAliasClient {
      * @example
      *     await client.get("typeId")
      */
-    public async get(typeId: SeedAlias.TypeId, requestOptions?: SeedAliasClient.RequestOptions): Promise<void> {
+    public get(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__get(typeId, requestOptions));
+    }
+
+    private async __get(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,13 +71,14 @@ export class SeedAliasClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAliasError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -76,12 +87,14 @@ export class SeedAliasClient {
                 throw new errors.SeedAliasError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAliasTimeoutError("Timeout exceeded when calling GET /{typeId}.");
             case "unknown":
                 throw new errors.SeedAliasError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

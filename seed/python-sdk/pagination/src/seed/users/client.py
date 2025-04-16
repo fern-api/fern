@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawUsersClient
 from .types.order import Order
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
@@ -20,6 +21,7 @@ from .types.list_users_extended_optional_list_response import ListUsersExtendedO
 from ..types.username_cursor import UsernameCursor
 from .types.username_container import UsernameContainer
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawUsersClient
 from ..core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -28,7 +30,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class UsersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawUsersClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawUsersClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawUsersClient
+        """
+        return self._raw_client
 
     def list_with_cursor_pagination(
         self,
@@ -81,7 +94,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -152,7 +165,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="POST",
             params={
@@ -219,7 +232,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="POST",
             json={
@@ -307,7 +320,7 @@ class UsersClient:
             yield page
         """
         page = page if page is not None else 0
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -394,7 +407,7 @@ class UsersClient:
             yield page
         """
         page = page if page is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -467,7 +480,7 @@ class UsersClient:
             yield page
         """
         page = page if page is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="POST",
             json={
@@ -547,7 +560,7 @@ class UsersClient:
             yield page
         """
         page = page if page is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -628,7 +641,7 @@ class UsersClient:
             yield page
         """
         page = page if page is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -697,7 +710,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -765,7 +778,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -831,7 +844,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -861,57 +874,6 @@ class UsersClient:
                 if _parsed_response.cursor is not None:
                     _items = _parsed_response.cursor.data
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def list_usernames_custom(
-        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsernameCursor:
-        """
-        Parameters
-        ----------
-        starting_after : typing.Optional[str]
-            The cursor used for pagination in order to fetch
-            the next page of results.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UsernameCursor
-
-        Examples
-        --------
-        from seed import SeedPagination
-
-        client = SeedPagination(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.users.list_usernames_custom(
-            starting_after="starting_after",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "users",
-            method="GET",
-            params={
-                "starting_after": starting_after,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    UsernameCursor,
-                    parse_obj_as(
-                        type_=UsernameCursor,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -950,7 +912,7 @@ class UsersClient:
             yield page
         """
         offset = offset if offset is not None else 1
-        _response = self._client_wrapper.httpx_client.request(
+        _response = self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -982,7 +944,18 @@ class UsersClient:
 
 class AsyncUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawUsersClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawUsersClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawUsersClient
+        """
+        return self._raw_client
 
     async def list_with_cursor_pagination(
         self,
@@ -1043,7 +1016,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -1122,7 +1095,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="POST",
             params={
@@ -1197,7 +1170,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="POST",
             json={
@@ -1293,7 +1266,7 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         page = page if page is not None else 0
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -1388,7 +1361,7 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         page = page if page is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -1469,7 +1442,7 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         page = page if page is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="POST",
             json={
@@ -1557,7 +1530,7 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         page = page if page is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -1646,7 +1619,7 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         page = page if page is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -1722,7 +1695,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -1797,7 +1770,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -1871,7 +1844,7 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={
@@ -1901,65 +1874,6 @@ class AsyncUsersClient:
                 if _parsed_response.cursor is not None:
                     _items = _parsed_response.cursor.data
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def list_usernames_custom(
-        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsernameCursor:
-        """
-        Parameters
-        ----------
-        starting_after : typing.Optional[str]
-            The cursor used for pagination in order to fetch
-            the next page of results.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        UsernameCursor
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedPagination
-
-        client = AsyncSeedPagination(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.users.list_usernames_custom(
-                starting_after="starting_after",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "users",
-            method="GET",
-            params={
-                "starting_after": starting_after,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    UsernameCursor,
-                    parse_obj_as(
-                        type_=UsernameCursor,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -2006,7 +1920,7 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         offset = offset if offset is not None else 1
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = await self._raw_client._client_wrapper.httpx_client.request(
             "users",
             method="GET",
             params={

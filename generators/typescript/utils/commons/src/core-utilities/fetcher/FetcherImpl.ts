@@ -33,7 +33,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 "../../stream-wrappers/chooseStreamWrapper":
                     "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
                 "../stream-wrappers/chooseStreamWrapper":
-                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper"
+                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
+                "../RawResponse": "../../../src/core/fetcher/RawResponse",
+                "../HttpResponsePromise": "../../../src/core/fetcher/HttpResponsePromise"
             }
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
@@ -220,28 +222,51 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         ok: "ok",
 
         SuccessfulResponse: {
-            _build: (body: ts.Expression): ts.ObjectLiteralExpression =>
+            _build: (
+                body: ts.Expression,
+                headers?: ts.Expression,
+                rawResponse?: ts.Expression
+            ): ts.ObjectLiteralExpression =>
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(this.APIResponse.ok, ts.factory.createTrue()),
-                        ts.factory.createPropertyAssignment(this.APIResponse.SuccessfulResponse.body, body)
+                        ts.factory.createPropertyAssignment(this.APIResponse.SuccessfulResponse.body, body),
+                        ...(headers
+                            ? [
+                                  ts.factory.createPropertyAssignment(
+                                      this.APIResponse.SuccessfulResponse.headers,
+                                      headers
+                                  )
+                              ]
+                            : []),
+                        ...(rawResponse
+                            ? [
+                                  ts.factory.createPropertyAssignment(
+                                      this.APIResponse.SuccessfulResponse.rawResponse,
+                                      rawResponse
+                                  )
+                              ]
+                            : [])
                     ],
                     true
                 ),
             body: "body",
-            headers: "headers"
+            headers: "headers",
+            rawResponse: "rawResponse"
         },
 
         FailedResponse: {
-            _build: (error: ts.Expression): ts.ObjectLiteralExpression =>
+            _build: (error: ts.Expression, rawResponse: ts.Expression): ts.ObjectLiteralExpression =>
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(this.APIResponse.ok, ts.factory.createFalse()),
-                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.error, error)
+                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.error, error),
+                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.rawResponse, rawResponse)
                     ],
                     true
                 ),
-            error: "error"
+            error: "error",
+            rawResponse: "rawResponse"
         }
     };
 
@@ -309,4 +334,65 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(Fetcher.getEntityName(), typeName))
         );
     }
+
+    public readonly RawResponse = {
+        RawResponse: {
+            _getReferenceToType: this.withExportedName("RawResponse", (RawResponse) => () => RawResponse.getTypeNode())
+        },
+        toRawResponse: {
+            _getReferenceToType: this.withExportedName(
+                "toRawResponse",
+                (RawResponse) => () => RawResponse.getTypeNode()
+            )
+        },
+        WithRawResponse: {
+            _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
+                return this.withExportedName(
+                    "WithRawResponse",
+                    (RawResponse) => () =>
+                        ts.factory.createTypeReferenceNode(RawResponse.getEntityName(), typeArg ? [typeArg] : undefined)
+                )();
+            }
+        }
+    };
+    public readonly HttpResponsePromise = {
+        _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createTypeReferenceNode(
+                        HttpResponsePromise.getEntityName(),
+                        typeArg ? [typeArg] : undefined
+                    )
+            )();
+        },
+        fromPromise: (promise: ts.Expression): ts.Expression => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            HttpResponsePromise.getExpression(),
+                            ts.factory.createIdentifier("fromPromise")
+                        ),
+                        undefined,
+                        [promise]
+                    )
+            )();
+        },
+        interceptFunction: (fn: ts.Expression): ts.Expression => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            HttpResponsePromise.getExpression(),
+                            ts.factory.createIdentifier("interceptFunction")
+                        ),
+                        undefined,
+                        [fn]
+                    )
+            )();
+        }
+    };
 }

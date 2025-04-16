@@ -198,6 +198,8 @@ export class Field extends AstNode {
         }
         writer.write(this.name);
 
+        // TODO: refactor useExpressionBodiedPropertySyntax to be an argument that defaults to false
+        // expression body will run the code every time, which is not the intended/expected behavior of initializer
         const useExpressionBodiedPropertySyntax = this.get && !this.init && !this.set && this.initializer != null;
         if ((this.get || this.init || this.set) && !useExpressionBodiedPropertySyntax) {
             writer.write(" { ");

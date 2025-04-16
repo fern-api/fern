@@ -72,6 +72,7 @@ class GeneratedEndpointFunction:
 
 class EndpointFunctionGenerator:
     REQUEST_OPTIONS_VARIABLE = "request_options"
+    STREAM_FUNC_NAME = "stream"
 
     def __init__(
         self,
@@ -86,6 +87,7 @@ class EndpointFunctionGenerator:
         generated_root_client: GeneratedRootClient,
         snippet_writer: SnippetWriter,
         endpoint_metadata_collector: Optional[EndpointMetadataCollector],
+        is_raw_client: bool = False,
     ):
         self._context = context
         self._package = package
@@ -97,6 +99,7 @@ class EndpointFunctionGenerator:
         self._generated_root_client = generated_root_client
         self.snippet_writer = snippet_writer
         self.endpoint_metadata_collector = endpoint_metadata_collector
+        self._is_raw_client = is_raw_client
 
         self.is_paginated = (
             self._endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients
@@ -182,15 +185,8 @@ class EndpointFunctionGenerator:
             ),
         )
 
-    def _is_overloaded_streaming_method(self) -> bool:
-        return (
-            self._endpoint.response is not None
-            and self._endpoint.response.body is not None
-            and self._endpoint.response.body.get_as_union().type == "streamParameter"
-        )
-
     def generate(self) -> List[GeneratedEndpointFunction]:
-        if self._is_overloaded_streaming_method():
+        if is_overloaded_streaming_method(self._endpoint):
             base_function = self.generate_single_function(is_overloaded=False, include_snippet=False)
             streaming_function = self.generate_single_function(is_overloaded=True, streaming_parameter="streaming")
             non_streaming_function = self.generate_single_function(
@@ -205,9 +201,23 @@ class EndpointFunctionGenerator:
         else:
             return [self.generate_single_function(is_overloaded=False)]
 
-    def _get_overridden_parameter_types(
+    def generate_endpoint_snippet_raw(self, example: ir_types.ExampleEndpointCall) -> AST.Expression:
+        return EndpointFunctionSnippetGenerator(
+            context=self._context,
+            snippet_writer=self.snippet_writer,
+            service=self._service,
+            endpoint=self._endpoint,
+            example=example,
+            path_parameter_names=self._path_parameter_names,
+            request_parameter_names=self._request_parameter_name_rewrites,
+            generate_pagination=self.is_paginated == True,
+            is_raw_client=self._is_raw_client,
+        ).generate_snippet()
+
+    def _get_named_parameter_types(
         self, streaming_parameter: Optional[StreamingParameterType] = None
     ) -> List[AST.NamedFunctionParameter]:
+        named_parameters: List[AST.NamedFunctionParameter] = self._named_parameters_raw.copy()
         if (
             streaming_parameter is not None
             and self._endpoint.sdk_request is not None
@@ -233,8 +243,16 @@ class EndpointFunctionGenerator:
                     )
                 else:
                     cleaned_parameters.append(param)
-            return cleaned_parameters
-        return self._named_parameters_raw
+            named_parameters = cleaned_parameters
+
+        if self._context.custom_config.inline_path_params:
+            named_path_parameters: List[AST.NamedFunctionParameter] = self._named_parameters_from_path_parameters(
+                self._endpoint.all_path_parameters
+            )
+            # path parameters go first because it's important that request options is the last parameter
+            named_parameters = named_path_parameters + named_parameters
+
+        return named_parameters
 
     def generate_single_function(
         self,
@@ -252,8 +270,39 @@ class EndpointFunctionGenerator:
             streaming_parameter=streaming_parameter,
         )
 
-        unnamed_parameters = self._get_endpoint_path_parameters()
-        named_parameters = self._get_overridden_parameter_types(streaming_parameter)
+        unnamed_parameters = self._get_unnamed_parameters()
+        named_parameters = self._get_named_parameter_types(streaming_parameter)
+
+        decorators = []
+        if is_overloaded:
+            decorators.append(
+                AST.Expression(
+                    AST.Reference(
+                        qualified_name_excluding_import=("overload",),
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                    )
+                )
+            )
+        # Add contextmanager decorators for streaming endpoints in raw clients
+        elif self._is_raw_client and is_streaming_endpoint(self._endpoint):
+            if self._is_async:
+                decorators.append(
+                    AST.Expression(
+                        AST.Reference(
+                            qualified_name_excluding_import=("asynccontextmanager",),
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("contextlib",))),
+                        )
+                    )
+                )
+            else:
+                decorators.append(
+                    AST.Expression(
+                        AST.Reference(
+                            qualified_name_excluding_import=("contextmanager",),
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("contextlib",))),
+                        )
+                    )
+                )
 
         function_declaration = AST.FunctionDeclaration(
             name=get_endpoint_name(self._endpoint),
@@ -286,18 +335,7 @@ class EndpointFunctionGenerator:
                 if not is_overloaded
                 else self._create_empty_body_writer()
             ),
-            decorators=(
-                [
-                    AST.Expression(
-                        AST.Reference(
-                            qualified_name_excluding_import=("overload",),
-                            import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
-                        )
-                    )
-                ]
-                if is_overloaded
-                else []
-            ),
+            decorators=decorators,
         )
         return GeneratedEndpointFunction(
             function=function_declaration,
@@ -305,12 +343,23 @@ class EndpointFunctionGenerator:
             snippets=endpoint_snippets or [],
         )
 
-    def _get_endpoint_return_type(self, streaming_parameter: Optional[StreamingParameterType] = None) -> AST.TypeHint:
-        return_type = (
-            self._get_response_body_type(self._endpoint.response.body, self._is_async, streaming_parameter)
-            if self._endpoint.response is not None and self._endpoint.response.body is not None
-            else AST.TypeHint.none()
+    def _get_stream_func_return_type(self) -> AST.TypeHint:
+        underlying_type = self._get_response_body_underlying_type(
+            response_body=self._endpoint.response.body, is_async=self._is_async
         )
+        underlying_type_wrapped = (
+            AST.TypeHint.async_iterator(underlying_type) if self._is_async else AST.TypeHint.iterator(underlying_type)
+        )
+        return self._get_http_response_wrapper_type(self._is_async, underlying_type_wrapped)
+
+    def _get_endpoint_return_type(self, streaming_parameter: Optional[StreamingParameterType] = None) -> AST.TypeHint:
+        if self._endpoint.response is not None:
+            return_type = self._get_response_body_type(
+                self._endpoint.response.body, self._is_async, streaming_parameter
+            )
+        else:
+            return_type = self._get_response_body_type(None, self._is_async, streaming_parameter)
+
         return (
             return_type
             if not self.is_paginated
@@ -322,20 +371,22 @@ class EndpointFunctionGenerator:
             name += "_"
         return name
 
-    def _get_endpoint_path_parameters(self) -> List[AST.FunctionParameter]:
+    def _get_unnamed_parameters(self) -> List[AST.FunctionParameter]:
         parameters: List[AST.FunctionParameter] = []
-        for path_parameter in self._endpoint.all_path_parameters:
-            if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[path_parameter.name]
-                parameters.append(
-                    AST.FunctionParameter(
-                        name=name,
-                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            path_parameter.value_type,
-                            in_endpoint=True,
+
+        if not self._context.custom_config.inline_path_params:
+            for path_parameter in self._endpoint.all_path_parameters:
+                if not self._is_type_literal(path_parameter.value_type):
+                    name = self._path_parameter_names[path_parameter.name]
+                    parameters.append(
+                        AST.FunctionParameter(
+                            name=name,
+                            type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                path_parameter.value_type,
+                                in_endpoint=True,
+                            ),
                         ),
-                    ),
-                )
+                    )
         return parameters
 
     def _get_endpoint_named_parameters(
@@ -465,7 +516,7 @@ class EndpointFunctionGenerator:
 
         json_request_body_var = None
         if (method != "GET") and json_request_body is not None:
-            if self._is_overloaded_streaming_method():
+            if is_overloaded_streaming_method(self._endpoint):
                 request_json_variable_name = "_request_json"
                 writer.write(f"{request_json_variable_name} = ")
                 writer.write_node(AST.CodeWriter(write_request_body))
@@ -483,7 +534,7 @@ class EndpointFunctionGenerator:
             else None
         )
 
-        if files is not None and self._is_overloaded_streaming_method():
+        if files is not None and is_overloaded_streaming_method(self._endpoint):
             files_variable_name = "_request_files"
             writer.write(f"{files_variable_name} = ")
             writer.write_node(files)
@@ -536,7 +587,7 @@ class EndpointFunctionGenerator:
                     request_options_variable_name = last_param.name
 
                 return HttpX.make_request(
-                    is_streaming=is_streaming,
+                    stream_response_type=self._get_stream_func_return_type() if is_streaming else None,
                     is_async=is_async,
                     path=(
                         self._get_path_for_endpoint(endpoint=endpoint) if not is_endpoint_path_empty(endpoint) else None
@@ -579,6 +630,7 @@ class EndpointFunctionGenerator:
                             parameters=parameters,
                             named_parameters=named_parameters,
                         ),
+                        is_raw_client=self._is_raw_client,
                     )
                     streaming_request = get_httpx_request(
                         is_streaming=True, response_code_writer=streaming_response_code_writer
@@ -614,6 +666,7 @@ class EndpointFunctionGenerator:
                         parameters=parameters,
                         named_parameters=named_parameters,
                     ),
+                    is_raw_client=self._is_raw_client,
                 )
                 non_streaming_request = get_httpx_request(
                     is_streaming=False, response_code_writer=non_streaming_response_code_writer
@@ -635,18 +688,12 @@ class EndpointFunctionGenerator:
                         parameters=parameters,
                         named_parameters=named_parameters,
                     ),
+                    is_raw_client=self._is_raw_client,
                 )
-                is_streaming = (
-                    True
-                    if endpoint.response is not None
-                    and endpoint.response.body
-                    and (
-                        endpoint.response.body.get_as_union().type == "streaming"
-                        or endpoint.response.body.get_as_union().type == "fileDownload"
-                    )
-                    else False
+
+                httpx_request = get_httpx_request(
+                    is_streaming=is_streaming_endpoint(self._endpoint), response_code_writer=response_code_writer
                 )
-                httpx_request = get_httpx_request(is_streaming=is_streaming, response_code_writer=response_code_writer)
                 writer.write_node(httpx_request)
 
         return AST.CodeWriter(write)
@@ -663,7 +710,9 @@ class EndpointFunctionGenerator:
 
         # Consolidate the named parameters and path parameters in a single list.
         parameters: List[AST.NamedFunctionParameter] = []
-        parameters = self._named_parameters_from_path_parameters(path_parameters)
+        inline_path_params = self._context.custom_config.inline_path_params
+        # If inline_path_params is true, named_parameters already includes path params
+        parameters = self._named_parameters_from_path_parameters(path_parameters) if not inline_path_params else []
         parameters.extend(named_parameters)
 
         def write(writer: AST.NodeWriter) -> None:
@@ -693,7 +742,8 @@ class EndpointFunctionGenerator:
 
             self._write_response_body_type(writer, self._endpoint.response, self._get_endpoint_return_type())
 
-            if snippet is not None:
+            # TODO(hughhan1): support generating examples in the docstring for raw clients.
+            if not self._is_raw_client and snippet is not None:
                 writer.write_line()
                 # Include a dashed line between the endpoint snippet and the rest of the docs, if any.
                 writer.write_line("Examples")
@@ -705,18 +755,6 @@ class EndpointFunctionGenerator:
                 writer.write_newline_if_last_line_not()
 
         return AST.CodeWriter(write)
-
-    def _generate_endpoint_snippet_raw(self, example: ir_types.ExampleEndpointCall) -> AST.Expression:
-        return EndpointFunctionSnippetGenerator(
-            context=self._context,
-            snippet_writer=self.snippet_writer,
-            service=self._service,
-            endpoint=self._endpoint,
-            example=example,
-            path_parameter_names=self._path_parameter_names,
-            request_parameter_names=self._request_parameter_name_rewrites,
-            generate_pagination=self.is_paginated == True,
-        ).generate_snippet()
 
     def _generate_endpoint_snippets(
         self,
@@ -748,6 +786,7 @@ class EndpointFunctionGenerator:
                 request_parameter_names=self._request_parameter_name_rewrites,
                 generate_pagination=self.is_paginated == True,
                 streaming_parameter=streaming_parameter,
+                is_raw_client=self._is_raw_client,
             )
 
             endpoint_snippet = endpoint_snippet_generator.generate_snippet()
@@ -964,10 +1003,10 @@ class EndpointFunctionGenerator:
         return fallback_typehint
 
     def _get_non_streaming_response_body_type(
-        self, non_stream_response: ir_types.NonStreamHttpResponseBody, is_async: bool
+        self, non_stream_response: ir_types.NonStreamHttpResponseBody
     ) -> AST.TypeHint:
         result = non_stream_response.visit(
-            file_download=lambda _: self._get_file_download_response_body_type(is_async),
+            file_download=lambda _: self._get_file_download_response_body_type(),
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),
             bytes=lambda _: AST.TypeHint.bytes(),
@@ -976,12 +1015,8 @@ class EndpointFunctionGenerator:
             return AST.TypeHint.none()
         return result
 
-    def _get_file_download_response_body_type(self, is_async: bool) -> AST.TypeHint:
-        return (
-            AST.TypeHint.async_iterator(AST.TypeHint.bytes())
-            if is_async
-            else AST.TypeHint.iterator(AST.TypeHint.bytes())
-        )
+    def _get_file_download_response_body_type(self) -> AST.TypeHint:
+        return AST.TypeHint.bytes()
 
     def _get_streaming_parameter_response_body_type(
         self,
@@ -989,40 +1024,64 @@ class EndpointFunctionGenerator:
         is_async: bool,
         streaming_parameter: Optional[StreamingParameterType] = None,
     ) -> AST.TypeHint:
-        stream_response = self._get_streaming_response_body_type(
-            stream_response=stream_param_response.stream_response, is_async=is_async
+        stream_response = self._get_streaming_response_body_type(stream_response=stream_param_response.stream_response)
+        stream_response_wrapped = (
+            AST.TypeHint.async_iterator(stream_response) if is_async else AST.TypeHint.iterator(stream_response)
         )
-        non_stream_response = self._get_non_streaming_response_body_type(
-            stream_param_response.non_stream_response, is_async=is_async
-        )
+        non_stream_response = self._get_non_streaming_response_body_type(stream_param_response.non_stream_response)
         if streaming_parameter is None:
-            return AST.TypeHint.union(stream_response, non_stream_response)
+            return AST.TypeHint.union(stream_response_wrapped, non_stream_response)
         else:
-            return stream_response if streaming_parameter == "streaming" else non_stream_response
+            return stream_response_wrapped if streaming_parameter == "streaming" else non_stream_response
 
     def _get_response_body_type(
         self,
-        response_body: ir_types.HttpResponseBody,
+        response_body: Optional[ir_types.HttpResponseBody],
         is_async: bool,
         streaming_parameter: Optional[StreamingParameterType] = None,
     ) -> AST.TypeHint:
-        response_type = response_body.visit(
-            file_download=lambda _: self._get_file_download_response_body_type(is_async=is_async),
-            json=lambda json_response: self._get_json_response_body_type(json_response),
-            streaming=lambda stream_response: self._get_streaming_response_body_type(
-                stream_response=stream_response, is_async=is_async
-            ),
-            text=lambda _: AST.TypeHint.str_(),
-            stream_parameter=lambda stream_param_response: self._get_streaming_parameter_response_body_type(
-                stream_param_response=stream_param_response, is_async=is_async, streaming_parameter=streaming_parameter
-            ),
-            bytes=lambda _: AST.TypeHint.bytes(),
+        underlying_type_hint = self._get_response_body_underlying_type(response_body, is_async, streaming_parameter)
+        is_streaming = response_body and is_streaming_endpoint(self._endpoint)
+
+        if not self._is_raw_client:
+            if is_streaming:
+                return (
+                    AST.TypeHint.async_iterator(underlying_type_hint)
+                    if is_async
+                    else AST.TypeHint.iterator(underlying_type_hint)
+                )
+            return self._get_pagination_results_type(underlying_type_hint) if self.is_paginated else underlying_type_hint
+
+        if is_streaming:
+            type_hint = self._get_stream_func_return_type()
+            return AST.TypeHint.async_iterator(type_hint) if is_async else AST.TypeHint.iterator(type_hint)
+
+        return self._get_http_response_wrapper_type(is_async, underlying_type_hint)
+
+    def _get_response_body_underlying_type(
+        self,
+        response_body: Optional[ir_types.HttpResponseBody],
+        is_async: bool,
+        streaming_parameter: Optional[StreamingParameterType] = None,
+    ) -> AST.TypeHint:
+        return (
+            response_body.visit(
+                file_download=lambda _: self._get_file_download_response_body_type(),
+                json=lambda json_response: self._get_json_response_body_type(json_response),
+                streaming=lambda stream_response: self._get_streaming_response_body_type(
+                    stream_response=stream_response
+                ),
+                text=lambda _: AST.TypeHint.str_(),
+                stream_parameter=lambda stream_param_response: self._get_streaming_parameter_response_body_type(
+                    stream_param_response=stream_param_response,
+                    is_async=is_async,
+                    streaming_parameter=streaming_parameter,
+                ),
+                bytes=lambda _: AST.TypeHint.bytes(),
+            )
+            if response_body is not None
+            else AST.TypeHint.none()
         )
-
-        if response_type is None:
-            return AST.TypeHint.none()
-
-        return response_type if not self.is_paginated else self._get_pagination_results_type(response_type)
 
     def _write_yielding_return(self, writer: NodeWriter, response_hint: AST.TypeHint, docs: Optional[str]) -> None:
         writer.write_line("Yields")
@@ -1045,7 +1104,7 @@ class EndpointFunctionGenerator:
     ) -> None:
         if response is not None and response.body:
             response.body.visit(
-                file_download=lambda fd: self._write_yielding_return(writer, response_hint, fd.docs),
+                file_download=lambda fd: (self._write_standard_return(writer, response_hint, fd.docs)),
                 json=lambda json_response: self._write_standard_return(
                     writer, response_hint, json_response.get_as_union().docs
                 ),
@@ -1059,7 +1118,11 @@ class EndpointFunctionGenerator:
         else:
             writer.write_line("Returns")
             writer.write_line("-------")
-            writer.write_line("None")
+            if self._is_raw_client:
+                writer.write_node(response_hint)
+            else:
+                writer.write_line("None")
+            writer.write_newline_if_last_line_not()
 
     def _write_docs(self, writer: NodeWriter, docs: str) -> None:
         split = docs.split("\n")
@@ -1090,23 +1153,12 @@ class EndpointFunctionGenerator:
             if response.response_property is not None
             else response.response_body_type
         )
-
-        if response_type.is_optional and not property_type.is_optional:
+        if response_type.is_optional:
             return AST.TypeHint.optional(property_type)
-
         return property_type
 
-    def _get_streaming_response_body_type(
-        self, *, stream_response: ir_types.StreamingResponse, is_async: bool
-    ) -> AST.TypeHint:
-        streaming_data_event_type_hint = self._get_streaming_response_data_type(stream_response)
-        if is_async:
-            return AST.TypeHint.async_iterator(streaming_data_event_type_hint)
-        else:
-            return AST.TypeHint.iterator(streaming_data_event_type_hint)
-
-    def _get_streaming_response_data_type(self, streaming_response: ir_types.StreamingResponse) -> AST.TypeHint:
-        union = streaming_response.get_as_union()
+    def _get_streaming_response_body_type(self, *, stream_response: ir_types.StreamingResponse) -> AST.TypeHint:
+        union = stream_response.get_as_union()
         if union.type == "json":
             return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.payload)
         if union.type == "sse":
@@ -1236,7 +1288,7 @@ class EndpointFunctionGenerator:
                 writer.write(", ")
             writer.write_line("}")
 
-        if self._is_overloaded_streaming_method():
+        if is_overloaded_streaming_method(self._endpoint):
             request_headers_var = "_request_headers"
             parent_writer.write(f"{request_headers_var} = ")
             parent_writer.write_node(AST.CodeWriter(write_headers_dict))
@@ -1272,7 +1324,7 @@ class EndpointFunctionGenerator:
                 writer.write(", ")
             writer.write_line("}")
 
-        if self._is_overloaded_streaming_method():
+        if is_overloaded_streaming_method(self._endpoint):
             request_query_params_var = "_request_query_params"
             parent_writer.write(f"{request_query_params_var} = ")
             parent_writer.write_node(AST.CodeWriter(write_query_parameters_dict))
@@ -1438,6 +1490,113 @@ class EndpointFunctionGenerator:
         )
         return context.core_utilities.convert_and_respect_annotation_metadata(object_=object_, annotation=type_hint)
 
+    def _get_http_response_wrapper_type(
+        self, is_async: bool, underlying_type: Optional[AST.TypeHint] = None
+    ) -> AST.TypeHint:
+        return AST.TypeHint(
+            type=AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
+                    named_import="AsyncHttpResponse" if is_async else "HttpResponse",
+                ),
+            ),
+            type_parameters=[underlying_type] if underlying_type is not None else None,
+        )
+
+    def generate_wrapper_function(self) -> AST.FunctionDeclaration:
+        """Create a wrapper method that delegates to the raw client and extracts the data property."""
+
+        # Generate the function with regular implementation to get the signature and docstring
+        generated_functions = self.generate()
+        # Get the primary function (in case of overloaded functions)
+        function = generated_functions[-1].function  # Last one is the actual implementation
+
+        parameters = [param.name for param in function.signature.parameters]
+        parameters.extend(
+            [f"{param.name}={param.name}" for param in function.signature.named_parameters if param.name != "self"]
+        )
+
+        def write_method_body(writer: AST.NodeWriter) -> None:
+            raw_client_method_name = get_endpoint_name(self._endpoint)
+            func_invocation_expr = AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        qualified_name_excluding_import=(f"self._raw_client.{raw_client_method_name}",),
+                    ),
+                    args=[AST.Expression(param) for param in parameters],
+                )
+            )
+            data_attribute = "data"
+            if is_streaming_endpoint(self._endpoint):
+                response_alias = "r"
+                if self._is_async:
+                    body = [
+                        AST.ForStatement(
+                            target=data_attribute,
+                            iterable=AST.Expression(f"{response_alias}.{data_attribute}"),
+                            is_async=True,
+                            body=[AST.YieldStatement(AST.Expression(data_attribute))],
+                        )
+                    ]
+                else:
+                    body = [
+                        AST.YieldStatement(AST.Expression(f"{response_alias}.{data_attribute}"), is_yield_from=True)
+                    ]
+
+                writer.write_node(
+                    AST.WithStatement(
+                        context_managers=[
+                            AST.WithContextManager(expression=func_invocation_expr, as_variable=response_alias)
+                        ],
+                        body=body,
+                        is_async=self._is_async,
+                    )
+                )
+            else:
+                response_alias = "response"
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name=response_alias,
+                        initializer=(
+                            AST.AwaitExpression(func_invocation_expr) if self._is_async else func_invocation_expr
+                        ),
+                    )
+                )
+                writer.write_node(AST.ReturnStatement(f"{response_alias}.{data_attribute}"))
+
+        return AST.FunctionDeclaration(
+            name=get_endpoint_name(self._endpoint),
+            is_async=self._is_async,
+            signature=function.signature,
+            docstring=function.docstring,
+            body=AST.CodeWriter(write_method_body),
+        )
+
+
+def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
+    return (
+        endpoint.response is not None
+        and endpoint.response.body
+        and (
+            endpoint.response.body.get_as_union().type == "streaming"
+            or endpoint.response.body.get_as_union().type == "fileDownload"
+            or (
+                endpoint.response.body.get_as_union().type == "stream_parameter"
+                and endpoint.sdk_request is not None
+                and endpoint.sdk_request.stream_parameter is not None
+            )
+        )
+    )
+
+
+def is_overloaded_streaming_method(endpoint: ir_types.HttpEndpoint) -> bool:
+    return (
+        endpoint.response is not None
+        and endpoint.response.body is not None
+        and endpoint.response.body.get_as_union().type == "streamParameter"
+    )
+
 
 def _is_request_body_optional(request_body: ir_types.HttpRequestBody) -> bool:
     union = request_body.get_as_union()
@@ -1470,6 +1629,7 @@ class EndpointFunctionSnippetGenerator:
         request_parameter_names: Dict[ir_types.Name, str],
         generate_pagination: bool,
         streaming_parameter: Optional[StreamingParameterType] = None,
+        is_raw_client: bool = False,
     ):
         self.context = context
         self.snippet_writer = snippet_writer
@@ -1480,6 +1640,7 @@ class EndpointFunctionSnippetGenerator:
         self.request_parameter_names = request_parameter_names
         self.generate_pagination = generate_pagination
         self.streaming_parameter = streaming_parameter
+        self.is_raw_client = is_raw_client
 
     # TODO: It should be sufficient for this to just take in the example and client
     def generate_snippet(self) -> AST.Expression:
@@ -1594,19 +1755,22 @@ class EndpointFunctionSnippetGenerator:
                 or self.streaming_parameter == "streaming"
             )
         ):
+            # For raw clients, iterate over response.data rather than response
+            response_accessor = f"{response_name}.data" if self.is_raw_client else response_name
 
             def snippet_writer(writer: AST.NodeWriter) -> None:
                 if is_async:
                     writer.write("async ")
-                writer.write_line(f"for {chunk_name} in {response_name}:")
+                writer.write_line(f"for {chunk_name} in {response_accessor}:")
                 with writer.indent():
                     writer.write_line(f"yield {chunk_name}")
 
                 if is_paginated:
                     writer.write_line("# alternatively, you can paginate page-by-page")
+                    page_accessor = f"{response_name}.data" if self.is_raw_client else response_name
                     if is_async:
                         writer.write("async ")
-                    writer.write_line(f"for page in {response_name}.iter_pages():")
+                    writer.write_line(f"for page in {page_accessor}.iter_pages():")
                     with writer.indent():
                         writer.write_line("yield page")
 

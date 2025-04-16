@@ -101,6 +101,9 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        inline_path_params: true
+      outputFolder: inline-path-params
+    - customConfig:
         timeout_in_seconds: infinity
       outputFolder: infinite-timeout
     - customConfig:
@@ -200,6 +203,16 @@ fixtures:
         pydantic_config:
           use_pydantic_field_aliases: true
       outputFolder: aliases_with_validation
+  file-upload:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+        use_typeddict_requests_for_file_upload: true
+      outputFolder: use_typeddict_requests
+    - customConfig:
+        exclude_types_from_init_exports: true
+      outputFolder: exclude_types_from_init_exports
   unions:
     - customConfig: null
       outputFolder: no-custom-config
@@ -224,6 +237,13 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use_typeddict_requests
+  mixed-file-directory:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        exclude_types_from_init_exports: true
+        use_typeddict_requests: true
+      outputFolder: exclude_types_from_init_exports
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -236,6 +256,11 @@ fixtures:
     - customConfig:
         should_generate_websocket_clients: true
       outputFolder: websocket-with_generated_clients
+  nullable:
+    - outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use-typeddict-requests
 scripts:
   # Test Pydantic V2
   - docker: fernapi/python-seed
@@ -266,9 +291,10 @@ allowedFailures:
   - exhaustive:additional_init_exports
   - exhaustive:pydantic-v1-wrapped
   - exhaustive:pydantic-v1-with-utils
-  - file-upload
   - oauth-client-credentials-custom
   - pagination
+  - pagination-custom
   - simple-fhir
+  - streaming-parameter
   - trace
   - websocket:websocket-with_generated_clients

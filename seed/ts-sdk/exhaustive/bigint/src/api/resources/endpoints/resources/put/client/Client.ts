@@ -39,11 +39,19 @@ export class Put {
      * @example
      *     await client.endpoints.put.add("id")
      */
-    public async add(
+    public add(
         id: string,
         request: SeedExhaustive.endpoints.PutRequest = {},
         requestOptions?: Put.RequestOptions,
-    ): Promise<SeedExhaustive.endpoints.PutResponse> {
+    ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__add(id, request, requestOptions));
+    }
+
+    private async __add(
+        id: string,
+        request: SeedExhaustive.endpoints.PutRequest = {},
+        requestOptions?: Put.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PutResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -68,18 +76,22 @@ export class Put {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.PutResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.PutResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -88,12 +100,14 @@ export class Put {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /{id}.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

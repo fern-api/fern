@@ -19,7 +19,8 @@ describe("OpenAPIConverterContext3_1", async () => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             logger: undefined as any,
             generationLanguage: undefined,
-            smartCasing: false
+            smartCasing: false,
+            exampleGenerationArgs: { disabled: false }
         });
 
         const result = await context.resolveReference<OpenAPIV3_1.SchemaObject>({

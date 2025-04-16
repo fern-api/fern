@@ -53,10 +53,17 @@ export class Object_ {
      *         bigint: "1000000"
      *     })
      */
-    public async getAndReturnWithOptionalField(
+    public getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithOptionalField(request, requestOptions));
+    }
+
+    private async __getAndReturnWithOptionalField(
+        request: SeedExhaustive.types.ObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -82,13 +89,17 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithOptionalField;
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -97,6 +108,7 @@ export class Object_ {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
@@ -105,6 +117,7 @@ export class Object_ {
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -118,10 +131,17 @@ export class Object_ {
      *         string: "string"
      *     })
      */
-    public async getAndReturnWithRequiredField(
+    public getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithRequiredField(request, requestOptions));
+    }
+
+    private async __getAndReturnWithRequiredField(
+        request: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -147,13 +167,17 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithRequiredField;
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -162,6 +186,7 @@ export class Object_ {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
@@ -170,6 +195,7 @@ export class Object_ {
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -187,10 +213,17 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnWithMapOfMap(
+    public getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.ObjectWithMapOfMap> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithMapOfMap(request, requestOptions));
+    }
+
+    private async __getAndReturnWithMapOfMap(
+        request: SeedExhaustive.types.ObjectWithMapOfMap,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMapOfMap>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -216,13 +249,17 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.ObjectWithMapOfMap;
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithMapOfMap,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -231,6 +268,7 @@ export class Object_ {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
@@ -239,6 +277,7 @@ export class Object_ {
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -269,10 +308,19 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithOptionalField(
+    public getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithOptionalField(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnNestedWithOptionalField(
+        request: SeedExhaustive.types.NestedObjectWithOptionalField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithOptionalField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -298,13 +346,17 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.NestedObjectWithOptionalField;
+            return {
+                data: _response.body as SeedExhaustive.types.NestedObjectWithOptionalField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -313,6 +365,7 @@ export class Object_ {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
@@ -321,6 +374,7 @@ export class Object_ {
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -352,11 +406,21 @@ export class Object_ {
      *         }
      *     })
      */
-    public async getAndReturnNestedWithRequiredField(
+    public getAndReturnNestedWithRequiredField(
         string_: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithRequiredField(string_, request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnNestedWithRequiredField(
+        string_: string,
+        request: SeedExhaustive.types.NestedObjectWithRequiredField,
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -382,13 +446,17 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.NestedObjectWithRequiredField;
+            return {
+                data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -397,6 +465,7 @@ export class Object_ {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
@@ -405,6 +474,7 @@ export class Object_ {
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -454,10 +524,19 @@ export class Object_ {
      *             }
      *         }])
      */
-    public async getAndReturnNestedWithRequiredFieldAsList(
+    public getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions,
-    ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnNestedWithRequiredFieldAsList(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnNestedWithRequiredFieldAsList(
+        request: SeedExhaustive.types.NestedObjectWithRequiredField[],
+        requestOptions?: Object_.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -483,13 +562,17 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedExhaustive.types.NestedObjectWithRequiredField;
+            return {
+                data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -498,6 +581,7 @@ export class Object_ {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
@@ -506,6 +590,7 @@ export class Object_ {
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

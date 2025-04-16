@@ -1,11 +1,7 @@
-import { Config } from "@wasm-fmt/ruff_fmt";
-
-import { AbstractWriter } from "@fern-api/base-generator";
+import { AbstractFormatter, AbstractWriter } from "@fern-api/browser-compatible-base-generator";
 
 import { Reference } from "../Reference";
 import { ImportedName } from "./types";
-
-export declare namespace Writer {}
 
 export class Writer extends AbstractWriter {
     private fullyQualifiedModulePathsToImportedNames: Record<string, ImportedName> = {};
@@ -33,9 +29,7 @@ export class Writer extends AbstractWriter {
         return this.buffer;
     }
 
-    public async toStringFormatted(config?: Config): Promise<string> {
-        const { default: init, format } = await import("@wasm-fmt/ruff_fmt");
-        await init();
-        return format(this.buffer, undefined, config);
+    public async toStringFormatted(formatter: AbstractFormatter): Promise<string> {
+        return formatter.format(this.buffer);
     }
 }

@@ -48,10 +48,17 @@ export class Events {
      *         limit: 1
      *     })
      */
-    public async listEvents(
+    public listEvents(
         request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
         requestOptions?: Events.RequestOptions,
-    ): Promise<SeedMixedFileDirectory.user.Event[]> {
+    ): core.HttpResponsePromise<SeedMixedFileDirectory.user.Event[]> {
+        return core.HttpResponsePromise.fromPromise(this.__listEvents(request, requestOptions));
+    }
+
+    private async __listEvents(
+        request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
+        requestOptions?: Events.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.Event[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -82,18 +89,22 @@ export class Events {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.user.events.listEvents.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.user.events.listEvents.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMixedFileDirectoryError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -102,6 +113,7 @@ export class Events {
                 throw new errors.SeedMixedFileDirectoryError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedMixedFileDirectoryTimeoutError(
@@ -110,6 +122,7 @@ export class Events {
             case "unknown":
                 throw new errors.SeedMixedFileDirectoryError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

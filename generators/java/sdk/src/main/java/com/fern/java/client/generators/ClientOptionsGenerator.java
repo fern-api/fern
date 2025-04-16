@@ -20,9 +20,9 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.PlatformHeaders;
+import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.variables.VariableDeclaration;
 import com.fern.ir.model.variables.VariableId;
-import com.fern.java.client.ApiVersionConstants;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -310,6 +310,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 @Override
                 public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
                     if (headerApiVersionScheme.getValue().getDefault().isPresent()) {
+                        EnumValue configuredDefaultVersion =
+                                headerApiVersionScheme.getValue().getDefault().get();
+
                         constructorBuilder.addParameter(ParameterSpec.builder(
                                         ParameterizedTypeName.get(
                                                 ClassName.get(Optional.class),
@@ -319,11 +322,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         apiVersionField.name)
                                 .addJavadoc(
                                         "Defaults to $S if empty",
-                                        headerApiVersionScheme
-                                                .getValue()
-                                                .getDefault()
-                                                .get())
+                                        configuredDefaultVersion.getName().getWireValue())
                                 .build());
+
+                        String configuredDefaultVersionString = configuredDefaultVersion
+                                .getName()
+                                .getName()
+                                .getScreamingSnakeCase()
+                                .getSafeName();
+
                         constructorBuilder.addStatement(
                                 "this.$L = $L.orElse($L)",
                                 apiVersionField.name,
@@ -333,7 +340,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         clientGeneratorContext
                                                 .getPoetClassNameFactory()
                                                 .getApiVersionClassName(),
-                                        ApiVersionConstants.CURRENT_API_VERSION));
+                                        configuredDefaultVersionString));
                     } else {
                         constructorBuilder.addParameter(ParameterSpec.builder(
                                         clientGeneratorContext

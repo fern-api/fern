@@ -38,10 +38,17 @@ export class Enum {
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
-    public async getAndReturnEnum(
+    public getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: Enum.RequestOptions,
-    ): Promise<SeedExhaustive.types.WeatherReport> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
+    }
+
+    private async __getAndReturnEnum(
+        request: SeedExhaustive.types.WeatherReport,
+        requestOptions?: Enum.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,18 +74,22 @@ export class Enum {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.WeatherReport.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.WeatherReport.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -87,12 +98,14 @@ export class Enum {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /enum.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

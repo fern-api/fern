@@ -41,10 +41,17 @@ export class Foo {
      *         privateProperty: 1
      *     })
      */
-    public async find(
+    public find(
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions,
-    ): Promise<SeedAudiences.ImportingType> {
+    ): core.HttpResponsePromise<SeedAudiences.ImportingType> {
+        return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
+    }
+
+    private async __find(
+        request: SeedAudiences.FindRequest = {},
+        requestOptions?: Foo.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedAudiences.ImportingType>> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (optionalString != null) {
@@ -74,18 +81,22 @@ export class Foo {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ImportingType.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ImportingType.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAudiencesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -94,12 +105,14 @@ export class Foo {
                 throw new errors.SeedAudiencesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedAudiencesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

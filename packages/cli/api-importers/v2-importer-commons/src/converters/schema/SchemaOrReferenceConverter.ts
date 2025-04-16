@@ -52,38 +52,67 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         errorCollector: ErrorCollector;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
         if (context.isReferenceObject(this.schemaOrReference)) {
-            const response = await context.convertReferenceToTypeReference(this.schemaOrReference);
-            if (!response.ok) {
-                return undefined;
-            }
-            return { type: response.reference, inlinedTypes: {} };
+            return this.convertReferenceObject({ context, errorCollector, reference: this.schemaOrReference });
         }
+        return this.convertSchemaObject({ context, errorCollector, schema: this.schemaOrReference });
+    }
 
+    private async convertReferenceObject({
+        reference,
+        context,
+        errorCollector
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<SchemaOrReferenceConverter.Output | undefined> {
+        const response = await context.convertReferenceToTypeReference(reference);
+        if (!response.ok) {
+            errorCollector.collect({
+                message: `Failed to convert reference to type reference: ${reference.$ref}`,
+                path: this.breadcrumbs
+            });
+            return undefined;
+        }
+        return {
+            type: this.wrapTypeReference(response.reference),
+            inlinedTypes: {}
+        };
+    }
+
+    private async convertSchemaObject({
+        context,
+        errorCollector,
+        schema
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+        schema: OpenAPIV3_1.SchemaObject;
+    }): Promise<SchemaOrReferenceConverter.Output | undefined> {
         const schemaId = this.schemaIdOverride ?? context.convertBreadcrumbsToName(this.breadcrumbs);
         const schemaConverter = new SchemaConverter({
             breadcrumbs: this.breadcrumbs,
-            schema: this.schemaOrReference,
+            schema,
             id: schemaId
         });
         const availability = await context.getAvailability({
-            node: this.schemaOrReference,
+            node: schema,
             breadcrumbs: this.breadcrumbs,
             errorCollector
         });
         const convertedSchema = await schemaConverter.convert({ context, errorCollector });
-
         if (convertedSchema != null) {
-            if (convertedSchema.typeDeclaration.shape.type === "alias") {
-                const type = convertedSchema.typeDeclaration.shape.aliasOf;
+            const convertedSchemaShape = convertedSchema.typeDeclaration.shape;
+            if (convertedSchemaShape.type === "alias") {
                 return {
-                    type: this.wrapTypeReference(type),
+                    type: this.wrapTypeReference(convertedSchemaShape.aliasOf),
+                    schema: convertedSchema.typeDeclaration,
                     inlinedTypes: convertedSchema.inlinedTypes,
                     availability
                 };
             }
-            const type = context.createNamedTypeReference(schemaId);
             return {
-                type: this.wrapTypeReference(type),
+                type: this.wrapTypeReference(context.createNamedTypeReference(schemaId)),
                 schema: convertedSchema.typeDeclaration,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
@@ -92,7 +121,6 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 availability
             };
         }
-
         return undefined;
     }
 

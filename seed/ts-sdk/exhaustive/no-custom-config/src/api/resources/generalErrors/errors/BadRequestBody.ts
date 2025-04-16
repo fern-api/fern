@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as SeedExhaustive from "../../../index";
+import * as core from "../../../../core";
 
 export class BadRequestBody extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.BadObjectRequestInfo) {
+    constructor(body: SeedExhaustive.BadObjectRequestInfo, rawResponse?: core.RawResponse) {
         super({
             message: "BadRequestBody",
             statusCode: 400,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, BadRequestBody.prototype);
     }

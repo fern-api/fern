@@ -46,11 +46,19 @@ export class Service {
      *         xFileApiVersion: "0.0.2"
      *     })
      */
-    public async getFile(
+    public getFile(
         filename: string,
         request: SeedExamples.file.GetFileRequest,
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedExamples.File_> {
+    ): core.HttpResponsePromise<SeedExamples.File_> {
+        return core.HttpResponsePromise.fromPromise(this.__getFile(filename, request, requestOptions));
+    }
+
+    private async __getFile(
+        filename: string,
+        request: SeedExamples.file.GetFileRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.File_>> {
         const { xFileApiVersion } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -77,12 +85,15 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.File_.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.File_.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -95,11 +106,13 @@ export class Service {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedExamplesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -109,12 +122,14 @@ export class Service {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /file/{filename}.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

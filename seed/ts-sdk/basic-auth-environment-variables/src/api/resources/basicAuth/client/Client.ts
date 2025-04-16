@@ -42,7 +42,13 @@ export class BasicAuth {
      * @example
      *     await client.basicAuth.getWithBasicAuth()
      */
-    public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
+    public getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithBasicAuth(requestOptions));
+    }
+
+    private async __getWithBasicAuth(
+        requestOptions?: BasicAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,12 +73,15 @@ export class BasicAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -85,11 +94,13 @@ export class BasicAuth {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedBasicAuthEnvironmentVariablesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -99,6 +110,7 @@ export class BasicAuth {
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError(
@@ -107,6 +119,7 @@ export class BasicAuth {
             case "unknown":
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -125,7 +138,17 @@ export class BasicAuth {
      *         "key": "value"
      *     })
      */
-    public async postWithBasicAuth(request?: unknown, requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
+    public postWithBasicAuth(
+        request?: unknown,
+        requestOptions?: BasicAuth.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithBasicAuth(request, requestOptions));
+    }
+
+    private async __postWithBasicAuth(
+        request?: unknown,
+        requestOptions?: BasicAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -151,12 +174,15 @@ export class BasicAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -169,13 +195,15 @@ export class BasicAuth {
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
                     );
                 case 400:
-                    throw new SeedBasicAuthEnvironmentVariables.BadRequest();
+                    throw new SeedBasicAuthEnvironmentVariables.BadRequest(_response.rawResponse);
                 default:
                     throw new errors.SeedBasicAuthEnvironmentVariablesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -185,6 +213,7 @@ export class BasicAuth {
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError(
@@ -193,6 +222,7 @@ export class BasicAuth {
             case "unknown":
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

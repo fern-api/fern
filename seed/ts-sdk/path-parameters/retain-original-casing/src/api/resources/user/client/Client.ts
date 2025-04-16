@@ -39,11 +39,19 @@ export class User {
      * @example
      *     await client.user.getUser("user_id")
      */
-    public async getUser(
+    public getUser(
         user_id: string,
         request: SeedPathParameters.GetUsersRequest = {},
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getUser(user_id, request, requestOptions));
+    }
+
+    private async __getUser(
+        user_id: string,
+        request: SeedPathParameters.GetUsersRequest = {},
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,18 +75,22 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -87,6 +99,7 @@ export class User {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
@@ -95,6 +108,7 @@ export class User {
             case "unknown":
                 throw new errors.SeedPathParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -109,10 +123,17 @@ export class User {
      *         tags: ["tags", "tags"]
      *     })
      */
-    public async createUser(
+    public createUser(
         request: SeedPathParameters.User,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
+    }
+
+    private async __createUser(
+        request: SeedPathParameters.User,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -137,18 +158,22 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -157,6 +182,7 @@ export class User {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
@@ -165,6 +191,7 @@ export class User {
             case "unknown":
                 throw new errors.SeedPathParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -182,11 +209,19 @@ export class User {
      *         }
      *     })
      */
-    public async updateUser(
+    public updateUser(
         user_id: string,
         request: SeedPathParameters.UpdateUserRequest,
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__updateUser(user_id, request, requestOptions));
+    }
+
+    private async __updateUser(
+        user_id: string,
+        request: SeedPathParameters.UpdateUserRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -211,18 +246,22 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -231,6 +270,7 @@ export class User {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
@@ -239,6 +279,7 @@ export class User {
             case "unknown":
                 throw new errors.SeedPathParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -253,11 +294,19 @@ export class User {
      *         limit: 1
      *     })
      */
-    public async searchUsers(
+    public searchUsers(
         user_id: string,
         request: SeedPathParameters.SearchUsersRequest = {},
         requestOptions?: User.RequestOptions,
-    ): Promise<SeedPathParameters.User[]> {
+    ): core.HttpResponsePromise<SeedPathParameters.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__searchUsers(user_id, request, requestOptions));
+    }
+
+    private async __searchUsers(
+        user_id: string,
+        request: SeedPathParameters.SearchUsersRequest = {},
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -288,18 +337,22 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.user.searchUsers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.user.searchUsers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -308,6 +361,7 @@ export class User {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
@@ -316,6 +370,7 @@ export class User {
             case "unknown":
                 throw new errors.SeedPathParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

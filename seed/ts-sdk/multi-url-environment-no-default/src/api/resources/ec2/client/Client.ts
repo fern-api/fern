@@ -44,10 +44,17 @@ export class Ec2 {
      *         size: "size"
      *     })
      */
-    public async bootInstance(
+    public bootInstance(
         request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
         requestOptions?: Ec2.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__bootInstance(request, requestOptions));
+    }
+
+    private async __bootInstance(
+        request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
+        requestOptions?: Ec2.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -73,13 +80,14 @@ export class Ec2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -88,6 +96,7 @@ export class Ec2 {
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
@@ -96,6 +105,7 @@ export class Ec2 {
             case "unknown":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -47,10 +47,17 @@ export class Submission {
      * @example
      *     await client.submission.createExecutionSession("JAVA")
      */
-    public async createExecutionSession(
+    public createExecutionSession(
         language: SeedTrace.Language,
         requestOptions?: Submission.RequestOptions,
-    ): Promise<SeedTrace.ExecutionSessionResponse> {
+    ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createExecutionSession(language, requestOptions));
+    }
+
+    private async __createExecutionSession(
+        language: SeedTrace.Language,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -80,13 +87,14 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.ExecutionSessionResponse;
+            return { data: _response.body as SeedTrace.ExecutionSessionResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -95,6 +103,7 @@ export class Submission {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -103,6 +112,7 @@ export class Submission {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -116,10 +126,17 @@ export class Submission {
      * @example
      *     await client.submission.getExecutionSession("sessionId")
      */
-    public async getExecutionSession(
+    public getExecutionSession(
         sessionId: string,
         requestOptions?: Submission.RequestOptions,
-    ): Promise<SeedTrace.ExecutionSessionResponse | undefined> {
+    ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionSession(sessionId, requestOptions));
+    }
+
+    private async __getExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -149,13 +166,17 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.ExecutionSessionResponse | undefined;
+            return {
+                data: _response.body as SeedTrace.ExecutionSessionResponse | undefined,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -164,12 +185,14 @@ export class Submission {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /sessions/{sessionId}.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -183,7 +206,17 @@ export class Submission {
      * @example
      *     await client.submission.stopExecutionSession("sessionId")
      */
-    public async stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<void> {
+    public stopExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__stopExecutionSession(sessionId, requestOptions));
+    }
+
+    private async __stopExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -213,13 +246,14 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -228,6 +262,7 @@ export class Submission {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -236,6 +271,7 @@ export class Submission {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -246,9 +282,15 @@ export class Submission {
      * @example
      *     await client.submission.getExecutionSessionsState()
      */
-    public async getExecutionSessionsState(
+    public getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions,
-    ): Promise<SeedTrace.GetExecutionSessionStateResponse> {
+    ): core.HttpResponsePromise<SeedTrace.GetExecutionSessionStateResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionSessionsState(requestOptions));
+    }
+
+    private async __getExecutionSessionsState(
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.GetExecutionSessionStateResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -278,13 +320,17 @@ export class Submission {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.GetExecutionSessionStateResponse;
+            return {
+                data: _response.body as SeedTrace.GetExecutionSessionStateResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -293,6 +339,7 @@ export class Submission {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -301,6 +348,7 @@ export class Submission {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

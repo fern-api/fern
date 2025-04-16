@@ -37,7 +37,14 @@ export class Bigunion {
      * @example
      *     await client.bigunion.get("id")
      */
-    public async get(id: string, requestOptions?: Bigunion.RequestOptions): Promise<SeedUnions.BigUnion> {
+    public get(id: string, requestOptions?: Bigunion.RequestOptions): core.HttpResponsePromise<SeedUnions.BigUnion> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
+    }
+
+    private async __get(
+        id: string,
+        requestOptions?: Bigunion.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedUnions.BigUnion>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,18 +68,22 @@ export class Bigunion {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.BigUnion.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.BigUnion.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -81,12 +92,14 @@ export class Bigunion {
                 throw new errors.SeedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling GET /{id}.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -101,7 +114,17 @@ export class Bigunion {
      *         value: "value"
      *     })
      */
-    public async update(request: SeedUnions.BigUnion, requestOptions?: Bigunion.RequestOptions): Promise<boolean> {
+    public update(
+        request: SeedUnions.BigUnion,
+        requestOptions?: Bigunion.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
+    }
+
+    private async __update(
+        request: SeedUnions.BigUnion,
+        requestOptions?: Bigunion.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -124,18 +147,22 @@ export class Bigunion {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.bigunion.update.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.bigunion.update.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -144,12 +171,14 @@ export class Bigunion {
                 throw new errors.SeedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -167,10 +196,17 @@ export class Bigunion {
      *             value: "value"
      *         }])
      */
-    public async updateMany(
+    public updateMany(
         request: SeedUnions.BigUnion[],
         requestOptions?: Bigunion.RequestOptions,
-    ): Promise<Record<string, boolean>> {
+    ): core.HttpResponsePromise<Record<string, boolean>> {
+        return core.HttpResponsePromise.fromPromise(this.__updateMany(request, requestOptions));
+    }
+
+    private async __updateMany(
+        request: SeedUnions.BigUnion[],
+        requestOptions?: Bigunion.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, boolean>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -195,18 +231,22 @@ export class Bigunion {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.bigunion.updateMany.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.bigunion.updateMany.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -215,12 +255,14 @@ export class Bigunion {
                 throw new errors.SeedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /many.");
             case "unknown":
                 throw new errors.SeedUnionsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -116,7 +116,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,
-                    spec: document.value as OpenAPIV3_1.Document
+                    spec: document.value as OpenAPIV3_1.Document,
+                    exampleGenerationArgs: { disabled: false }
                 });
                 const converter = new OpenAPI3_1Converter({ context: converterContext });
                 result = await converter.convert({
@@ -129,7 +130,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,
-                    spec: document.value
+                    spec: document.value,
+                    exampleGenerationArgs: { disabled: false }
                 });
                 const converter = new AsyncAPIConverter({ context: converterContext });
                 result = await converter.convert({

@@ -1,16 +1,18 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import {
-    ObjectProperty,
+    ContainerType,
     SingleUnionType,
     SingleUnionTypeProperties,
     Type,
     TypeDeclaration,
     TypeId,
+    TypeReference,
     UndiscriminatedUnionMember
 } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext, ErrorCollector, convertNumberToSnakeCase } from "../..";
+import { convertProperties } from "../../utils/ConvertProperties";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
@@ -21,8 +23,8 @@ export declare namespace OneOfSchemaConverter {
     }
 
     export interface Output {
-        union: Type;
-        inlinedTypes?: Record<TypeId, TypeDeclaration>;
+        type: Type;
+        inlinedTypes: Record<TypeId, TypeDeclaration>;
     }
 }
 
@@ -44,10 +46,36 @@ export class OneOfSchemaConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<OneOfSchemaConverter.Output | undefined> {
-        if (this.schema.discriminator != null) {
+        if (this.shouldConvertAsNullableSchemaOrReference()) {
+            return await this.convertAsNullableSchemaOrReference({ context, errorCollector });
+        }
+
+        if (
+            this.schema.discriminator != null &&
+            !(await this.unionVariantsContainLiteral({
+                context,
+                discriminantProperty: this.schema.discriminator.propertyName
+            }))
+        ) {
             return await this.convertAsDiscriminatedUnion({ context, errorCollector });
         }
         return this.convertAsUndiscriminatedUnion({ context, errorCollector });
+    }
+
+    private async unionVariantsContainLiteral({
+        context,
+        discriminantProperty
+    }: {
+        context: AbstractConverterContext<object>;
+        discriminantProperty: string;
+    }): Promise<boolean> {
+        for (const [_, reference] of Object.entries(this.schema.discriminator?.mapping ?? {})) {
+            const schema = await context.resolveReference<OpenAPIV3_1.SchemaObject>({ $ref: reference });
+            if (schema.resolved && !Object.keys(schema.value.properties ?? {}).includes(discriminantProperty)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private async convertAsDiscriminatedUnion({
@@ -57,12 +85,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<OneOfSchemaConverter.Output | undefined> {
-        const unionTypes: SingleUnionType[] = [];
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
-
         if (this.schema.discriminator == null) {
             return undefined;
         }
+
+        const unionTypes: SingleUnionType[] = [];
+        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
         for (const [discriminant, reference] of Object.entries(this.schema.discriminator.mapping ?? {})) {
             const singleUnionTypeSchemaConverter = new SchemaOrReferenceConverter({
@@ -70,9 +98,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
             });
             const typeId = context.getTypeIdFromSchemaReference({ $ref: reference });
-
             const convertedSchema = await singleUnionTypeSchemaConverter.convert({ context, errorCollector });
-
             if (convertedSchema?.type != null && typeId != null) {
                 const nameAndWireValue = context.casingsGenerator.generateNameAndWireValue({
                     name: discriminant,
@@ -101,41 +127,16 @@ export class OneOfSchemaConverter extends AbstractConverter<
             }
         }
 
-        const baseProperties: ObjectProperty[] = [];
-
-        for (const [propertyName, propertySchema] of Object.entries(this.schema.properties ?? {})) {
-            const propertyBreadcrumbs = [...this.breadcrumbs, "properties", propertyName];
-            const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
-
-            const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
-            const propertySchemaConverter = new SchemaOrReferenceConverter({
-                breadcrumbs: propertyBreadcrumbs,
-                schemaOrReference: propertySchema,
-                schemaIdOverride: propertyId,
-                wrapAsOptional: !this.schema.required?.includes(propertyName),
-                wrapAsNullable: isNullable
-            });
-            const convertedProperty = await propertySchemaConverter.convert({ context, errorCollector });
-            if (convertedProperty != null) {
-                baseProperties.push({
-                    name: context.casingsGenerator.generateNameAndWireValue({
-                        name: propertyName,
-                        wireValue: propertyName
-                    }),
-                    valueType: convertedProperty.type,
-                    docs: propertySchema.description,
-                    availability: convertedProperty.availability,
-                    propertyAccess: await context.getPropertyAccess(propertySchema)
-                });
-                inlinedTypes = {
-                    ...inlinedTypes,
-                    ...convertedProperty.inlinedTypes
-                };
-            }
-        }
+        const { convertedProperties: baseProperties, inlinedTypesFromProperties } = await convertProperties({
+            properties: this.schema.properties ?? {},
+            required: this.schema.required ?? [],
+            breadcrumbs: this.breadcrumbs,
+            context,
+            errorCollector
+        });
 
         return {
-            union: Type.union({
+            type: Type.union({
                 baseProperties,
                 discriminant: context.casingsGenerator.generateNameAndWireValue({
                     name: this.schema.discriminator.propertyName,
@@ -144,7 +145,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 extends: [],
                 types: unionTypes
             }),
-            inlinedTypes
+            inlinedTypes: {
+                ...inlinedTypes,
+                ...inlinedTypesFromProperties
+            }
         };
     }
 
@@ -203,10 +207,92 @@ export class OneOfSchemaConverter extends AbstractConverter<
         }
 
         return {
-            union: Type.undiscriminatedUnion({
+            type: Type.undiscriminatedUnion({
                 members: unionTypes
             }),
             inlinedTypes
         };
+    }
+
+    private shouldConvertAsNullableSchemaOrReference(): boolean {
+        if (this.schema.oneOf != null) {
+            return this.schema.oneOf.some((subSchema) => "type" in subSchema && subSchema.type === "null");
+        } else if (this.schema.anyOf != null) {
+            return this.schema.anyOf.some((subSchema) => "type" in subSchema && subSchema.type === "null");
+        }
+        return false;
+    }
+
+    private removeNullFromOneOfOrAnyOf({
+        context,
+        errorCollector
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): OpenAPIV3_1.SchemaObject | undefined {
+        const schemaArray = this.schema.oneOf ?? this.schema.anyOf;
+        const schemaType = this.schema.oneOf != null ? "oneOf" : "anyOf";
+
+        if (schemaArray == null) {
+            return undefined;
+        }
+
+        const withoutNull = schemaArray.filter((subSchema) => !("type" in subSchema && subSchema.type === "null"));
+
+        if (withoutNull.length === 0) {
+            errorCollector.collect({
+                message: `Received ${schemaType} schema with no valid non-null types: ${JSON.stringify(this.schema)}`,
+                path: this.breadcrumbs
+            });
+            return undefined;
+        }
+
+        if (withoutNull.length === 1) {
+            return {
+                ...this.schema,
+                [schemaType]: undefined,
+                ...withoutNull[0]
+            };
+        }
+
+        return {
+            ...this.schema,
+            [schemaType]: withoutNull
+        };
+    }
+
+    private async convertAsNullableSchemaOrReference({
+        context,
+        errorCollector
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<OneOfSchemaConverter.Output | undefined> {
+        const simplifiedSchema = this.removeNullFromOneOfOrAnyOf({ context, errorCollector });
+        if (simplifiedSchema == null) {
+            return undefined;
+        }
+
+        const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            breadcrumbs: this.breadcrumbs,
+            schemaOrReference: simplifiedSchema
+        });
+        const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
+        if (convertedSchema == null) {
+            return undefined;
+        }
+        const wrappedType = this.wrapInNullable(convertedSchema.type);
+        return {
+            type: Type.alias({
+                aliasOf: wrappedType,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                resolvedType: wrappedType as any
+            }),
+            inlinedTypes: convertedSchema.inlinedTypes
+        };
+    }
+
+    private wrapInNullable(type: TypeReference): TypeReference {
+        return TypeReference.container(ContainerType.nullable(type));
     }
 }

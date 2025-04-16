@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as SeedBasicAuthEnvironmentVariables from "../../../index";
+import * as core from "../../../../core";
 
 export class UnauthorizedRequest extends errors.SeedBasicAuthEnvironmentVariablesError {
-    constructor(body: SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody) {
+    constructor(body: SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "UnauthorizedRequest",
             statusCode: 401,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, UnauthorizedRequest.prototype);
     }

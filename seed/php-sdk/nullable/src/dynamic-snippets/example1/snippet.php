@@ -6,6 +6,7 @@ use Seed\SeedClient;
 use Seed\Nullable\Requests\CreateUserRequest;
 use Seed\Nullable\Types\Metadata;
 use DateTime;
+use Seed\Nullable\Types\Status;
 
 $client = new SeedClient(
     options: [
@@ -24,6 +25,10 @@ $client->nullable->createUser(
             'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
             'avatar' => 'avatar',
             'activated' => true,
+            'status' => Status::active(),
+            'values' => [
+                'values' => 'values',
+            ],
         ]),
         'avatar' => 'avatar',
     ]),

@@ -8,15 +8,14 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
-import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
-import com.fern.ir.model.types.EnumTypeDeclaration;
-import com.fern.ir.model.types.EnumValue;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
+import com.fern.java.JavaV2Adapter;
+import com.fern.java.JavaV2Arguments;
 import com.fern.java.client.generators.AbstractRootClientGenerator;
 import com.fern.java.client.generators.AbstractSubpackageClientGenerator;
 import com.fern.java.client.generators.ApiErrorGenerator;
@@ -103,6 +102,11 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                         .artifact("jackson-datatype-jsr310")
                         .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
                         .build()));
+    }
+
+    @Override
+    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
+        JavaV2Adapter.run(defaultGeneratorExecClient, new JavaV2Arguments(args[0]));
     }
 
     @Override
@@ -216,23 +220,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         ir.getApiVersion()
                 .flatMap(apiVersion -> apiVersion.getHeader().map(HeaderApiVersionScheme::getValue))
                 .ifPresent(irDeclaration -> {
-                    EnumTypeDeclaration.Builder enumTypeDeclaration =
-                            EnumTypeDeclaration.builder().from(irDeclaration);
-
-                    irDeclaration.getDefault().ifPresent(defaultValue -> {
-                        enumTypeDeclaration.addValues(EnumValue.builder()
-                                .from(defaultValue)
-                                .name(NameAndWireValue.builder()
-                                        .from(defaultValue.getName())
-                                        .name(ApiVersionConstants.CURRENT_API_VERSION_NAME)
-                                        .build())
-                                .build());
-                    });
-
                     EnumGenerator apiVersionsGenerator = new EnumGenerator(
                             context.getPoetClassNameFactory().getApiVersionClassName(),
                             context,
-                            enumTypeDeclaration.build(),
+                            irDeclaration,
                             Set.of(context.getPoetClassNameFactory()
                                     .getApiVersionClassName()
                                     .simpleName()),

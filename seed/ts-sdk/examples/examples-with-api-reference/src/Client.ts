@@ -57,7 +57,14 @@ export class SeedExamplesClient {
      * @example
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
-    public async echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): Promise<string> {
+    public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__echo(request, requestOptions));
+    }
+
+    private async __echo(
+        request: string,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -81,18 +88,22 @@ export class SeedExamplesClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.echo.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.echo.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -101,12 +112,14 @@ export class SeedExamplesClient {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -118,10 +131,17 @@ export class SeedExamplesClient {
      * @example
      *     await client.createType("primitive")
      */
-    public async createType(
+    public createType(
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
-    ): Promise<SeedExamples.Identifier> {
+    ): core.HttpResponsePromise<SeedExamples.Identifier> {
+        return core.HttpResponsePromise.fromPromise(this.__createType(request, requestOptions));
+    }
+
+    private async __createType(
+        request: SeedExamples.Type,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -145,18 +165,22 @@ export class SeedExamplesClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Identifier.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Identifier.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -165,12 +189,14 @@ export class SeedExamplesClient {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

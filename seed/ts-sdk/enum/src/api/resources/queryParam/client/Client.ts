@@ -41,10 +41,17 @@ export class QueryParam {
      *         operandOrColor: "red"
      *     })
      */
-    public async send(
+    public send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
+    }
+
+    private async __send(
+        request: SeedEnum.SendEnumAsQueryParamRequest,
+        requestOptions?: QueryParam.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
@@ -91,13 +98,14 @@ export class QueryParam {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -106,12 +114,14 @@ export class QueryParam {
                 throw new errors.SeedEnumError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -128,10 +138,17 @@ export class QueryParam {
      *         maybeOperandOrColor: "red"
      *     })
      */
-    public async sendList(
+    public sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
+    }
+
+    private async __sendList(
+        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        requestOptions?: QueryParam.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(operand)) {
@@ -214,13 +231,14 @@ export class QueryParam {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -229,12 +247,14 @@ export class QueryParam {
                 throw new errors.SeedEnumError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query-list.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

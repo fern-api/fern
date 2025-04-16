@@ -14,7 +14,7 @@ describe("Field", () => {
             type: python.Type.str()
         });
         field.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("writes a field with a name, type, and value", async () => {
@@ -24,7 +24,7 @@ describe("Field", () => {
             initializer: python.codeBlock("42")
         });
         field.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("writes a field with a name and value but no type", async () => {
@@ -33,7 +33,7 @@ describe("Field", () => {
             initializer: python.codeBlock("'default_value'")
         });
         field.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("writes a field with a complex type", async () => {
@@ -43,7 +43,7 @@ describe("Field", () => {
             initializer: python.codeBlock("[]")
         });
         field.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("writes a field with an optional type", async () => {
@@ -52,7 +52,7 @@ describe("Field", () => {
             type: python.Type.optional(python.Type.str())
         });
         field.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("writes a field with a union type", async () => {
@@ -61,7 +61,7 @@ describe("Field", () => {
             type: python.Type.union([python.Type.int(), python.Type.str()])
         });
         field.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("writes a field with a dictionary type", async () => {
@@ -70,7 +70,7 @@ describe("Field", () => {
             type: python.Type.dict(python.Type.str(), python.Type.any())
         });
         field.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("writes a field with a tuple type", async () => {
@@ -79,6 +79,6 @@ describe("Field", () => {
             type: python.Type.tuple([python.Type.float(), python.Type.float()])
         });
         field.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 });

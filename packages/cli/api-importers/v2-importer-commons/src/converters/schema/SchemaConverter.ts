@@ -1,11 +1,12 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import * as FernIr from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext, ErrorCollector, Extensions } from "../..";
+import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType";
 import { ArraySchemaConverter } from "./ArraySchemaConverter";
 import { EnumSchemaConverter } from "./EnumSchemaConverter";
+import { MapSchemaConverter } from "./MapSchemaConverter";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
 import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
@@ -42,25 +43,23 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaConverter.Output | undefined> {
-        const fernTypeConverter = new Extensions.FernTypeExtension({
-            breadcrumbs: this.breadcrumbs,
-            schema: this.schema
-        });
-        const fernType = fernTypeConverter.convert({ context, errorCollector });
-        if (fernType != null) {
-            const typeDeclaration = await this.createTypeDeclarationFromFernType({
-                fernType,
-                context,
-                errorCollector
-            });
-            if (typeDeclaration != null) {
-                return {
-                    typeDeclaration,
-                    inlinedTypes: {}
-                };
-            }
+        const maybeFernTypeDeclaration = await this.tryConvertFernTypeDeclaration({ context, errorCollector });
+        if (maybeFernTypeDeclaration != null) {
+            return {
+                typeDeclaration: maybeFernTypeDeclaration,
+                inlinedTypes: {}
+            };
         }
+        return this.convertSchema({ context, errorCollector });
+    }
 
+    private async convertSchema({
+        context,
+        errorCollector
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<SchemaConverter.Output | undefined> {
         if (this.schema.enum?.length) {
             const fernEnumConverter = new Extensions.FernEnumExtension({
                 breadcrumbs: this.breadcrumbs,
@@ -77,7 +76,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             if (enumType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
-                        shape: enumType.enum,
+                        shape: enumType.type,
                         context,
                         errorCollector
                     }),
@@ -120,9 +119,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         context,
                         errorCollector
                     }),
-                    inlinedTypes: arrayType.inlinedTypes ?? {}
+                    inlinedTypes: arrayType.inlinedTypes
                 };
             }
+        }
+
+        if (Array.isArray(this.schema.type)) {
+            const schemaTypeArray = this.schema.type;
+            this.schema.type = undefined;
+            this.schema.oneOf = schemaTypeArray.map((type) => ({ type: type as OpenAPIV3_1.NonArraySchemaObjectType }));
         }
 
         if (this.schema.oneOf != null || this.schema.anyOf != null) {
@@ -135,11 +140,34 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             if (oneOfType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
-                        shape: oneOfType.union,
+                        shape: oneOfType.type,
                         context,
                         errorCollector
                     }),
-                    inlinedTypes: oneOfType.inlinedTypes ?? {}
+                    inlinedTypes: oneOfType.inlinedTypes
+                };
+            }
+        }
+
+        if (
+            typeof this.schema.additionalProperties === "object" &&
+            this.schema.additionalProperties != null &&
+            !this.schema.properties &&
+            !this.schema.allOf
+        ) {
+            const additionalPropertiesConverter = new MapSchemaConverter({
+                breadcrumbs: this.breadcrumbs,
+                schema: this.schema.additionalProperties
+            });
+            const additionalPropertiesType = await additionalPropertiesConverter.convert({ context, errorCollector });
+            if (additionalPropertiesType != null) {
+                return {
+                    typeDeclaration: await this.createTypeDeclaration({
+                        shape: additionalPropertiesType.type,
+                        context,
+                        errorCollector
+                    }),
+                    inlinedTypes: additionalPropertiesType.inlinedTypes
                 };
             }
         }
@@ -147,22 +175,46 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
                 breadcrumbs: this.breadcrumbs,
-                schema: this.schema,
-                inlinedTypes: {}
+                schema: this.schema
             });
             const objectType = await objectConverter.convert({ context, errorCollector });
             if (objectType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
-                        shape: objectType.object,
+                        shape: objectType.type,
                         context,
                         errorCollector
                     }),
-                    inlinedTypes: objectType.inlinedTypes ?? {}
+                    inlinedTypes: objectType.inlinedTypes
                 };
             }
         }
 
+        return undefined;
+    }
+
+    private async tryConvertFernTypeDeclaration({
+        context,
+        errorCollector
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<FernIr.TypeDeclaration | undefined> {
+        const fernTypeConverter = new Extensions.FernTypeExtension({
+            breadcrumbs: this.breadcrumbs,
+            schema: this.schema
+        });
+        const fernType = fernTypeConverter.convert({ context, errorCollector });
+        if (fernType != null) {
+            const typeDeclaration = await this.createTypeDeclarationFromFernType({
+                fernType,
+                context,
+                errorCollector
+            });
+            if (typeDeclaration != null) {
+                return typeDeclaration;
+            }
+        }
         return undefined;
     }
 
@@ -189,7 +241,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             docs: this.schema.description,
             referencedTypes: new Set(),
             source: undefined,
-            inline: this.inlined
+            inline: this.inlined,
+            v2Examples: {
+                userSpecifiedExamples: await this.convertSchemaExamples({ context, errorCollector }),
+                autogeneratedExamples: {}
+            }
         };
     }
 
@@ -214,7 +270,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<FernIr.TypeDeclaration | undefined> {
-        const typeReference = this.createTypeReferenceFromFernType(fernType);
+        const typeReference = createTypeReferenceFromFernType(fernType);
         if (typeReference == null) {
             return undefined;
         }
@@ -237,157 +293,54 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             docs: this.schema.description,
             referencedTypes: new Set<string>(),
             source: undefined,
-            inline: this.inlined
+            inline: this.inlined,
+            v2Examples: {
+                userSpecifiedExamples: {},
+                autogeneratedExamples: {}
+            }
         };
     }
 
-    private createTypeReferenceFromFernType(fernType: string): FernIr.TypeReference | undefined {
-        return recursivelyVisitRawTypeReference<FernIr.TypeReference | undefined>({
-            type: fernType,
-            _default: undefined,
-            validation: undefined,
-            visitor: {
-                primitive: (primitive) => {
-                    switch (primitive.v1) {
-                        case "BASE_64":
-                            return FernIr.TypeReference.primitive({
-                                v1: "BASE_64",
-                                v2: FernIr.PrimitiveTypeV2.base64({})
-                            });
-                        case "BOOLEAN":
-                            return FernIr.TypeReference.primitive({
-                                v1: "BOOLEAN",
-                                v2: FernIr.PrimitiveTypeV2.boolean({
-                                    default: undefined
-                                })
-                            });
-                        case "DATE":
-                            return FernIr.TypeReference.primitive({
-                                v1: "DATE",
-                                v2: FernIr.PrimitiveTypeV2.date({})
-                            });
-                        case "DATE_TIME":
-                            return FernIr.TypeReference.primitive({
-                                v1: "DATE_TIME",
-                                v2: FernIr.PrimitiveTypeV2.dateTime({})
-                            });
-                        case "FLOAT":
-                            return FernIr.TypeReference.primitive({
-                                v1: "FLOAT",
-                                v2: FernIr.PrimitiveTypeV2.float({})
-                            });
-                        case "DOUBLE":
-                            return FernIr.TypeReference.primitive({
-                                v1: "DOUBLE",
-                                v2: FernIr.PrimitiveTypeV2.double({
-                                    default: undefined,
-                                    validation: undefined
-                                })
-                            });
-                        case "UINT":
-                            return FernIr.TypeReference.primitive({
-                                v1: "UINT",
-                                v2: FernIr.PrimitiveTypeV2.uint({})
-                            });
-                        case "UINT_64":
-                            return FernIr.TypeReference.primitive({
-                                v1: "UINT_64",
-                                v2: FernIr.PrimitiveTypeV2.uint64({})
-                            });
-                        case "INTEGER":
-                            return FernIr.TypeReference.primitive({
-                                v1: "INTEGER",
-                                v2: FernIr.PrimitiveTypeV2.integer({
-                                    default: undefined,
-                                    validation: undefined
-                                })
-                            });
-                        case "LONG":
-                            return FernIr.TypeReference.primitive({
-                                v1: "LONG",
-                                v2: FernIr.PrimitiveTypeV2.long({
-                                    default: undefined
-                                })
-                            });
-                        case "STRING":
-                            return FernIr.TypeReference.primitive({
-                                v1: "STRING",
-                                v2: FernIr.PrimitiveTypeV2.string({
-                                    default: undefined,
-                                    validation: undefined
-                                })
-                            });
-                        case "UUID":
-                            return FernIr.TypeReference.primitive({
-                                v1: "UUID",
-                                v2: FernIr.PrimitiveTypeV2.uuid({})
-                            });
-                        case "BIG_INTEGER":
-                            return FernIr.TypeReference.primitive({
-                                v1: "BIG_INTEGER",
-                                v2: FernIr.PrimitiveTypeV2.bigInteger({
-                                    default: undefined
-                                })
-                            });
-                        default:
-                            return undefined;
-                    }
-                },
-                unknown: () => {
-                    return FernIr.TypeReference.unknown();
-                },
-                map: ({ keyType, valueType }) => {
-                    if (keyType == null || valueType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(
-                        FernIr.ContainerType.map({
-                            keyType,
-                            valueType
-                        })
-                    );
-                },
-                list: (itemType) => {
-                    if (itemType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(FernIr.ContainerType.list(itemType));
-                },
-                optional: (itemType) => {
-                    if (itemType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(FernIr.ContainerType.optional(itemType));
-                },
-                nullable: (itemType) => {
-                    if (itemType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(FernIr.ContainerType.nullable(itemType));
-                },
-                set: (itemType) => {
-                    if (itemType == null) {
-                        return undefined;
-                    }
-                    return FernIr.TypeReference.container(FernIr.ContainerType.set(itemType));
-                },
-                literal: (literal) => {
-                    return FernIr.TypeReference.container(
-                        FernIr.ContainerType.literal(
-                            literal._visit<FernIr.Literal>({
-                                string: (value) => FernIr.Literal.string(value),
-                                boolean: (value) => FernIr.Literal.boolean(value),
-                                _other: () => {
-                                    throw new Error("Unexpected literal type");
-                                }
-                            })
-                        )
-                    );
-                },
-                named: () => {
-                    return undefined;
-                }
+    private async convertSchemaExamples({
+        context,
+        errorCollector
+    }: {
+        context: AbstractConverterContext<object>;
+        errorCollector: ErrorCollector;
+    }): Promise<Record<string, unknown>> {
+        // OAS 3.1 allows schema & property-level examples as an array of example values. See:
+        // https://stackoverflow.com/questions/73714802/multiple-examples-for-object-properties-swagger
+        const schemaExample = this.schema.example;
+        const schemaExamples = this.schema.examples;
+        let examples: unknown[] = [];
+        if (schemaExample != null) {
+            examples = [schemaExample];
+        }
+        if (schemaExamples != null) {
+            if (Array.isArray(schemaExamples)) {
+                examples = [...examples, ...schemaExamples];
+            } else {
+                errorCollector.collect({
+                    message: "Received non-array schema examples",
+                    path: this.breadcrumbs
+                });
             }
-        });
+        }
+        if (examples.length === 0) {
+            return {};
+        }
+        const userSpecifiedExamples: Record<string, unknown> = {};
+        for (const [index, example] of examples.entries()) {
+            const schemaExampleName = `${this.id}_example_${index}`;
+            if (context.isReferenceObject(example)) {
+                const resolved = await context.resolveReference(example);
+                if (resolved.resolved) {
+                    userSpecifiedExamples[schemaExampleName] = resolved.value;
+                }
+            } else {
+                userSpecifiedExamples[schemaExampleName] = example;
+            }
+        }
+        return userSpecifiedExamples;
     }
 }

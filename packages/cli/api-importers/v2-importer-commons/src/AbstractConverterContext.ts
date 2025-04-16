@@ -17,6 +17,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { ExampleGenerationArgs } from "@fern-api/ir-utils";
 import { Logger } from "@fern-api/logger";
 
 import { Extensions } from ".";
@@ -30,6 +31,7 @@ export declare namespace Spec {
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         smartCasing: boolean;
         namespace?: string;
+        exampleGenerationArgs: ExampleGenerationArgs;
     }
 }
 
@@ -45,6 +47,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly smartCasing: boolean;
     public readonly casingsGenerator: CasingsGenerator;
     public readonly namespace?: string;
+    public readonly exampleGenerationArgs: ExampleGenerationArgs;
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -58,6 +61,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             keywords: undefined,
             smartCasing: args.smartCasing
         });
+        this.exampleGenerationArgs = args.exampleGenerationArgs;
     }
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];
@@ -344,6 +348,17 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return value;
     }
 
+    public generateUniqueName({ prefix, existingNames }: { prefix: string; existingNames: string[] }): string {
+        if (!existingNames.includes(prefix)) {
+            return prefix;
+        }
+        let i = 0;
+        while (existingNames.includes(`${prefix}_${i}`)) {
+            i++;
+        }
+        return `${prefix}_${i}`;
+    }
+
     public isReferenceObject(value: unknown): value is OpenAPIV3_1.ReferenceObject {
         return typeof value === "object" && value !== null && "$ref" in value;
     }
@@ -351,6 +366,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public abstract convertReferenceToTypeReference(
         reference: OpenAPIV3_1.ReferenceObject
     ): Promise<{ ok: true; reference: TypeReference } | { ok: false }>;
+
+    public isExampleWithValue(example: unknown): example is { value: unknown } {
+        return typeof example === "object" && example != null && "value" in example;
+    }
 
     /**
      * TypeReference helper methods to check various properties

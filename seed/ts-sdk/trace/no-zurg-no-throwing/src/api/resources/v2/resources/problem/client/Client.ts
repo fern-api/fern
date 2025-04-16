@@ -42,10 +42,20 @@ export class Problem {
      * @example
      *     await client.v2.problem.getLightweightProblems()
      */
-    public async getLightweightProblems(
+    public getLightweightProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getLightweightProblems(requestOptions));
+    }
+
+    private async __getLightweightProblems(
         requestOptions?: Problem.RequestOptions,
     ): Promise<
-        core.APIResponse<SeedTrace.v2.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error>
+        core.WithRawResponse<
+            core.APIResponse<SeedTrace.v2.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error>
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -77,14 +87,23 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.v2.LightweightProblemInfoV2[],
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.v2.LightweightProblemInfoV2[],
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.problem.getLightweightProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.problem.getLightweightProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -96,9 +115,19 @@ export class Problem {
      * @example
      *     await client.v2.problem.getProblems()
      */
-    public async getProblems(
+    public getProblems(
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.v2.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getProblems(requestOptions));
+    }
+
+    private async __getProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -129,14 +158,23 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.v2.ProblemInfoV2[],
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.v2.ProblemInfoV2[],
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.problem.getProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.problem.getProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -149,10 +187,21 @@ export class Problem {
      * @example
      *     await client.v2.problem.getLatestProblem("problemId")
      */
-    public async getLatestProblem(
+    public getLatestProblem(
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getLatestProblem(problemId, requestOptions));
+    }
+
+    private async __getLatestProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -183,14 +232,23 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.v2.ProblemInfoV2,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.v2.ProblemInfoV2,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.problem.getLatestProblem.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.problem.getLatestProblem.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -204,11 +262,25 @@ export class Problem {
      * @example
      *     await client.v2.problem.getProblemVersion("problemId", 1)
      */
-    public async getProblemVersion(
+    public getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error>> {
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getProblemVersion(problemId, problemVersion, requestOptions),
+        );
+    }
+
+    private async __getProblemVersion(
+        problemId: SeedTrace.ProblemId,
+        problemVersion: number,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -239,14 +311,23 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.v2.ProblemInfoV2,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.v2.ProblemInfoV2,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.problem.getProblemVersion.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.problem.getProblemVersion.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

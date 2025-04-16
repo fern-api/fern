@@ -21,7 +21,7 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a class with a reference that uses a python standard library reference", async () => {
@@ -38,7 +38,7 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a class with a reference that uses a relative import", async () => {
@@ -68,7 +68,7 @@ describe("PythonFile", () => {
         file.addStatement(deeplyNestedClass);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a class with a reference to itself", async () => {
@@ -108,7 +108,7 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Set a variable to a nested attribute of an imported reference", async () => {
@@ -130,7 +130,7 @@ describe("PythonFile", () => {
         file.addStatement(field);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a Method", async () => {
@@ -146,7 +146,7 @@ describe("PythonFile", () => {
         file.addStatement(testMethod);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a code block", async () => {
@@ -158,7 +158,7 @@ describe("PythonFile", () => {
         file.addStatement(codeBlock);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a reference with no module path", async () => {
@@ -171,7 +171,7 @@ describe("PythonFile", () => {
 
         // There shouldn't be any import path added
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a class with an absolute import and alias", async () => {
@@ -191,7 +191,7 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a class with a relative import and alias", async () => {
@@ -211,7 +211,7 @@ describe("PythonFile", () => {
         file.addStatement(testClass);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a class that inherits from a class imported from another file", async () => {
@@ -232,7 +232,7 @@ describe("PythonFile", () => {
         file.addStatement(derivedClass);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Add a field with a list of reference type and initializer", async () => {
@@ -254,7 +254,7 @@ describe("PythonFile", () => {
         file.addStatement(carsField);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Multiple imports from the same module should work", async () => {
@@ -270,7 +270,7 @@ describe("PythonFile", () => {
         file.addStatement(unionField);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Ensure we don't duplicate imports", async () => {
@@ -292,7 +292,7 @@ describe("PythonFile", () => {
         file.addStatement(varBField);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("References to other nodes in same module in __init__.py work", async () => {
@@ -314,7 +314,7 @@ describe("PythonFile", () => {
         file.addStatement(exportField);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("Initialize with a statement containing a reference", async () => {
@@ -329,7 +329,7 @@ describe("PythonFile", () => {
         });
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
         expect(file.getReferences()).toHaveLength(1);
     });
 
@@ -349,7 +349,7 @@ describe("PythonFile", () => {
         });
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
         expect(file.getReferences()).toHaveLength(1);
     });
 
@@ -370,7 +370,7 @@ describe("PythonFile", () => {
         });
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
         expect(file.getReferences()).toHaveLength(3);
     });
 
@@ -436,7 +436,7 @@ describe("PythonFile", () => {
         file.addStatement(local_class);
 
         file.write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
         expect(file.getReferences()).toHaveLength(4);
     });
 });

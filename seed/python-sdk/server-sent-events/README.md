@@ -28,7 +28,7 @@ client = SeedServerSentEvents(
 response = client.completions.stream(
     query="query",
 )
-for chunk in response:
+for chunk in response.data:
     yield chunk
 ```
 
@@ -50,7 +50,7 @@ async def main() -> None:
     response = await client.completions.stream(
         query="query",
     )
-    async for chunk in response:
+    async for chunk in response.data:
         yield chunk
 
 
@@ -85,7 +85,7 @@ client = SeedServerSentEvents(
 response = client.completions.stream(
     query="query",
 )
-for chunk in response:
+for chunk in response.data:
     yield chunk
 ```
 

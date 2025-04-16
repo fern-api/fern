@@ -32,7 +32,7 @@ fern/
 Once you've configured your changelog, specify where it should appear within your docs in your `docs.yml`.
 
 <CodeBlock title="docs.yml">
-```yaml {8-11}
+```yaml {8-11,17}
 tabs:
   guides:
     display-name: Guides
@@ -44,10 +44,16 @@ tabs:
     display-name: Changelog
     icon: light clock
     changelog: ./changelog
+
+navigation: 
+  - tab: guides
+    layout: 
+      ...
+  - tab: changelog
 ```
 </CodeBlock>
 
-[View an example](https://github.com/humanloop/humanloop-docs/blob/30ddedaf6d2779361e8ee1f373f722364e5dd71d/fern/versions/v5.yml#L10-L13) in GitHub of Humanloop's `docs.yml` which powers [their Changelog](https://humanloop.com/docs/changelog).
+[View an example](https://github.com/elevenlabs/elevenlabs-docs/blob/ab509a12b1c7e3db37b6414a76b502e71b580feb/fern/docs.yml#L45-L47) in GitHub of the ElevenLabs `docs.yml` which powers [their Changelog](https://elevenlabs.io/docs/changelog).
 
 </Accordion>
 <Accordion title="Section-level Changelog">
@@ -123,4 +129,8 @@ Changelog entries are automatically sorted chronologically by the date specific 
 
 ### Linking to an Entry
 
- Each changelog entry has a unique URL you can direct users to. For example, `https://humanloop.com/docs/v5/changelog/2024/8/16`
+Each changelog entry has a unique URL you can direct users to. For example, `https://elevenlabs.io/docs/changelog/2025/3/31`
+
+### RSS Feed
+
+Changelogs automatically come with a RSS feed so users can subscribe to updates. Navigate to the RSS feed by appending `.rss` to the changelog path. For example, `https://elevenlabs.io/docs/changelog.rss`

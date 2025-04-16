@@ -43,9 +43,15 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getLightweightProblems()
      */
-    public async getLightweightProblems(
+    public getLightweightProblems(
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.v2.v3.LightweightProblemInfoV2[]> {
+    ): core.HttpResponsePromise<SeedTrace.v2.v3.LightweightProblemInfoV2[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getLightweightProblems(requestOptions));
+    }
+
+    private async __getLightweightProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.LightweightProblemInfoV2[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,13 +81,17 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[];
+            return {
+                data: _response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[],
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -90,6 +100,7 @@ export class Problem {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -98,6 +109,7 @@ export class Problem {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -110,7 +122,15 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getProblems()
      */
-    public async getProblems(requestOptions?: Problem.RequestOptions): Promise<SeedTrace.v2.v3.ProblemInfoV2[]> {
+    public getProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getProblems(requestOptions));
+    }
+
+    private async __getProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -140,13 +160,14 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.v2.v3.ProblemInfoV2[];
+            return { data: _response.body as SeedTrace.v2.v3.ProblemInfoV2[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -155,12 +176,14 @@ export class Problem {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /problems-v2/problem-info.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -174,10 +197,17 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getLatestProblem("problemId")
      */
-    public async getLatestProblem(
+    public getLatestProblem(
         problemId: SeedTrace.ProblemId,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.v2.v3.ProblemInfoV2> {
+    ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2> {
+        return core.HttpResponsePromise.fromPromise(this.__getLatestProblem(problemId, requestOptions));
+    }
+
+    private async __getLatestProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -207,13 +237,14 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.v2.v3.ProblemInfoV2;
+            return { data: _response.body as SeedTrace.v2.v3.ProblemInfoV2, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -222,6 +253,7 @@ export class Problem {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -230,6 +262,7 @@ export class Problem {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -244,11 +277,21 @@ export class Problem {
      * @example
      *     await client.v2.v3.problem.getProblemVersion("problemId", 1)
      */
-    public async getProblemVersion(
+    public getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
         requestOptions?: Problem.RequestOptions,
-    ): Promise<SeedTrace.v2.v3.ProblemInfoV2> {
+    ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getProblemVersion(problemId, problemVersion, requestOptions),
+        );
+    }
+
+    private async __getProblemVersion(
+        problemId: SeedTrace.ProblemId,
+        problemVersion: number,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -278,13 +321,14 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.v2.v3.ProblemInfoV2;
+            return { data: _response.body as SeedTrace.v2.v3.ProblemInfoV2, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -293,6 +337,7 @@ export class Problem {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
@@ -301,6 +346,7 @@ export class Problem {
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

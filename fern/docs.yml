@@ -324,11 +324,6 @@ navigation:
               - page: Packagist (PHP)
                 slug: packagist
                 path: ./pages/sdks/integration/packagist.mdx
-      - section: Alternatives
-        hidden: true
-        contents:
-          - page: Speakeasy
-            path: ./pages/sdks/comparison/speakeasy.mdx
   - tab: docs
     layout:
       - section: Getting Started
@@ -491,6 +486,9 @@ navigation:
           - page: Changelog
             path: ./pages/docs/writing-content/changelog.mdx
             icon: fa-regular fa-clock-rotate-left
+          - page: Visual Editor (Beta)
+            path: ./pages/docs/writing-content/visual-editor.mdx
+            icon: fa-regular fa-paintbrush
 
       - section: API References
         contents:

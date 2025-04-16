@@ -1,5 +1,33 @@
 - changelogEntry:
     - summary: |
+        Use safe name for version enum
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.8
+- changelogEntry:
+    - summary: |
+        Run v2 generation for SDK generator only
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.7
+- changelogEntry:
+    - summary: |
+        Fix getting the default version of an api versions enum to not require the `CURRENT` entry
+      type: fix
+  createdAt: '2025-04-09'
+  irVersion: 55
+  version: 2.32.6
+- changelogEntry:
+    - summary: |
+        Fix inlining forward-compatible enums
+      type: fix
+  createdAt: '2025-04-08'
+  irVersion: 55
+  version: 2.32.5
+- changelogEntry:
+    - summary: |
         Fix typos in README generator
       type: fix
   createdAt: '2025-04-01'

@@ -1,0 +1,18 @@
+types:
+  UserId: string
+
+  User:
+    properties:
+      id: UserId
+      name: string
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    getUser:
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: UserId
+      response: User

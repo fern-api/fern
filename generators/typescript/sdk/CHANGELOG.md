@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.51.0] - 2025-04-14
+
+- Feat: Add `rawResponse` property to JavaScript errors. 
+
+  ```ts
+  try {
+    const fooBar = await client.foo.bar("id", options);
+  } catch (e) {
+    if (error instanceof FooError) {
+      console.log(error.rawResponse);
+    } else {
+      // ...
+    }
+  }
+  ```
+
+## [0.50.1] - 2025-04-08
+
+- Feat: Add `"packageManager": "yarn@1.22.22"` to _package.json_.
+
+## [0.50.0] - 2025-04-07
+
+- Feat: All endpoint functions now return an `HttpResponsePromise<T>` instead of a `Promise<T>`.
+  Using `await`, `.then()`, `.catch()`, and `.finally()` on these promises behave the same as before,
+  but you can call `.withRawResponse()` to get a promise that includes the parsed response and the raw response.
+  The raw response let's you retrieve the response headers, status code, etc.
+
+  ```ts
+  const fooBar = await client.foo.bar("id", options);
+  const { data: alsoFooBar, rawResponse } = await client.foo.bar("id", options).withRawResponse();
+  const {
+      headers,
+      status,
+      url,
+      ...
+  } = rawResponse;
+  ```
+
+
+## [0.49.7] - 2025-03-27
+
+- Fix: Significantly improve performance of SDK generation when the `useLegacyExports` config is `false`.
+  For a large spec like Square, the generation went from 10+ minutes to almost 1 minute.
+
 ## [0.49.6] - 2025-03-27
 
 - Feat: Support arbitrary websocket headers during connect handshake.

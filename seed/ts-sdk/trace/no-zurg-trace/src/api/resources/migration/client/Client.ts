@@ -44,10 +44,17 @@ export class Migration {
      *         "admin-key-header": "admin-key-header"
      *     })
      */
-    public async getAttemptedMigrations(
+    public getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions,
-    ): Promise<SeedTrace.Migration[]> {
+    ): core.HttpResponsePromise<SeedTrace.Migration[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
+    }
+
+    private async __getAttemptedMigrations(
+        request: SeedTrace.GetAttemptedMigrationsRequest,
+        requestOptions?: Migration.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
         const { "admin-key-header": adminKeyHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -79,13 +86,14 @@ export class Migration {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.Migration[];
+            return { data: _response.body as SeedTrace.Migration[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -94,12 +102,14 @@ export class Migration {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /migration-info/all.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

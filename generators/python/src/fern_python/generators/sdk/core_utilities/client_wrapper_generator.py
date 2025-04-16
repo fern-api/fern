@@ -32,6 +32,8 @@ class ConstructorParameter:
 
 @dataclass
 class LiteralHeader:
+    constructor_parameter_name: str
+    private_member_name: str
     header: ir_types.HttpHeader
     header_key: typing.Optional[str] = None
 
@@ -97,13 +99,15 @@ class ClientWrapperGenerator:
         )
         source_file.add_class_declaration(
             declaration=self._create_sync_client_wrapper_class_declaration(
-                constructor_parameters=constructor_parameters
+                constructor_parameters=constructor_parameters,
+                literal_headers=constructor_info.literal_headers,
             ),
             should_export=True,
         )
         source_file.add_class_declaration(
             declaration=self._create_async_client_wrapper_class_declaration(
-                constructor_parameters=constructor_parameters
+                constructor_parameters=constructor_parameters,
+                literal_headers=constructor_info.literal_headers,
             ),
             should_export=True,
         )
@@ -168,7 +172,10 @@ class ClientWrapperGenerator:
         literal_headers: typing.List[LiteralHeader],
         project: Project,
     ) -> AST.ClassDeclaration:
-        named_parameters = self._get_named_parameters(constructor_parameters=constructor_parameters)
+        named_parameters = self._get_named_parameters(
+            constructor_parameters=constructor_parameters,
+            literal_headers=literal_headers,
+        )
 
         class_declaration = AST.ClassDeclaration(
             name=ClientWrapperGenerator.BASE_CLIENT_WRAPPER_CLASS_NAME,
@@ -176,7 +183,12 @@ class ClientWrapperGenerator:
                 signature=AST.FunctionSignature(
                     named_parameters=named_parameters,
                 ),
-                body=AST.CodeWriter(self._get_write_constructor_body(constructor_parameters=constructor_parameters)),
+                body=AST.CodeWriter(
+                    self._get_write_constructor_body(
+                        constructor_parameters=constructor_parameters,
+                        literal_headers=literal_headers,
+                    )
+                ),
             ),
         )
 
@@ -203,9 +215,12 @@ class ClientWrapperGenerator:
         return class_declaration
 
     def _create_sync_client_wrapper_class_declaration(
-        self, *, constructor_parameters: typing.List[ConstructorParameter]
+        self, *, constructor_parameters: typing.List[ConstructorParameter], literal_headers: typing.List[LiteralHeader]
     ) -> AST.ClassDeclaration:
-        named_parameters = self._get_named_parameters(constructor_parameters=constructor_parameters)
+        named_parameters = self._get_named_parameters(
+            constructor_parameters=constructor_parameters,
+            literal_headers=literal_headers,
+        )
 
         named_parameters.append(
             AST.NamedFunctionParameter(
@@ -223,7 +238,9 @@ class ClientWrapperGenerator:
                 ),
                 body=AST.CodeWriter(
                     self._get_write_derived_client_wrapper_constructor_body(
-                        constructor_parameters=constructor_parameters, is_async=False
+                        constructor_parameters=constructor_parameters,
+                        literal_headers=literal_headers,
+                        is_async=False,
                     )
                 ),
             ),
@@ -232,9 +249,12 @@ class ClientWrapperGenerator:
         return class_declaration
 
     def _create_async_client_wrapper_class_declaration(
-        self, *, constructor_parameters: typing.List[ConstructorParameter]
+        self, *, constructor_parameters: typing.List[ConstructorParameter], literal_headers: typing.List[LiteralHeader]
     ) -> AST.ClassDeclaration:
-        named_parameters = self._get_named_parameters(constructor_parameters=constructor_parameters)
+        named_parameters = self._get_named_parameters(
+            constructor_parameters=constructor_parameters,
+            literal_headers=literal_headers,
+        )
 
         named_parameters.append(
             AST.NamedFunctionParameter(
@@ -252,7 +272,9 @@ class ClientWrapperGenerator:
                 ),
                 body=AST.CodeWriter(
                     self._get_write_derived_client_wrapper_constructor_body(
-                        constructor_parameters=constructor_parameters, is_async=True
+                        constructor_parameters=constructor_parameters,
+                        literal_headers=literal_headers,
+                        is_async=True,
                     )
                 ),
             ),
@@ -261,7 +283,11 @@ class ClientWrapperGenerator:
         return class_declaration
 
     def _get_write_derived_client_wrapper_constructor_body(
-        self, *, constructor_parameters: List[ConstructorParameter], is_async: bool
+        self,
+        *,
+        constructor_parameters: List[ConstructorParameter],
+        literal_headers: List[LiteralHeader],
+        is_async: bool,
     ) -> CodeWriterFunction:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
 
@@ -272,6 +298,10 @@ class ClientWrapperGenerator:
                     [
                         f"{param.constructor_parameter_name}={param.constructor_parameter_name}"
                         for param in constructor_parameters
+                    ]
+                    + [
+                        f"{literal_header.constructor_parameter_name}={literal_header.constructor_parameter_name}"
+                        for literal_header in literal_headers
                     ]
                 )
                 + ")"
@@ -294,7 +324,7 @@ class ClientWrapperGenerator:
         return _write_derived_client_wrapper_constructor_body
 
     def _get_named_parameters(
-        self, *, constructor_parameters: List[ConstructorParameter]
+        self, *, constructor_parameters: List[ConstructorParameter], literal_headers: List[LiteralHeader]
     ) -> typing.List[AST.NamedFunctionParameter]:
         return [
             AST.NamedFunctionParameter(
@@ -302,6 +332,13 @@ class ClientWrapperGenerator:
                 type_hint=param.type_hint,
             )
             for param in constructor_parameters
+        ] + [
+            AST.NamedFunctionParameter(
+                name=literal_header.constructor_parameter_name,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                initializer=AST.Expression(AST.TypeHint.none()),
+            )
+            for literal_header in literal_headers
         ]
 
     def _get_write_get_headers_body(
@@ -315,6 +352,10 @@ class ClientWrapperGenerator:
             writer.write("headers: ")
             writer.write_node(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
             writer.write_line("= {")
+            if self._context.ir.sdk_config.platform_headers.user_agent is not None:
+                writer.write_line(
+                    f'"{self._context.ir.sdk_config.platform_headers.user_agent.header}": "{self._context.ir.sdk_config.platform_headers.user_agent.value}",'
+                )
             writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
             if project._project_config is not None:
                 writer.write_line(
@@ -408,21 +449,29 @@ class ClientWrapperGenerator:
                             if param.type_hint.is_optional:
                                 writer.outdent()
             for literal_header in literal_headers:
+                private_member_name = literal_header.private_member_name
                 writer.write(
-                    f'headers["{literal_header.header_key}"] = "{self._context.get_literal_header_value(literal_header.header)}"'
+                    f'headers["{literal_header.header_key}"] = self.{private_member_name} if self.{private_member_name} is not None else "{self._context.get_literal_header_value(literal_header.header)}"'
                 )
                 writer.write_line()
             writer.write_line("return headers")
 
         return _write_get_headers_body
 
-    def _get_write_constructor_body(self, *, constructor_parameters: List[ConstructorParameter]) -> CodeWriterFunction:
+    def _get_write_constructor_body(
+        self, *, constructor_parameters: List[ConstructorParameter], literal_headers: List[LiteralHeader]
+    ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             params_empty = True
             for param in constructor_parameters:
                 if param.private_member_name is not None:
                     writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
                     params_empty = False
+            for param in literal_headers:
+                writer.write_line(
+                    f"self.{param.private_member_name} = {param.constructor_parameter_name}"
+                )
+                params_empty = False
             if params_empty:
                 writer.write_line("pass")
 
@@ -438,6 +487,8 @@ class ClientWrapperGenerator:
             if type_hint.is_literal:
                 literal_headers.append(
                     LiteralHeader(
+                        constructor_parameter_name=self._get_header_constructor_parameter_name(header),
+                        private_member_name=self._get_header_private_member_name(header),
                         header=header,
                         header_key=header.name.wire_value,
                     )
