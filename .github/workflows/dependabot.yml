@@ -33,3 +33,5 @@ jobs:
         with:
           approver-gh-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{github.event.pull_request.number}}    
+          enforce-checks: 'true'
+          enforced-checks: 'check'
