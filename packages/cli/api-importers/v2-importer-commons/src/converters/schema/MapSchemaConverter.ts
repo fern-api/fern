@@ -2,7 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { ContainerType, PrimitiveTypeV2, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
+import { AbstractConverter, AbstractConverterContext } from "../..";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace MapSchemaConverter {
@@ -32,19 +32,13 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
         this.schema = schema;
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<MapSchemaConverter.Output | undefined> {
+    public async convert(): Promise<MapSchemaConverter.Output | undefined> {
         const additionalPropertiesSchemaConverter = new SchemaOrReferenceConverter({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             schemaOrReference: this.schema
         });
-        const convertedAdditionalProperties = await additionalPropertiesSchemaConverter.convert({
-            errorCollector
-        });
+        const convertedAdditionalProperties = await additionalPropertiesSchemaConverter.convert();
         if (convertedAdditionalProperties != null) {
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({

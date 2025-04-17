@@ -1,15 +1,9 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import {
-    AbstractConverter,
-    AbstractConverterContext,
-    AbstractExtension,
-    ErrorCollector
-} from "@fern-api/v2-importer-commons";
+import { AbstractExtension } from "@fern-api/v2-importer-commons";
 
 export declare namespace FernExamplesExtension {
     export interface Args extends AbstractExtension.Args {
         operation: object;
-        context: AbstractConverterContext<object>;
     }
 
     export type Output = RawSchemas.ExampleEndpointCallArraySchema;
@@ -17,17 +11,15 @@ export declare namespace FernExamplesExtension {
 
 export class FernExamplesExtension extends AbstractExtension<FernExamplesExtension.Output> {
     private readonly operation: object;
-    private readonly context: AbstractConverterContext<object>;
 
     public readonly key = "x-fern-examples";
 
     constructor({ context, breadcrumbs, operation }: FernExamplesExtension.Args) {
-        super({ breadcrumbs });
-        this.context = context;
+        super({ breadcrumbs, context });
         this.operation = operation;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernExamplesExtension.Output | undefined {
+    public convert(): FernExamplesExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;
@@ -39,7 +31,10 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
             (example) => {
                 const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example);
                 if (!maybeFernExample.ok) {
-                    this.context.logger.error(`Failed to parse x-fern-example in ${this.breadcrumbs.join(".")}`);
+                    this.context.errorCollector.collect({
+                        message: `Failed to parse x-fern-example in ${this.breadcrumbs.join(".")}`,
+                        path: this.breadcrumbs
+                    });
                 }
                 return maybeFernExample.ok;
             }

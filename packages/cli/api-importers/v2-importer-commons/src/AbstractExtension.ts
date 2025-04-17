@@ -1,8 +1,9 @@
-import { ErrorCollector } from "./ErrorCollector";
+import { AbstractConverterContext } from "./AbstractConverterContext";
 
 export declare namespace AbstractExtension {
     export interface Args {
         breadcrumbs: string[];
+        context: AbstractConverterContext<object>;
     }
 }
 
@@ -15,9 +16,11 @@ export abstract class AbstractExtension<Output> {
      * The breadcrumbs representing the path to this extension in the OpenAPI spec
      */
     protected readonly breadcrumbs: string[];
+    protected readonly context: AbstractConverterContext<object>;
 
-    constructor(protected readonly args: AbstractExtension.Args) {
+    constructor(args: AbstractExtension.Args) {
         this.breadcrumbs = args.breadcrumbs;
+        this.context = args.context;
     }
 
     protected getExtensionValue(value: unknown): unknown | undefined {
@@ -29,12 +32,7 @@ export abstract class AbstractExtension<Output> {
 
     /**
      * Converts the OpenAPI extension to the target type
-     * @param errorCollector Optional collector to track any conversion errors
      * @returns The converted target type Output
      */
-    public abstract convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Output | undefined | Promise<Output | undefined>;
+    public abstract convert(): Output | undefined | Promise<Output | undefined>;
 }

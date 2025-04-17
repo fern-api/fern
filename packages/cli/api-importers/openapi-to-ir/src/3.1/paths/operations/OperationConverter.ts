@@ -2,11 +2,9 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, HttpEndpoint } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
-import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ServersConverter } from "../../servers/ServersConverter";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
@@ -33,33 +31,27 @@ export class OperationConverter extends AbstractOperationConverter {
         this.servers = servers;
         this.streamingExtensionConverter = new FernStreamingExtension({
             breadcrumbs: this.breadcrumbs,
-            operation: this.operation
+            operation: this.operation,
+            context: this.context
         });
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<OperationConverter.Output | undefined> {
+    public async convert(): Promise<OperationConverter.Output | undefined> {
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
         }
 
         const { group, method } =
-            this.computeGroupNameAndLocationFromExtensions({ errorCollector }) ??
-            this.computeGroupNameFromTagAndOperationId({ errorCollector });
+            this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
 
-        const streamingExtension = this.streamingExtensionConverter.convert({ errorCollector });
+        const streamingExtension = this.streamingExtensionConverter.convert();
 
         const { headers, pathParameters, queryParameters } = await this.convertParameters({
-            errorCollector,
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
         const convertedRequestBody = await this.convertRequestBody({
-            errorCollector,
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
             method
@@ -67,7 +59,6 @@ export class OperationConverter extends AbstractOperationConverter {
         const requestBody = convertedRequestBody != null ? convertedRequestBody.value : undefined;
 
         const convertedResponseBody = await this.convertResponseBody({
-            errorCollector,
             breadcrumbs: [...this.breadcrumbs, "responses"],
             group,
             method,
@@ -84,16 +75,12 @@ export class OperationConverter extends AbstractOperationConverter {
         endpointId.push(method);
 
         const path = constructHttpPath(this.path);
-        const baseUrl =
-            server != null
-                ? ServersConverter.getServerName({ server, context: this.context, errorCollector })
-                : undefined;
+        const baseUrl = server != null ? ServersConverter.getServerName({ server, context: this.context }) : undefined;
 
         const fernExamples = this.convertExamples({
             pathHead: path.head,
             httpMethod,
-            baseUrl,
-            errorCollector
+            baseUrl
         });
 
         return {
@@ -115,8 +102,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 auth: this.operation.security != null || this.context.spec.security != null,
                 availability: await this.context.getAvailability({
                     node: this.operation,
-                    breadcrumbs: this.breadcrumbs,
-                    errorCollector
+                    breadcrumbs: this.breadcrumbs
                 }),
                 docs: this.operation.description,
                 userSpecifiedExamples: [],
@@ -140,20 +126,18 @@ export class OperationConverter extends AbstractOperationConverter {
     private convertExamples({
         pathHead,
         httpMethod,
-        baseUrl,
-        errorCollector
+        baseUrl
     }: {
         pathHead: string;
         httpMethod: FernIr.HttpMethod;
         baseUrl: string | undefined;
-        errorCollector: ErrorCollector;
     }): Record<string, FernIr.V2HttpEndpointExample> {
         const fernExamplesExtension = new FernExamplesExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             operation: this.operation as object
         });
-        const fernExamples = fernExamplesExtension.convert({ errorCollector });
+        const fernExamples = fernExamplesExtension.convert();
         if (fernExamples == null) {
             return {};
         }

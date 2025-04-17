@@ -10,7 +10,7 @@ import {
     QueryParameter,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector, Extensions } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Extensions } from "@fern-api/v2-importer-commons";
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
@@ -60,11 +60,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         this.path = path;
     }
 
-    public abstract convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<AbstractOperationConverter.Output | undefined>;
+    public abstract convert(): Promise<AbstractOperationConverter.Output | undefined>;
 
     protected convertHttpMethod(): HttpMethod | undefined {
         switch (this.method) {
@@ -83,13 +79,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         }
     }
 
-    protected async convertParameters({
-        errorCollector,
-        breadcrumbs
-    }: {
-        errorCollector: ErrorCollector;
-        breadcrumbs: string[];
-    }): Promise<{
+    protected async convertParameters({ breadcrumbs }: { breadcrumbs: string[] }): Promise<{
         pathParameters: PathParameter[];
         queryParameters: QueryParameter[];
         headers: HttpHeader[];
@@ -118,7 +108,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 parameter
             });
 
-            const convertedParameter = await parameterConverter.convert({ errorCollector });
+            const convertedParameter = await parameterConverter.convert();
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {
@@ -164,12 +154,10 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     }
 
     protected async convertRequestBody({
-        errorCollector,
         breadcrumbs,
         group,
         method
     }: {
-        errorCollector: ErrorCollector;
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
@@ -201,7 +189,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             group: group ?? [],
             method
         });
-        const convertedRequestBody = await requestBodyConverter.convert({ errorCollector });
+        const convertedRequestBody = await requestBodyConverter.convert();
 
         if (convertedRequestBody != null) {
             this.inlinedTypes = {
@@ -215,13 +203,11 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     }
 
     protected async convertResponseBody({
-        errorCollector,
         breadcrumbs,
         group,
         method,
         streamingExtension
     }: {
-        errorCollector: ErrorCollector;
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
@@ -260,7 +246,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 statusCode,
                 streamingExtension
             });
-            const convertedResponseBody = await responseBodyConverter.convert({ errorCollector });
+            const convertedResponseBody = await responseBodyConverter.convert();
             if (convertedResponseBody != null) {
                 this.inlinedTypes = {
                     ...this.inlinedTypes,
@@ -279,22 +265,20 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return undefined;
     }
 
-    protected computeGroupNameAndLocationFromExtensions({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): GroupNameAndLocation | undefined {
+    protected computeGroupNameAndLocationFromExtensions(): GroupNameAndLocation | undefined {
         const methodNameExtension = new Extensions.SdkMethodNameExtension({
             breadcrumbs: this.breadcrumbs,
-            operation: this.operation
+            operation: this.operation,
+            context: this.context
         });
-        const method = methodNameExtension.convert({ errorCollector })?.methodName;
+        const method = methodNameExtension.convert()?.methodName;
 
         const groupNameExtension = new Extensions.SdkGroupNameExtension({
             breadcrumbs: this.breadcrumbs,
-            operation: this.operation
+            operation: this.operation,
+            context: this.context
         });
-        const group = groupNameExtension.convert({ errorCollector })?.groups ?? [];
+        const group = groupNameExtension.convert()?.groups ?? [];
 
         if (method != null) {
             return { group, method };
@@ -303,11 +287,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return undefined;
     }
 
-    protected computeGroupNameFromTagAndOperationId({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): GroupNameAndLocation {
+    protected computeGroupNameFromTagAndOperationId(): GroupNameAndLocation {
         const tag = this.operation.tags?.[0];
         const operationId = this.operation.operationId;
 

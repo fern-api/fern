@@ -27,6 +27,7 @@ export declare namespace Spec {
     export interface Args<T> {
         spec: T;
         settings?: OpenAPISettings;
+        errorCollector: ErrorCollector;
         logger: Logger;
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         smartCasing: boolean;
@@ -42,6 +43,7 @@ export declare namespace Spec {
 export abstract class AbstractConverterContext<Spec extends object> {
     public spec: Spec;
     public readonly settings?: OpenAPISettings;
+    public readonly errorCollector: ErrorCollector;
     public readonly logger: Logger;
     public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;
     public readonly smartCasing: boolean;
@@ -52,6 +54,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
         this.settings = args.settings;
+        this.errorCollector = args.errorCollector;
         this.logger = args.logger;
         this.generationLanguage = args.generationLanguage;
         this.smartCasing = args.smartCasing;
@@ -224,6 +227,57 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return { resolved: true, value: resolvedReference as unknown as T };
     }
 
+    public getExamplesFromSchema({
+        schema,
+        breadcrumbs
+    }: {
+        schema: OpenAPIV3_1.SchemaObject | undefined;
+        breadcrumbs: string[];
+    }): unknown[] {
+        if (schema == null) {
+            return [];
+        }
+        const examples: unknown[] = schema.example != null ? [schema.example] : [];
+
+        if (schema.examples != null) {
+            if (Array.isArray(schema.examples)) {
+                examples.push(...schema.examples);
+            } else {
+                this.errorCollector.collect({
+                    message: "Received non-array schema examples",
+                    path: breadcrumbs
+                });
+            }
+        }
+        return examples;
+    }
+
+    public getNamedExamplesFromMediaTypeObject({
+        mediaTypeObject,
+        breadcrumbs,
+        defaultExampleName
+    }: {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        breadcrumbs: string[];
+        defaultExampleName?: string;
+    }): Array<[string, unknown]> {
+        if (mediaTypeObject == null) {
+            return [];
+        }
+        const examples: Array<[string, unknown]> = [];
+        if (mediaTypeObject.example != null) {
+            const exampleName = this.generateUniqueName({
+                prefix: defaultExampleName ?? `${breadcrumbs.join("_")}_example`,
+                existingNames: []
+            });
+            examples.push([exampleName, mediaTypeObject.example]);
+        }
+        if (mediaTypeObject.examples != null) {
+            examples.push(...Object.entries(mediaTypeObject.examples));
+        }
+        return examples;
+    }
+
     public async resolveExample(example: unknown): Promise<unknown> {
         if (!this.isReferenceObject(example)) {
             return example;
@@ -279,8 +333,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public async getAvailability({
         node,
-        breadcrumbs,
-        errorCollector
+        breadcrumbs
     }: {
         node:
             | OpenAPIV3_1.ReferenceObject
@@ -288,7 +341,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
             | OpenAPIV3_1.OperationObject
             | OpenAPIV3_1.ParameterObject;
         breadcrumbs: string[];
-        errorCollector: ErrorCollector;
     }): Promise<Availability | undefined> {
         while (this.isReferenceObject(node)) {
             const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
@@ -300,11 +352,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         const availabilityExtension = new Extensions.FernAvailabilityExtension({
             node,
-            breadcrumbs
+            breadcrumbs,
+            context: this
         });
-        const availability = await availabilityExtension.convert({
-            errorCollector
-        });
+        const availability = await availabilityExtension.convert();
         if (availability != null) {
             return {
                 status: availability,

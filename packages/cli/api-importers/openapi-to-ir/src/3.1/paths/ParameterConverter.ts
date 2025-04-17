@@ -1,10 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
-
-import { OpenAPIConverter } from "../OpenAPIConverter";
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
+import { Converters } from "@fern-api/v2-importer-commons";
 
 export class ParameterConverter extends Converters.AbstractConverters
     .AbstractParameterConverter<OpenAPIV3_1.ParameterObject> {
@@ -16,11 +13,7 @@ export class ParameterConverter extends Converters.AbstractConverters
         super({ context, breadcrumbs, parameter });
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<Converters.AbstractConverters.AbstractParameterConverter.Output | undefined> {
+    public async convert(): Promise<Converters.AbstractConverters.AbstractParameterConverter.Output | undefined> {
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
@@ -31,7 +24,7 @@ export class ParameterConverter extends Converters.AbstractConverters
                 schemaOrReference: this.parameter.schema,
                 wrapAsOptional: this.parameter.required == null || !this.parameter.required
             });
-            const converted = await schemaOrReferenceConverter.convert({ errorCollector });
+            const converted = await schemaOrReferenceConverter.convert();
             if (converted != null) {
                 typeReference = converted.type;
                 inlinedTypes = converted.inlinedTypes ?? {};
@@ -40,8 +33,7 @@ export class ParameterConverter extends Converters.AbstractConverters
 
         return this.convertToOutput({
             typeReference,
-            inlinedTypes,
-            errorCollector
+            inlinedTypes
         });
     }
 }

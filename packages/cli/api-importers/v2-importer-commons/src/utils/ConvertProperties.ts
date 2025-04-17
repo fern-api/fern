@@ -34,7 +34,7 @@ export async function convertProperties({
             wrapAsOptional: !required.includes(propertyName),
             wrapAsNullable: isNullable
         });
-        const convertedProperty = await propertySchemaConverter.convert({ errorCollector });
+        const convertedProperty = await propertySchemaConverter.convert();
         if (convertedProperty != null) {
             convertedProperties.push({
                 name: context.casingsGenerator.generateNameAndWireValue({

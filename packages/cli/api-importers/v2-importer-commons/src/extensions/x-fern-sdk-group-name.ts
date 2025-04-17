@@ -1,7 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
 
 export declare namespace SdkGroupNameExtension {
     export interface Args extends AbstractExtension.Args {
@@ -17,12 +16,12 @@ export class SdkGroupNameExtension extends AbstractExtension<SdkGroupNameExtensi
     private readonly operation: OpenAPIV3_1.OperationObject;
     public readonly key = "x-fern-sdk-group-name";
 
-    constructor({ breadcrumbs, operation }: SdkGroupNameExtension.Args) {
-        super({ breadcrumbs });
+    constructor({ breadcrumbs, operation, context }: SdkGroupNameExtension.Args) {
+        super({ breadcrumbs, context });
         this.operation = operation;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): SdkGroupNameExtension.Output | undefined {
+    public convert(): SdkGroupNameExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;

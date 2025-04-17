@@ -124,13 +124,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     logger: context.logger,
                     smartCasing: false,
                     spec: document.value as OpenAPIV3_1.Document,
-                    exampleGenerationArgs: { disabled: false }
-                });
-                const converter = new OpenAPI3_1Converter({ context: converterContext });
-                result = await converter.convert({
-                    context: converterContext,
+                    exampleGenerationArgs: { disabled: false },
                     errorCollector
                 });
+                const converter = new OpenAPI3_1Converter({ context: converterContext });
+                result = await converter.convert();
             } else if (document.type === "asyncapi") {
                 const converterContext = new AsyncAPIConverterContext({
                     namespace: document.namespace,
@@ -138,12 +136,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     logger: context.logger,
                     smartCasing: false,
                     spec: document.value,
-                    exampleGenerationArgs: { disabled: false }
-                });
-                const converter = new AsyncAPIConverter({ context: converterContext });
-                result = await converter.convert({
+                    exampleGenerationArgs: { disabled: false },
                     errorCollector
                 });
+                const converter = new AsyncAPIConverter({ context: converterContext });
+                result = await converter.convert();
             } else {
                 errorCollector.collect({
                     message: `Unsupported document type: ${document}`,
@@ -168,11 +165,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
             }
         }
-        // Handle OpenRPC documents
         for (const spec of this.allSpecs) {
             if (spec.type === "openrpc") {
                 const errorCollector = new ErrorCollector({ logger: context.logger });
-
                 const converterContext = new OpenRPCConverterContext3_1({
                     namespace: spec.namespace,
                     generationLanguage: "typescript",
@@ -183,13 +178,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         absoluteFilePath: spec.absoluteFilepath,
                         absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
                     }),
-                    exampleGenerationArgs: { disabled: false }
+                    exampleGenerationArgs: { disabled: false },
+                    errorCollector
                 });
 
                 const converter = new OpenRPC3_1Converter({ context: converterContext });
-                const result = await converter.convert({
-                    errorCollector
-                });
+                const result = await converter.convert();
 
                 if (errorCollector.hasErrors()) {
                     context.logger.info("OpenRPC Importer encountered errors:");

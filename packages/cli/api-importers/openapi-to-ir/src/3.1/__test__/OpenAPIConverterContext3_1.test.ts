@@ -1,6 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it } from "vitest";
 
+import { ErrorCollector } from "@fern-api/v2-importer-commons";
+
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 describe("OpenAPIConverterContext3_1", async () => {
@@ -20,7 +22,11 @@ describe("OpenAPIConverterContext3_1", async () => {
             logger: undefined as any,
             generationLanguage: undefined,
             smartCasing: false,
-            exampleGenerationArgs: { disabled: false }
+            exampleGenerationArgs: { disabled: false },
+            errorCollector: new ErrorCollector({
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                logger: undefined as any
+            })
         });
 
         const result = await context.resolveReference<OpenAPIV3_1.SchemaObject>({

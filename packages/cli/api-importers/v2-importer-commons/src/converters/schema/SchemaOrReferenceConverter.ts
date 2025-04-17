@@ -2,7 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
+import { AbstractConverter, AbstractConverterContext } from "../..";
 import { SchemaConverter } from "./SchemaConverter";
 
 export declare namespace SchemaOrReferenceConverter {
@@ -45,27 +45,21 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         this.wrapAsNullable = wrapAsNullable;
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<SchemaOrReferenceConverter.Output | undefined> {
+    public async convert(): Promise<SchemaOrReferenceConverter.Output | undefined> {
         if (this.context.isReferenceObject(this.schemaOrReference)) {
-            return this.convertReferenceObject({ errorCollector, reference: this.schemaOrReference });
+            return this.convertReferenceObject({ reference: this.schemaOrReference });
         }
-        return this.convertSchemaObject({ errorCollector, schema: this.schemaOrReference });
+        return this.convertSchemaObject({ schema: this.schemaOrReference });
     }
 
     private async convertReferenceObject({
-        reference,
-        errorCollector
+        reference
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
-        errorCollector: ErrorCollector;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
         const response = await this.context.convertReferenceToTypeReference(reference);
         if (!response.ok) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: `Failed to convert reference to type reference: ${reference.$ref}`,
                 path: this.breadcrumbs
             });
@@ -78,10 +72,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     }
 
     private async convertSchemaObject({
-        errorCollector,
         schema
     }: {
-        errorCollector: ErrorCollector;
         schema: OpenAPIV3_1.SchemaObject;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
         const schemaId = this.schemaIdOverride ?? this.context.convertBreadcrumbsToName(this.breadcrumbs);
@@ -93,10 +85,9 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         });
         const availability = await this.context.getAvailability({
             node: schema,
-            breadcrumbs: this.breadcrumbs,
-            errorCollector
+            breadcrumbs: this.breadcrumbs
         });
-        const convertedSchema = await schemaConverter.convert({ errorCollector });
+        const convertedSchema = await schemaConverter.convert();
         if (convertedSchema != null) {
             const convertedSchemaShape = convertedSchema.typeDeclaration.shape;
             if (convertedSchemaShape.type === "alias") {
