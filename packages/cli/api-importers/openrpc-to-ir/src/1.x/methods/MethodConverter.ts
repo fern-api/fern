@@ -11,8 +11,9 @@ import {
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenRPCConverter } from "../OpenRPCConverter";
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
+import { OpenRPCConverter } from "../OpenRPCConverter";
+import { OpenAPIV3 } from "openapi-types";
 
 export declare namespace MethodConverter {
     export interface Args extends OpenRPCConverter.Args {
@@ -57,7 +58,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             valueType: MethodConverter.STRING,
             location: "ENDPOINT",
             variable: undefined,
-            v2Examples: undefined
+            v2Examples: undefined,
         };
         const path: HttpPath = {
             head: "/",
@@ -68,6 +69,29 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 }
             ]
         };
+
+        for (const param of this.method.params) {
+            let resolvedParam: ContentDescriptorObject;
+            if (this.context.isReferenceObject(param)) {
+                const resolvedParamResponse = await this.context.resolveReference<ContentDescriptorObject>(param) ;
+                if (resolvedParamResponse.resolved) {
+                    resolvedParam = resolvedParamResponse.value;
+                } else {
+                    continue;
+                }
+            } else {
+                resolvedParam = param;
+            }
+                
+            const parameterSchemaConverter = new Converters.SchemaConverters.SchemaConverter({
+                breadcrumbs: [...this.breadcrumbs, "params"],
+                context: this.context,
+                schema: resolvedParam.schema as OpenAPIV3.SchemaObject,
+                inlined: true,
+                id: ""
+            });
+            const schema = await parameterSchemaConverter.convert({ errorCollector });
+        }
 
         const endpoint: HttpEndpoint = {
             baseUrl: undefined,
