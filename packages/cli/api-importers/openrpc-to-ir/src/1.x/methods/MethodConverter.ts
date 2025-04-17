@@ -57,7 +57,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             valueType: MethodConverter.STRING,
             location: "ENDPOINT",
             variable: undefined,
-            example: undefined
+            v2Examples: undefined,
         };
         const path: HttpPath = {
             head: "/",

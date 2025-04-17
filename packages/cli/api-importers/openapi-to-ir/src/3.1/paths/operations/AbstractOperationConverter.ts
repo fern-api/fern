@@ -118,7 +118,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 parameter
             });
 
-            const convertedParameter = await parameterConverter.convert({ context: this.context, errorCollector });
+            const convertedParameter = await parameterConverter.convert({ errorCollector });
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {
@@ -201,7 +201,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             group: group ?? [],
             method
         });
-        const convertedRequestBody = await requestBodyConverter.convert({ context: this.context, errorCollector });
+        const convertedRequestBody = await requestBodyConverter.convert({ errorCollector });
 
         if (convertedRequestBody != null) {
             this.inlinedTypes = {
@@ -260,7 +260,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 statusCode,
                 streamingExtension
             });
-            const convertedResponseBody = await responseBodyConverter.convert({this.context, errorCollector });
+            const convertedResponseBody = await responseBodyConverter.convert({ errorCollector });
             if (convertedResponseBody != null) {
                 this.inlinedTypes = {
                     ...this.inlinedTypes,

@@ -17,10 +17,8 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<Converters.AbstractConverters.AbstractParameterConverter.Output | undefined> {
         let typeReference: TypeReference | undefined;
@@ -62,7 +60,6 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
         return this.convertToOutput({
             typeReference,
             inlinedTypes,
-            context,
             errorCollector
         });
     }

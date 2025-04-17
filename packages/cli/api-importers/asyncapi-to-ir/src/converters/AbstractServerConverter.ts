@@ -22,10 +22,8 @@ export abstract class AbstractServerConverter<TServer> extends AbstractConverter
     }
 
     public convert({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): EnvironmentsConfig | undefined {
         if (this.servers == null || Object.keys(this.servers).length === 0) {
@@ -36,7 +34,7 @@ export abstract class AbstractServerConverter<TServer> extends AbstractConverter
         let defaultEnvironmentId: string | undefined;
 
         for (const [serverId, server] of Object.entries(this.servers)) {
-            const environment: SingleBaseUrlEnvironment = this.buildSingleBaseUrlEnvironment(context, serverId, server);
+            const environment: SingleBaseUrlEnvironment = this.buildSingleBaseUrlEnvironment(this.context, serverId, server);
             environments.push(environment);
 
             if (defaultEnvironmentId == null) {

@@ -45,12 +45,10 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
     protected convertExamples({
         pathHead,
         baseUrl,
-        context,
         errorCollector
     }: {
         pathHead: string;
         baseUrl: string | undefined;
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Record<string, FernIr.V2WebSocketSessionExample> {
         const fernExamplesExtension = new FernExamplesExtension({
@@ -58,7 +56,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
             breadcrumbs: this.breadcrumbs,
             channel: this.channel as object
         });
-        const fernExamples = fernExamplesExtension.convert({ context, errorCollector });
+        const fernExamples = fernExamplesExtension.convert({ errorCollector });
         if (fernExamples == null) {
             return {};
         }

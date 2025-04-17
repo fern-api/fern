@@ -54,7 +54,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             ...this.ir,
             apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
             constants: {
-                errorInstanceIdKey: context.casingsGenerator.generateNameAndWireValue({
+                errorInstanceIdKey: this.context.casingsGenerator.generateNameAndWireValue({
                     wireValue: "errorInstanceId",
                     name: "errorInstanceId"
                 })
@@ -120,7 +120,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                     breadcrumbs: ["channels", channelPath, "messages", messageId],
                     schema: messageSchema
                 });
-                const convertedSchema = await schemaConverter.convert({ context, errorCollector });
+                const convertedSchema = await schemaConverter.convert({ errorCollector });
                 if (convertedSchema != null) {
                     this.ir.rootPackage.types.push(typeId);
                     this.ir.types = {
@@ -134,20 +134,18 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
     }
 
     private async convertComponentMessages({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<void> {
-        for (const [id, message] of Object.entries(context.spec.components?.messages ?? {})) {
+        for (const [id, message] of Object.entries(this.context.spec.components?.messages ?? {})) {
             if (message.payload == null) {
                 continue;
             }
 
             let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
-            if (context.isReferenceObject(message.payload)) {
-                const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
+            if (this.context.isReferenceObject(message.payload)) {
+                const resolved = await this.context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
                 if (resolved.resolved) {
                     payloadSchema = resolved.value;
                 }
@@ -181,20 +179,18 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
     }
 
     private async convertSchemas({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<void> {
-        for (const [id, schema] of Object.entries(context.spec.components?.schemas ?? {})) {
+        for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
                 id,
                 breadcrumbs: ["components", "schemas", id],
                 schema
             });
-            const convertedSchema = await schemaConverter.convert({ context, errorCollector });
+            const convertedSchema = await schemaConverter.convert({ errorCollector });
             if (convertedSchema != null) {
                 this.ir.rootPackage.types.push(id);
                 this.ir.types = {
@@ -207,29 +203,29 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
     }
 
     private async convertServers({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<void> {
-        if (this.isAsyncAPIV3(context)) {
-            const servers = context.spec.servers as Record<string, AsyncAPIV3.ServerV3>;
+        if (this.isAsyncAPIV3(this.context)) {
+            const servers = this.context.spec.servers as Record<string, AsyncAPIV3.ServerV3>;
             const serversConverter = new ServersConverter3_0({
+                context: this.context,
                 breadcrumbs: ["servers"],
                 servers
             });
-            const convertedServers = serversConverter.convert({ context, errorCollector });
+            const convertedServers = serversConverter.convert({ errorCollector });
             if (convertedServers != null) {
                 this.ir.environments = convertedServers;
             }
         } else {
-            const servers = context.spec.servers as Record<string, AsyncAPIV2.ServerV2>;
+            const servers = this.context.spec.servers as Record<string, AsyncAPIV2.ServerV2>;
             const serversConverter = new ServersConverter2_X({
+                context: this.context,
                 breadcrumbs: ["servers"],
                 servers
             });
-            const convertedServers = serversConverter.convert({ context, errorCollector });
+            const convertedServers = serversConverter.convert({ errorCollector });
             if (convertedServers != null) {
                 this.ir.environments = convertedServers;
             }
@@ -237,31 +233,30 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
     }
 
     private async convertChannels({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<void> {
-        for (const [channelPath, channel] of Object.entries(context.spec.channels ?? {})) {
+        for (const [channelPath, channel] of Object.entries(this.context.spec.channels ?? {})) {
             const groupNameExtension = new Extensions.SdkGroupNameExtension({
                 breadcrumbs: ["channels", channelPath],
                 operation: channel
             });
-            const group = groupNameExtension.convert({ context, errorCollector })?.groups;
+            const group = groupNameExtension.convert({ errorCollector })?.groups;
 
-            if (this.isAsyncAPIV3(context)) {
-                const spec = context.spec as AsyncAPIV3.DocumentV3;
+            if (this.isAsyncAPIV3(this.context)) {
+                const spec = this.context.spec as AsyncAPIV3.DocumentV3;
                 const operations = spec.operations ?? {};
 
                 const channelConverter = new ChannelConverter3_0({
+                    context: this.context,
                     breadcrumbs: ["channels", channelPath],
                     channel,
                     channelPath,
                     operations,
                     group
                 });
-                const convertedChannel = await channelConverter.convert({ context, errorCollector });
+                const convertedChannel = await channelConverter.convert({ errorCollector });
                 if (convertedChannel != null) {
                     this.ir.websocketChannels = {
                         ...this.ir.websocketChannels,
@@ -274,12 +269,13 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 }
             } else {
                 const channelConverter = new ChannelConverter2_X({
+                    context: this.context,
                     breadcrumbs: ["channels", channelPath],
                     channel,
                     channelPath,
                     group
                 });
-                const convertedChannel = await channelConverter.convert({ context, errorCollector });
+                const convertedChannel = await channelConverter.convert({ errorCollector });
                 if (convertedChannel != null) {
                     this.ir.websocketChannels = {
                         ...this.ir.websocketChannels,
@@ -292,15 +288,13 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 }
             }
         }
-        this.addWebsocketsToIr({ websocketChannels: this.ir.websocketChannels, context });
+        this.addWebsocketsToIr({ websocketChannels: this.ir.websocketChannels });
     }
 
     private addWebsocketsToIr({
         websocketChannels,
-        context
     }: {
         websocketChannels: Record<string, FernIr.WebSocketChannel> | undefined;
-        context: AsyncAPIConverterContext;
     }): void {
         if (websocketChannels == null) {
             return;
@@ -310,8 +304,8 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             if (channelPath !== "") {
                 if (this.ir.subpackages[channelPath] == null) {
                     this.ir.subpackages[channelPath] = {
-                        name: context.casingsGenerator.generateName(channelPath),
-                        ...context.createPackage({ name: channelPath })
+                        name: this.context.casingsGenerator.generateName(channelPath),
+                        ...this.context.createPackage({ name: channelPath })
                     };
                 }
                 this.ir.subpackages[channelPath].websocket = channelPath;
