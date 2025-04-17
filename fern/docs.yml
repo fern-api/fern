@@ -510,9 +510,6 @@ navigation:
               - page: Auto-populate API Keys
                 icon: fa-regular fa-key
                 path: ./pages/docs/api-references/autopopulate-api-key.mdx
-              - page: Advanced Configuration
-                icon: fa-regular fa-screwdriver-wrench
-                path: ./pages/docs/api-references/customize-api-explorer.mdx
           - page: Endpoint Errors
             icon: fa-regular fa-triangle-exclamation
             path: ./pages/docs/api-references/endpoint-errors.mdx
