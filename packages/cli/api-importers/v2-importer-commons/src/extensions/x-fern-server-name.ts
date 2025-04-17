@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+
 import { AbstractExtension } from "../AbstractExtension";
 
 export declare namespace ServerNameExtension {

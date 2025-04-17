@@ -14,7 +14,7 @@ import { ServerNameExtension } from "../../extensions/x-fern-server-name";
 const DEFAULT_BASE_URL_ID = "Base";
 
 export declare namespace ServersConverter {
-    export interface Args extends AbstractConverter.AbstractArgs  {
+    export interface Args extends AbstractConverter.AbstractArgs {
         servers?: OpenAPIV3_1.ServerObject[];
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
     }
