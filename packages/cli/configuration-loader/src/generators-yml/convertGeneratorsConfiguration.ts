@@ -337,6 +337,17 @@ async function parseApiConfigurationV2Schema({
                 audiences: [],
                 settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
             };
+        } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
+            definitionLocation = {
+                schema: {
+                    type: "openrpc",
+                    path: spec.openrpc
+                },
+                origin: undefined,
+                overrides: spec.overrides,
+                audiences: [],
+                settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
+            };
         } else {
             continue;
         }

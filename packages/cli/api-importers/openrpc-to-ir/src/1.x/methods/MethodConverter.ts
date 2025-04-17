@@ -1,4 +1,5 @@
 import { ContentDescriptorObject, MethodObject } from "@open-rpc/meta-schema";
+import { OpenAPIV3 } from "openapi-types";
 
 import {
     HttpEndpoint,
@@ -11,9 +12,8 @@ import {
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 import { OpenRPCConverter } from "../OpenRPCConverter";
-import { OpenAPIV3 } from "openapi-types";
+import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 
 export declare namespace MethodConverter {
     export interface Args extends OpenRPCConverter.Args {
@@ -58,7 +58,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             valueType: MethodConverter.STRING,
             location: "ENDPOINT",
             variable: undefined,
-            v2Examples: undefined,
+            v2Examples: undefined
         };
         const path: HttpPath = {
             head: "/",
@@ -73,7 +73,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         for (const param of this.method.params) {
             let resolvedParam: ContentDescriptorObject;
             if (this.context.isReferenceObject(param)) {
-                const resolvedParamResponse = await this.context.resolveReference<ContentDescriptorObject>(param) ;
+                const resolvedParamResponse = await this.context.resolveReference<ContentDescriptorObject>(param);
                 if (resolvedParamResponse.resolved) {
                     resolvedParam = resolvedParamResponse.value;
                 } else {
@@ -82,7 +82,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             } else {
                 resolvedParam = param;
             }
-                
+
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 breadcrumbs: [...this.breadcrumbs, "params"],
                 context: this.context,

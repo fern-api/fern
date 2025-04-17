@@ -8223,6 +8223,9 @@ importers:
       '@fern-api/openapi-to-ir':
         specifier: workspace:*
         version: link:../../api-importers/openapi-to-ir
+      '@fern-api/openrpc-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openrpc-to-ir
       '@fern-api/semver-utils':
         specifier: workspace:*
         version: link:../../semver-utils
@@ -8235,6 +8238,9 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584(encoding@0.1.13)
+      '@open-rpc/meta-schema':
+        specifier: ^1.14.9
+        version: 1.14.9
       '@redocly/openapi-core':
         specifier: ^1.4.1
         version: 1.4.1(encoding@0.1.13)

@@ -311,6 +311,12 @@ types:
       overrides: optional<string>
       namespace: optional<string>
       settings: optional<OpenAPISettingsSchema>
+  
+  OpenRPCSpecSchema: 
+    properties:   
+      openrpc: string
+      overrides: optional<string>
+      namespace: optional<string>
 
   AsyncAPISettingsSchema:
     extends:
@@ -341,6 +347,7 @@ types:
       - OpenAPISpecSchema
       - AsyncAPISpecSchema
       - ProtobufSpecSchema
+      - OpenRPCSpecSchema
 
   ProtobufSpecSchema:
     properties:
