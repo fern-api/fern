@@ -4,6 +4,8 @@ import { OpenAPIV3 } from "openapi-types";
 import {
     HttpEndpoint,
     HttpPath,
+    HttpRequestBody,
+    InlinedRequestBodyProperty,
     PathParameter,
     PrimitiveTypeV2,
     TypeDeclaration,
@@ -18,7 +20,6 @@ import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 export declare namespace MethodConverter {
     export interface Args extends OpenRPCConverter.Args {
         method: MethodObject;
-        endpoint: HttpEndpoint;
     }
 
     export interface Output {
@@ -50,7 +51,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         context: OpenRPCConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<MethodConverter.Output | undefined> {
-        const inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
         const apiKeyPathParameter: PathParameter = {
             name: context.casingsGenerator.generateName("apiKey"),
@@ -70,6 +71,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             ]
         };
 
+
+        const requestProperties: InlinedRequestBodyProperty[] = [];
         for (const param of this.method.params) {
             let resolvedParam: ContentDescriptorObject;
             if (this.context.isReferenceObject(param)) {
@@ -83,15 +86,29 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 resolvedParam = param;
             }
 
-            const parameterSchemaConverter = new Converters.SchemaConverters.SchemaConverter({
+            const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, "params"],
                 context: this.context,
-                schema: resolvedParam.schema as OpenAPIV3.SchemaObject,
-                inlined: true,
-                id: ""
+                schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
             });
+            const schemaId = [...this.method.name, "Request", resolvedParam.name].join("_");
             const schema = await parameterSchemaConverter.convert({ errorCollector });
+            if (schema != null) {
+                requestProperties.push({
+                    docs: resolvedParam.description,
+                    availability: await this.context.getAvailability({ node: param, breadcrumbs: [...this.breadcrumbs, "parameters"], errorCollector }),
+                    name: this.context.casingsGenerator.generateNameAndWireValue({ name: resolvedParam.name, wireValue: resolvedParam.name }),
+                    valueType: schema.type,
+                    v2Examples: undefined,
+                });
+                inlinedTypes = {
+                    ...schema.inlinedTypes,
+                    ...inlinedTypes,
+                    ...(schema.schema != null ? { [schemaId]: schema.schema } : {})
+                }
+            }
         }
+        
 
         const endpoint: HttpEndpoint = {
             baseUrl: undefined,
@@ -108,7 +125,18 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             allPathParameters: [apiKeyPathParameter],
             path,
             fullPath: path,
-            requestBody: undefined,
+            requestBody: requestProperties.length > 0 
+                ? HttpRequestBody.inlinedRequestBody({
+                    name: this.context.casingsGenerator.generateName([this.method.name, "Request"].join("_")),
+                    docs: undefined,
+                    properties: requestProperties,
+                    extends: [],
+                    extendedProperties: [],
+                    contentType: "application/json",
+                    extraProperties: false,
+                    v2Examples: undefined,
+                })
+                : undefined,
             sdkRequest: undefined,
             response: undefined,
             errors: [],
