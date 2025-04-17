@@ -7,7 +7,7 @@ import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../
 import { convertProperties } from "../../utils/ConvertProperties";
 
 export declare namespace ObjectSchemaConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         schema: OpenAPIV3_1.SchemaObject;
     }
 
@@ -23,16 +23,14 @@ export class ObjectSchemaConverter extends AbstractConverter<
 > {
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
-    constructor({ breadcrumbs, schema }: ObjectSchemaConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, schema }: ObjectSchemaConverter.Args) {
+        super({ context, breadcrumbs });
         this.schema = schema;
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ObjectSchemaConverter.Output | undefined> {
         const hasAdditionalProperties =
@@ -55,15 +53,15 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 properties: this.schema.properties ?? {},
                 required: this.schema.required ?? [],
                 breadcrumbs: this.breadcrumbs,
-                context,
+                context: this.context,
                 errorCollector
             });
 
         const extends_: TypeReference[] = [];
         let inlinedTypes: Record<TypeId, TypeDeclaration> = propertiesInlinedTypes;
         for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
-            if (context.isReferenceObject(allOfSchema)) {
-                const maybeTypeReference = await context.convertReferenceToTypeReference(allOfSchema);
+            if (this.context.isReferenceObject(allOfSchema)) {
+                const maybeTypeReference = await this.context.convertReferenceToTypeReference(allOfSchema);
                 if (maybeTypeReference.ok) {
                     extends_.push(maybeTypeReference.reference);
                 }
@@ -75,7 +73,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
                     properties: allOfSchema.properties ?? {},
                     required: allOfSchema.required ?? [],
                     breadcrumbs: [...this.breadcrumbs, "allOf", index.toString()],
-                    context,
+                    context: this.context,
                     errorCollector
                 });
 
@@ -86,7 +84,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
         return {
             type: Type.object({
                 properties,
-                extends: extends_.map((ext) => context.typeReferenceToDeclaredTypeName(ext)).filter(isNonNullish),
+                extends: extends_.map((ext) => this.context.typeReferenceToDeclaredTypeName(ext)).filter(isNonNullish),
                 extendedProperties: [],
                 extraProperties: hasAdditionalProperties
             }),

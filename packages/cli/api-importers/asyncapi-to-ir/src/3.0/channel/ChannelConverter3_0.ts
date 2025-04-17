@@ -34,16 +34,14 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
     private readonly operations: Record<string, AsyncAPIV3.Operation>;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
-        super({ breadcrumbs, channel, channelPath, group });
+    constructor({ context, breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
+        super({ context, breadcrumbs, channel, channelPath, group });
         this.operations = operations;
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<AbstractChannelConverter.Output | undefined> {
         const pathParameters: PathParameter[] = [];
@@ -54,7 +52,6 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
         if (this.channel.parameters) {
             await this.convertChannelParameters({
-                context,
                 errorCollector,
                 pathParameters,
                 queryParameters,
@@ -78,7 +75,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
         for (const [operationId, operation] of Object.entries(channelOperations)) {
             for (const message of operation.messages) {
-                const resolved = await context.convertReferenceToTypeReference(message);
+                const resolved = await this.context.convertReferenceToTypeReference(message);
                 if (resolved.ok) {
                     const messageBody = WebSocketMessageBody.reference({
                         bodyType: resolved.reference,
@@ -89,7 +86,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                         displayName: operationId,
                         origin: operation.action === "send" ? "client" : "server",
                         body: messageBody,
-                        availability: await context.getAvailability({
+                        availability: await this.context.getAvailability({
                             node: operation,
                             breadcrumbs: this.breadcrumbs,
                             errorCollector
@@ -102,13 +99,13 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
         const baseUrl =
             this.resolveChannelServersFromReference(this.channel.servers ?? [], errorCollector) ??
-            Object.keys(context.spec.servers ?? {})[0];
+            Object.keys(this.context.spec.servers ?? {})[0];
 
         const pathHead = this.transformToValidPath(this.channel.address ?? this.channelPath);
 
         return {
             channel: {
-                name: context.casingsGenerator.generateName(displayName),
+                name: this.context.casingsGenerator.generateName(displayName),
                 displayName,
                 baseUrl,
                 path: {
@@ -120,7 +117,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 queryParameters,
                 pathParameters,
                 messages,
-                availability: await context.getAvailability({
+                availability: await this.context.getAvailability({
                     node: this.channel,
                     breadcrumbs: this.breadcrumbs,
                     errorCollector
@@ -132,7 +129,6 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     userSpecifiedExamples: this.convertExamples({
                         pathHead,
                         baseUrl,
-                        context,
                         errorCollector
                     })
                 }
@@ -142,13 +138,11 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
     }
 
     private async convertChannelParameters({
-        context,
         errorCollector,
         pathParameters,
         queryParameters,
         headers
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
         pathParameters: PathParameter[];
         queryParameters: QueryParameter[];
@@ -156,8 +150,8 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
     }): Promise<void> {
         for (const parameter of Object.values(this.channel.parameters ?? {})) {
             let parameterObject: OpenAPIV3.ParameterObject = parameter;
-            if (context.isReferenceObject(parameter)) {
-                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
+            if (this.context.isReferenceObject(parameter)) {
+                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
                 if (resolvedReference.resolved) {
                     parameterObject = resolvedReference.value;
                 } else {
@@ -170,6 +164,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             }
             const { type, parameterKey } = location;
             const parameterConverter = new ParameterConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 parameter: {
                     ...parameterObject,
@@ -177,7 +172,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     in: type
                 }
             });
-            const convertedParameter = await parameterConverter.convert({ context, errorCollector });
+            const convertedParameter = await parameterConverter.convert({ errorCollector });
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {

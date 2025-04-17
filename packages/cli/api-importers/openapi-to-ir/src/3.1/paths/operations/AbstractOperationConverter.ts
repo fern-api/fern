@@ -14,6 +14,7 @@ import { AbstractConverter, ErrorCollector, Extensions } from "@fern-api/v2-impo
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
+import { OpenAPIConverter } from "../../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
 import { RequestBodyConverter } from "../RequestBodyConverter";
@@ -22,7 +23,7 @@ import { ResponseBodyConverter } from "../ResponseBodyConverter";
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
 export declare namespace AbstractOperationConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends OpenAPIConverter.Args {
         operation: OpenAPIV3_1.OperationObject;
         method: OpenAPIV3_1.HttpMethods;
         path: string;
@@ -52,18 +53,16 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected readonly path: string;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
+        super({ context, breadcrumbs });
         this.operation = operation;
         this.method = method;
         this.path = path;
     }
 
     public abstract convert({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): Promise<AbstractOperationConverter.Output | undefined>;
 
@@ -85,11 +84,9 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     }
 
     protected async convertParameters({
-        context,
         errorCollector,
         breadcrumbs
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
         breadcrumbs: string[];
     }): Promise<{
@@ -106,8 +103,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         }
 
         for (let parameter of this.operation.parameters) {
-            if (context.isReferenceObject(parameter)) {
-                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
+            if (this.context.isReferenceObject(parameter)) {
+                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
                 if (resolvedReference.resolved) {
                     parameter = resolvedReference.value;
                 } else {
@@ -116,11 +113,12 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             }
 
             const parameterConverter = new ParameterConverter({
+                context: this.context,
                 breadcrumbs,
                 parameter
             });
 
-            const convertedParameter = await parameterConverter.convert({ context, errorCollector });
+            const convertedParameter = await parameterConverter.convert({ errorCollector });
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {
@@ -146,7 +144,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 continue;
             }
             pathParameters.push({
-                name: context.casingsGenerator.generateName(param),
+                name: this.context.casingsGenerator.generateName(param),
                 valueType: ParameterConverter.STRING,
                 docs: undefined,
                 location: "ENDPOINT",
@@ -166,13 +164,11 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     }
 
     protected async convertRequestBody({
-        context,
         errorCollector,
         breadcrumbs,
         group,
         method
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
         breadcrumbs: string[];
         group: string[] | undefined;
@@ -183,8 +179,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         }
 
         let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
-        if (context.isReferenceObject(this.operation.requestBody)) {
-            const resolvedReference = await context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
+        if (this.context.isReferenceObject(this.operation.requestBody)) {
+            const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
                 this.operation.requestBody
             );
             if (resolvedReference.resolved) {
@@ -199,12 +195,13 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         }
 
         const requestBodyConverter = new RequestBodyConverter({
+            context: this.context,
             breadcrumbs,
             requestBody: resolvedRequestBody,
             group: group ?? [],
             method
         });
-        const convertedRequestBody = await requestBodyConverter.convert({ context, errorCollector });
+        const convertedRequestBody = await requestBodyConverter.convert({ errorCollector });
 
         if (convertedRequestBody != null) {
             this.inlinedTypes = {
@@ -218,14 +215,12 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     }
 
     protected async convertResponseBody({
-        context,
         errorCollector,
         breadcrumbs,
         group,
         method,
         streamingExtension
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
         breadcrumbs: string[];
         group: string[] | undefined;
@@ -243,8 +238,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             }
 
             let resolvedResponse: OpenAPIV3_1.ResponseObject | undefined = undefined;
-            if (context.isReferenceObject(response)) {
-                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
+            if (this.context.isReferenceObject(response)) {
+                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
                 if (resolvedReference.resolved) {
                     resolvedResponse = resolvedReference.value;
                 }
@@ -257,6 +252,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             }
 
             const responseBodyConverter = new ResponseBodyConverter({
+                context: this.context,
                 breadcrumbs: [...breadcrumbs, statusCode],
                 responseBody: resolvedResponse,
                 group: group ?? [],
@@ -264,7 +260,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 statusCode,
                 streamingExtension
             });
-            const convertedResponseBody = await responseBodyConverter.convert({ context, errorCollector });
+            const convertedResponseBody = await responseBodyConverter.convert({ errorCollector });
             if (convertedResponseBody != null) {
                 this.inlinedTypes = {
                     ...this.inlinedTypes,
@@ -284,23 +280,21 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     }
 
     protected computeGroupNameAndLocationFromExtensions({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): GroupNameAndLocation | undefined {
         const methodNameExtension = new Extensions.SdkMethodNameExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation
         });
-        const method = methodNameExtension.convert({ context, errorCollector })?.methodName;
+        const method = methodNameExtension.convert({ errorCollector })?.methodName;
 
         const groupNameExtension = new Extensions.SdkGroupNameExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation
         });
-        const group = groupNameExtension.convert({ context, errorCollector })?.groups ?? [];
+        const group = groupNameExtension.convert({ errorCollector })?.groups ?? [];
 
         if (method != null) {
             return { group, method };
@@ -310,10 +304,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     }
 
     protected computeGroupNameFromTagAndOperationId({
-        context,
         errorCollector
     }: {
-        context: OpenAPIConverterContext3_1;
         errorCollector: ErrorCollector;
     }): GroupNameAndLocation {
         const tag = this.operation.tags?.[0];

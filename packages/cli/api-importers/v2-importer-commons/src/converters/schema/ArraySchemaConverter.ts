@@ -6,7 +6,7 @@ import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace ArraySchemaConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         schema: OpenAPIV3_1.ArraySchemaObject;
     }
 
@@ -24,16 +24,14 @@ export class ArraySchemaConverter extends AbstractConverter<
 
     private readonly schema: OpenAPIV3_1.ArraySchemaObject;
 
-    constructor({ breadcrumbs, schema }: ArraySchemaConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, schema }: ArraySchemaConverter.Args) {
+        super({ context, breadcrumbs });
         this.schema = schema;
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ArraySchemaConverter.Output | undefined> {
         if (this.schema.items == null) {
@@ -41,11 +39,12 @@ export class ArraySchemaConverter extends AbstractConverter<
         }
 
         const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            context: this.context,
             breadcrumbs: [...this.breadcrumbs, "items"],
             schemaOrReference: this.schema.items
         });
 
-        const convertedSchema = await schemaOrReferenceConverter.convert({ context, errorCollector });
+        const convertedSchema = await schemaOrReferenceConverter.convert({ errorCollector });
         if (convertedSchema != null) {
             return {
                 typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
