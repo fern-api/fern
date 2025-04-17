@@ -1,7 +1,12 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
-import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
+import {
+    AbstractConverter,
+    AbstractConverterContext,
+    AbstractExtension,
+    ErrorCollector
+} from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
 
@@ -32,17 +37,14 @@ type StreamConditionEndpoint = {
 };
 
 export declare namespace FernStreamingExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         operation: object;
     }
 
     export type Output = OnlyStreamingEndpoint | StreamConditionEndpoint;
 }
 
-export class FernStreamingExtension extends AbstractExtension<
-    OpenAPIConverterContext3_1,
-    FernStreamingExtension.Output
-> {
+export class FernStreamingExtension extends AbstractExtension<FernStreamingExtension.Output> {
     private readonly operation: object;
     public readonly key = "x-fern-streaming";
 
@@ -51,13 +53,7 @@ export class FernStreamingExtension extends AbstractExtension<
         this.operation = operation;
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: OpenAPIConverterContext3_1;
-        errorCollector: ErrorCollector;
-    }): FernStreamingExtension.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernStreamingExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;
@@ -92,7 +88,10 @@ export class FernStreamingExtension extends AbstractExtension<
             type: "streamCondition",
             format: result.data.format ?? "json",
             streamDescription: result.data["stream-description"],
-            streamConditionProperty: context.maybeTrimPrefix(result.data["stream-condition"], REQUEST_PREFIX),
+            streamConditionProperty: AbstractConverterContext.maybeTrimPrefix(
+                result.data["stream-condition"],
+                REQUEST_PREFIX
+            ),
             responseStream: result.data["response-stream"],
             response: result.data.response
         };

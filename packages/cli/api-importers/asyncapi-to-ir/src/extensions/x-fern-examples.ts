@@ -20,29 +20,23 @@ export interface WebsocketSessionExtensionExample {
 }
 
 export declare namespace FernExamplesExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         channel: object;
     }
 
     export type Output = WebsocketSessionExtensionExample[];
 }
 
-export class FernExamplesExtension extends AbstractExtension<AsyncAPIConverterContext, FernExamplesExtension.Output> {
+export class FernExamplesExtension extends AbstractExtension<FernExamplesExtension.Output> {
     private readonly channel: object;
     public readonly key = "x-fern-examples";
 
     constructor({ breadcrumbs, channel }: FernExamplesExtension.Args) {
-        super({ breadcrumbs });
+        super({ breadcrumbs: breadcrumbs ?? [] });
         this.channel = channel;
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: AsyncAPIConverterContext;
-        errorCollector: ErrorCollector;
-    }): FernExamplesExtension.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernExamplesExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.channel);
         if (extensionValue == null) {
             return undefined;

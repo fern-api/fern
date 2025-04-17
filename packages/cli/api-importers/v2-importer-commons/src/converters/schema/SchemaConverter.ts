@@ -12,7 +12,7 @@ import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
 
 export declare namespace SchemaConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         id: string;
         schema: OpenAPIV3_1.SchemaObject;
         inlined?: boolean;
@@ -29,35 +29,31 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private readonly id: string;
     private readonly inlined: boolean;
 
-    constructor({ breadcrumbs, schema, id, inlined = false }: SchemaConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, schema, id, inlined = false }: SchemaConverter.Args) {
+        super({ context, breadcrumbs });
         this.schema = schema;
         this.id = id;
         this.inlined = inlined;
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaConverter.Output | undefined> {
-        const maybeFernTypeDeclaration = await this.tryConvertFernTypeDeclaration({ context, errorCollector });
+        const maybeFernTypeDeclaration = await this.tryConvertFernTypeDeclaration({ errorCollector });
         if (maybeFernTypeDeclaration != null) {
             return {
                 typeDeclaration: maybeFernTypeDeclaration,
                 inlinedTypes: {}
             };
         }
-        return this.convertSchema({ context, errorCollector });
+        return this.convertSchema({ errorCollector });
     }
 
     private async convertSchema({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaConverter.Output | undefined> {
         if (this.schema.enum?.length) {
@@ -65,19 +61,19 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });
-            const maybeFernEnum = fernEnumConverter.convert({ context, errorCollector });
+            const maybeFernEnum = fernEnumConverter.convert({ errorCollector });
 
             const enumConverter = new EnumSchemaConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema,
                 maybeFernEnum
             });
-            const enumType = enumConverter.convert({ context, errorCollector });
+            const enumType = enumConverter.convert({ errorCollector });
             if (enumType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
                         shape: enumType.type,
-                        context,
                         errorCollector
                     }),
                     inlinedTypes: {}
@@ -85,8 +81,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
         }
 
-        const primitiveConverter = new PrimitiveSchemaConverter({ schema: this.schema });
-        const primitiveType = primitiveConverter.convert({ context, errorCollector });
+        const primitiveConverter = new PrimitiveSchemaConverter({ context: this.context, schema: this.schema });
+        const primitiveType = primitiveConverter.convert({ errorCollector });
         if (primitiveType != null) {
             return {
                 typeDeclaration: await this.createTypeDeclaration({
@@ -95,7 +91,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         resolvedType: primitiveType as any
                     }),
-                    context,
                     errorCollector
                 }),
                 inlinedTypes: {}
@@ -104,10 +99,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         if (this.schema.type === "array") {
             const arrayConverter = new ArraySchemaConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });
-            const arrayType = await arrayConverter.convert({ context, errorCollector });
+            const arrayType = await arrayConverter.convert({ errorCollector });
             if (arrayType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
@@ -116,7 +112,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             resolvedType: arrayType.typeReference as any
                         }),
-                        context,
                         errorCollector
                     }),
                     inlinedTypes: arrayType.inlinedTypes
@@ -132,16 +127,16 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         if (this.schema.oneOf != null || this.schema.anyOf != null) {
             const oneOfConverter = new OneOfSchemaConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema,
                 inlinedTypes: {}
             });
-            const oneOfType = await oneOfConverter.convert({ context, errorCollector });
+            const oneOfType = await oneOfConverter.convert({ errorCollector });
             if (oneOfType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
                         shape: oneOfType.type,
-                        context,
                         errorCollector
                     }),
                     inlinedTypes: oneOfType.inlinedTypes
@@ -156,15 +151,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             !this.schema.allOf
         ) {
             const additionalPropertiesConverter = new MapSchemaConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema.additionalProperties
             });
-            const additionalPropertiesType = await additionalPropertiesConverter.convert({ context, errorCollector });
+            const additionalPropertiesType = await additionalPropertiesConverter.convert({ errorCollector });
             if (additionalPropertiesType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
                         shape: additionalPropertiesType.type,
-                        context,
                         errorCollector
                     }),
                     inlinedTypes: additionalPropertiesType.inlinedTypes
@@ -174,15 +169,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });
-            const objectType = await objectConverter.convert({ context, errorCollector });
+            const objectType = await objectConverter.convert({ errorCollector });
             if (objectType != null) {
                 return {
                     typeDeclaration: await this.createTypeDeclaration({
                         shape: objectType.type,
-                        context,
                         errorCollector
                     }),
                     inlinedTypes: objectType.inlinedTypes
@@ -194,21 +189,18 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     private async tryConvertFernTypeDeclaration({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<FernIr.TypeDeclaration | undefined> {
         const fernTypeConverter = new Extensions.FernTypeExtension({
             breadcrumbs: this.breadcrumbs,
             schema: this.schema
         });
-        const fernType = fernTypeConverter.convert({ context, errorCollector });
+        const fernType = fernTypeConverter.convert({ errorCollector });
         if (fernType != null) {
             const typeDeclaration = await this.createTypeDeclarationFromFernType({
                 fernType,
-                context,
                 errorCollector
             });
             if (typeDeclaration != null) {
@@ -220,20 +212,18 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     public async createTypeDeclaration({
         shape,
-        context,
         errorCollector
     }: {
         shape: FernIr.Type;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<FernIr.TypeDeclaration> {
         return {
-            name: this.convertDeclaredTypeName({ context }),
+            name: this.convertDeclaredTypeName(),
             shape,
             autogeneratedExamples: [],
             userProvidedExamples: [],
             encoding: undefined,
-            availability: await context.getAvailability({
+            availability: await this.context.getAvailability({
                 node: this.schema,
                 breadcrumbs: this.breadcrumbs,
                 errorCollector
@@ -243,31 +233,25 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             source: undefined,
             inline: this.inlined,
             v2Examples: {
-                userSpecifiedExamples: await this.convertSchemaExamples({ context, errorCollector }),
+                userSpecifiedExamples: await this.convertSchemaExamples({ errorCollector }),
                 autogeneratedExamples: {}
             }
         };
     }
 
-    public convertDeclaredTypeName({
-        context
-    }: {
-        context: AbstractConverterContext<object>;
-    }): FernIr.DeclaredTypeName {
+    public convertDeclaredTypeName(): FernIr.DeclaredTypeName {
         return {
             typeId: this.id,
-            fernFilepath: context.createFernFilepath(),
-            name: context.casingsGenerator.generateName(this.id)
+            fernFilepath: this.context.createFernFilepath(),
+            name: this.context.casingsGenerator.generateName(this.id)
         };
     }
 
     private async createTypeDeclarationFromFernType({
         fernType,
-        context,
         errorCollector
     }: {
         fernType: string;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<FernIr.TypeDeclaration | undefined> {
         const typeReference = createTypeReferenceFromFernType(fernType);
@@ -276,7 +260,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         }
 
         return {
-            name: this.convertDeclaredTypeName({ context }),
+            name: this.convertDeclaredTypeName(),
             shape: FernIr.Type.alias({
                 aliasOf: typeReference,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -285,7 +269,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             autogeneratedExamples: [],
             userProvidedExamples: [],
             encoding: undefined,
-            availability: await context.getAvailability({
+            availability: await this.context.getAvailability({
                 node: this.schema,
                 breadcrumbs: this.breadcrumbs,
                 errorCollector
@@ -302,10 +286,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     private async convertSchemaExamples({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<Record<string, unknown>> {
         // OAS 3.1 allows schema & property-level examples as an array of example values. See:
@@ -332,8 +314,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const userSpecifiedExamples: Record<string, unknown> = {};
         for (const [index, example] of examples.entries()) {
             const schemaExampleName = `${this.id}_example_${index}`;
-            if (context.isReferenceObject(example)) {
-                const resolved = await context.resolveReference(example);
+            if (this.context.isReferenceObject(example)) {
+                const resolved = await this.context.resolveReference(example);
                 if (resolved.resolved) {
                     userSpecifiedExamples[schemaExampleName] = resolved.value;
                 }

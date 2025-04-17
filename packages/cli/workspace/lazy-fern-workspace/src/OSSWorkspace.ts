@@ -135,7 +135,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 });
                 const converter = new AsyncAPIConverter({ context: converterContext });
                 result = await converter.convert({
-                    context: converterContext,
                     errorCollector
                 });
             } else {
