@@ -1,14 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
-import {
-    AbstractConverter,
-    AbstractConverterContext,
-    AbstractExtension,
-    ErrorCollector
-} from "@fern-api/v2-importer-commons";
-
-import { OpenAPIConverterContext3_1 } from "../3.1/OpenAPIConverterContext3_1";
+import { AbstractConverterContext, AbstractExtension } from "@fern-api/v2-importer-commons";
 
 const REQUEST_PREFIX = "$request.";
 
@@ -48,12 +41,12 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
     private readonly operation: object;
     public readonly key = "x-fern-streaming";
 
-    constructor({ breadcrumbs, operation }: FernStreamingExtension.Args) {
-        super({ breadcrumbs });
+    constructor({ breadcrumbs, operation, context }: FernStreamingExtension.Args) {
+        super({ breadcrumbs, context });
         this.operation = operation;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernStreamingExtension.Output | undefined {
+    public convert(): FernStreamingExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;
@@ -61,7 +54,7 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
 
         const result = StreamingExtensionSchema.safeParse(extensionValue);
         if (!result.success) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: `Invalid x-fern-streaming extension: ${result.error.message}`,
                 path: this.breadcrumbs
             });
@@ -77,7 +70,7 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
         }
 
         if (result.data["stream-condition"] == null) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: "Missing required stream-condition property",
                 path: this.breadcrumbs
             });

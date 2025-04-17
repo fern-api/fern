@@ -12,7 +12,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
 
 import { OpenRPCConverter } from "../OpenRPCConverter";
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
@@ -44,11 +44,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         this.method = method;
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<MethodConverter.Output | undefined> {
+    public async convert(): Promise<MethodConverter.Output | undefined> {
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
         const apiKeyPathParameter: PathParameter = {
@@ -89,14 +85,13 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
             });
             const schemaId = [...this.method.name, "Request", resolvedParam.name].join("_");
-            const schema = await parameterSchemaConverter.convert({ errorCollector });
+            const schema = await parameterSchemaConverter.convert();
             if (schema != null) {
                 requestProperties.push({
                     docs: resolvedParam.description,
                     availability: await this.context.getAvailability({
                         node: param,
-                        breadcrumbs: [...this.breadcrumbs, "parameters"],
-                        errorCollector
+                        breadcrumbs: [...this.breadcrumbs, "parameters"]
                     }),
                     name: this.context.casingsGenerator.generateNameAndWireValue({
                         name: resolvedParam.name,

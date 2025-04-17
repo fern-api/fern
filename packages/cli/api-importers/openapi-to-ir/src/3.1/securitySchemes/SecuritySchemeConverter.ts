@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AuthScheme, ContainerType, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { OpenAPIConverter } from "../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
@@ -20,7 +20,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
         this.securityScheme = securityScheme;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): AuthScheme | undefined {
+    public convert(): AuthScheme | undefined {
         switch (this.securityScheme.type) {
             case "http": {
                 if (this.securityScheme.scheme === "bearer") {

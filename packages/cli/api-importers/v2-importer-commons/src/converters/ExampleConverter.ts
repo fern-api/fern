@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, ErrorCollector, type OpenApiError } from "..";
+import { AbstractConverter, AbstractConverterContext, type OpenApiError } from "..";
 
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
@@ -74,7 +74,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         this.depth = depth;
     }
 
-    public async convert({ errorCollector }: { errorCollector: ErrorCollector }): Promise<ExampleConverter.Output> {
+    public async convert(): Promise<ExampleConverter.Output> {
         if (this.depth > this.MAX_DEPTH) {
             return { isValid: true, coerced: false, validExample: this.example, errors: [] };
         }
@@ -128,43 +128,37 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         if (resolvedSchema.type == "array" && "items" in resolvedSchema) {
             return this.convertArray({
-                resolvedSchema,
-                errorCollector
+                resolvedSchema
             });
         }
 
         if (resolvedSchema.type == "object" || resolvedSchema.properties != null) {
             return this.convertObject({
-                resolvedSchema,
-                errorCollector
+                resolvedSchema
             });
         }
 
         if (Array.isArray(resolvedSchema.type)) {
             return this.convertSchemaTypeArray({
-                resolvedSchema,
-                errorCollector
+                resolvedSchema
             });
         }
 
         if ("allOf" in resolvedSchema && resolvedSchema.allOf != null) {
             return this.convertAllOf({
-                resolvedSchema,
-                errorCollector
+                resolvedSchema
             });
         }
 
         if ("oneOf" in resolvedSchema && resolvedSchema.oneOf != null) {
             return this.convertOneOf({
-                resolvedSchema,
-                errorCollector
+                resolvedSchema
             });
         }
 
         if ("anyOf" in resolvedSchema && resolvedSchema.anyOf != null) {
             return this.convertAnyOf({
-                resolvedSchema,
-                errorCollector
+                resolvedSchema
             });
         }
 
@@ -358,11 +352,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private async convertArray({
-        resolvedSchema,
-        errorCollector
+        resolvedSchema
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (resolvedSchema.type != "array" || resolvedSchema.items == null) {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
@@ -375,7 +367,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 example: null,
                 depth: this.depth + 1
             });
-            const { validExample } = await exampleConverter.convert({ errorCollector });
+            const { validExample } = await exampleConverter.convert();
             return {
                 isValid: false,
                 coerced: false,
@@ -397,7 +389,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     example: item,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ errorCollector });
+                return await exampleConverter.convert();
             })
         );
 
@@ -412,11 +404,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private async convertObject({
-        resolvedSchema,
-        errorCollector
+        resolvedSchema
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (resolvedSchema.type == "object" && resolvedSchema.properties == null) {
             return { isValid: true, coerced: false, validExample: this.example ?? {}, errors: [] };
@@ -440,7 +430,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     example: exampleObj[key],
                     depth: this.depth + 1
                 });
-                const result = await exampleConverter.convert({ errorCollector });
+                const result = await exampleConverter.convert();
                 return { key, result };
             })
         );
@@ -462,11 +452,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private async convertSchemaTypeArray({
-        resolvedSchema,
-        errorCollector
+        resolvedSchema
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (!Array.isArray(resolvedSchema.type)) {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
@@ -480,7 +468,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     example: this.example,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ errorCollector });
+                return await exampleConverter.convert();
             })
         );
 
@@ -498,11 +486,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private async convertAllOf({
-        resolvedSchema,
-        errorCollector
+        resolvedSchema
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (!("allOf" in resolvedSchema) || resolvedSchema.allOf == null) {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
@@ -516,7 +502,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     example: this.example,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ errorCollector });
+                return await exampleConverter.convert();
             })
         );
 
@@ -552,11 +538,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private async convertOneOf({
-        resolvedSchema,
-        errorCollector
+        resolvedSchema
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (!("oneOf" in resolvedSchema) || resolvedSchema.oneOf == null) {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
@@ -570,7 +554,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     example: this.example,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ errorCollector });
+                return await exampleConverter.convert();
             })
         );
 
@@ -589,11 +573,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private async convertAnyOf({
-        resolvedSchema,
-        errorCollector
+        resolvedSchema
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (!("anyOf" in resolvedSchema) || resolvedSchema.anyOf == null) {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
@@ -607,7 +589,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     example: this.example,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ errorCollector });
+                return await exampleConverter.convert();
             })
         );
 

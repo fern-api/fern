@@ -1,7 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 import { z } from "zod";
 
-import { AbstractConverterContext, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverterContext, AbstractExtension } from "@fern-api/v2-importer-commons";
 
 import {
     CursorPaginationExtensionSchema,
@@ -39,13 +39,13 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
     private readonly document: OpenAPIV3.Document;
     public readonly key = "x-fern-pagination";
 
-    constructor({ breadcrumbs, operation, document }: FernPaginationExtension.Args) {
-        super({ breadcrumbs });
+    constructor({ breadcrumbs, operation, document, context }: FernPaginationExtension.Args) {
+        super({ breadcrumbs, context });
         this.operation = operation;
         this.document = document;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernPaginationExtension.Output | undefined {
+    public convert(): FernPaginationExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;
@@ -53,7 +53,7 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
 
         const result = PaginationExtensionSchema.safeParse(extensionValue);
         if (!result.success) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: `Invalid x-fern-pagination extension: ${result.error.message}`,
                 path: this.breadcrumbs
             });
@@ -66,7 +66,7 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
                 return undefined;
             }
             if (typeof topLevelPagination === "boolean") {
-                errorCollector.collect({
+                this.context.errorCollector.collect({
                     message:
                         "Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination.",
                     path: this.breadcrumbs
@@ -75,14 +75,14 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
             }
             const result = PaginationExtensionSchema.safeParse(topLevelPagination);
             if (!result.success) {
-                errorCollector.collect({
+                this.context.errorCollector.collect({
                     message: `Invalid x-fern-pagination extension: ${result.error.message}`,
                     path: this.breadcrumbs
                 });
                 return undefined;
             }
             if (typeof result.data === "boolean") {
-                errorCollector.collect({
+                this.context.errorCollector.collect({
                     message: "Global pagination extension is a boolean, expected an object.",
                     path: this.breadcrumbs
                 });
@@ -92,7 +92,7 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
         }
 
         if (typeof result.data === "boolean") {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: "Pagination extension is a boolean with no global configuration.",
                 path: this.breadcrumbs
             });

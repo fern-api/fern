@@ -1,7 +1,6 @@
 import { FernIr, IntermediateRepresentation, Package } from "@fern-api/ir-sdk";
 
 import { AbstractConverterContext } from "./AbstractConverterContext";
-import { ErrorCollector } from "./ErrorCollector";
 import { FernIgnoreExtension } from "./extensions";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
@@ -76,24 +75,17 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
 
     /**
      * Converts the OpenAPI specification to the target type
-     * @param errorCollector Optional collector to track any conversion errors
      * @returns The converted target type Output
      */
-    public abstract convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Output | undefined | Promise<Output | undefined>;
+    public abstract convert(): Output | undefined | Promise<Output | undefined>;
 
     protected removeXFernIgnores({
         document,
         context,
-        errorCollector,
         breadcrumbs = []
     }: {
         document: unknown;
         context: Context;
-        errorCollector: ErrorCollector;
         breadcrumbs?: string[];
     }): unknown {
         if (Array.isArray(document)) {
@@ -101,15 +93,15 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                 .filter((item, index) => {
                     const shouldIgnore = new FernIgnoreExtension({
                         breadcrumbs: [...breadcrumbs, String(index)],
-                        operation: item
-                    }).convert({ errorCollector });
+                        operation: item,
+                        context
+                    }).convert();
                     return !shouldIgnore;
                 })
                 .map((item, index) =>
                     this.removeXFernIgnores({
                         document: item,
                         context,
-                        errorCollector,
                         breadcrumbs: [...breadcrumbs, String(index)]
                     })
                 );
@@ -119,8 +111,9 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                     .filter(([key, value]) => {
                         const shouldIgnore = new FernIgnoreExtension({
                             breadcrumbs: [...breadcrumbs, key],
-                            operation: value
-                        }).convert({ errorCollector });
+                            operation: value,
+                            context
+                        }).convert();
                         return !shouldIgnore;
                     })
                     .map(([key, value]) => [
@@ -128,7 +121,6 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                         this.removeXFernIgnores({
                             document: value,
                             context,
-                            errorCollector,
                             breadcrumbs: [...breadcrumbs, key]
                         })
                     ])

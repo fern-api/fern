@@ -1,7 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
 
 export declare namespace FernTypeExtension {
     export interface Args extends AbstractExtension.Args {
@@ -13,12 +12,12 @@ export class FernTypeExtension extends AbstractExtension<string> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
     public readonly key = "x-fern-type";
 
-    constructor({ breadcrumbs, schema }: FernTypeExtension.Args) {
-        super({ breadcrumbs });
+    constructor({ breadcrumbs, schema, context }: FernTypeExtension.Args) {
+        super({ breadcrumbs, context });
         this.schema = schema;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): string | undefined {
+    public convert(): string | undefined {
         const extensionValue = this.getExtensionValue(this.schema);
         if (extensionValue == null) {
             return undefined;

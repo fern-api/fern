@@ -1,7 +1,5 @@
 import { Webhook, WebhookPayload } from "@fern-api/ir-sdk";
-import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
 export declare namespace WebhookConverter {
@@ -15,20 +13,16 @@ export class WebhookConverter extends AbstractOperationConverter {
         super({ context, breadcrumbs, operation, method, path });
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<WebhookConverter.Output | undefined> {
+    public async convert(): Promise<WebhookConverter.Output | undefined> {
         if (this.operation.operationId == null) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: "Skipping webhook because no operation id present",
                 path: this.breadcrumbs
             });
             return undefined;
         }
         if (this.operation.requestBody == null) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: "Skipping webhook because no request body present",
                 path: this.breadcrumbs
             });
@@ -41,7 +35,7 @@ export class WebhookConverter extends AbstractOperationConverter {
         }
 
         if (httpMethod !== "POST" && httpMethod !== "GET") {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: "Skipping webhook because non-POST or GET method",
                 path: this.breadcrumbs
             });
@@ -49,17 +43,14 @@ export class WebhookConverter extends AbstractOperationConverter {
         }
 
         const { group, method } =
-            this.computeGroupNameAndLocationFromExtensions({ errorCollector }) ??
-            this.computeGroupNameFromTagAndOperationId({ errorCollector });
+            this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
 
         const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"];
         const { headers, pathParameters, queryParameters } = await this.convertParameters({
-            errorCollector,
             breadcrumbs: payloadBreadcrumbs
         });
 
         const requestBody = await this.convertRequestBody({
-            errorCollector,
             breadcrumbs: payloadBreadcrumbs,
             group,
             method
@@ -93,8 +84,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 examples: [],
                 availability: await this.context.getAvailability({
                     node: this.operation,
-                    breadcrumbs: this.breadcrumbs,
-                    errorCollector
+                    breadcrumbs: this.breadcrumbs
                 }),
                 docs: this.operation.description,
                 v2Examples: undefined

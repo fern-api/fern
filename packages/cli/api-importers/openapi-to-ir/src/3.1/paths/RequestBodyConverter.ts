@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { FileProperty, FileUploadRequestProperty, HttpRequestBody, ObjectProperty } from "@fern-api/ir-sdk";
-import { Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { Converters } from "@fern-api/v2-importer-commons";
 
 export declare namespace RequestBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
@@ -21,18 +21,14 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         this.requestBody = requestBody;
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<RequestBodyConverter.Output | undefined> {
+    public async convert(): Promise<RequestBodyConverter.Output | undefined> {
         if (!this.requestBody.content) {
             return undefined;
         }
 
         const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("json"));
         for (const contentType of jsonContentTypes) {
-            const result = this.handleJsonOrFormContent({ contentType, errorCollector });
+            const result = this.handleJsonOrFormContent({ contentType });
             if (result != null) {
                 return result;
             }
@@ -47,8 +43,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             const convertedSchema = await this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId,
-                contentType,
-                errorCollector
+                contentType
             });
             if (convertedSchema == null) {
                 continue;
@@ -62,8 +57,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         return this.convertRequestBodyProperty({ property, contentType });
                     }),
                     v2Examples: await this.convertMediaTypeObjectExamples({
-                        mediaTypeObject,
-                        errorCollector
+                        mediaTypeObject
                     })
                 });
                 return {
@@ -81,7 +75,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             type.includes("urlencoded")
         );
         for (const contentType of urlEncodedContentTypes) {
-            const result = this.handleJsonOrFormContent({ contentType, errorCollector });
+            const result = this.handleJsonOrFormContent({ contentType });
             if (result != null) {
                 return result;
             }
@@ -91,19 +85,16 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     }
 
     private async handleJsonOrFormContent({
-        contentType,
-        errorCollector
+        contentType
     }: {
         contentType: string;
-        errorCollector: ErrorCollector;
     }): Promise<RequestBodyConverter.Output | undefined> {
         const schemaId = [...this.group, this.method, "Request"].join("_");
         const mediaTypeObject = this.requestBody.content[contentType];
         const convertedSchema = await this.parseMediaTypeObject({
             mediaTypeObject,
             schemaId,
-            contentType,
-            errorCollector
+            contentType
         });
         if (convertedSchema == null) {
             return undefined;
@@ -119,8 +110,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 properties: convertedSchema.schema?.shape.properties,
                 extraProperties: convertedSchema.schema?.shape.extraProperties,
                 v2Examples: await this.convertMediaTypeObjectExamples({
-                    mediaTypeObject,
-                    errorCollector
+                    mediaTypeObject
                 })
             });
 

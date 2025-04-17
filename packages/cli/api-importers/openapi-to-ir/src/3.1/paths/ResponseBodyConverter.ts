@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { HttpResponseBody, JsonResponse } from "@fern-api/ir-sdk";
-import { Converters, ErrorCollector, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons";
+import { Converters, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 
@@ -37,11 +37,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         this.streamingExtension = streamingExtension;
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<ResponseBodyConverter.Output | undefined> {
+    public async convert(): Promise<ResponseBodyConverter.Output | undefined> {
         if (!this.responseBody.content) {
             return undefined;
         }
@@ -52,7 +48,6 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = await this.parseMediaTypeObject({
                 mediaTypeObject,
-                errorCollector,
                 contentType,
                 schemaId
             });
@@ -65,8 +60,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         responseBodyType: convertedSchema.type,
                         docs: this.responseBody.description,
                         v2Examples: await this.convertMediaTypeObjectExamples({
-                            mediaTypeObject,
-                            errorCollector
+                            mediaTypeObject
                         })
                     })
                 );
@@ -83,7 +77,6 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = await this.parseMediaTypeObject({
                 mediaTypeObject,
-                errorCollector,
                 contentType,
                 schemaId
             });
@@ -95,8 +88,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     const responseBody = HttpResponseBody.bytes({
                         docs: this.responseBody.description,
                         v2Examples: await this.convertMediaTypeObjectExamples({
-                            mediaTypeObject,
-                            errorCollector
+                            mediaTypeObject
                         })
                     });
                     return {
@@ -107,8 +99,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 const responseBody = HttpResponseBody.fileDownload({
                     docs: this.responseBody.description,
                     v2Examples: await this.convertMediaTypeObjectExamples({
-                        mediaTypeObject,
-                        errorCollector
+                        mediaTypeObject
                     })
                 });
                 return {

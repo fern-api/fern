@@ -27,6 +27,7 @@ export declare namespace Spec {
     export interface Args<T> {
         spec: T;
         settings?: OpenAPISettings;
+        errorCollector: ErrorCollector;
         logger: Logger;
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         smartCasing: boolean;
@@ -42,6 +43,7 @@ export declare namespace Spec {
 export abstract class AbstractConverterContext<Spec extends object> {
     public spec: Spec;
     public readonly settings?: OpenAPISettings;
+    public readonly errorCollector: ErrorCollector;
     public readonly logger: Logger;
     public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;
     public readonly smartCasing: boolean;
@@ -52,6 +54,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
         this.settings = args.settings;
+        this.errorCollector = args.errorCollector;
         this.logger = args.logger;
         this.generationLanguage = args.generationLanguage;
         this.smartCasing = args.smartCasing;
@@ -226,12 +229,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public getExamplesFromSchema({
         schema,
-        breadcrumbs,
-        errorCollector
+        breadcrumbs
     }: {
         schema: OpenAPIV3_1.SchemaObject | undefined;
         breadcrumbs: string[];
-        errorCollector: ErrorCollector;
     }): unknown[] {
         if (schema == null) {
             return [];
@@ -242,7 +243,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             if (Array.isArray(schema.examples)) {
                 examples.push(...schema.examples);
             } else {
-                errorCollector.collect({
+                this.errorCollector.collect({
                     message: "Received non-array schema examples",
                     path: breadcrumbs
                 });
@@ -332,8 +333,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public async getAvailability({
         node,
-        breadcrumbs,
-        errorCollector
+        breadcrumbs
     }: {
         node:
             | OpenAPIV3_1.ReferenceObject
@@ -341,7 +341,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
             | OpenAPIV3_1.OperationObject
             | OpenAPIV3_1.ParameterObject;
         breadcrumbs: string[];
-        errorCollector: ErrorCollector;
     }): Promise<Availability | undefined> {
         while (this.isReferenceObject(node)) {
             const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
@@ -353,11 +352,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         const availabilityExtension = new Extensions.FernAvailabilityExtension({
             node,
-            breadcrumbs
+            breadcrumbs,
+            context: this
         });
-        const availability = await availabilityExtension.convert({
-            errorCollector
-        });
+        const availability = await availabilityExtension.convert();
         if (availability != null) {
             return {
                 status: availability,

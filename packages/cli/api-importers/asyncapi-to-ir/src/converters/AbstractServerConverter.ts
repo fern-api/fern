@@ -1,5 +1,5 @@
 import { Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIConverter } from "../AsyncAPIConverter";
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
@@ -21,7 +21,7 @@ export abstract class AbstractServerConverter<TServer> extends AbstractConverter
         this.servers = servers;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): EnvironmentsConfig | undefined {
+    public convert(): EnvironmentsConfig | undefined {
         if (this.servers == null || Object.keys(this.servers).length === 0) {
             return undefined;
         }

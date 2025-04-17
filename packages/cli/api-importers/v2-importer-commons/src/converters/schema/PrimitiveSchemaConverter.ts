@@ -9,7 +9,7 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
+import { AbstractConverter, AbstractConverterContext } from "../..";
 
 export declare namespace PrimitiveSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -25,7 +25,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
         this.schema = schema;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): TypeReference | undefined {
+    public convert(): TypeReference | undefined {
         switch (this.schema.type) {
             case "string": {
                 const stringConst = this.context.getAsString(this.schema.const);

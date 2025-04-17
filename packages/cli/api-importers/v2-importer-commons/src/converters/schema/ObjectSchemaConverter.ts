@@ -3,7 +3,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { isNonNullish } from "@fern-api/core-utils";
 import { Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
+import { AbstractConverter, AbstractConverterContext } from "../..";
 import { convertProperties } from "../../utils/ConvertProperties";
 
 export declare namespace ObjectSchemaConverter {
@@ -28,11 +28,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
         this.schema = schema;
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<ObjectSchemaConverter.Output | undefined> {
+    public async convert(): Promise<ObjectSchemaConverter.Output | undefined> {
         const hasAdditionalProperties =
             typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties;
 
@@ -54,7 +50,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 required: this.schema.required ?? [],
                 breadcrumbs: this.breadcrumbs,
                 context: this.context,
-                errorCollector
+                errorCollector: this.context.errorCollector
             });
 
         const extends_: TypeReference[] = [];
@@ -74,7 +70,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
                     required: allOfSchema.required ?? [],
                     breadcrumbs: [...this.breadcrumbs, "allOf", index.toString()],
                     context: this.context,
-                    errorCollector
+                    errorCollector: this.context.errorCollector
                 });
 
             properties.push(...allOfProperties);

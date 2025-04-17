@@ -1,5 +1,5 @@
 import { FernIr, TypeDeclaration, WebSocketChannel } from "@fern-api/ir-sdk";
-import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIConverter } from "../AsyncAPIConverter";
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
@@ -34,27 +34,21 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
         this.group = group;
     }
 
-    public abstract convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<AbstractChannelConverter.Output | undefined>;
+    public abstract convert(): Promise<AbstractChannelConverter.Output | undefined>;
 
     protected convertExamples({
         pathHead,
-        baseUrl,
-        errorCollector
+        baseUrl
     }: {
         pathHead: string;
         baseUrl: string | undefined;
-        errorCollector: ErrorCollector;
     }): Record<string, FernIr.V2WebSocketSessionExample> {
         const fernExamplesExtension = new FernExamplesExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             channel: this.channel as object
         });
-        const fernExamples = fernExamplesExtension.convert({ errorCollector });
+        const fernExamples = fernExamplesExtension.convert();
         if (fernExamples == null) {
             return {};
         }

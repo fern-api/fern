@@ -1,6 +1,5 @@
-import { AbstractConverter, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, AbstractExtension } from "@fern-api/v2-importer-commons";
 
-import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
 import { WebsocketSessionExtensionExamplesSchema } from "../schemas/ExampleSchema";
 
 export interface WebsocketSessionExampleMessage {
@@ -31,12 +30,12 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
     private readonly channel: object;
     public readonly key = "x-fern-examples";
 
-    constructor({ breadcrumbs, channel }: FernExamplesExtension.Args) {
-        super({ breadcrumbs: breadcrumbs ?? [] });
+    constructor({ breadcrumbs, channel, context }: FernExamplesExtension.Args) {
+        super({ breadcrumbs: breadcrumbs ?? [], context });
         this.channel = channel;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernExamplesExtension.Output | undefined {
+    public convert(): FernExamplesExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.channel);
         if (extensionValue == null) {
             return undefined;
@@ -44,7 +43,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
 
         const result = WebsocketSessionExtensionExamplesSchema.safeParse(extensionValue);
         if (!result.success) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: `Invalid x-fern-examples extension: ${result.error.message}`,
                 path: this.breadcrumbs
             });

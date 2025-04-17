@@ -1,7 +1,6 @@
 import { AvailabilityStatus } from "@fern-api/ir-sdk";
 
 import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
 
 export declare namespace FernAvailabilityExtension {
     export interface Args extends AbstractExtension.Args {
@@ -13,16 +12,12 @@ export class FernAvailabilityExtension extends AbstractExtension<AvailabilitySta
     private readonly node: unknown;
     public readonly key = "x-fern-availability";
 
-    constructor({ breadcrumbs, node }: FernAvailabilityExtension.Args) {
-        super({ breadcrumbs });
+    constructor({ breadcrumbs, node, context }: FernAvailabilityExtension.Args) {
+        super({ breadcrumbs, context });
         this.node = node;
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<AvailabilityStatus | undefined> {
+    public async convert(): Promise<AvailabilityStatus | undefined> {
         const extensionValue = this.getExtensionValue(this.node);
         if (extensionValue == null) {
             return undefined;

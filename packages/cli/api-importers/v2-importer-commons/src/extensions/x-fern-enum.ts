@@ -1,5 +1,4 @@
 import { AbstractExtension } from "../AbstractExtension";
-import { ErrorCollector } from "../ErrorCollector";
 import { FernEnumConfigSchema } from "../schemas/EnumSchema";
 import { FernEnumConfig } from "../types/FernEnumConfig";
 
@@ -15,12 +14,12 @@ export class FernEnumExtension extends AbstractExtension<FernEnumExtension.Outpu
     private readonly schema: object;
     public readonly key = "x-fern-enum";
 
-    constructor({ breadcrumbs, schema }: FernEnumExtension.Args) {
-        super({ breadcrumbs });
+    constructor({ breadcrumbs, schema, context }: FernEnumExtension.Args) {
+        super({ breadcrumbs, context });
         this.schema = schema;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernEnumExtension.Output | undefined {
+    public convert(): FernEnumExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.schema);
         if (extensionValue == null) {
             return undefined;
@@ -28,7 +27,7 @@ export class FernEnumExtension extends AbstractExtension<FernEnumExtension.Outpu
 
         const result = FernEnumConfigSchema.safeParse(extensionValue);
         if (!result.success) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: `Invalid x-fern-enum extension: ${result.error.message}`,
                 path: this.breadcrumbs
             });

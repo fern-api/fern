@@ -2,7 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { Type } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, ErrorCollector, FernEnumConfig } from "../..";
+import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../..";
 
 export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -28,7 +28,7 @@ export class EnumSchemaConverter extends AbstractConverter<
         this.maybeFernEnum = maybeFernEnum;
     }
 
-    public convert({ errorCollector }: { errorCollector: ErrorCollector }): EnumSchemaConverter.Output | undefined {
+    public convert(): EnumSchemaConverter.Output | undefined {
         if (!this.schema.enum) {
             return undefined;
         }
@@ -51,7 +51,7 @@ export class EnumSchemaConverter extends AbstractConverter<
         });
 
         if (values.length === 0) {
-            errorCollector.collect({
+            this.context.errorCollector.collect({
                 message: `Received enum schema with no valid values: ${JSON.stringify(this.schema)}`,
                 path: this.breadcrumbs
             });
