@@ -4,16 +4,16 @@ import { FileProperty, FileUploadRequestProperty, HttpRequestBody, ObjectPropert
 import { Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 export declare namespace RequestBodyConverter {
-    export interface Args extends Converters.AbstractConverters.AbstractMediaTypeConverter.Args {
+    export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
         requestBody: OpenAPIV3_1.RequestBodyObject;
     }
 
-    export interface Output extends Converters.AbstractConverters.AbstractMediaTypeConverter.Output {
+    export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
         requestBody: HttpRequestBody;
     }
 }
 
-export class RequestBodyConverter extends Converters.AbstractConverters.AbstractMediaTypeConverter {
+export class RequestBodyConverter extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter {
     private readonly requestBody: OpenAPIV3_1.RequestBodyObject;
 
     constructor({ context, breadcrumbs, requestBody, group, method }: RequestBodyConverter.Args) {

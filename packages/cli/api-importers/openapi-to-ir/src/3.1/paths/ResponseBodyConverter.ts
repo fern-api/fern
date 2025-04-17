@@ -6,18 +6,18 @@ import { Converters, ErrorCollector, SchemaOrReferenceConverter } from "@fern-ap
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 
 export declare namespace ResponseBodyConverter {
-    export interface Args extends Converters.AbstractConverters.AbstractMediaTypeConverter.Args {
+    export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
         responseBody: OpenAPIV3_1.ResponseObject;
         statusCode: string;
         streamingExtension: FernStreamingExtension.Output | undefined;
     }
 
-    export interface Output extends Converters.AbstractConverters.AbstractMediaTypeConverter.Output {
+    export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
         responseBody: HttpResponseBody;
     }
 }
 
-export class ResponseBodyConverter extends Converters.AbstractConverters.AbstractMediaTypeConverter {
+export class ResponseBodyConverter extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter {
     private readonly responseBody: OpenAPIV3_1.ResponseObject;
     private readonly statusCode: string;
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;

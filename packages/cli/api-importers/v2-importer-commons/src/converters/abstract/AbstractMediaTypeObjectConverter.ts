@@ -6,7 +6,7 @@ import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../
 import { ExampleConverter } from "../ExampleConverter";
 import { SchemaOrReferenceConverter } from "../schema";
 
-export declare namespace AbstractMediaTypeConverter {
+export declare namespace AbstractMediaTypeObjectConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
         group: string[];
         method: string;
@@ -22,14 +22,14 @@ export interface MediaTypeObject extends SchemaOrReferenceConverter.Output {
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
-export abstract class AbstractMediaTypeConverter extends AbstractConverter<
+export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter<
     AbstractConverterContext<object>,
-    AbstractMediaTypeConverter.Output
+    AbstractMediaTypeObjectConverter.Output
 > {
     protected readonly group: string[];
     protected readonly method: string;
 
-    constructor({ context, breadcrumbs, group, method }: AbstractMediaTypeConverter.Args) {
+    constructor({ context, breadcrumbs, group, method }: AbstractMediaTypeObjectConverter.Args) {
         super({ context, breadcrumbs });
         this.group = group;
         this.method = method;
@@ -39,7 +39,7 @@ export abstract class AbstractMediaTypeConverter extends AbstractConverter<
         errorCollector
     }: {
         errorCollector: ErrorCollector;
-    }): Promise<AbstractMediaTypeConverter.Output | undefined>;
+    }): Promise<AbstractMediaTypeObjectConverter.Output | undefined>;
 
     protected async parseMediaTypeObject({
         mediaTypeObject,

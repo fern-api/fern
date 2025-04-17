@@ -1,2 +1,2 @@
-export { AbstractMediaTypeConverter } from "./AbstractMediaTypeConverter";
+export { AbstractMediaTypeObjectConverter } from "./AbstractMediaTypeObjectConverter";
 export { AbstractParameterConverter } from "./AbstractParameterConverter";
