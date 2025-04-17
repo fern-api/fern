@@ -24,6 +24,7 @@ describe("OpenAPIConverterContext3_1", async () => {
             smartCasing: false,
             exampleGenerationArgs: { disabled: false },
             errorCollector: new ErrorCollector({
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 logger: undefined as any
             })
         });
