@@ -33,15 +33,16 @@ export class EnumSchemaConverter extends AbstractConverter<
             return undefined;
         }
 
-        const stringEnumValues = this.schema.enum.filter((value) => typeof value === "string");
-        const values = stringEnumValues.map((value) => {
-            const fernEnumValue = this.maybeFernEnum?.[value];
-            const name = fernEnumValue?.name ?? value.toString();
+        const enumValues = this.schema.enum.filter((value) => typeof value === "string" || typeof value === "number");
+        const values = enumValues.map((value) => {
+            const stringValue = value.toString();
+            const fernEnumValue = this.maybeFernEnum?.[stringValue];
+            const name = fernEnumValue?.name ?? stringValue;
 
             return {
                 name: this.context.casingsGenerator.generateNameAndWireValue({
                     name,
-                    wireValue: value.toString()
+                    wireValue: stringValue
                 }),
                 docs: fernEnumValue?.description,
                 availability: undefined,

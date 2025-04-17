@@ -1,3 +1,11 @@
+
+- changelogEntry:
+  - summary: |
+      Correctly parse non-string enum values; remove dependency on Fern Definition for v3 Parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.26
+
 - changelogEntry:
   - summary: |
       Parse schema-level examples in the v3 OpenAPI parser.
