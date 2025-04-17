@@ -6,7 +6,6 @@ export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         example: unknown;
-        schemaId?: string;
         depth?: number;
     }
 
@@ -72,14 +71,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     private readonly example: unknown;
     private readonly depth: number;
-    private readonly schemaId?: string;
 
-    constructor({ breadcrumbs, context, schema, example, schemaId, depth = 0 }: ExampleConverter.Args) {
+    constructor({ breadcrumbs, context, schema, example, depth = 0 }: ExampleConverter.Args) {
         super({ breadcrumbs, context });
         this.example = example;
         this.schema = schema;
         this.depth = depth;
-        this.schemaId = schemaId;
     }
 
     public async convert({
@@ -340,7 +337,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            validExample: this.schemaId != null ? `sample_${this.schemaId}` : this.EXAMPLE_STRING,
+            validExample: this.EXAMPLE_STRING,
             errors: [
                 {
                     message: `Example cannot be converted to string: ${JSON.stringify(this.example, null, 2)}`,
@@ -470,7 +467,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     context,
                     schema: property,
                     example: exampleObj[key],
-                    schemaId: key,
                     depth: this.depth + 1
                 });
                 const result = await exampleConverter.convert({ context, errorCollector });
