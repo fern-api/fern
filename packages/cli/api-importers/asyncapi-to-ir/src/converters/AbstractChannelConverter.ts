@@ -35,10 +35,8 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
     }
 
     public abstract convert({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<AbstractChannelConverter.Output | undefined>;
 

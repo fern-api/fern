@@ -62,10 +62,8 @@ export abstract class AbstractParameterConverter<
     }
 
     public abstract convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<AbstractParameterConverter.Output | undefined>;
 

@@ -105,10 +105,7 @@ export class OpenRPCConverter extends AbstractConverter<OpenRPCConverterContext3
                 method: resolvedMethod
             });
 
-            const convertedMethod = await methodConverter.convert({
-                context: this.context,
-                errorCollector
-            });
+            const convertedMethod = await methodConverter.convert({ errorCollector });
 
             if (convertedMethod != null) {
                 if (pkg.service == null) {
