@@ -11,6 +11,7 @@ import {
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
     OpenApiFilterSchema,
+    OpenRpcSpecSchema,
     ReadmeSchema
 } from "./schemas";
 
@@ -80,7 +81,7 @@ export interface APIDefinitionLocation {
     settings: APIDefinitionSettings | undefined;
 }
 
-export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema;
+export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema;
 
 export interface ProtoAPIDefinitionSchema {
     type: "protobuf";
@@ -91,6 +92,11 @@ export interface ProtoAPIDefinitionSchema {
 
 export interface OSSAPIDefinitionSchema {
     type: "oss";
+    path: string;
+}
+
+export interface OpenRPCDefinitionSchema {
+    type: "openrpc";
     path: string;
 }
 

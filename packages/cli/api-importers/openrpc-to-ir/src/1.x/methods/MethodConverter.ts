@@ -1,4 +1,5 @@
 import { ContentDescriptorObject, MethodObject } from "@open-rpc/meta-schema";
+import { OpenAPIV3 } from "openapi-types";
 
 import {
     HttpEndpoint,
@@ -68,6 +69,29 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 }
             ]
         };
+
+        for (const param of this.method.params) {
+            let resolvedParam: ContentDescriptorObject;
+            if (this.context.isReferenceObject(param)) {
+                const resolvedParamResponse = await this.context.resolveReference<ContentDescriptorObject>(param);
+                if (resolvedParamResponse.resolved) {
+                    resolvedParam = resolvedParamResponse.value;
+                } else {
+                    continue;
+                }
+            } else {
+                resolvedParam = param;
+            }
+
+            const parameterSchemaConverter = new Converters.SchemaConverters.SchemaConverter({
+                breadcrumbs: [...this.breadcrumbs, "params"],
+                context: this.context,
+                schema: resolvedParam.schema as OpenAPIV3.SchemaObject,
+                inlined: true,
+                id: ""
+            });
+            const schema = await parameterSchemaConverter.convert({ errorCollector });
+        }
 
         const endpoint: HttpEndpoint = {
             baseUrl: undefined,

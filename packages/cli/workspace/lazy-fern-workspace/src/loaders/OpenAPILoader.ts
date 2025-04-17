@@ -73,6 +73,21 @@ export class OpenAPILoader {
                 });
                 continue;
             }
+            if (contents.includes("openrpc")) {
+                const asyncAPI = await loadAsyncAPI({
+                    context,
+                    absoluteFilePath: spec.absoluteFilepath,
+                    absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
+                });
+                documents.push({
+                    type: "asyncapi",
+                    value: asyncAPI,
+                    source,
+                    namespace: spec.namespace,
+                    settings: spec.settings
+                });
+                continue;
+            }
             context.failAndThrow(`${spec.absoluteFilepath} is not a valid OpenAPI or AsyncAPI file`);
         }
         return documents;

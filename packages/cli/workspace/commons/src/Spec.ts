@@ -3,7 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
 import { Source } from "./Source";
 
-export type Spec = OpenAPISpec | ProtobufSpec;
+export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec;
 
 export interface OpenAPISpec {
     type: "openapi";
@@ -12,6 +12,13 @@ export interface OpenAPISpec {
     source: Source;
     namespace?: string;
     settings?: ParseOpenAPIOptions;
+}
+
+export interface OpenRPCSpec {
+    type: "openrpc";
+    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    namespace?: string;
 }
 
 export interface ProtobufSpec {
