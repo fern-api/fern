@@ -122,7 +122,7 @@ export class DocsDefinitionResolver {
         });
 
         // track all changelog markdown files in parsedDocsConfig.pages
-        if (this.docsWorkspace.config.navigation != null) {
+        if (this.docsWorkspace.config.navigation != null && !this.parsedDocsConfig.experimental?.openapiParserV3) {
             await visitNavigationAst({
                 navigation: this.docsWorkspace.config.navigation,
                 visitor: {
