@@ -143,7 +143,7 @@ types:
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
-      v2Examples: optional<examples.V2ValueExamples>
+      v2Examples: optional<examples.V2SchemaExamples>
 
   FileUploadRequest:
     extends: 

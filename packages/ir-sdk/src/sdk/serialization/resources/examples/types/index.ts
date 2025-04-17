@@ -13,7 +13,6 @@ export * from "./V2WebhookExample";
 export * from "./V2SchemaExamples";
 export * from "./V2SchemaExample";
 export * from "./V2ValueExamples";
-export * from "./V2ValueExample";
 export * from "./V2WebSocketEndpointLocation";
 export * from "./V2EndpointLocation";
 export * from "./V2EnvironmentValues";
