@@ -65,6 +65,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];
+
+    public abstract convertReferenceToTypeReference(
+        reference: OpenAPIV3_1.ReferenceObject
+    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }>;
+
     /**
      * Converts breadcrumbs into a schema name or type id
      * @param breadcrumbs Array of path segments leading to the schema
@@ -219,6 +224,31 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return { resolved: true, value: resolvedReference as unknown as T };
     }
 
+    public async resolveExample(example: unknown): Promise<unknown> {
+        if (!this.isReferenceObject(example)) {
+            return example;
+        }
+        const resolved = await this.resolveReference(example);
+        if (resolved.resolved && this.isExampleWithValue(resolved.value)) {
+            return resolved.value.value;
+        }
+        return undefined;
+    }
+
+    public async resolveExampleWithValue(example: unknown): Promise<unknown> {
+        if (!this.isReferenceObject(example)) {
+            if (this.isExampleWithValue(example)) {
+                return example.value;
+            }
+            return example;
+        }
+        const resolved = await this.resolveReference(example);
+        if (resolved.resolved && this.isExampleWithValue(resolved.value)) {
+            return resolved.value.value;
+        }
+        return undefined;
+    }
+
     public async getPropertyAccess(
         schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
     ): Promise<ObjectPropertyAccess | undefined> {
@@ -361,10 +391,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public isReferenceObject(value: unknown): value is OpenAPIV3_1.ReferenceObject {
         return typeof value === "object" && value !== null && "$ref" in value;
     }
-
-    public abstract convertReferenceToTypeReference(
-        reference: OpenAPIV3_1.ReferenceObject
-    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }>;
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {
         return typeof example === "object" && example != null && "value" in example;

@@ -292,15 +292,9 @@ export class RequestBodyConverter extends AbstractConverter<
         const requestBodyExamples = this.requestBody.content[contentType]?.examples;
 
         for (const [key, example] of Object.entries(requestBodyExamples ?? {})) {
-            if (this.context.isReferenceObject(example)) {
-                const resolved = await this.context.resolveReference(example);
-                if (resolved.resolved) {
-                    if (this.context.isExampleWithValue(resolved.value)) {
-                        userSpecifiedExamples[key] = resolved.value.value;
-                    }
-                }
-            } else if (example != null) {
-                userSpecifiedExamples[key] = example;
+            const resolvedExample = await this.context.resolveExampleWithValue(example);
+            if (resolvedExample != null) {
+                userSpecifiedExamples[key] = resolvedExample;
             }
         }
 
