@@ -217,7 +217,7 @@ export class ResponseBodyConverter extends AbstractConverter<
         const responseBodyExamples = this.responseBody.content?.[contentType]?.examples;
 
         for (const [key, example] of Object.entries(responseBodyExamples ?? {})) {
-            const resolvedExample = await this.context.resolveValuedExample(example);
+            const resolvedExample = await this.context.resolveExampleWithValue(example);
             if (resolvedExample != null) {
                 userSpecifiedExamples[key] = resolvedExample;
             }

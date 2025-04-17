@@ -235,7 +235,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return undefined;
     }
 
-    public async resolveValuedExample(example: unknown): Promise<unknown> {
+    public async resolveExampleWithValue(example: unknown): Promise<unknown> {
         if (!this.isReferenceObject(example)) {
             if (this.isExampleWithValue(example)) {
                 return example.value;

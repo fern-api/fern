@@ -154,14 +154,14 @@ export abstract class AbstractParameterConverter<
         const parameterExamples = this.parameter.examples;
 
         for (const [key, example] of Object.entries(parameterExamples ?? {})) {
-            const resolvedExample = await this.context.resolveValuedExample(example);
+            const resolvedExample = await this.context.resolveExampleWithValue(example);
             if (resolvedExample != null) {
                 if (this.parameter.schema != null) {
                     userSpecifiedExamples[key] = await this.generateOrValidateExample({
                         shouldCollectErrors: true,
                         schema: this.parameter.schema,
                         example: resolvedExample,
-                        context,
+                        context: this.context,
                         errorCollector
                     });
                 } else {
@@ -199,6 +199,7 @@ export abstract class AbstractParameterConverter<
     }): Promise<unknown> {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
+            context,
             schema,
             example
         });

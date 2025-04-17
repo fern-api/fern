@@ -3,7 +3,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "..";
 
 export declare namespace ExampleConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         example: unknown;
         depth?: number;
@@ -72,8 +72,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private readonly example: unknown;
     private readonly depth: number;
 
-    constructor({ breadcrumbs, schema, example, depth = 0 }: ExampleConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ breadcrumbs, context, schema, example, depth = 0 }: ExampleConverter.Args) {
+        super({ breadcrumbs, context });
         this.example = example;
         this.schema = schema;
         this.depth = depth;
@@ -397,6 +397,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (!Array.isArray(this.example) || resolvedSchema.items == null) {
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, "items"],
+                context,
                 schema: resolvedSchema.items,
                 example: null,
                 depth: this.depth + 1
@@ -418,6 +419,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             this.example.map(async (item, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `Item[${index}]`],
+                    context,
                     schema: resolvedSchema.items,
                     example: item,
                     depth: this.depth + 1
@@ -462,6 +464,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 }
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
+                    context,
                     schema: property,
                     example: exampleObj[key],
                     depth: this.depth + 1
@@ -503,6 +506,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.type.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `type[${index}]`],
+                    context,
                     schema: { ...resolvedSchema, type: subSchema } as OpenAPIV3_1.SchemaObject,
                     example: this.example,
                     depth: this.depth + 1
@@ -540,6 +544,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.allOf.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
+                    context,
                     schema: subSchema,
                     example: this.example,
                     depth: this.depth + 1
@@ -595,6 +600,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.oneOf.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
+                    context,
                     schema: subSchema,
                     example: this.example,
                     depth: this.depth + 1
@@ -633,6 +639,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.anyOf.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `anyOf[${index}]`],
+                    context,
                     schema: subSchema,
                     example: this.example,
                     depth: this.depth + 1
