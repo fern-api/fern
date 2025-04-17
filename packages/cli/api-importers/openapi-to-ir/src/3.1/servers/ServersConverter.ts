@@ -10,8 +10,8 @@ import {
 import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { ServerNameExtension } from "../../extensions/x-fern-server-name";
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { OpenAPIConverter } from "../OpenAPIConverter";
+import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 const DEFAULT_BASE_URL_ID = "Base";
 
@@ -40,11 +40,7 @@ export class ServersConverter extends AbstractConverter<
         this.endpointLevelServers = endpointLevelServers;
     }
 
-    public convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): ServersConverter.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): ServersConverter.Output | undefined {
         if (this.servers == null || this.servers.length === 0 || this.servers[0] == null) {
             return undefined;
         }
@@ -56,7 +52,11 @@ export class ServersConverter extends AbstractConverter<
             };
             const endpointUrls = this.endpointLevelServers
                 .map((server) => {
-                    const serverName = ServersConverter.getServerName({ server, errorCollector, context: this.context });
+                    const serverName = ServersConverter.getServerName({
+                        server,
+                        errorCollector,
+                        context: this.context
+                    });
                     return {
                         id: serverName,
                         name: this.context.casingsGenerator.generateName(serverName)
@@ -67,7 +67,11 @@ export class ServersConverter extends AbstractConverter<
             const baseUrls = [defaultBaseUrl, ...endpointUrls];
 
             const environments: MultipleBaseUrlsEnvironment[] = this.servers.map((baseUrl) => {
-                const serverName = ServersConverter.getServerName({ server: baseUrl, errorCollector, context: this.context });
+                const serverName = ServersConverter.getServerName({
+                    server: baseUrl,
+                    errorCollector,
+                    context: this.context
+                });
                 const endpointLevelServers = this.endpointLevelServers?.map((server) => [
                     ServersConverter.getServerName({ server, errorCollector, context: this.context }),
                     this.getServerUrl(server)
@@ -91,7 +95,11 @@ export class ServersConverter extends AbstractConverter<
                         environments
                     })
                 },
-                defaultUrl: ServersConverter.getServerName({ server: this.servers[0], errorCollector, context: this.context })
+                defaultUrl: ServersConverter.getServerName({
+                    server: this.servers[0],
+                    errorCollector,
+                    context: this.context
+                })
             };
         }
 

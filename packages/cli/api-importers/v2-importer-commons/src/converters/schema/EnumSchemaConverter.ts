@@ -28,11 +28,7 @@ export class EnumSchemaConverter extends AbstractConverter<
         this.maybeFernEnum = maybeFernEnum;
     }
 
-    public convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): EnumSchemaConverter.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): EnumSchemaConverter.Output | undefined {
         if (!this.schema.enum) {
             return undefined;
         }

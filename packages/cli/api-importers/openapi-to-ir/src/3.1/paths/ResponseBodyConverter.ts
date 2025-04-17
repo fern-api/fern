@@ -9,8 +9,8 @@ import {
 } from "@fern-api/v2-importer-commons";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { OpenAPIConverter } from "../OpenAPIConverter";
+import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace ResponseBodyConverter {
     export interface Args extends OpenAPIConverter.Args {

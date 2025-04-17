@@ -15,23 +15,17 @@ import { AsyncAPIConverterContext } from "./AsyncAPIConverterContext";
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
 export declare namespace AsyncAPIConverter {
-    type Args = AbstractConverter.Args<AsyncAPIConverterContext>
+    type Args = AbstractConverter.Args<AsyncAPIConverterContext>;
 
     type AbstractArgs = AbstractConverter.Args<AsyncAPIConverterContext>;
 }
 
 export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContext, IntermediateRepresentation> {
-
     constructor({ context, breadcrumbs }: AsyncAPIConverter.Args) {
         super({ context, breadcrumbs });
     }
 
-    public async convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<IntermediateRepresentation> {
-        
+    public async convert({ errorCollector }: { errorCollector: ErrorCollector }): Promise<IntermediateRepresentation> {
         this.context.spec = this.removeXFernIgnores({
             document: this.context.spec,
             context: this.context,
@@ -73,11 +67,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         return parseFloat(context.spec.asyncapi) >= 3;
     }
 
-    private async convertChannelMessages({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<void> {
+    private async convertChannelMessages({ errorCollector }: { errorCollector: ErrorCollector }): Promise<void> {
         const spec = this.context.spec as AsyncAPIV3.DocumentV3;
         for (const [channelPath, channel] of Object.entries(spec.channels ?? {})) {
             for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
@@ -133,11 +123,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         }
     }
 
-    private async convertComponentMessages({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<void> {
+    private async convertComponentMessages({ errorCollector }: { errorCollector: ErrorCollector }): Promise<void> {
         for (const [id, message] of Object.entries(this.context.spec.components?.messages ?? {})) {
             if (message.payload == null) {
                 continue;
@@ -178,11 +164,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         }
     }
 
-    private async convertSchemas({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<void> {
+    private async convertSchemas({ errorCollector }: { errorCollector: ErrorCollector }): Promise<void> {
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
@@ -202,11 +184,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         }
     }
 
-    private async convertServers({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<void> {
+    private async convertServers({ errorCollector }: { errorCollector: ErrorCollector }): Promise<void> {
         if (this.isAsyncAPIV3(this.context)) {
             const servers = this.context.spec.servers as Record<string, AsyncAPIV3.ServerV3>;
             const serversConverter = new ServersConverter3_0({
@@ -232,11 +210,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
         }
     }
 
-    private async convertChannels({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<void> {
+    private async convertChannels({ errorCollector }: { errorCollector: ErrorCollector }): Promise<void> {
         for (const [channelPath, channel] of Object.entries(this.context.spec.channels ?? {})) {
             const groupNameExtension = new Extensions.SdkGroupNameExtension({
                 breadcrumbs: ["channels", channelPath],
@@ -292,7 +266,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
     }
 
     private addWebsocketsToIr({
-        websocketChannels,
+        websocketChannels
     }: {
         websocketChannels: Record<string, FernIr.WebSocketChannel> | undefined;
     }): void {

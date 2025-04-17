@@ -85,7 +85,9 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const path = constructHttpPath(this.path);
         const baseUrl =
-            server != null ? ServersConverter.getServerName({ server, context: this.context, errorCollector }) : undefined;
+            server != null
+                ? ServersConverter.getServerName({ server, context: this.context, errorCollector })
+                : undefined;
 
         const fernExamples = this.convertExamples({
             pathHead: path.head,

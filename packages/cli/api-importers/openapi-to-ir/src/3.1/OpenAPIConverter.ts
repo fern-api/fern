@@ -13,12 +13,10 @@ import { ServersConverter } from "./servers/ServersConverter";
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
 export declare namespace OpenAPIConverter {
-    
-    type Args = AbstractConverter.Args<OpenAPIConverterContext3_1>
+    type Args = AbstractConverter.Args<OpenAPIConverterContext3_1>;
 }
 
 export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3_1, IntermediateRepresentation> {
-    
     constructor({ breadcrumbs, context }: AbstractConverter.Args<OpenAPIConverterContext3_1>) {
         super({ breadcrumbs, context });
     }
@@ -161,11 +159,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         }
     }
 
-    private async convertWebhooks({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): Promise<void> {
+    private async convertWebhooks({ errorCollector }: { errorCollector: ErrorCollector }): Promise<void> {
         const groupToWebhooks: Record<string, string[]> = {};
 
         for (const [, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {

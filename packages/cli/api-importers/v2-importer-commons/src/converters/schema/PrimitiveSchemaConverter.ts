@@ -25,11 +25,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
         this.schema = schema;
     }
 
-    public convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): TypeReference | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): TypeReference | undefined {
         switch (this.schema.type) {
             case "string": {
                 const stringConst = this.context.getAsString(this.schema.const);

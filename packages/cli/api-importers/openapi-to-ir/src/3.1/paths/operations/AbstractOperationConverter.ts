@@ -14,11 +14,11 @@ import { AbstractConverter, ErrorCollector, Extensions } from "@fern-api/v2-impo
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
+import { OpenAPIConverter } from "../../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
 import { RequestBodyConverter } from "../RequestBodyConverter";
 import { ResponseBodyConverter } from "../ResponseBodyConverter";
-import { OpenAPIConverter } from "../../OpenAPIConverter";
 
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
@@ -53,8 +53,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected readonly path: string;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
-        super({context, breadcrumbs });
+    constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
+        super({ context, breadcrumbs });
         this.operation = operation;
         this.method = method;
         this.path = path;
@@ -144,7 +144,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 continue;
             }
             pathParameters.push({
-                name:this.context.casingsGenerator.generateName(param),
+                name: this.context.casingsGenerator.generateName(param),
                 valueType: ParameterConverter.STRING,
                 docs: undefined,
                 location: "ENDPOINT",
@@ -288,7 +288,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             breadcrumbs: this.breadcrumbs,
             operation: this.operation
         });
-        const method = methodNameExtension.convert({errorCollector })?.methodName;
+        const method = methodNameExtension.convert({ errorCollector })?.methodName;
 
         const groupNameExtension = new Extensions.SdkGroupNameExtension({
             breadcrumbs: this.breadcrumbs,

@@ -9,8 +9,8 @@ import {
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { OpenAPIConverter } from "../OpenAPIConverter";
+import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace RequestBodyConverter {
     export interface Args extends OpenAPIConverter.Args {
@@ -213,13 +213,7 @@ export class RequestBodyConverter extends AbstractConverter<
         }
     }
 
-    private convertRequestBodyProperty({
-        property,
-        contentType
-    }: {
-        property: ObjectProperty;
-        contentType: string;
-    }) {
+    private convertRequestBodyProperty({ property, contentType }: { property: ObjectProperty; contentType: string }) {
         if (this.context.isFile(property.valueType)) {
             return FileUploadRequestProperty.file(
                 FileProperty.file({

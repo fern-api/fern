@@ -3,10 +3,11 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { Converters, ErrorCollector } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { OpenAPIConverter } from "../OpenAPIConverter";
+import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
-export class ParameterConverter extends Converters.AbstractConverters.AbstractParameterConverter<OpenAPIV3_1.ParameterObject> {
+export class ParameterConverter extends Converters.AbstractConverters
+    .AbstractParameterConverter<OpenAPIV3_1.ParameterObject> {
     constructor({
         context,
         breadcrumbs,

@@ -36,11 +36,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
         this.channel = channel;
     }
 
-    public convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): FernExamplesExtension.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernExamplesExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.channel);
         if (extensionValue == null) {
             return undefined;

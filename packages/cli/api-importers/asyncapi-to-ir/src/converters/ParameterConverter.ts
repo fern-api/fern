@@ -7,7 +7,6 @@ import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
 import { AsyncAPIParameter } from "../sharedTypes";
 
 export class ParameterConverter extends Converters.AbstractConverters.AbstractParameterConverter<AsyncAPIParameter> {
-    
     constructor({
         context,
         breadcrumbs,

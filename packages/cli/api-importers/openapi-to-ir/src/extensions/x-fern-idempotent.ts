@@ -17,11 +17,7 @@ export class FernIdempotentExtension extends AbstractExtension<boolean> {
         this.operation = operation;
     }
 
-    public convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): boolean | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): boolean | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;

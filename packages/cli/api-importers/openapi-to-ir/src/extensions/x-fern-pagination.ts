@@ -34,9 +34,7 @@ export declare namespace FernPaginationExtension {
           };
 }
 
-export class FernPaginationExtension extends AbstractExtension<
-    FernPaginationExtension.Output
-> {
+export class FernPaginationExtension extends AbstractExtension<FernPaginationExtension.Output> {
     private readonly operation: object;
     private readonly document: OpenAPIV3.Document;
     public readonly key = "x-fern-pagination";
@@ -47,11 +45,7 @@ export class FernPaginationExtension extends AbstractExtension<
         this.document = document;
     }
 
-    public convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): FernPaginationExtension.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernPaginationExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;
@@ -105,18 +99,23 @@ export class FernPaginationExtension extends AbstractExtension<
             return undefined;
         }
 
-        return this.convertPaginationConfig({ config: result.data});
+        return this.convertPaginationConfig({ config: result.data });
     }
 
-    private convertPaginationConfig({ config }: {
-        config: z.infer<typeof CursorPaginationExtensionSchema> | z.infer<typeof OffsetPaginationExtensionSchema>,
+    private convertPaginationConfig({
+        config
+    }: {
+        config: z.infer<typeof CursorPaginationExtensionSchema> | z.infer<typeof OffsetPaginationExtensionSchema>;
     }): FernPaginationExtension.Output {
         const maybeCursorPagination = config as z.infer<typeof CursorPaginationExtensionSchema>;
         if ("cursor" in maybeCursorPagination) {
             return {
                 type: "cursor",
                 cursor: AbstractConverterContext.maybeTrimPrefix(maybeCursorPagination.cursor, REQUEST_PREFIX),
-                nextCursor: AbstractConverterContext.maybeTrimPrefix(maybeCursorPagination.next_cursor, RESPONSE_PREFIX),
+                nextCursor: AbstractConverterContext.maybeTrimPrefix(
+                    maybeCursorPagination.next_cursor,
+                    RESPONSE_PREFIX
+                ),
                 results: AbstractConverterContext.maybeTrimPrefix(maybeCursorPagination.results, RESPONSE_PREFIX)
             };
         }

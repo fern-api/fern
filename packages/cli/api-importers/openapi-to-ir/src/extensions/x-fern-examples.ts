@@ -1,11 +1,15 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "@fern-api/v2-importer-commons";
-
+import {
+    AbstractConverter,
+    AbstractConverterContext,
+    AbstractExtension,
+    ErrorCollector
+} from "@fern-api/v2-importer-commons";
 
 export declare namespace FernExamplesExtension {
     export interface Args extends AbstractExtension.Args {
         operation: object;
-        context: AbstractConverterContext<object>
+        context: AbstractConverterContext<object>;
     }
 
     export type Output = RawSchemas.ExampleEndpointCallArraySchema;
@@ -23,11 +27,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
         this.operation = operation;
     }
 
-    public convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): FernExamplesExtension.Output | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): FernExamplesExtension.Output | undefined {
         const extensionValue = this.getExtensionValue(this.operation);
         if (extensionValue == null) {
             return undefined;

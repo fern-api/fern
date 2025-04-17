@@ -18,11 +18,7 @@ export class FernTypeExtension extends AbstractExtension<string> {
         this.schema = schema;
     }
 
-    public convert({
-        errorCollector
-    }: {
-        errorCollector: ErrorCollector;
-    }): string | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): string | undefined {
         const extensionValue = this.getExtensionValue(this.schema);
         if (extensionValue == null) {
             return undefined;

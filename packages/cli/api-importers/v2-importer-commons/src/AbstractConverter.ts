@@ -85,7 +85,6 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
         errorCollector: ErrorCollector;
     }): Output | undefined | Promise<Output | undefined>;
 
-
     protected removeXFernIgnores({
         document,
         context,
