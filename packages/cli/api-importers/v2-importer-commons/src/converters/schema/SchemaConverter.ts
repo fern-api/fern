@@ -367,6 +367,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
             context,
+            schemaId: this.id,
             schema: this.schema,
             example
         });
