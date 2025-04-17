@@ -79,25 +79,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         this.depth = depth;
     }
 
-    public async convert({
-        context,
-        errorCollector
-    }: {
-        context: AbstractConverterContext<object>;
-        errorCollector: ErrorCollector;
-    }): Promise<ExampleConverter.Output> {
+    public async convert({ errorCollector }: { errorCollector: ErrorCollector }): Promise<ExampleConverter.Output> {
         if (this.depth > this.MAX_DEPTH) {
             return { isValid: true, coerced: false, validExample: this.example, errors: [] };
         }
-        let resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
-        if (context.isReferenceObject(this.schema)) {
-            const resolved = await context.resolveReference<OpenAPIV3_1.SchemaObject>(this.schema);
-            if (resolved.resolved) {
-                resolvedSchema = resolved.value;
-            }
-        } else {
-            resolvedSchema = this.schema;
-        }
+        const resolvedSchema = await this.resolveSchema(this.schema);
         if (resolvedSchema == null) {
             return {
                 isValid: false,
@@ -148,7 +134,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema.type == "array" && "items" in resolvedSchema) {
             return this.convertArray({
                 resolvedSchema,
-                context,
                 errorCollector
             });
         }
@@ -156,7 +141,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema.type == "object" || resolvedSchema.properties != null) {
             return this.convertObject({
                 resolvedSchema,
-                context,
                 errorCollector
             });
         }
@@ -164,7 +148,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (Array.isArray(resolvedSchema.type)) {
             return this.convertSchemaTypeArray({
                 resolvedSchema,
-                context,
                 errorCollector
             });
         }
@@ -172,7 +155,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if ("allOf" in resolvedSchema && resolvedSchema.allOf != null) {
             return this.convertAllOf({
                 resolvedSchema,
-                context,
                 errorCollector
             });
         }
@@ -180,7 +162,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if ("oneOf" in resolvedSchema && resolvedSchema.oneOf != null) {
             return this.convertOneOf({
                 resolvedSchema,
-                context,
                 errorCollector
             });
         }
@@ -188,7 +169,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if ("anyOf" in resolvedSchema && resolvedSchema.anyOf != null) {
             return this.convertAnyOf({
                 resolvedSchema,
-                context,
                 errorCollector
             });
         }
@@ -384,11 +364,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private async convertArray({
         resolvedSchema,
-        context,
         errorCollector
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (resolvedSchema.type != "array" || resolvedSchema.items == null) {
@@ -397,12 +375,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (!Array.isArray(this.example) || resolvedSchema.items == null) {
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, "items"],
-                context,
+                context: this.context,
                 schema: resolvedSchema.items,
                 example: null,
                 depth: this.depth + 1
             });
-            const { validExample } = await exampleConverter.convert({ context, errorCollector });
+            const { validExample } = await exampleConverter.convert({ errorCollector });
             return {
                 isValid: false,
                 coerced: false,
@@ -419,12 +397,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             this.example.map(async (item, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `Item[${index}]`],
-                    context,
+                    context: this.context,
                     schema: resolvedSchema.items,
                     example: item,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ context, errorCollector });
+                return await exampleConverter.convert({ errorCollector });
             })
         );
 
@@ -440,11 +418,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private async convertObject({
         resolvedSchema,
-        context,
         errorCollector
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (resolvedSchema.type == "object" && resolvedSchema.properties == null) {
@@ -464,12 +440,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 }
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
-                    context,
+                    context: this.context,
                     schema: property,
                     example: exampleObj[key],
                     depth: this.depth + 1
                 });
-                const result = await exampleConverter.convert({ context, errorCollector });
+                const result = await exampleConverter.convert({ errorCollector });
                 return { key, result };
             })
         );
@@ -492,11 +468,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private async convertSchemaTypeArray({
         resolvedSchema,
-        context,
         errorCollector
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (!Array.isArray(resolvedSchema.type)) {
@@ -506,12 +480,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.type.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `type[${index}]`],
-                    context,
+                    context: this.context,
                     schema: { ...resolvedSchema, type: subSchema } as OpenAPIV3_1.SchemaObject,
                     example: this.example,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ context, errorCollector });
+                return await exampleConverter.convert({ errorCollector });
             })
         );
 
@@ -530,11 +504,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private async convertAllOf({
         resolvedSchema,
-        context,
         errorCollector
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (!("allOf" in resolvedSchema) || resolvedSchema.allOf == null) {
@@ -544,12 +516,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.allOf.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
-                    context,
+                    context: this.context,
                     schema: subSchema,
                     example: this.example,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ context, errorCollector });
+                return await exampleConverter.convert({ errorCollector });
             })
         );
 
@@ -586,11 +558,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private async convertOneOf({
         resolvedSchema,
-        context,
         errorCollector
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (!("oneOf" in resolvedSchema) || resolvedSchema.oneOf == null) {
@@ -600,12 +570,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.oneOf.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
-                    context,
+                    context: this.context,
                     schema: subSchema,
                     example: this.example,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ context, errorCollector });
+                return await exampleConverter.convert({ errorCollector });
             })
         );
 
@@ -625,11 +595,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private async convertAnyOf({
         resolvedSchema,
-        context,
         errorCollector
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<ExampleConverter.Output> {
         if (!("anyOf" in resolvedSchema) || resolvedSchema.anyOf == null) {
@@ -639,12 +607,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.anyOf.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `anyOf[${index}]`],
-                    context,
+                    context: this.context,
                     schema: subSchema,
                     example: this.example,
                     depth: this.depth + 1
                 });
-                return await exampleConverter.convert({ context, errorCollector });
+                return await exampleConverter.convert({ errorCollector });
             })
         );
 
@@ -660,5 +628,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             validExample,
             errors: isValid ? [] : results.flatMap((result) => result.errors)
         };
+    }
+
+    private async resolveSchema(
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    ): Promise<OpenAPIV3_1.SchemaObject | undefined> {
+        if (this.context.isReferenceObject(schema)) {
+            const resolved = await this.context.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
+            if (resolved.resolved) {
+                return resolved.value;
+            }
+            return undefined;
+        }
+        return schema;
     }
 }

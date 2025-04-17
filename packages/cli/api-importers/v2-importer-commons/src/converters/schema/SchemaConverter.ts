@@ -299,7 +299,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         if (examples.length === 0) {
             const convertedExample = await this.generateOrValidateExample({
                 example: undefined,
-                context: this.context,
                 errorCollector,
                 ignoreErrors: true
             });
@@ -309,11 +308,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return v2Examples;
         }
 
-        v2Examples.userSpecifiedExamples = await this.convertUserSpecifiedExamples(
-            examples,
-            this.context,
-            errorCollector
-        );
+        v2Examples.userSpecifiedExamples = await this.convertUserSpecifiedExamples(examples, errorCollector);
         return v2Examples;
     }
 
@@ -335,7 +330,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private async convertUserSpecifiedExamples(
         examples: unknown[],
-        context: AbstractConverterContext<object>,
         errorCollector: ErrorCollector
     ): Promise<Record<string, unknown>> {
         const userSpecifiedExamples: Record<string, unknown> = {};
@@ -344,7 +338,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const resolvedExample = await this.context.resolveExample(example);
             const convertedExample = await this.generateOrValidateExample({
                 example: resolvedExample,
-                context,
                 errorCollector
             });
             userSpecifiedExamples[`${this.id}_example_${index}`] = convertedExample;
@@ -355,22 +348,20 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private async generateOrValidateExample({
         example,
-        context,
         errorCollector,
         ignoreErrors
     }: {
         example: unknown;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
         ignoreErrors?: boolean;
     }): Promise<unknown> {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
-            context,
+            context: this.context,
             schema: this.schema,
             example
         });
-        const { validExample: convertedExample, errors } = await exampleConverter.convert({ context, errorCollector });
+        const { validExample: convertedExample, errors } = await exampleConverter.convert({ errorCollector });
         if (!ignoreErrors) {
             errors.forEach((error) => {
                 errorCollector.collect({

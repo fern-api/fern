@@ -158,10 +158,8 @@ export abstract class AbstractParameterConverter<
             if (resolvedExample != null) {
                 if (this.parameter.schema != null) {
                     userSpecifiedExamples[key] = await this.generateOrValidateExample({
-                        shouldCollectErrors: true,
                         schema: this.parameter.schema,
                         example: resolvedExample,
-                        context: this.context,
                         errorCollector
                     });
                 } else {
@@ -186,25 +184,23 @@ export abstract class AbstractParameterConverter<
 
     private async generateOrValidateExample({
         schema,
-        shouldCollectErrors,
+        ignoreErrors,
         example,
-        context,
         errorCollector
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-        shouldCollectErrors: boolean;
         example: unknown;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
+        ignoreErrors?: boolean;
     }): Promise<unknown> {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
-            context,
+            context: this.context,
             schema,
             example
         });
-        const { validExample: convertedExample, errors } = await exampleConverter.convert({ context, errorCollector });
-        if (shouldCollectErrors) {
+        const { validExample: convertedExample, errors } = await exampleConverter.convert({ errorCollector });
+        if (!ignoreErrors) {
             errors.forEach((error) => {
                 errorCollector.collect({
                     message: error.message,
