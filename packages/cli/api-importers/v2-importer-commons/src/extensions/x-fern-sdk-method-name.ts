@@ -1,6 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
+import { AbstractExtension } from "../AbstractExtension";
+import { ErrorCollector } from "../ErrorCollector";
 
 export declare namespace SdkMethodNameExtension {
     export interface Args extends AbstractExtension.Args {

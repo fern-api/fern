@@ -1,5 +1,7 @@
-import { AbstractConverterContext, AbstractExtension, ErrorCollector, FernEnumConfig } from "../";
+import { AbstractExtension } from "../AbstractExtension";
+import { ErrorCollector } from "../ErrorCollector";
 import { FernEnumConfigSchema } from "../schemas/EnumSchema";
+import { FernEnumConfig } from "../types/FernEnumConfig";
 
 export declare namespace FernEnumExtension {
     export interface Args extends AbstractExtension.Args {

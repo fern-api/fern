@@ -1,6 +1,7 @@
 import { AvailabilityStatus } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
+import { AbstractExtension } from "../AbstractExtension";
+import { ErrorCollector } from "../ErrorCollector";
 
 export declare namespace FernAvailabilityExtension {
     export interface Args extends AbstractExtension.Args {

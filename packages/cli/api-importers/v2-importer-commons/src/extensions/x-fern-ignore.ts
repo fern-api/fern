@@ -1,4 +1,6 @@
-import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
+import { AbstractExtension } from "../AbstractExtension";
+import { ErrorCollector } from "../ErrorCollector";
+
 
 export declare namespace FernIgnoreExtension {
     export interface Args extends AbstractExtension.Args {
