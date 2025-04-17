@@ -20,6 +20,6 @@ class DebugKeyValuePairs(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .debug_variable_value import DebugVariableValue  # noqa: E402
+from .debug_variable_value import DebugVariableValue  # noqa: E402, F401
 
 update_forward_refs(DebugKeyValuePairs)

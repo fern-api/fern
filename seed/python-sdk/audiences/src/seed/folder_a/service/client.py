@@ -39,10 +39,7 @@ class ServiceClient:
         --------
         from seed import SeedAudiences
         from seed.environment import SeedAudiencesEnvironment
-
-        client = SeedAudiences(
-            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
-        )
+        client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
         client.folder_a.service.get_direct_thread()
         """
         response = self._raw_client.get_direct_thread(request_options=request_options)
@@ -77,20 +74,12 @@ class AsyncServiceClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedAudiences
         from seed.environment import SeedAudiencesEnvironment
-
-        client = AsyncSeedAudiences(
-            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
-        )
-
-
+        import asyncio
+        client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
         async def main() -> None:
             await client.folder_a.service.get_direct_thread()
-
-
         asyncio.run(main())
         """
         response = await self._raw_client.get_direct_thread(request_options=request_options)

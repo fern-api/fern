@@ -43,13 +43,8 @@ class UserClient:
         Examples
         --------
         from seed import SeedExtraProperties
-
-        client = SeedExtraProperties(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.create_user(
-            name="name",
-        )
+        client = SeedExtraProperties(base_url="https://yourhost.com/path/to/api", )
+        client.user.create_user(name='name', )
         """
         response = self._raw_client.create_user(name=name, request_options=request_options)
         return response.data
@@ -85,21 +80,11 @@ class AsyncUserClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedExtraProperties
-
-        client = AsyncSeedExtraProperties(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedExtraProperties(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.user.create_user(
-                name="name",
-            )
-
-
+            await client.user.create_user(name='name', )
         asyncio.run(main())
         """
         response = await self._raw_client.create_user(name=name, request_options=request_options)

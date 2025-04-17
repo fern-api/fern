@@ -11,11 +11,7 @@ class FooExtended(Foo):
     Examples
     --------
     from seed.unions.resources import FooExtended
-
-    FooExtended(
-        name="example1",
-        age=5,
-    )
+    FooExtended(name='example1', age=5, )
     """
 
     age: int

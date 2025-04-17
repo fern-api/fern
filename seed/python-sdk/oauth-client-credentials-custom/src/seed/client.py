@@ -33,12 +33,7 @@ class SeedOauthClientCredentials:
     Examples
     --------
     from seed import SeedOauthClientCredentials
-
-    client = SeedOauthClientCredentials(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = SeedOauthClientCredentials(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
     """
 
     def __init__(
@@ -103,12 +98,7 @@ class AsyncSeedOauthClientCredentials:
     Examples
     --------
     from seed import AsyncSeedOauthClientCredentials
-
-    client = AsyncSeedOauthClientCredentials(
-        base_url="https://yourhost.com/path/to/api",
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = AsyncSeedOauthClientCredentials(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
     """
 
     def __init__(

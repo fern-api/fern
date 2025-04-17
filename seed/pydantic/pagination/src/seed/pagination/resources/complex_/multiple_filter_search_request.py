@@ -21,6 +21,6 @@ class MultipleFilterSearchRequest(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .multiple_filter_search_request_value import MultipleFilterSearchRequestValue  # noqa: E402
+from .multiple_filter_search_request_value import MultipleFilterSearchRequestValue  # noqa: E402, F401
 
 update_forward_refs(MultipleFilterSearchRequest)

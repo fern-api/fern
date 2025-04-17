@@ -29,10 +29,7 @@ class SeedContentTypes:
     Examples
     --------
     from seed import SeedContentTypes
-
-    client = SeedContentTypes(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedContentTypes(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedContentTypes:
     Examples
     --------
     from seed import AsyncSeedContentTypes
-
-    client = AsyncSeedContentTypes(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedContentTypes(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

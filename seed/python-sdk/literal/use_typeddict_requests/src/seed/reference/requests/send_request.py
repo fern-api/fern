@@ -3,7 +3,6 @@
 import typing_extensions
 import typing
 from ..types.some_literal import SomeLiteral
-import typing_extensions
 from ...core.serialization import FieldMetadata
 from .container_object import ContainerObjectParams
 

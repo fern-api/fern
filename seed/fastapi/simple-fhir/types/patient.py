@@ -21,6 +21,6 @@ class Patient(BaseResource):
             extra = pydantic.Extra.forbid
 
 
-from .script import Script  # noqa: E402
+from .script import Script  # noqa: E402, F401
 
 update_forward_refs(Patient)

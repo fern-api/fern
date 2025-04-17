@@ -14,12 +14,7 @@ class Exception_Generic(UniversalBaseModel):
     Examples
     --------
     from seed.types import Exception_Generic
-
-    Exception_Generic(
-        exception_type="Unavailable",
-        exception_message="This component is unavailable!",
-        exception_stacktrace="<logs>",
-    )
+    Exception_Generic(exception_type='Unavailable', exception_message='This component is unavailable!', exception_stacktrace='<logs>', )
     """
 
     type: typing.Literal["generic"] = "generic"
@@ -42,12 +37,7 @@ class Exception_Timeout(UniversalBaseModel):
     Examples
     --------
     from seed.types import Exception_Generic
-
-    Exception_Generic(
-        exception_type="Unavailable",
-        exception_message="This component is unavailable!",
-        exception_stacktrace="<logs>",
-    )
+    Exception_Generic(exception_type='Unavailable', exception_message='This component is unavailable!', exception_stacktrace='<logs>', )
     """
 
     type: typing.Literal["timeout"] = "timeout"
@@ -64,11 +54,6 @@ class Exception_Timeout(UniversalBaseModel):
 
 """
 from seed.types import Exception_Generic
-
-Exception_Generic(
-    exception_type="Unavailable",
-    exception_message="This component is unavailable!",
-    exception_stacktrace="<logs>",
-)
+Exception_Generic(exception_type='Unavailable', exception_message='This component is unavailable!', exception_stacktrace='<logs>', )
 """
 Exception = typing.Union[Exception_Generic, Exception_Timeout]

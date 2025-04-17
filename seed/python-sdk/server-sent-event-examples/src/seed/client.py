@@ -29,10 +29,7 @@ class SeedServerSentEvents:
     Examples
     --------
     from seed import SeedServerSentEvents
-
-    client = SeedServerSentEvents(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedServerSentEvents(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedServerSentEvents:
     Examples
     --------
     from seed import AsyncSeedServerSentEvents
-
-    client = AsyncSeedServerSentEvents(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedServerSentEvents(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

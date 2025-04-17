@@ -45,14 +45,8 @@ class HttpMethodsClient:
         Examples
         --------
         from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.http_methods.test_get(
-            id="id",
-        )
+        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+        client.endpoints.http_methods.test_get(id='id', )
         """
         response = self._raw_client.test_get(id, request_options=request_options)
         return response.data
@@ -75,14 +69,8 @@ class HttpMethodsClient:
         Examples
         --------
         from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.http_methods.test_post(
-            string="string",
-        )
+        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+        client.endpoints.http_methods.test_post(string='string', )
         """
         response = self._raw_client.test_post(string=string, request_options=request_options)
         return response.data
@@ -107,15 +95,8 @@ class HttpMethodsClient:
         Examples
         --------
         from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.http_methods.test_put(
-            id="id",
-            string="string",
-        )
+        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+        client.endpoints.http_methods.test_put(id='id', string='string', )
         """
         response = self._raw_client.test_put(id, string=string, request_options=request_options)
         return response.data
@@ -180,37 +161,11 @@ class HttpMethodsClient:
 
         Examples
         --------
+        from seed import SeedExhaustive
         import datetime
         import uuid
-
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.http_methods.test_patch(
-            id="id",
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base_64="SGVsbG8gd29ybGQh",
-            list_=["list", "list"],
-            set_={"set"},
-            map_={1: "map"},
-            bigint=1000000,
-        )
+        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+        client.endpoints.http_methods.test_patch(id='id', string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         """
         response = self._raw_client.test_patch(
             id,
@@ -247,14 +202,8 @@ class HttpMethodsClient:
         Examples
         --------
         from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.http_methods.test_delete(
-            id="id",
-        )
+        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+        client.endpoints.http_methods.test_delete(id='id', )
         """
         response = self._raw_client.test_delete(id, request_options=request_options)
         return response.data
@@ -290,22 +239,11 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.endpoints.http_methods.test_get(
-                id="id",
-            )
-
-
+            await client.endpoints.http_methods.test_get(id='id', )
         asyncio.run(main())
         """
         response = await self._raw_client.test_get(id, request_options=request_options)
@@ -328,22 +266,11 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.endpoints.http_methods.test_post(
-                string="string",
-            )
-
-
+            await client.endpoints.http_methods.test_post(string='string', )
         asyncio.run(main())
         """
         response = await self._raw_client.test_post(string=string, request_options=request_options)
@@ -368,23 +295,11 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.endpoints.http_methods.test_put(
-                id="id",
-                string="string",
-            )
-
-
+            await client.endpoints.http_methods.test_put(id='id', string='string', )
         asyncio.run(main())
         """
         response = await self._raw_client.test_put(id, string=string, request_options=request_options)
@@ -450,43 +365,13 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
-        import asyncio
+        from seed import AsyncSeedExhaustive
         import datetime
         import uuid
-
-        from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.endpoints.http_methods.test_patch(
-                id="id",
-                string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base_64="SGVsbG8gd29ybGQh",
-                list_=["list", "list"],
-                set_={"set"},
-                map_={1: "map"},
-                bigint=1000000,
-            )
-
-
+            await client.endpoints.http_methods.test_patch(id='id', string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         asyncio.run(main())
         """
         response = await self._raw_client.test_patch(
@@ -523,22 +408,11 @@ class AsyncHttpMethodsClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.endpoints.http_methods.test_delete(
-                id="id",
-            )
-
-
+            await client.endpoints.http_methods.test_delete(id='id', )
         asyncio.run(main())
         """
         response = await self._raw_client.test_delete(id, request_options=request_options)

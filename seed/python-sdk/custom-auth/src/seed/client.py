@@ -30,11 +30,7 @@ class SeedCustomAuth:
     Examples
     --------
     from seed import SeedCustomAuth
-
-    client = SeedCustomAuth(
-        custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -84,11 +80,7 @@ class AsyncSeedCustomAuth:
     Examples
     --------
     from seed import AsyncSeedCustomAuth
-
-    client = AsyncSeedCustomAuth(
-        custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

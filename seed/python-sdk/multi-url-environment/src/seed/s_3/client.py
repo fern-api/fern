@@ -42,13 +42,8 @@ class S3Client:
         Examples
         --------
         from seed import SeedMultiUrlEnvironment
-
-        client = SeedMultiUrlEnvironment(
-            token="YOUR_TOKEN",
-        )
-        client.s_3.get_presigned_url(
-            s_3_key="s3Key",
-        )
+        client = SeedMultiUrlEnvironment(token="YOUR_TOKEN", )
+        client.s_3.get_presigned_url(s_3_key='s3Key', )
         """
         response = self._raw_client.get_presigned_url(s_3_key=s_3_key, request_options=request_options)
         return response.data
@@ -84,21 +79,11 @@ class AsyncS3Client:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedMultiUrlEnvironment
-
-        client = AsyncSeedMultiUrlEnvironment(
-            token="YOUR_TOKEN",
-        )
-
-
+        import asyncio
+        client = AsyncSeedMultiUrlEnvironment(token="YOUR_TOKEN", )
         async def main() -> None:
-            await client.s_3.get_presigned_url(
-                s_3_key="s3Key",
-            )
-
-
+            await client.s_3.get_presigned_url(s_3_key='s3Key', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_presigned_url(s_3_key=s_3_key, request_options=request_options)

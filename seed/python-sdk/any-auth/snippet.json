@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAnyAuth\n\nclient = SeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    scope=\"scope\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAnyAuth\n\nclient = AsyncSeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedAnyAuth\nclient = SeedAnyAuth(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )\nclient.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )\n",
+                "async_client": "from seed import AsyncSeedAnyAuth\nimport asyncio\nclient = AsyncSeedAnyAuth(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )\nasync def main() -> None:\n    await client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -22,8 +22,8 @@
                 "identifier_override": "endpoint_user.get"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAnyAuth\n\nclient = SeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAnyAuth\n\nclient = AsyncSeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedAnyAuth\nclient = SeedAnyAuth(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )\nclient.user.get()\n",
+                "async_client": "from seed import AsyncSeedAnyAuth\nimport asyncio\nclient = AsyncSeedAnyAuth(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )\nasync def main() -> None:\n    await client.user.get()\nasyncio.run(main())",
                 "type": "python"
             }
         }

@@ -21,7 +21,7 @@ class BaseResource(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .resource_list import ResourceList  # noqa: E402
-from .memo import Memo  # noqa: E402
+from .resource_list import ResourceList  # noqa: E402, F401
+from .memo import Memo  # noqa: E402, F401
 
 update_forward_refs(BaseResource)

@@ -33,11 +33,7 @@ class SeedBearerTokenEnvironmentVariable:
     Examples
     --------
     from seed import SeedBearerTokenEnvironmentVariable
-
-    client = SeedBearerTokenEnvironmentVariable(
-        api_key="YOUR_API_KEY",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -94,11 +90,7 @@ class AsyncSeedBearerTokenEnvironmentVariable:
     Examples
     --------
     from seed import AsyncSeedBearerTokenEnvironmentVariable
-
-    client = AsyncSeedBearerTokenEnvironmentVariable(
-        api_key="YOUR_API_KEY",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

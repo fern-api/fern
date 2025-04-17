@@ -10,10 +10,10 @@ from .types import (
     Page,
     User,
     UserListContainer,
+    UsernameContainer,
     UserOptionalListContainer,
     UserOptionalListPage,
     UserPage,
-    UsernameContainer,
     WithCursor,
     WithPage,
 )

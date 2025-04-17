@@ -11,29 +11,10 @@ class Tree(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Node, Tree
+    from seed import Tree
+    from seed import Node
     from seed.commons.metadata import Metadata
-
-    Tree(
-        nodes=[
-            Node(
-                id="node-8dvgfja2",
-                label="left",
-                metadata=Metadata(
-                    id="metadata-kjasf923",
-                    data={"foo": "bar", "baz": "qux"},
-                ),
-            ),
-            Node(
-                id="node-cwda9fi2x",
-                label="right",
-                metadata=Metadata(
-                    id="metadata-lkasdfv9j",
-                    data={"one": "two", "three": "four"},
-                ),
-            ),
-        ],
-    )
+    Tree(nodes=[Node(id='node-8dvgfja2', label='left', metadata=Metadata(id='metadata-kjasf923', data={'foo': 'bar', 'baz': 'qux'}, ), ), Node(id='node-cwda9fi2x', label='right', metadata=Metadata(id='metadata-lkasdfv9j', data={'one': 'two', 'three': 'four'}, ), )], )
     """
 
     nodes: typing.Optional[typing.List[Node]] = None

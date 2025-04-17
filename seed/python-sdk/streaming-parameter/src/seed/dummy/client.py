@@ -52,14 +52,8 @@ class DummyClient:
         Examples
         --------
         from seed import SeedStreaming
-
-        client = SeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.dummy.generate(
-            stream=False,
-            num_events=5,
-        )
+        client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
+        response = client.dummy.generate(stream=False, num_events=5, )
         for chunk in response:
             yield chunk
         """
@@ -83,14 +77,8 @@ class DummyClient:
         Examples
         --------
         from seed import SeedStreaming
-
-        client = SeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.dummy.generate(
-            stream=False,
-            num_events=5,
-        )
+        client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
+        client.dummy.generate(stream=False, num_events=5, )
         """
         ...
 
@@ -123,9 +111,9 @@ class DummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    def stream() -> (
-                        HttpResponse[typing.Iterator[typing.Union[typing.Iterator[StreamResponse], RegularResponse]]]
-                    ):
+                    def stream() -> HttpResponse[
+                        typing.Iterator[typing.Union[typing.Iterator[StreamResponse], RegularResponse]]
+                    ]:
                         try:
                             if 200 <= _response.status_code < 300:
 
@@ -210,24 +198,13 @@ class AsyncDummyClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedStreaming
-
-        client = AsyncSeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            response = await client.dummy.generate(
-                stream=False,
-                num_events=5,
-            )
+            response = await client.dummy.generate(stream=False, num_events=5, )
             async for chunk in response:
                 yield chunk
-
-
         asyncio.run(main())
         """
         ...
@@ -249,22 +226,11 @@ class AsyncDummyClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedStreaming
-
-        client = AsyncSeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.dummy.generate(
-                stream=False,
-                num_events=5,
-            )
-
-
+            await client.dummy.generate(stream=False, num_events=5, )
         asyncio.run(main())
         """
         ...
@@ -298,11 +264,9 @@ class AsyncDummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    async def stream() -> (
-                        AsyncHttpResponse[
-                            typing.AsyncIterator[typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]]
-                        ]
-                    ):
+                    async def stream() -> AsyncHttpResponse[
+                        typing.AsyncIterator[typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]]
+                    ]:
                         try:
                             if 200 <= _response.status_code < 300:
 

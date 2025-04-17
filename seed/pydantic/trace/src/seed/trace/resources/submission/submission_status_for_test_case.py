@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
-from ..commons.key_value_pair import KeyValuePair
-from ..commons.map_value import MapValue
 import typing
 from .test_case_result import TestCaseResult
 from ...core.pydantic_utilities import IS_PYDANTIC_V2

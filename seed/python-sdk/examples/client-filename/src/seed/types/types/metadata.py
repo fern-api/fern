@@ -12,8 +12,7 @@ class Base(UniversalBaseModel):
     Examples
     --------
     from seed.types import Metadata_Html
-
-    Metadata_Html(value="<head>...</head>")
+    Metadata_Html(value='<head>...</head>')
     """
 
     extra: typing.Dict[str, str]
@@ -57,7 +56,6 @@ class Metadata_Markdown(Base):
 
 """
 from seed.types import Metadata_Html
-
-Metadata_Html(value="<head>...</head>")
+Metadata_Html(value='<head>...</head>')
 """
 Metadata = typing.Union[Metadata_Html, Metadata_Markdown]
