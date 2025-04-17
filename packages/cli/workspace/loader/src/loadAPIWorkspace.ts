@@ -96,7 +96,7 @@ export async function loadSingleNamespaceAPIWorkspace({
             });
             continue;
         }
-        
+
         if (definition.schema.type === "openrpc") {
             const relativeFilepathToOpenRpc = RelativeFilePath.of(definition.schema.path);
             const absoluteFilepathToOpenRpc = join(absolutePathToWorkspace, relativeFilepathToOpenRpc);
@@ -104,11 +104,11 @@ export async function loadSingleNamespaceAPIWorkspace({
                 type: "openrpc",
                 absoluteFilepath: absoluteFilepathToOpenRpc,
                 absoluteFilepathToOverrides,
-                namespace,
+                namespace
             });
             continue;
         }
-        
+
         const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
