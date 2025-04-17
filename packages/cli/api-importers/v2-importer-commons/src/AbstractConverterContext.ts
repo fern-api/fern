@@ -224,6 +224,59 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return { resolved: true, value: resolvedReference as unknown as T };
     }
 
+    public getExamplesFromSchema({
+        schema,
+        breadcrumbs,
+        errorCollector
+    }: {
+        schema: OpenAPIV3_1.SchemaObject | undefined;
+        breadcrumbs: string[];
+        errorCollector: ErrorCollector;
+    }): unknown[] {
+        if (schema == null) {
+            return [];
+        }
+        const examples: unknown[] = schema.example != null ? [schema.example] : [];
+
+        if (schema.examples != null) {
+            if (Array.isArray(schema.examples)) {
+                examples.push(...schema.examples);
+            } else {
+                errorCollector.collect({
+                    message: "Received non-array schema examples",
+                    path: breadcrumbs
+                });
+            }
+        }
+        return examples;
+    }
+
+    public getNamedExamplesFromMediaTypeObject({
+        mediaTypeObject,
+        breadcrumbs,
+        defaultExampleName
+    }: {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        breadcrumbs: string[];
+        defaultExampleName?: string;
+    }): Array<[string, unknown]> {
+        if (mediaTypeObject == null) {
+            return [];
+        }
+        const examples: Array<[string, unknown]> = [];
+        if (mediaTypeObject.example != null) {
+            const exampleName = this.generateUniqueName({
+                prefix: defaultExampleName ?? `${breadcrumbs.join("_")}_example`,
+                existingNames: []
+            });
+            examples.push([exampleName, mediaTypeObject.example]);
+        }
+        if (mediaTypeObject.examples != null) {
+            examples.push(...Object.entries(mediaTypeObject.examples));
+        }
+        return examples;
+    }
+
     public async resolveExample(example: unknown): Promise<unknown> {
         if (!this.isReferenceObject(example)) {
             return example;
