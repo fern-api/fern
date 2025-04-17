@@ -128,7 +128,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 });
                 const converter = new OpenAPI3_1Converter({ context: converterContext });
                 result = await converter.convert({
-                    context: converterContext,
                     errorCollector
                 });
             } else if (document.type === "asyncapi") {
