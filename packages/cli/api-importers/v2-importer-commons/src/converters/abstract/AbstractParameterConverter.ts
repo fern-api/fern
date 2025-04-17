@@ -14,7 +14,7 @@ import {
 import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 
 export declare namespace AbstractParameterConverter {
-    export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.Args {
+    export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.AbstractArgs {
         parameter: TParameter;
     }
 
@@ -55,8 +55,8 @@ export abstract class AbstractParameterConverter<
 
     protected readonly parameter: TParameter;
 
-    constructor({ breadcrumbs, parameter }: AbstractParameterConverter.Args<TParameter>) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, parameter }: AbstractParameterConverter.Args<TParameter>) {
+        super({ context, breadcrumbs });
         this.parameter = parameter;
     }
 

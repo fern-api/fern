@@ -23,8 +23,8 @@ export declare namespace ChannelConverter2_X {
 export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.ChannelV2> {
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
-        super({ breadcrumbs, channel, channelPath, group });
+    constructor({ context, breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
+        super({ context, breadcrumbs, channel, channelPath, group });
     }
 
     public async convert({
@@ -160,12 +160,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
 
         if ("oneOf" in operation.message) {
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+                context: this.context,
                 breadcrumbs: [...this.breadcrumbs, breadcrumbName],
                 schemaOrReference: operation.message,
                 schemaIdOverride: operation.operationId ?? defaultId
             });
             const schemaOrReferenceConverterOutput = await schemaOrReferenceConverter.convert({
-                context,
                 errorCollector
             });
             if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
@@ -187,12 +187,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             }
             if (payloadSchema != null) {
                 const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+                    context: this.context,
                     breadcrumbs: [...this.breadcrumbs, breadcrumbName],
                     schemaOrReference: payloadSchema,
                     schemaIdOverride: operation.operationId ?? defaultId
                 });
                 const schemaOrReferenceConverterOutput = await schemaOrReferenceConverter.convert({
-                    context,
                     errorCollector
                 });
                 if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
@@ -258,6 +258,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 }
             }
             const parameterConverter = new ParameterConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 parameter: {
                     ...parameterObject,
@@ -299,6 +300,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 }
 
                 const parameterConverter = new ParameterConverter({
+                    context: this.context,
                     breadcrumbs: [...this.breadcrumbs, name],
                     parameter: {
                         name,
@@ -340,6 +342,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 }
 
                 const parameterConverter = new ParameterConverter({
+                    context: this.context,
                     breadcrumbs: [...this.breadcrumbs, name],
                     parameter: {
                         name,

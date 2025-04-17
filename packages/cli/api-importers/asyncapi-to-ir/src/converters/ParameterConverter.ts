@@ -7,11 +7,13 @@ import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
 import { AsyncAPIParameter } from "../sharedTypes";
 
 export class ParameterConverter extends Converters.AbstractConverters.AbstractParameterConverter<AsyncAPIParameter> {
+    
     constructor({
+        context,
         breadcrumbs,
         parameter
     }: Converters.AbstractConverters.AbstractParameterConverter.Args<AsyncAPIParameter>) {
-        super({ breadcrumbs, parameter });
+        super({ context, breadcrumbs, parameter });
     }
 
     public async convert({
@@ -28,7 +30,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             breadcrumbs: this.breadcrumbs,
             parameter: this.parameter
         });
-        const fernOptional = fernOptionalExtension.convert({ context, errorCollector });
+        const fernOptional = fernOptionalExtension.convert({ errorCollector });
         const parameterIsOptional = fernOptional ?? this.parameter.required ?? false;
         let maybeParameterSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined =
             this.parameter.schema;
@@ -45,12 +47,13 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
         }
 
         const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+            context: this.context,
             breadcrumbs: [...this.breadcrumbs, "schema"],
             schemaIdOverride: this.parameter.name,
             schemaOrReference: maybeParameterSchema,
             wrapAsOptional: parameterIsOptional
         });
-        const converted = await schemaOrReferenceConverter.convert({ context, errorCollector });
+        const converted = await schemaOrReferenceConverter.convert({ errorCollector });
         if (converted != null) {
             typeReference = converted.type;
             inlinedTypes = converted.inlinedTypes ?? {};

@@ -3,9 +3,10 @@ import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons
 
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
 import { FernExamplesExtension } from "../extensions/x-fern-examples";
+import { AsyncAPIConverter } from "../AsyncAPIConverter";
 
 export declare namespace AbstractChannelConverter {
-    export interface Args<TChannel> extends AbstractConverter.Args {
+    export interface Args<TChannel> extends AsyncAPIConverter.AbstractArgs {
         channel: TChannel;
         channelPath: string;
         group: string[] | undefined;
@@ -26,8 +27,8 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
     protected readonly group: string[] | undefined;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath, group }: AbstractChannelConverter.Args<TChannel>) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, channel, channelPath, group }: AbstractChannelConverter.Args<TChannel>) {
+        super({ context, breadcrumbs });
         this.channel = channel;
         this.channelPath = channelPath;
         this.group = group;
@@ -53,6 +54,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
         errorCollector: ErrorCollector;
     }): Record<string, FernIr.V2WebSocketSessionExample> {
         const fernExamplesExtension = new FernExamplesExtension({
+            context: this.context,
             breadcrumbs: this.breadcrumbs,
             channel: this.channel as object
         });

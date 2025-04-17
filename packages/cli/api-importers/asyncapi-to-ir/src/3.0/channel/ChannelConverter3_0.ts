@@ -34,8 +34,8 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
     private readonly operations: Record<string, AsyncAPIV3.Operation>;
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
-        super({ breadcrumbs, channel, channelPath, group });
+    constructor({ context, breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
+        super({ context, breadcrumbs, channel, channelPath, group });
         this.operations = operations;
     }
 
@@ -170,6 +170,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             }
             const { type, parameterKey } = location;
             const parameterConverter = new ParameterConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 parameter: {
                     ...parameterObject,

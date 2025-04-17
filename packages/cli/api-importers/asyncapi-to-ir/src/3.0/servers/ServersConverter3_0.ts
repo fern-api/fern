@@ -5,8 +5,8 @@ import { AbstractServerConverter } from "../../converters/AbstractServerConverte
 import { ServerV3 } from "../types";
 
 export class ServersConverter3_0 extends AbstractServerConverter<ServerV3> {
-    constructor({ breadcrumbs, servers }: AbstractServerConverter.Args<ServerV3>) {
-        super({ breadcrumbs, servers });
+    constructor({ context, breadcrumbs, servers }: AbstractServerConverter.Args<ServerV3>) {
+        super({ context, breadcrumbs, servers });
     }
 
     public buildSingleBaseUrlEnvironment(

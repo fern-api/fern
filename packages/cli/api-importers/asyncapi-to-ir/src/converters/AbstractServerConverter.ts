@@ -2,9 +2,10 @@ import { Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from "@fer
 import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
+import { AsyncAPIConverter } from "../AsyncAPIConverter";
 
 export declare namespace AbstractServerConverter {
-    export interface Args<TServer> extends AbstractConverter.Args {
+    export interface Args<TServer> extends AsyncAPIConverter.AbstractArgs {
         servers?: Record<string, TServer>;
     }
 }
@@ -15,8 +16,8 @@ export abstract class AbstractServerConverter<TServer> extends AbstractConverter
 > {
     protected readonly servers?: Record<string, TServer>;
 
-    constructor({ breadcrumbs, servers }: AbstractServerConverter.Args<TServer>) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, servers }: AbstractServerConverter.Args<TServer>) {
+        super({ context, breadcrumbs });
         this.servers = servers;
     }
 
