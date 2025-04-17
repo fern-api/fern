@@ -96,6 +96,19 @@ export async function loadSingleNamespaceAPIWorkspace({
             });
             continue;
         }
+        
+        if (definition.schema.type === "openrpc") {
+            const relativeFilepathToOpenRpc = RelativeFilePath.of(definition.schema.path);
+            const absoluteFilepathToOpenRpc = join(absolutePathToWorkspace, relativeFilepathToOpenRpc);
+            specs.push({
+                type: "openrpc",
+                absoluteFilepath: absoluteFilepathToOpenRpc,
+                absoluteFilepathToOverrides,
+                namespace,
+            });
+            continue;
+        }
+        
         const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
