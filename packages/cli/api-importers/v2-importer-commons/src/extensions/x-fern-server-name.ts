@@ -1,6 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { AbstractExtension } from "@fern-api/v2-importer-commons";
+import { AbstractExtension } from "../AbstractExtension";
 
 export declare namespace ServerNameExtension {
     export interface Args extends AbstractExtension.Args {

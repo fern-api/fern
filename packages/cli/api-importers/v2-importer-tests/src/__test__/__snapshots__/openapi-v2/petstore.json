@@ -1541,6 +1541,37 @@
     "sharedTypes": [],
     "typesReferencedOnlyByService": {}
   },
+  "environments": {
+    "defaultEnvironment": "http://localhost:8080",
+    "environments": {
+      "environments": [
+        {
+          "id": "http://localhost:8080",
+          "name": {
+            "originalName": "http://localhost:8080",
+            "camelCase": {
+              "unsafeName": "httpLocalhost8080",
+              "safeName": "httpLocalhost8080"
+            },
+            "snakeCase": {
+              "unsafeName": "http_localhost_8080",
+              "safeName": "http_localhost_8080"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "HTTP_LOCALHOST_8080",
+              "safeName": "HTTP_LOCALHOST_8080"
+            },
+            "pascalCase": {
+              "unsafeName": "HttpLocalhost8080",
+              "safeName": "HttpLocalhost8080"
+            }
+          },
+          "url": "http://localhost:8080"
+        }
+      ],
+      "type": "singleBaseUrl"
+    }
+  },
   "rootPackage": {
     "fernFilepath": {
       "allParts": [],
