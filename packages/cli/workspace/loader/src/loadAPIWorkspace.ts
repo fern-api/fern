@@ -243,7 +243,8 @@ export async function loadAPIWorkspace({
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({
-                specs,
+                specs: specs.filter((spec) => spec.type !== "openrpc"),
+                allSpecs: specs,
                 workspaceName,
                 absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,

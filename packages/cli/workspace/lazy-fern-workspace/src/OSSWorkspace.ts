@@ -6,6 +6,8 @@ import {
     BaseOpenAPIWorkspace,
     FernWorkspace,
     IdentifiableSource,
+    OpenAPISpec,
+    ProtobufSpec,
     Spec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
@@ -16,16 +18,19 @@ import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
+import { OpenRPC3_1Converter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
 
 import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
+import { loadOpenRpc } from "./loaders";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
-        specs: Spec[];
+        allSpecs: Spec[];
+        specs: (OpenAPISpec | ProtobufSpec)[];
     }
 
     export type Settings = BaseOpenAPIWorkspace.Settings;
@@ -33,12 +38,13 @@ export declare namespace OSSWorkspace {
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public type: string = "oss";
-    public specs: Spec[];
+    public allSpecs: Spec[];
+    public specs: (OpenAPISpec | ProtobufSpec)[];
     public sources: IdentifiableSource[];
 
     private loader: OpenAPILoader;
 
-    constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
+    constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         super({
             ...superArgs,
             respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
@@ -59,6 +65,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
+        this.allSpecs = allSpecs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.loader = new OpenAPILoader(this.absoluteFilePath);
     }
@@ -135,7 +142,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 });
                 const converter = new AsyncAPIConverter({ context: converterContext });
                 result = await converter.convert({
-                    context: converterContext,
                     errorCollector
                 });
             } else {
@@ -160,6 +166,48 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     mergedIr === undefined
                         ? result
                         : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
+            }
+        }
+        // Handle OpenRPC documents
+        for (const spec of this.allSpecs) {
+            if (spec.type === "openrpc") {
+                const errorCollector = new ErrorCollector({ logger: context.logger });
+
+                const converterContext = new OpenRPCConverterContext3_1({
+                    namespace: spec.namespace,
+                    generationLanguage: "typescript",
+                    logger: context.logger,
+                    smartCasing: false,
+                    spec: await loadOpenRpc({
+                        context,
+                        absoluteFilePath: spec.absoluteFilepath,
+                        absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
+                    }),
+                    exampleGenerationArgs: { disabled: false }
+                });
+
+                const converter = new OpenRPC3_1Converter({ context: converterContext });
+                const result = await converter.convert({
+                    errorCollector
+                });
+
+                if (errorCollector.hasErrors()) {
+                    context.logger.info("OpenRPC Importer encountered errors:");
+                    errorCollector.logErrors();
+                }
+
+                const casingsGenerator = constructCasingsGenerator({
+                    generationLanguage: "typescript",
+                    keywords: undefined,
+                    smartCasing: false
+                });
+
+                if (result != null) {
+                    mergedIr =
+                        mergedIr === undefined
+                            ? result
+                            : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
+                }
             }
         }
         if (mergedIr === undefined) {
@@ -202,7 +250,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return this.sources;
     }
 
-    private convertSpecsToIdentifiableSources(specs: Spec[]): IdentifiableSource[] {
+    private convertSpecsToIdentifiableSources(specs: (OpenAPISpec | ProtobufSpec)[]): IdentifiableSource[] {
         const seen = new Set<string>();
         const result: IdentifiableSource[] = [];
         return specs.reduce((acc, spec) => {

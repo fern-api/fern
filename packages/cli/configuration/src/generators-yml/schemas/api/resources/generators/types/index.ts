@@ -29,6 +29,7 @@ export * from "./OpenApiExampleGenerationSchema";
 export * from "./RequestOrResponseExampleGenerationSchema";
 export * from "./OpenApiFilterSchema";
 export * from "./OpenApiSpecSchema";
+export * from "./OpenRpcSpecSchema";
 export * from "./AsyncApiSettingsSchema";
 export * from "./AsyncApiSpecSchema";
 export * from "./ConjureSchema";

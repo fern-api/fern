@@ -27,13 +27,14 @@ export async function convertProperties({
         const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
 
         const propertySchemaConverter = new SchemaOrReferenceConverter({
+            context,
             breadcrumbs: propertyBreadcrumbs,
             schemaOrReference: propertySchema,
             schemaIdOverride: propertyId,
             wrapAsOptional: !required.includes(propertyName),
             wrapAsNullable: isNullable
         });
-        const convertedProperty = await propertySchemaConverter.convert({ context, errorCollector });
+        const convertedProperty = await propertySchemaConverter.convert({ errorCollector });
         if (convertedProperty != null) {
             convertedProperties.push({
                 name: context.casingsGenerator.generateNameAndWireValue({

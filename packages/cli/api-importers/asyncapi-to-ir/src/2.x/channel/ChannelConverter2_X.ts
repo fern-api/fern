@@ -23,15 +23,13 @@ export declare namespace ChannelConverter2_X {
 export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.ChannelV2> {
     protected inlinedTypes: Record<string, TypeDeclaration> = {};
 
-    constructor({ breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
-        super({ breadcrumbs, channel, channelPath, group });
+    constructor({ context, breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
+        super({ context, breadcrumbs, channel, channelPath, group });
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AsyncAPIConverterContext;
         errorCollector: ErrorCollector;
     }): Promise<AbstractChannelConverter.Output | undefined> {
         const pathParameters: PathParameter[] = [];
@@ -42,7 +40,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
 
         if (this.channel.parameters) {
             await this.convertQueryParameters({
-                context,
+                context: this.context,
                 errorCollector,
                 queryParameters
             });
@@ -50,13 +48,13 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
 
         if (this.channel.bindings?.ws != null) {
             await this.convertHeaders({
-                context,
+                context: this.context,
                 errorCollector,
                 headers
             });
 
             await this.convertBindingQueryParameters({
-                context,
+                context: this.context,
                 errorCollector,
                 queryParameters
             });
@@ -65,7 +63,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         let subscribeMessage: WebSocketMessage | undefined = undefined;
         if (this.channel.subscribe != null) {
             subscribeMessage = await this.convertMessage({
-                context,
+                context: this.context,
                 errorCollector,
                 origin: "server",
                 operation: this.channel.subscribe,
@@ -77,7 +75,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         let publishMessage: WebSocketMessage | undefined = undefined;
         if (this.channel.publish != null) {
             publishMessage = await this.convertMessage({
-                context,
+                context: this.context,
                 errorCollector,
                 origin: "client",
                 operation: this.channel.publish,
@@ -94,12 +92,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             messages.push(publishMessage);
         }
 
-        const baseUrl = this.channel.servers?.[0] ?? Object.keys(context.spec.servers ?? {})[0];
+        const baseUrl = this.channel.servers?.[0] ?? Object.keys(this.context.spec.servers ?? {})[0];
         const pathHead = this.transformToValidPath(this.channel.address ?? this.channelPath);
 
         return {
             channel: {
-                name: context.casingsGenerator.generateName(displayName),
+                name: this.context.casingsGenerator.generateName(displayName),
                 displayName,
                 baseUrl,
                 path: {
@@ -111,7 +109,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 queryParameters,
                 pathParameters,
                 messages,
-                availability: await context.getAvailability({
+                availability: await this.context.getAvailability({
                     node: this.channel,
                     breadcrumbs: this.breadcrumbs,
                     errorCollector
@@ -123,7 +121,6 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     userSpecifiedExamples: this.convertExamples({
                         pathHead,
                         baseUrl,
-                        context,
                         errorCollector
                     })
                 }
@@ -160,12 +157,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
 
         if ("oneOf" in operation.message) {
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+                context: this.context,
                 breadcrumbs: [...this.breadcrumbs, breadcrumbName],
                 schemaOrReference: operation.message,
                 schemaIdOverride: operation.operationId ?? defaultId
             });
             const schemaOrReferenceConverterOutput = await schemaOrReferenceConverter.convert({
-                context,
                 errorCollector
             });
             if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
@@ -187,12 +184,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             }
             if (payloadSchema != null) {
                 const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+                    context: this.context,
                     breadcrumbs: [...this.breadcrumbs, breadcrumbName],
                     schemaOrReference: payloadSchema,
                     schemaIdOverride: operation.operationId ?? defaultId
                 });
                 const schemaOrReferenceConverterOutput = await schemaOrReferenceConverter.convert({
-                    context,
                     errorCollector
                 });
                 if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
@@ -258,6 +255,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 }
             }
             const parameterConverter = new ParameterConverter({
+                context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 parameter: {
                     ...parameterObject,
@@ -267,7 +265,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     required: parameter.required ?? false
                 }
             });
-            const convertedParameter = await parameterConverter.convert({ context, errorCollector });
+            const convertedParameter = await parameterConverter.convert({ errorCollector });
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 if (convertedParameter.type === "query") {
@@ -299,6 +297,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 }
 
                 const parameterConverter = new ParameterConverter({
+                    context: this.context,
                     breadcrumbs: [...this.breadcrumbs, name],
                     parameter: {
                         name,
@@ -309,7 +308,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     }
                 });
 
-                const convertedParameter = await parameterConverter.convert({ context, errorCollector });
+                const convertedParameter = await parameterConverter.convert({ errorCollector });
                 if (convertedParameter != null && convertedParameter.type === "header") {
                     this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                     headers.push(convertedParameter.parameter);
@@ -340,6 +339,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 }
 
                 const parameterConverter = new ParameterConverter({
+                    context: this.context,
                     breadcrumbs: [...this.breadcrumbs, name],
                     parameter: {
                         name,
@@ -350,7 +350,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     }
                 });
 
-                const convertedParameter = await parameterConverter.convert({ context, errorCollector });
+                const convertedParameter = await parameterConverter.convert({ errorCollector });
                 if (convertedParameter != null && convertedParameter.type === "query") {
                     this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                     queryParameters.push(convertedParameter.parameter);

@@ -1,17 +1,15 @@
 import { AvailabilityStatus } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, AbstractExtension, ErrorCollector } from "../";
+import { AbstractExtension } from "../AbstractExtension";
+import { ErrorCollector } from "../ErrorCollector";
 
 export declare namespace FernAvailabilityExtension {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractExtension.Args {
         node: unknown;
     }
 }
 
-export class FernAvailabilityExtension extends AbstractExtension<
-    AbstractConverterContext<object>,
-    AvailabilityStatus | undefined
-> {
+export class FernAvailabilityExtension extends AbstractExtension<AvailabilityStatus | undefined> {
     private readonly node: unknown;
     public readonly key = "x-fern-availability";
 
@@ -21,10 +19,8 @@ export class FernAvailabilityExtension extends AbstractExtension<
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<AvailabilityStatus | undefined> {
         const extensionValue = this.getExtensionValue(this.node);

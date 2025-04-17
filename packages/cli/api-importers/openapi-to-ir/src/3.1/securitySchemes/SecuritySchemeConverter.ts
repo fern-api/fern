@@ -3,10 +3,11 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AuthScheme, ContainerType, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverter, ErrorCollector } from "@fern-api/v2-importer-commons";
 
+import { OpenAPIConverter } from "../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace SecuritySchemeConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends OpenAPIConverter.Args {
         securityScheme: OpenAPIV3_1.SecuritySchemeObject;
     }
 }
@@ -14,31 +15,25 @@ export declare namespace SecuritySchemeConverter {
 export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterContext3_1, AuthScheme> {
     private readonly securityScheme: OpenAPIV3_1.SecuritySchemeObject;
 
-    constructor({ breadcrumbs, securityScheme }: SecuritySchemeConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, securityScheme }: SecuritySchemeConverter.Args) {
+        super({ context, breadcrumbs });
         this.securityScheme = securityScheme;
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: OpenAPIConverterContext3_1;
-        errorCollector: ErrorCollector;
-    }): AuthScheme | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): AuthScheme | undefined {
         switch (this.securityScheme.type) {
             case "http": {
                 if (this.securityScheme.scheme === "bearer") {
                     return AuthScheme.bearer({
-                        token: context.casingsGenerator.generateName("token"),
+                        token: this.context.casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: this.securityScheme.description
                     });
                 }
                 if (this.securityScheme.scheme === "basic") {
                     return AuthScheme.basic({
-                        username: context.casingsGenerator.generateName("username"),
-                        password: context.casingsGenerator.generateName("password"),
+                        username: this.context.casingsGenerator.generateName("username"),
+                        password: this.context.casingsGenerator.generateName("password"),
                         usernameEnvVar: undefined,
                         passwordEnvVar: undefined,
                         docs: this.securityScheme.description
@@ -50,7 +45,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                 if (this.securityScheme.in === "header") {
                     return AuthScheme.header({
                         name: {
-                            name: context.casingsGenerator.generateName(this.securityScheme.name),
+                            name: this.context.casingsGenerator.generateName(this.securityScheme.name),
                             wireValue: this.securityScheme.name
                         },
                         valueType: TypeReference.container(
@@ -71,7 +66,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
             case "oauth2": {
                 // Treat OAuth as bearer auth for now
                 return AuthScheme.bearer({
-                    token: context.casingsGenerator.generateName("token"),
+                    token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
                     docs: this.securityScheme.description
                 });

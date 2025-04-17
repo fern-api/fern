@@ -12,7 +12,7 @@ import {
 import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../..";
 
 export declare namespace PrimitiveSchemaConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         schema: OpenAPIV3_1.SchemaObject;
     }
 }
@@ -20,28 +20,22 @@ export declare namespace PrimitiveSchemaConverter {
 export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, TypeReference> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
-    constructor({ breadcrumbs, schema }: PrimitiveSchemaConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, schema }: PrimitiveSchemaConverter.Args) {
+        super({ context, breadcrumbs });
         this.schema = schema;
     }
 
-    public convert({
-        context,
-        errorCollector
-    }: {
-        context: AbstractConverterContext<object>;
-        errorCollector: ErrorCollector;
-    }): TypeReference | undefined {
+    public convert({ errorCollector }: { errorCollector: ErrorCollector }): TypeReference | undefined {
         switch (this.schema.type) {
             case "string": {
-                const stringConst = context.getAsString(this.schema.const);
+                const stringConst = this.context.getAsString(this.schema.const);
                 if (stringConst != null) {
                     return TypeReference.container(ContainerType.literal(Literal.string(stringConst)));
                 }
                 return TypeReference.primitive({
                     v1: "STRING",
                     v2: PrimitiveTypeV2.string({
-                        default: context.getAsString(this.schema.default),
+                        default: this.context.getAsString(this.schema.default),
                         validation: this.getStringValidation(this.schema)
                     })
                 });
@@ -53,7 +47,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "DOUBLE",
                             v2: PrimitiveTypeV2.double({
-                                default: context.getAsNumber(this.schema.default),
+                                default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         });
@@ -61,7 +55,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "FLOAT",
                             v2: PrimitiveTypeV2.float({
-                                default: context.getAsNumber(this.schema.default),
+                                default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         });
@@ -69,7 +63,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "INTEGER",
                             v2: PrimitiveTypeV2.integer({
-                                default: context.getAsNumber(this.schema.default),
+                                default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         });
@@ -77,7 +71,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "LONG",
                             v2: PrimitiveTypeV2.long({
-                                default: context.getAsNumber(this.schema.default)
+                                default: this.context.getAsNumber(this.schema.default)
                                 // TODO: add validation here
                             })
                         });
@@ -85,7 +79,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "UINT",
                             v2: PrimitiveTypeV2.uint({
-                                default: context.getAsNumber(this.schema.default),
+                                default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         });
@@ -93,7 +87,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "UINT_64",
                             v2: PrimitiveTypeV2.uint64({
-                                default: context.getAsNumber(this.schema.default),
+                                default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         });
@@ -101,13 +95,13 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "INTEGER",
                             v2: PrimitiveTypeV2.integer({
-                                default: context.getAsNumber(this.schema.default),
+                                default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         });
                 }
             case "boolean": {
-                const booleanConst = context.getAsBoolean(this.schema.const);
+                const booleanConst = this.context.getAsBoolean(this.schema.const);
                 if (booleanConst != null) {
                     return TypeReference.container(ContainerType.literal(Literal.boolean(booleanConst)));
                 }

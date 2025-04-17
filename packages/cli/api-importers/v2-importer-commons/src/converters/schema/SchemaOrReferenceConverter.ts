@@ -6,7 +6,7 @@ import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../
 import { SchemaConverter } from "./SchemaConverter";
 
 export declare namespace SchemaOrReferenceConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         schemaIdOverride?: string;
         wrapAsOptional?: boolean;
@@ -31,13 +31,14 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     private readonly wrapAsNullable: boolean;
 
     constructor({
+        context,
         breadcrumbs,
         schemaOrReference,
         schemaIdOverride,
         wrapAsOptional = false,
         wrapAsNullable = false
     }: SchemaOrReferenceConverter.Args) {
-        super({ breadcrumbs });
+        super({ context, breadcrumbs });
         this.schemaOrReference = schemaOrReference;
         this.schemaIdOverride = schemaIdOverride;
         this.wrapAsOptional = wrapAsOptional;
@@ -45,28 +46,24 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
-        if (context.isReferenceObject(this.schemaOrReference)) {
-            return this.convertReferenceObject({ context, errorCollector, reference: this.schemaOrReference });
+        if (this.context.isReferenceObject(this.schemaOrReference)) {
+            return this.convertReferenceObject({ errorCollector, reference: this.schemaOrReference });
         }
-        return this.convertSchemaObject({ context, errorCollector, schema: this.schemaOrReference });
+        return this.convertSchemaObject({ errorCollector, schema: this.schemaOrReference });
     }
 
     private async convertReferenceObject({
         reference,
-        context,
         errorCollector
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
-        const response = await context.convertReferenceToTypeReference(reference);
+        const response = await this.context.convertReferenceToTypeReference(reference);
         if (!response.ok) {
             errorCollector.collect({
                 message: `Failed to convert reference to type reference: ${reference.$ref}`,
@@ -81,26 +78,25 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     }
 
     private async convertSchemaObject({
-        context,
         errorCollector,
         schema
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
         schema: OpenAPIV3_1.SchemaObject;
     }): Promise<SchemaOrReferenceConverter.Output | undefined> {
-        const schemaId = this.schemaIdOverride ?? context.convertBreadcrumbsToName(this.breadcrumbs);
+        const schemaId = this.schemaIdOverride ?? this.context.convertBreadcrumbsToName(this.breadcrumbs);
         const schemaConverter = new SchemaConverter({
+            context: this.context,
             breadcrumbs: this.breadcrumbs,
             schema,
             id: schemaId
         });
-        const availability = await context.getAvailability({
+        const availability = await this.context.getAvailability({
             node: schema,
             breadcrumbs: this.breadcrumbs,
             errorCollector
         });
-        const convertedSchema = await schemaConverter.convert({ context, errorCollector });
+        const convertedSchema = await schemaConverter.convert({ errorCollector });
         if (convertedSchema != null) {
             const convertedSchemaShape = convertedSchema.typeDeclaration.shape;
             if (convertedSchemaShape.type === "alias") {
@@ -112,7 +108,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 };
             }
             return {
-                type: this.wrapTypeReference(context.createNamedTypeReference(schemaId)),
+                type: this.wrapTypeReference(this.context.createNamedTypeReference(schemaId)),
                 schema: convertedSchema.typeDeclaration,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,

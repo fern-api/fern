@@ -303,7 +303,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
             breadcrumbs
         });
         const availability = await availabilityExtension.convert({
-            context: this,
             errorCollector
         });
         if (availability != null) {
@@ -371,7 +370,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== id));
     }
 
-    public maybeTrimPrefix(value: string, prefix: string): string {
+    public static maybeTrimPrefix(value: string, prefix: string): string {
         if (value.startsWith(prefix)) {
             return value.slice(prefix.length);
         }
@@ -462,5 +461,20 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return value as Record<string, unknown>;
         }
         return undefined;
+    }
+
+    /**
+     * Helper function to get a stringified group name from an array of group parts
+     * @param groupParts Array of group name parts
+     * @param namespace Optional namespace to prepend to the group
+     * @returns A dot-separated string representation of the group
+     */
+    public getGroup({ groupParts, namespace }: { groupParts: string[] | undefined; namespace?: string }): string[] {
+        const group = [];
+        if (namespace != null) {
+            group.push(namespace);
+        }
+        group.push(...(groupParts ?? []));
+        return group;
     }
 }

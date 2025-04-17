@@ -6,7 +6,7 @@ import { AbstractConverter, AbstractConverterContext, ErrorCollector } from "../
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace MapSchemaConverter {
-    export interface Args extends AbstractConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     }
 
@@ -27,24 +27,22 @@ const STRING = TypeReference.primitive({
 export class MapSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, MapSchemaConverter.Output> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
 
-    constructor({ breadcrumbs, schema }: MapSchemaConverter.Args) {
-        super({ breadcrumbs });
+    constructor({ context, breadcrumbs, schema }: MapSchemaConverter.Args) {
+        super({ context, breadcrumbs });
         this.schema = schema;
     }
 
     public async convert({
-        context,
         errorCollector
     }: {
-        context: AbstractConverterContext<object>;
         errorCollector: ErrorCollector;
     }): Promise<MapSchemaConverter.Output | undefined> {
         const additionalPropertiesSchemaConverter = new SchemaOrReferenceConverter({
+            context: this.context,
             breadcrumbs: this.breadcrumbs,
             schemaOrReference: this.schema
         });
         const convertedAdditionalProperties = await additionalPropertiesSchemaConverter.convert({
-            context,
             errorCollector
         });
         if (convertedAdditionalProperties != null) {

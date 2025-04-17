@@ -66,6 +66,9 @@
     },
     {
       "path": "../../../commons/ir-utils"
-    }
+    },
+    {
+      "path": "../../api-importers/openrpc-to-ir"
+    },
   ]
 }

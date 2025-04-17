@@ -1708,6 +1708,38 @@
       ],
       "additionalProperties": false
     },
+    "generators.OpenRPCSpecSchema": {
+      "type": "object",
+      "properties": {
+        "openrpc": {
+          "type": "string"
+        },
+        "overrides": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "namespace": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "openrpc"
+      ],
+      "additionalProperties": false
+    },
     "generators.SpecSchema": {
       "anyOf": [
         {
@@ -1718,6 +1750,9 @@
         },
         {
           "$ref": "#/definitions/generators.ProtobufSpecSchema"
+        },
+        {
+          "$ref": "#/definitions/generators.OpenRPCSpecSchema"
         }
       ]
     },
