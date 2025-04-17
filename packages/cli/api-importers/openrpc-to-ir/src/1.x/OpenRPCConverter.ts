@@ -104,20 +104,20 @@ export class OpenRPCConverter extends AbstractConverter<OpenRPCConverterContext3
                 breadcrumbs: ["methods"],
                 method: resolvedMethod
             });
-            
+
             const convertedMethod = await methodConverter.convert({
                 context: this.context,
                 errorCollector
             });
-            
+
             if (convertedMethod != null) {
                 if (pkg.service == null) {
                     pkg.service = "service_root";
                 }
-                
+
                 const allParts = [...group].map((part) => this.context.casingsGenerator.generateName(part));
                 const finalpart = allParts[allParts.length - 1];
-                
+
                 if (this.ir.services[pkg.service] == null) {
                     this.ir.services[pkg.service] = {
                         name: {
@@ -137,9 +137,9 @@ export class OpenRPCConverter extends AbstractConverter<OpenRPCConverterContext3
                         encoding: undefined
                     };
                 }
-                
+
                 this.ir.services[pkg.service]?.endpoints.push(convertedMethod.endpoint);
-                
+
                 this.ir.types = {
                     ...this.ir.types,
                     ...convertedMethod.inlinedTypes
