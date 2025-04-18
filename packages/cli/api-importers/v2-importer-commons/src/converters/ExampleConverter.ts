@@ -362,29 +362,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema.items == null) {
             resolvedSchema.items = { type: "string" };
         }
-        if (!Array.isArray(this.example)) {
-            const exampleConverter = new ExampleConverter({
-                breadcrumbs: [...this.breadcrumbs, "items"],
-                context: this.context,
-                schema: resolvedSchema.items,
-                example: null,
-                depth: this.depth + 1
-            });
-            const { validExample } = await exampleConverter.convert();
-            return {
-                isValid: false,
-                coerced: false,
-                validExample: [validExample],
-                errors: [
-                    {
-                        message: `Example is not an array: ${JSON.stringify(this.example, null, 2)}`,
-                        path: this.breadcrumbs
-                    }
-                ]
-            };
-        }
+        const exampleArray = Array.isArray(this.example) ? this.example : [this.example];
         const results = await Promise.all(
-            this.example.map(async (item, index) => {
+            exampleArray.map(async (item, index) => {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `Item[${index}]`],
                     context: this.context,
