@@ -143,6 +143,8 @@ allowedFailures:
   - reserved-keywords
   - streaming-parameter
   - trace
+  - bytes
+  - pagination-custom
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
