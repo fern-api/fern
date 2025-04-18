@@ -466,7 +466,10 @@ export class DocsDefinitionResolver {
                 return apiWorkspace;
             }
         }
-        throw new Error("Failed to load API Definition referenced in docs");
+        const errorMessage = apiSection.apiName 
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
+            : `Failed to load API Definition referenced in docs`;
+        throw new Error(errorMessage);
     }
 
     private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
@@ -478,7 +481,10 @@ export class DocsDefinitionResolver {
                 return ossWorkspace;
             }
         }
-        throw new Error("Failed to load API Definition referenced in docs");
+        const errorMessage = apiSection.apiName 
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
+            : `Failed to load API Definition referenced in docs`;
+        throw new Error(errorMessage);
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
