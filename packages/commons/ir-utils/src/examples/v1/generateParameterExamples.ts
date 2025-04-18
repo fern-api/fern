@@ -6,9 +6,9 @@ import {
 } from "@fern-api/ir-sdk";
 import { HttpHeader, PathParameter, QueryParameter, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
 
+import { isOptional } from "../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
-import { isOptional } from "./isTypeReferenceOptional";
 
 export interface GenerateParamsOptions {
     typeDeclarations: Record<TypeId, TypeDeclaration>;

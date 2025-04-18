@@ -32,6 +32,7 @@ export class ParameterConverter extends Converters.AbstractConverters
         }
 
         return this.convertToOutput({
+            schema: this.parameter.schema ?? { type: "string" },
             typeReference,
             inlinedTypes
         });

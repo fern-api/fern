@@ -18,6 +18,7 @@ import {
 } from "@fern-api/ir-sdk";
 
 import { hashJSON } from "../../hashJSON";
+import { isOptional } from "../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import {
     generateHeaderExamples,
@@ -26,7 +27,6 @@ import {
 } from "./generateParameterExamples";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
-import { isOptional } from "./isTypeReferenceOptional";
 
 export declare namespace generateEndpointExample {
     interface Args {
