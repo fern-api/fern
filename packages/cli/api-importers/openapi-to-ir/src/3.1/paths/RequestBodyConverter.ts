@@ -142,7 +142,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     }
 
     private convertRequestBodyProperty({ property, contentType }: { property: ObjectProperty; contentType: string }) {
-        const { isFile, isOptional, isArray } = this.recursivelyCheckPropertyIsFile({
+        const { isFile, isOptional, isArray } = this.recursivelyCheckTypeReferenceIsFile({
             typeReference: property.valueType
         });
         if (isFile) {
@@ -174,7 +174,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         });
     }
 
-    private recursivelyCheckPropertyIsFile({
+    private recursivelyCheckTypeReferenceIsFile({
         typeReference,
         isOptional,
         isArray
@@ -188,21 +188,21 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         isArray: boolean;
     } {
         if (this.context.isList(typeReference)) {
-            return this.recursivelyCheckPropertyIsFile({
+            return this.recursivelyCheckTypeReferenceIsFile({
                 typeReference: typeReference.container.list,
                 isOptional,
                 isArray: true
             });
         }
         if (this.context.isOptional(typeReference)) {
-            return this.recursivelyCheckPropertyIsFile({
+            return this.recursivelyCheckTypeReferenceIsFile({
                 typeReference: typeReference.container.optional,
                 isOptional: true,
                 isArray
             });
         }
         if (this.context.isNullable(typeReference)) {
-            return this.recursivelyCheckPropertyIsFile({
+            return this.recursivelyCheckTypeReferenceIsFile({
                 typeReference: typeReference.container.nullable,
                 isOptional,
                 isArray
