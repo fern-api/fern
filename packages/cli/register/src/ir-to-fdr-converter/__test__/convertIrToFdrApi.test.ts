@@ -7,9 +7,11 @@ import path from "path";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 
+import { loadAPIWorkspace } from "../../../../workspace/loader/src/loadAPIWorkspace";
 import { convertIrToFdrApi } from "../convertIrToFdrApi";
 
 describe("fdr", async () => {
@@ -84,11 +86,78 @@ describe("fdr", async () => {
 
             it(workspace.workspaceName ?? "", () => {
                 expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
-                    `./__snapshots__/${
+                    `./__snapshots__/fdr/${
                         workspace.workspaceName ?? workspace.absoluteFilePath.split("/").reverse()[1]
                     }.json`
                 );
             });
         })
     );
+});
+
+describe("oas-ir-fdr", async () => {
+    const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../api-importers/v2-importer-tests/src/__test__");
+    const V3_IGNORED_FIXTURES = ["vellum"];
+    const FIXTURES_DIR = path.join(TEST_DEFINITIONS_DIR, "fixtures");
+    const filterFixture = process.env.TEST_FIXTURE;
+
+    for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
+        if (
+            !fixture.isDirectory() ||
+            (filterFixture && fixture.name !== filterFixture) ||
+            V3_IGNORED_FIXTURES.includes(fixture.name)
+        ) {
+            continue;
+        }
+
+        it(
+            fixture.name,
+            async () => {
+                const fixturePath = join(
+                    AbsoluteFilePath.of(FIXTURES_DIR),
+                    RelativeFilePath.of(fixture.name),
+                    RelativeFilePath.of("fern")
+                );
+                const context = createMockTaskContext();
+                const workspace = await loadAPIWorkspace({
+                    absolutePathToWorkspace: fixturePath,
+                    context,
+                    cliVersion: "0.0.0",
+                    workspaceName: fixture.name
+                });
+                if (!workspace.didSucceed) {
+                    throw new Error(
+                        `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
+                    );
+                }
+
+                if (workspace.workspace instanceof OSSWorkspace) {
+                    const ossWorkspace = workspace.workspace as OSSWorkspace;
+                    const intermediateRepresentation = await ossWorkspace.getIntermediateRepresentation({
+                        context
+                    });
+
+                    const fdr = convertIrToFdrApi({
+                        ir: intermediateRepresentation,
+                        snippetsConfig: {
+                            typescriptSdk: undefined,
+                            pythonSdk: undefined,
+                            javaSdk: undefined,
+                            rubySdk: undefined,
+                            goSdk: undefined,
+                            csharpSdk: undefined
+                        },
+                        playgroundConfig: {
+                            oauth: true
+                        }
+                    });
+
+                    await expect(JSON.stringify(fdr, undefined, 2)).toMatchFileSnapshot(
+                        `./__snapshots__/oas-ir-fdr/${fixture.name}.json`
+                    );
+                }
+            },
+            90_000
+        );
+    }
 });

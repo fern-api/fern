@@ -1,0 +1,23 @@
+{
+  "types": {
+    "UnionJob": {
+      "name": "UnionJob",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": []
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "UnionJob"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

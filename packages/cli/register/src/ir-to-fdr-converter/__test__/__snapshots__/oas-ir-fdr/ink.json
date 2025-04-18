@@ -1,0 +1,6108 @@
+{
+  "types": {
+    "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "MethodsParamsOneOfZero": {
+      "name": "MethodsParamsOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "MethodsParamsOneOfOne": {
+      "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+      "name": "MethodsParamsOneOfOne",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "earliest"
+          },
+          {
+            "value": "finalized"
+          },
+          {
+            "value": "safe"
+          },
+          {
+            "value": "latest"
+          },
+          {
+            "value": "pending"
+          }
+        ]
+      }
+    },
+    "MethodsParamsOneOfTwo": {
+      "name": "MethodsParamsOneOfTwo",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "MethodsParams": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfTwo",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfTwo"
+            }
+          }
+        ]
+      }
+    },
+    "MethodsParamsAccessListItems": {
+      "name": "MethodsParamsAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___c_a_l_l_Request_Transaction": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([0-9a-fA-F]?){1,2}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-fA-F]{40}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]*$"
+                }
+              }
+            }
+          },
+          {
+            "description": "The gas price willing to be paid by the sender in wei",
+            "key": "gasPrice",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "description": "Maximum fee per gas the sender is willing to pay to miners in wei",
+            "key": "maxPriorityFeePerGas",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
+            "key": "maxFeePerGas",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "description": "The maximum total fee per gas the sender is willing to pay for blob gas in wei",
+            "key": "maxFeePerBlobGas",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "description": "EIP-2930 access list",
+            "key": "accessList",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "MethodsParamsAccessListItems"
+                }
+              }
+            }
+          },
+          {
+            "description": "List of versioned blob hashes associated with the transaction's EIP-4844 data blobs.",
+            "key": "blobVersionedHashes",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "Raw blob data.",
+            "key": "blobs",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]*$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "Chain ID that this transaction is valid on.",
+            "key": "chainId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___c_a_l_l_Request_Block": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfTwo",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfTwo"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___c_a_l_l_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]*$"
+          }
+        }
+      }
+    },
+    "e_t_h___c_h_a_i_n_I_d_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Request_Transaction": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([0-9a-fA-F]?){1,2}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-fA-F]{40}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]*$"
+                }
+              }
+            }
+          },
+          {
+            "description": "The gas price willing to be paid by the sender in wei",
+            "key": "gasPrice",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "description": "Maximum fee per gas the sender is willing to pay to miners in wei",
+            "key": "maxPriorityFeePerGas",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
+            "key": "maxFeePerGas",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "description": "The maximum total fee per gas the sender is willing to pay for blob gas in wei",
+            "key": "maxFeePerBlobGas",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "description": "EIP-2930 access list",
+            "key": "accessList",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "MethodsParamsAccessListItems"
+                }
+              }
+            }
+          },
+          {
+            "description": "List of versioned blob hashes associated with the transaction's EIP-4844 data blobs.",
+            "key": "blobVersionedHashes",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "Raw blob data.",
+            "key": "blobs",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]*$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "Chain ID that this transaction is valid on.",
+            "key": "chainId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Request_Block": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_a_s_P_r_i_c_e_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_a_l_a_n_c_e_Request_Address": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-fA-F]{40}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_a_l_a_n_c_e_Request_Block": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfTwo",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfTwo"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_B_a_l_a_n_c_e_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "MethodsResultTransactionsOneOfZero": {
+      "name": "MethodsResultTransactionsOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "type": "string",
+              "regex": "^0x[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "MethodsResultTransactionsOneOfOneItemsOneOfZeroAccessListItems": {
+      "name": "MethodsResultTransactionsOneOfOneItemsOneOfZeroAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultTransactionsOneOfOneItemsOneOfZero": {
+      "name": "MethodsResultTransactionsOneOfOneItemsOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([0-9a-fA-F]?){1,2}$"
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-fA-F]{40}$"
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          {
+            "description": "Maximum fee per gas the sender is willing to pay to miners in wei",
+            "key": "maxPriorityFeePerGas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
+            "key": "maxFeePerGas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "The maximum total fee per gas the sender is willing to pay for blob gas in wei",
+            "key": "maxFeePerBlobGas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "EIP-2930 access list",
+            "key": "accessList",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResultTransactionsOneOfOneItemsOneOfZeroAccessListItems"
+              }
+            }
+          },
+          {
+            "description": "List of versioned blob hashes associated with the transaction's EIP-4844 data blobs.",
+            "key": "blobVersionedHashes",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "description": "Chain ID that this transaction is valid on.",
+            "key": "chainId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "The parity (0 for even, 1 for odd) of the y-value of the secp256k1 signature.",
+            "key": "yParity",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "r",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "s",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultTransactionsOneOfOneItemsOneOfOneAccessListItems": {
+      "name": "MethodsResultTransactionsOneOfOneItemsOneOfOneAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultTransactionsOneOfOneItemsOneOfOne": {
+      "name": "MethodsResultTransactionsOneOfOneItemsOneOfOne",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x2$"
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-fA-F]{40}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          {
+            "description": "Maximum fee per gas the sender is willing to pay to miners in wei",
+            "key": "maxPriorityFeePerGas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
+            "key": "maxFeePerGas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "The effective gas price paid by the sender in wei. For transactions not yet included in a block, this value should be set equal to the max fee per gas. This field is DEPRECATED, please transition to using effectiveGasPrice in the receipt object going forward.",
+            "key": "gasPrice",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "EIP-2930 access list",
+            "key": "accessList",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResultTransactionsOneOfOneItemsOneOfOneAccessListItems"
+              }
+            }
+          },
+          {
+            "description": "Chain ID that this transaction is valid on.",
+            "key": "chainId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "The parity (0 for even, 1 for odd) of the y-value of the secp256k1 signature.",
+            "key": "yParity",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "For backwards compatibility, `v` is optionally provided as an alternative to `yParity`. This field is DEPRECATED and all use of it should migrate to `yParity`.",
+            "key": "v",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "r",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "s",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultTransactionsOneOfOneItemsOneOfTwoAccessListItems": {
+      "name": "MethodsResultTransactionsOneOfOneItemsOneOfTwoAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultTransactionsOneOfOneItemsOneOfTwo": {
+      "name": "MethodsResultTransactionsOneOfOneItemsOneOfTwo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x1$"
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-fA-F]{40}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          {
+            "description": "The gas price willing to be paid by the sender in wei",
+            "key": "gasPrice",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "EIP-2930 access list",
+            "key": "accessList",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResultTransactionsOneOfOneItemsOneOfTwoAccessListItems"
+              }
+            }
+          },
+          {
+            "description": "Chain ID that this transaction is valid on.",
+            "key": "chainId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "The parity (0 for even, 1 for odd) of the y-value of the secp256k1 signature.",
+            "key": "yParity",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "For backwards compatibility, `v` is optionally provided as an alternative to `yParity`. This field is DEPRECATED and all use of it should migrate to `yParity`.",
+            "key": "v",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "r",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "s",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultTransactionsOneOfOneItemsOneOfThree": {
+      "name": "MethodsResultTransactionsOneOfOneItemsOneOfThree",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x0$"
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-fA-F]{40}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          {
+            "description": "The gas price willing to be paid by the sender in wei",
+            "key": "gasPrice",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "Chain ID that this transaction is valid on.",
+            "key": "chainId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "v",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "r",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "s",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultTransactionsOneOfOneItems": {
+      "name": "MethodsResultTransactionsOneOfOneItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsResultTransactionsOneOfOneItemsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultTransactionsOneOfOneItemsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsResultTransactionsOneOfOneItemsOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultTransactionsOneOfOneItemsOneOfOne"
+            }
+          },
+          {
+            "typeName": "MethodsResultTransactionsOneOfOneItemsOneOfTwo",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultTransactionsOneOfOneItemsOneOfTwo"
+            }
+          },
+          {
+            "typeName": "MethodsResultTransactionsOneOfOneItemsOneOfThree",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultTransactionsOneOfOneItemsOneOfThree"
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultTransactionsOneOfOne": {
+      "name": "MethodsResultTransactionsOneOfOne",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "MethodsResultTransactionsOneOfOneItems"
+          }
+        }
+      }
+    },
+    "MethodsResultTransactions": {
+      "name": "MethodsResultTransactions",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsResultTransactionsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultTransactionsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsResultTransactionsOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultTransactionsOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultWithdrawalsItems": {
+      "name": "MethodsResultWithdrawalsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "index",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]{0,15})|0$"
+              }
+            }
+          },
+          {
+            "key": "validatorIndex",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]{0,15})|0$"
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-fA-F]{40}$"
+              }
+            }
+          },
+          {
+            "key": "amount",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]{0,31})|0$"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResult": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsResultOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsResultOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Request_Block hash": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Request_Hydrated transactions": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "id",
+            "value": "MethodsResult"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Request_Block number or tag": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Request_Hydrated transactions": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "id",
+            "value": "MethodsResult"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_H_a_s_h_Request_Block hash": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_H_a_s_h_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "type": "string",
+              "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+            }
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Request_Block number or tag": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "type": "string",
+              "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+            }
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_C_o_d_e_Request_Address": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-fA-F]{40}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_C_o_d_e_Request_Block": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfTwo",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfTwo"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_C_o_d_e_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]*$"
+          }
+        }
+      }
+    },
+    "MethodsResultOneOfZero": {
+      "name": "MethodsResultOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "MethodsResultOneOfOneItems": {
+      "name": "MethodsResultOneOfOneItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "removed",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "logIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionHash",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
+            }
+          },
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]*$"
+                }
+              }
+            }
+          },
+          {
+            "key": "topics",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultOneOfOne": {
+      "name": "MethodsResultOneOfOne",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsResultOneOfOneOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultOneOfOneOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsResultOneOfOneOneOfOne",
+            "description": "Should always return false if not syncing.",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultOneOfOneOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "MethodsParamsAddressOneOfZero": {
+      "name": "MethodsParamsAddressOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-fA-F]{40}$"
+          }
+        }
+      }
+    },
+    "MethodsParamsAddressOneOfOne": {
+      "name": "MethodsParamsAddressOneOfOne",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "type": "string",
+              "regex": "^0x[0-9a-fA-F]{40}$"
+            }
+          }
+        }
+      }
+    },
+    "MethodsParamsAddress": {
+      "name": "MethodsParamsAddress",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsAddressOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsAddressOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsAddressOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsAddressOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "MethodsParamsTopicsItemsOneOfZero": {
+      "name": "MethodsParamsTopicsItemsOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "MethodsParamsTopicsItemsOneOfOne": {
+      "name": "MethodsParamsTopicsItemsOneOfOne",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "type": "string",
+              "regex": "^0x[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "MethodsParamsTopicsItems": {
+      "name": "MethodsParamsTopicsItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsTopicsItemsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsTopicsItemsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsTopicsItemsOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsTopicsItemsOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_L_o_g_s_Request_Filter": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "fromBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "toBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "MethodsParamsAddress"
+                }
+              }
+            }
+          },
+          {
+            "key": "topics",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "MethodsParamsTopicsItems"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_L_o_g_s_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsResultOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsResultOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultStorageProofItems": {
+      "name": "MethodsResultStorageProofItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{0,64}$"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]{0,31})|0$"
+              }
+            }
+          },
+          {
+            "key": "proof",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]*$"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_P_r_o_o_f_Request_Address": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-fA-F]{40}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_P_r_o_o_f_Request_StorageKeys": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "type": "string",
+              "regex": "^0x[0-9a-f]{0,64}$"
+            }
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_P_r_o_o_f_Request_Block": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfTwo",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfTwo"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_P_r_o_o_f_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-fA-F]{40}$"
+              }
+            }
+          },
+          {
+            "key": "accountProof",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]*$"
+                }
+              }
+            }
+          },
+          {
+            "key": "balance",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]{0,31})|0$"
+              }
+            }
+          },
+          {
+            "key": "codeHash",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]{0,15})|0$"
+              }
+            }
+          },
+          {
+            "key": "storageHash",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
+            }
+          },
+          {
+            "key": "storageProof",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResultStorageProofItems"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Request_Address": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-fA-F]{40}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Request_Storage slot": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]{0,31})|0$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Request_Block": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfTwo",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfTwo"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]*$"
+          }
+        }
+      }
+    },
+    "MethodsResultOneOfZeroAccessListItems": {
+      "name": "MethodsResultOneOfZeroAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultOneOfOneAccessListItems": {
+      "name": "MethodsResultOneOfOneAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultOneOfTwoAccessListItems": {
+      "name": "MethodsResultOneOfTwoAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultOneOfTwo": {
+      "name": "MethodsResultOneOfTwo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x1$"
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-fA-F]{40}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          {
+            "description": "The gas price willing to be paid by the sender in wei",
+            "key": "gasPrice",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "EIP-2930 access list",
+            "key": "accessList",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResultOneOfTwoAccessListItems"
+              }
+            }
+          },
+          {
+            "description": "Chain ID that this transaction is valid on.",
+            "key": "chainId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "The parity (0 for even, 1 for odd) of the y-value of the secp256k1 signature.",
+            "key": "yParity",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "For backwards compatibility, `v` is optionally provided as an alternative to `yParity`. This field is DEPRECATED and all use of it should migrate to `yParity`.",
+            "key": "v",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "r",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "s",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultOneOfThree": {
+      "name": "MethodsResultOneOfThree",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x0$"
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-fA-F]{40}$"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          {
+            "description": "The gas price willing to be paid by the sender in wei",
+            "key": "gasPrice",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "description": "Chain ID that this transaction is valid on.",
+            "key": "chainId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "v",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "r",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          {
+            "key": "s",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Request_Block hash": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Request_Transaction index": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "id",
+            "value": "MethodsResult"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Request_Block": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Request_Transaction index": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "id",
+            "value": "MethodsResult"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Request_Transaction hash": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "id",
+            "value": "MethodsResult"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Request_Address": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-fA-F]{40}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Request_Block": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsParamsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfOne",
+            "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfOne"
+            }
+          },
+          {
+            "typeName": "MethodsParamsOneOfTwo",
+            "type": {
+              "type": "id",
+              "value": "MethodsParamsOneOfTwo"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+          }
+        }
+      }
+    },
+    "MethodsResultLogsItems": {
+      "name": "MethodsResultLogsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "removed",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "logIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionHash",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
+            }
+          },
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]*$"
+                }
+              }
+            }
+          },
+          {
+            "key": "topics",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Request_Transaction hash": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "itemType": {
+            "type": "id",
+            "value": "MethodsResult"
+          }
+        }
+      }
+    },
+    "e_t_h___s_e_n_d_R_a_w_T_r_a_n_s_a_c_t_i_o_n_Request_Transaction": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]*$"
+          }
+        }
+      }
+    },
+    "e_t_h___s_e_n_d_R_a_w_T_r_a_n_s_a_c_t_i_o_n_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "MethodsResultOneOfOneOneOfZero": {
+      "name": "MethodsResultOneOfOneOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "startingBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "currentBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "highestBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "MethodsResultOneOfOneOneOfOne": {
+      "description": "Should always return false if not syncing.",
+      "name": "MethodsResultOneOfOneOneOfOne",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "e_t_h___s_y_n_c_i_n_g_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MethodsResultOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultOneOfZero"
+            }
+          },
+          {
+            "typeName": "MethodsResultOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "MethodsResultOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "n_e_t___v_e_r_s_i_o_n_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "w_e_b_3___c_l_i_e_n_t_V_e_r_s_i_o_n_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "w_e_b_3___s_h_a_3_Request_Data": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]*$"
+          }
+        }
+      }
+    },
+    "w_e_b_3___s_h_a_3_Result": {
+      "name": "MethodsResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[0-9a-f]{64}$"
+          }
+        }
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_blockNumber",
+        "originalEndpointId": "eth_blockNumber",
+        "name": "eth_blockNumber",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          "description": "The block number of the most recently mined block as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_blockNumber"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_call",
+        "originalEndpointId": "eth_call",
+        "name": "eth_call",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The transaction call object containing the details of the message call.",
+                  "key": "Transaction",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                },
+                {
+                  "description": "The block number, tag, or hash at which to execute the call. Defaults to `'latest'` if not provided.",
+                  "key": "Block",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          "description": "The return value of the executed contract function, encoded as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Transaction": "Transaction",
+              "Block": "Block"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Transaction": "Transaction",
+                "Block": "Block"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_call"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_chainId",
+        "originalEndpointId": "eth_chainId",
+        "name": "eth_chainId",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          "description": "The chain ID of the current network in hexadecimal format."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_chainId"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_estimateGas",
+        "originalEndpointId": "eth_estimateGas",
+        "name": "eth_estimateGas",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The transaction object for which to estimate gas usage.",
+                  "key": "Transaction",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                },
+                {
+                  "description": "The block number or tag at which to estimate gas usage. Defaults to `'latest'` if not provided.",
+                  "key": "Block",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          "description": "The estimated amount of gas required for the transaction, as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Transaction": "Transaction",
+              "Block": "Block"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Transaction": "Transaction",
+                "Block": "Block"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_estimateGas"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_gasPrice",
+        "originalEndpointId": "eth_gasPrice",
+        "name": "eth_gasPrice",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          "description": "The current gas price in wei, as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_gasPrice"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getBalance",
+        "originalEndpointId": "eth_getBalance",
+        "name": "eth_getBalance",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The address of the account to query the balance for.",
+                  "key": "Address",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-fA-F]{40}$"
+                    }
+                  }
+                },
+                {
+                  "description": "The block number, tag, or hash at which to retrieve the balance. Can be a block number, 'latest', 'earliest', 'pending', or a block hash.",
+                  "key": "Block",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          "description": "The balance of the account in wei, encoded as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Address": "Address",
+              "Block": "Block"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Address": "Address",
+                "Block": "Block"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getBalance"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getBlockByHash",
+        "originalEndpointId": "eth_getBlockByHash",
+        "name": "eth_getBlockByHash",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The hash of the block to retrieve.",
+                  "key": "Block hash",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                {
+                  "description": "If true, returns full transaction objects; if false, returns only transaction hashes.",
+                  "key": "Hydrated transactions",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResult"
+              }
+            }
+          },
+          "description": "The block object containing various properties of the block."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Block hash": "Block hash",
+              "Hydrated transactions": true
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Block hash": "Block hash",
+                "Hydrated transactions": true
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getBlockByHash"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getBlockByNumber",
+        "originalEndpointId": "eth_getBlockByNumber",
+        "name": "eth_getBlockByNumber",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The block number or special tags like 'latest', 'earliest', or 'pending'.",
+                  "key": "Block number or tag",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                },
+                {
+                  "description": "If true, returns full transaction objects; if false, returns only transaction hashes.",
+                  "key": "Hydrated transactions",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResult"
+              }
+            }
+          },
+          "description": "The block object containing various properties of the block."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Block number or tag": "Block number or tag",
+              "Hydrated transactions": true
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Block number or tag": "Block number or tag",
+                "Hydrated transactions": true
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getBlockByNumber"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getBlockTransactionCountByHash",
+        "originalEndpointId": "eth_getBlockTransactionCountByHash",
+        "name": "eth_getBlockTransactionCountByHash",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The hash of the block.",
+                  "key": "Block hash",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-f]{64}$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          "description": "The number of transactions in the block as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Block hash": "Block hash"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Block hash": "Block hash"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getBlockTransactionCountByHash"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getBlockTransactionCountByNumber",
+        "originalEndpointId": "eth_getBlockTransactionCountByNumber",
+        "name": "eth_getBlockTransactionCountByNumber",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The block number or special tags like 'latest', 'earliest', or 'pending'.",
+                  "key": "Block number or tag",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          "description": "The number of transactions in the block as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Block number or tag": "Block number or tag"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Block number or tag": "Block number or tag"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getBlockTransactionCountByNumber"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getCode",
+        "originalEndpointId": "eth_getCode",
+        "name": "eth_getCode",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The address of the contract to get code from.",
+                  "key": "Address",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-fA-F]{40}$"
+                    }
+                  }
+                },
+                {
+                  "description": "The block number, tag, or hash at which to retrieve the code.",
+                  "key": "Block",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          "description": "The code from the specified address, as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Address": "Address",
+              "Block": "Block"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Address": "Address",
+                "Block": "Block"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getCode"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getLogs",
+        "originalEndpointId": "eth_getLogs",
+        "name": "eth_getLogs",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The filter options object to specify the criteria for logs retrieval.",
+                  "key": "Filter",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "MethodsResult"
+            }
+          },
+          "description": "An array of log objects matching the filter criteria."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Filter": "Filter"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Filter": "Filter"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getLogs"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getProof",
+        "originalEndpointId": "eth_getProof",
+        "name": "eth_getProof",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The address of the account to generate the proof for.",
+                  "key": "Address",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-fA-F]{40}$"
+                    }
+                  }
+                },
+                {
+                  "description": "An array of storage keys (slots) to generate proofs for.",
+                  "key": "StorageKeys",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "regex": "^0x[0-9a-f]{0,64}$"
+                      }
+                    }
+                  }
+                },
+                {
+                  "description": "The block number, tag, or hash at which to generate the proof.",
+                  "key": "Block",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "MethodsResult"
+            }
+          },
+          "description": "An object containing the account proof and storage proofs."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Address": "Address",
+              "StorageKeys": [
+                "StorageKeys",
+                "StorageKeys"
+              ],
+              "Block": "Block"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Address": "Address",
+                "StorageKeys": [
+                  "StorageKeys",
+                  "StorageKeys"
+                ],
+                "Block": "Block"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getProof"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getStorageAt",
+        "originalEndpointId": "eth_getStorageAt",
+        "name": "eth_getStorageAt",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The address of the contract to read storage from.",
+                  "key": "Address",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-fA-F]{40}$"
+                    }
+                  }
+                },
+                {
+                  "description": "The index position of the storage slot to retrieve, as a hexadecimal string.",
+                  "key": "Storage slot",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x([1-9a-f]+[0-9a-f]{0,31})|0$"
+                    }
+                  }
+                },
+                {
+                  "description": "The block number, tag, or hash at which to retrieve the storage value.",
+                  "key": "Block",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]*$"
+              }
+            }
+          },
+          "description": "The value stored at the given storage slot, encoded as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Address": "Address",
+              "Storage slot": "Storage slot",
+              "Block": "Block"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Address": "Address",
+                "Storage slot": "Storage slot",
+                "Block": "Block"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getStorageAt"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getTransactionByBlockHashAndIndex",
+        "originalEndpointId": "eth_getTransactionByBlockHashAndIndex",
+        "name": "eth_getTransactionByBlockHashAndIndex",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The hash of the block containing the transaction.",
+                  "key": "Block hash",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                {
+                  "description": "The index position of the transaction in the block's transaction list, as a hexadecimal string.",
+                  "key": "Transaction index",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResult"
+              }
+            }
+          },
+          "description": "The transaction object containing various properties of the transaction."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Block hash": "Block hash",
+              "Transaction index": "Transaction index"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Block hash": "Block hash",
+                "Transaction index": "Transaction index"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getTransactionByBlockHashAndIndex"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getTransactionByBlockNumberAndIndex",
+        "originalEndpointId": "eth_getTransactionByBlockNumberAndIndex",
+        "name": "eth_getTransactionByBlockNumberAndIndex",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The block number or tag ('latest', 'earliest', 'pending') containing the transaction.",
+                  "key": "Block",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                },
+                {
+                  "description": "The index position of the transaction in the block's transaction list, as a hexadecimal string.",
+                  "key": "Transaction index",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResult"
+              }
+            }
+          },
+          "description": "The transaction object containing various properties of the transaction."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Block": "Block",
+              "Transaction index": "Transaction index"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Block": "Block",
+                "Transaction index": "Transaction index"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getTransactionByBlockNumberAndIndex"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getTransactionByHash",
+        "originalEndpointId": "eth_getTransactionByHash",
+        "name": "eth_getTransactionByHash",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The hash of the transaction to retrieve.",
+                  "key": "Transaction hash",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-f]{64}$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResult"
+              }
+            }
+          },
+          "description": "The transaction object containing various properties of the transaction."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Transaction hash": "Transaction hash"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Transaction hash": "Transaction hash"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getTransactionByHash"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getTransactionCount",
+        "originalEndpointId": "eth_getTransactionCount",
+        "name": "eth_getTransactionCount",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The address of the account to get the transaction count for.",
+                  "key": "Address",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-fA-F]{40}$"
+                    }
+                  }
+                },
+                {
+                  "description": "The block number, tag, or hash at which to retrieve the transaction count.",
+                  "key": "Block",
+                  "valueType": {
+                    "type": "id",
+                    "value": "MethodsParams"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
+            }
+          },
+          "description": "The number of transactions sent from the address, as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Address": "Address",
+              "Block": "Block"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Address": "Address",
+                "Block": "Block"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getTransactionCount"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_getTransactionReceipt",
+        "originalEndpointId": "eth_getTransactionReceipt",
+        "name": "eth_getTransactionReceipt",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The hash of the transaction for which to get the receipt.",
+                  "key": "Transaction hash",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-f]{64}$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsResult"
+              }
+            }
+          },
+          "description": "The transaction receipt object containing various properties of the transaction receipt."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Transaction hash": "Transaction hash"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Transaction hash": "Transaction hash"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_getTransactionReceipt"
+        }
+      },
+      {
+        "auth": false,
+        "description": "Submits a raw transaction (serialized and signed) for broadcasting to the network. The transaction data should be encoded as a hexadecimal string starting with `0x`. You can create and sign a transaction externally using libraries like [web3.js](https://web3js.readthedocs.io/) or [ethers.js](https://docs.ethers.org/). \n\n**Note:** For [EIP-4844](https://eips.ethereum.org/EIPS/eip-4844) transactions, the raw form must be in the network format, which includes blobs, KZG commitments, and KZG proofs.\n",
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_sendRawTransaction",
+        "originalEndpointId": "eth_sendRawTransaction",
+        "name": "eth_sendRawTransaction",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The raw transaction data to submit, encoded as a hexadecimal string.",
+                  "key": "Transaction",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-f]*$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
+            }
+          },
+          "description": "The hash of the submitted transaction, as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Transaction": "Transaction"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Transaction": "Transaction"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_sendRawTransaction"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "eth_syncing",
+        "originalEndpointId": "eth_syncing",
+        "name": "eth_syncing",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "MethodsResult"
+            }
+          },
+          "description": "An object with synchronization status data when syncing, or `false` when not syncing."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": true,
+            "responseBodyV3": {
+              "type": "json",
+              "value": true
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "eth_syncing"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "net_version",
+        "originalEndpointId": "net_version",
+        "name": "net_version",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The network ID as a string. Common IDs are `\"1\"` for mainnet, `\"3\"` for Ropsten, etc."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "net_version"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "web3_clientVersion",
+        "originalEndpointId": "web3_clientVersion",
+        "name": "web3_clientVersion",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "A string identifying the client software name, version, and platform."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "web3_clientVersion"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+        "environments": [
+          {
+            "id": "https://ink-mainnet.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+          },
+          {
+            "id": "https://ink-sepolia.g.alchemy.com/v2/",
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+          }
+        ],
+        "id": "web3_sha3",
+        "originalEndpointId": "web3_sha3",
+        "name": "web3_sha3",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The data to hash, encoded as a hexadecimal string.",
+                  "key": "Data",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[0-9a-f]*$"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
+            }
+          },
+          "description": "The Keccak-256 hash of the input data, as a hexadecimal string."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "Data": "Data"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "Data": "Data"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": "string",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "string"
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "web3_sha3"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

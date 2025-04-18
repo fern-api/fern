@@ -1,0 +1,2198 @@
+{
+  "types": {
+    "AgentLlm": {
+      "name": "AgentLlm",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Agent": {
+      "name": "Agent",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "llm",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "AgentLlm"
+              }
+            }
+          },
+          {
+            "key": "has_memory",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          },
+          {
+            "key": "documentId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "promptId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "toolId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ApiToken": {
+      "name": "ApiToken",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "description",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DocumentAuthorization": {
+      "name": "DocumentAuthorization",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "DocumentSplitter": {
+      "name": "DocumentSplitter",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Document": {
+      "name": "Document",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "url",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "authorization",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentAuthorization"
+              }
+            }
+          },
+          {
+            "key": "from_page",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "to_page",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "splitter",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentSplitter"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "HTTPValidationError": {
+      "name": "HTTPValidationError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "detail",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "ValidationError"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PredictAgentInput": {
+      "name": "PredictAgentInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "PredictAgent": {
+      "name": "PredictAgent",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "input",
+            "valueType": {
+              "type": "id",
+              "value": "PredictAgentInput"
+            }
+          },
+          {
+            "key": "has_streaming",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Prompt": {
+      "name": "Prompt",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "input_variables",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
+            "key": "template",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "SignIn": {
+      "name": "SignIn",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "SignUpMetadata": {
+      "name": "SignUpMetadata",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "SignUp": {
+      "name": "SignUp",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "metadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "SignUpMetadata"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ToolAuthorization": {
+      "name": "ToolAuthorization",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Tool": {
+      "name": "Tool",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "authorization",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ToolAuthorization"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ValidationErrorLocItemsOneOfZero": {
+      "name": "ValidationErrorLocItemsOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ValidationErrorLocItemsOneOfOne": {
+      "name": "ValidationErrorLocItemsOneOfOne",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "ValidationErrorLocItems": {
+      "name": "ValidationErrorLocItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "ValidationErrorLocItemsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "ValidationErrorLocItemsOneOfZero"
+            }
+          },
+          {
+            "typeName": "ValidationErrorLocItemsOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "ValidationErrorLocItemsOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "ValidationError": {
+      "name": "ValidationError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "loc",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "ValidationErrorLocItems"
+              }
+            }
+          },
+          {
+            "key": "msg",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "Agent": {
+      "subpackageId": "Agent",
+      "name": "Agent",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "List all agents",
+          "method": "GET",
+          "id": "List_all_agents_api_v1_agents_get",
+          "originalEndpointId": "Agent.List_all_agents_api_v1_agents_get",
+          "name": "List All Agents",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/agents"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/agents",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Create a new agent",
+          "method": "POST",
+          "id": "Create_agent_api_v1_agents_post",
+          "originalEndpointId": "Agent.Create_agent_api_v1_agents_post",
+          "name": "Create Agent",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/agents"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Agent"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/agents",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "foo",
+                "type": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "foo",
+                  "type": "foo"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Get a specific agent",
+          "method": "GET",
+          "id": "Get_agent_api_v1_agents__agentId__get",
+          "originalEndpointId": "Agent.Get_agent_api_v1_agents__agentId__get",
+          "name": "Get Agent",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "agentId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/agents/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "agentId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/agents/",
+              "pathParameters": {
+                "agentId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Delete a specific agent",
+          "method": "DELETE",
+          "id": "Delete_agent_api_v1_agents__agentId__delete",
+          "originalEndpointId": "Agent.Delete_agent_api_v1_agents__agentId__delete",
+          "name": "Delete Agent",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "agentId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/agents/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "agentId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/agents/",
+              "pathParameters": {
+                "agentId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Patch a specific agent",
+          "method": "PATCH",
+          "id": "Patch_agent_api_v1_agents__agentId__patch",
+          "originalEndpointId": "Agent.Patch_agent_api_v1_agents__agentId__patch",
+          "name": "Patch Agent",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "agentId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/agents/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "agentId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": []
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/agents/",
+              "pathParameters": {
+                "agentId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Invoke a specific agent",
+          "method": "POST",
+          "id": "Prompt_agent_api_v1_agents__agentId__predict_post",
+          "originalEndpointId": "Agent.Prompt_agent_api_v1_agents__agentId__predict_post",
+          "name": "Prompt Agent",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "agentId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/agents/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "agentId"
+              },
+              {
+                "type": "literal",
+                "value": "/predict"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "PredictAgent"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/agents/",
+              "pathParameters": {
+                "agentId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "input": {}
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "input": {}
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "Auth": {
+      "subpackageId": "Auth",
+      "name": "Auth",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "sign_in_api_v1_auth_sign_in_post",
+          "originalEndpointId": "Auth.sign_in_api_v1_auth_sign_in_post",
+          "name": "Sign In",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/auth/sign-in"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "SignIn"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/auth/sign-in",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "email": "foo",
+                "password": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "email": "foo",
+                  "password": "foo"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "sign_up_api_v1_auth_sign_up_post",
+          "originalEndpointId": "Auth.sign_up_api_v1_auth_sign_up_post",
+          "name": "Sign Up",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/auth/sign-up"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "SignUp"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/auth/sign-up",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "email": "foo",
+                "password": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "email": "foo",
+                  "password": "foo"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "User": {
+      "subpackageId": "User",
+      "name": "User",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "read_user_me_api_v1_users_me_get",
+          "originalEndpointId": "User.read_user_me_api_v1_users_me_get",
+          "name": "Read User Me",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/users/me"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/users/me",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "read_user_api_v1_users__userId__get",
+          "originalEndpointId": "User.read_user_api_v1_users__userId__get",
+          "name": "Read User",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/users/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "userId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/users/",
+              "pathParameters": {
+                "userId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "Api token": {
+      "subpackageId": "Api token",
+      "name": "Api token",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "List all API tokens",
+          "method": "GET",
+          "id": "List_API_tokens_api_v1_api_tokens_get",
+          "originalEndpointId": "Api token.List_API_tokens_api_v1_api_tokens_get",
+          "name": "List Api Tokens",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/api-tokens"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/api-tokens",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Create a new API token",
+          "method": "POST",
+          "id": "Create_API_token_api_v1_api_tokens_post",
+          "originalEndpointId": "Api token.Create_API_token_api_v1_api_tokens_post",
+          "name": "Create Api Token",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/api-tokens"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "ApiToken"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/api-tokens",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "description": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "description": "foo"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Get a specific API token",
+          "method": "GET",
+          "id": "Get_API_token_api_v1_api_tokens__tokenId__get",
+          "originalEndpointId": "Api token.Get_API_token_api_v1_api_tokens__tokenId__get",
+          "name": "Get Api Token",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tokenId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/api-tokens/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tokenId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/api-tokens/",
+              "pathParameters": {
+                "tokenId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Delete a specific API token",
+          "method": "DELETE",
+          "id": "Delete_API_token_api_v1_api_tokens__tokenId__delete",
+          "originalEndpointId": "Api token.Delete_API_token_api_v1_api_tokens__tokenId__delete",
+          "name": "Delete Api Token",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "tokenId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/api-tokens/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "tokenId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/api-tokens/",
+              "pathParameters": {
+                "tokenId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "Documents": {
+      "subpackageId": "Documents",
+      "name": "Documents",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "List all documents",
+          "method": "GET",
+          "id": "List_documents_api_v1_documents_get",
+          "originalEndpointId": "Documents.List_documents_api_v1_documents_get",
+          "name": "List Documents",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/documents"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/documents",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Create a new document",
+          "method": "POST",
+          "id": "Create_document_api_v1_documents_post",
+          "originalEndpointId": "Documents.Create_document_api_v1_documents_post",
+          "name": "Create Document",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/documents"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Document"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/documents",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "type": "foo",
+                "url": "foo",
+                "name": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "foo",
+                  "url": "foo",
+                  "name": "foo"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Get a specific document",
+          "method": "GET",
+          "id": "Get_document_api_v1_documents__documentId__get",
+          "originalEndpointId": "Documents.Get_document_api_v1_documents__documentId__get",
+          "name": "Get Document",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "documentId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/documents/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "documentId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/documents/",
+              "pathParameters": {
+                "documentId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Delete a specific document",
+          "method": "DELETE",
+          "id": "Delete_document_api_v1_documents__documentId__delete",
+          "originalEndpointId": "Documents.Delete_document_api_v1_documents__documentId__delete",
+          "name": "Delete Document",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "documentId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/documents/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "documentId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/documents/",
+              "pathParameters": {
+                "documentId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "Prompts": {
+      "subpackageId": "Prompts",
+      "name": "Prompts",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "List all prompts",
+          "method": "GET",
+          "id": "List_prompts_api_v1_prompts_get",
+          "originalEndpointId": "Prompts.List_prompts_api_v1_prompts_get",
+          "name": "List Prompts",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/prompts"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/prompts",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Create a new prompt",
+          "method": "POST",
+          "id": "Create_a_prompt_api_v1_prompts_post",
+          "originalEndpointId": "Prompts.Create_a_prompt_api_v1_prompts_post",
+          "name": "Create A Prompt",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/prompts"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Prompt"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/prompts",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "foo",
+                "input_variables": [
+                  null
+                ],
+                "template": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "foo",
+                  "input_variables": [
+                    null
+                  ],
+                  "template": "foo"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Get a specific prompt",
+          "method": "GET",
+          "id": "Get_prompt_api_v1_prompts__promptId__get",
+          "originalEndpointId": "Prompts.Get_prompt_api_v1_prompts__promptId__get",
+          "name": "Get Prompt",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "promptId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/prompts/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "promptId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/prompts/",
+              "pathParameters": {
+                "promptId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Delete a specific prompt",
+          "method": "DELETE",
+          "id": "Delete_prompt_api_v1_prompts__promptId__delete",
+          "originalEndpointId": "Prompts.Delete_prompt_api_v1_prompts__promptId__delete",
+          "name": "Delete Prompt",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "promptId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/prompts/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "promptId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/prompts/",
+              "pathParameters": {
+                "promptId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Patch a specific prompt",
+          "method": "PATCH",
+          "id": "Patch_prompt_api_v1_prompts__promptId__patch",
+          "originalEndpointId": "Prompts.Patch_prompt_api_v1_prompts__promptId__patch",
+          "name": "Patch Prompt",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "promptId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/prompts/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "promptId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": []
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/prompts/",
+              "pathParameters": {
+                "promptId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "Tools": {
+      "subpackageId": "Tools",
+      "name": "Tools",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "List all tools",
+          "method": "GET",
+          "id": "List_tools_api_v1_tools_get",
+          "originalEndpointId": "Tools.List_tools_api_v1_tools_get",
+          "name": "List Tools",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/tools"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/tools",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Create a new tool",
+          "method": "POST",
+          "id": "Create_a_tool_api_v1_tools_post",
+          "originalEndpointId": "Tools.Create_a_tool_api_v1_tools_post",
+          "name": "Create A Tool",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/tools"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Tool"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/tools",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "name": "foo",
+                "type": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "foo",
+                  "type": "foo"
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Get a specific tool",
+          "method": "GET",
+          "id": "Get_tool_api_v1_tools__toolId__get",
+          "originalEndpointId": "Tools.Get_tool_api_v1_tools__toolId__get",
+          "name": "Get Tool",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "toolId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/tools/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "toolId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/tools/",
+              "pathParameters": {
+                "toolId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Delete a specific tool",
+          "method": "DELETE",
+          "id": "Delete_tool_api_v1_tools__toolId__delete",
+          "originalEndpointId": "Tools.Delete_tool_api_v1_tools__toolId__delete",
+          "name": "Delete Tool",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "toolId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/tools/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "toolId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/tools/",
+              "pathParameters": {
+                "toolId": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "Traces": {
+      "subpackageId": "Traces",
+      "name": "Traces",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "List all agent traces",
+          "method": "GET",
+          "id": "List_agent_traces_api_v1_traces_get",
+          "originalEndpointId": "Traces.List_agent_traces_api_v1_traces_get",
+          "name": "List Agent Traces",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v1/traces"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v1/traces",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "Agent",
+      "ApiToken",
+      "Document",
+      "HTTPValidationError",
+      "PredictAgent",
+      "Prompt",
+      "SignIn",
+      "SignUp",
+      "Tool",
+      "ValidationError"
+    ],
+    "subpackages": [
+      "Agent",
+      "Auth",
+      "User",
+      "Api token",
+      "Documents",
+      "Prompts",
+      "Tools",
+      "Traces"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

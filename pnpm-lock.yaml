@@ -7933,6 +7933,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../commons/ir-utils
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../workspace/lazy-fern-workspace
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../project-loader

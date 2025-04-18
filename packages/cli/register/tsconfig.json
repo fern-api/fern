@@ -28,6 +28,9 @@
       "path": "../configuration"
     },
     {
+      "path": "../workspace/lazy-fern-workspace"
+    },
+    {
       "path": "../generation/ir-generator"
     },
     {
