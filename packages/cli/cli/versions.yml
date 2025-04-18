@@ -1,3 +1,9 @@
+- changelogEntry:
+  - summary: |
+      Fix an issue where deeply wrapped file request properties were not being parsed correctly.
+    type: fix
+  irVersion: 57
+  version: 0.57.27
 
 - changelogEntry:
   - summary: |

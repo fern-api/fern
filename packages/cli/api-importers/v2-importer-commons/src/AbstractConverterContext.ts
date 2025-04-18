@@ -456,6 +456,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return valueType.type === "container" && valueType.container.type === "optional";
     }
 
+    public isNullable(
+        valueType: TypeReference
+    ): valueType is TypeReference.Container & { container: ContainerType.Nullable } {
+        return valueType.type === "container" && valueType.container.type === "nullable";
+    }
+
     public isList(valueType: TypeReference): valueType is TypeReference.Container & { container: ContainerType.List } {
         return valueType.type === "container" && valueType.container.type === "list";
     }

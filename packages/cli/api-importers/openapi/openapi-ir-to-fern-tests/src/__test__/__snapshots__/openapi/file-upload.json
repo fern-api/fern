@@ -59,8 +59,14 @@
               "request": {
                 "body": {
                   "properties": {
-                    "list_file": "list<file>",
-                    "maybe_list_file": "optional<list<file>>",
+                    "list_file": {
+                      "docs": "A list of files to upload",
+                      "type": "list<file>",
+                    },
+                    "maybe_list_file": {
+                      "docs": "An optional list of files to upload",
+                      "type": "optional<list<file>>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -171,8 +177,12 @@
         name: UploadListRequest
         body:
           properties:
-            list_file: list<file>
-            maybe_list_file: optional<list<file>>
+            list_file:
+              type: list<file>
+              docs: A list of files to upload
+            maybe_list_file:
+              type: optional<list<file>>
+              docs: An optional list of files to upload
         content-type: multipart/form-data
       examples:
         - request: {}

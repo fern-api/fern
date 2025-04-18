@@ -92,6 +92,7 @@
             "schema": {
               "isOptional": false,
               "isArray": true,
+              "description": "File's content",
               "type": "file"
             },
             "description": "File's content",
