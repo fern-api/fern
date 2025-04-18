@@ -1,0 +1,268 @@
+{
+  "types": {
+    "TestPostRequestBodySchemaMetadata": {
+      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+      "name": "TestPostRequestBodySchemaMetadata",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "ExamplePostRequestBodySchemaMetadata": {
+      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+      "name": "ExamplePostRequestBodySchemaMetadata",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "description": "Test multipart request with different content types.\n",
+        "method": "POST",
+        "id": "testUpload",
+        "originalEndpointId": "testUpload",
+        "name": "Test upload",
+        "path": {
+          "pathParameters": [
+            {
+              "description": "The unique key",
+              "key": "corpus_key",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/test"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "fileUpload",
+            "value": {
+              "name": "testUpload_Request",
+              "properties": [
+                {
+                  "type": "bodyProperty",
+                  "key": "metadata",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "TestPostRequestBodySchemaMetadata"
+                    }
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "exploded": false
+                },
+                {
+                  "type": "bodyProperty",
+                  "key": "filename",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "contentType": "multipart/form-data",
+                  "description": "Optional multipart section to override the filename.",
+                  "exploded": false
+                },
+                {
+                  "type": "file",
+                  "value": {
+                    "type": "file",
+                    "key": "file",
+                    "isOptional": false,
+                    "contentType": "multipart/form-data",
+                    "description": "Binary file contents. The file name of the file will be used as the document ID."
+                  }
+                }
+              ]
+            },
+            "description": "Test request body\n"
+          },
+          "description": "Test request body\n"
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 201,
+          "description": "The sample response"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/test",
+            "pathParameters": {
+              "corpus_key": "foo"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "form",
+              "value": {}
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "type": "json",
+              "value": "foo"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "description": "Test request with dual content types.\n",
+        "method": "POST",
+        "id": "testWithDualContentTypeRequestTypes",
+        "originalEndpointId": "testWithDualContentTypeRequestTypes",
+        "name": "Test with dual Content-Type request types",
+        "path": {
+          "pathParameters": [
+            {
+              "description": "The unique key",
+              "key": "corpus_key",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/example"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "key": "metadata",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "ExamplePostRequestBodySchemaMetadata"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "Test request body\n"
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 201,
+          "description": "The sample response"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/example",
+            "pathParameters": {
+              "corpus_key": "foo"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {},
+            "requestBodyV3": {
+              "type": "json",
+              "value": {}
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "type": "json",
+              "value": "foo"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

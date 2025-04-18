@@ -1,0 +1,325 @@
+{
+  "types": {
+    "UserCreate": {
+      "name": "UserCreate",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "settings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "UserSettings"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "User": {
+      "name": "User",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "createdAt",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "settings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "UserSettings"
+              }
+            }
+          },
+          {
+            "key": "stats",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "UserStats"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UserSettings": {
+      "name": "UserSettings",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "theme",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "notifications",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "lastModified",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UserStatsAccountStatus": {
+      "name": "UserStatsAccountStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "active"
+          },
+          {
+            "value": "suspended"
+          },
+          {
+            "value": "deleted"
+          }
+        ]
+      }
+    },
+    "UserStats": {
+      "name": "UserStats",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "totalLogins",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "lastLoginTime",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "accountStatus",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "UserStatsAccountStatus"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "createAUser",
+        "originalEndpointId": "createAUser",
+        "name": "Create a user",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/users"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "UserCreate"
+              }
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "User"
+            }
+          },
+          "statusCode": 200,
+          "description": "User created successfully"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/users",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {},
+            "requestBodyV3": {
+              "type": "json",
+              "value": {}
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {}
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {}
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "UserCreate",
+      "User",
+      "UserSettings",
+      "UserStats"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

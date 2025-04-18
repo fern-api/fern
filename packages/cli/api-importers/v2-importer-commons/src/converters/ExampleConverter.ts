@@ -126,7 +126,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return this.convertInteger();
         }
 
-        if (resolvedSchema.type == "array" && "items" in resolvedSchema) {
+        if (resolvedSchema.type == "array") {
             return this.convertArray({
                 resolvedSchema
             });
@@ -356,10 +356,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
     }): Promise<ExampleConverter.Output> {
-        if (resolvedSchema.type != "array" || resolvedSchema.items == null) {
+        if (resolvedSchema.type != "array") {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
         }
-        if (!Array.isArray(this.example) || resolvedSchema.items == null) {
+        if (resolvedSchema.items == null) {
+            resolvedSchema.items = { type: "string" };
+        }
+        if (!Array.isArray(this.example)) {
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, "items"],
                 context: this.context,
@@ -474,8 +477,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const isValid = results.some((result) => result?.isValid ?? false);
 
-        const validSubSchemaExample = results.find((result) => result.isValid)?.validExample;
-        const example = validSubSchemaExample ?? null;
+        const validExample = results.find((result) => result.isValid)?.validExample;
+        const example = validExample ?? results[0]?.validExample ?? null;
 
         return {
             isValid,
@@ -550,7 +553,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
                     context: this.context,
-                    schema: subSchema,
+                    schema: { ...resolvedSchema, ...subSchema, oneOf: undefined },
                     example: this.example,
                     depth: this.depth + 1
                 });
@@ -561,8 +564,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const validResults = results.filter((result) => result.isValid);
         const isValid = validResults.length > 0;
 
-        const nonCoercedResult = validResults.find((result) => !result.coerced);
-        const validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
+        let validExample;
+        if (isValid) {
+            const nonCoercedResult = validResults.find((result) => !result.coerced);
+            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
+        } else {
+            validExample = results[0]?.validExample;
+        }
 
         return {
             isValid,
@@ -596,8 +604,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const validResults = results.filter((result) => result.isValid);
         const isValid = validResults.length > 0;
 
-        const nonCoercedResult = validResults.find((result) => !result.coerced);
-        const validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
+        let validExample;
+        if (isValid) {
+            const nonCoercedResult = validResults.find((result) => !result.coerced);
+            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
+        } else {
+            validExample = results[0]?.validExample;
+        }
 
         return {
             isValid,

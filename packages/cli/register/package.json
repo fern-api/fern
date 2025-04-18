@@ -38,6 +38,7 @@
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
+    "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "lodash-es": "^4.17.21"

@@ -1,0 +1,490 @@
+{
+  "types": {
+    "PetId": {
+      "name": "PetId",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "Pet": {
+      "name": "Pet",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "PetId"
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "tag",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Pets": {
+      "name": "Pets",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "Pet"
+          }
+        }
+      }
+    },
+    "l_i_s_t___p_e_t_s_Request_limit": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "c_r_e_a_t_e___p_e_t_Request_newPetName": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "c_r_e_a_t_e___p_e_t_Request_newPetTag": {
+      "name": "MethodsParams",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "http://localhost:8080",
+        "environments": [
+          {
+            "id": "http://localhost:8080",
+            "baseUrl": "http://localhost:8080"
+          }
+        ],
+        "id": "list_pets",
+        "originalEndpointId": "list_pets",
+        "name": "list_pets",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "How many items to return at one time (max 100)",
+                  "key": "limit",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "Pets"
+            }
+          },
+          "description": "A paged array of pets"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "limit": 1
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "limit": 1
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": [
+              {
+                "id": 1,
+                "name": "name",
+                "tag": "tag"
+              },
+              {
+                "id": 1,
+                "name": "name",
+                "tag": "tag"
+              }
+            ],
+            "responseBodyV3": {
+              "type": "json",
+              "value": [
+                {
+                  "id": 1,
+                  "name": "name",
+                  "tag": "tag"
+                },
+                {
+                  "id": 1,
+                  "name": "name",
+                  "tag": "tag"
+                }
+              ]
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "list_pets"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "http://localhost:8080",
+        "environments": [
+          {
+            "id": "http://localhost:8080",
+            "baseUrl": "http://localhost:8080"
+          }
+        ],
+        "id": "create_pet",
+        "originalEndpointId": "create_pet",
+        "name": "create_pet",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "Name of pet to create",
+                  "key": "newPetName",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Pet tag to create",
+                  "key": "newPetTag",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "PetId"
+            }
+          },
+          "description": "The id of the pet to retrieve"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "newPetName": "newPetName",
+              "newPetTag": "newPetTag"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "newPetName": "newPetName",
+                "newPetTag": "newPetTag"
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": 1,
+            "responseBodyV3": {
+              "type": "json",
+              "value": 1
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "create_pet"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "defaultEnvironment": "http://localhost:8080",
+        "environments": [
+          {
+            "id": "http://localhost:8080",
+            "baseUrl": "http://localhost:8080"
+          }
+        ],
+        "id": "get_pet",
+        "originalEndpointId": "get_pet",
+        "name": "get_pet",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "apiKey",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "apiKey"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The id of the pet to retrieve",
+                  "key": "petId",
+                  "valueType": {
+                    "type": "id",
+                    "value": "PetId"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "Pet"
+            }
+          },
+          "description": "Expected response to a valid request"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/apiKey",
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "petId": 1
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "petId": 1
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "id": 1,
+              "name": "name",
+              "tag": "tag"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "name": "name",
+                "tag": "tag"
+              }
+            },
+            "codeSamples": []
+          }
+        ],
+        "protocol": {
+          "type": "openrpc",
+          "methodName": "get_pet"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "PetId",
+      "Pet",
+      "Pets"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

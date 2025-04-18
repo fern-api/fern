@@ -1,0 +1,159 @@
+{
+  "types": {
+    "ExampleResponse": {
+      "name": "ExampleResponse",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "StatusEnum",
+            "type": {
+              "type": "id",
+              "value": "StatusEnum"
+            }
+          },
+          {
+            "typeName": "PriorityEnum",
+            "type": {
+              "type": "id",
+              "value": "PriorityEnum"
+            }
+          },
+          {
+            "typeName": "ErrorCodeEnum",
+            "type": {
+              "type": "id",
+              "value": "ErrorCodeEnum"
+            }
+          }
+        ]
+      }
+    },
+    "StatusEnum": {
+      "description": "Status of the resource",
+      "name": "StatusEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "INACTIVE"
+          },
+          {
+            "value": "PENDING"
+          }
+        ]
+      }
+    },
+    "PriorityEnum": {
+      "description": "Priority level (1=Low, 2=Medium, 3=High)",
+      "name": "PriorityEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "1"
+          },
+          {
+            "value": "2"
+          },
+          {
+            "value": "3"
+          }
+        ]
+      }
+    },
+    "ErrorCodeEnum": {
+      "description": "Error codes",
+      "name": "ErrorCodeEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "NOT_FOUND"
+          },
+          {
+            "value": "UNAUTHORIZED"
+          },
+          {
+            "value": "BAD_REQUEST"
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "getExample",
+        "originalEndpointId": "getExample",
+        "name": "Get Example",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/example"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "ExampleResponse"
+            }
+          },
+          "statusCode": 200,
+          "description": "Successful response"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/example",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": "ACTIVE"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": "ACTIVE"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "ExampleResponse",
+      "StatusEnum",
+      "PriorityEnum",
+      "ErrorCodeEnum"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

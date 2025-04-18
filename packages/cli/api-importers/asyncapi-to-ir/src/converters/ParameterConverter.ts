@@ -18,26 +18,21 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
-        const fernOptionalExtension = new Extensions.FernOptionalExtension({
+        const fernOptional = new Extensions.FernOptionalExtension({
             breadcrumbs: this.breadcrumbs,
             parameter: this.parameter,
             context: this.context
-        });
-        const fernOptional = fernOptionalExtension.convert();
+        }).convert();
         const parameterIsOptional = fernOptional ?? this.parameter.required ?? false;
-        let maybeParameterSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined =
-            this.parameter.schema;
-        if (maybeParameterSchema == null) {
-            maybeParameterSchema = {
-                ...this.parameter,
-                type: "string",
-                enum: this.parameter.enum,
-                default: this.parameter.default,
-                example: this.parameter.examples?.[0],
-                examples: undefined,
-                required: undefined
-            };
-        }
+        const maybeParameterSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = this.parameter.schema ?? {
+            ...this.parameter,
+            type: "string",
+            enum: this.parameter.enum,
+            default: this.parameter.default,
+            example: this.parameter.example,
+            examples: Object.values(this.parameter.examples ?? {}),
+            required: undefined
+        };
 
         const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
             context: this.context,
@@ -53,6 +48,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
         }
 
         return this.convertToOutput({
+            schema: maybeParameterSchema,
             typeReference,
             inlinedTypes
         });

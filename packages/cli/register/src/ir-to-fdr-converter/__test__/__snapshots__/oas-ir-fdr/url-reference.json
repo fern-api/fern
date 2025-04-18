@@ -1,0 +1,132 @@
+{
+  "types": {
+    "Error": {
+      "name": "Error",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "listAllPets",
+        "originalEndpointId": "listAllPets",
+        "name": "List all pets",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/pets"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "Pet"
+            }
+          },
+          "statusCode": 200,
+          "description": "A list of pets"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/pets",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 0,
+                "category": null,
+                "name": "doggie",
+                "photoUrls": [
+                  "photoUrls",
+                  "photoUrls"
+                ],
+                "tags": [
+                  null,
+                  null
+                ],
+                "status": "available"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": 0,
+                "category": null,
+                "name": "doggie",
+                "photoUrls": [
+                  "photoUrls",
+                  "photoUrls"
+                ],
+                "tags": [
+                  null,
+                  null
+                ],
+                "status": "available"
+              }
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "Error"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -1,0 +1,822 @@
+{
+  "types": {
+    "EndUserOneOfZero": {
+      "name": "EndUserOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "EndUser": {
+      "name": "EndUser",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUserOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUserOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUserRequestOneOfZero": {
+      "name": "EndUserRequestOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "EndUserRequest": {
+      "name": "EndUserRequest",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUserRequestOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUserRequestOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "ErrorOneOfZero": {
+      "name": "ErrorOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Error": {
+      "name": "Error",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "ErrorOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "ErrorOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "ErrorsOneOfZero": {
+      "name": "ErrorsOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Errors": {
+      "name": "Errors",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "ErrorsOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "ErrorsOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUsersOneOfZero": {
+      "name": "EndUsersOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "EndUsers": {
+      "name": "EndUsers",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUsersOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUsersOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUserCreatedWebhookPayloadTypeOneOfZero": {
+      "name": "EndUserCreatedWebhookPayloadTypeOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "EndUserCreatedWebhookPayloadType": {
+      "description": "The webhook event type description",
+      "name": "EndUserCreatedWebhookPayloadType",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUserCreatedWebhookPayloadTypeOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUserCreatedWebhookPayloadTypeOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUserCreatedWebhookPayloadTimestampOneOfZero": {
+      "name": "EndUserCreatedWebhookPayloadTimestampOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "EndUserCreatedWebhookPayloadTimestamp": {
+      "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
+      "name": "EndUserCreatedWebhookPayloadTimestamp",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUserCreatedWebhookPayloadTimestampOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUserCreatedWebhookPayloadTimestampOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUserCreatedWebhookPayloadDataOneOfZero": {
+      "name": "EndUserCreatedWebhookPayloadDataOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "EndUserCreatedWebhookPayloadData": {
+      "description": "The webhook event data",
+      "name": "EndUserCreatedWebhookPayloadData",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUserCreatedWebhookPayloadDataOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUserCreatedWebhookPayloadDataOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUserCreatedWebhookPayload": {
+      "name": "EndUserCreatedWebhookPayload",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The webhook event type description",
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserCreatedWebhookPayloadType"
+              }
+            }
+          },
+          {
+            "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
+            "key": "timestamp",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserCreatedWebhookPayloadTimestamp"
+              }
+            }
+          },
+          {
+            "description": "The webhook event data",
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserCreatedWebhookPayloadData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "EndUserUpdatedWebhookPayloadTypeOneOfZero": {
+      "name": "EndUserUpdatedWebhookPayloadTypeOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "EndUserUpdatedWebhookPayloadType": {
+      "description": "The webhook event type description",
+      "name": "EndUserUpdatedWebhookPayloadType",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUserUpdatedWebhookPayloadTypeOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUserUpdatedWebhookPayloadTypeOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUserUpdatedWebhookPayloadTimestampOneOfZero": {
+      "name": "EndUserUpdatedWebhookPayloadTimestampOneOfZero",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "EndUserUpdatedWebhookPayloadTimestamp": {
+      "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
+      "name": "EndUserUpdatedWebhookPayloadTimestamp",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUserUpdatedWebhookPayloadTimestampOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUserUpdatedWebhookPayloadTimestampOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUserUpdatedWebhookPayloadDataOneOfZero": {
+      "name": "EndUserUpdatedWebhookPayloadDataOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "EndUserUpdatedWebhookPayloadData": {
+      "description": "The webhook event data",
+      "name": "EndUserUpdatedWebhookPayloadData",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EndUserUpdatedWebhookPayloadDataOneOfZero",
+            "type": {
+              "type": "id",
+              "value": "EndUserUpdatedWebhookPayloadDataOneOfZero"
+            }
+          }
+        ]
+      }
+    },
+    "EndUserUpdatedWebhookPayload": {
+      "name": "EndUserUpdatedWebhookPayload",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The webhook event type description",
+            "key": "type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserUpdatedWebhookPayloadType"
+              }
+            }
+          },
+          {
+            "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
+            "key": "timestamp",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserUpdatedWebhookPayloadTimestamp"
+              }
+            }
+          },
+          {
+            "description": "The webhook event data",
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserUpdatedWebhookPayloadData"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "End users": {
+      "subpackageId": "End users",
+      "name": "End users",
+      "endpoints": [
+        {
+          "auth": true,
+          "description": "Get a specific end user",
+          "method": "GET",
+          "defaultEnvironment": "The subdomain of the client",
+          "environments": [
+            {
+              "id": "The subdomain of the client",
+              "baseUrl": "https://example.ada.support/api"
+            }
+          ],
+          "id": "getEndUserById",
+          "originalEndpointId": "End users.getEndUserById",
+          "name": "Get an end user by ID",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "The end_user_id",
+                "key": "end_user_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/end-users/v1/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "end_user_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "EndUser"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/end-users/v1/",
+              "pathParameters": {
+                "end_user_id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                  "profile": {
+                    "first_name": "Ada",
+                    "last_name": "Lovelace",
+                    "email": "ada.lovelace@ada.cx",
+                    "language": "en-US",
+                    "metadata": {
+                      "example_key1": "example_string_value",
+                      "example_key2": true,
+                      "example_key3": 123
+                    },
+                    "system_properties": {
+                      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                      "device": "macos",
+                      "browser": "Chrome",
+                      "browser_version": "119.0.0.0",
+                      "introshown": false,
+                      "last_answer_id": "650071321ef45533437f6f29",
+                      "last_question_asked": "What is my account balance?",
+                      "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                      "sunshine_conversation_id": "12345abc",
+                      "sunshine_end_user_channel": "whatsapp",
+                      "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                      "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a"
+                    }
+                  },
+                  "created_at": "2023-12-08T19:06:04.890000",
+                  "updated_at": "2023-12-08T19:06:04.890000"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                  "profile": {
+                    "first_name": "Ada",
+                    "last_name": "Lovelace",
+                    "email": "ada.lovelace@ada.cx",
+                    "language": "en-US",
+                    "metadata": {
+                      "example_key1": "example_string_value",
+                      "example_key2": true,
+                      "example_key3": 123
+                    },
+                    "system_properties": {
+                      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                      "device": "macos",
+                      "browser": "Chrome",
+                      "browser_version": "119.0.0.0",
+                      "introshown": false,
+                      "last_answer_id": "650071321ef45533437f6f29",
+                      "last_question_asked": "What is my account balance?",
+                      "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                      "sunshine_conversation_id": "12345abc",
+                      "sunshine_end_user_channel": "whatsapp",
+                      "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                      "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a"
+                    }
+                  },
+                  "created_at": "2023-12-08T19:06:04.890000",
+                  "updated_at": "2023-12-08T19:06:04.890000"
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Update an end user. Request data is limited to 4KB in size total.",
+          "method": "PATCH",
+          "defaultEnvironment": "The subdomain of the client",
+          "environments": [
+            {
+              "id": "The subdomain of the client",
+              "baseUrl": "https://example.ada.support/api"
+            }
+          ],
+          "id": "updateEndUserById",
+          "originalEndpointId": "End users.updateEndUserById",
+          "name": "Update an end user by ID",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "The end_user_id",
+                "key": "end_user_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/end-users/v1/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "end_user_id"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "EndUserRequest"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "EndUser"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/end-users/v1/",
+              "pathParameters": {
+                "end_user_id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "profile": {
+                  "first_name": "Ada",
+                  "last_name": "Lovelace",
+                  "email": "ada.lovelace@ada.cx",
+                  "language": "en-US",
+                  "metadata": {
+                    "example_key1": "example_string_value",
+                    "example_key2": true,
+                    "example_key3": 123
+                  }
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "profile": {
+                    "first_name": "Ada",
+                    "last_name": "Lovelace",
+                    "email": "ada.lovelace@ada.cx",
+                    "language": "en-US",
+                    "metadata": {
+                      "example_key1": "example_string_value",
+                      "example_key2": true,
+                      "example_key3": 123
+                    }
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                  "profile": {
+                    "first_name": "Ada",
+                    "last_name": "Lovelace",
+                    "email": "ada.lovelace@ada.cx",
+                    "language": "en-US",
+                    "metadata": {
+                      "example_key1": "example_string_value",
+                      "example_key2": true,
+                      "example_key3": 123
+                    },
+                    "system_properties": {
+                      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                      "device": "macos",
+                      "browser": "Chrome",
+                      "browser_version": "119.0.0.0",
+                      "introshown": false,
+                      "last_answer_id": "650071321ef45533437f6f29",
+                      "last_question_asked": "What is my account balance?",
+                      "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                      "sunshine_conversation_id": "12345abc",
+                      "sunshine_end_user_channel": "whatsapp",
+                      "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                      "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a"
+                    }
+                  },
+                  "created_at": "2023-12-08T19:06:04.890000",
+                  "updated_at": "2023-12-08T19:06:04.890000"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                  "profile": {
+                    "first_name": "Ada",
+                    "last_name": "Lovelace",
+                    "email": "ada.lovelace@ada.cx",
+                    "language": "en-US",
+                    "metadata": {
+                      "example_key1": "example_string_value",
+                      "example_key2": true,
+                      "example_key3": 123
+                    },
+                    "system_properties": {
+                      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                      "device": "macos",
+                      "browser": "Chrome",
+                      "browser_version": "119.0.0.0",
+                      "introshown": false,
+                      "last_answer_id": "650071321ef45533437f6f29",
+                      "last_question_asked": "What is my account balance?",
+                      "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                      "sunshine_conversation_id": "12345abc",
+                      "sunshine_end_user_channel": "whatsapp",
+                      "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                      "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a"
+                    }
+                  },
+                  "created_at": "2023-12-08T19:06:04.890000",
+                  "updated_at": "2023-12-08T19:06:04.890000"
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": true,
+          "description": "Get multiple end users",
+          "method": "GET",
+          "defaultEnvironment": "The subdomain of the client",
+          "environments": [
+            {
+              "id": "The subdomain of the client",
+              "baseUrl": "https://example.ada.support/api"
+            }
+          ],
+          "id": "getEndUsers",
+          "originalEndpointId": "End users.getEndUsers",
+          "name": "Get multiple end users by ID",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/end-users/v1"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "The end user ID that marks the start or beginning of the returned profile records.",
+              "key": "cursor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "The number of end user profile records to return",
+              "key": "limit",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "EndUsers"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/end-users/v1",
+              "pathParameters": {},
+              "queryParameters": {
+                "cursor": "foo",
+                "limit": 42
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "EndUser",
+      "EndUserRequest",
+      "Error",
+      "Errors",
+      "EndUsers",
+      "EndUserCreatedWebhookPayload",
+      "EndUserUpdatedWebhookPayload"
+    ],
+    "subpackages": [
+      "End users"
+    ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

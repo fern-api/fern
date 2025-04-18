@@ -1,0 +1,2917 @@
+{
+  "types": {
+    "Room": {
+      "name": "Room",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
+            }
+          },
+          {
+            "key": "hidden",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GamePhotosItems": {
+      "name": "GamePhotosItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "photo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "processed_image",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          {
+            "key": "ready",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GameExtraFieldsItemsValue": {
+      "name": "GameExtraFieldsItemsValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "GameExtraFieldsItems": {
+      "name": "GameExtraFieldsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "label",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "GameExtraFieldsItemsValue"
+              }
+            }
+          },
+          {
+            "key": "present",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GameComplete": {
+      "name": "GameComplete",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "completed_at",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          {
+            "key": "did_win",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "hints",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "score",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "completion_time",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Game": {
+      "name": "Game",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "updated_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
+            }
+          },
+          {
+            "key": "date",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          },
+          {
+            "key": "time",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "start_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "group",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "room",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "photos",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "GamePhotosItems"
+                }
+              }
+            }
+          },
+          {
+            "key": "extra_fields",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "GameExtraFieldsItems"
+              }
+            }
+          },
+          {
+            "key": "complete",
+            "valueType": {
+              "type": "id",
+              "value": "GameComplete"
+            }
+          }
+        ]
+      }
+    },
+    "GroupGamesItemsExtraFieldsItemsValue": {
+      "name": "GroupGamesItemsExtraFieldsItemsValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "GroupGamesItemsExtraFieldsItems": {
+      "name": "GroupGamesItemsExtraFieldsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "label",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "GroupGamesItemsExtraFieldsItemsValue"
+              }
+            }
+          },
+          {
+            "key": "present",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GroupGamesItemsComplete": {
+      "name": "GroupGamesItemsComplete",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "completed_at",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          {
+            "key": "did_win",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "hints",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "score",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "completion_time",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GroupGamesItems": {
+      "name": "GroupGamesItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "updated_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
+            }
+          },
+          {
+            "key": "date",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          },
+          {
+            "key": "time",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "start_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "room",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "extra_fields",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "GroupGamesItemsExtraFieldsItems"
+              }
+            }
+          },
+          {
+            "key": "complete",
+            "valueType": {
+              "type": "id",
+              "value": "GroupGamesItemsComplete"
+            }
+          }
+        ]
+      }
+    },
+    "GroupPlayersItemsExtraFieldsItemsValue": {
+      "name": "GroupPlayersItemsExtraFieldsItemsValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "GroupPlayersItemsExtraFieldsItems": {
+      "name": "GroupPlayersItemsExtraFieldsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "label",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "GroupPlayersItemsExtraFieldsItemsValue"
+              }
+            }
+          },
+          {
+            "key": "present",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GroupPlayersItems": {
+      "name": "GroupPlayersItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "updated_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "player",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "first_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
+            }
+          },
+          {
+            "key": "last_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "email"
+              }
+            }
+          },
+          {
+            "key": "phone",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "extra_fields",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "GroupPlayersItemsExtraFieldsItems"
+              }
+            }
+          },
+          {
+            "key": "signature",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GroupPhotosItems": {
+      "name": "GroupPhotosItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "game",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "photo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "processed_image",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          {
+            "key": "ready",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Group": {
+      "name": "Group",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "updated_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "is_event",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
+            }
+          },
+          {
+            "key": "date",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          },
+          {
+            "key": "time",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "start_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "games",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "GroupGamesItems"
+                }
+              }
+            }
+          },
+          {
+            "key": "players",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "GroupPlayersItems"
+              }
+            }
+          },
+          {
+            "key": "photos",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "GroupPhotosItems"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PlayerExtraFieldsItemsValue": {
+      "name": "PlayerExtraFieldsItemsValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "PlayerExtraFieldsItems": {
+      "name": "PlayerExtraFieldsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "key",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "label",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PlayerExtraFieldsItemsValue"
+              }
+            }
+          },
+          {
+            "key": "present",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Player": {
+      "name": "Player",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "updated_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "first_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
+            }
+          },
+          {
+            "key": "last_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "email"
+              }
+            }
+          },
+          {
+            "key": "phone",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "extra_fields",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "PlayerExtraFieldsItems"
+              }
+            }
+          },
+          {
+            "key": "marketing_email_allowed",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PhotoProcessedItems": {
+      "name": "PhotoProcessedItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "game",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "group",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "photo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "processed_image",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          {
+            "key": "ready",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Photo": {
+      "name": "Photo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "added_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "original_image",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          },
+          {
+            "key": "processed",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "PhotoProcessedItems"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "api_listAccounts_Response_200": {
+      "name": "api_listAccounts_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "previous",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "Room"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "api_listGames_Response_200": {
+      "name": "api_listGames_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "previous",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "Game"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "api_listGroups_Response_200": {
+      "name": "api_listGroups_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "previous",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "Group"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "api_listPlayers_Response_200": {
+      "name": "api_listPlayers_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "previous",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "Player"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "api_listLocations_Response_200": {
+      "name": "api_listLocations_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "previous",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "Room"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "api_listPhotos_Response_200": {
+      "name": "api_listPhotos_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "previous",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "Photo"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "api": {
+      "subpackageId": "api",
+      "name": "api",
+      "endpoints": [
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "listAccounts",
+          "originalEndpointId": "api.listAccounts",
+          "name": "List Accounts",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/accounts/"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "A page number within the paginated result set.",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "api_listAccounts_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/accounts/",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 42
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "retrieveAccount",
+          "originalEndpointId": "api.retrieveAccount",
+          "name": "Retrieve Account",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A unique integer value identifying this account.",
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/accounts/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Room"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/accounts/",
+              "pathParameters": {
+                "id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "name": "foo"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "foo"
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "listGames",
+          "originalEndpointId": "api.listGames",
+          "name": "List Games",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/games/"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "A page number within the paginated result set.",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "description": "complete",
+              "key": "complete",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Date",
+              "key": "date",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Before",
+              "key": "before",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "After",
+              "key": "after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "api_listGames_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/games/",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 42,
+                "complete": "foo",
+                "date": "foo",
+                "before": "foo",
+                "after": "foo"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "retrieveGame",
+          "originalEndpointId": "api.retrieveGame",
+          "name": "Retrieve Game",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A unique integer value identifying this group.",
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/games/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "complete",
+              "key": "complete",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Date",
+              "key": "date",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Before",
+              "key": "before",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "After",
+              "key": "after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Game"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/games/",
+              "pathParameters": {
+                "id": "foo"
+              },
+              "queryParameters": {
+                "complete": "foo",
+                "date": "foo",
+                "before": "foo",
+                "after": "foo"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "date": "foo",
+                  "time": "foo",
+                  "extra_fields": [
+                    {
+                      "key": "foo",
+                      "value": {},
+                      "present": true
+                    }
+                  ],
+                  "complete": {
+                    "completed_at": "foo",
+                    "did_win": true,
+                    "hints": 42,
+                    "score": 42,
+                    "completion_time": 42
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "date": "foo",
+                  "time": "foo",
+                  "extra_fields": [
+                    {
+                      "key": "foo",
+                      "value": {},
+                      "present": true
+                    }
+                  ],
+                  "complete": {
+                    "completed_at": "foo",
+                    "did_win": true,
+                    "hints": 42,
+                    "score": 42,
+                    "completion_time": 42
+                  }
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "listGroups",
+          "originalEndpointId": "api.listGroups",
+          "name": "List Groups",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/groups/"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "A page number within the paginated result set.",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "description": "is_event",
+              "key": "is_event",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "complete",
+              "key": "complete",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "api_listGroups_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/groups/",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 42,
+                "is_event": "foo",
+                "complete": "foo"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "retrieveGroup",
+          "originalEndpointId": "api.retrieveGroup",
+          "name": "Retrieve Group",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A unique integer value identifying this group.",
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/groups/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "is_event",
+              "key": "is_event",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "complete",
+              "key": "complete",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Group"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/groups/",
+              "pathParameters": {
+                "id": "foo"
+              },
+              "queryParameters": {
+                "is_event": "foo",
+                "complete": "foo"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "date": "foo",
+                  "time": "foo",
+                  "players": [
+                    {
+                      "email": "foo",
+                      "phone": "foo",
+                      "extra_fields": [
+                        {
+                          "key": "foo",
+                          "value": {},
+                          "present": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "date": "foo",
+                  "time": "foo",
+                  "players": [
+                    {
+                      "email": "foo",
+                      "phone": "foo",
+                      "extra_fields": [
+                        {
+                          "key": "foo",
+                          "value": {},
+                          "present": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "listPlayers",
+          "originalEndpointId": "api.listPlayers",
+          "name": "List Players",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/players/"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "A page number within the paginated result set.",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "api_listPlayers_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/players/",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 42
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "retrievePlayer",
+          "originalEndpointId": "api.retrievePlayer",
+          "name": "Retrieve Player",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A unique integer value identifying this player.",
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/players/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Player"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/players/",
+              "pathParameters": {
+                "id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "email": "foo",
+                  "phone": "foo",
+                  "extra_fields": [
+                    {
+                      "key": "foo",
+                      "value": {},
+                      "present": true
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "email": "foo",
+                  "phone": "foo",
+                  "extra_fields": [
+                    {
+                      "key": "foo",
+                      "value": {},
+                      "present": true
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "listLocations",
+          "originalEndpointId": "api.listLocations",
+          "name": "List Locations",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/rooms/"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "A page number within the paginated result set.",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "api_listLocations_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/rooms/",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 42
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "retrieveLocation",
+          "originalEndpointId": "api.retrieveLocation",
+          "name": "Retrieve Location",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "A unique integer value identifying this location.",
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/rooms/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "id"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Room"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/rooms/",
+              "pathParameters": {
+                "id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "name": "foo"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "name": "foo"
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "listPhotos",
+          "originalEndpointId": "api.listPhotos",
+          "name": "List Photos",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/photos/"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "A page number within the paginated result set.",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "api_listPhotos_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/photos/",
+              "pathParameters": {},
+              "queryParameters": {
+                "page": 42
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "description": "",
+          "method": "GET",
+          "id": "retrievePhoto",
+          "originalEndpointId": "api.retrievePhoto",
+          "name": "Retrieve Photo",
+          "path": {
+            "pathParameters": [
+              {
+                "description": "",
+                "key": "photo_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/api/v2/photos/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "photo_id"
+              },
+              {
+                "type": "literal",
+                "value": "/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Photo"
+              }
+            },
+            "statusCode": 200,
+            "description": ""
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/api/v2/photos/",
+              "pathParameters": {
+                "photo_id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "original_image": "foo",
+                  "processed": [
+                    {
+                      "photo": "foo"
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "original_image": "foo",
+                  "processed": [
+                    {
+                      "photo": "foo"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "Room",
+      "Game",
+      "Group",
+      "Player",
+      "Photo"
+    ],
+    "subpackages": [
+      "api"
+    ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -1,0 +1,73 @@
+{
+  "types": {
+    "Pet": {
+      "name": "Pet",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "tag",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [
+      {
+        "id": "CreatePet",
+        "path": [],
+        "method": "POST",
+        "name": "Create Pet",
+        "headers": [],
+        "payload": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "Pet"
+            }
+          }
+        },
+        "examples": []
+      }
+    ],
+    "websockets": [],
+    "types": [
+      "Pet"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

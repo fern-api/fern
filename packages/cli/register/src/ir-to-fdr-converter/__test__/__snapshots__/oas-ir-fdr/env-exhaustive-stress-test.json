@@ -1,0 +1,623 @@
+{
+  "types": {},
+  "subpackages": {
+    "alpha": {
+      "subpackageId": "alpha",
+      "name": "alpha",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "prod",
+          "environments": [
+            {
+              "id": "prod",
+              "baseUrl": "https://alpha.spscommerce.com"
+            }
+          ],
+          "id": "getAlpha",
+          "originalEndpointId": "alpha.getAlpha",
+          "name": "Get Alpha",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/alpha"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "A response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/alpha",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "beta": {
+      "subpackageId": "beta",
+      "name": "beta",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "prod",
+          "environments": [
+            {
+              "id": "prod",
+              "baseUrl": "https://beta.spscommerce.com"
+            }
+          ],
+          "id": "getBeta",
+          "originalEndpointId": "beta.getBeta",
+          "name": "Get Beta",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/beta"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "A response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/beta",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "gamma": {
+      "subpackageId": "gamma",
+      "name": "gamma",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "prod",
+          "environments": [
+            {
+              "id": "prod",
+              "baseUrl": "https://gamma.spscommerce.com"
+            }
+          ],
+          "id": "getGamma",
+          "originalEndpointId": "gamma.getGamma",
+          "name": "Get Gamma",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/gamma"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "A response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/gamma",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "delta": {
+      "subpackageId": "delta",
+      "name": "delta",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "prod",
+          "environments": [
+            {
+              "id": "prod",
+              "baseUrl": "https://delta.spscommerce.com"
+            }
+          ],
+          "id": "getDelta",
+          "originalEndpointId": "delta.getDelta",
+          "name": "Get Delta",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/delta"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "A response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/delta",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "mu": {
+      "subpackageId": "mu",
+      "name": "mu",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "prod",
+          "environments": [
+            {
+              "id": "prod",
+              "baseUrl": "https://mu.spscommerce.com"
+            }
+          ],
+          "id": "getMu",
+          "originalEndpointId": "mu.getMu",
+          "name": "Get Mu",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/mu"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "A response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/mu",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "omega": {
+      "subpackageId": "omega",
+      "name": "omega",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "prod",
+          "environments": [
+            {
+              "id": "prod",
+              "baseUrl": "https://omega.spscommerce.com"
+            }
+          ],
+          "id": "getOmega",
+          "originalEndpointId": "omega.getOmega",
+          "name": "Get Omega",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/omega"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "A response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/omega",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "zeta": {
+      "subpackageId": "zeta",
+      "name": "zeta",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "prod",
+          "environments": [
+            {
+              "id": "prod",
+              "baseUrl": "https://zeta.spscommerce.com"
+            }
+          ],
+          "id": "getZeta",
+          "originalEndpointId": "zeta.getZeta",
+          "name": "Get Zeta",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/zeta"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "A response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/zeta",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "eta": {
+      "subpackageId": "eta",
+      "name": "eta",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "prod",
+          "environments": [
+            {
+              "id": "prod",
+              "baseUrl": "https://eta.spscommerce.com"
+            }
+          ],
+          "id": "getEta",
+          "originalEndpointId": "eta.getEta",
+          "name": "Get Eta",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/eta"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "A response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/eta",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "alpha",
+      "beta",
+      "gamma",
+      "delta",
+      "mu",
+      "omega",
+      "zeta",
+      "eta"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

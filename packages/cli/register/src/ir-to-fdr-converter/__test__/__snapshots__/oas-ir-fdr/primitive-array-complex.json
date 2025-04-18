@@ -1,0 +1,207 @@
+{
+  "types": {
+    "SearchWithObjectUnionGetRequestBodySchema": {
+      "name": "SearchWithObjectUnionGetRequestBodySchema",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "foo",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "getSearchWithArrayUnion",
+        "originalEndpointId": "getSearchWithArrayUnion",
+        "name": "Get Search With Array Union",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/search-with-array-union"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "optional",
+                "itemType": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "Successful search response"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/search-with-array-union",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": "foo"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "getSearchWithObjectUnion",
+        "originalEndpointId": "getSearchWithObjectUnion",
+        "name": "Get Search With Object Union",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/search-with-object-union"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "SearchWithObjectUnionGetRequestBodySchema"
+                }
+              }
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "Successful search response"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/search-with-object-union",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": "foo"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

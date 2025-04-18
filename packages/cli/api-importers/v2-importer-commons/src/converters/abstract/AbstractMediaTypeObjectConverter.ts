@@ -133,11 +133,21 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         example: unknown;
         ignoreErrors?: boolean;
     }): Promise<unknown> {
+        const resolvedSchema = await this.context.resolveToSchema(schema);
+        if (resolvedSchema == null) {
+            return undefined;
+        }
+        const schemaExamples = this.context.getExamplesFromSchema({
+            schema: resolvedSchema,
+            breadcrumbs: this.breadcrumbs
+        });
+        // We prioritize MediaTypeObject examples over Schema examples, but will fall back to
+        // Schema examples if MediaTypeObject examples are not present.
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
             context: this.context,
-            schema,
-            example
+            schema: resolvedSchema,
+            example: example ?? schemaExamples[0]
         });
         const { validExample: convertedExample, errors } = await exampleConverter.convert();
         if (!ignoreErrors) {

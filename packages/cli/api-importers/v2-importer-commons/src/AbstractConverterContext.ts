@@ -278,6 +278,19 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return examples;
     }
 
+    public async resolveToSchema(
+        schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
+    ): Promise<OpenAPIV3_1.SchemaObject> {
+        if (this.isReferenceObject(schemaOrReference)) {
+            const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(schemaOrReference);
+            if (!resolved.resolved) {
+                throw new Error("Failed to resolve reference");
+            }
+            return resolved.value;
+        }
+        return schemaOrReference;
+    }
+
     public async resolveExample(example: unknown): Promise<unknown> {
         if (!this.isReferenceObject(example)) {
             return example;
