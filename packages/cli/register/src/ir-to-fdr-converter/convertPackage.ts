@@ -190,10 +190,14 @@ function convertService(
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
             examples,
             protocol: irEndpoint.source?._visit<FdrCjsSdk.api.v1.Protocol | undefined>({
-                openapi: () => { return { type: "rest" }; },
-                openrpc: () => { return { type: "openrpc", methodName: irEndpoint.id }; },
+                openapi: () => {
+                    return { type: "rest" };
+                },
+                openrpc: () => {
+                    return { type: "openrpc", methodName: irEndpoint.id };
+                },
                 proto: () => undefined,
-                _other: () => undefined,
+                _other: () => undefined
             })
         };
         endpoints.push(endpoint);
