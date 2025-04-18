@@ -18,7 +18,7 @@ export const DoubleValidationRules: core.serialization.ObjectSchema<
 });
 
 export declare namespace DoubleValidationRules {
-    interface Raw {
+    export interface Raw {
         min?: number | null;
         max?: number | null;
         exclusiveMin?: boolean | null;

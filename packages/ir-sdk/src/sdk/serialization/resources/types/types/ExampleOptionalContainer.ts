@@ -15,7 +15,7 @@ export const ExampleOptionalContainer: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleOptionalContainer {
-    interface Raw {
+    export interface Raw {
         optional?: serializers.ExampleTypeReference.Raw | null;
         valueType: serializers.TypeReference.Raw;
     }

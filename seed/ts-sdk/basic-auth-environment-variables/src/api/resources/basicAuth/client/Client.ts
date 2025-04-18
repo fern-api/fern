@@ -9,19 +9,23 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace BasicAuth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         username?: core.Supplier<string | undefined>;
-        password?: core.Supplier<string | undefined>;
+        accessToken?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -38,9 +42,19 @@ export class BasicAuth {
      * @example
      *     await client.basicAuth.getWithBasicAuth()
      */
-    public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
+    public getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithBasicAuth(requestOptions));
+    }
+
+    private async __getWithBasicAuth(
+        requestOptions?: BasicAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "basic-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "basic-auth",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -50,6 +64,7 @@ export class BasicAuth {
                 "User-Agent": "@fern/basic-auth-environment-variables/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -58,12 +73,15 @@ export class BasicAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -75,12 +93,14 @@ export class BasicAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedBasicAuthEnvironmentVariablesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -90,12 +110,16 @@ export class BasicAuth {
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError();
+                throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError(
+                    "Timeout exceeded when calling GET /basic-auth.",
+                );
             case "unknown":
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -114,9 +138,23 @@ export class BasicAuth {
      *         "key": "value"
      *     })
      */
-    public async postWithBasicAuth(request?: unknown, requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
+    public postWithBasicAuth(
+        request?: unknown,
+        requestOptions?: BasicAuth.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithBasicAuth(request, requestOptions));
+    }
+
+    private async __postWithBasicAuth(
+        request?: unknown,
+        requestOptions?: BasicAuth.RequestOptions,
+    ): Promise<core.WithRawResponse<boolean>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "basic-auth"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "basic-auth",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -126,6 +164,7 @@ export class BasicAuth {
                 "User-Agent": "@fern/basic-auth-environment-variables/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -135,12 +174,15 @@ export class BasicAuth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -152,14 +194,16 @@ export class BasicAuth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 400:
-                    throw new SeedBasicAuthEnvironmentVariables.BadRequest();
+                    throw new SeedBasicAuthEnvironmentVariables.BadRequest(_response.rawResponse);
                 default:
                     throw new errors.SeedBasicAuthEnvironmentVariablesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -169,20 +213,40 @@ export class BasicAuth {
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError();
+                throw new errors.SeedBasicAuthEnvironmentVariablesTimeoutError(
+                    "Timeout exceeded when calling POST /basic-auth.",
+                );
             case "unknown":
                 throw new errors.SeedBasicAuthEnvironmentVariablesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
+        const username = (await core.Supplier.get(this._options.username)) ?? process?.env["USERNAME"];
+        if (username == null) {
+            throw new errors.SeedBasicAuthEnvironmentVariablesError({
+                message:
+                    "Please specify a username by either passing it in to the constructor or initializing a USERNAME environment variable",
+            });
+        }
+
+        const accessToken = (await core.Supplier.get(this._options.accessToken)) ?? process?.env["PASSWORD"];
+        if (accessToken == null) {
+            throw new errors.SeedBasicAuthEnvironmentVariablesError({
+                message:
+                    "Please specify a accessToken by either passing it in to the constructor or initializing a PASSWORD environment variable",
+            });
+        }
+
         return core.BasicAuth.toAuthorizationHeader({
-            username: (await core.Supplier.get(this._options.username)) ?? process?.env["USERNAME"],
-            password: (await core.Supplier.get(this._options.password)) ?? process?.env["PASSWORD"],
+            username: username,
+            password: accessToken,
         });
     }
 }

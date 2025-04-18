@@ -10,7 +10,7 @@ exports[`compatible-ir-versions > simple failure 1`] = `
       "json",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
 ]
 `;

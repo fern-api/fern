@@ -2,53 +2,60 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Commons\Language;
+use Seed\Core\Json\JsonSerializableType;
 use DateTime;
-use Seed\Core\DateType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\Date;
+use Seed\Commons\Language;
 
-class GetSubmissionStateResponse extends SerializableType
+class GetSubmissionStateResponse extends JsonSerializableType
 {
-    /**
-     * @var string $submission
-     */
-    #[JsonProperty("submission")]
-    public string $submission;
-
-    /**
-     * @var Language $language
-     */
-    #[JsonProperty("language")]
-    public Language $language;
-
-    /**
-     * @var mixed $submissionTypeState
-     */
-    #[JsonProperty("submissionTypeState")]
-    public mixed $submissionTypeState;
-
     /**
      * @var ?DateTime $timeSubmitted
      */
-    #[JsonProperty("timeSubmitted"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('timeSubmitted'), Date(Date::TYPE_DATETIME)]
     public ?DateTime $timeSubmitted;
 
     /**
-     * @param string $submission
-     * @param Language $language
-     * @param mixed $submissionTypeState
-     * @param ?DateTime $timeSubmitted
+     * @var string $submission
+     */
+    #[JsonProperty('submission')]
+    public string $submission;
+
+    /**
+     * @var value-of<Language> $language
+     */
+    #[JsonProperty('language')]
+    public string $language;
+
+    /**
+     * @var SubmissionTypeState $submissionTypeState
+     */
+    #[JsonProperty('submissionTypeState')]
+    public SubmissionTypeState $submissionTypeState;
+
+    /**
+     * @param array{
+     *   submission: string,
+     *   language: value-of<Language>,
+     *   submissionTypeState: SubmissionTypeState,
+     *   timeSubmitted?: ?DateTime,
+     * } $values
      */
     public function __construct(
-        string $submission,
-        Language $language,
-        mixed $submissionTypeState,
-        ?DateTime $timeSubmitted = null,
+        array $values,
     ) {
-        $this->submission = $submission;
-        $this->language = $language;
-        $this->submissionTypeState = $submissionTypeState;
-        $this->timeSubmitted = $timeSubmitted;
+        $this->timeSubmitted = $values['timeSubmitted'] ?? null;
+        $this->submission = $values['submission'];
+        $this->language = $values['language'];
+        $this->submissionTypeState = $values['submissionTypeState'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

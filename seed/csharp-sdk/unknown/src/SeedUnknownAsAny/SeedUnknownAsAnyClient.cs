@@ -1,12 +1,10 @@
 using SeedUnknownAsAny.Core;
 
-#nullable enable
-
 namespace SeedUnknownAsAny;
 
 public partial class SeedUnknownAsAnyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedUnknownAsAnyClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedUnknownAsAnyClient
         Unknown = new UnknownClient(_client);
     }
 
-    public UnknownClient Unknown { get; init; }
+    public UnknownClient Unknown { get; }
 }

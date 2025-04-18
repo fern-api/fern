@@ -1,34 +1,32 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedTrace;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetExecutionSessionsStateTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
               "states": {
-                "string": {
-                  "lastTimeContacted": "string",
-                  "sessionId": "string",
+                "states": {
+                  "lastTimeContacted": "lastTimeContacted",
+                  "sessionId": "sessionId",
                   "isWarmInstance": true,
-                  "awsTaskId": "string",
+                  "awsTaskId": "awsTaskId",
                   "language": "JAVA",
                   "status": "CREATING_CONTAINER"
                 }
               },
               "numWarmingInstances": 1,
               "warmingSessionIds": [
-                "string"
+                "warmingSessionIds",
+                "warmingSessionIds"
               ]
             }
             """;
@@ -47,10 +45,11 @@ public class GetExecutionSessionsStateTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Submission.GetExecutionSessionsStateAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Submission.GetExecutionSessionsStateAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<GetExecutionSessionStateResponse>(mockResponse))
+                .UsingDefaults()
+        );
     }
 }

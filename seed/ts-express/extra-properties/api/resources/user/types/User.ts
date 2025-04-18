@@ -4,4 +4,6 @@
 
 export interface User {
     name: string;
+    /** Accepts any additional properties */
+    [key: string]: any;
 }

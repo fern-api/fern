@@ -25,18 +25,18 @@ export const ActualResult: core.serialization.Schema<serializers.ActualResult.Ra
         });
 
 export declare namespace ActualResult {
-    type Raw = ActualResult.Value | ActualResult.Exception | ActualResult.ExceptionV2;
+    export type Raw = ActualResult.Value | ActualResult.Exception | ActualResult.ExceptionV2;
 
-    interface Value {
+    export interface Value {
         type: "value";
         value: serializers.VariableValue.Raw;
     }
 
-    interface Exception extends ExceptionInfo.Raw {
+    export interface Exception extends ExceptionInfo.Raw {
         type: "exception";
     }
 
-    interface ExceptionV2 {
+    export interface ExceptionV2 {
         type: "exceptionV2";
         value: ExceptionV2.Raw;
     }

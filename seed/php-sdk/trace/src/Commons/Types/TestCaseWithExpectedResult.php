@@ -2,32 +2,41 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseWithExpectedResult extends SerializableType
+class TestCaseWithExpectedResult extends JsonSerializableType
 {
     /**
      * @var TestCase $testCase
      */
-    #[JsonProperty("testCase")]
+    #[JsonProperty('testCase')]
     public TestCase $testCase;
 
     /**
-     * @var mixed $expectedResult
+     * @var VariableValue $expectedResult
      */
-    #[JsonProperty("expectedResult")]
-    public mixed $expectedResult;
+    #[JsonProperty('expectedResult')]
+    public VariableValue $expectedResult;
 
     /**
-     * @param TestCase $testCase
-     * @param mixed $expectedResult
+     * @param array{
+     *   testCase: TestCase,
+     *   expectedResult: VariableValue,
+     * } $values
      */
     public function __construct(
-        TestCase $testCase,
-        mixed $expectedResult,
+        array $values,
     ) {
-        $this->testCase = $testCase;
-        $this->expectedResult = $expectedResult;
+        $this->testCase = $values['testCase'];
+        $this->expectedResult = $values['expectedResult'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

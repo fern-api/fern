@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoMissingErrorDiscriminantRule } from "../no-missing-error-discriminant";
 
@@ -17,7 +18,7 @@ describe("no-missing-error-discriminant", () => {
                 message: "error-discrimination is required because this API has declared errors.",
                 nodePath: ["error-discrimination"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

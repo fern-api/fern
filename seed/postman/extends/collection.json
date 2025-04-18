@@ -41,7 +41,7 @@
         "auth": null,
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"unique\": \"string\",\n    \"name\": \"string\",\n    \"docs\": \"string\"\n}",
+          "raw": "{\n    \"docs\": \"docs\",\n    \"name\": \"name\",\n    \"unique\": \"unique\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -79,7 +79,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"unique\": \"string\",\n    \"name\": \"string\",\n    \"docs\": \"string\"\n}",
+              "raw": "{\n    \"docs\": \"docs\",\n    \"name\": \"name\",\n    \"unique\": \"unique\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

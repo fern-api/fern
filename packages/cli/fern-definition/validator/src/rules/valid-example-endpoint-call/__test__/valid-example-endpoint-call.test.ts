@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidExampleEndpointCallRule } from "../valid-example-endpoint-call";
 
 describe("valid-example-endpoint-call", () => {
@@ -29,7 +30,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required header "endpointHeader"',
@@ -44,7 +45,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required header "serviceHeader"',
@@ -59,7 +60,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required header "endpointHeader"',
@@ -74,7 +75,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Unexpected header "extraHeader"',
@@ -89,7 +90,7 @@ describe("valid-example-endpoint-call", () => {
                     "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error"
+                severity: "fatal"
             },
 
             // path-parameters.yml
@@ -106,7 +107,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required path parameter "endpointPathParam"',
@@ -121,7 +122,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required path parameter "servicePathParam"',
@@ -136,7 +137,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required path parameter "endpointPathParam"',
@@ -151,7 +152,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Unexpected path parameter "extraParam"',
@@ -166,7 +167,7 @@ describe("valid-example-endpoint-call", () => {
                     "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error"
+                severity: "fatal"
             },
 
             // query-parameters.yml
@@ -183,7 +184,7 @@ describe("valid-example-endpoint-call", () => {
                     "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required query parameter "queryParam"',
@@ -198,7 +199,7 @@ describe("valid-example-endpoint-call", () => {
                     "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Unexpected query parameter "extraParam"',
@@ -213,7 +214,7 @@ describe("valid-example-endpoint-call", () => {
                     "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
-                severity: "error"
+                severity: "fatal"
             },
 
             // request.yml
@@ -230,7 +231,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Expected example to be a string. Example is: undefined",
@@ -245,7 +246,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Expected example to be a string. Example is: 123",
@@ -260,7 +261,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Expected example to be an object. Example is: 123",
@@ -275,7 +276,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required property "request.bar"',
@@ -290,7 +291,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Example is missing required property "request.foo"',
@@ -305,7 +306,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Unexpected property "extraProperty"',
@@ -320,7 +321,7 @@ describe("valid-example-endpoint-call", () => {
                     "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error"
+                severity: "fatal"
             },
 
             // response.yml
@@ -337,7 +338,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: 'Expected example to be a boolean. Example is: "hello"',
@@ -352,7 +353,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Expected example to be a string. Example is: undefined",
@@ -367,7 +368,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Expected example to be a string. Example is: true",
@@ -382,7 +383,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Unexpected response in example. ErrorWithNoBody does not have a body.",
@@ -397,7 +398,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message:
@@ -413,7 +414,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message:
@@ -429,7 +430,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Unexpected response in example. NotFoundError does not have a body.",
@@ -444,7 +445,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message:
@@ -460,7 +461,7 @@ describe("valid-example-endpoint-call", () => {
                     "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 
@@ -488,6 +489,51 @@ describe("valid-example-endpoint-call", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("server-sent-events")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [];
+
+        expect(violations).toEqual(expectedViolations);
+    });
+
+    it("endpoint-level-base-path", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleEndpointCallRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("endpoint-level-base-path")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [];
+
+        expect(violations).toEqual(expectedViolations);
+    });
+
+    it("endpoint-recursive-types", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleEndpointCallRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("endpoint-recursive-types")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [];
+
+        expect(violations).toEqual(expectedViolations);
+    });
+
+    it("extra-properties", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleEndpointCallRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("extra-properties")
             )
         });
 

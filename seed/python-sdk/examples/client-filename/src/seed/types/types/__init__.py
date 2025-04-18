@@ -2,6 +2,7 @@
 
 from .actor import Actor
 from .actress import Actress
+from .big_entity import BigEntity
 from .cast_member import CastMember
 from .directory import Directory
 from .entity import Entity
@@ -26,6 +27,7 @@ from .tree import Tree
 __all__ = [
     "Actor",
     "Actress",
+    "BigEntity",
     "CastMember",
     "Directory",
     "Entity",

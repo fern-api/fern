@@ -13,7 +13,7 @@ export const Foo: core.serialization.ObjectSchema<serializers.folderB.Foo.Raw, S
     });
 
 export declare namespace Foo {
-    interface Raw {
+    export interface Raw {
         foo?: FolderCFoo.Raw | null;
     }
 }

@@ -5,7 +5,7 @@ package literal
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/literal/fern/core"
+	internal "github.com/literal/fern/internal"
 )
 
 type SendResponse struct {
@@ -14,15 +14,29 @@ type SendResponse struct {
 	success bool
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
 }
 
-func (s *SendResponse) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
+func (s *SendResponse) GetMessage() string {
+	if s == nil {
+		return ""
+	}
+	return s.Message
+}
+
+func (s *SendResponse) GetStatus() int {
+	if s == nil {
+		return 0
+	}
+	return s.Status
 }
 
 func (s *SendResponse) Success() bool {
 	return s.success
+}
+
+func (s *SendResponse) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SendResponse) UnmarshalJSON(data []byte) error {
@@ -41,14 +55,12 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, true, unmarshaler.Success)
 	}
 	s.success = unmarshaler.Success
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s, "success")
+	extraProperties, err := internal.ExtractExtraProperties(data, *s, "success")
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -65,81 +77,13 @@ func (s *SendResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendResponse) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
 }
-
-type ANestedLiteral struct {
-	myLiteral string
-
-	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
-}
-
-func (a *ANestedLiteral) GetExtraProperties() map[string]interface{} {
-	return a.extraProperties
-}
-
-func (a *ANestedLiteral) MyLiteral() string {
-	return a.myLiteral
-}
-
-func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
-	type embed ANestedLiteral
-	var unmarshaler = struct {
-		embed
-		MyLiteral string `json:"myLiteral"`
-	}{
-		embed: embed(*a),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*a = ANestedLiteral(unmarshaler.embed)
-	if unmarshaler.MyLiteral != "How super cool" {
-		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "How super cool", unmarshaler.MyLiteral)
-	}
-	a.myLiteral = unmarshaler.MyLiteral
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a, "myLiteral")
-	if err != nil {
-		return err
-	}
-	a.extraProperties = extraProperties
-
-	a._rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (a *ANestedLiteral) MarshalJSON() ([]byte, error) {
-	type embed ANestedLiteral
-	var marshaler = struct {
-		embed
-		MyLiteral string `json:"myLiteral"`
-	}{
-		embed:     embed(*a),
-		MyLiteral: "How super cool",
-	}
-	return json.Marshal(marshaler)
-}
-
-func (a *ANestedLiteral) String() string {
-	if len(a._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(a._rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := core.StringifyJSON(a); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", a)
-}
-
-type SomeLiteral = string

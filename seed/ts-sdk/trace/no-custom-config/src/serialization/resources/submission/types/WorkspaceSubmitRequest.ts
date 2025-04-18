@@ -20,7 +20,7 @@ export const WorkspaceSubmitRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace WorkspaceSubmitRequest {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
         language: Language.Raw;
         submissionFiles: SubmissionFileInfo.Raw[];

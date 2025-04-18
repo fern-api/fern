@@ -19,7 +19,7 @@ export const ListUsersPaginationResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ListUsersPaginationResponse {
-    interface Raw {
+    export interface Raw {
         hasNextPage?: boolean | null;
         page?: Page.Raw | null;
         total_count: number;

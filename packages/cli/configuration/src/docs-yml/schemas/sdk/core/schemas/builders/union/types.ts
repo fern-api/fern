@@ -16,11 +16,11 @@ export type inferParsedUnion<D extends string | Discriminant<any, any>, U extend
 export type inferRawDiscriminant<D extends string | Discriminant<any, any>> = D extends string
     ? D
     : D extends Discriminant<infer Raw, any>
-    ? Raw
-    : never;
+      ? Raw
+      : never;
 
 export type inferParsedDiscriminant<D extends string | Discriminant<any, any>> = D extends string
     ? D
     : D extends Discriminant<any, infer Parsed>
-    ? Parsed
-    : never;
+      ? Parsed
+      : never;

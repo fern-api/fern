@@ -6,8 +6,6 @@ using SeedExhaustive.Core;
 using SeedExhaustive.GeneralErrors;
 using SeedExhaustive.Types.Object;
 
-#nullable enable
-
 namespace SeedExhaustive.InlinedRequests;
 
 public partial class InlinedRequestsClient
@@ -22,8 +20,7 @@ public partial class InlinedRequestsClient
     /// <summary>
     /// POST with custom object in request body, response is an object
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
     ///     new PostWithObjectBody
     ///     {
@@ -40,35 +37,36 @@ public partial class InlinedRequestsClient
     ///             Date = new DateOnly(2023, 1, 15),
     ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             Base64 = "SGVsbG8gd29ybGQh",
-    ///             List = new List<string>() { "string" },
-    ///             Set = new HashSet<string>() { "string" },
-    ///             Map = new Dictionary<int, string>() { { 1, "string" } },
-    ///             Bigint = "123456789123456789",
+    ///             List = new List&lt;string&gt;() { "list", "list" },
+    ///             Set = new HashSet&lt;string&gt;() { "set" },
+    ///             Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///             Bigint = "1000000",
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
         PostWithObjectBody request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/req-bodies/object",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/req-bodies/object",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -79,24 +77,27 @@ public partial class InlinedRequestsClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 400:
-                    throw new BadRequestBody(
-                        JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
-                    );
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestBody(
+                            JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+                        );
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

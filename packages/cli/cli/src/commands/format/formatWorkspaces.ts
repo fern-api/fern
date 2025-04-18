@@ -1,6 +1,7 @@
-import { Project } from "@fern-api/project-loader";
-import { OSSWorkspace } from "@fern-api/workspace-loader";
 import { formatWorkspace } from "@fern-api/fern-definition-formatter";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function formatWorkspaces({
@@ -19,7 +20,7 @@ export async function formatWorkspaces({
             }
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 await formatWorkspace({
-                    workspace: await workspace.toFernWorkspace({}),
+                    workspace: await workspace.toFernWorkspace({ context }),
                     context,
                     shouldFix
                 });

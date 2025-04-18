@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.undiscriminatedUnion = void 0;
+exports.undiscriminatedUnion = undiscriminatedUnion;
 const Schema_1 = require("../../Schema");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
 const schema_utils_1 = require("../schema-utils");
@@ -16,7 +16,6 @@ function undiscriminatedUnion(schemas) {
     };
     return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema));
 }
-exports.undiscriminatedUnion = undiscriminatedUnion;
 function validateAndTransformUndiscriminatedUnion(transform, schemas, opts) {
     const errors = [];
     for (const [index, schema] of schemas.entries()) {

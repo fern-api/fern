@@ -45,7 +45,7 @@ module SeedUnknownAsAnyClient
     # @return [Array<Object>]
     # @example
     #  unknown_as_any = SeedUnknownAsAnyClient::Client.new(base_url: "https://api.example.com")
-    #  unknown_as_any.unknown.post_object(request: {  })
+    #  unknown_as_any.unknown.post_object(request: { unknown: {"key":"value"} })
     def post_object(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -106,7 +106,7 @@ module SeedUnknownAsAnyClient
     # @return [Array<Object>]
     # @example
     #  unknown_as_any = SeedUnknownAsAnyClient::Client.new(base_url: "https://api.example.com")
-    #  unknown_as_any.unknown.post_object(request: {  })
+    #  unknown_as_any.unknown.post_object(request: { unknown: {"key":"value"} })
     def post_object(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

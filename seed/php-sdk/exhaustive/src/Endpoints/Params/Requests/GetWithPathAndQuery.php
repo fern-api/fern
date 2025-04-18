@@ -2,7 +2,9 @@
 
 namespace Seed\Endpoints\Params\Requests;
 
-class GetWithPathAndQuery
+use Seed\Core\Json\JsonSerializableType;
+
+class GetWithPathAndQuery extends JsonSerializableType
 {
     /**
      * @var string $query
@@ -10,11 +12,13 @@ class GetWithPathAndQuery
     public string $query;
 
     /**
-     * @param string $query
+     * @param array{
+     *   query: string,
+     * } $values
      */
     public function __construct(
-        string $query,
+        array $values,
     ) {
-        $this->query = $query;
+        $this->query = $values['query'];
     }
 }

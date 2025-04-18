@@ -1,18 +1,20 @@
+import { mkdir, writeFile } from "fs/promises";
+import yaml from "js-yaml";
+
 import {
     DEFAULT_GROUP_NAME,
     DEFINITION_DIRECTORY,
-    generatorsYml,
     GENERATORS_CONFIGURATION_FILENAME,
-    OPENAPI_DIRECTORY,
-    ROOT_API_FILENAME
-} from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+    GENERATOR_INVOCATIONS,
+    ROOT_API_FILENAME,
+    generatorsYml,
+    getLatestGeneratorVersion
+} from "@fern-api/configuration-loader";
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-import path from "path";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, relative } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 
 export async function createFernWorkspace({
@@ -52,19 +54,14 @@ export async function createOpenAPIWorkspace({
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
     }
-    const openAPIfilename = path.basename(openAPIFilePath);
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
         context,
         apiConfiguration: {
-            path: join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(openAPIfilename))
+            specs: [{ openapi: relative(directoryOfWorkspace, openAPIFilePath) }]
         }
     });
-    const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
-    await mkdir(openapiDirectory);
-    const openAPIContents = await readFile(openAPIFilePath);
-    await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
 }
 
 async function getDefaultGeneratorsConfiguration({
@@ -74,13 +71,13 @@ async function getDefaultGeneratorsConfiguration({
 }: {
     cliVersion: string;
     context: TaskContext;
-    apiConfiguration?: generatorsYml.APIConfigurationSchema;
+    apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     const defaultGeneratorName = "fernapi/fern-typescript-node-sdk";
-    const fallbackInvocation = generatorsYml.GENERATOR_INVOCATIONS[defaultGeneratorName];
+    const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorName];
 
     let version = fallbackInvocation.version;
-    const versionFromDB = await generatorsYml.getLatestGeneratorVersion({
+    const versionFromDB = await getLatestGeneratorVersion({
         cliVersion,
         generatorName: defaultGeneratorName,
         channel: undefined
@@ -123,11 +120,22 @@ async function writeGeneratorsConfiguration({
     filepath: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
-    apiConfiguration?: generatorsYml.APIConfigurationSchema;
+    apiConfiguration?: generatorsYml.ApiConfigurationV2Schema;
 }): Promise<void> {
     await writeFile(
         filepath,
-        yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
+        "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
+            yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }), {
+                sortKeys: (a, b) => {
+                    if (a === "api") {
+                        return -1;
+                    }
+                    if (b === "api") {
+                        return 1;
+                    }
+                    return a.localeCompare(b);
+                }
+            })
     );
 }
 

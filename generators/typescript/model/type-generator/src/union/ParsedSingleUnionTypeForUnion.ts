@@ -1,3 +1,11 @@
+import { BaseContext } from "@fern-typescript/contexts";
+import {
+    AbstractKnownSingleUnionType,
+    NoPropertiesSingleUnionTypeGenerator,
+    SinglePropertySingleUnionTypeGenerator,
+    SingleUnionTypeGenerator
+} from "@fern-typescript/union-generator";
+
 import {
     NameAndWireValue,
     SingleUnionType,
@@ -5,13 +13,7 @@ import {
     SingleUnionTypeProperty,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { ModelContext } from "@fern-typescript/contexts";
-import {
-    AbstractKnownSingleUnionType,
-    NoPropertiesSingleUnionTypeGenerator,
-    SinglePropertySingleUnionTypeGenerator,
-    SingleUnionTypeGenerator
-} from "@fern-typescript/union-generator";
+
 import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
 
 export declare namespace ParsedSingleUnionTypeForUnion {
@@ -22,10 +24,11 @@ export declare namespace ParsedSingleUnionTypeForUnion {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
-export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends AbstractKnownSingleUnionType<Context> {
+export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends AbstractKnownSingleUnionType<Context> {
     private singleUnionTypeFromUnion: SingleUnionType;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
@@ -37,7 +40,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
         includeUtilsOnUnionMembers,
         includeSerdeLayer,
         retainOriginalCasing,
-        noOptionalProperties
+        noOptionalProperties,
+        enableInlineTypes
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
@@ -45,7 +49,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
                 {
                     noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                     samePropertiesAsObject: (extended) =>
-                        new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended }),
+                        new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended, enableInlineTypes }),
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
@@ -54,7 +58,10 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
                             }),
                             getReferenceToPropertyType: (context) =>
                                 context.type.getReferenceToType(singleProperty.type),
-                            noOptionalProperties
+                            getReferenceToPropertyTypeForInlineUnion: (context) =>
+                                context.type.getReferenceToTypeForInlineUnion(singleProperty.type),
+                            noOptionalProperties,
+                            enableInlineTypes
                         }),
                     _other: () => {
                         throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);

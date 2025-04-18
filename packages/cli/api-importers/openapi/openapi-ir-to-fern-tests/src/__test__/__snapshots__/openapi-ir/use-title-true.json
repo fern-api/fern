@@ -1,0 +1,76 @@
+{
+  "title": "Hume AI Batch API",
+  "description": "The Batch API provides access to Hume models through an asynchronous job-based interface. You can submit a job to have many different files processed in parallel. The status of a job can then be checked with the job ID. Email notifications are available to alert on completed jobs.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "UnionJob": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "type",
+          "generatedName": "UnionJob",
+          "schemas": {
+            "EMBEDDING_GENERATION": {
+              "generatedName": "ComponentsSchemasUnionJobJobEmbeddingGeneration",
+              "schema": "UnionJob_Job<EmbeddingGeneration>",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "INFERENCE": {
+              "generatedName": "ComponentsSchemasUnionJobJobInference",
+              "schema": "UnionJob_Job<Inference>",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "TL_INFERENCE": {
+              "generatedName": "ComponentsSchemasUnionJobJobTlInference",
+              "schema": "UnionJob_Job<TlInference>",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "TRAINING": {
+              "generatedName": "ComponentsSchemasUnionJobJobTraining",
+              "schema": "UnionJob_Job<Training>",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

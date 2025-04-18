@@ -1,5 +1,6 @@
-import { AbstractGeneratorContext } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext } from "@fern-api/base-generator";
 import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
+
 import {
     AliasTypeDeclaration,
     DeclaredTypeName,
@@ -14,6 +15,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+
 import {
     generateAliasDefinitionFromTypeDeclaration,
     generateEnumDefinitionFromTypeDeclaration,
@@ -77,14 +79,14 @@ export class TypesGenerator {
     }
 
     // We pull all inherited properties onto the object because Ruby
-    // does not allow for multiple inheritence of classes, and does not
+    // does not allow for multiple inheritance of classes, and does not
     // have a concept of interfaces. We could leverage Modules, however inheriting
     // properties from Modules appears non-standard (functions is the more common usecase)
     private getFlattenedProperties(typeId: TypeId): ObjectProperty[] {
         const td = this.types.get(typeId);
         return td === undefined
             ? []
-            : this.flattenedProperties.get(typeId) ??
+            : (this.flattenedProperties.get(typeId) ??
                   td.shape._visit<ObjectProperty[]>({
                       alias: (atd: AliasTypeDeclaration) => {
                           return atd.aliasOf._visit<ObjectProperty[]>({
@@ -122,7 +124,7 @@ export class TypesGenerator {
                       _other: () => {
                           throw new Error("Attempting to type declaration for an unknown type.");
                       }
-                  });
+                  }));
     }
 
     // Create a main file for the gem, this just contains imports to all the types
@@ -269,7 +271,7 @@ export class TypesGenerator {
             fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
-    private generateUnkownFile(shape: Type): GeneratedRubyFile | undefined {
+    private generateUnknownFile(shape: Type): GeneratedRubyFile | undefined {
         throw new Error("Unknown type declaration shape: " + shape.type);
     }
 
@@ -284,7 +286,7 @@ export class TypesGenerator {
                 union: (utd: UnionTypeDeclaration) => this.generateUnionFile(typeId, utd, typeDeclaration),
                 undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
                     this.generateUndiscriminatedUnionFile(typeId, uutd, typeDeclaration),
-                _other: () => this.generateUnkownFile(typeDeclaration.shape)
+                _other: () => this.generateUnknownFile(typeDeclaration.shape)
             });
 
             if (generatedFile != null) {

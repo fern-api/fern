@@ -14,13 +14,13 @@ export const BasicCustomFiles: core.serialization.ObjectSchema<
     signature: core.serialization.lazyObject(() => serializers.v2.v3.NonVoidFunctionSignature),
     additionalFiles: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.v3.Files).optional(),
     ),
     basicTestCaseTemplate: core.serialization.lazyObject(() => serializers.v2.v3.BasicTestCaseTemplate),
 });
 
 export declare namespace BasicCustomFiles {
-    interface Raw {
+    export interface Raw {
         methodName: string;
         signature: serializers.v2.v3.NonVoidFunctionSignature.Raw;
         additionalFiles: Record<serializers.Language.Raw, serializers.v2.v3.Files.Raw | null | undefined>;

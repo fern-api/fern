@@ -1,6 +1,8 @@
+import inquirer, { ConfirmQuestion } from "inquirer";
+
 import { FernToken, getToken, isLoggedIn } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
-import inquirer, { ConfirmQuestion } from "inquirer";
+
 import { login } from "./login";
 
 export async function askToLogin(context: TaskContext): Promise<FernToken> {

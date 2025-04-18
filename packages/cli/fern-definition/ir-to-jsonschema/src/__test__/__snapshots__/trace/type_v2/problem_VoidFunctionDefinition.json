@@ -1,0 +1,228 @@
+{
+  "type": "object",
+  "properties": {
+    "parameters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/v2.problem.Parameter"
+      }
+    },
+    "code": {
+      "$ref": "#/definitions/v2.problem.FunctionImplementationForMultipleLanguages"
+    }
+  },
+  "required": [
+    "parameters",
+    "code"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.problem.ParameterId": {
+      "type": "string"
+    },
+    "commons.VariableType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "integerType",
+            "doubleType",
+            "booleanType",
+            "stringType",
+            "charType",
+            "listType",
+            "mapType",
+            "binaryTreeType",
+            "singlyLinkedListType",
+            "doublyLinkedListType"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "integerType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doubleType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "booleanType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stringType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "charType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "listType"
+            },
+            "valueType": {
+              "$ref": "#/definitions/commons.VariableType"
+            },
+            "isFixedLength": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "valueType"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "mapType"
+            },
+            "keyType": {
+              "$ref": "#/definitions/commons.VariableType"
+            },
+            "valueType": {
+              "$ref": "#/definitions/commons.VariableType"
+            }
+          },
+          "required": [
+            "type",
+            "keyType",
+            "valueType"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "binaryTreeType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "singlyLinkedListType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doublyLinkedListType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "v2.problem.Parameter": {
+      "type": "object",
+      "properties": {
+        "parameterId": {
+          "$ref": "#/definitions/v2.problem.ParameterId"
+        },
+        "name": {
+          "type": "string"
+        },
+        "variableType": {
+          "$ref": "#/definitions/commons.VariableType"
+        }
+      },
+      "required": [
+        "parameterId",
+        "name",
+        "variableType"
+      ],
+      "additionalProperties": false
+    },
+    "v2.problem.FunctionImplementation": {
+      "type": "object",
+      "properties": {
+        "impl": {
+          "type": "string"
+        },
+        "imports": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "impl"
+      ],
+      "additionalProperties": false
+    },
+    "v2.problem.FunctionImplementationForMultipleLanguages": {
+      "type": "object",
+      "properties": {
+        "codeByLanguage": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v2.problem.FunctionImplementation"
+          }
+        }
+      },
+      "required": [
+        "codeByLanguage"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

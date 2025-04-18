@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: Sample API
+  version: 1.0.0
+paths:
+  /a/{alpha}:
+    post:
+      summary: Test summary
+      description: Test description
+      parameters:
+        - name: alpha
+          in: path
+          required: true
+          schema:
+            type: string
+      operationId: operation-id-a
+      requestBody:
+        description: Request body containing beta
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '201':
+          description: Resource created successfully
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /a/b:
+    get:
+      summary: Test summary
+      description: Test description
+      parameters:
+        - name: alpha
+          in: query
+          required: true
+          schema:
+            type: string
+      operationId: operation-id-b
+      responses:
+        '200':
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: string

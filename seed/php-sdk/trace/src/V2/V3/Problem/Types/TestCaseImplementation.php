@@ -2,32 +2,41 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseImplementation extends SerializableType
+class TestCaseImplementation extends JsonSerializableType
 {
     /**
      * @var TestCaseImplementationDescription $description
      */
-    #[JsonProperty("description")]
+    #[JsonProperty('description')]
     public TestCaseImplementationDescription $description;
 
     /**
-     * @var mixed $function
+     * @var TestCaseFunction $function
      */
-    #[JsonProperty("function")]
-    public mixed $function;
+    #[JsonProperty('function')]
+    public TestCaseFunction $function;
 
     /**
-     * @param TestCaseImplementationDescription $description
-     * @param mixed $function
+     * @param array{
+     *   description: TestCaseImplementationDescription,
+     *   function: TestCaseFunction,
+     * } $values
      */
     public function __construct(
-        TestCaseImplementationDescription $description,
-        mixed $function,
+        array $values,
     ) {
-        $this->description = $description;
-        $this->function = $function;
+        $this->description = $values['description'];
+        $this->function = $values['function'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

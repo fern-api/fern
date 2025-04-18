@@ -2,32 +2,41 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ErroredResponse extends SerializableType
+class ErroredResponse extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
-     * @var mixed $errorInfo
+     * @var ErrorInfo $errorInfo
      */
-    #[JsonProperty("errorInfo")]
-    public mixed $errorInfo;
+    #[JsonProperty('errorInfo')]
+    public ErrorInfo $errorInfo;
 
     /**
-     * @param string $submissionId
-     * @param mixed $errorInfo
+     * @param array{
+     *   submissionId: string,
+     *   errorInfo: ErrorInfo,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        mixed $errorInfo,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->errorInfo = $errorInfo;
+        $this->submissionId = $values['submissionId'];
+        $this->errorInfo = $values['errorInfo'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

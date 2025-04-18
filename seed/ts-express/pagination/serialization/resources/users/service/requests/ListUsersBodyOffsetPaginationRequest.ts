@@ -14,7 +14,7 @@ export const ListUsersBodyOffsetPaginationRequest: core.serialization.Schema<
 });
 
 export declare namespace ListUsersBodyOffsetPaginationRequest {
-    interface Raw {
+    export interface Raw {
         pagination?: serializers.WithPage.Raw | null;
     }
 }

@@ -8,8 +8,8 @@ const client = new SeedIdempotencyHeadersClient({
 await client.payment.create({
   amount: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -19,8 +19,8 @@ const client = new SeedIdempotencyHeadersClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-await client.payment.delete("string");
- 
-```                        
+await client.payment.delete("paymentId");
+
+```
 
 

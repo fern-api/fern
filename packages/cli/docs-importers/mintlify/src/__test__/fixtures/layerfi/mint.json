@@ -1,0 +1,240 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Layer",
+  "logo": {
+    "dark": "/logo/layer_logo.svg",
+    "light": "/logo/layer_logo.svg",
+    "href": "http://layerfi.com"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#5ba183",
+    "light": "#7e9be5",
+    "dark": "#0c48e5",
+    "background": {
+      "dark": "#090014"
+    },
+    "anchors": {
+      "from": "#FF7F57",
+      "to": "#9563FF"
+    }
+  },
+  "modeToggle": {
+    "default": "light",
+    "isHidden": true
+  },
+  "topbarLinks": [],
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ],
+  "anchors": [],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": ["introduction", "authentication", "guides/business-onboarding"]
+    },
+    {
+      "group": "Importing Financial Data",
+      "pages": [
+        "guides/importing-data-overview",
+        "guides/importing-invoices",
+        "guides/importing-bank-transactions"
+      ]
+    },
+    {
+      "group": "Offering Accounting",
+      "pages": [
+        "guides/offering-accounting-overview",
+        "guides/transaction-categorization",
+        "guides/reporting"
+      ]
+    },
+    {
+      "group": "Embedded Components",
+      "pages": [
+        "guides/embedded-components"
+      ]
+    },
+    {
+      "group": "Businesses",
+      "pages": [
+        "api-reference/business",
+        "api-reference/list-businesses",
+        "api-reference/create-new-business",
+        "api-reference/get-business",
+        "api-reference/update-business",
+        "api-reference/archive-business",
+        "api-reference/list-chart-of-accounts-categories-for-business",
+        {
+          "group": "Plaid Configuration",
+          "pages": [
+            "api-reference/list-plaid-items-for-business",
+            "api-reference/delete-plaid-item-from-business",
+            "api-reference/get-plaid-item-configuration",
+            "api-reference/set-plaid-item-configuration",
+            "api-reference/unlink-and-archive-plaid-item-and-child-plaid-accounts",
+            "api-reference/create-plaid-item-link-token",
+            "api-reference/exchange-plaid-token-and-add-item-to-business",
+            "api-reference/update-plaid-link-link",
+            "api-reference/list-plaid-accounts-for-business",
+            "api-reference/archive-plaid-account",
+            "api-reference/reactivate-archived-plaid-account",
+            "api-reference/get-plaid-account-configuration",
+            "api-reference/set-plaid-account-configuration"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Financial Activities",
+      "pages": [
+        {
+          "group": "Transactions",
+          "pages": [
+            "api-reference/bank-transaction",
+            "api-reference/import-transactions",
+            "api-reference/list-transactions-from-business",
+            "api-reference/get-transaction-from-business",
+            "api-reference/categorize-transaction",
+            "api-reference/uncategorize-transaction",
+            "api-reference/match-transaction",
+            "api-reference/bulk-match-transactions",
+            "api-reference/list-transaction-ledger-entries"
+          ]
+        },
+        {
+          "group": "Payouts",
+          "pages": [
+            "api-reference/list-payouts-from-business",
+            "api-reference/get-payout-from-business"
+          ]
+        },
+        {
+          "group": "Accounts Receivable",
+          "pages": [
+            {
+              "group": "Invoices",
+              "pages": [
+                "api-reference/invoice",
+                "api-reference/get-invoice-from-business",
+                "api-reference/create-invoice-payments-from-batch",
+                "api-reference/delete-invoice-from-business"
+              ]
+            },
+            {
+              "group": "Payments",
+              "pages": [
+                "api-reference/payments",
+                "api-reference/list-invoice-payments-from-business",
+                "api-reference/create-invoice-payments-from-batch",
+                "api-reference/get-invoice-payment-from-business",
+                "api-reference/delete-invoice-payment-from-business"
+              ]
+            },
+            {
+              "group": "Refunds",
+              "pages": [
+                "api-reference/refunds",
+                "api-reference/list-refunds-from-business"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Reporting",
+      "pages": [
+        "api-reference/pnl",
+        "api-reference/get-profit-and-loss-report-for-business",
+        "api-reference/get-profit-and-loss-entries-from-business",
+        "api-reference/download-ledger-transactions-from-business-as-csv"
+      ]
+    },
+    {
+      "group": "General Ledger",
+      "pages": [
+        "api-reference/ledger",
+        "api-reference/list-account-balances-from-ledger",
+        "api-reference/get-chart-of-accounts-for-business",
+        "api-reference/get-ledger-from-business",
+        "api-reference/list-ledger-entries-from-business",
+        "api-reference/get-ledger-entry-from-business",
+        "api-reference/create-reversal-entry-for-ledger-entry",
+        "api-reference/create-manual-ledger-entries",
+        "api-reference/get-or-create-ledger-account-on-business",
+        "api-reference/list-ledger-account-line-items"
+      ]
+    },
+    {
+      "group": "External Accounts",
+      "pages": [
+        "api-reference/list-linked-external-accounts-from-business",
+        "api-reference/get-linked-external-account-from-business",
+        "api-reference/get-transactions-from-linked-external-account",
+        "api-reference/get-opening-balance-from-linked-external-account",
+        "api-reference/list-balance-timestamps-from-linked-external-account",
+        "api-reference/archive-linked-external-account",
+        {
+          "group": "Custom Accounts",
+          "pages": [
+            "api-reference/get-custom-account-from-business",
+            "api-reference/add-custom-account-for-business",
+            "api-reference/archive-custom-account-from-business",
+            "api-reference/reactivate-custom-account-from-business",
+            "api-reference/create-custom-account-balance-timestamp",
+            "api-reference/calculate-new-custom-account-opening-balance-entry"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Tags",
+      "pages": [
+        "api-reference/list-tags-applied-to-transaction",
+        "api-reference/apply-list-of-tags-to-list-of-transactions",
+        "api-reference/remove-tag-from-transaction",
+        "api-reference/list-tags-applied-to-payout",
+        "api-reference/apply-list-of-tags-to-list-of-payouts",
+        "api-reference/list-tags-applied-to-invoice",
+        "api-reference/apply-list-of-tags-to-list-of-invoices",
+        "api-reference/list-tags-applied-to-invoice-payment",
+        "api-reference/list-tags-applied-to-invoice-payment-allocation",
+        "api-reference/apply-list-of-tags-to-list-of-invoice-payment-allocations",
+        "api-reference/delete-tags-applied-to-payment-allocation"
+      ]
+    },
+    {
+      "group": "Client Admin",
+      "pages": [
+        "api-reference/get-client-info",
+        "api-reference/get-business-auth-token",
+        "api-reference/summary-of-activities-for-all-businesses",
+        "api-reference/summary-of-business-activities",
+        {
+          "group": "Configuration",
+          "pages": [
+            "api-reference/plaid",
+            "api-reference/get-plaid-client-id-and-secret",
+            "api-reference/configure-plaid-client-id-and-secret",
+            "api-reference/get-stripe-secret",
+            "api-reference/configure-stripe-secret"
+          ]
+        }
+      ]
+    }
+  ],
+  "api": {
+    "baseUrl": "https://sandbox.layerfi.com",
+    "auth": {
+      "method": "bearer"
+    },
+    "playground": {
+      "mode": "simple"
+    }
+  },
+  "openapi": ["/OpenApiSpec.yaml"]
+}

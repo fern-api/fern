@@ -1,8 +1,8 @@
 // HACKHACK: copied from cli folder
-
-import { Logger, LogLevel } from "@fern-api/logger";
-import { FernCliError } from "@fern-api/task-context";
 import chalk from "chalk";
+
+import { LogLevel, Logger } from "@fern-api/logger";
+import { FernCliError } from "@fern-api/task-context";
 
 export function logErrorMessage({
     message,

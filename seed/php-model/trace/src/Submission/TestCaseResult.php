@@ -2,41 +2,50 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Commons\VariableValue;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseResult extends SerializableType
+class TestCaseResult extends JsonSerializableType
 {
     /**
-     * @var mixed $expectedResult
+     * @var VariableValue $expectedResult
      */
-    #[JsonProperty("expectedResult")]
-    public mixed $expectedResult;
+    #[JsonProperty('expectedResult')]
+    public VariableValue $expectedResult;
 
     /**
-     * @var mixed $actualResult
+     * @var ActualResult $actualResult
      */
-    #[JsonProperty("actualResult")]
-    public mixed $actualResult;
+    #[JsonProperty('actualResult')]
+    public ActualResult $actualResult;
 
     /**
      * @var bool $passed
      */
-    #[JsonProperty("passed")]
+    #[JsonProperty('passed')]
     public bool $passed;
 
     /**
-     * @param mixed $expectedResult
-     * @param mixed $actualResult
-     * @param bool $passed
+     * @param array{
+     *   expectedResult: VariableValue,
+     *   actualResult: ActualResult,
+     *   passed: bool,
+     * } $values
      */
     public function __construct(
-        mixed $expectedResult,
-        mixed $actualResult,
-        bool $passed,
+        array $values,
     ) {
-        $this->expectedResult = $expectedResult;
-        $this->actualResult = $actualResult;
-        $this->passed = $passed;
+        $this->expectedResult = $values['expectedResult'];
+        $this->actualResult = $values['actualResult'];
+        $this->passed = $values['passed'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

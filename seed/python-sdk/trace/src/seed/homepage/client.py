@@ -2,12 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawHomepageClient
 from ..core.request_options import RequestOptions
 from ..commons.types.problem_id import ProblemId
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
-from ..core.pydantic_utilities import parse_obj_as
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawHomepageClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -15,7 +14,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class HomepageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawHomepageClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawHomepageClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawHomepageClient
+        """
+        return self._raw_client
 
     def get_homepage_problems(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -40,24 +50,8 @@ class HomepageClient:
         )
         client.homepage.get_homepage_problems()
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "homepage-problems",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return typing.cast(
-                typing.List[ProblemId],
-                parse_obj_as(
-                    type_=typing.List[ProblemId],  # type: ignore
-                    object_=_response_json,
-                ),
-            )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get_homepage_problems(request_options=request_options)
+        return response.data
 
     def set_homepage_problems(
         self, *, request: typing.Sequence[ProblemId], request_options: typing.Optional[RequestOptions] = None
@@ -83,28 +77,27 @@ class HomepageClient:
             token="YOUR_TOKEN",
         )
         client.homepage.set_homepage_problems(
-            request=["string"],
+            request=["string", "string"],
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "homepage-problems",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.set_homepage_problems(request=request, request_options=request_options)
+        return response.data
 
 
 class AsyncHomepageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawHomepageClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawHomepageClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawHomepageClient
+        """
+        return self._raw_client
 
     async def get_homepage_problems(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -137,24 +130,8 @@ class AsyncHomepageClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "homepage-problems",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return typing.cast(
-                typing.List[ProblemId],
-                parse_obj_as(
-                    type_=typing.List[ProblemId],  # type: ignore
-                    object_=_response_json,
-                ),
-            )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get_homepage_problems(request_options=request_options)
+        return response.data
 
     async def set_homepage_problems(
         self, *, request: typing.Sequence[ProblemId], request_options: typing.Optional[RequestOptions] = None
@@ -185,23 +162,11 @@ class AsyncHomepageClient:
 
         async def main() -> None:
             await client.homepage.set_homepage_problems(
-                request=["string"],
+                request=["string", "string"],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "homepage-problems",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.set_homepage_problems(request=request, request_options=request_options)
+        return response.data

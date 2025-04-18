@@ -2,9 +2,8 @@ import collections
 import inspect
 import typing
 
-import typing_extensions
-
 import pydantic
+import typing_extensions
 
 
 class FieldMetadata:
@@ -69,6 +68,24 @@ def convert_and_respect_annotation_metadata(
     if typing_extensions.is_typeddict(clean_type) and isinstance(object_, typing.Mapping):
         return _convert_mapping(object_, clean_type, direction)
 
+    if (
+        typing_extensions.get_origin(clean_type) == typing.Dict
+        or typing_extensions.get_origin(clean_type) == dict
+        or clean_type == typing.Dict
+    ) and isinstance(object_, typing.Dict):
+        key_type = typing_extensions.get_args(clean_type)[0]
+        value_type = typing_extensions.get_args(clean_type)[1]
+
+        return {
+            key: convert_and_respect_annotation_metadata(
+                object_=value,
+                annotation=annotation,
+                inner_type=value_type,
+                direction=direction,
+            )
+            for key, value in object_.items()
+        }
+
     # If you're iterating on a string, do not bother to coerce it to a sequence.
     if not isinstance(object_, str):
         if (
@@ -101,7 +118,6 @@ def convert_and_respect_annotation_metadata(
             )
             and isinstance(object_, typing.Sequence)
         ):
-
             inner_type = typing_extensions.get_args(clean_type)[0]
             return [
                 convert_and_respect_annotation_metadata(
@@ -142,7 +158,14 @@ def _convert_mapping(
     direction: typing.Literal["read", "write"],
 ) -> typing.Mapping[str, object]:
     converted_object: typing.Dict[str, object] = {}
-    annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
+    try:
+        annotations = typing_extensions.get_type_hints(
+            expected_type, include_extras=True
+        )
+    except NameError:
+        # The TypedDict contains a circular reference, so
+        # we use the __annotations__ attribute directly.
+        annotations = getattr(expected_type, "__annotations__", {})
     aliases_to_field_names = _get_alias_to_field_name(annotations)
     for key, value in object_.items():
         if direction == "read" and key in aliases_to_field_names:
@@ -162,9 +185,9 @@ def _convert_mapping(
                 object_=value, annotation=type_, direction=direction
             )
         else:
-            converted_object[
-                _alias_key(key, type_, direction, aliases_to_field_names)
-            ] = convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
+            converted_object[_alias_key(key, type_, direction, aliases_to_field_names)] = (
+                convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
+            )
     return converted_object
 
 

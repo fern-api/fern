@@ -1,3 +1,6 @@
+[project]
+name = "fern_websocket"
+
 [tool.poetry]
 name = "fern_websocket"
 version = "0.0.1"
@@ -32,6 +35,7 @@ Repository = 'https://github.com/websocket/fern'
 
 [tool.poetry.dependencies]
 python = "^3.8"
+pydantic = ">= 1.9.2"
 pydantic-core = "^2.18.2"
 
 [tool.poetry.dev-dependencies]

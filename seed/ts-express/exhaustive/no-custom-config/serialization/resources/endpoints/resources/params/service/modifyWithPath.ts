@@ -9,12 +9,12 @@ export const Request: core.serialization.Schema<serializers.endpoints.params.mod
     core.serialization.string();
 
 export declare namespace Request {
-    type Raw = string;
+    export type Raw = string;
 }
 
 export const Response: core.serialization.Schema<serializers.endpoints.params.modifyWithPath.Response.Raw, string> =
     core.serialization.string();
 
 export declare namespace Response {
-    type Raw = string;
+    export type Raw = string;
 }

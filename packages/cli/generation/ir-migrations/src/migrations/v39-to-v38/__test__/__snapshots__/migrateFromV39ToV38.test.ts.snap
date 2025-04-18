@@ -156,10 +156,10 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
               "request": {
                 "jsonExample": {
                   "audience": "https://api.example.com",
-                  "client_id": "string",
-                  "client_secret": "string",
+                  "client_id": "client_id",
+                  "client_secret": "client_secret",
                   "grant_type": "client_credentials",
-                  "scope": "string",
+                  "scope": undefined,
                 },
                 "properties": [
                   {
@@ -187,11 +187,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": "client_id",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "string",
+                            "original": "client_id",
                           },
                           "type": "string",
                         },
@@ -224,11 +224,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": "client_secret",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "string",
+                            "original": "client_secret",
                           },
                           "type": "string",
                         },
@@ -335,21 +335,10 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": undefined,
                       "shape": {
                         "container": {
-                          "optional": {
-                            "jsonExample": "string",
-                            "shape": {
-                              "primitive": {
-                                "string": {
-                                  "original": "string",
-                                },
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
-                          },
+                          "optional": null,
                           "type": "optional",
                         },
                         "type": "container",
@@ -362,9 +351,9 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "access_token": "string",
+                    "access_token": "access_token",
                     "expires_in": 1,
-                    "refresh_token": "string",
+                    "refresh_token": "refresh_token",
                   },
                   "shape": {
                     "shape": {
@@ -458,11 +447,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                             "typeId": "type_auth:TokenResponse",
                           },
                           "value": {
-                            "jsonExample": "string",
+                            "jsonExample": "access_token",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "string",
+                                  "original": "access_token",
                                 },
                                 "type": "string",
                               },
@@ -658,15 +647,15 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                             "typeId": "type_auth:TokenResponse",
                           },
                           "value": {
-                            "jsonExample": "string",
+                            "jsonExample": "refresh_token",
                             "shape": {
                               "container": {
                                 "optional": {
-                                  "jsonExample": "string",
+                                  "jsonExample": "refresh_token",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "string",
+                                        "original": "refresh_token",
                                       },
                                       "type": "string",
                                     },
@@ -1137,11 +1126,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
               "request": {
                 "jsonExample": {
                   "audience": "https://api.example.com",
-                  "client_id": "string",
-                  "client_secret": "string",
+                  "client_id": "client_id",
+                  "client_secret": "client_secret",
                   "grant_type": "refresh_token",
-                  "refresh_token": "string",
-                  "scope": "string",
+                  "refresh_token": "refresh_token",
+                  "scope": undefined,
                 },
                 "properties": [
                   {
@@ -1169,11 +1158,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": "client_id",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "string",
+                            "original": "client_id",
                           },
                           "type": "string",
                         },
@@ -1206,11 +1195,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": "client_secret",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "string",
+                            "original": "client_secret",
                           },
                           "type": "string",
                         },
@@ -1243,11 +1232,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": "refresh_token",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "string",
+                            "original": "refresh_token",
                           },
                           "type": "string",
                         },
@@ -1354,21 +1343,10 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": undefined,
                       "shape": {
                         "container": {
-                          "optional": {
-                            "jsonExample": "string",
-                            "shape": {
-                              "primitive": {
-                                "string": {
-                                  "original": "string",
-                                },
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
-                          },
+                          "optional": null,
                           "type": "optional",
                         },
                         "type": "container",
@@ -1381,9 +1359,9 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "access_token": "string",
+                    "access_token": "access_token",
                     "expires_in": 1,
-                    "refresh_token": "string",
+                    "refresh_token": "refresh_token",
                   },
                   "shape": {
                     "shape": {
@@ -1477,11 +1455,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                             "typeId": "type_auth:TokenResponse",
                           },
                           "value": {
-                            "jsonExample": "string",
+                            "jsonExample": "access_token",
                             "shape": {
                               "primitive": {
                                 "string": {
-                                  "original": "string",
+                                  "original": "access_token",
                                 },
                                 "type": "string",
                               },
@@ -1677,15 +1655,15 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                             "typeId": "type_auth:TokenResponse",
                           },
                           "value": {
-                            "jsonExample": "string",
+                            "jsonExample": "refresh_token",
                             "shape": {
                               "container": {
                                 "optional": {
-                                  "jsonExample": "string",
+                                  "jsonExample": "refresh_token",
                                   "shape": {
                                     "primitive": {
                                       "string": {
-                                        "original": "string",
+                                        "original": "refresh_token",
                                       },
                                       "type": "string",
                                     },
@@ -2912,11 +2890,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     },
                   },
                   "value": {
-                    "jsonExample": "string",
+                    "jsonExample": "id",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "string",
+                          "original": "id",
                         },
                         "type": "string",
                       },
@@ -3021,7 +2999,7 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                   },
                   "value": {
                     "jsonExample": {
-                      "name": "string",
+                      "name": "name",
                     },
                     "shape": {
                       "shape": {
@@ -3115,11 +3093,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                               "typeId": "type_service:User",
                             },
                             "value": {
-                              "jsonExample": "string",
+                              "jsonExample": "name",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "string",
+                                    "original": "name",
                                   },
                                   "type": "string",
                                 },
@@ -3224,18 +3202,18 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                   },
                   "value": {
                     "jsonExample": {
-                      "string": "string",
+                      "map": "map",
                     },
                     "shape": {
                       "container": {
                         "map": [
                           {
                             "key": {
-                              "jsonExample": "string",
+                              "jsonExample": "map",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "string",
+                                    "original": "map",
                                   },
                                   "type": "string",
                                 },
@@ -3243,11 +3221,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                               },
                             },
                             "value": {
-                              "jsonExample": "string",
+                              "jsonExample": "map",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "string",
+                                    "original": "map",
                                   },
                                   "type": "string",
                                 },
@@ -3257,51 +3235,6 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "type": "container",
-                    },
-                  },
-                },
-                {
-                  "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "optionalString",
-                        "unsafeName": "optionalString",
-                      },
-                      "originalName": "optionalString",
-                      "pascalCase": {
-                        "safeName": "OptionalString",
-                        "unsafeName": "OptionalString",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OPTIONAL_STRING",
-                        "unsafeName": "OPTIONAL_STRING",
-                      },
-                      "snakeCase": {
-                        "safeName": "optional_string",
-                        "unsafeName": "optional_string",
-                      },
-                    },
-                    "wireValue": "optionalString",
-                  },
-                  "value": {
-                    "jsonExample": "string",
-                    "shape": {
-                      "container": {
-                        "optional": {
-                          "jsonExample": "string",
-                          "shape": {
-                            "primitive": {
-                              "string": {
-                                "original": "string",
-                              },
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "optional",
                       },
                       "type": "container",
                     },
@@ -3332,7 +3265,7 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                   },
                   "value": {
                     "jsonExample": {
-                      "name": "string",
+                      "name": "name",
                     },
                     "shape": {
                       "shape": {
@@ -3426,11 +3359,11 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                               "typeId": "type_service:User",
                             },
                             "value": {
-                              "jsonExample": "string",
+                              "jsonExample": "name",
                               "shape": {
                                 "primitive": {
                                   "string": {
-                                    "original": "string",
+                                    "original": "name",
                                   },
                                   "type": "string",
                                 },
@@ -3534,61 +3467,15 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                     "wireValue": "filter",
                   },
                   "value": {
-                    "jsonExample": "string",
+                    "jsonExample": "filter",
                     "shape": {
                       "primitive": {
                         "string": {
-                          "original": "string",
+                          "original": "filter",
                         },
                         "type": "string",
                       },
                       "type": "primitive",
-                    },
-                  },
-                },
-                {
-                  "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "any",
-                        "unsafeName": "any",
-                      },
-                      "originalName": "any",
-                      "pascalCase": {
-                        "safeName": "Any",
-                        "unsafeName": "Any",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "ANY",
-                        "unsafeName": "ANY",
-                      },
-                      "snakeCase": {
-                        "safeName": "any",
-                        "unsafeName": "any",
-                      },
-                    },
-                    "wireValue": "any",
-                  },
-                  "value": {
-                    "jsonExample": {
-                      "key": "value",
-                    },
-                    "shape": {
-                      "container": {
-                        "optional": {
-                          "jsonExample": {
-                            "key": "value",
-                          },
-                          "shape": {
-                            "type": "unknown",
-                            "unknown": {
-                              "key": "value",
-                            },
-                          },
-                        },
-                        "type": "optional",
-                      },
-                      "type": "container",
                     },
                   },
                 },
@@ -3601,7 +3488,7 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/check/string",
+              "url": "/check/id",
             },
           ],
           "fullPath": {
@@ -4194,7 +4081,10 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                   "jsonExample": {
                     "users": [
                       {
-                        "name": "string",
+                        "name": "name",
+                      },
+                      {
+                        "name": "name",
                       },
                     ],
                   },
@@ -4292,7 +4182,10 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                           "value": {
                             "jsonExample": [
                               {
-                                "name": "string",
+                                "name": "name",
+                              },
+                              {
+                                "name": "name",
                               },
                             ],
                             "shape": {
@@ -4300,7 +4193,7 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                                 "list": [
                                   {
                                     "jsonExample": {
-                                      "name": "string",
+                                      "name": "name",
                                     },
                                     "shape": {
                                       "shape": {
@@ -4394,11 +4287,190 @@ exports[`migrateFromV39ToV38 > snapshot 1`] = `
                                               "typeId": "type_service:User",
                                             },
                                             "value": {
-                                              "jsonExample": "string",
+                                              "jsonExample": "name",
                                               "shape": {
                                                 "primitive": {
                                                   "string": {
-                                                    "original": "string",
+                                                    "original": "name",
+                                                  },
+                                                  "type": "string",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                            },
+                                          },
+                                        ],
+                                        "type": "object",
+                                      },
+                                      "type": "named",
+                                      "typeName": {
+                                        "fernFilepath": {
+                                          "allParts": [
+                                            {
+                                              "camelCase": {
+                                                "safeName": "service",
+                                                "unsafeName": "service",
+                                              },
+                                              "originalName": "service",
+                                              "pascalCase": {
+                                                "safeName": "Service",
+                                                "unsafeName": "Service",
+                                              },
+                                              "screamingSnakeCase": {
+                                                "safeName": "SERVICE",
+                                                "unsafeName": "SERVICE",
+                                              },
+                                              "snakeCase": {
+                                                "safeName": "service",
+                                                "unsafeName": "service",
+                                              },
+                                            },
+                                          ],
+                                          "file": {
+                                            "camelCase": {
+                                              "safeName": "service",
+                                              "unsafeName": "service",
+                                            },
+                                            "originalName": "service",
+                                            "pascalCase": {
+                                              "safeName": "Service",
+                                              "unsafeName": "Service",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "SERVICE",
+                                              "unsafeName": "SERVICE",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "service",
+                                              "unsafeName": "service",
+                                            },
+                                          },
+                                          "packagePath": [],
+                                        },
+                                        "name": {
+                                          "camelCase": {
+                                            "safeName": "user",
+                                            "unsafeName": "user",
+                                          },
+                                          "originalName": "User",
+                                          "pascalCase": {
+                                            "safeName": "User",
+                                            "unsafeName": "User",
+                                          },
+                                          "screamingSnakeCase": {
+                                            "safeName": "USER",
+                                            "unsafeName": "USER",
+                                          },
+                                          "snakeCase": {
+                                            "safeName": "user",
+                                            "unsafeName": "user",
+                                          },
+                                        },
+                                        "typeId": "type_service:User",
+                                      },
+                                    },
+                                  },
+                                  {
+                                    "jsonExample": {
+                                      "name": "name",
+                                    },
+                                    "shape": {
+                                      "shape": {
+                                        "properties": [
+                                          {
+                                            "name": {
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "name",
+                                                  "unsafeName": "name",
+                                                },
+                                                "originalName": "name",
+                                                "pascalCase": {
+                                                  "safeName": "Name",
+                                                  "unsafeName": "Name",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "NAME",
+                                                  "unsafeName": "NAME",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "name",
+                                                  "unsafeName": "name",
+                                                },
+                                              },
+                                              "wireValue": "name",
+                                            },
+                                            "originalTypeDeclaration": {
+                                              "fernFilepath": {
+                                                "allParts": [
+                                                  {
+                                                    "camelCase": {
+                                                      "safeName": "service",
+                                                      "unsafeName": "service",
+                                                    },
+                                                    "originalName": "service",
+                                                    "pascalCase": {
+                                                      "safeName": "Service",
+                                                      "unsafeName": "Service",
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                      "safeName": "SERVICE",
+                                                      "unsafeName": "SERVICE",
+                                                    },
+                                                    "snakeCase": {
+                                                      "safeName": "service",
+                                                      "unsafeName": "service",
+                                                    },
+                                                  },
+                                                ],
+                                                "file": {
+                                                  "camelCase": {
+                                                    "safeName": "service",
+                                                    "unsafeName": "service",
+                                                  },
+                                                  "originalName": "service",
+                                                  "pascalCase": {
+                                                    "safeName": "Service",
+                                                    "unsafeName": "Service",
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "safeName": "SERVICE",
+                                                    "unsafeName": "SERVICE",
+                                                  },
+                                                  "snakeCase": {
+                                                    "safeName": "service",
+                                                    "unsafeName": "service",
+                                                  },
+                                                },
+                                                "packagePath": [],
+                                              },
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "user",
+                                                  "unsafeName": "user",
+                                                },
+                                                "originalName": "User",
+                                                "pascalCase": {
+                                                  "safeName": "User",
+                                                  "unsafeName": "User",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "USER",
+                                                  "unsafeName": "USER",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "user",
+                                                  "unsafeName": "user",
+                                                },
+                                              },
+                                              "typeId": "type_service:User",
+                                            },
+                                            "value": {
+                                              "jsonExample": "name",
+                                              "shape": {
+                                                "primitive": {
+                                                  "string": {
+                                                    "original": "name",
                                                   },
                                                   "type": "string",
                                                 },

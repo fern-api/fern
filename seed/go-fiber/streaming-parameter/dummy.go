@@ -5,14 +5,33 @@ package streaming
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/streaming-parameter/fern/core"
+	internal "github.com/streaming-parameter/fern/internal"
 )
+
+type GenerateRequest struct {
+	Stream    bool `json:"stream" url:"-"`
+	NumEvents int  `json:"num_events" url:"-"`
+}
 
 type RegularResponse struct {
 	Id   string  `json:"id" url:"id"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (r *RegularResponse) GetId() string {
+	if r == nil {
+		return ""
+	}
+	return r.Id
+}
+
+func (r *RegularResponse) GetName() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Name
 }
 
 func (r *RegularResponse) GetExtraProperties() map[string]interface{} {
@@ -26,18 +45,16 @@ func (r *RegularResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = RegularResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
 	return nil
 }
 
 func (r *RegularResponse) String() string {
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -48,6 +65,20 @@ type StreamResponse struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (s *StreamResponse) GetId() string {
+	if s == nil {
+		return ""
+	}
+	return s.Id
+}
+
+func (s *StreamResponse) GetName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Name
 }
 
 func (s *StreamResponse) GetExtraProperties() map[string]interface{} {
@@ -61,18 +92,16 @@ func (s *StreamResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StreamResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
 	return nil
 }
 
 func (s *StreamResponse) String() string {
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)

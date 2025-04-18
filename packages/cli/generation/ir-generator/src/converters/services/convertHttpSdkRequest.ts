@@ -1,6 +1,8 @@
-import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, parseRawBytesType, RawSchemas } from "@fern-api/fern-definition-schema";
 import { size } from "lodash-es";
+
+import { RawSchemas, isInlineRequestBody, parseRawBytesType } from "@fern-api/fern-definition-schema";
+import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -10,7 +12,7 @@ import { getRequestPropertyComponents } from "./convertProperty";
 export const DEFAULT_REQUEST_PARAMETER_NAME = "request";
 export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = "body";
 
-export async function convertHttpSdkRequest({
+export function convertHttpSdkRequest({
     request,
     endpointKey,
     endpoint,
@@ -26,7 +28,7 @@ export async function convertHttpSdkRequest({
     file: FernFileContext;
     typeResolver: TypeResolver;
     propertyResolver: PropertyResolver;
-}): Promise<SdkRequest | undefined> {
+}): SdkRequest | undefined {
     const shape = convertHttpSdkRequestShape({ request, service, file, typeResolver });
     if (shape == null) {
         return undefined;
@@ -36,7 +38,7 @@ export async function convertHttpSdkRequest({
         requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME),
         streamParameter:
             endpoint["stream-condition"] != null
-                ? await propertyResolver.resolveRequestPropertyOrThrow({
+                ? propertyResolver.resolveRequestPropertyOrThrow({
                       file,
                       endpoint: endpointKey,
                       propertyComponents: getRequestPropertyComponents(endpoint["stream-condition"])
@@ -62,7 +64,9 @@ function convertHttpSdkRequestShape({
         }
         return SdkRequestShape.wrapper({
             wrapperName: file.casingsGenerator.generateName(request.name),
-            bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER)
+            bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER),
+            includePathParameters: shouldIncludePathParametersInWrapper(request),
+            onlyPathParameters: doesRequestHaveOnlyPathParameters({ request, file, typeResolver })
         });
     };
 
@@ -107,7 +111,9 @@ export function getSdkJustRequestBodyType({
     if (rawBytes != null) {
         return SdkRequestBodyType.bytes({
             isOptional: rawBytes.isOptional,
-            contentType
+            contentType,
+            docs: undefined,
+            v2Examples: undefined
         });
     }
     return SdkRequestBodyType.typeReference(
@@ -128,9 +134,34 @@ export function doesRequestHaveNonBodyProperties({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): boolean {
-    const { headers = {}, "query-parameters": queryParameters = {} } = request;
+    const { headers = {}, "path-parameters": pathParameters = {}, "query-parameters": queryParameters = {} } = request;
 
-    return !areAllHeadersLiteral({ headers, file, typeResolver }) || size(queryParameters) > 0;
+    return (
+        !areAllHeadersLiteral({ headers, file, typeResolver }) || size(pathParameters) > 0 || size(queryParameters) > 0
+    );
+}
+
+function doesRequestHaveOnlyPathParameters({
+    request,
+    file,
+    typeResolver
+}: {
+    request: RawSchemas.HttpRequestSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): boolean {
+    const { headers = {}, "path-parameters": pathParameters = {}, "query-parameters": queryParameters = {} } = request;
+
+    return (
+        size(pathParameters) > 0 &&
+        areAllHeadersLiteral({ headers, file, typeResolver }) &&
+        size(queryParameters) === 0 &&
+        request.body == null
+    );
+}
+
+function shouldIncludePathParametersInWrapper(request: RawSchemas.HttpRequestSchema): boolean {
+    return typeof request !== "string" && request?.["path-parameters"] != null;
 }
 
 function areAllHeadersLiteral({

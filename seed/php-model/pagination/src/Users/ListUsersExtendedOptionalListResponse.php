@@ -2,23 +2,40 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Users\Traits\UserOptionalListPage;
+use Seed\Core\Json\JsonProperty;
 
-class ListUsersExtendedOptionalListResponse extends SerializableType
+class ListUsersExtendedOptionalListResponse extends JsonSerializableType
 {
+    use UserOptionalListPage;
+
     /**
      * @var int $totalCount The totall number of /users
      */
-    #[JsonProperty("total_count")]
+    #[JsonProperty('total_count')]
     public int $totalCount;
 
     /**
-     * @param int $totalCount The totall number of /users
+     * @param array{
+     *   data: UserOptionalListContainer,
+     *   totalCount: int,
+     *   next?: ?string,
+     * } $values
      */
     public function __construct(
-        int $totalCount,
+        array $values,
     ) {
-        $this->totalCount = $totalCount;
+        $this->data = $values['data'];
+        $this->next = $values['next'] ?? null;
+        $this->totalCount = $values['totalCount'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

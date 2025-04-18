@@ -16,7 +16,7 @@
 
 ```typescript
 await client.package.test({
-    for: "string",
+    for: "for",
 });
 ```
 

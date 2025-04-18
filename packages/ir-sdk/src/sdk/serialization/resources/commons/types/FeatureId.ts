@@ -10,5 +10,5 @@ export const FeatureId: core.serialization.Schema<serializers.FeatureId.Raw, Fer
     core.serialization.string();
 
 export declare namespace FeatureId {
-    type Raw = string;
+    export type Raw = string;
 }

@@ -6,11 +6,13 @@ package com.seed.exhaustive.resources.endpoints;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.Suppliers;
 import com.seed.exhaustive.resources.endpoints.container.ContainerClient;
+import com.seed.exhaustive.resources.endpoints.contenttype.ContentTypeClient;
 import com.seed.exhaustive.resources.endpoints.enum_.EnumClient;
 import com.seed.exhaustive.resources.endpoints.httpmethods.HttpMethodsClient;
 import com.seed.exhaustive.resources.endpoints.object.ObjectClient;
 import com.seed.exhaustive.resources.endpoints.params.ParamsClient;
 import com.seed.exhaustive.resources.endpoints.primitive.PrimitiveClient;
+import com.seed.exhaustive.resources.endpoints.put.PutClient;
 import com.seed.exhaustive.resources.endpoints.union.UnionClient;
 import java.util.function.Supplier;
 
@@ -18,6 +20,8 @@ public class EndpointsClient {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ContainerClient> containerClient;
+
+    protected final Supplier<ContentTypeClient> contentTypeClient;
 
     protected final Supplier<EnumClient> enumClient;
 
@@ -29,21 +33,29 @@ public class EndpointsClient {
 
     protected final Supplier<PrimitiveClient> primitiveClient;
 
+    protected final Supplier<PutClient> putClient;
+
     protected final Supplier<UnionClient> unionClient;
 
     public EndpointsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.containerClient = Suppliers.memoize(() -> new ContainerClient(clientOptions));
+        this.contentTypeClient = Suppliers.memoize(() -> new ContentTypeClient(clientOptions));
         this.enumClient = Suppliers.memoize(() -> new EnumClient(clientOptions));
         this.httpMethodsClient = Suppliers.memoize(() -> new HttpMethodsClient(clientOptions));
         this.objectClient = Suppliers.memoize(() -> new ObjectClient(clientOptions));
         this.paramsClient = Suppliers.memoize(() -> new ParamsClient(clientOptions));
         this.primitiveClient = Suppliers.memoize(() -> new PrimitiveClient(clientOptions));
+        this.putClient = Suppliers.memoize(() -> new PutClient(clientOptions));
         this.unionClient = Suppliers.memoize(() -> new UnionClient(clientOptions));
     }
 
     public ContainerClient container() {
         return this.containerClient.get();
+    }
+
+    public ContentTypeClient contentType() {
+        return this.contentTypeClient.get();
     }
 
     public EnumClient enum_() {
@@ -64,6 +76,10 @@ public class EndpointsClient {
 
     public PrimitiveClient primitive() {
         return this.primitiveClient.get();
+    }
+
+    public PutClient put() {
+        return this.putClient.get();
     }
 
     public UnionClient union() {

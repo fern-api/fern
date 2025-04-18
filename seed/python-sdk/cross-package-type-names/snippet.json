@@ -35,8 +35,8 @@
                 "identifier_override": "endpoint_foo.find"
             },
             "snippet": {
-                "sync_client": "from seed import SeedCrossPackageTypeNames\n\nclient = SeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.foo.find(\n    optional_string=\"string\",\n    public_property=\"string\",\n    private_property=1,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedCrossPackageTypeNames\n\nclient = AsyncSeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.foo.find(\n        optional_string=\"string\",\n        public_property=\"string\",\n        private_property=1,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedCrossPackageTypeNames\n\nclient = SeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.foo.find(\n    optional_string=\"optionalString\",\n    public_property=\"publicProperty\",\n    private_property=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedCrossPackageTypeNames\n\nclient = AsyncSeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.foo.find(\n        optional_string=\"optionalString\",\n        public_property=\"publicProperty\",\n        private_property=1,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

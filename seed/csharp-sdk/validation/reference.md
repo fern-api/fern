@@ -15,9 +15,9 @@
 await client.CreateAsync(
     new CreateRequest
     {
-        Decimal = 1.1,
-        Even = 1,
-        Name = "string",
+        Decimal = 2.2,
+        Even = 100,
+        Name = "foo",
         Shape = Shape.Square,
     }
 );
@@ -63,9 +63,9 @@ await client.CreateAsync(
 await client.GetAsync(
     new GetRequest
     {
-        Decimal = 1.1,
-        Even = 1,
-        Name = "string",
+        Decimal = 2.2,
+        Even = 100,
+        Name = "foo",
     }
 );
 ```

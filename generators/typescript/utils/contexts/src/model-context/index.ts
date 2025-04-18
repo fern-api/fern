@@ -1,3 +1,4 @@
 export { type ModelContext } from "./ModelContext";
-export * from "./type";
-export * from "./type-schema";
+
+export * from "../base-context/type";
+export * from "../base-context/type-schema";

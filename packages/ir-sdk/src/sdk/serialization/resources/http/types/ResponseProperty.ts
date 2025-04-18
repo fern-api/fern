@@ -17,7 +17,7 @@ export const ResponseProperty: core.serialization.ObjectSchema<
 });
 
 export declare namespace ResponseProperty {
-    interface Raw {
+    export interface Raw {
         propertyPath?: Name.Raw[] | null;
         property: ObjectProperty.Raw;
     }

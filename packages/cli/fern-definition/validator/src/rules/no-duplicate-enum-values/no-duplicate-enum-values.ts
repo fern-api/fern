@@ -1,5 +1,7 @@
-import { isRawEnumDefinition } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { isRawEnumDefinition } from "@fern-api/fern-definition-schema";
+
 import { Rule } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 
@@ -20,7 +22,7 @@ export const NoDuplicateEnumValuesRule: Rule = {
                     );
 
                     return duplicatedValues.map((duplicatedValue) => ({
-                        severity: "error",
+                        severity: "fatal",
                         message: `Duplicated enum value: ${chalk.bold(duplicatedValue)}.`
                     }));
                 }

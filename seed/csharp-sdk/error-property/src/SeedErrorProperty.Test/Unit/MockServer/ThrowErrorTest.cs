@@ -1,10 +1,6 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedErrorProperty.Core;
-
-#nullable enable
 
 namespace SeedErrorProperty.Test.Unit.MockServer;
 
@@ -12,7 +8,7 @@ namespace SeedErrorProperty.Test.Unit.MockServer;
 public class ThrowErrorTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             "string"
@@ -32,10 +28,7 @@ public class ThrowErrorTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.PropertyBasedError.ThrowErrorAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.PropertyBasedError.ThrowErrorAsync();
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

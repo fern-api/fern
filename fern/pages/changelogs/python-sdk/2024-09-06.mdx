@@ -1,0 +1,7 @@
+## 4.0.0-rc1
+**`(fix):`** Update .dict calls in Pydantic V2 to be back to pre-3.10.4 logic.
+
+### What's been fixed
+- Pydantic V2 `.dict` calls are updated to be back to pre-3.10.4 logic. This is fix a regression where nested literals were being omitted due to the Pydantic V2 serializers not respecting the recursive .dict logic, as Pydantic V2 shells out `model_dump` calls to Rust library and serializers, as opposed to recursively calling `model_dump`.
+It is expected that performance will not be degraded given the Rust-based serializers have optimized performance, compared to the Pydantic V1 .dict approach.
+

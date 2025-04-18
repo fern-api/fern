@@ -9,25 +9,25 @@ export type CustomFiles =
     | SeedTrace.v2.v3.CustomFiles.Custom
     | SeedTrace.v2.v3.CustomFiles._Unknown;
 
-export declare namespace CustomFiles {
-    interface Basic extends SeedTrace.v2.v3.BasicCustomFiles, _Utils {
+export namespace CustomFiles {
+    export interface Basic extends SeedTrace.v2.v3.BasicCustomFiles, _Utils {
         type: "basic";
     }
 
-    interface Custom extends _Utils {
+    export interface Custom extends _Utils {
         type: "custom";
         value: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         basic: (value: SeedTrace.v2.v3.BasicCustomFiles) => _Result;
         custom: (value: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -41,7 +41,7 @@ export const CustomFiles = {
             type: "basic",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.CustomFiles.Basic,
-                visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.CustomFiles._visit(this, visitor);
             },
@@ -49,14 +49,14 @@ export const CustomFiles = {
     },
 
     custom: (
-        value: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>
+        value: Record<SeedTrace.Language, SeedTrace.v2.v3.Files | undefined>,
     ): SeedTrace.v2.v3.CustomFiles.Custom => {
         return {
             value: value,
             type: "custom",
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.CustomFiles.Custom,
-                visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.CustomFiles._visit(this, visitor);
             },
@@ -68,7 +68,7 @@ export const CustomFiles = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.v2.v3.CustomFiles._Unknown,
-                visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>
+                visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>,
             ) {
                 return SeedTrace.v2.v3.CustomFiles._visit(this, visitor);
             },
@@ -77,7 +77,7 @@ export const CustomFiles = {
 
     _visit: <_Result>(
         value: SeedTrace.v2.v3.CustomFiles,
-        visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>
+        visitor: SeedTrace.v2.v3.CustomFiles._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "basic":

@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organization.create({\n    name: \"string\"\n});\n"
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organization.create({\n    name: \"name\"\n});\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.metadata.getMetadata({\n    id: \"string\"\n});\n"
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.metadata.getMetadata({\n    id: \"id\"\n});\n"
             }
         }
     ],

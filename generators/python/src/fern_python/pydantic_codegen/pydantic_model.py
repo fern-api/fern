@@ -4,12 +4,11 @@ import dataclasses
 from types import TracebackType
 from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
+from .pydantic_field import PydanticField
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from pydantic import BaseModel
-
-from .pydantic_field import PydanticField
 
 # these are the properties that BaseModel already has
 BASE_MODEL_PROPERTIES = set(dir(BaseModel))
@@ -43,11 +42,11 @@ class PydanticModel:
         snippet: Optional[str] = None,
         extra_fields: Optional[Literal["allow", "forbid"]] = None,
         pydantic_base_model: Optional[AST.ClassReference] = None,
-        include_model_config: Optional[bool] = True,
+        is_root_model: bool = False,
     ):
         self._source_file = source_file
 
-        pydantic_base_model = pydantic_base_model or Pydantic.BaseModel()
+        pydantic_base_model = pydantic_base_model or Pydantic(version).BaseModel()
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [pydantic_base_model],
@@ -74,7 +73,7 @@ class PydanticModel:
         self._universal_root_validator = universal_root_validator
         self._universal_field_validator = universal_field_validator
 
-        self._include_model_config = include_model_config
+        self._is_root_model = is_root_model
 
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
         self._field_metadata_getter = field_metadata_getter
@@ -123,6 +122,7 @@ class PydanticModel:
             default_factory=field.default_factory,
             description=field.description,
             default=default_value,
+            version=self._version,
         )
 
         if is_aliased and not self._use_pydantic_field_aliases:
@@ -163,7 +163,7 @@ class PydanticModel:
                 type_hint=type_hint,
                 initializer=AST.Expression(
                     AST.ClassInstantiation(
-                        Pydantic.PrivateAttr(),
+                        Pydantic(self._version).PrivateAttr(),
                         kwargs=[("default_factory", default_factory)] if default_factory is not None else [],
                     )
                 ),
@@ -253,8 +253,8 @@ class PydanticModel:
     def set_root_type_unsafe_v1_only(
         self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None
     ) -> None:
-        if self._version != PydanticVersionCompatibility.V1:
-            raise RuntimeError("Overriding root types is only available in Pydantic v1")
+        if self._version not in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
+            raise RuntimeError("Overriding root types is only available in Pydantic v1 or v1_on_v2")
 
         if self._v1_root_type is not None:
             raise RuntimeError("__root__ was already added")
@@ -285,21 +285,23 @@ class PydanticModel:
     def add_partial_class(self) -> None:
         partial_class = AST.ClassDeclaration(
             name=PydanticModel._PARTIAL_CLASS_NAME,
-            extends=[
-                dataclasses.replace(
-                    base_model,
-                    qualified_name_excluding_import=base_model.qualified_name_excluding_import
-                    + (PydanticModel._PARTIAL_CLASS_NAME,),
-                )
-                for base_model in self._base_models
-            ]
-            if len(self._base_models) > 0
-            else [
-                AST.ClassReference(
-                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
-                    qualified_name_excluding_import=("TypedDict",),
-                )
-            ],
+            extends=(
+                [
+                    dataclasses.replace(
+                        base_model,
+                        qualified_name_excluding_import=base_model.qualified_name_excluding_import
+                        + (PydanticModel._PARTIAL_CLASS_NAME,),
+                    )
+                    for base_model in self._base_models
+                ]
+                if len(self._base_models) > 0
+                else [
+                    AST.ClassReference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
+                        qualified_name_excluding_import=("TypedDict",),
+                    )
+                ]
+            ),
         )
 
         for field in self.get_public_fields():
@@ -318,40 +320,76 @@ class PydanticModel:
             is_forward_reference=True,
         )
 
-    def _maybe_model_config(self) -> None:
+    def _get_v2_model_config(self) -> Optional[AST.Expression]:
         extra_fields = self._extra_fields
         config_kwargs: List[Tuple[str, AST.Expression]] = []
-        if extra_fields == "allow" or extra_fields == "forbid":
-            config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
+        if not self._is_root_model:
+            if extra_fields == "allow" or extra_fields == "forbid":
+                config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
         if self._frozen:
             config_kwargs.append(("frozen", AST.Expression("True")))
         if self._orm_mode:
             config_kwargs.append(("from_attributes", AST.Expression("True")))
 
         def write_extras(writer: AST.NodeWriter) -> None:
-            config_class = self._get_config_class()
-            if len(config_kwargs) > 0:
-                writer.write("if ")
-                # TODO: this class needs a context, then we can call get_is_pydantic_v2
-                writer.write_node(self._is_pydantic_v2)
-                writer.write_line(":")
-                with writer.indent():
-                    writer.write("model_config: ")
-                    writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
-                    writer.write(" = ")
-                    writer.write_node(
-                        AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=config_kwargs))
-                    )
-                    writer.write("  # type: ignore # Pydantic v2")
-                writer.write_newline_if_last_line_not()
-                writer.write_line("else:")
-                with writer.indent():
-                    if config_class is not None:
-                        writer.write_node(config_class)
-            elif config_class is not None:
-                writer.write_node(config_class)
+            writer.write("model_config: ")
+            writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic(self._version).ConfigDict())))
+            writer.write(" = ")
+            writer.write_node(
+                AST.Expression(AST.ClassInstantiation(Pydantic(self._version).ConfigDict(), kwargs=config_kwargs))
+            )
+            writer.write("  # type: ignore # Pydantic v2")
 
-        if self._include_model_config:
+        if len(config_kwargs) > 0:
+            return AST.Expression(AST.CodeWriter(write_extras))
+
+        return None
+
+    def _maybe_model_config(self) -> None:
+        v1_config_class = self._get_v1_config_class()
+        v2_model_config = self._get_v2_model_config()
+
+        def write_extras(writer: AST.NodeWriter) -> None:
+            if self._version == PydanticVersionCompatibility.Both:
+                if v1_config_class is not None and v2_model_config is not None:
+                    writer.write("if ")
+                    writer.write_node(self._is_pydantic_v2)
+                    writer.write_line(":")
+                    with writer.indent():
+                        writer.write_node(v2_model_config)
+                    writer.write_newline_if_last_line_not()
+                    writer.write_line("else:")
+                    with writer.indent():
+                        writer.write_node(v1_config_class)
+                elif v1_config_class is not None or v2_model_config is not None:
+                    writer.write("if ")
+                    if v2_model_config is None:
+                        writer.write("not ")
+                    writer.write_node(self._is_pydantic_v2)
+                    writer.write_line(":")
+                    with writer.indent():
+                        non_none_config = v1_config_class if v1_config_class is not None else v2_model_config
+                        assert non_none_config is not None
+                        writer.write_node(non_none_config)
+            elif self._version == PydanticVersionCompatibility.V1_ON_V2:
+                if v1_config_class is not None:
+                    writer.write_node(v1_config_class)
+            elif self._version == PydanticVersionCompatibility.V1 and v1_config_class is not None:
+                writer.write_node(v1_config_class)
+            elif self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None:
+                writer.write_node(v2_model_config)
+
+        if (
+            (
+                self._version == PydanticVersionCompatibility.Both
+                and (v1_config_class is not None or v2_model_config is not None)
+            )
+            or (
+                self._version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2)
+                and v1_config_class is not None
+            )
+            or (self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None)
+        ):
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self) -> None:
@@ -380,7 +418,7 @@ class PydanticModel:
             )
         )
 
-    def _get_config_class(self) -> Optional[AST.ClassDeclaration]:
+    def _get_v1_config_class(self) -> Optional[AST.ClassDeclaration]:
         config = AST.ClassDeclaration(name="Config")
 
         if self._frozen:
@@ -407,20 +445,21 @@ class PydanticModel:
                 )
             )
 
-        if self._extra_fields == "forbid":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.forbid(),
+        if not self._is_root_model:
+            if self._extra_fields == "forbid":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic(self._version).extra.forbid(),
+                    )
                 )
-            )
-        elif self._extra_fields == "allow":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.allow(),
+            elif self._extra_fields == "allow":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic(self._version).extra.allow(),
+                    )
                 )
-            )
 
         if len(config.class_vars) > 0:
             return config
@@ -444,12 +483,13 @@ def get_field_name_initializer(
     default: Optional[AST.Expression],
     default_factory: Optional[AST.Expression],
     description: Optional[str],
+    version: PydanticVersionCompatibility,
 ) -> Union[AST.Expression, None]:
     if alias is None and default_factory is None and description is None:
         return default
 
     def write(writer: AST.NodeWriter) -> None:
-        writer.write_reference(Pydantic.Field())
+        writer.write_reference(Pydantic(version).Field())
         writer.write("(")
         arg_present = False
         if alias is not None:

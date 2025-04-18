@@ -18,9 +18,9 @@ client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
 )
 client.create(
-    decimal=1.1,
-    even=1,
-    name="string",
+    decimal=2.2,
+    even=100,
+    name="foo",
     shape="SQUARE",
 )
 
@@ -101,9 +101,9 @@ client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
 )
 client.get(
-    decimal=1.1,
-    even=1,
-    name="string",
+    decimal=2.2,
+    even=100,
+    name="foo",
 )
 
 ```

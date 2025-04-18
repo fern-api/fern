@@ -29,6 +29,7 @@ class SeedBearerTokenEnvironmentVariable:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    version : typing.Optional[str]
     Examples
     --------
     from seed import SeedBearerTokenEnvironmentVariable
@@ -47,8 +48,11 @@ class SeedBearerTokenEnvironmentVariable:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        version: typing.Optional[str] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
@@ -62,6 +66,7 @@ class SeedBearerTokenEnvironmentVariable:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            version=version,
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
@@ -85,6 +90,7 @@ class AsyncSeedBearerTokenEnvironmentVariable:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    version : typing.Optional[str]
     Examples
     --------
     from seed import AsyncSeedBearerTokenEnvironmentVariable
@@ -103,8 +109,11 @@ class AsyncSeedBearerTokenEnvironmentVariable:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        version: typing.Optional[str] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
@@ -118,5 +127,6 @@ class AsyncSeedBearerTokenEnvironmentVariable:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            version=version,
         )
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)

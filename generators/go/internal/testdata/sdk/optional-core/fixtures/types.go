@@ -5,14 +5,21 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/optional-core/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/optional-core/fixtures/internal"
 )
 
 type Optional struct {
 	Value string `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (o *Optional) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 func (o *Optional) GetExtraProperties() map[string]interface{} {
@@ -26,24 +33,22 @@ func (o *Optional) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = Optional(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
-	o._rawJSON = json.RawMessage(data)
+	o.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (o *Optional) String() string {
-	if len(o._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(o._rawJSON); err == nil {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)

@@ -1,25 +1,27 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import {
-    isRawTextType,
-    NodePath,
-    parseRawBytesType,
-    parseRawFileType,
-    recursivelyVisitRawTypeReference,
-    parseGeneric
-} from "@fern-api/fern-definition-schema";
-import { visitDefinitionFileYamlAst, TypeReferenceLocation } from "../../ast";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
+
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import {
+    NodePath,
+    isRawTextType,
+    parseGeneric,
+    parseRawBytesType,
+    parseRawFileType,
+    recursivelyVisitRawTypeReference
+} from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { parseReferenceToTypeName } from "@fern-api/ir-generator";
+
 import { Rule, RuleViolation } from "../../Rule";
+import { TypeReferenceLocation, visitDefinitionFileYamlAst } from "../../ast";
 
 type TypeName = string;
 
 export const NoUndefinedTypeReferenceRule: Rule = {
     name: "no-undefined-type-reference",
-    create: async ({ workspace }) => {
-        const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = await getTypesByFilepath(workspace);
+    create: ({ workspace }) => {
+        const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = getTypesByFilepath(workspace);
 
         function doesTypeExist(reference: ReferenceToTypeName) {
             if (reference.parsed == null) {
@@ -69,7 +71,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                             if (parsedRawFileType.isOptional) {
                                 return [
                                     {
-                                        severity: "error",
+                                        severity: "fatal",
                                         message: "File response cannot be optional"
                                     }
                                 ];
@@ -81,12 +83,15 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 
                     const parsedBytesType = parseRawBytesType(typeReference);
                     if (parsedBytesType != null) {
-                        if (location === TypeReferenceLocation.RequestReference) {
+                        if (
+                            location === TypeReferenceLocation.RequestReference ||
+                            location === TypeReferenceLocation.Response
+                        ) {
                             return [];
                         } else {
                             return [
                                 {
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: "The bytes type can only be used as a request"
                                 }
                             ];
@@ -101,7 +106,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                         } else {
                             return [
                                 {
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: "The text type can only be used as a response or response-stream."
                                 }
                             ];
@@ -117,17 +122,17 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                     return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
                         if (namedType.parsed?.typeName != null && parseRawFileType(namedType.parsed.typeName) != null) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: "The file type can only be used as properties in inlined requests."
                             });
                         } else if (namedType.parsed?.typeName != null && isRawTextType(namedType.parsed.typeName)) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: "The text type can only be used as a response-stream or response."
                             });
                         } else if (!doesTypeExist(namedType) && !checkGenericType(namedType, nodePath)) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Type ${chalk.bold(
                                     namedType.parsed?.typeName ?? namedType.fullyQualifiedName
                                 )} is not defined.`
@@ -142,13 +147,13 @@ export const NoUndefinedTypeReferenceRule: Rule = {
     }
 };
 
-async function getTypesByFilepath(workspace: FernWorkspace) {
+function getTypesByFilepath(workspace: FernWorkspace) {
     const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = {};
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        await visitDefinitionFileYamlAst(file, {
+        visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 if (!typeName.isInlined) {
                     const maybeGenericDeclaration = parseGeneric(typeName.name);
@@ -197,6 +202,7 @@ function getAllNamedTypes({
             list: (namesInValueType) => namesInValueType,
             set: (namesInValueType) => namesInValueType,
             optional: (namesInValueType) => namesInValueType,
+            nullable: (namesInValueType) => namesInValueType,
             literal: () => [],
             named: (named) => {
                 const reference = parseReferenceToTypeName({

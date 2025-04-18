@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "filename": {
+      "type": "string"
+    },
+    "directory": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "filename",
+    "directory"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,13 +1,13 @@
-name: api
-error-discrimination:
-  strategy: status-code
-display-name: API Reference
-default-environment: Production
-environments:
-  Production: https://api.cohere.com
+auth: BearerAuthScheme
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer
     token:
       env: CO_API_KEY
-auth: BearerAuthScheme
+default-environment: Production
+display-name: API Reference
+environments:
+  Production: https://api.cohere.com
+error-discrimination:
+  strategy: status-code
+name: api

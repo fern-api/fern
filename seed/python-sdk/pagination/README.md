@@ -1,6 +1,6 @@
 # Seed Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_pagination)](https://pypi.python.org/pypi/fern_pagination)
 
 The Seed Python library provides convenient access to the Seed API from Python.
@@ -11,21 +11,31 @@ The Seed Python library provides convenient access to the Seed API from Python.
 pip install fern_pagination
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPagination
-from seed.users import WithCursor
+from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_body_cursor_pagination(
-    pagination=WithCursor(
-        cursor="string",
+response = client.complex_.search(
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
     ),
 )
 for item in response:
@@ -43,7 +53,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedPagination
-from seed.users import WithCursor
+from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
@@ -52,9 +62,15 @@ client = AsyncSeedPagination(
 
 
 async def main() -> None:
-    response = await client.users.list_with_body_cursor_pagination(
-        pagination=WithCursor(
-            cursor="string",
+    response = await client.complex_.search(
+        pagination=StartingAfterPaging(
+            per_page=1,
+            starting_after="starting_after",
+        ),
+        query=SingleFilterSearchRequest(
+            field="field",
+            operator="=",
+            value="value",
         ),
     )
     async for item in response:
@@ -76,7 +92,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.users.list_with_body_cursor_pagination(...)
+    client.complex_.search(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -88,16 +104,22 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from seed import SeedPagination
+from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = SeedPagination(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="string",
+response = client.complex_.search(
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
 )
 for item in response:
     yield item
@@ -111,10 +133,10 @@ for page in response.iter_pages():
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
@@ -123,7 +145,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_body_cursor_pagination(..., {
+client.complex_.search(..., request_options={
     "max_retries": 1
 })
 ```
@@ -143,7 +165,7 @@ client = SeedPagination(
 
 
 # Override timeout for a specific method
-client.users.list_with_body_cursor_pagination(..., {
+client.complex_.search(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -152,6 +174,7 @@ client.users.list_with_body_cursor_pagination(..., {
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedPagination

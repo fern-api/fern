@@ -1,12 +1,10 @@
 using SeedBytes.Core;
 
-#nullable enable
-
 namespace SeedBytes;
 
 public partial class SeedBytesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedBytesClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedBytesClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 }

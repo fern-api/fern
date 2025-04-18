@@ -2,80 +2,85 @@
 
 namespace Seed\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
+use Seed\Commons\Types\VariableType;
 use Seed\Commons\Types\TestCaseWithExpectedResult;
 
-class CreateProblemRequest extends SerializableType
+class CreateProblemRequest extends JsonSerializableType
 {
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var ProblemDescription $problemDescription
      */
-    #[JsonProperty("problemDescription")]
+    #[JsonProperty('problemDescription')]
     public ProblemDescription $problemDescription;
 
     /**
-     * @var array<Language, ProblemFiles> $files
+     * @var array<value-of<Language>, ProblemFiles> $files
      */
-    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
+    #[JsonProperty('files'), ArrayType(['string' => ProblemFiles::class])]
     public array $files;
 
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
+    #[JsonProperty('inputParams'), ArrayType([VariableTypeAndName::class])]
     public array $inputParams;
 
     /**
-     * @var mixed $outputType
+     * @var VariableType $outputType
      */
-    #[JsonProperty("outputType")]
-    public mixed $outputType;
+    #[JsonProperty('outputType')]
+    public VariableType $outputType;
 
     /**
      * @var array<TestCaseWithExpectedResult> $testcases
      */
-    #[JsonProperty("testcases"), ArrayType([TestCaseWithExpectedResult::class])]
+    #[JsonProperty('testcases'), ArrayType([TestCaseWithExpectedResult::class])]
     public array $testcases;
 
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
-     * @param string $problemName
-     * @param ProblemDescription $problemDescription
-     * @param array<Language, ProblemFiles> $files
-     * @param array<VariableTypeAndName> $inputParams
-     * @param mixed $outputType
-     * @param array<TestCaseWithExpectedResult> $testcases
-     * @param string $methodName
+     * @param array{
+     *   problemName: string,
+     *   problemDescription: ProblemDescription,
+     *   files: array<value-of<Language>, ProblemFiles>,
+     *   inputParams: array<VariableTypeAndName>,
+     *   outputType: VariableType,
+     *   testcases: array<TestCaseWithExpectedResult>,
+     *   methodName: string,
+     * } $values
      */
     public function __construct(
-        string $problemName,
-        ProblemDescription $problemDescription,
-        array $files,
-        array $inputParams,
-        mixed $outputType,
-        array $testcases,
-        string $methodName,
+        array $values,
     ) {
-        $this->problemName = $problemName;
-        $this->problemDescription = $problemDescription;
-        $this->files = $files;
-        $this->inputParams = $inputParams;
-        $this->outputType = $outputType;
-        $this->testcases = $testcases;
-        $this->methodName = $methodName;
+        $this->problemName = $values['problemName'];
+        $this->problemDescription = $values['problemDescription'];
+        $this->files = $values['files'];
+        $this->inputParams = $values['inputParams'];
+        $this->outputType = $values['outputType'];
+        $this->testcases = $values['testcases'];
+        $this->methodName = $values['methodName'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

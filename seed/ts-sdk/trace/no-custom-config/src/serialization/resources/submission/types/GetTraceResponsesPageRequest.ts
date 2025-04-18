@@ -14,7 +14,7 @@ export const GetTraceResponsesPageRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetTraceResponsesPageRequest {
-    interface Raw {
+    export interface Raw {
         offset?: number | null;
     }
 }

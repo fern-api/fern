@@ -1,0 +1,107 @@
+instances:
+  - url: https://layer.docs.buildwithfern.com
+title: Layer
+favicon: favicon.png
+logo:
+  light: logo/layer_logo.svg
+  dark: logo/layer_logo.svg
+  href: http://layerfi.com
+  height: 28
+colors:
+  accent-primary:
+    dark: '#0c48e5'
+    light: '#7e9be5'
+  background:
+    dark: '#090014'
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
+tabs:
+  api-reference:
+    slug: api-reference
+    display-name: API Reference
+  documentation:
+    display-name: Documentation
+    slug: documentation
+navigation:
+  - tab: api-reference
+    layout:
+      - section: Businesses
+        contents:
+          - page: Business object
+            path: api-reference/business.mdx
+          - section: Plaid Configuration
+            contents: []
+      - section: Financial Activities
+        contents:
+          - section: Transactions
+            contents:
+              - page: Bank Transaction object
+                path: api-reference/bank-transaction.mdx
+          - section: Payouts
+            contents: []
+          - section: Accounts Receivable
+            contents:
+              - section: Invoices
+                contents:
+                  - page: Invoice object
+                    path: api-reference/invoice.mdx
+              - section: Payments
+                contents:
+                  - page: Invoice Payment object
+                    path: api-reference/payments.mdx
+              - section: Refunds
+                contents:
+                  - page: Refunds object
+                    path: api-reference/refunds.mdx
+      - section: Reporting
+        contents:
+          - page: Profit and Loss object
+            path: api-reference/pnl.mdx
+      - section: General Ledger
+        contents:
+          - page: General Ledger objects
+            path: api-reference/ledger.mdx
+      - section: External Accounts
+        contents:
+          - section: Custom Accounts
+            contents: []
+      - section: Tags
+        contents: []
+      - section: Client Admin
+        contents:
+          - section: Configuration
+            contents:
+              - page: Plaid Configuration object
+                path: api-reference/plaid.mdx
+  - tab: documentation
+    layout:
+      - section: Get Started
+        contents:
+          - page: Overview
+            path: introduction.mdx
+          - page: Authentication
+            path: authentication.mdx
+          - page: Onboarding a Business
+            path: guides/business-onboarding.mdx
+      - section: Importing Financial Data
+        contents:
+          - page: Overview
+            path: guides/importing-data-overview.mdx
+          - page: Invoices and Payments
+            path: guides/importing-invoices.mdx
+          - page: Bank Accounts and Credit Cards
+            path: guides/importing-bank-transactions.mdx
+      - section: Offering Accounting
+        contents:
+          - page: Overview
+            path: guides/offering-accounting-overview.mdx
+          - page: Transaction Categorization
+            path: guides/transaction-categorization.mdx
+          - page: Accounting Reports
+            path: guides/reporting.mdx
+      - section: Embedded Components
+        contents:
+          - page: Overview
+            path: guides/embedded-components.mdx

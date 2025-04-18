@@ -2,32 +2,41 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class RecordedTestCaseUpdate extends SerializableType
+class RecordedTestCaseUpdate extends JsonSerializableType
 {
     /**
      * @var string $testCaseId
      */
-    #[JsonProperty("testCaseId")]
+    #[JsonProperty('testCaseId')]
     public string $testCaseId;
 
     /**
      * @var int $traceResponsesSize
      */
-    #[JsonProperty("traceResponsesSize")]
+    #[JsonProperty('traceResponsesSize')]
     public int $traceResponsesSize;
 
     /**
-     * @param string $testCaseId
-     * @param int $traceResponsesSize
+     * @param array{
+     *   testCaseId: string,
+     *   traceResponsesSize: int,
+     * } $values
      */
     public function __construct(
-        string $testCaseId,
-        int $traceResponsesSize,
+        array $values,
     ) {
-        $this->testCaseId = $testCaseId;
-        $this->traceResponsesSize = $traceResponsesSize;
+        $this->testCaseId = $values['testCaseId'];
+        $this->traceResponsesSize = $values['traceResponsesSize'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

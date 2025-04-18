@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedExhaustive;
 
-#nullable enable
-
 namespace SeedExhaustive.Test.Unit.MockServer;
 
 [TestFixture]
@@ -20,8 +18,8 @@ public class GetWithCustomHeaderTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/test-headers/custom-header")
-                    .WithHeader("X-TEST-SERVICE-HEADER", "string")
-                    .WithHeader("X-TEST-ENDPOINT-HEADER", "string")
+                    .WithHeader("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
+                    .WithHeader("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER")
                     .UsingPost()
                     .WithBody(requestJson)
             )
@@ -32,11 +30,10 @@ public class GetWithCustomHeaderTest : BaseMockServerTest
                 await Client.ReqWithHeaders.GetWithCustomHeaderAsync(
                     new ReqWithHeaders
                     {
-                        XTestEndpointHeader = "string",
-                        XTestServiceHeader = "string",
+                        XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
+                        XTestServiceHeader = "X-TEST-SERVICE-HEADER",
                         Body = "string",
-                    },
-                    RequestOptions
+                    }
                 )
         );
     }

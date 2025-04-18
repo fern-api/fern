@@ -1,5 +1,5 @@
-import { validateVersionConfigFileSchema } from "../../docsAst/validateVersionConfig";
 import { Rule } from "../../Rule";
+import { validateVersionConfigFileSchema } from "../../docsAst/validateVersionConfig";
 
 export const ValidateVersionFileRule: Rule = {
     name: "validate-version-file",
@@ -12,8 +12,8 @@ export const ValidateVersionFileRule: Rule = {
                 }
                 return [
                     {
-                        severity: "error",
-                        message: `Failed to parse ${path}: ${parseResult.message}`
+                        severity: "fatal",
+                        message: `${parseResult.message}`
                     }
                 ];
             }

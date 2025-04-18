@@ -16,7 +16,7 @@ export const PostWithObjectBody: core.serialization.Schema<
 });
 
 export declare namespace PostWithObjectBody {
-    interface Raw {
+    export interface Raw {
         string: string;
         integer: number;
         NestedObject: serializers.types.ObjectWithOptionalField.Raw;

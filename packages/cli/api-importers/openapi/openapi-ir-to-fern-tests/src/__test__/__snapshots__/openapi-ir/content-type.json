@@ -1,0 +1,339 @@
+{
+  "title": "Test content-type parsing.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Test upload",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "description": "The unique key",
+          "name": "corpus_key",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PostTestRequestCorpusKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostTestRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "metadata",
+            "schema": {
+              "value": {
+                "generatedName": "postTestRequestMetadata",
+                "value": {
+                  "generatedName": "PostTestRequestMetadata",
+                  "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "key": {
+                    "generatedName": "PostTestRequestMetadataKey",
+                    "schema": {
+                      "type": "string"
+                    }
+                  },
+                  "value": {
+                    "generatedName": "PostTestRequestMetadataValue",
+                    "type": "unknown"
+                  },
+                  "groupName": [],
+                  "type": "map"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          },
+          {
+            "key": "chunking_strategy",
+            "schema": {
+              "value": {
+                "generatedName": "postTestRequestChunkingStrategy",
+                "value": {
+                  "generatedName": "PostTestRequestChunkingStrategy",
+                  "schema": "ChunkingStrategy",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          },
+          {
+            "key": "filename",
+            "schema": {
+              "value": {
+                "generatedName": "postTestRequestFilename",
+                "value": {
+                  "generatedName": "PostTestRequestFilename",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Optional multipart section to override the filename.",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          },
+          {
+            "key": "file",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "description": "Binary file contents. The file name of the file will be used as the document ID.",
+            "contentType": "application/octet-stream, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.text, application/epub+zip, application/rtf, text/html, text/plain, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, text/markdown",
+            "exploded": false
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "response": {
+        "description": "The sample response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "PostTestResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Test multipart request with different content types.\n",
+      "authed": false,
+      "method": "POST",
+      "path": "/test",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "corpus_key",
+              "value": {
+                "value": {
+                  "value": "corpus_key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Test with dual Content-Type request types",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "description": "The unique key",
+          "name": "corpus_key",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PostExampleRequestCorpusKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostExampleRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postExampleRequestMetadata",
+              "key": "metadata",
+              "schema": {
+                "generatedName": "postExampleRequestMetadata",
+                "value": {
+                  "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "PostExampleRequestMetadataKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "PostExampleRequestMetadataValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "PostExampleRequestMetadata",
+                  "groupName": [],
+                  "type": "map"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostExampleRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "The sample response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "PostExampleResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Test request with dual content types.\n",
+      "authed": false,
+      "method": "POST",
+      "path": "/example",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "corpus_key",
+              "value": {
+                "value": {
+                  "value": "corpus_key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

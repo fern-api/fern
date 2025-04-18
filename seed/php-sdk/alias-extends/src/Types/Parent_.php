@@ -2,23 +2,33 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Parent_ extends SerializableType
+class Parent_ extends JsonSerializableType
 {
     /**
      * @var string $parent
      */
-    #[JsonProperty("parent")]
+    #[JsonProperty('parent')]
     public string $parent;
 
     /**
-     * @param string $parent
+     * @param array{
+     *   parent: string,
+     * } $values
      */
     public function __construct(
-        string $parent,
+        array $values,
     ) {
-        $this->parent = $parent;
+        $this->parent = $values['parent'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

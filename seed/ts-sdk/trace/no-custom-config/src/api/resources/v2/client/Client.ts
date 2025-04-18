@@ -9,14 +9,16 @@ import { Problem } from "../resources/problem/client/Client";
 import { V3 } from "../resources/v3/client/Client";
 
 export declare namespace V2 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,11 +27,24 @@ export declare namespace V2 {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class V2 {
+    protected _problem: Problem | undefined;
+    protected _v3: V3 | undefined;
+
     constructor(protected readonly _options: V2.Options = {}) {}
+
+    public get problem(): Problem {
+        return (this._problem ??= new Problem(this._options));
+    }
+
+    public get v3(): V3 {
+        return (this._v3 ??= new V3(this._options));
+    }
 
     /**
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
@@ -37,9 +52,16 @@ export class V2 {
      * @example
      *     await client.v2.test()
      */
-    public async test(requestOptions?: V2.RequestOptions): Promise<void> {
+    public test(requestOptions?: V2.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__test(requestOptions));
+    }
+
+    private async __test(requestOptions?: V2.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.SeedTraceEnvironment.Prod,
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -53,6 +75,7 @@ export class V2 {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -61,13 +84,14 @@ export class V2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -76,26 +100,16 @@ export class V2 {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected _problem: Problem | undefined;
-
-    public get problem(): Problem {
-        return (this._problem ??= new Problem(this._options));
-    }
-
-    protected _v3: V3 | undefined;
-
-    public get v3(): V3 {
-        return (this._v3 ??= new V3(this._options));
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

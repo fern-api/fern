@@ -1,8 +1,14 @@
-import { generatorsYml } from "@fern-api/configuration";
-import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import {
+    addGenerator,
+    getPathToGeneratorsConfiguration,
+    loadRawGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
+import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function addGeneratorToWorkspaces({
@@ -20,12 +26,12 @@ export async function addGeneratorToWorkspaces({
         apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const generatorsConfiguration =
-                    (await generatorsYml.loadRawGeneratorsConfiguration({
-                        absolutePathToWorkspace: workspace.absoluteFilepath,
+                    (await loadRawGeneratorsConfiguration({
+                        absolutePathToWorkspace: workspace.absoluteFilePath,
                         context
                     })) ?? {};
 
-                const newConfiguration = await generatorsYml.addGenerator({
+                const newConfiguration = await addGenerator({
                     generatorName,
                     generatorsConfiguration,
                     groupName,
@@ -33,12 +39,20 @@ export async function addGeneratorToWorkspaces({
                     cliVersion: cliContext.environment.packageVersion
                 });
 
-                await writeFile(
+                const absolutePathToGeneratorsConfiguration =
                     workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-                        generatorsYml.getPathToGeneratorsConfiguration({
-                            absolutePathToWorkspace: workspace.absoluteFilepath
-                        }),
-                    yaml.dump(newConfiguration)
+                    (await getPathToGeneratorsConfiguration({
+                        absolutePathToWorkspace: workspace.absoluteFilePath
+                    }));
+
+                if (absolutePathToGeneratorsConfiguration == null) {
+                    return;
+                }
+
+                await writeFile(
+                    absolutePathToGeneratorsConfiguration,
+                    "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
+                        yaml.dump(newConfiguration)
                 );
                 context.logger.info(chalk.green(`Added ${generatorName} generator`));
             });

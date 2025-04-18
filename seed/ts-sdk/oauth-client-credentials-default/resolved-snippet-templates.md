@@ -7,10 +7,10 @@ const client = new SeedOauthClientCredentialsDefaultClient({
   clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.getToken({
-  clientId: "string",
-  clientSecret: "string",
+  clientId: "client_id",
+  clientSecret: "client_secret",
 });
- 
-```                        
+
+```
 
 

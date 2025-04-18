@@ -89,7 +89,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"resource_type\": \"user\",\n    \"userName\": \"username\",\n    \"metadata_tags\": [\n        \"tag1\",\n        \"tag2\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"foo\": \"bar\",\n        \"baz\": \"qux\"\n    }\n}",
+              "body": "{\n    \"status\": \"ACTIVE\",\n    \"resource_type\": \"user\",\n    \"userName\": \"username\",\n    \"metadata_tags\": [\n        \"tag1\",\n        \"tag2\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"foo\": \"bar\",\n        \"baz\": \"qux\"\n    }\n}",
               "_postman_previewlanguage": "json"
             },
             {
@@ -112,7 +112,7 @@
                     {
                       "key": "ResourceID",
                       "description": null,
-                      "value": "string"
+                      "value": "ResourceID"
                     }
                   ]
                 },
@@ -128,7 +128,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"resource_type\": \"user\",\n    \"userName\": \"username\",\n    \"metadata_tags\": [\n        \"tag1\",\n        \"tag2\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"foo\": \"bar\",\n        \"baz\": \"qux\"\n    }\n}",
+              "body": "{\n    \"resource_type\": \"user\",\n    \"userName\": \"userName\",\n    \"metadata_tags\": [\n        \"metadata_tags\",\n        \"metadata_tags\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n    },\n    \"status\": \"ACTIVE\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -212,7 +212,7 @@
                 "body": null
               },
               "description": null,
-              "body": "[\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"username\",\n        \"metadata_tags\": [\n            \"tag1\",\n            \"tag2\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"foo\": \"bar\",\n            \"baz\": \"qux\"\n        }\n    }\n]",
+              "body": "[\n    {\n        \"resource_type\": \"user\",\n        \"status\": \"ACTIVE\",\n        \"userName\": \"username\",\n        \"metadata_tags\": [\n            \"tag1\",\n            \"tag2\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"foo\": \"bar\",\n            \"baz\": \"qux\"\n        }\n    }\n]",
               "_postman_previewlanguage": "json"
             },
             {
@@ -255,7 +255,7 @@
                 "body": null
               },
               "description": null,
-              "body": "[\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"username\",\n        \"metadata_tags\": [\n            \"tag1\",\n            \"tag2\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"foo\": \"bar\",\n            \"baz\": \"qux\"\n        }\n    }\n]",
+              "body": "[\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"userName\",\n        \"metadata_tags\": [\n            \"metadata_tags\",\n            \"metadata_tags\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n        },\n        \"status\": \"ACTIVE\"\n    },\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"userName\",\n        \"metadata_tags\": [\n            \"metadata_tags\",\n            \"metadata_tags\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"EXTRA_PROPERTIES\": \"EXTRA_PROPERTIES\"\n        },\n        \"status\": \"ACTIVE\"\n    }\n]",
               "_postman_previewlanguage": "json"
             }
           ]

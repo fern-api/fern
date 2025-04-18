@@ -1,5 +1,6 @@
 import { Audiences as ConfigAudiences } from "@fern-api/configuration";
 import { assertNever, noop } from "@fern-api/core-utils";
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
 import {
     ContainerType,
     DeclaredServiceName,
@@ -14,17 +15,21 @@ import {
     MultipleBaseUrlsEnvironment,
     SingleBaseUrlEnvironment,
     TypeReference,
+    WebSocketChannel,
+    WebSocketChannelId,
+    WebSocketMessageBody,
     Webhook,
     WebhookPayload
 } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
-import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
+
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
+import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
 import { getPropertiesByAudience } from "../utils/getPropertiesByAudience";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {
     AudienceId,
+    ChannelNode,
     EndpointId,
     EndpointNode,
     EnvironmentId,
@@ -32,7 +37,7 @@ import {
     ErrorNode,
     InlinedRequestPropertiesNode,
     InlinedRequestQueryParametersNode,
-    InlinedWebhookPayloadProperiesNode,
+    InlinedWebhookPayloadPropertiesNode,
     ServiceId,
     SubpackageId,
     TypeId,
@@ -47,10 +52,11 @@ export class IrGraph {
     private properties: Record<TypeId, TypePropertiesNode> = {};
     private queryParameters: Record<EndpointId, InlinedRequestQueryParametersNode> = {};
     private requestProperties: Record<EndpointId, InlinedRequestPropertiesNode> = {};
-    private webhookProperties: Record<WebhookId, InlinedWebhookPayloadProperiesNode> = {};
+    private webhookProperties: Record<WebhookId, InlinedWebhookPayloadPropertiesNode> = {};
     private errors: Record<TypeId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
     private webhooks: Record<WebhookId, WebhookNode> = {};
+    private channels: Record<WebSocketChannelId, ChannelNode> = {};
     private audiences: Audiences;
     private typesReferencedByService: Record<TypeId, Set<ServiceId>> = {};
     private environmentsNeededForAudience: Set<EnvironmentId> = new Set();
@@ -58,6 +64,7 @@ export class IrGraph {
     private servicesNeededForAudience: Set<ServiceId> = new Set();
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
     private webhooksNeededForAudience: Set<WebhookId> = new Set();
+    private channelsNeededForAudience: Set<WebSocketChannelId> = new Set();
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
 
     public constructor(audiences: ConfigAudiences) {
@@ -119,6 +126,11 @@ export class IrGraph {
     }
 
     public getTypesReferencedByService(): Record<TypeId, Set<ServiceId>> {
+        for (const endpoint of Object.values(this.endpoints)) {
+            for (const typeId of endpoint.referencedTypes) {
+                this.markTypeForService(typeId, endpoint.serviceId);
+            }
+        }
         return this.typesReferencedByService;
     }
 
@@ -252,6 +264,7 @@ export class IrGraph {
                     }
                 },
                 text: noop,
+                bytes: noop,
                 _other: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.body?.type);
                 }
@@ -261,11 +274,9 @@ export class IrGraph {
             referencedErrors.add(IdGenerator.generateErrorId(responseError.error));
             referencedSubpackages.add(responseError.error.fernFilepath);
         });
-        for (const typeId of referencedTypes) {
-            this.markTypeForService(typeId, serviceId);
-        }
         this.endpoints[endpointId] = {
             endpointId,
+            serviceId,
             referencedTypes,
             referencedErrors,
             referencedSubpackages
@@ -349,6 +360,58 @@ export class IrGraph {
         }
     }
 
+    public addChannel(
+        file: FernFileContext,
+        channelId: string,
+        channel: WebSocketChannel,
+        rawChannel?: RawSchemas.WebSocketChannelSchema
+    ): void {
+        if (channelId == null) {
+            return;
+        }
+        const referencedTypes = new Set<TypeId>();
+        const referencedSubpackages = new Set<FernFilepath>();
+
+        for (const message of channel.messages) {
+            WebSocketMessageBody._visit(message.body, {
+                reference: ({ bodyType }) => {
+                    populateReferencesFromTypeReference(bodyType, referencedTypes, referencedSubpackages);
+                },
+                inlinedBody: (inlinedBody) => {
+                    for (const extension of inlinedBody.extends) {
+                        populateReferencesFromTypeName(extension, referencedTypes, referencedSubpackages);
+                    }
+                    for (const property of inlinedBody.properties) {
+                        populateReferencesFromTypeReference(property.valueType, referencedTypes, referencedSubpackages);
+                    }
+                },
+                _other: () => undefined
+            });
+        }
+
+        referencedSubpackages.add(file.fernFilepath);
+        this.channels[channelId] = {
+            channelId,
+            referencedTypes,
+            referencedSubpackages
+        };
+    }
+
+    public markChannelForAudiences(
+        file: FernFileContext,
+        channelId: WebSocketChannelId,
+        audiences: AudienceId[]
+    ): void {
+        if (channelId == null) {
+            return;
+        }
+
+        if (this.hasAudience(audiences)) {
+            this.channelsNeededForAudience.add(channelId);
+            this.addSubpackages(file.fernFilepath);
+        }
+    }
+
     public build(): FilteredIr {
         const typeIds = new Set<TypeId>();
         const errorIds = new Set<ErrorId>();
@@ -370,6 +433,11 @@ export class IrGraph {
         for (const webhookId of this.webhooksNeededForAudience.keys()) {
             const webhookNode = this.getWebhookNode(webhookId);
             this.addReferencedTypes(typeIds, webhookNode.referencedTypes);
+        }
+
+        for (const channelId of this.channelsNeededForAudience.keys()) {
+            const channelNode = this.getChannelNode(channelId);
+            this.addReferencedTypes(typeIds, channelNode.referencedTypes);
         }
 
         const properties: Record<TypeId, Set<string> | undefined> = {};
@@ -457,16 +525,22 @@ export class IrGraph {
             endpoints: this.endpointsNeededForAudience,
             webhooks: this.webhooksNeededForAudience,
             webhookPayloadProperties,
-            subpackages: this.subpackagesNeededForAudience
+            subpackages: this.subpackagesNeededForAudience,
+            channels: this.channelsNeededForAudience
         });
     }
 
     private markTypeForService(typeId: TypeId, serviceId: ServiceId): void {
-        const services = this.typesReferencedByService[typeId];
-        if (services == null) {
-            this.typesReferencedByService[typeId] = new Set(serviceId);
-        } else {
-            services.add(serviceId);
+        const types = (this.typesReferencedByService[typeId] ??= new Set());
+        if (types.has(serviceId)) {
+            return;
+        }
+
+        types.add(serviceId);
+
+        const typeNode = this.getTypeNode(typeId);
+        for (const descendantTypeId of typeNode.allDescendants) {
+            this.markTypeForService(descendantTypeId, serviceId);
         }
     }
 
@@ -530,6 +604,14 @@ export class IrGraph {
             throw new Error(`Failed to find webhook node with id ${webhookId}`);
         }
         return webhookNode;
+    }
+
+    private getChannelNode(channelId: WebSocketChannelId): ChannelNode {
+        const channelNode = this.channels[channelId];
+        if (channelNode == null) {
+            throw new Error(`Failed to find channel node with id ${channelId}`);
+        }
+        return channelNode;
     }
 
     public hasNoAudiences(): boolean {
@@ -623,6 +705,9 @@ function populateReferencesFromContainer(
         },
         optional: (optionalType) => {
             populateReferencesFromTypeReference(optionalType, referencedTypes, referencedSubpackages);
+        },
+        nullable: (nullableType) => {
+            populateReferencesFromTypeReference(nullableType, referencedTypes, referencedSubpackages);
         },
         set: (setType) => {
             populateReferencesFromTypeReference(setType, referencedTypes, referencedSubpackages);

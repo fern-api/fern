@@ -34,20 +34,20 @@ export const SingleUnionTypeProperties: core.serialization.Schema<
     });
 
 export declare namespace SingleUnionTypeProperties {
-    type Raw =
+    export type Raw =
         | SingleUnionTypeProperties.SamePropertiesAsObject
         | SingleUnionTypeProperties.SingleProperty
         | SingleUnionTypeProperties.NoProperties;
 
-    interface SamePropertiesAsObject extends DeclaredTypeName.Raw {
+    export interface SamePropertiesAsObject extends DeclaredTypeName.Raw {
         _type: "samePropertiesAsObject";
     }
 
-    interface SingleProperty extends SingleUnionTypeProperty.Raw {
+    export interface SingleProperty extends SingleUnionTypeProperty.Raw {
         _type: "singleProperty";
     }
 
-    interface NoProperties {
+    export interface NoProperties {
         _type: "noProperties";
     }
 }

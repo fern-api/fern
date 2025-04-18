@@ -1,19 +1,46 @@
+import {
+    GetReferenceOpts,
+    getTextOfTsKeyword,
+    getTextOfTsNode,
+    maybeAddDocsNode,
+    maybeAddDocsStructure,
+    writerToString
+} from "@fern-typescript/commons";
+import { BaseContext, BrandedGeneratedAliasType } from "@fern-typescript/contexts";
+import {
+    FunctionDeclarationStructure,
+    ModuleDeclarationStructure,
+    StatementStructures,
+    StructureKind,
+    TypeAliasDeclarationStructure,
+    WriterFunction,
+    ts
+} from "ts-morph";
+
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { BrandedGeneratedAliasType, ModelContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
+export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
     extends AbstractGeneratedType<TypeReference, Context>
     implements BrandedGeneratedAliasType<Context>
 {
     public readonly type = "alias";
     public readonly isBranded = true;
 
-    public writeToFile(context: Context): void {
-        this.writeTypeAlias(context);
-        this.writeBuilder(context);
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+        return [this.generateTypeAliasStructure(context), this.generateBuilderFunction(context)];
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        const type = writerToString(this.generateTypeAliasStructure(context).type);
+        return ts.factory.createTypeReferenceNode(type);
+    }
+
+    public generateModule(): ModuleDeclarationStructure | undefined {
+        return undefined;
     }
 
     public getReferenceToCreator(context: Context, opts?: GetReferenceOpts): ts.Expression {
@@ -29,10 +56,11 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
         ]);
     }
 
-    private writeTypeAlias(context: Context) {
+    private generateTypeAliasStructure(context: Context): TypeAliasDeclarationStructure {
         const referenceToAliasedType = context.type.getReferenceToType(this.shape).typeNode;
-        const typeAlias = context.sourceFile.addTypeAlias({
+        const typeAlias: TypeAliasDeclarationStructure = {
             name: this.typeName,
+            kind: StructureKind.TypeAlias,
             type: getTextOfTsNode(
                 ts.factory.createIntersectionTypeNode([
                     referenceToAliasedType,
@@ -47,13 +75,15 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
                 ])
             ),
             isExported: true
-        });
-        maybeAddDocs(typeAlias, this.getDocs(context));
+        };
+        maybeAddDocsStructure(typeAlias, this.getDocs(context));
+        return typeAlias;
     }
 
-    private writeBuilder(context: Context) {
+    private generateBuilderFunction(context: Context): FunctionDeclarationStructure {
         const VALUE_PARAMETER_NAME = "value";
-        context.sourceFile.addFunction({
+        const builderFunction: FunctionDeclarationStructure = {
+            kind: StructureKind.Function,
             name: this.typeName,
             parameters: [
                 {
@@ -76,7 +106,8 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
                 )
             ],
             isExported: true
-        });
+        };
+        return builderFunction;
     }
 
     private getStringBrand(): string {

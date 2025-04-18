@@ -1,0 +1,78 @@
+---
+title: Overview
+subtitle: >-
+  With Zep's Chat History features you can ensure that your your assistant's
+  responses are always relevant to the conversation at hand.
+slug: chat-history-memory/overview
+---
+
+
+Zep's Memory API persists your users' chat history and metadata to a [Session](sessions), enriches the memory, and
+enables vector similarity search over historical chat messages and dialog summaries.
+
+Zep offers several approaches to populating prompts with context from historical conversations.
+
+## Perpetual Memory
+
+Perpetual Memory is the default memory type. Salient facts from the dialog are extracted and stored in a `Fact Table`. This
+is updated in real-time as new messages are added to the Session.
+
+Every time you call the Memory API to get a Memory,
+Zep returns the Fact Table, the most recent messages (per your `Message Window` setting), and a summary of the most recent
+messages prior to the `Message Window`.
+
+We've found that including the combination of the Fact Table, summary, and the most recent messages in a prompts provides both factual
+context and nuance to the LLM.
+
+<Frame>
+  <img alt="Perpetual Memory" src="images/fact-table.png" />
+</Frame>
+
+## Summary Retriever Memory
+
+The Memory API returns the most recent messages and a summary of past messages relevant to the
+current conversation, enabling you to provide your Assistant with helpful context from past conversations. In essence,
+Perpetual memory
+is a RAG pipeline over the entire conversation history and that executes in hundreds
+of milliseconds.
+
+You don't need to do anything to enable this feature, beyond adding messages to a Session and
+calling the `get_memory` API and requesting the `perpetual` `memory_type`.
+
+<Note>
+  Want to learn more about how Summary Retriever works? [Read How Perpetual Memory
+  Works](#how-summary-retriever-memory-works).
+</Note>
+
+## Message Window Buffer Memory
+
+The Memory API returns the most recent `N` messages from the current conversation, where `N` is a
+configurable `Message Window` set in your [Project Settings](/getting-started/projects).
+
+A summary of a messages older than the `N`th most recent message is also returned, if available.
+
+## How Summary Retriever Memory Works
+
+Perpetual Memory extracts the most relevant historical dialog from a Session and, with very low latency, returns to via
+the Zep Memory API.
+
+When new Messages are added to a Session, Zep generates a new summary from a trailing series of messages in the dialog.
+This is ongoing, ensuring that the entire conversation is incrementally summarized.
+These summaries are also embedded, enabling vector similarity search over the entire series of conversation summaries.
+
+<Frame>
+  <img alt="Summary Retriever Flow Chart" src="images/perpetual_memory.png" />
+</Frame>
+
+Every time you call the Memory API to get a Memory, Zep uses a proprietary, low-latency language model to generate a
+standalone
+question from the most recent messages in the Session. This question is then used to search over the entire series of
+conversation summaries.
+
+The most relevant summaries are returned and re-ranked in order to
+improve their relevance and diversity. The top summaries are then themselves summarized using a
+low-latency summarization model. The resulting summary and most recent messages are then returned via the API for use in
+populating your prompt.
+
+The entire process takes hundreds of milliseconds, so that you're able to rapidly populate your prompt with relevant
+context.

@@ -24,9 +24,7 @@ class AbstractReqWithHeadersService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_with_custom_header(
-        self, *, body: str, x_test_endpoint_header: str, auth: ApiAuth
-    ) -> None: ...
+    def get_with_custom_header(self, *, body: str, x_test_endpoint_header: str, auth: ApiAuth) -> None: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -41,30 +39,18 @@ class AbstractReqWithHeadersService(AbstractFernService):
     def __init_get_with_custom_header(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_custom_header)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "x_test_endpoint_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(alias="X-TEST-ENDPOINT-HEADER")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-TEST-ENDPOINT-HEADER")))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_with_custom_header,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_with_custom_header, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_with_custom_header)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -87,7 +73,5 @@ class AbstractReqWithHeadersService(AbstractFernService):
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractReqWithHeadersService.get_with_custom_header.__doc__,
-            **get_route_args(
-                cls.get_with_custom_header, default_tag="req_with_headers"
-            ),
+            **get_route_args(cls.get_with_custom_header, default_tag="req_with_headers"),
         )(wrapper)

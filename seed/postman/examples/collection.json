@@ -139,7 +139,7 @@
                             {
                               "key": "notificationId",
                               "description": null,
-                              "value": "string"
+                              "value": "notificationId"
                             }
                           ]
                         },
@@ -155,7 +155,7 @@
                         "body": null
                       },
                       "description": null,
-                      "body": "{\n    \"type\": \"generic\",\n    \"exceptionType\": \"Unavailable\",\n    \"exceptionMessage\": \"This component is unavailable!\",\n    \"exceptionStacktrace\": \"<logs>\"\n}",
+                      "body": "{\n    \"type\": \"generic\",\n    \"exceptionType\": \"exceptionType\",\n    \"exceptionMessage\": \"exceptionMessage\",\n    \"exceptionStacktrace\": \"exceptionStacktrace\"\n}",
                       "_postman_previewlanguage": "json"
                     }
                   ]
@@ -275,7 +275,7 @@
                         {
                           "key": "filename",
                           "description": "This is a filename",
-                          "value": "string"
+                          "value": "filename"
                         }
                       ]
                     },
@@ -284,7 +284,7 @@
                         "key": "X-File-API-Version",
                         "description": null,
                         "type": "text",
-                        "value": "\"string\""
+                        "value": "\"X-File-API-Version\""
                       },
                       {
                         "type": "text",
@@ -297,52 +297,7 @@
                     "body": null
                   },
                   "description": null,
-                  "body": "{\n    \"name\": \"file.txt\",\n    \"contents\": \"...\"\n}",
-                  "_postman_previewlanguage": "json"
-                },
-                {
-                  "name": "Not Found Error",
-                  "status": "Not Found Error",
-                  "code": 404,
-                  "originalRequest": {
-                    "description": "This endpoint returns a file by its name.",
-                    "url": {
-                      "raw": "{{baseUrl}}/file/:filename",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "file",
-                        ":filename"
-                      ],
-                      "query": [],
-                      "variable": [
-                        {
-                          "key": "filename",
-                          "description": "This is a filename",
-                          "value": "string"
-                        }
-                      ]
-                    },
-                    "header": [
-                      {
-                        "key": "X-File-API-Version",
-                        "description": null,
-                        "type": "text",
-                        "value": "\"string\""
-                      },
-                      {
-                        "type": "text",
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "method": "GET",
-                    "auth": null,
-                    "body": null
-                  },
-                  "description": null,
-                  "body": "",
+                  "body": "{\n    \"name\": \"name\",\n    \"contents\": \"contents\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -494,46 +449,7 @@
                         {
                           "key": "id",
                           "description": "The id to check",
-                          "value": "string"
-                        }
-                      ]
-                    },
-                    "header": [
-                      {
-                        "type": "text",
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "method": "GET",
-                    "auth": null,
-                    "body": null
-                  },
-                  "description": null,
-                  "body": "",
-                  "_postman_previewlanguage": "json"
-                },
-                {
-                  "name": "Success",
-                  "status": "OK",
-                  "code": 200,
-                  "originalRequest": {
-                    "description": "This endpoint checks the health of a resource.",
-                    "url": {
-                      "raw": "{{baseUrl}}/check/:id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "check",
-                        ":id"
-                      ],
-                      "query": [],
-                      "variable": [
-                        {
-                          "key": "id",
-                          "description": "The id to check",
-                          "value": "string"
+                          "value": "id"
                         }
                       ]
                     },
@@ -751,7 +667,7 @@
                     {
                       "key": "movieId",
                       "description": null,
-                      "value": "movie-c06a4ad7"
+                      "value": "movieId"
                     }
                   ]
                 },
@@ -767,7 +683,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"prequel\": \"movie-cv9b914f\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\",\n    \"metadata\": {\n        \"actors\": [\n            \"Christian Bale\",\n            \"Florence Pugh\",\n            \"Willem Dafoe\"\n        ],\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\n            \"rottenTomatoes\": 97,\n            \"imdb\": 7.6\n        }\n    },\n    \"revenue\": 1000000\n}",
+              "body": "{\n    \"id\": \"id\",\n    \"prequel\": \"prequel\",\n    \"title\": \"title\",\n    \"from\": \"from\",\n    \"rating\": 1.1,\n    \"type\": \"movie\",\n    \"tag\": \"tag\",\n    \"book\": \"book\",\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"revenue\": 1000000\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -876,7 +792,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"prequel\": \"movie-cv9b914f\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\",\n    \"metadata\": {\n        \"actors\": [\n            \"Christian Bale\",\n            \"Florence Pugh\",\n            \"Willem Dafoe\"\n        ],\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\n            \"rottenTomatoes\": 97,\n            \"imdb\": 7.6\n        }\n    },\n    \"revenue\": 1000000\n}",
+                  "raw": "{\n    \"id\": \"id\",\n    \"prequel\": \"prequel\",\n    \"title\": \"title\",\n    \"from\": \"from\",\n    \"rating\": 1.1,\n    \"type\": \"movie\",\n    \"tag\": \"tag\",\n    \"book\": \"book\",\n    \"metadata\": {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    \"revenue\": 1000000\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -885,7 +801,7 @@
                 }
               },
               "description": null,
-              "body": "\"movie-c06a4ad7\"",
+              "body": "\"string\"",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -991,7 +907,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/metadata?shallow=true&tag=string",
+                  "raw": "{{baseUrl}}/metadata?shallow=true&tag=tag",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -1007,7 +923,7 @@
                     {
                       "key": "tag",
                       "description": null,
-                      "value": "string"
+                      "value": "tag"
                     }
                   ],
                   "variable": []
@@ -1017,7 +933,7 @@
                     "key": "X-API-Version",
                     "description": null,
                     "type": "text",
-                    "value": "\"string\""
+                    "value": "\"X-API-Version\""
                   },
                   {
                     "type": "text",
@@ -1030,23 +946,23 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"type\": \"html\",\n    \"extra\": {\n        \"version\": \"0.0.1\",\n        \"tenancy\": \"test\"\n    },\n    \"tags\": [\n        \"development\",\n        \"public\"\n    ],\n    \"value\": \"<head>...</head>\"\n}",
+              "body": "{\n    \"type\": \"html\",\n    \"value\": \"string\",\n    \"extra\": {\n        \"extra\": \"extra\"\n    },\n    \"tags\": [\n        \"tags\"\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
         },
         {
           "_type": "endpoint",
-          "name": "Get Response",
+          "name": "Create Big Entity",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/response",
+              "raw": "{{baseUrl}}/big-entity",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "response"
+                "big-entity"
               ],
               "query": [],
               "variable": []
@@ -1060,7 +976,15 @@
             ],
             "method": "POST",
             "auth": null,
-            "body": null
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"castMember\": {\n        \"name\": \"name\",\n        \"id\": \"id\"\n    },\n    \"extendedMovie\": {\n        \"id\": \"id\",\n        \"prequel\": \"prequel\",\n        \"title\": \"title\",\n        \"from\": \"from\",\n        \"rating\": 1.1,\n        \"type\": \"movie\",\n        \"tag\": \"tag\",\n        \"book\": \"book\",\n        \"metadata\": {\n            \"metadata\": {\n                \"key\": \"value\"\n            }\n        },\n        \"revenue\": 1000000,\n        \"cast\": [\n            \"cast\",\n            \"cast\"\n        ]\n    },\n    \"entity\": {\n        \"type\": \"primitive\",\n        \"name\": \"name\"\n    },\n    \"metadata\": {\n        \"type\": \"html\",\n        \"value\": \"metadata\",\n        \"extra\": {\n            \"extra\": \"extra\"\n        },\n        \"tags\": [\n            \"tags\"\n        ]\n    },\n    \"commonMetadata\": {\n        \"id\": \"id\",\n        \"data\": {\n            \"data\": \"data\"\n        },\n        \"jsonString\": \"jsonString\"\n    },\n    \"eventInfo\": {\n        \"type\": \"metadata\",\n        \"id\": \"id\",\n        \"data\": {\n            \"data\": \"data\"\n        },\n        \"jsonString\": \"jsonString\"\n    },\n    \"data\": {\n        \"type\": \"string\",\n        \"value\": \"data\"\n    },\n    \"migration\": {\n        \"name\": \"name\",\n        \"status\": \"RUNNING\"\n    },\n    \"exception\": {\n        \"type\": \"generic\",\n        \"exceptionType\": \"exceptionType\",\n        \"exceptionMessage\": \"exceptionMessage\",\n        \"exceptionStacktrace\": \"exceptionStacktrace\"\n    },\n    \"test\": {\n        \"type\": \"and\",\n        \"value\": true\n    },\n    \"node\": {\n        \"name\": \"name\",\n        \"nodes\": [\n            {\n                \"name\": \"name\",\n                \"nodes\": [\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    }\n                ],\n                \"trees\": [\n                    {\n                        \"nodes\": []\n                    },\n                    {\n                        \"nodes\": []\n                    }\n                ]\n            },\n            {\n                \"name\": \"name\",\n                \"nodes\": [\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    }\n                ],\n                \"trees\": [\n                    {\n                        \"nodes\": []\n                    },\n                    {\n                        \"nodes\": []\n                    }\n                ]\n            }\n        ],\n        \"trees\": [\n            {\n                \"nodes\": [\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    }\n                ]\n            },\n            {\n                \"nodes\": [\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    }\n                ]\n            }\n        ]\n    },\n    \"directory\": {\n        \"name\": \"name\",\n        \"files\": [\n            {\n                \"name\": \"name\",\n                \"contents\": \"contents\"\n            },\n            {\n                \"name\": \"name\",\n                \"contents\": \"contents\"\n            }\n        ],\n        \"directories\": [\n            {\n                \"name\": \"name\",\n                \"files\": [\n                    {\n                        \"name\": \"name\",\n                        \"contents\": \"contents\"\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"contents\": \"contents\"\n                    }\n                ],\n                \"directories\": [\n                    {\n                        \"name\": \"name\",\n                        \"files\": [],\n                        \"directories\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"files\": [],\n                        \"directories\": []\n                    }\n                ]\n            },\n            {\n                \"name\": \"name\",\n                \"files\": [\n                    {\n                        \"name\": \"name\",\n                        \"contents\": \"contents\"\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"contents\": \"contents\"\n                    }\n                ],\n                \"directories\": [\n                    {\n                        \"name\": \"name\",\n                        \"files\": [],\n                        \"directories\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"files\": [],\n                        \"directories\": []\n                    }\n                ]\n            }\n        ]\n    },\n    \"moment\": {\n        \"id\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"date\": \"2023-01-15\",\n        \"datetime\": \"2024-01-15T09:30:00Z\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           },
           "response": [
             {
@@ -1070,12 +994,12 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/response",
+                  "raw": "{{baseUrl}}/big-entity",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "response"
+                    "big-entity"
                   ],
                   "query": [],
                   "variable": []
@@ -1089,42 +1013,18 @@
                 ],
                 "method": "POST",
                 "auth": null,
-                "body": null
-              },
-              "description": null,
-              "body": "{\n    \"response\": \"Initializing...\",\n    \"identifiers\": [\n        {\n            \"type\": \"primitive\",\n            \"value\": \"example\",\n            \"label\": \"Primitive\"\n        },\n        {\n            \"type\": \"unknown\",\n            \"value\": \"{}\",\n            \"label\": \"Unknown\"\n        }\n    ]\n}",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/response",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "response"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"castMember\": {\n        \"name\": \"name\",\n        \"id\": \"id\"\n    },\n    \"extendedMovie\": {\n        \"id\": \"id\",\n        \"prequel\": \"prequel\",\n        \"title\": \"title\",\n        \"from\": \"from\",\n        \"rating\": 1.1,\n        \"type\": \"movie\",\n        \"tag\": \"tag\",\n        \"book\": \"book\",\n        \"metadata\": {\n            \"metadata\": {\n                \"key\": \"value\"\n            }\n        },\n        \"revenue\": 1000000,\n        \"cast\": [\n            \"cast\",\n            \"cast\"\n        ]\n    },\n    \"entity\": {\n        \"type\": \"primitive\",\n        \"name\": \"name\"\n    },\n    \"metadata\": {\n        \"type\": \"html\",\n        \"value\": \"metadata\",\n        \"extra\": {\n            \"extra\": \"extra\"\n        },\n        \"tags\": [\n            \"tags\"\n        ]\n    },\n    \"commonMetadata\": {\n        \"id\": \"id\",\n        \"data\": {\n            \"data\": \"data\"\n        },\n        \"jsonString\": \"jsonString\"\n    },\n    \"eventInfo\": {\n        \"type\": \"metadata\",\n        \"id\": \"id\",\n        \"data\": {\n            \"data\": \"data\"\n        },\n        \"jsonString\": \"jsonString\"\n    },\n    \"data\": {\n        \"type\": \"string\",\n        \"value\": \"data\"\n    },\n    \"migration\": {\n        \"name\": \"name\",\n        \"status\": \"RUNNING\"\n    },\n    \"exception\": {\n        \"type\": \"generic\",\n        \"exceptionType\": \"exceptionType\",\n        \"exceptionMessage\": \"exceptionMessage\",\n        \"exceptionStacktrace\": \"exceptionStacktrace\"\n    },\n    \"test\": {\n        \"type\": \"and\",\n        \"value\": true\n    },\n    \"node\": {\n        \"name\": \"name\",\n        \"nodes\": [\n            {\n                \"name\": \"name\",\n                \"nodes\": [\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    }\n                ],\n                \"trees\": [\n                    {\n                        \"nodes\": []\n                    },\n                    {\n                        \"nodes\": []\n                    }\n                ]\n            },\n            {\n                \"name\": \"name\",\n                \"nodes\": [\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    }\n                ],\n                \"trees\": [\n                    {\n                        \"nodes\": []\n                    },\n                    {\n                        \"nodes\": []\n                    }\n                ]\n            }\n        ],\n        \"trees\": [\n            {\n                \"nodes\": [\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    }\n                ]\n            },\n            {\n                \"nodes\": [\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"nodes\": [],\n                        \"trees\": []\n                    }\n                ]\n            }\n        ]\n    },\n    \"directory\": {\n        \"name\": \"name\",\n        \"files\": [\n            {\n                \"name\": \"name\",\n                \"contents\": \"contents\"\n            },\n            {\n                \"name\": \"name\",\n                \"contents\": \"contents\"\n            }\n        ],\n        \"directories\": [\n            {\n                \"name\": \"name\",\n                \"files\": [\n                    {\n                        \"name\": \"name\",\n                        \"contents\": \"contents\"\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"contents\": \"contents\"\n                    }\n                ],\n                \"directories\": [\n                    {\n                        \"name\": \"name\",\n                        \"files\": [],\n                        \"directories\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"files\": [],\n                        \"directories\": []\n                    }\n                ]\n            },\n            {\n                \"name\": \"name\",\n                \"files\": [\n                    {\n                        \"name\": \"name\",\n                        \"contents\": \"contents\"\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"contents\": \"contents\"\n                    }\n                ],\n                \"directories\": [\n                    {\n                        \"name\": \"name\",\n                        \"files\": [],\n                        \"directories\": []\n                    },\n                    {\n                        \"name\": \"name\",\n                        \"files\": [],\n                        \"directories\": []\n                    }\n                ]\n            }\n        ]\n    },\n    \"moment\": {\n        \"id\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"date\": \"2023-01-15\",\n        \"datetime\": \"2024-01-15T09:30:00Z\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
                   }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": null
+                }
               },
               "description": null,
-              "body": "{\n    \"response\": \"Initializing...\",\n    \"identifiers\": [\n        {\n            \"type\": \"primitive\",\n            \"value\": \"example\",\n            \"label\": \"Primitive\"\n        },\n        {\n            \"type\": \"unknown\",\n            \"value\": \"{}\",\n            \"label\": \"Unknown\"\n        }\n    ]\n}",
+              "body": "{\n    \"response\": {\n        \"key\": \"value\"\n    },\n    \"identifiers\": [\n        {\n            \"type\": \"primitive\",\n            \"value\": \"value\",\n            \"label\": \"label\"\n        },\n        {\n            \"type\": \"primitive\",\n            \"value\": \"value\",\n            \"label\": \"label\"\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -1229,7 +1129,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\"",
+              "raw": "\"string\"",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1238,7 +1138,81 @@
             }
           },
           "description": null,
-          "body": "\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\"",
+          "body": "\"string\"",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    },
+    {
+      "_type": "endpoint",
+      "name": "Create Type",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "\"primitive\"",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"primitive\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": null,
+          "body": "{\n    \"type\": \"primitive\",\n    \"value\": \"value\",\n    \"label\": \"label\"\n}",
           "_postman_previewlanguage": "json"
         }
       ]

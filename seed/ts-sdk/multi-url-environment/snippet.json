@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait client.ec2.bootInstance({\n    size: \"string\"\n});\n"
+                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait client.ec2.bootInstance({\n    size: \"size\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait client.s3.getPresignedUrl({\n    s3Key: \"string\"\n});\n"
+                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait client.s3.getPresignedUrl({\n    s3Key: \"s3Key\"\n});\n"
             }
         }
     ],

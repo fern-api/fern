@@ -9,28 +9,71 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.literal.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendLiteralsInQueryRequest.Builder.class)
 public final class SendLiteralsInQueryRequest {
+    private final Optional<String> optionalPrompt;
+
+    private final String aliasPrompt;
+
+    private final Optional<String> aliasOptionalPrompt;
+
     private final String query;
+
+    private final Optional<Boolean> optionalStream;
+
+    private final Boolean aliasStream;
+
+    private final Optional<Boolean> aliasOptionalStream;
 
     private final Map<String, Object> additionalProperties;
 
-    private SendLiteralsInQueryRequest(String query, Map<String, Object> additionalProperties) {
+    private SendLiteralsInQueryRequest(
+            Optional<String> optionalPrompt,
+            String aliasPrompt,
+            Optional<String> aliasOptionalPrompt,
+            String query,
+            Optional<Boolean> optionalStream,
+            Boolean aliasStream,
+            Optional<Boolean> aliasOptionalStream,
+            Map<String, Object> additionalProperties) {
+        this.optionalPrompt = optionalPrompt;
+        this.aliasPrompt = aliasPrompt;
+        this.aliasOptionalPrompt = aliasOptionalPrompt;
         this.query = query;
+        this.optionalStream = optionalStream;
+        this.aliasStream = aliasStream;
+        this.aliasOptionalStream = aliasOptionalStream;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("prompt")
     public String getPrompt() {
         return "You are a helpful assistant";
+    }
+
+    @JsonProperty("optional_prompt")
+    public Optional<String> getOptionalPrompt() {
+        return optionalPrompt;
+    }
+
+    @JsonProperty("alias_prompt")
+    public String getAliasPrompt() {
+        return aliasPrompt;
+    }
+
+    @JsonProperty("alias_optional_prompt")
+    public Optional<String> getAliasOptionalPrompt() {
+        return aliasOptionalPrompt;
     }
 
     @JsonProperty("query")
@@ -41,6 +84,21 @@ public final class SendLiteralsInQueryRequest {
     @JsonProperty("stream")
     public Boolean getStream() {
         return false;
+    }
+
+    @JsonProperty("optional_stream")
+    public Optional<Boolean> getOptionalStream() {
+        return optionalStream;
+    }
+
+    @JsonProperty("alias_stream")
+    public Boolean getAliasStream() {
+        return aliasStream;
+    }
+
+    @JsonProperty("alias_optional_stream")
+    public Optional<Boolean> getAliasOptionalStream() {
+        return aliasOptionalStream;
     }
 
     @java.lang.Override
@@ -55,12 +113,25 @@ public final class SendLiteralsInQueryRequest {
     }
 
     private boolean equalTo(SendLiteralsInQueryRequest other) {
-        return query.equals(other.query);
+        return optionalPrompt.equals(other.optionalPrompt)
+                && aliasPrompt.equals(other.aliasPrompt)
+                && aliasOptionalPrompt.equals(other.aliasOptionalPrompt)
+                && query.equals(other.query)
+                && optionalStream.equals(other.optionalStream)
+                && aliasStream.equals(other.aliasStream)
+                && aliasOptionalStream.equals(other.aliasOptionalStream);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.query);
+        return Objects.hash(
+                this.optionalPrompt,
+                this.aliasPrompt,
+                this.aliasOptionalPrompt,
+                this.query,
+                this.optionalStream,
+                this.aliasStream,
+                this.aliasOptionalStream);
     }
 
     @java.lang.Override
@@ -68,23 +139,59 @@ public final class SendLiteralsInQueryRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static QueryStage builder() {
+    public static AliasPromptStage builder() {
         return new Builder();
     }
 
-    public interface QueryStage {
-        _FinalStage query(@NotNull String query);
+    public interface AliasPromptStage {
+        QueryStage aliasPrompt(@NotNull String aliasPrompt);
 
         Builder from(SendLiteralsInQueryRequest other);
     }
 
+    public interface QueryStage {
+        AliasStreamStage query(@NotNull String query);
+    }
+
+    public interface AliasStreamStage {
+        _FinalStage aliasStream(@NotNull Boolean aliasStream);
+    }
+
     public interface _FinalStage {
         SendLiteralsInQueryRequest build();
+
+        _FinalStage optionalPrompt(Optional<String> optionalPrompt);
+
+        _FinalStage optionalPrompt(String optionalPrompt);
+
+        _FinalStage aliasOptionalPrompt(Optional<String> aliasOptionalPrompt);
+
+        _FinalStage aliasOptionalPrompt(String aliasOptionalPrompt);
+
+        _FinalStage optionalStream(Optional<Boolean> optionalStream);
+
+        _FinalStage optionalStream(Boolean optionalStream);
+
+        _FinalStage aliasOptionalStream(Optional<Boolean> aliasOptionalStream);
+
+        _FinalStage aliasOptionalStream(Boolean aliasOptionalStream);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, _FinalStage {
+    public static final class Builder implements AliasPromptStage, QueryStage, AliasStreamStage, _FinalStage {
+        private String aliasPrompt;
+
         private String query;
+
+        private Boolean aliasStream;
+
+        private Optional<Boolean> aliasOptionalStream = Optional.empty();
+
+        private Optional<Boolean> optionalStream = Optional.empty();
+
+        private Optional<String> aliasOptionalPrompt = Optional.empty();
+
+        private Optional<String> optionalPrompt = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -93,20 +200,100 @@ public final class SendLiteralsInQueryRequest {
 
         @java.lang.Override
         public Builder from(SendLiteralsInQueryRequest other) {
+            optionalPrompt(other.getOptionalPrompt());
+            aliasPrompt(other.getAliasPrompt());
+            aliasOptionalPrompt(other.getAliasOptionalPrompt());
             query(other.getQuery());
+            optionalStream(other.getOptionalStream());
+            aliasStream(other.getAliasStream());
+            aliasOptionalStream(other.getAliasOptionalStream());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("alias_prompt")
+        public QueryStage aliasPrompt(@NotNull String aliasPrompt) {
+            this.aliasPrompt = Objects.requireNonNull(aliasPrompt, "aliasPrompt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("query")
-        public _FinalStage query(@NotNull String query) {
+        public AliasStreamStage query(@NotNull String query) {
             this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("alias_stream")
+        public _FinalStage aliasStream(@NotNull Boolean aliasStream) {
+            this.aliasStream = Objects.requireNonNull(aliasStream, "aliasStream must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage aliasOptionalStream(Boolean aliasOptionalStream) {
+            this.aliasOptionalStream = Optional.ofNullable(aliasOptionalStream);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "alias_optional_stream", nulls = Nulls.SKIP)
+        public _FinalStage aliasOptionalStream(Optional<Boolean> aliasOptionalStream) {
+            this.aliasOptionalStream = aliasOptionalStream;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage optionalStream(Boolean optionalStream) {
+            this.optionalStream = Optional.ofNullable(optionalStream);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "optional_stream", nulls = Nulls.SKIP)
+        public _FinalStage optionalStream(Optional<Boolean> optionalStream) {
+            this.optionalStream = optionalStream;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage aliasOptionalPrompt(String aliasOptionalPrompt) {
+            this.aliasOptionalPrompt = Optional.ofNullable(aliasOptionalPrompt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "alias_optional_prompt", nulls = Nulls.SKIP)
+        public _FinalStage aliasOptionalPrompt(Optional<String> aliasOptionalPrompt) {
+            this.aliasOptionalPrompt = aliasOptionalPrompt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage optionalPrompt(String optionalPrompt) {
+            this.optionalPrompt = Optional.ofNullable(optionalPrompt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "optional_prompt", nulls = Nulls.SKIP)
+        public _FinalStage optionalPrompt(Optional<String> optionalPrompt) {
+            this.optionalPrompt = optionalPrompt;
+            return this;
+        }
+
+        @java.lang.Override
         public SendLiteralsInQueryRequest build() {
-            return new SendLiteralsInQueryRequest(query, additionalProperties);
+            return new SendLiteralsInQueryRequest(
+                    optionalPrompt,
+                    aliasPrompt,
+                    aliasOptionalPrompt,
+                    query,
+                    optionalStream,
+                    aliasStream,
+                    aliasOptionalStream,
+                    additionalProperties);
         }
     }
 }

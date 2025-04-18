@@ -2,6 +2,8 @@ imports:
   commons: commons.yml
   types: types.yml
   http: http.yml
+  examples: examples.yml
+
 types:
   WebhookGroup: list<Webhook>
 
@@ -15,6 +17,7 @@ types:
       headers: list<http.HttpHeader>
       payload: WebhookPayload
       examples: optional<list<ExampleWebhookCall>>
+      v2Examples: optional<examples.V2WebhookExamples>
 
   WebhookName: commons.Name
 

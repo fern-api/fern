@@ -1,3 +1,6 @@
+[project]
+name = "fern_any-auth"
+
 [tool.poetry]
 name = "fern_any-auth"
 version = "0.0.1"

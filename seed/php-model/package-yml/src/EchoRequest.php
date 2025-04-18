@@ -2,32 +2,41 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class EchoRequest extends SerializableType
+class EchoRequest extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var int $size
      */
-    #[JsonProperty("size")]
+    #[JsonProperty('size')]
     public int $size;
 
     /**
-     * @param string $name
-     * @param int $size
+     * @param array{
+     *   name: string,
+     *   size: int,
+     * } $values
      */
     public function __construct(
-        string $name,
-        int $size,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->size = $size;
+        $this->name = $values['name'];
+        $this->size = $values['size'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

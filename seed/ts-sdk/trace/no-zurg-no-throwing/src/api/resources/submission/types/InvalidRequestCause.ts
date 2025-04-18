@@ -13,16 +13,16 @@ export type InvalidRequestCause =
      * The submission request was routed to an incorrect language executor. */
     | SeedTrace.InvalidRequestCause.UnexpectedLanguage;
 
-export declare namespace InvalidRequestCause {
-    interface SubmissionIdNotFound extends SeedTrace.SubmissionIdNotFound {
+export namespace InvalidRequestCause {
+    export interface SubmissionIdNotFound extends SeedTrace.SubmissionIdNotFound {
         type: "submissionIdNotFound";
     }
 
-    interface CustomTestCasesUnsupported extends SeedTrace.CustomTestCasesUnsupported {
+    export interface CustomTestCasesUnsupported extends SeedTrace.CustomTestCasesUnsupported {
         type: "customTestCasesUnsupported";
     }
 
-    interface UnexpectedLanguage extends SeedTrace.UnexpectedLanguageError {
+    export interface UnexpectedLanguage extends SeedTrace.UnexpectedLanguageError {
         type: "unexpectedLanguage";
     }
 }

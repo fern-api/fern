@@ -1,0 +1,11 @@
+## 1.0.0
+**`(break):`** The C# SDK is now on major version 1.0.0. To preserve compatibility with pre-1.0.0, set all of \{root-namespace-for-core-classes, pascal-case-environments, simplify-object-dictionaries\} to `false`.
+
+**`(internal):`** Core classes that are exposed publicly are now in the root namespace.
+
+**`(internal):`** Types that were previously generated as `Dictionary<string, object?>` are now just `object`.
+
+**`(internal):`** Environment names are pascal-cased.
+
+**`(feat):`** Generating specific error types can now be turned off with the `generate-error-types` configuration.
+

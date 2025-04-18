@@ -10,23 +10,33 @@ import * as errors from "./errors/index";
 import { Service } from "./api/resources/service/client/Client";
 
 export declare namespace SeedPackageYmlClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         id: string;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedPackageYmlClient {
+    protected _service: Service | undefined;
+
     constructor(protected readonly _options: SeedPackageYmlClient.Options) {}
+
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 
     /**
      * @param {SeedPackageYml.EchoRequest} request
@@ -38,14 +48,22 @@ export class SeedPackageYmlClient {
      *         size: 20
      *     })
      */
-    public async echo(
+    public echo(
         request: SeedPackageYml.EchoRequest,
-        requestOptions?: SeedPackageYmlClient.RequestOptions
-    ): Promise<string> {
+        requestOptions?: SeedPackageYmlClient.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__echo(request, requestOptions));
+    }
+
+    private async __echo(
+        request: SeedPackageYml.EchoRequest,
+        requestOptions?: SeedPackageYmlClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(this._options.id)}/`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/${encodeURIComponent(this._options.id)}/`,
             ),
             method: "POST",
             headers: {
@@ -55,6 +73,7 @@ export class SeedPackageYmlClient {
                 "User-Agent": "@fern/package-yml/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -64,18 +83,22 @@ export class SeedPackageYmlClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.echo.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.echo.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPackageYmlError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -84,19 +107,15 @@ export class SeedPackageYmlClient {
                 throw new errors.SeedPackageYmlError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedPackageYmlTimeoutError();
+                throw new errors.SeedPackageYmlTimeoutError("Timeout exceeded when calling POST /{id}/.");
             case "unknown":
                 throw new errors.SeedPackageYmlError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected _service: Service | undefined;
-
-    public get service(): Service {
-        return (this._service ??= new Service(this._options));
     }
 }

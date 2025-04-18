@@ -6,16 +6,16 @@ import * as FernIr from "../../../index";
 
 export type PublishTarget = FernIr.PublishTarget.Postman;
 
-export declare namespace PublishTarget {
-    interface Postman extends FernIr.PostmanPublishTarget, _Utils {
+export namespace PublishTarget {
+    export interface Postman extends FernIr.PostmanPublishTarget, _Utils {
         type: "postman";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishTarget._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         postman: (value: FernIr.PostmanPublishTarget) => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -28,7 +28,7 @@ export const PublishTarget = {
             type: "postman",
             _visit: function <_Result>(
                 this: FernIr.PublishTarget.Postman,
-                visitor: FernIr.PublishTarget._Visitor<_Result>
+                visitor: FernIr.PublishTarget._Visitor<_Result>,
             ) {
                 return FernIr.PublishTarget._visit(this, visitor);
             },

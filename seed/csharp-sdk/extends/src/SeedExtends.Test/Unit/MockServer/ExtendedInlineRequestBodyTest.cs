@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedExtends;
 
-#nullable enable
-
 namespace SeedExtends.Test.Unit.MockServer;
 
 [TestFixture]
@@ -13,9 +11,9 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "unique": "string",
-              "name": "string",
-              "docs": "string"
+              "docs": "docs",
+              "name": "name",
+              "unique": "unique"
             }
             """;
 
@@ -31,15 +29,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
 
         Assert.DoesNotThrowAsync(
             async () =>
-                await Client.ExtendedInlineRequestBodyAsync(
-                    new Inlined
-                    {
-                        Unique = "string",
-                        Name = "string",
-                        Docs = "string",
-                    },
-                    RequestOptions
-                )
+                await Client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" })
         );
     }
 }

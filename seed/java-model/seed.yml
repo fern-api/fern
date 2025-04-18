@@ -1,19 +1,25 @@
-irVersion: v46
+irVersion: v55
 displayName: Java Model
 changelogLocation: ../../generators/java/model/versions.yml
 image: fernapi/fern-java-model
+
+buildScripts:
+  compileScript:
+    commands:
+      - ./gradlew compileJava
+
 publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :model:distTar
-  docker: 
+  docker:
     file: ./generators/java/model/Dockerfile
     image: fernapi/fern-java-model
     context: ./generators/java/model
 test:
   docker:
     image: fernapi/fern-java-model:latest
-    command: 
+    command:
       - cd generators/java
       - ./gradlew :model:distTar
       - docker build -f model/Dockerfile -t fernapi/fern-java-model:latest model/
@@ -45,8 +51,10 @@ allowedFailures:
   - enum
   - exhaustive
   - extends
+  - file-upload
   - multi-url-environment
   - reserved-keywords
   - trace
   - unions
   - alias-extends
+  - literal

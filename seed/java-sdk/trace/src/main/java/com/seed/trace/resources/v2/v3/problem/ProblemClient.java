@@ -3,197 +3,84 @@
  */
 package com.seed.trace.resources.v2.v3.problem;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.ClientOptions;
-import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.core.RequestOptions;
-import com.seed.trace.core.SeedTraceApiException;
-import com.seed.trace.core.SeedTraceException;
 import com.seed.trace.resources.v2.v3.problem.types.LightweightProblemInfoV2;
 import com.seed.trace.resources.v2.v3.problem.types.ProblemInfoV2;
-import java.io.IOException;
 import java.util.List;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class ProblemClient {
     protected final ClientOptions clientOptions;
 
+    private final RawProblemClient rawClient;
+
     public ProblemClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawProblemClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawProblemClient withRawResponse() {
+        return this.rawClient;
     }
 
     /**
      * Returns lightweight versions of all problems
      */
     public List<LightweightProblemInfoV2> getLightweightProblems() {
-        return getLightweightProblems(null);
+        return this.rawClient.getLightweightProblems().body();
     }
 
     /**
      * Returns lightweight versions of all problems
      */
     public List<LightweightProblemInfoV2> getLightweightProblems(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problems-v2")
-                .addPathSegments("lightweight-problem-info")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<LightweightProblemInfoV2>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getLightweightProblems(requestOptions).body();
     }
 
     /**
      * Returns latest versions of all problems
      */
     public List<ProblemInfoV2> getProblems() {
-        return getProblems(null);
+        return this.rawClient.getProblems().body();
     }
 
     /**
      * Returns latest versions of all problems
      */
     public List<ProblemInfoV2> getProblems(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problems-v2")
-                .addPathSegments("problem-info")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ProblemInfoV2>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getProblems(requestOptions).body();
     }
 
     /**
      * Returns latest version of a problem
      */
     public ProblemInfoV2 getLatestProblem(String problemId) {
-        return getLatestProblem(problemId, null);
+        return this.rawClient.getLatestProblem(problemId).body();
     }
 
     /**
      * Returns latest version of a problem
      */
     public ProblemInfoV2 getLatestProblem(String problemId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problems-v2")
-                .addPathSegments("problem-info")
-                .addPathSegment(problemId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProblemInfoV2.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getLatestProblem(problemId, requestOptions).body();
     }
 
     /**
      * Returns requested version of a problem
      */
     public ProblemInfoV2 getProblemVersion(String problemId, int problemVersion) {
-        return getProblemVersion(problemId, problemVersion, null);
+        return this.rawClient.getProblemVersion(problemId, problemVersion).body();
     }
 
     /**
      * Returns requested version of a problem
      */
     public ProblemInfoV2 getProblemVersion(String problemId, int problemVersion, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("problems-v2")
-                .addPathSegments("problem-info")
-                .addPathSegment(problemId)
-                .addPathSegments("version")
-                .addPathSegment(Integer.toString(problemVersion))
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProblemInfoV2.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedTraceApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedTraceException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .getProblemVersion(problemId, problemVersion, requestOptions)
+                .body();
     }
 }

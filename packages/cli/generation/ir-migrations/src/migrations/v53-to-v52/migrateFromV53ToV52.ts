@@ -1,6 +1,8 @@
-import { GeneratorName } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
 import { mapValues } from "lodash-es";
+
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
+
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import {
@@ -22,25 +24,27 @@ export const V53_TO_V52_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: "0.38.0-rc0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.3",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: "1.3.0",
+        [GeneratorName.JAVA_SDK]: "2.5.0",
+        [GeneratorName.JAVA_SPRING]: "1.3.0",
         [GeneratorName.PYTHON_FASTAPI]: "1.1.0-rc0",
         [GeneratorName.PYTHON_PYDANTIC]: "1.1.0-rc0",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: "0.1.0",
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: "0.2.0",
         [GeneratorName.PYTHON_SDK]: "3.3.0-rc0",
-        [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_FIBER]: "0.23.5",
+        [GeneratorName.GO_MODEL]: "0.23.5",
+        [GeneratorName.GO_SDK]: "0.28.3",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: "0.5.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_SDK]: "0.1.0"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V52.IntermediateRepresentation.jsonOrThrow(ir, {

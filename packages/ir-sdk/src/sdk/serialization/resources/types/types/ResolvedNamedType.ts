@@ -17,7 +17,7 @@ export const ResolvedNamedType: core.serialization.ObjectSchema<
 });
 
 export declare namespace ResolvedNamedType {
-    interface Raw {
+    export interface Raw {
         name: DeclaredTypeName.Raw;
         shape: ShapeType.Raw;
     }

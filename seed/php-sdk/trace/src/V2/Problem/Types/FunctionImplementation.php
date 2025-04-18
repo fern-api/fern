@@ -2,32 +2,41 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class FunctionImplementation extends SerializableType
+class FunctionImplementation extends JsonSerializableType
 {
     /**
      * @var string $impl
      */
-    #[JsonProperty("impl")]
+    #[JsonProperty('impl')]
     public string $impl;
 
     /**
      * @var ?string $imports
      */
-    #[JsonProperty("imports")]
+    #[JsonProperty('imports')]
     public ?string $imports;
 
     /**
-     * @param string $impl
-     * @param ?string $imports
+     * @param array{
+     *   impl: string,
+     *   imports?: ?string,
+     * } $values
      */
     public function __construct(
-        string $impl,
-        ?string $imports = null,
+        array $values,
     ) {
-        $this->impl = $impl;
-        $this->imports = $imports;
+        $this->impl = $values['impl'];
+        $this->imports = $values['imports'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

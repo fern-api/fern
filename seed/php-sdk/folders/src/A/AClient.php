@@ -4,8 +4,8 @@ namespace Seed\A;
 
 use Seed\A\B\BClient;
 use Seed\A\C\CClient;
-use Seed\A\D\DClient;
-use Seed\Core\RawClient;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\Client\RawClient;
 
 class AClient
 {
@@ -20,9 +20,15 @@ class AClient
     public CClient $c;
 
     /**
-     * @var DClient $d
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
-    public DClient $d;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -31,13 +37,21 @@ class AClient
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
-        $this->b = new BClient($this->client);
-        $this->c = new CClient($this->client);
-        $this->d = new DClient($this->client);
+        $this->options = $options ?? [];
+        $this->b = new BClient($this->client, $this->options);
+        $this->c = new CClient($this->client, $this->options);
     }
 }

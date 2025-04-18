@@ -1,8 +1,10 @@
 /* eslint-disable jest/no-disabled-tests */
-import { AbsoluteFilePath, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { cp, readFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
+
+import { AbsoluteFilePath, RelativeFilePath, getDirectoryContents, join } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");

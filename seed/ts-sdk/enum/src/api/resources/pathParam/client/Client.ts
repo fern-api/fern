@@ -9,17 +9,21 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace PathParam {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -28,29 +32,30 @@ export class PathParam {
 
     /**
      * @param {SeedEnum.Operand} operand
-     * @param {SeedEnum.Operand | undefined} maybeOperand
      * @param {SeedEnum.ColorOrOperand} operandOrColor
-     * @param {SeedEnum.ColorOrOperand | undefined} maybeOperandOrColor
      * @param {PathParam.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.pathParam.send(">", "less_than", "red", "red")
+     *     await client.pathParam.send(">", "red")
      */
-    public async send(
+    public send(
         operand: SeedEnum.Operand,
-        maybeOperand: SeedEnum.Operand | undefined,
         operandOrColor: SeedEnum.ColorOrOperand,
-        maybeOperandOrColor: SeedEnum.ColorOrOperand | undefined,
-        requestOptions?: PathParam.RequestOptions
-    ): Promise<void> {
+        requestOptions?: PathParam.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__send(operand, operandOrColor, requestOptions));
+    }
+
+    private async __send(
+        operand: SeedEnum.Operand,
+        operandOrColor: SeedEnum.ColorOrOperand,
+        requestOptions?: PathParam.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `path/${encodeURIComponent(serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(
-                    maybeOperand
-                )}/${encodeURIComponent(serializers.ColorOrOperand.jsonOrThrow(operandOrColor))}/${encodeURIComponent(
-                    maybeOperandOrColor
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `path/${encodeURIComponent(serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(serializers.ColorOrOperand.jsonOrThrow(operandOrColor))}`,
             ),
             method: "POST",
             headers: {
@@ -60,6 +65,7 @@ export class PathParam {
                 "User-Agent": "@fern/enum/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -68,13 +74,14 @@ export class PathParam {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -83,12 +90,16 @@ export class PathParam {
                 throw new errors.SeedEnumError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedEnumTimeoutError();
+                throw new errors.SeedEnumTimeoutError(
+                    "Timeout exceeded when calling POST /path/{operand}/{operandOrColor}.",
+                );
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

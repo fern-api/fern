@@ -1,6 +1,8 @@
+import urlJoin from "url-join";
+
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import urlJoin from "url-join";
+
 import { isSubpackage } from "./utils/isSubpackage";
 import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts";
 
@@ -45,10 +47,12 @@ export class ApiDefinitionHolder {
         return isSubpackage(pkg) ? pkg.subpackageId : ROOT_PACKAGE_ID;
     }
 
-    public getSubpackageByIdOrLocator(subpackageId: string | undefined): APIV1Read.ApiDefinitionPackage | undefined {
-        if (subpackageId == null) {
+    public getSubpackageByIdOrLocator(subpackageIdRaw: string | undefined): APIV1Read.ApiDefinitionPackage | undefined {
+        if (subpackageIdRaw == null) {
             return undefined;
-        } else if (subpackageId === ROOT_PACKAGE_ID) {
+        }
+        const subpackageId = APIV1Read.SubpackageId(subpackageIdRaw);
+        if (subpackageId === ROOT_PACKAGE_ID) {
             return this.api.rootPackage;
         } else {
             return this.api.subpackages[subpackageId] ?? this.#subpackagesByLocator.get(subpackageId);
@@ -67,9 +71,12 @@ export class ApiDefinitionHolder {
         return pkg;
     }
 
-    private constructor(public readonly api: APIV1Read.ApiDefinition, private readonly context?: TaskContext) {
+    private constructor(
+        public readonly api: APIV1Read.ApiDefinition,
+        private readonly context?: TaskContext
+    ) {
         [api.rootPackage, ...Object.values(api.subpackages)].forEach((pkg) => {
-            const subpackageId = ApiDefinitionHolder.getSubpackageId(pkg);
+            const subpackageId = APIV1Read.SubpackageId(ApiDefinitionHolder.getSubpackageId(pkg));
             const subpackageHolder = {
                 endpoints: new Map<APIV1Read.EndpointId, APIV1Read.EndpointDefinition>(),
                 webSockets: new Map<APIV1Read.WebSocketId, APIV1Read.WebSocketChannel>(),
@@ -115,7 +122,7 @@ export class ApiDefinitionHolder {
                 });
 
                 locators.forEach((locator) => {
-                    this.context?.logger.debug(`Registering endpoint locator: ${locator}`);
+                    this.context?.logger.trace(`Registering endpoint locator: ${locator}`);
                     this.#endpointsByLocator.set(locator, endpoint);
                 });
             });
@@ -157,7 +164,7 @@ export class ApiDefinitionHolder {
                 });
 
                 locators.forEach((locator) => {
-                    this.context?.logger.debug(`Registering websocket locator: ${locator}`);
+                    this.context?.logger.trace(`Registering websocket locator: ${locator}`);
                     this.#webSocketsByLocator.set(locator, webSocket);
                 });
             });
@@ -192,7 +199,7 @@ export class ApiDefinitionHolder {
         const path = packageList.length === 0 ? [ROOT_PACKAGE_ID] : packageList;
         const locators = [path.join("."), path.join("/"), `${path.join(".")}.yml`];
         locators.forEach((locator) => {
-            this.context?.logger.debug(`Registering subpackage locator: ${locator}`);
+            this.context?.logger.trace(`Registering subpackage locator: ${locator}`);
             this.#subpackagesByLocator.set(locator, pkg);
         });
 
@@ -204,7 +211,7 @@ export class ApiDefinitionHolder {
             const path = [...packageList, endpoint.id];
             const locators = [path.join("."), path.join("/")];
             locators.forEach((locator) => {
-                this.context?.logger.debug(`Registering endpoint locator: ${locator}`);
+                this.context?.logger.trace(`Registering endpoint locator: ${locator}`);
                 this.#endpointsByLocator.set(locator, endpoint);
             });
         });
@@ -213,7 +220,7 @@ export class ApiDefinitionHolder {
             const path = [...packageList, webSocket.id];
             const locators = [path.join("."), path.join("/")];
             locators.forEach((locator) => {
-                this.context?.logger.debug(`Registering websocket locator: ${locator}`);
+                this.context?.logger.trace(`Registering websocket locator: ${locator}`);
                 this.#webSocketsByLocator.set(locator, webSocket);
             });
         });
@@ -222,7 +229,7 @@ export class ApiDefinitionHolder {
             const path = [...packageList, webhook.id];
             const locators = [path.join("."), path.join("/")];
             locators.forEach((locator) => {
-                this.context?.logger.debug(`Registering webhook locator: ${locator}`);
+                this.context?.logger.trace(`Registering webhook locator: ${locator}`);
                 this.#webhooksByLocator.set(locator, webhook);
             });
         });
@@ -302,7 +309,7 @@ export class ApiDefinitionHolder {
     }
 }
 
-function getBasePath(environment: APIV1Read.Environment | undefined): string | undefined {
+export function getBasePath(environment: APIV1Read.Environment | undefined): string | undefined {
     if (environment == null) {
         return undefined;
     }

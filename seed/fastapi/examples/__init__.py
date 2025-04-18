@@ -3,6 +3,7 @@
 from .resources import (
     Actor,
     Actress,
+    BigEntity,
     CastMember,
     Directory,
     Entity,
@@ -36,6 +37,7 @@ __all__ = [
     "Actress",
     "ApiAuth",
     "BasicType",
+    "BigEntity",
     "CastMember",
     "ComplexType",
     "Directory",

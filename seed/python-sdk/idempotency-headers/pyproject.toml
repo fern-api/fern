@@ -1,3 +1,6 @@
+[project]
+name = "fern_idempotency-headers"
+
 [tool.poetry]
 name = "fern_idempotency-headers"
 version = "0.0.1"

@@ -18,7 +18,7 @@ export const ExampleInlinedRequestBodyProperty: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleInlinedRequestBodyProperty {
-    interface Raw {
+    export interface Raw {
         name: NameAndWireValue.Raw;
         value: serializers.ExampleTypeReference.Raw;
         originalTypeDeclaration?: DeclaredTypeName.Raw | null;

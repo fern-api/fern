@@ -9,17 +9,17 @@ export type FieldValue =
     | SeedApi.FieldValue.ObjectValue
     | SeedApi.FieldValue.ContainerValue;
 
-export declare namespace FieldValue {
-    interface PrimitiveValue {
+export namespace FieldValue {
+    export interface PrimitiveValue {
         type: "primitive_value";
         value: SeedApi.PrimitiveValue;
     }
 
-    interface ObjectValue extends SeedApi.ObjectValue {
+    export interface ObjectValue extends SeedApi.ObjectValue {
         type: "object_value";
     }
 
-    interface ContainerValue {
+    export interface ContainerValue {
         type: "container_value";
         value: SeedApi.ContainerValue;
     }

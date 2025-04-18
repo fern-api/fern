@@ -8,7 +8,7 @@ org.immutables:* = 2.8.8
 org.apache.commons:commons-lang3 = 3.12.0
 
 # fern
-com.fern.fern:irV46 = 0.0.3517
+com.fern.fern:irV55 = 55.3.0
 com.fern.fern:generator-exec-client = 0.0.806
 
 # testing
@@ -18,7 +18,7 @@ org.mockito:* = 3.11.2
 io.github.origin-energy:java-snapshot-* = 3.3.2
 
 # jackson
-com.fasterxml.jackson.*:jackson-* = 2.12.3
+com.fasterxml.jackson.*:jackson-* = 2.17.2
 
 # errorprone
 com.google.errorprone:error_prone_* = 2.12.1

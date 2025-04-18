@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.query.send({\n    query: \"What is the weather today\"\n});\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.query.send({\n    optionalPrompt: \"You are a helpful assistant\",\n    aliasPrompt: \"You are a helpful assistant\",\n    aliasOptionalPrompt: \"You are a helpful assistant\",\n    optionalStream: false,\n    aliasStream: false,\n    aliasOptionalStream: false,\n    query: \"What is the weather today\"\n});\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.reference.send({\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    context: \"You're super wise\",\n    query: \"What is the weather today\"\n});\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.reference.send({\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    context: \"You're super wise\",\n    query: \"What is the weather today\",\n    containerObject: {\n        nestedObjects: [{\n                literal1: \"literal1\",\n                literal2: \"literal2\",\n                strProp: \"strProp\"\n            }]\n    }\n});\n"
             }
         }
     ],

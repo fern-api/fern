@@ -9,19 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         xApiVersion: "1.0.0" | "2.0.0" | "latest";
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
         /** Override the X-API-Version header */
         xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     }
@@ -35,13 +39,24 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getUser("string")
+     *     await client.user.getUser("userId")
      */
-    public async getUser(userId: SeedVersion.UserId, requestOptions?: User.RequestOptions): Promise<SeedVersion.User> {
+    public getUser(
+        userId: SeedVersion.UserId,
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<SeedVersion.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
+    }
+
+    private async __getUser(
+        userId: SeedVersion.UserId,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedVersion.User>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/users/${encodeURIComponent(serializers.UserId.jsonOrThrow(userId))}`,
             ),
             method: "GET",
             headers: {
@@ -52,6 +67,7 @@ export class User {
                 "X-API-Version": requestOptions?.xApiVersion ?? this._options.xApiVersion,
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -60,18 +76,22 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedVersionError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -80,12 +100,14 @@ export class User {
                 throw new errors.SeedVersionError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedVersionTimeoutError();
+                throw new errors.SeedVersionTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
             case "unknown":
                 throw new errors.SeedVersionError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

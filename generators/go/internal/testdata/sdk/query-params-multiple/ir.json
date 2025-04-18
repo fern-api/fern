@@ -1,4 +1,6 @@
 {
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
     "apiName": {
         "originalName": "api",
         "camelCase": {
@@ -84,6 +86,13 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_user.getAllUsers",
@@ -111,6 +120,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "/all",
                         "parts": []
@@ -147,7 +157,14 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "INTEGER"
+                                "primitive": {
+                                    "v1": "INTEGER",
+                                    "v2": {
+                                        "type": "integer",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "allowMultiple": false,
                             "availability": null,
@@ -182,7 +199,14 @@
                                     "_type": "optional",
                                     "optional": {
                                         "_type": "primitive",
-                                        "primitive": "INTEGER"
+                                        "primitive": {
+                                            "v1": "INTEGER",
+                                            "v2": {
+                                                "type": "integer",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -219,7 +243,14 @@
                                     "_type": "optional",
                                     "optional": {
                                         "_type": "primitive",
-                                        "primitive": "STRING"
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -252,7 +283,14 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "allowMultiple": true,
                             "availability": null,
@@ -285,8 +323,16 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         }
@@ -352,21 +398,298 @@
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
-                    "examples": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "url": "/users/all",
+                                "rootPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointPathParameters": [],
+                                "serviceHeaders": [],
+                                "endpointHeaders": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointHeader",
+                                                    "safeName": "xEndpointHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_header",
+                                                    "safeName": "x_endpoint_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_HEADER",
+                                                    "safeName": "X_ENDPOINT_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointHeader",
+                                                    "safeName": "XEndpointHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                ],
+                                "queryParameters": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "tag",
+                                                "camelCase": {
+                                                    "unsafeName": "tag",
+                                                    "safeName": "tag"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "tag",
+                                                    "safeName": "tag"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TAG",
+                                                    "safeName": "TAG"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Tag",
+                                                    "safeName": "Tag"
+                                                }
+                                            },
+                                            "wireValue": "tag"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "integer",
+                                                    "integer": 1
+                                                }
+                                            },
+                                            "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "limit",
+                                                "camelCase": {
+                                                    "unsafeName": "limit",
+                                                    "safeName": "limit"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "limit",
+                                                    "safeName": "limit"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "LIMIT",
+                                                    "safeName": "LIMIT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Limit",
+                                                    "safeName": "Limit"
+                                                }
+                                            },
+                                            "wireValue": "limit"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "integer",
+                                                                "integer": 1
+                                                            }
+                                                        },
+                                                        "jsonExample": 1
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "INTEGER",
+                                                            "v2": {
+                                                                "type": "integer",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "filter",
+                                                "camelCase": {
+                                                    "unsafeName": "filter",
+                                                    "safeName": "filter"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "filter",
+                                                    "safeName": "filter"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "FILTER",
+                                                    "safeName": "FILTER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Filter",
+                                                    "safeName": "Filter"
+                                                }
+                                            },
+                                            "wireValue": "filter"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "string"
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "series",
+                                                "camelCase": {
+                                                    "unsafeName": "series",
+                                                    "safeName": "series"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "series",
+                                                    "safeName": "series"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERIES",
+                                                    "safeName": "SERIES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Series",
+                                                    "safeName": "Series"
+                                                }
+                                            },
+                                            "wireValue": "series"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
+                                        }
+                                    }
+                                ],
+                                "request": null,
+                                "name": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "id": "2b1a86798ce2b18ab016e3841de3cfe341c5d415",
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -409,6 +732,10 @@
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {
         "subpackage_user": {
             "name": {
@@ -479,6 +806,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -489,6 +817,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -503,11 +832,13 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

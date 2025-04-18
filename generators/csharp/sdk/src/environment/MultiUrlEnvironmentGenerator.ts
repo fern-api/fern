@@ -1,6 +1,9 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -27,22 +30,23 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         const class_ = csharp.class_({
             ...this.context.getEnvironmentsClassReference(),
             partial: false,
-            access: "public"
+            access: csharp.Access.Public
         });
 
         for (const environment of this.multiUrlEnvironments.environments) {
             class_.addField(
                 csharp.field({
-                    access: "public",
+                    access: csharp.Access.Public,
+                    static_: true,
+                    readonly: true,
                     name:
-                        this.context.customConfig["pascal-case-environments"] ?? true
+                        (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
-                    static_: true,
                     type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
                     initializer: csharp.codeblock((writer) => {
                         writer.writeNode(
-                            new csharp.ClassInstantiation({
+                            csharp.instantiateClass({
                                 classReference: class_.reference,
                                 arguments_: Object.entries(environment.urls).map(([id, url]) => {
                                     const baseUrl = this.multiUrlEnvironments.baseUrls.find((url) => url.id === id);
@@ -64,7 +68,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
         for (const baseUrl of this.multiUrlEnvironments.baseUrls) {
             class_.addField(
                 csharp.field({
-                    access: "public",
+                    access: csharp.Access.Public,
                     name: baseUrl.name.pascalCase.safeName,
                     type: csharp.Type.string(),
                     get: true,
@@ -81,6 +85,19 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
+        });
+    }
+
+    public generateSnippet(baseUrlValues?: csharp.AstNode): csharp.ClassInstantiation {
+        const arguments_ = this.multiUrlEnvironments.baseUrls.map((baseUrl) => {
+            const name = baseUrl.name.pascalCase.safeName;
+            const value = baseUrlValues ?? `<${baseUrl.id} URL>`;
+            return { name, assignment: value };
+        });
+
+        return csharp.instantiateClass({
+            classReference: this.context.getEnvironmentsClassReference(),
+            arguments_
         });
     }
 

@@ -17,56 +17,56 @@ export type VariableType =
     | SeedTrace.VariableType.DoublyLinkedListType
     | SeedTrace.VariableType._Unknown;
 
-export declare namespace VariableType {
-    interface IntegerType extends _Utils {
+export namespace VariableType {
+    export interface IntegerType extends _Utils {
         type: "integerType";
     }
 
-    interface DoubleType extends _Utils {
+    export interface DoubleType extends _Utils {
         type: "doubleType";
     }
 
-    interface BooleanType extends _Utils {
+    export interface BooleanType extends _Utils {
         type: "booleanType";
     }
 
-    interface StringType extends _Utils {
+    export interface StringType extends _Utils {
         type: "stringType";
     }
 
-    interface CharType extends _Utils {
+    export interface CharType extends _Utils {
         type: "charType";
     }
 
-    interface ListType extends SeedTrace.ListType, _Utils {
+    export interface ListType extends SeedTrace.ListType, _Utils {
         type: "listType";
     }
 
-    interface MapType extends SeedTrace.MapType, _Utils {
+    export interface MapType extends SeedTrace.MapType, _Utils {
         type: "mapType";
     }
 
-    interface BinaryTreeType extends _Utils {
+    export interface BinaryTreeType extends _Utils {
         type: "binaryTreeType";
     }
 
-    interface SinglyLinkedListType extends _Utils {
+    export interface SinglyLinkedListType extends _Utils {
         type: "singlyLinkedListType";
     }
 
-    interface DoublyLinkedListType extends _Utils {
+    export interface DoublyLinkedListType extends _Utils {
         type: "doublyLinkedListType";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.VariableType._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         integerType: () => _Result;
         doubleType: () => _Result;
         booleanType: () => _Result;
@@ -87,7 +87,7 @@ export const VariableType = {
             type: "integerType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.IntegerType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -99,7 +99,7 @@ export const VariableType = {
             type: "doubleType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.DoubleType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -111,7 +111,7 @@ export const VariableType = {
             type: "booleanType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.BooleanType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -123,7 +123,7 @@ export const VariableType = {
             type: "stringType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.StringType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -135,7 +135,7 @@ export const VariableType = {
             type: "charType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.CharType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -148,7 +148,7 @@ export const VariableType = {
             type: "listType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.ListType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -161,7 +161,7 @@ export const VariableType = {
             type: "mapType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.MapType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -173,7 +173,7 @@ export const VariableType = {
             type: "binaryTreeType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.BinaryTreeType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -185,7 +185,7 @@ export const VariableType = {
             type: "singlyLinkedListType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.SinglyLinkedListType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -197,7 +197,7 @@ export const VariableType = {
             type: "doublyLinkedListType",
             _visit: function <_Result>(
                 this: SeedTrace.VariableType.DoublyLinkedListType,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },
@@ -209,7 +209,7 @@ export const VariableType = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.VariableType._Unknown,
-                visitor: SeedTrace.VariableType._Visitor<_Result>
+                visitor: SeedTrace.VariableType._Visitor<_Result>,
             ) {
                 return SeedTrace.VariableType._visit(this, visitor);
             },

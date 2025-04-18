@@ -1,4 +1,4 @@
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isRawMultipleBaseUrlsEnvironment } from "@fern-api/fern-definition-schema";
 
 export function getAllEnvironmentUrlIds(workspace: FernWorkspace): string[] {

@@ -13,5 +13,5 @@ export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperan
     ]);
 
 export declare namespace ColorOrOperand {
-    type Raw = serializers.Color.Raw | serializers.Operand.Raw;
+    export type Raw = serializers.Color.Raw | serializers.Operand.Raw;
 }

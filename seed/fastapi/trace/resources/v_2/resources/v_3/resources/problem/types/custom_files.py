@@ -18,15 +18,9 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def basic(self, value: BasicCustomFiles) -> CustomFiles:
         if IS_PYDANTIC_V2:
-            return CustomFiles(
-                root=_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic")
-            )  # type: ignore
+            return CustomFiles(root=_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic"))  # type: ignore
         else:
-            return CustomFiles(
-                __root__=_CustomFiles.Basic(
-                    **value.dict(exclude_unset=True), type="basic"
-                )
-            )  # type: ignore
+            return CustomFiles(__root__=_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic"))  # type: ignore
 
     def custom(self, value: typing.Dict[Language, Files]) -> CustomFiles:
         if IS_PYDANTIC_V2:
@@ -40,16 +34,14 @@ class CustomFiles(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_CustomFiles.Basic, _CustomFiles.Custom],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_CustomFiles.Basic, _CustomFiles.Custom],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
@@ -68,11 +60,7 @@ class CustomFiles(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "basic":
-            return basic(
-                BasicCustomFiles(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return basic(BasicCustomFiles(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "custom":
             return custom(unioned_value.value)
 

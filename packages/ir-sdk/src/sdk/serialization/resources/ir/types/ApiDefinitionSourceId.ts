@@ -12,5 +12,5 @@ export const ApiDefinitionSourceId: core.serialization.Schema<
 > = core.serialization.string();
 
 export declare namespace ApiDefinitionSourceId {
-    type Raw = string;
+    export type Raw = string;
 }

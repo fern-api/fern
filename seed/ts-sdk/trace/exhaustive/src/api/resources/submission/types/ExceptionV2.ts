@@ -9,24 +9,24 @@ export type ExceptionV2 =
     | SeedTrace.ExceptionV2.Timeout
     | SeedTrace.ExceptionV2._Unknown;
 
-export declare namespace ExceptionV2 {
-    interface Generic extends SeedTrace.ExceptionInfo, _Utils {
+export namespace ExceptionV2 {
+    export interface Generic extends SeedTrace.ExceptionInfo, _Utils {
         type: "generic";
     }
 
-    interface Timeout extends _Utils {
+    export interface Timeout extends _Utils {
         type: "timeout";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ExceptionV2._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         generic: (value: SeedTrace.ExceptionInfo) => _Result;
         timeout: () => _Result;
         _other: (value: { type: string }) => _Result;
@@ -40,7 +40,7 @@ export const ExceptionV2 = {
             type: "generic",
             _visit: function <_Result>(
                 this: SeedTrace.ExceptionV2.Generic,
-                visitor: SeedTrace.ExceptionV2._Visitor<_Result>
+                visitor: SeedTrace.ExceptionV2._Visitor<_Result>,
             ) {
                 return SeedTrace.ExceptionV2._visit(this, visitor);
             },
@@ -52,7 +52,7 @@ export const ExceptionV2 = {
             type: "timeout",
             _visit: function <_Result>(
                 this: SeedTrace.ExceptionV2.Timeout,
-                visitor: SeedTrace.ExceptionV2._Visitor<_Result>
+                visitor: SeedTrace.ExceptionV2._Visitor<_Result>,
             ) {
                 return SeedTrace.ExceptionV2._visit(this, visitor);
             },
@@ -64,7 +64,7 @@ export const ExceptionV2 = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.ExceptionV2._Unknown,
-                visitor: SeedTrace.ExceptionV2._Visitor<_Result>
+                visitor: SeedTrace.ExceptionV2._Visitor<_Result>,
             ) {
                 return SeedTrace.ExceptionV2._visit(this, visitor);
             },

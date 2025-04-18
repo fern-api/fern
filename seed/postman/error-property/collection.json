@@ -77,38 +77,6 @@
               "description": null,
               "body": "\"string\"",
               "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Property Based Error Test",
-              "status": "Property Based Error Test",
-              "code": 400,
-              "originalRequest": {
-                "description": "GET request that always throws an error",
-                "url": {
-                  "raw": "{{baseUrl}}/property-based-error",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "property-based-error"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "auth": null,
-                "body": null
-              },
-              "description": null,
-              "body": "",
-              "_postman_previewlanguage": "json"
             }
           ]
         }

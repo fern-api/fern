@@ -1,4 +1,5 @@
 import { Config } from "jest";
+
 import defaultConfig from "./shared/jest.config.shared";
 
 export default async (): Promise<Config> => {

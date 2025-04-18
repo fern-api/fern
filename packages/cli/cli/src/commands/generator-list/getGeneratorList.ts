@@ -1,8 +1,19 @@
-import { generatorsYml } from "@fern-api/configuration";
-import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
+import { Values, assertNever } from "@fern-api/core-utils";
+import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
+
+export const GenerationModeFilter = {
+    GitHub: "github",
+    Local: "local-file-system",
+    PackageRegistry: "publish"
+} as const;
+
+export type GenerationModeFilter = Values<typeof GenerationModeFilter>;
 
 export async function getGeneratorList({
     cliContext,
@@ -11,7 +22,9 @@ export async function getGeneratorList({
     apiFilter,
     apiKeyFallback = "FERN_DEFAULT",
     project: { apiWorkspaces },
-    outputLocation
+    outputLocation,
+    excludedModes,
+    includedModes
 }: {
     cliContext: CliContext;
     generatorFilter: Set<string> | undefined;
@@ -20,6 +33,8 @@ export async function getGeneratorList({
     project: Project;
     apiKeyFallback: string | undefined;
     outputLocation: string | undefined;
+    excludedModes: Set<GenerationModeFilter> | undefined;
+    includedModes: Set<GenerationModeFilter> | undefined;
 }): Promise<void> {
     const generators: Record<string, Record<string, string[]>> = {};
     await Promise.all(
@@ -31,8 +46,8 @@ export async function getGeneratorList({
                 }
 
                 // If there are no groups in the configuration, skip this workspace
-                const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
-                    absolutePathToWorkspace: workspace.absoluteFilepath,
+                const generatorsConfiguration = await loadGeneratorsConfiguration({
+                    absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 });
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {
@@ -51,6 +66,17 @@ export async function getGeneratorList({
                     // If the current generator is not in the specified generators, skip it
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     generators[apiName]![group.groupName] = group.generators
+                        .filter((generator) => {
+                            let include = true;
+                            if (includedModes != null) {
+                                include = isGeneratorInModeSet(generator, includedModes);
+                            }
+                            if (excludedModes != null) {
+                                include = !isGeneratorInModeSet(generator, excludedModes);
+                            }
+
+                            return include;
+                        })
                         .filter((generator) => generatorFilter == null || generatorFilter.has(generator.name))
                         .map((generator) => generator.name);
                 }
@@ -69,4 +95,27 @@ export async function getGeneratorList({
     } catch (error) {
         cliContext.failAndThrow(`Could not write file to the specified location: ${outputLocation}`, error);
     }
+}
+
+function isGeneratorInModeSet(generator: generatorsYml.GeneratorInvocation, modes: Set<GenerationModeFilter>): boolean {
+    let convertedMode: GenerationModeFilter;
+
+    const outputModeType = generator.outputMode.type;
+    switch (outputModeType) {
+        case "downloadFiles":
+            convertedMode = GenerationModeFilter.Local;
+            break;
+        case "github":
+        case "githubV2":
+            convertedMode = GenerationModeFilter.GitHub;
+            break;
+        case "publish":
+        case "publishV2":
+            convertedMode = GenerationModeFilter.PackageRegistry;
+            break;
+        default:
+            assertNever(outputModeType);
+    }
+
+    return modes.has(convertedMode);
 }

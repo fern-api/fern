@@ -14,7 +14,7 @@ export const HttpResponse: core.serialization.ObjectSchema<serializers.HttpRespo
     });
 
 export declare namespace HttpResponse {
-    interface Raw {
+    export interface Raw {
         "status-code"?: number | null;
         body?: HttpResponseBody.Raw | null;
     }

@@ -1,12 +1,10 @@
 using SeedIdempotencyHeaders.Core;
 
-#nullable enable
-
 namespace SeedIdempotencyHeaders;
 
 public partial class SeedIdempotencyHeadersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedIdempotencyHeadersClient(string? token = null, ClientOptions? clientOptions = null)
     {
@@ -32,5 +30,5 @@ public partial class SeedIdempotencyHeadersClient
         Payment = new PaymentClient(_client);
     }
 
-    public PaymentClient Payment { get; init; }
+    public PaymentClient Payment { get; }
 }

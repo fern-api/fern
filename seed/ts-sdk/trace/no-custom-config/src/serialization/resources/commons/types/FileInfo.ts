@@ -13,7 +13,7 @@ export const FileInfo: core.serialization.ObjectSchema<serializers.FileInfo.Raw,
     });
 
 export declare namespace FileInfo {
-    interface Raw {
+    export interface Raw {
         filename: string;
         contents: string;
     }

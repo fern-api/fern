@@ -15,7 +15,7 @@ export interface UnknownServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     postObject(
         req: express.Request<never, unknown[], SeedUnknownAsAny.MyObject, never>,
@@ -24,19 +24,22 @@ export interface UnknownServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class UnknownService {
     private router;
 
-    constructor(private readonly methods: UnknownServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: UnknownServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -55,13 +58,13 @@ export class UnknownService {
                             res.json(
                                 serializers.unknown.post.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -69,7 +72,7 @@ export class UnknownService {
                     console.warn(
                         `Endpoint 'post' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -90,13 +93,13 @@ export class UnknownService {
                                 res.json(
                                     serializers.unknown.postObject.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
-                                    })
+                                    }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -104,7 +107,7 @@ export class UnknownService {
                         console.warn(
                             `Endpoint 'postObject' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -115,7 +118,7 @@ export class UnknownService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);

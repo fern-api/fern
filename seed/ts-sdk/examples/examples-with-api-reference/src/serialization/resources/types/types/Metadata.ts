@@ -29,19 +29,19 @@ export const Metadata: core.serialization.Schema<serializers.Metadata.Raw, SeedE
     });
 
 export declare namespace Metadata {
-    type Raw = Metadata.Html | Metadata.Markdown;
+    export type Raw = Metadata.Html | Metadata.Markdown;
 
-    interface Html extends _Base {
+    export interface Html extends _Base {
         type: "html";
         value: string;
     }
 
-    interface Markdown extends _Base {
+    export interface Markdown extends _Base {
         type: "markdown";
         value: string;
     }
 
-    interface _Base {
+    export interface _Base {
         extra: Record<string, string>;
         tags: string[];
     }

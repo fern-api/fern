@@ -19,15 +19,14 @@
     "compile": "tsc --build",
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-sdk": "53.8.0",
+    "@fern-fern/ir-sdk": "57.0.0",
     "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
@@ -35,13 +34,14 @@
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/node": "^18.7.18",
-    "depcheck": "^1.4.6",
+    "@types/jest": "^29.5.14",
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
-    "vitest": "^2.0.5",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.7.1",
-    "typescript": "4.6.4"
+    "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "typescript": "5.7.2",
+    "vitest": "^2.1.9"
   }
 }

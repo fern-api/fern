@@ -2,107 +2,108 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Problem\Types\ProblemDescription;
 use Seed\Commons\Types\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
-class ProblemInfoV2 extends SerializableType
+class ProblemInfoV2 extends JsonSerializableType
 {
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var ProblemDescription $problemDescription
      */
-    #[JsonProperty("problemDescription")]
+    #[JsonProperty('problemDescription')]
     public ProblemDescription $problemDescription;
 
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
-     * @var array<Language> $supportedLanguages
+     * @var array<value-of<Language>> $supportedLanguages
      */
-    #[JsonProperty("supportedLanguages"), ArrayType([Language::class])]
+    #[JsonProperty('supportedLanguages'), ArrayType(['string'])]
     public array $supportedLanguages;
 
     /**
-     * @var mixed $customFiles
+     * @var CustomFiles $customFiles
      */
-    #[JsonProperty("customFiles")]
-    public mixed $customFiles;
+    #[JsonProperty('customFiles')]
+    public CustomFiles $customFiles;
 
     /**
      * @var GeneratedFiles $generatedFiles
      */
-    #[JsonProperty("generatedFiles")]
+    #[JsonProperty('generatedFiles')]
     public GeneratedFiles $generatedFiles;
 
     /**
      * @var array<TestCaseTemplate> $customTestCaseTemplates
      */
-    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate::class])]
+    #[JsonProperty('customTestCaseTemplates'), ArrayType([TestCaseTemplate::class])]
     public array $customTestCaseTemplates;
 
     /**
      * @var array<TestCaseV2> $testcases
      */
-    #[JsonProperty("testcases"), ArrayType([TestCaseV2::class])]
+    #[JsonProperty('testcases'), ArrayType([TestCaseV2::class])]
     public array $testcases;
 
     /**
      * @var bool $isPublic
      */
-    #[JsonProperty("isPublic")]
+    #[JsonProperty('isPublic')]
     public bool $isPublic;
 
     /**
-     * @param string $problemId
-     * @param ProblemDescription $problemDescription
-     * @param string $problemName
-     * @param int $problemVersion
-     * @param array<Language> $supportedLanguages
-     * @param mixed $customFiles
-     * @param GeneratedFiles $generatedFiles
-     * @param array<TestCaseTemplate> $customTestCaseTemplates
-     * @param array<TestCaseV2> $testcases
-     * @param bool $isPublic
+     * @param array{
+     *   problemId: string,
+     *   problemDescription: ProblemDescription,
+     *   problemName: string,
+     *   problemVersion: int,
+     *   supportedLanguages: array<value-of<Language>>,
+     *   customFiles: CustomFiles,
+     *   generatedFiles: GeneratedFiles,
+     *   customTestCaseTemplates: array<TestCaseTemplate>,
+     *   testcases: array<TestCaseV2>,
+     *   isPublic: bool,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        ProblemDescription $problemDescription,
-        string $problemName,
-        int $problemVersion,
-        array $supportedLanguages,
-        mixed $customFiles,
-        GeneratedFiles $generatedFiles,
-        array $customTestCaseTemplates,
-        array $testcases,
-        bool $isPublic,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->problemDescription = $problemDescription;
-        $this->problemName = $problemName;
-        $this->problemVersion = $problemVersion;
-        $this->supportedLanguages = $supportedLanguages;
-        $this->customFiles = $customFiles;
-        $this->generatedFiles = $generatedFiles;
-        $this->customTestCaseTemplates = $customTestCaseTemplates;
-        $this->testcases = $testcases;
-        $this->isPublic = $isPublic;
+        $this->problemId = $values['problemId'];
+        $this->problemDescription = $values['problemDescription'];
+        $this->problemName = $values['problemName'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->supportedLanguages = $values['supportedLanguages'];
+        $this->customFiles = $values['customFiles'];
+        $this->generatedFiles = $values['generatedFiles'];
+        $this->customTestCaseTemplates = $values['customTestCaseTemplates'];
+        $this->testcases = $values['testcases'];
+        $this->isPublic = $values['isPublic'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

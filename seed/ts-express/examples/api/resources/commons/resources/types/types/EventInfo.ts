@@ -17,12 +17,12 @@ import * as SeedExamples from "../../../../../index";
  */
 export type EventInfo = SeedExamples.commons.EventInfo.Metadata | SeedExamples.commons.EventInfo.Tag;
 
-export declare namespace EventInfo {
-    interface Metadata extends SeedExamples.commons.Metadata {
+export namespace EventInfo {
+    export interface Metadata extends SeedExamples.commons.Metadata {
         type: "metadata";
     }
 
-    interface Tag {
+    export interface Tag {
         type: "tag";
         value: SeedExamples.commons.Tag;
     }

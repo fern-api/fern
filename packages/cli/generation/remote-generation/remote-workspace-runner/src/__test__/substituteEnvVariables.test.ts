@@ -1,6 +1,6 @@
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
-import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
+import { FernCliError, createMockTaskContext } from "@fern-api/task-context";
 
 describe("substituteEnvVariables", () => {
     it("basic", () => {

@@ -9,17 +9,21 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedAliasClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -31,13 +35,24 @@ export class SeedAliasClient {
      * @param {SeedAliasClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.get("type-kaljhv87")
+     *     await client.get("typeId")
      */
-    public async get(typeId: SeedAlias.TypeId, requestOptions?: SeedAliasClient.RequestOptions): Promise<void> {
+    public get(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__get(typeId, requestOptions));
+    }
+
+    private async __get(
+        typeId: SeedAlias.TypeId,
+        requestOptions?: SeedAliasClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/${encodeURIComponent(serializers.TypeId.jsonOrThrow(typeId))}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/${encodeURIComponent(serializers.TypeId.jsonOrThrow(typeId))}`,
             ),
             method: "GET",
             headers: {
@@ -47,6 +62,7 @@ export class SeedAliasClient {
                 "User-Agent": "@fern/alias/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -55,13 +71,14 @@ export class SeedAliasClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAliasError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -70,12 +87,14 @@ export class SeedAliasClient {
                 throw new errors.SeedAliasError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedAliasTimeoutError();
+                throw new errors.SeedAliasTimeoutError("Timeout exceeded when calling GET /{typeId}.");
             case "unknown":
                 throw new errors.SeedAliasError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

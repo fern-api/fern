@@ -1,5 +1,7 @@
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 import { Reference } from "@fern-typescript/commons";
+
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedExpressError } from "./GeneratedExpressError";
 
 export interface ExpressErrorContext {

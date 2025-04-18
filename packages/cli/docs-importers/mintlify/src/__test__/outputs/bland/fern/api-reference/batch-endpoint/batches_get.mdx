@@ -1,0 +1,78 @@
+---
+title: Retrieve All Batches
+subtitle: Retrieves batch-specific data for each batch you've created.
+slug: api-reference/batch-endpoint/batches_get
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="batches" type="array">
+  Contains an array of batch objects.
+</ResponseField>
+
+<ResponseField name="batches[i].batch_id" type="string">
+  The unique identifier for the batch.
+</ResponseField>
+
+<ResponseField name="batches[i].base_prompt" type="string">
+  The original base prompt used to create the batch. Will still contain the original placeholder variables such as `
+  {{ business }}` or `{{ name }}`.
+</ResponseField>
+
+<ResponseField name="batches[i].label" type="string">
+  The label you assigned to the batch (if any).
+</ResponseField>
+
+<ResponseField name="batches[i].endpoint_code" type="string" default="API">
+  Enterprise customers with custom endpoints will see the endpoint code here if specified.
+</ResponseField>
+
+<ResponseField name="batches[i].call_params" type="array">
+  The base call parameters used to create the batch, such as `voice_id`, `max_duration`, `reduce_latency`, and
+  `wait_for_greeting`.
+</ResponseField>
+
+<ResponseField name="batches[i].created_at" type="string">
+  The date and time the batch was created.
+</ResponseField>
+
+<ResponseExample>
+```json Response
+{
+    "status": "success",
+    "batches": [
+        {
+            "batch_id": "ZfowpkhOSVCZJ94i-gen-batch",
+            "campaign_id": "a2shduf92f74p8288c93nid5",
+            "created_at": "2023-11-16T22:14:24.9663+00:00",
+            "label": "Subscription Renewal Reminders",
+            "base_prompt": "You are calling {{business}} and need to let them know that their subscription to {{service}} is going to expire on {{date}}. If they'd like to renew, take their credit card information and bill them through {{url}}",
+            "endpoint_code": "api",
+            "call_params": {
+                "reduce_latency": true,
+                "voice_id": 2,
+                "language": "eng",
+                "request_data": {
+                    "test_param": "request data.test_param",
+                    "your name": "Janessa"
+                },
+                "max_duration": 5,
+                "wait_for_greeting": false
+            }
+        },
+        //...
+    ]
+}
+```
+</ResponseExample>

@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_unknown.postObject"
             },
             "snippet": {
-                "client": "require \"fern_unknown\"\n\nunknown_as_any = SeedUnknownAsAnyClient::Client.new(base_url: \"https://api.example.com\")\nunknown_as_any.unknown.post_object(request: {  })",
+                "client": "require \"fern_unknown\"\n\nunknown_as_any = SeedUnknownAsAnyClient::Client.new(base_url: \"https://api.example.com\")\nunknown_as_any.unknown.post_object(request: { unknown: {\"key\":\"value\"} })",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_unknown.postObject"
             },
             "snippet": {
-                "client": "require \"fern_unknown\"\n\nunknown_as_any = SeedUnknownAsAnyClient::Client.new(base_url: \"https://api.example.com\")\nunknown_as_any.unknown.post_object(request: {  })",
+                "client": "require \"fern_unknown\"\n\nunknown_as_any = SeedUnknownAsAnyClient::Client.new(base_url: \"https://api.example.com\")\nunknown_as_any.unknown.post_object(request: { unknown: {\"key\":\"value\"} })",
                 "type": "ruby"
             }
         }

@@ -1,3 +1,5 @@
+import { OpenAPIV3 } from "openapi-types";
+
 import {
     DeclaredErrorName,
     DeclaredTypeName,
@@ -5,7 +7,7 @@ import {
     IntermediateRepresentation,
     TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { OpenAPIV3 } from "openapi-types";
+
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";
 import { constructEndpointSecurity, constructSecuritySchemes } from "./security";
@@ -42,6 +44,7 @@ export function convertToOpenApi({
     const security = constructEndpointSecurity(ir.auth);
 
     const paths = convertServices({
+        ir,
         httpServices: Object.values(ir.services),
         typesByName,
         errorsByName,

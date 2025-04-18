@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 
-from fern_python.codegen import AST
-
 from ...context import FastApiGeneratorContext
+from fern_python.codegen import AST
 
 
 class EndpointParameter(ABC):
@@ -20,16 +19,13 @@ class EndpointParameter(ABC):
         return unsafe_name
 
     @abstractmethod
-    def _get_unsafe_name(self) -> str:
-        ...
+    def _get_unsafe_name(self) -> str: ...
 
     @abstractmethod
-    def get_type(self) -> AST.TypeHint:
-        ...
+    def get_type(self) -> AST.TypeHint: ...
 
     @abstractmethod
-    def get_default(self) -> AST.Expression:
-        ...
+    def get_default(self) -> AST.Expression: ...
 
     def _get_request_param_name(self) -> str:
         return "body"

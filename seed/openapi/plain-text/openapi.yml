@@ -10,11 +10,8 @@ paths:
         - Service
       parameters: []
       responses:
-        '200':
+        '204':
           description: ''
-          content:
-            application/json:
-              schema: {}
 components:
   schemas: {}
   securitySchemes: {}

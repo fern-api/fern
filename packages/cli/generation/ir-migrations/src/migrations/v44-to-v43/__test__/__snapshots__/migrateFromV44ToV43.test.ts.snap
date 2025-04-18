@@ -757,10 +757,10 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
                   "jsonExample": {
                     "users": [
                       {
-                        "name": "Alice",
+                        "name": "name",
                       },
                       {
-                        "name": "Bob",
+                        "name": "name",
                       },
                     ],
                   },
@@ -858,10 +858,10 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
                           "value": {
                             "jsonExample": [
                               {
-                                "name": "Alice",
+                                "name": "name",
                               },
                               {
-                                "name": "Bob",
+                                "name": "name",
                               },
                             ],
                             "shape": {
@@ -869,7 +869,7 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
                                 "list": [
                                   {
                                     "jsonExample": {
-                                      "name": "Alice",
+                                      "name": "name",
                                     },
                                     "shape": {
                                       "shape": {
@@ -963,11 +963,11 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
                                               "typeId": "type_service:User",
                                             },
                                             "value": {
-                                              "jsonExample": "Alice",
+                                              "jsonExample": "name",
                                               "shape": {
                                                 "primitive": {
                                                   "string": {
-                                                    "original": "Alice",
+                                                    "original": "name",
                                                   },
                                                   "type": "string",
                                                 },
@@ -1048,7 +1048,7 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
                                   },
                                   {
                                     "jsonExample": {
-                                      "name": "Bob",
+                                      "name": "name",
                                     },
                                     "shape": {
                                       "shape": {
@@ -1142,11 +1142,11 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
                                               "typeId": "type_service:User",
                                             },
                                             "value": {
-                                              "jsonExample": "Bob",
+                                              "jsonExample": "name",
                                               "shape": {
                                                 "primitive": {
                                                   "string": {
-                                                    "original": "Bob",
+                                                    "original": "name",
                                                   },
                                                   "type": "string",
                                                 },

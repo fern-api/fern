@@ -23,9 +23,9 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
     # @example
     #  oauth_client_credentials_environment_variables = SeedOauthClientCredentialsEnvironmentVariablesClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials_environment_variables.auth.get_token_with_client_credentials(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    scope: "string"
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    scope: "scope"
     #  )
     def get_token_with_client_credentials(client_id:, client_secret:, scope: nil, request_options: nil)
       response = @request_client.conn.post do |req|
@@ -61,10 +61,10 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
     # @example
     #  oauth_client_credentials_environment_variables = SeedOauthClientCredentialsEnvironmentVariablesClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials_environment_variables.auth.refresh_token(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    refresh_token: "string",
-    #    scope: "string"
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    refresh_token: "refresh_token",
+    #    scope: "scope"
     #  )
     def refresh_token(client_id:, client_secret:, refresh_token:, scope: nil, request_options: nil)
       response = @request_client.conn.post do |req|
@@ -111,9 +111,9 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
     # @example
     #  oauth_client_credentials_environment_variables = SeedOauthClientCredentialsEnvironmentVariablesClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials_environment_variables.auth.get_token_with_client_credentials(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    scope: "string"
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    scope: "scope"
     #  )
     def get_token_with_client_credentials(client_id:, client_secret:, scope: nil, request_options: nil)
       Async do
@@ -151,10 +151,10 @@ module SeedOauthClientCredentialsEnvironmentVariablesClient
     # @example
     #  oauth_client_credentials_environment_variables = SeedOauthClientCredentialsEnvironmentVariablesClient::Client.new(base_url: "https://api.example.com")
     #  oauth_client_credentials_environment_variables.auth.refresh_token(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    refresh_token: "string",
-    #    scope: "string"
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    refresh_token: "refresh_token",
+    #    scope: "scope"
     #  )
     def refresh_token(client_id:, client_secret:, refresh_token:, scope: nil, request_options: nil)
       Async do

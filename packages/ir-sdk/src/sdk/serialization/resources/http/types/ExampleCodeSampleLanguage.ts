@@ -21,7 +21,7 @@ export const ExampleCodeSampleLanguage: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace ExampleCodeSampleLanguage {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         name?: Name.Raw | null;
         language: string;
         code: string;

@@ -14,7 +14,7 @@ export const WorkspaceSubmissionState: core.serialization.ObjectSchema<
 });
 
 export declare namespace WorkspaceSubmissionState {
-    interface Raw {
+    export interface Raw {
         status: serializers.WorkspaceSubmissionStatus.Raw;
     }
 }

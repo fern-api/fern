@@ -17,7 +17,7 @@ module SeedApiClient
       @request_client = request_client
     end
 
-    # Add a movie to the database
+    # Add a movie to the database using the movies/* /... path.
     #
     # @param request [Hash] Request of type SeedApiClient::Imdb::CreateMovieRequest, as a Hash
     #   * :title (String)
@@ -26,7 +26,7 @@ module SeedApiClient
     # @return [String]
     # @example
     #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  api.imdb.create_movie(request: { title: "string", rating: 1.1 })
+    #  api.imdb.create_movie(request: { title: "title", rating: 1.1 })
     def create_movie(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -50,7 +50,7 @@ module SeedApiClient
     # @return [SeedApiClient::Imdb::Movie]
     # @example
     #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  api.imdb.get_movie(movie_id: "string")
+    #  api.imdb.get_movie(movie_id: "movieId")
     def get_movie(movie_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -82,7 +82,7 @@ module SeedApiClient
       @request_client = request_client
     end
 
-    # Add a movie to the database
+    # Add a movie to the database using the movies/* /... path.
     #
     # @param request [Hash] Request of type SeedApiClient::Imdb::CreateMovieRequest, as a Hash
     #   * :title (String)
@@ -91,7 +91,7 @@ module SeedApiClient
     # @return [String]
     # @example
     #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  api.imdb.create_movie(request: { title: "string", rating: 1.1 })
+    #  api.imdb.create_movie(request: { title: "title", rating: 1.1 })
     def create_movie(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -118,7 +118,7 @@ module SeedApiClient
     # @return [SeedApiClient::Imdb::Movie]
     # @example
     #  api = SeedApiClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  api.imdb.get_movie(movie_id: "string")
+    #  api.imdb.get_movie(movie_id: "movieId")
     def get_movie(movie_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

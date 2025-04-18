@@ -20,7 +20,7 @@ module SeedVersionClient
     # @return [SeedVersionClient::User::User]
     # @example
     #  version = SeedVersionClient::Client.new(base_url: "https://api.example.com")
-    #  version.user.get_user(user_id: "string")
+    #  version.user.get_user(user_id: "userId")
     def get_user(user_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -56,7 +56,7 @@ module SeedVersionClient
     # @return [SeedVersionClient::User::User]
     # @example
     #  version = SeedVersionClient::Client.new(base_url: "https://api.example.com")
-    #  version.user.get_user(user_id: "string")
+    #  version.user.get_user(user_id: "userId")
     def get_user(user_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

@@ -1,14 +1,15 @@
 import { FernToken } from "@fern-api/auth";
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
-    fernConfigJson,
-    GENERATORS_CONFIGURATION_FILENAME
-} from "@fern-api/configuration";
+    GENERATORS_CONFIGURATION_FILENAME,
+    fernConfigJson
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+
 import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
 import { GenerationMode } from "./generateAPIWorkspaces";
@@ -28,7 +29,7 @@ export async function generateWorkspace({
     mode
 }: {
     organization: string;
-    workspace: APIWorkspace;
+    workspace: AbstractAPIWorkspace<unknown>;
     projectConfig: fernConfigJson.ProjectConfig;
     context: TaskContext;
     version: string | undefined;

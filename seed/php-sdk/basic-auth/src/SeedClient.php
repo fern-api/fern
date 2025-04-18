@@ -3,9 +3,8 @@
 namespace Seed;
 
 use Seed\BasicAuth\BasicAuthClient;
-use Seed\Errors\ErrorsClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
@@ -15,14 +14,15 @@ class SeedClient
     public BasicAuthClient $basicAuth;
 
     /**
-     * @var ErrorsClient $errors
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
-    public ErrorsClient $errors;
-
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
-     */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -32,7 +32,13 @@ class SeedClient
     /**
      * @param string $username The username to use for authentication.
      * @param string $password The username to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         string $username,
@@ -43,6 +49,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -55,7 +62,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->basicAuth = new BasicAuthClient($this->client);
-        $this->errors = new ErrorsClient($this->client);
+        $this->basicAuth = new BasicAuthClient($this->client, $this->options);
     }
 }

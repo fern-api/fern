@@ -2,23 +2,33 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseHiddenGrade extends SerializableType
+class TestCaseHiddenGrade extends JsonSerializableType
 {
     /**
      * @var bool $passed
      */
-    #[JsonProperty("passed")]
+    #[JsonProperty('passed')]
     public bool $passed;
 
     /**
-     * @param bool $passed
+     * @param array{
+     *   passed: bool,
+     * } $values
      */
     public function __construct(
-        bool $passed,
+        array $values,
     ) {
-        $this->passed = $passed;
+        $this->passed = $values['passed'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

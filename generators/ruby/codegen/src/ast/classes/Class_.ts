@@ -1,12 +1,12 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { Argument } from "../Argument";
+import { Import } from "../Import";
+import { Property } from "../Property";
+import { Yardoc } from "../Yardoc";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
-import { Property } from "../Property";
-import { Yardoc } from "../Yardoc";
 import { ClassReference } from "./ClassReference";
 
 export declare namespace Class_ {
@@ -87,7 +87,7 @@ export class Class_ extends AstNode {
         }
         this.functions = functions;
         this.expressions = expressions;
-        this.children = children instanceof AstNode ? [children] : children ?? [];
+        this.children = children instanceof AstNode ? [children] : (children ?? []);
 
         this.yardoc =
             this.documentation != null

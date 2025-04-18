@@ -5,10 +5,10 @@ package fileupload
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/file-upload/fern/core"
+	internal "github.com/file-upload/fern/internal"
 )
 
-type JustFileWithQueryParamsRequet struct {
+type JustFileWithQueryParamsRequest struct {
 	MaybeString           *string   `query:"maybeString"`
 	Integer               int       `query:"integer"`
 	MaybeInteger          *int      `query:"maybeInteger"`
@@ -17,22 +17,36 @@ type JustFileWithQueryParamsRequet struct {
 }
 
 type MyRequest struct {
-	MaybeString           *string     `json:"maybeString,omitempty" url:"-"`
-	Integer               int         `json:"integer" url:"-"`
-	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"-"`
-	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"-"`
-	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"-"`
-	OptionalMetadata      interface{} `json:"optionalMetadata,omitempty" url:"-"`
-	OptionalObjectType    *ObjectType `json:"optionalObjectType,omitempty" url:"-"`
-	OptionalId            *Id         `json:"optionalId,omitempty" url:"-"`
+	MaybeString           *string                 `json:"maybe_string,omitempty" url:"-"`
+	Integer               int                     `json:"integer" url:"-"`
+	MaybeInteger          *int                    `json:"maybe_integer,omitempty" url:"-"`
+	OptionalListOfStrings []string                `json:"optional_list_of_strings,omitempty" url:"-"`
+	ListOfObjects         []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
+	OptionalMetadata      interface{}             `json:"optional_metadata,omitempty" url:"-"`
+	OptionalObjectType    *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
+	OptionalId            *Id                     `json:"optional_id,omitempty" url:"-"`
+	AliasObject           MyAliasObject           `json:"alias_object,omitempty" url:"-"`
+	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
+	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
 }
 
 type Id = string
+
+type MyAliasObject = *MyObject
+
+type MyCollectionAliasObject = []*MyObject
 
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
 
 	extraProperties map[string]interface{}
+}
+
+func (m *MyObject) GetFoo() string {
+	if m == nil {
+		return ""
+	}
+	return m.Foo
 }
 
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
@@ -46,18 +60,63 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MyObject(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
 	return nil
 }
 
 func (m *MyObject) String() string {
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
+type MyObjectWithOptional struct {
+	Prop         string  `json:"prop" url:"prop"`
+	OptionalProp *string `json:"optionalProp,omitempty" url:"optionalProp,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *MyObjectWithOptional) GetProp() string {
+	if m == nil {
+		return ""
+	}
+	return m.Prop
+}
+
+func (m *MyObjectWithOptional) GetOptionalProp() *string {
+	if m == nil {
+		return nil
+	}
+	return m.OptionalProp
+}
+
+func (m *MyObjectWithOptional) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *MyObjectWithOptional) UnmarshalJSON(data []byte) error {
+	type unmarshaler MyObjectWithOptional
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MyObjectWithOptional(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	return nil
+}
+
+func (m *MyObjectWithOptional) String() string {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
@@ -86,6 +145,27 @@ func (o ObjectType) Ptr() *ObjectType {
 }
 
 type WithContentTypeRequest struct {
+	Foo    string    `json:"foo" url:"-"`
+	Bar    *MyObject `json:"bar,omitempty" url:"-"`
+	FooBar *MyObject `json:"foo_bar,omitempty" url:"-"`
+}
+
+type MyOtherRequest struct {
+	MaybeString                *string                 `json:"maybe_string,omitempty" url:"-"`
+	Integer                    int                     `json:"integer" url:"-"`
+	MaybeInteger               *int                    `json:"maybe_integer,omitempty" url:"-"`
+	OptionalListOfStrings      []string                `json:"optional_list_of_strings,omitempty" url:"-"`
+	ListOfObjects              []*MyObject             `json:"list_of_objects,omitempty" url:"-"`
+	OptionalMetadata           interface{}             `json:"optional_metadata,omitempty" url:"-"`
+	OptionalObjectType         *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
+	OptionalId                 *Id                     `json:"optional_id,omitempty" url:"-"`
+	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals,omitempty" url:"-"`
+	AliasObject                MyAliasObject           `json:"alias_object,omitempty" url:"-"`
+	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object,omitempty" url:"-"`
+	AliasListOfObject          MyCollectionAliasObject `json:"alias_list_of_object,omitempty" url:"-"`
+}
+
+type WithFormEncodingRequest struct {
 	Foo string    `json:"foo" url:"-"`
 	Bar *MyObject `json:"bar,omitempty" url:"-"`
 }

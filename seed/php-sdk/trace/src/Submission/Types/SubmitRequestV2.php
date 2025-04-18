@@ -2,70 +2,75 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
-class SubmitRequestV2 extends SerializableType
+class SubmitRequestV2 extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
-     * @var Language $language
+     * @var value-of<Language> $language
      */
-    #[JsonProperty("language")]
-    public Language $language;
+    #[JsonProperty('language')]
+    public string $language;
 
     /**
      * @var array<SubmissionFileInfo> $submissionFiles
      */
-    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
+    #[JsonProperty('submissionFiles'), ArrayType([SubmissionFileInfo::class])]
     public array $submissionFiles;
 
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var ?int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public ?int $problemVersion;
 
     /**
      * @var ?string $userId
      */
-    #[JsonProperty("userId")]
+    #[JsonProperty('userId')]
     public ?string $userId;
 
     /**
-     * @param string $submissionId
-     * @param Language $language
-     * @param array<SubmissionFileInfo> $submissionFiles
-     * @param string $problemId
-     * @param ?int $problemVersion
-     * @param ?string $userId
+     * @param array{
+     *   submissionId: string,
+     *   language: value-of<Language>,
+     *   submissionFiles: array<SubmissionFileInfo>,
+     *   problemId: string,
+     *   problemVersion?: ?int,
+     *   userId?: ?string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        Language $language,
-        array $submissionFiles,
-        string $problemId,
-        ?int $problemVersion = null,
-        ?string $userId = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->language = $language;
-        $this->submissionFiles = $submissionFiles;
-        $this->problemId = $problemId;
-        $this->problemVersion = $problemVersion;
-        $this->userId = $userId;
+        $this->submissionId = $values['submissionId'];
+        $this->language = $values['language'];
+        $this->submissionFiles = $values['submissionFiles'];
+        $this->problemId = $values['problemId'];
+        $this->problemVersion = $values['problemVersion'] ?? null;
+        $this->userId = $values['userId'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -16,7 +16,7 @@ export const ExampleMapContainer: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleMapContainer {
-    interface Raw {
+    export interface Raw {
         map: serializers.ExampleKeyValuePair.Raw[];
         keyType: serializers.TypeReference.Raw;
         valueType: serializers.TypeReference.Raw;

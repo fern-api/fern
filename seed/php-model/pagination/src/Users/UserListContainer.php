@@ -2,24 +2,34 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class UserListContainer extends SerializableType
+class UserListContainer extends JsonSerializableType
 {
     /**
      * @var array<User> $users
      */
-    #[JsonProperty("users"), ArrayType([User::class])]
+    #[JsonProperty('users'), ArrayType([User::class])]
     public array $users;
 
     /**
-     * @param array<User> $users
+     * @param array{
+     *   users: array<User>,
+     * } $values
      */
     public function __construct(
-        array $users,
+        array $values,
     ) {
-        $this->users = $users;
+        $this->users = $values['users'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

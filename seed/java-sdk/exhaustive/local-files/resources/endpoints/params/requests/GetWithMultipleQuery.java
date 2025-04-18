@@ -10,40 +10,45 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.sdk.core.ObjectMappers;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = GetWithMultipleQuery.Builder.class
 )
 public final class GetWithMultipleQuery {
-  private final String query;
+  private final List<String> query;
 
-  private final int numer;
+  private final List<Integer> number;
 
   private final Map<String, Object> additionalProperties;
 
-  private GetWithMultipleQuery(String query, int numer, Map<String, Object> additionalProperties) {
+  private GetWithMultipleQuery(List<String> query, List<Integer> number,
+      Map<String, Object> additionalProperties) {
     this.query = query;
-    this.numer = numer;
+    this.number = number;
     this.additionalProperties = additionalProperties;
   }
 
   @JsonProperty("query")
-  public String getQuery() {
+  public List<String> getQuery() {
     return query;
   }
 
-  @JsonProperty("numer")
-  public int getNumer() {
-    return numer;
+  @JsonProperty("number")
+  public List<Integer> getNumber() {
+    return number;
   }
 
   @java.lang.Override
@@ -58,12 +63,12 @@ public final class GetWithMultipleQuery {
   }
 
   private boolean equalTo(GetWithMultipleQuery other) {
-    return query.equals(other.query) && numer == other.numer;
+    return query.equals(other.query) && number.equals(other.number);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.query, this.numer);
+    return Objects.hash(this.query, this.number);
   }
 
   @java.lang.Override
@@ -71,31 +76,17 @@ public final class GetWithMultipleQuery {
     return ObjectMappers.stringify(this);
   }
 
-  public static QueryStage builder() {
+  public static Builder builder() {
     return new Builder();
-  }
-
-  public interface QueryStage {
-    NumerStage query(@NotNull String query);
-
-    Builder from(GetWithMultipleQuery other);
-  }
-
-  public interface NumerStage {
-    _FinalStage numer(int numer);
-  }
-
-  public interface _FinalStage {
-    GetWithMultipleQuery build();
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements QueryStage, NumerStage, _FinalStage {
-    private String query;
+  public static final class Builder {
+    private List<String> query = new ArrayList<>();
 
-    private int numer;
+    private List<Integer> number = new ArrayList<>();
 
     @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
@@ -103,30 +94,64 @@ public final class GetWithMultipleQuery {
     private Builder() {
     }
 
-    @java.lang.Override
     public Builder from(GetWithMultipleQuery other) {
       query(other.getQuery());
-      numer(other.getNumer());
+      number(other.getNumber());
       return this;
     }
 
-    @java.lang.Override
-    @JsonSetter("query")
-    public NumerStage query(@NotNull String query) {
-      this.query = Objects.requireNonNull(query, "query must not be null");
+    @JsonSetter(
+        value = "query",
+        nulls = Nulls.SKIP
+    )
+    public Builder query(List<String> query) {
+      this.query.clear();
+      this.query.addAll(query);
       return this;
     }
 
-    @java.lang.Override
-    @JsonSetter("numer")
-    public _FinalStage numer(int numer) {
-      this.numer = numer;
+    public Builder addQuery(String query) {
+      this.query.add(query);
       return this;
     }
 
-    @java.lang.Override
+    public Builder addAllQuery(List<String> query) {
+      this.query.addAll(query);
+      return this;
+    }
+
+    public Builder query(String query) {
+      this.query = Collections.singletonList(query);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "number",
+        nulls = Nulls.SKIP
+    )
+    public Builder number(List<Integer> number) {
+      this.number.clear();
+      this.number.addAll(number);
+      return this;
+    }
+
+    public Builder addNumber(Integer number) {
+      this.number.add(number);
+      return this;
+    }
+
+    public Builder addAllNumber(List<Integer> number) {
+      this.number.addAll(number);
+      return this;
+    }
+
+    public Builder number(Integer number) {
+      this.number = Collections.singletonList(number);
+      return this;
+    }
+
     public GetWithMultipleQuery build() {
-      return new GetWithMultipleQuery(query, numer, additionalProperties);
+      return new GetWithMultipleQuery(query, number, additionalProperties);
     }
   }
 }

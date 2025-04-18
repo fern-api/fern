@@ -2,41 +2,49 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SendResponse extends SerializableType
+class SendResponse extends JsonSerializableType
 {
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**
      * @var int $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public int $status;
 
     /**
-     * @var bool $success
+     * @var true $success
      */
-    #[JsonProperty("success")]
+    #[JsonProperty('success')]
     public bool $success;
 
     /**
-     * @param string $message
-     * @param int $status
-     * @param bool $success
+     * @param array{
+     *   message: string,
+     *   status: int,
+     *   success: true,
+     * } $values
      */
     public function __construct(
-        string $message,
-        int $status,
-        bool $success,
+        array $values,
     ) {
-        $this->message = $message;
-        $this->status = $status;
-        $this->success = $success;
+        $this->message = $values['message'];
+        $this->status = $values['status'];
+        $this->success = $values['success'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

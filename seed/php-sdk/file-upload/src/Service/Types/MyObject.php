@@ -2,23 +2,33 @@
 
 namespace Seed\Service\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class MyObject extends SerializableType
+class MyObject extends JsonSerializableType
 {
     /**
      * @var string $foo
      */
-    #[JsonProperty("foo")]
+    #[JsonProperty('foo')]
     public string $foo;
 
     /**
-     * @param string $foo
+     * @param array{
+     *   foo: string,
+     * } $values
      */
     public function __construct(
-        string $foo,
+        array $values,
     ) {
-        $this->foo = $foo;
+        $this->foo = $values['foo'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

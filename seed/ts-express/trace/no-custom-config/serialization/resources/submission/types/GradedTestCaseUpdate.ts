@@ -15,7 +15,7 @@ export const GradedTestCaseUpdate: core.serialization.ObjectSchema<
 });
 
 export declare namespace GradedTestCaseUpdate {
-    interface Raw {
+    export interface Raw {
         testCaseId: serializers.v2.TestCaseId.Raw;
         grade: serializers.TestCaseGrade.Raw;
     }

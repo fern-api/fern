@@ -5,7 +5,96 @@ package undiscriminatedunions
 import (
 	json "encoding/json"
 	fmt "fmt"
+	internal "github.com/undiscriminated-unions/fern/internal"
 )
+
+type Key struct {
+	KeyType              KeyType
+	DefaultStringLiteral string
+
+	typ string
+}
+
+func NewKeyFromKeyType(value KeyType) *Key {
+	return &Key{typ: "KeyType", KeyType: value}
+}
+
+func NewKeyWithDefaultStringLiteral() *Key {
+	return &Key{typ: "DefaultStringLiteral", DefaultStringLiteral: "default"}
+}
+
+func (k *Key) GetKeyType() KeyType {
+	if k == nil {
+		return ""
+	}
+	return k.KeyType
+}
+
+func (k *Key) UnmarshalJSON(data []byte) error {
+	var valueKeyType KeyType
+	if err := json.Unmarshal(data, &valueKeyType); err == nil {
+		k.typ = "KeyType"
+		k.KeyType = valueKeyType
+		return nil
+	}
+	var valueDefaultStringLiteral string
+	if err := json.Unmarshal(data, &valueDefaultStringLiteral); err == nil {
+		k.typ = "DefaultStringLiteral"
+		k.DefaultStringLiteral = valueDefaultStringLiteral
+		if k.DefaultStringLiteral != "default" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", k, "default", valueDefaultStringLiteral)
+		}
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, k)
+}
+
+func (k Key) MarshalJSON() ([]byte, error) {
+	if k.typ == "KeyType" || k.KeyType != "" {
+		return json.Marshal(k.KeyType)
+	}
+	if k.typ == "DefaultStringLiteral" || k.DefaultStringLiteral != "" {
+		return json.Marshal("default")
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", k)
+}
+
+type KeyVisitor interface {
+	VisitKeyType(KeyType) error
+	VisitDefaultStringLiteral(string) error
+}
+
+func (k *Key) Accept(visitor KeyVisitor) error {
+	if k.typ == "KeyType" || k.KeyType != "" {
+		return visitor.VisitKeyType(k.KeyType)
+	}
+	if k.typ == "DefaultStringLiteral" || k.DefaultStringLiteral != "" {
+		return visitor.VisitDefaultStringLiteral(k.DefaultStringLiteral)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", k)
+}
+
+type KeyType string
+
+const (
+	KeyTypeName  KeyType = "name"
+	KeyTypeValue KeyType = "value"
+)
+
+func NewKeyTypeFromString(s string) (KeyType, error) {
+	switch s {
+	case "name":
+		return KeyTypeName, nil
+	case "value":
+		return KeyTypeValue, nil
+	}
+	var t KeyType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (k KeyType) Ptr() *KeyType {
+	return &k
+}
 
 // Undiscriminated unions can act as a map key
 // as long as all of their values are valid keys
@@ -20,60 +109,110 @@ type MyUnion struct {
 	IntegerList     []int
 	IntegerListList [][]int
 	StringSet       []string
+
+	typ string
 }
 
 func NewMyUnionFromString(value string) *MyUnion {
-	return &MyUnion{String: value}
+	return &MyUnion{typ: "String", String: value}
 }
 
 func NewMyUnionFromStringList(value []string) *MyUnion {
-	return &MyUnion{StringList: value}
+	return &MyUnion{typ: "StringList", StringList: value}
 }
 
 func NewMyUnionFromInteger(value int) *MyUnion {
-	return &MyUnion{Integer: value}
+	return &MyUnion{typ: "Integer", Integer: value}
 }
 
 func NewMyUnionFromIntegerList(value []int) *MyUnion {
-	return &MyUnion{IntegerList: value}
+	return &MyUnion{typ: "IntegerList", IntegerList: value}
 }
 
 func NewMyUnionFromIntegerListList(value [][]int) *MyUnion {
-	return &MyUnion{IntegerListList: value}
+	return &MyUnion{typ: "IntegerListList", IntegerListList: value}
 }
 
 func NewMyUnionFromStringSet(value []string) *MyUnion {
-	return &MyUnion{StringSet: value}
+	return &MyUnion{typ: "StringSet", StringSet: value}
+}
+
+func (m *MyUnion) GetString() string {
+	if m == nil {
+		return ""
+	}
+	return m.String
+}
+
+func (m *MyUnion) GetStringList() []string {
+	if m == nil {
+		return nil
+	}
+	return m.StringList
+}
+
+func (m *MyUnion) GetInteger() int {
+	if m == nil {
+		return 0
+	}
+	return m.Integer
+}
+
+func (m *MyUnion) GetIntegerList() []int {
+	if m == nil {
+		return nil
+	}
+	return m.IntegerList
+}
+
+func (m *MyUnion) GetIntegerListList() [][]int {
+	if m == nil {
+		return nil
+	}
+	return m.IntegerListList
+}
+
+func (m *MyUnion) GetStringSet() []string {
+	if m == nil {
+		return nil
+	}
+	return m.StringSet
 }
 
 func (m *MyUnion) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
+		m.typ = "String"
 		m.String = valueString
 		return nil
 	}
 	var valueStringList []string
 	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		m.typ = "StringList"
 		m.StringList = valueStringList
 		return nil
 	}
 	var valueInteger int
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		m.typ = "Integer"
 		m.Integer = valueInteger
 		return nil
 	}
 	var valueIntegerList []int
 	if err := json.Unmarshal(data, &valueIntegerList); err == nil {
+		m.typ = "IntegerList"
 		m.IntegerList = valueIntegerList
 		return nil
 	}
 	var valueIntegerListList [][]int
 	if err := json.Unmarshal(data, &valueIntegerListList); err == nil {
+		m.typ = "IntegerListList"
 		m.IntegerListList = valueIntegerListList
 		return nil
 	}
 	var valueStringSet []string
 	if err := json.Unmarshal(data, &valueStringSet); err == nil {
+		m.typ = "StringSet"
 		m.StringSet = valueStringSet
 		return nil
 	}
@@ -81,22 +220,22 @@ func (m *MyUnion) UnmarshalJSON(data []byte) error {
 }
 
 func (m MyUnion) MarshalJSON() ([]byte, error) {
-	if m.String != "" {
+	if m.typ == "String" || m.String != "" {
 		return json.Marshal(m.String)
 	}
-	if m.StringList != nil {
+	if m.typ == "StringList" || m.StringList != nil {
 		return json.Marshal(m.StringList)
 	}
-	if m.Integer != 0 {
+	if m.typ == "Integer" || m.Integer != 0 {
 		return json.Marshal(m.Integer)
 	}
-	if m.IntegerList != nil {
+	if m.typ == "IntegerList" || m.IntegerList != nil {
 		return json.Marshal(m.IntegerList)
 	}
-	if m.IntegerListList != nil {
+	if m.typ == "IntegerListList" || m.IntegerListList != nil {
 		return json.Marshal(m.IntegerListList)
 	}
-	if m.StringSet != nil {
+	if m.typ == "StringSet" || m.StringSet != nil {
 		return json.Marshal(m.StringSet)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", m)
@@ -112,23 +251,62 @@ type MyUnionVisitor interface {
 }
 
 func (m *MyUnion) Accept(visitor MyUnionVisitor) error {
-	if m.String != "" {
+	if m.typ == "String" || m.String != "" {
 		return visitor.VisitString(m.String)
 	}
-	if m.StringList != nil {
+	if m.typ == "StringList" || m.StringList != nil {
 		return visitor.VisitStringList(m.StringList)
 	}
-	if m.Integer != 0 {
+	if m.typ == "Integer" || m.Integer != 0 {
 		return visitor.VisitInteger(m.Integer)
 	}
-	if m.IntegerList != nil {
+	if m.typ == "IntegerList" || m.IntegerList != nil {
 		return visitor.VisitIntegerList(m.IntegerList)
 	}
-	if m.IntegerListList != nil {
+	if m.typ == "IntegerListList" || m.IntegerListList != nil {
 		return visitor.VisitIntegerListList(m.IntegerListList)
 	}
-	if m.StringSet != nil {
+	if m.typ == "StringSet" || m.StringSet != nil {
 		return visitor.VisitStringSet(m.StringSet)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", m)
+}
+
+type TypeWithOptionalUnion struct {
+	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (t *TypeWithOptionalUnion) GetMyUnion() *MyUnion {
+	if t == nil {
+		return nil
+	}
+	return t.MyUnion
+}
+
+func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
+	type unmarshaler TypeWithOptionalUnion
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalUnion(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	return nil
+}
+
+func (t *TypeWithOptionalUnion) String() string {
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

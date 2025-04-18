@@ -2,23 +2,33 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WorkspaceTracedUpdate extends SerializableType
+class WorkspaceTracedUpdate extends JsonSerializableType
 {
     /**
      * @var int $traceResponsesSize
      */
-    #[JsonProperty("traceResponsesSize")]
+    #[JsonProperty('traceResponsesSize')]
     public int $traceResponsesSize;
 
     /**
-     * @param int $traceResponsesSize
+     * @param array{
+     *   traceResponsesSize: int,
+     * } $values
      */
     public function __construct(
-        int $traceResponsesSize,
+        array $values,
     ) {
-        $this->traceResponsesSize = $traceResponsesSize;
+        $this->traceResponsesSize = $values['traceResponsesSize'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

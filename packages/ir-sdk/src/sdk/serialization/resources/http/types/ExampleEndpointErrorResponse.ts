@@ -16,7 +16,7 @@ export const ExampleEndpointErrorResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleEndpointErrorResponse {
-    interface Raw {
+    export interface Raw {
         error: DeclaredErrorName.Raw;
         body?: serializers.ExampleTypeReference.Raw | null;
     }

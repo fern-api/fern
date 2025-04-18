@@ -11,7 +11,8 @@ Commands:
 
 Options:
   --help       Show help                                               [boolean]
-  --log-level      [choices: "debug", "info", "warn", "error"] [default: "info"]"
+  --log-level
+          [choices: "trace", "debug", "info", "warn", "error"] [default: "info"]"
 `;
 
 exports[`fern generator upgrade > fern generator help commands 2`] = `
@@ -21,7 +22,8 @@ Upgrades the specified generator in generators.yml to the latest stable version.
 
 Options:
   --help           Show help                                           [boolean]
-  --log-level      [choices: "debug", "info", "warn", "error"] [default: "info"]
+  --log-level
+          [choices: "trace", "debug", "info", "warn", "error"] [default: "info"]
   --generator      The type of generator to upgrade, ex:
                    \`fern-typescript-node-sdk\`.                          [string]
   --group          The group in which the generator is located, if group is not
@@ -39,11 +41,15 @@ Options:
 `;
 
 exports[`fern generator upgrade > fern generator upgrade list 1`] = `
-"              ╭──────────────────────────────────────────────────╮
+"Warnings for generators.yml:
+	Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.
+[api]: Warnings for generators.yml:
+[api]: 	Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.
+              ╭──────────────────────────────────────────────────╮
               │                                                  │
               │                Generator Upgrades                │
               │                                                  │
-              │   Python SDK (Group: python-sdk) 3.0.0 → 4.2.5   │
+              │   Python SDK (Group: python-sdk) 3.0.0 → 4.2.7   │
               │                                                  │
               │                                                  │
               ╰──────────────────────────────────────────────────╯"

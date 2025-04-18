@@ -11,6 +11,7 @@ export const ExpressCustomConfigSchema = z.strictObject({
     outputEsm: z.optional(z.boolean()),
     requestValidationStatusCode: z.optional(z.number()),
     useBigInt: z.optional(z.boolean()),
+    noOptionalProperties: z.optional(z.boolean()),
 
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),

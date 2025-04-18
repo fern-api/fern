@@ -1,11 +1,28 @@
 {
-  "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../commons/fs-utils" },
-    { "path": "../configuration" },
-    { "path": "../task-context" },
-    { "path": "../workspace-loader" }
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../configuration-loader"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../workspace/loader"
+    },
+    {
+      "path": "../workspace/commons"
+    }
   ]
 }

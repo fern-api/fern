@@ -10,5 +10,5 @@ export const VariableId: core.serialization.Schema<serializers.VariableId.Raw, F
     core.serialization.string();
 
 export declare namespace VariableId {
-    type Raw = string;
+    export type Raw = string;
 }

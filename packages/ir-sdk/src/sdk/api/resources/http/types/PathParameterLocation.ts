@@ -3,7 +3,6 @@
  */
 
 export type PathParameterLocation = "ROOT" | "SERVICE" | "ENDPOINT";
-
 export const PathParameterLocation = {
     Root: "ROOT",
     Service: "SERVICE",
@@ -22,8 +21,8 @@ export const PathParameterLocation = {
     },
 } as const;
 
-export declare namespace PathParameterLocation {
-    interface Visitor<R> {
+export namespace PathParameterLocation {
+    export interface Visitor<R> {
         root: () => R;
         service: () => R;
         endpoint: () => R;

@@ -15,7 +15,7 @@ export const ExampleType: core.serialization.ObjectSchema<serializers.ExampleTyp
         .extend(Docs);
 
 export declare namespace ExampleType {
-    interface Raw extends Docs.Raw {
+    export interface Raw extends Docs.Raw {
         name: string;
     }
 }

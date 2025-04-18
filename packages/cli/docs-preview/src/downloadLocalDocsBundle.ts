@@ -1,13 +1,12 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Logger } from "@fern-api/logger";
+import { fetcher } from "@fern-typescript/fetcher";
 import decompress from "decompress";
-import { createWriteStream } from "fs";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
-import path from "path";
-import { pipeline } from "stream/promises";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
+
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
@@ -45,9 +44,9 @@ export function getPathToEtagFile(): AbsoluteFilePath {
 }
 
 export declare namespace DownloadLocalBundle {
-    type Result = SuccesResult | FailureResult;
+    type Result = SuccessResult | FailureResult;
 
-    interface SuccesResult {
+    interface SuccessResult {
         type: "success";
     }
 
@@ -66,8 +65,18 @@ export async function downloadBundle({
     preferCached: boolean;
 }): Promise<DownloadLocalBundle.Result> {
     logger.debug("Setting up docs preview bundle...");
-    const response = await fetch(bucketUrl);
-    const body = await response.text();
+    const response = await fetcher<string>({
+        url: bucketUrl,
+        method: "GET",
+        responseType: "text",
+        duplex: "half"
+    });
+    if (!response.ok) {
+        return {
+            type: "failure"
+        };
+    }
+    const body = response.body;
     const parser = new xml2js.Parser();
     const parsedResponse = await parser.parseStringPromise(body);
     const eTag = parsedResponse?.ListBucketResult?.Contents?.[0]?.ETag?.[0];
@@ -92,13 +101,35 @@ export async function downloadBundle({
         }
     }
 
+    logger.debug("Creating tmp directory to download docs preview bundle");
     // create tmp directory
     const dir = await tmp.dir({ prefix: "fern" });
     const absoluteDirectoryToTmpDir = AbsoluteFilePath.of(dir.path);
-    logger.debug(`Created tmp directory ${absoluteDirectoryToTmpDir}`);
 
+    const docsBundleUrl = new URL(key, bucketUrl).href;
+    logger.debug(`Downloading docs preview bundle from ${docsBundleUrl}`);
     // download docs bundle
-    const docsBundleZipResponse = await fetch(`${path.join(bucketUrl, key)}`);
+    const docsBundleZipResponse = await fetcher<unknown>({
+        url: docsBundleUrl,
+        method: "GET",
+        responseType: "arrayBuffer",
+        duplex: "half"
+    });
+
+    if (!docsBundleZipResponse.ok) {
+        let errorMessage: string;
+        if (docsBundleZipResponse.error.reason === "status-code") {
+            errorMessage = `Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.error.statusCode}`;
+        } else if (docsBundleZipResponse.error.reason === "unknown") {
+            errorMessage = `Failed to download docs preview bundle. Error: ${docsBundleZipResponse.error.errorMessage}`;
+        } else {
+            errorMessage = `Failed to download docs preview bundle. Error: ${docsBundleZipResponse.error.reason}`;
+        }
+        logger.error(errorMessage);
+        return {
+            type: "failure"
+        };
+    }
     const outputZipPath = join(absoluteDirectoryToTmpDir, RelativeFilePath.of("output.zip"));
 
     const contents = docsBundleZipResponse.body;
@@ -107,8 +138,10 @@ export async function downloadBundle({
             type: "failure"
         };
     }
+
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    await pipeline(contents as any, createWriteStream(outputZipPath));
+    const nodeBuffer = Buffer.from(contents as any);
+    await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
     logger.debug(`Wrote output.zip to ${outputZipPath}`);
 
     const absolutePathToPreviewFolder = getPathToPreviewFolder();

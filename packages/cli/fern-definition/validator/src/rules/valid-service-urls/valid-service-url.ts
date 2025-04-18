@@ -1,5 +1,7 @@
-import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import chalk from "chalk";
+
+import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds";
 
@@ -20,7 +22,7 @@ export const ValidServiceUrlsRule: Rule = {
             if (urlIds.length === 0) {
                 return [
                     {
-                        severity: "error",
+                        severity: "fatal",
                         message: `"url" cannot be configured unless you specify multiple URLs for each environment in ${ROOT_API_FILENAME}`
                     }
                 ];
@@ -28,7 +30,7 @@ export const ValidServiceUrlsRule: Rule = {
 
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: [
                         `URL ${chalk.bold(
                             url
@@ -58,7 +60,7 @@ export const ValidServiceUrlsRule: Rule = {
                         }
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: [
                                     '"url" is missing. Please specify one of the configured environment URLs:',
                                     ...urlIds.map((urlId) => `  - ${urlId}`)

@@ -1,0 +1,5 @@
+api:
+  - path: ../openapi1.yml
+  - path: ../asyncapi1.yml
+  - path: ../openapi2.yml
+  - path: ../asyncapi2.yml

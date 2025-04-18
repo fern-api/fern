@@ -2,32 +2,41 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class RunningResponse extends SerializableType
+class RunningResponse extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
-     * @var RunningSubmissionState $state
+     * @var value-of<RunningSubmissionState> $state
      */
-    #[JsonProperty("state")]
-    public RunningSubmissionState $state;
+    #[JsonProperty('state')]
+    public string $state;
 
     /**
-     * @param string $submissionId
-     * @param RunningSubmissionState $state
+     * @param array{
+     *   submissionId: string,
+     *   state: value-of<RunningSubmissionState>,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        RunningSubmissionState $state,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->state = $state;
+        $this->submissionId = $values['submissionId'];
+        $this->state = $values['state'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

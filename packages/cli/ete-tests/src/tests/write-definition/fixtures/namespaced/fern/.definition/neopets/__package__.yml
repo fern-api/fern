@@ -1,19 +1,19 @@
 types:
-  Pet:
-    properties:
-      id: long
-      name: string
-      tag: optional<string>
-      messages: optional<V2ChatMessages>
-    source:
-      openapi: openapi/petstore/openapi.yml
-  Pets: list<Pet>
   Error:
     properties:
       code: integer
       message: string
     source:
       openapi: openapi/petstore/openapi.yml
+  Pet:
+    properties:
+      id: long
+      messages: optional<V2ChatMessages>
+      name: string
+      tag: optional<string>
+    source:
+      openapi: openapi/petstore/openapi.yml
+  Pets: list<Pet>
   V2ChatMessages:
     docs: >
       A list of chat messages in chronological order, representing a

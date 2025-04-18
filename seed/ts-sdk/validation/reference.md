@@ -14,9 +14,9 @@
 
 ```typescript
 await client.get({
-    decimal: 1.1,
-    even: 1,
-    name: "string",
+    decimal: 2.2,
+    even: 100,
+    name: "foo",
 });
 ```
 

@@ -25,9 +25,9 @@ export const ApiVersionScheme: core.serialization.Schema<serializers.ApiVersionS
         });
 
 export declare namespace ApiVersionScheme {
-    type Raw = ApiVersionScheme.Header;
+    export type Raw = ApiVersionScheme.Header;
 
-    interface Header extends HeaderApiVersionScheme.Raw {
+    export interface Header extends HeaderApiVersionScheme.Raw {
         type: "header";
     }
 }

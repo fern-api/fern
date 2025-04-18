@@ -7,4 +7,6 @@ import * as FernIr from "../../../index";
 export interface ObjectProperty extends FernIr.Declaration {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
+    propertyAccess: FernIr.ObjectPropertyAccess | undefined;
+    v2Examples: FernIr.V2SchemaExamples | undefined;
 }

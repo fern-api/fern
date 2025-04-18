@@ -11,7 +11,7 @@ export const Bar: core.serialization.ObjectSchema<serializers.Bar.Raw, SeedUnion
 });
 
 export declare namespace Bar {
-    interface Raw {
+    export interface Raw {
         name: string;
     }
 }

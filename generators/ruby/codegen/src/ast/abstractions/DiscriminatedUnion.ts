@@ -1,5 +1,8 @@
 import { NameAndWireValue, SingleUnionTypeProperties, SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
+
 import { Argument } from "../Argument";
+import { Parameter } from "../Parameter";
+import { Property } from "../Property";
 import {
     BooleanClassReference,
     ClassReference,
@@ -14,8 +17,6 @@ import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Parameter } from "../Parameter";
-import { Property } from "../Property";
 import { CaseStatement } from "./CaseStatement";
 
 export declare namespace DiscriminatedUnion {

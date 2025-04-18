@@ -12,12 +12,12 @@ export const GetFunctionSignatureResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     functionByLanguage: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.string().optional()
+        core.serialization.string().optional(),
     ),
 });
 
 export declare namespace GetFunctionSignatureResponse {
-    interface Raw {
+    export interface Raw {
         functionByLanguage: Record<serializers.Language.Raw, string | null | undefined>;
     }
 }

@@ -1,10 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedAnyAuth;
 using SeedAnyAuth.Core;
-
-#nullable enable
 
 namespace SeedAnyAuth.Test.Unit.MockServer;
 
@@ -12,13 +9,17 @@ namespace SeedAnyAuth.Test.Unit.MockServer;
 public class GetTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [
               {
-                "id": "string",
-                "name": "string"
+                "id": "id",
+                "name": "name"
+              },
+              {
+                "id": "id",
+                "name": "name"
               }
             ]
             """;
@@ -32,10 +33,10 @@ public class GetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.User.GetAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.User.GetAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<User>>(mockResponse)).UsingDefaults()
+        );
     }
 }

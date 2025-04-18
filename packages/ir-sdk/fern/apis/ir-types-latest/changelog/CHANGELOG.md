@@ -5,23 +5,142 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v53.12.0] - 2024-08-13
+## [v57.6.0] - 2024-04-14
+
+- Feature: Add support for requestBody and response examples.
+
+## [v57.5.0] - 2024-04-04
+
+- Feature: Update support for property–, schema–, and parameter-level examples.
+
+## [v57.4.0] - 2024-04-04
+
+- Feature: Support property–, schema–, and parameter-level examples.
+
+
+## [v57.3.0] - 2024-04-04
+
+- Feature: HTTP and Websocket endpoints now support storing lightweight examples.
+
+## [v57.2.0] - 2024-04-01
+
+- Feature: HTTP Endpoints now support storing dynamic snippet requests as examples. (In the future, this will be the only path.)
+
+## [v57.1.0] - 2024-03-05
+
+- Feature: File properties can now support descriptions.
+
+## [v57.0.0] - 2024-03-03
+
+- Feature: The IR now supports the full generator-exec config.
+- Feature: The Dynamic IR now supports the generator config, OAuth, additional properties, and root path parameters.
+
+## [v56.0.0] - 2024-02-28
+
+- Feature: Add custom pagination schema
+
+## [v55.4.0] - 2024-02-26
+
+- Feature: ObjectProperty declarations now contain an optional `propertyAccess` field (i.e. for `readOnly` or `writeOnly` properties).
+
+## [v55.3.0] - 2024-02-19
+
+- Feature: The Dynamic IR now supports optional list of examples in each enpdoint.
+
+## [v55.2.0] - 2024-02-18
+
+- Feature: Add support for configuring a websocket channel URL.
+
+## [v55.1.0] - 2024-02-18
+
+- Feature: Support form encoding in multipart requests.
+
+## [v55.0.0] - 2024-01-13
+
+- Feature: The IR now supports `nullable<T>` types to distinguish if a property should support explicit `null` values.
+
+## [v54.1.0] - 2024-01-10
+
+- Feature: OAuthAccessTokenRequestProperties now pulls in additional request properties from the OAuth
+  getToken endpoint to support custom OAuth schemas.
+
+## [v54.0.0] - 2024-12-11
+
+- Break: The HttpResponse type in the IR now supports bytes responses. This is useful for different languages -
+  for example TypeScript can return an `ArrayBuffer` instead of `stream.Readable` in this case.
+
+## [v53.24.0] - 2024-11-04
+
+- Feature: The dynamic snippets IR supports a configurable baseURL and/or environment.
+
+## [v53.23.0] - 2024-11-04
+
+- Internal: Update the Dynamic IR discriminator so that the generated types are unaffected
+  when `noSerdeLayer` is enabled.
+
+## [v53.22.0] - 2024-11-04
+
+- Redacted: Use v53.23.0 instead.
+- Internal: Add the `dynamic` property to the IR. This should be
+  made required in IRv54.
+
+## [v53.21.0] - 2024-11-04
+
+- Internal: Add the `includePathParameters` and `onlyPathParameters` properties to the dynamic
+  IR within the `InlinedRequestMetadata` type.
+
+## [v53.20.0] - 2024-11-04
+
+- Internal: Add `includePathParameters` and `onlyPathParameters` property to the wrapped request.
+
+  With this, the generator can determine whether or not the path parameters should be included in
+  the wrapped request, or if the wrapped request can be omitted entirely.
+
+## [v53.19.0] - 2024-11-04
+
+- Internal: Add errors property to dynamic `EndpointSnippetResponse`.
+
+## [v53.18.0] - 2024-11-04
+
+- Internal: Add `transport` to `HttpEndpoint`. `transport` on the endpoint overrides the `transport` on the `HttpService`.
+
+## [v53.17.0] - 2024-11-01
+
+- Internal: Add dynamic audience to endpoint snippet request and response.
+
+## [v53.16.0] - 2024-10-31
+
+- Internal: Publish @fern-api/dynamic-ir-sdk
+
+## [v53.15.0] - 2024-10-23
+
+- Internal: Introduce dynamic IR types.
+
+## [v53.14.0] - 2024-10-16
+
+- Feature: Add `inline` to type declarations so that generators can nest unnamed types.
+
+## [v53.13.0] - 2024-10-07
 
 - Feature: Add `contentType` to file upload body properties.
 
-## [v53.11.0] - 2024-08-13
+## [v53.12.0] - 2024-09-13
 
-- Fix: Add availability to inline websocket, webhook, and http body parameter properties.
+- Feature: Add `contentType` to file upload body properties.
 
-## [v53.10.0] - 2024-08-12
+## [v53.11.0] - 2024-09-13
+
+- Fix: Add `availability` to inline websocket, webhook, and http body parameter properties.
+
+## [v53.10.0] - 2024-09-12
 
 - Feature: Add `display-name` to discriminated union values for use with displaying docs.
 
-## [v53.9.0] - 2024-08-12 (TODO: Make required in next major)
+## [v53.9.0] - 2024-08-29 (TODO: Make required in next major)
 
 - Feature: Introduce a `PublishingConfig` to the IR instead of trying to go through Fiddle.
 
-## [v53.8.0] - 2024-08-12 (TODO: Make required in next major)
+## [v53.8.0] - 2024-08-23 (TODO: Make required in next major)
 
 - Fix: Include the raw datetime alongside the parsed datetime in `ExamplePrimitive`.
 

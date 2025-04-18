@@ -11,12 +11,12 @@ export const TestCaseImplementationDescription: core.serialization.ObjectSchema<
     SeedTrace.v2.TestCaseImplementationDescription
 > = core.serialization.object({
     boards: core.serialization.list(
-        core.serialization.lazy(() => serializers.v2.TestCaseImplementationDescriptionBoard)
+        core.serialization.lazy(() => serializers.v2.TestCaseImplementationDescriptionBoard),
     ),
 });
 
 export declare namespace TestCaseImplementationDescription {
-    interface Raw {
+    export interface Raw {
         boards: serializers.v2.TestCaseImplementationDescriptionBoard.Raw[];
     }
 }

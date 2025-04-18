@@ -4,4 +4,6 @@
 
 export interface Failure {
     status: "failure";
+    /** Accepts any additional properties */
+    [key: string]: any;
 }

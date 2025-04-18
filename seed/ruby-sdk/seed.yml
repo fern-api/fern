@@ -2,11 +2,20 @@ irVersion: v39
 displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk
 changelogLocation: ../../generators/ruby/sdk/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - bundle install
+  testScript:
+    commands:
+      - bundle exec rake test
+
 publish:
   preBuildCommands:
     - ./.github/actions/install
     - pnpm --filter @fern-api/fern-ruby-sdk dist:cli
-  docker: 
+  docker:
     file: ./generators/ruby/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
     context: .
@@ -15,10 +24,10 @@ test:
     image: fernapi/fern-ruby-sdk:latest
     command: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
 language: ruby
-generatorType: sdk
+generatorType: SDK
 defaultOutputMode: github
 fixtures:
-  exhaustive: 
+  exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
@@ -58,7 +67,7 @@ features:
   websocket: false
   streamingJson: false
   fileUpload: true
-  fileDownlaod: true
+  fileDownload: true
   snippets: false
   snippetTests: false
   errors: false

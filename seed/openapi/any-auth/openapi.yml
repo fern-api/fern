@@ -29,12 +29,10 @@ paths:
                   type: string
                 audience:
                   type: string
-                  enum:
-                    - https://api.example.com
+                  const: https://api.example.com
                 grant_type:
                   type: string
-                  enum:
-                    - client_credentials
+                  const: client_credentials
                 scope:
                   type: string
                   nullable: true

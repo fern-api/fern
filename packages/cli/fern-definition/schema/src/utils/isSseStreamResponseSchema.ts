@@ -1,6 +1,6 @@
 import { HttpEndpointSchema } from "../schemas";
 
-export function isSseStsreamResponseSchema(endpoint: HttpEndpointSchema): boolean {
+export function isSseStreamResponseSchema(endpoint: HttpEndpointSchema): boolean {
     return (
         endpoint["response-stream"] != null &&
         typeof endpoint["response-stream"] !== "string" &&

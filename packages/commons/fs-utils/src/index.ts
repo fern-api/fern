@@ -21,3 +21,13 @@ export { streamObjectToFile } from "./streamObjectToFile";
 export { stringifyLargeObject } from "./stringifyLargeObject";
 export { waitUntilPathExists } from "./waitUntilPathExists";
 export { streamObjectFromFile } from "./streamObjectFromFile";
+export {
+    convertToOsPath,
+    convertToFernHostAbsoluteFilePath,
+    convertToFernHostRelativeFilePath
+} from "./osPathConverter";
+export { getAllFilesInDirectory } from "./getAllFilesInDirectory";
+export { getFilename } from "./getFilename";
+export { isURL } from "./isUrl";
+export { isCI } from "./isCI";
+export { splitPath } from "./splitPath";

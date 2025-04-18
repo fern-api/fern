@@ -10,18 +10,22 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,14 +39,22 @@ export class Service {
      * @example
      *     await client.service.getMovie("movie-c06a4ad7")
      */
-    public async getMovie(
+    public getMovie(
         movieId: SeedExamples.MovieId,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedExamples.Movie> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedExamples.Movie> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
+    }
+
+    private async __getMovie(
+        movieId: SeedExamples.MovieId,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Movie>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/movie/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`,
             ),
             method: "GET",
             headers: {
@@ -53,6 +65,7 @@ export class Service {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -61,18 +74,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Movie.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Movie.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -81,12 +98,14 @@ export class Service {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /movie/{movieId}.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -119,12 +138,23 @@ export class Service {
      *         revenue: 1000000
      *     })
      */
-    public async createMovie(
+    public createMovie(
         request: SeedExamples.Movie,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedExamples.MovieId> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedExamples.MovieId> {
+        return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
+    }
+
+    private async __createMovie(
+        request: SeedExamples.Movie,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.MovieId>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/movie",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -134,6 +164,7 @@ export class Service {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -143,18 +174,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.MovieId.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.MovieId.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -163,12 +198,14 @@ export class Service {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -184,12 +221,19 @@ export class Service {
      *         tag: "development"
      *     })
      */
-    public async getMetadata(
+    public getMetadata(
         request: SeedExamples.GetMetadataRequest,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedExamples.Metadata> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedExamples.Metadata> {
+        return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
+    }
+
+    private async __getMetadata(
+        request: SeedExamples.GetMetadataRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
         const { shallow, tag, xApiVersion } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (shallow != null) {
             _queryParams["shallow"] = shallow.toString();
         }
@@ -203,7 +247,11 @@ export class Service {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/metadata"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/metadata",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -214,6 +262,7 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "X-API-Version": xApiVersion,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -223,18 +272,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Metadata.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Metadata.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -243,25 +296,214 @@ export class Service {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /metadata.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
+     * @param {SeedExamples.BigEntity} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getResponse()
+     *     await client.service.createBigEntity({
+     *         castMember: {
+     *             name: "name",
+     *             id: "id"
+     *         },
+     *         extendedMovie: {
+     *             id: "id",
+     *             prequel: "prequel",
+     *             title: "title",
+     *             from: "from",
+     *             rating: 1.1,
+     *             type: "movie",
+     *             tag: "tag",
+     *             book: "book",
+     *             metadata: {
+     *                 "metadata": {
+     *                     "key": "value"
+     *                 }
+     *             },
+     *             revenue: 1000000,
+     *             cast: ["cast", "cast"]
+     *         },
+     *         entity: {
+     *             type: "primitive",
+     *             name: "name"
+     *         },
+     *         metadata: {
+     *             type: "html",
+     *             value: "metadata"
+     *         },
+     *         commonMetadata: {
+     *             id: "id",
+     *             data: {
+     *                 "data": "data"
+     *             },
+     *             jsonString: "jsonString"
+     *         },
+     *         eventInfo: {
+     *             type: "metadata",
+     *             id: "id",
+     *             data: {
+     *                 "data": "data"
+     *             },
+     *             jsonString: "jsonString"
+     *         },
+     *         data: {
+     *             type: "string",
+     *             value: "data"
+     *         },
+     *         migration: {
+     *             name: "name",
+     *             status: "RUNNING"
+     *         },
+     *         exception: {
+     *             type: "generic",
+     *             exceptionType: "exceptionType",
+     *             exceptionMessage: "exceptionMessage",
+     *             exceptionStacktrace: "exceptionStacktrace"
+     *         },
+     *         test: {
+     *             type: "and",
+     *             value: true
+     *         },
+     *         node: {
+     *             name: "name",
+     *             nodes: [{
+     *                     name: "name",
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }],
+     *                     trees: [{
+     *                             nodes: []
+     *                         }, {
+     *                             nodes: []
+     *                         }]
+     *                 }, {
+     *                     name: "name",
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }],
+     *                     trees: [{
+     *                             nodes: []
+     *                         }, {
+     *                             nodes: []
+     *                         }]
+     *                 }],
+     *             trees: [{
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }]
+     *                 }, {
+     *                     nodes: [{
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }, {
+     *                             name: "name",
+     *                             nodes: [],
+     *                             trees: []
+     *                         }]
+     *                 }]
+     *         },
+     *         directory: {
+     *             name: "name",
+     *             files: [{
+     *                     name: "name",
+     *                     contents: "contents"
+     *                 }, {
+     *                     name: "name",
+     *                     contents: "contents"
+     *                 }],
+     *             directories: [{
+     *                     name: "name",
+     *                     files: [{
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }, {
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }],
+     *                     directories: [{
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }, {
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }]
+     *                 }, {
+     *                     name: "name",
+     *                     files: [{
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }, {
+     *                             name: "name",
+     *                             contents: "contents"
+     *                         }],
+     *                     directories: [{
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }, {
+     *                             name: "name",
+     *                             files: [],
+     *                             directories: []
+     *                         }]
+     *                 }]
+     *         },
+     *         moment: {
+     *             id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             date: "2023-01-15",
+     *             datetime: "2024-01-15T09:30:00Z"
+     *         }
+     *     })
      */
-    public async getResponse(requestOptions?: Service.RequestOptions): Promise<SeedExamples.Response> {
+    public createBigEntity(
+        request: SeedExamples.BigEntity,
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedExamples.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__createBigEntity(request, requestOptions));
+    }
+
+    private async __createBigEntity(
+        request: SeedExamples.BigEntity,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Response>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/response"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/big-entity",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -271,26 +513,32 @@ export class Service {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
+            body: serializers.BigEntity.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -299,12 +547,14 @@ export class Service {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /big-entity.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

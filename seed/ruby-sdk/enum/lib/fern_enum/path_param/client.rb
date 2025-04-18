@@ -17,20 +17,13 @@ module SeedEnumClient
     end
 
     # @param operand [SeedEnumClient::Operand]
-    # @param maybe_operand [SeedEnumClient::Operand]
     # @param operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
-    # @param maybe_operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
     # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     # @example
     #  enum = SeedEnumClient::Client.new(base_url: "https://api.example.com")
-    #  enum.path_param.send(
-    #    operand: GREATER_THAN,
-    #    maybe_operand: LESS_THAN,
-    #    operand_or_color: RED,
-    #    maybe_operand_or_color: RED
-    #  )
-    def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
+    #  enum.path_param.send(operand: GREATER_THAN, operand_or_color: RED)
+    def send(operand:, operand_or_color:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -44,7 +37,7 @@ module SeedEnumClient
         unless request_options.nil? || request_options&.additional_body_parameters.nil?
           req.body = { **(request_options&.additional_body_parameters || {}) }.compact
         end
-        req.url "#{@request_client.get_url(request_options: request_options)}/path/#{operand}/#{maybe_operand}/#{operand_or_color}/#{maybe_operand_or_color}"
+        req.url "#{@request_client.get_url(request_options: request_options)}/path/#{operand}/#{operand_or_color}"
       end
     end
   end
@@ -60,20 +53,13 @@ module SeedEnumClient
     end
 
     # @param operand [SeedEnumClient::Operand]
-    # @param maybe_operand [SeedEnumClient::Operand]
     # @param operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
-    # @param maybe_operand_or_color [SeedEnumClient::Color, SeedEnumClient::Operand]
     # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     # @example
     #  enum = SeedEnumClient::Client.new(base_url: "https://api.example.com")
-    #  enum.path_param.send(
-    #    operand: GREATER_THAN,
-    #    maybe_operand: LESS_THAN,
-    #    operand_or_color: RED,
-    #    maybe_operand_or_color: RED
-    #  )
-    def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
+    #  enum.path_param.send(operand: GREATER_THAN, operand_or_color: RED)
+    def send(operand:, operand_or_color:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -88,7 +74,7 @@ module SeedEnumClient
           unless request_options.nil? || request_options&.additional_body_parameters.nil?
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact
           end
-          req.url "#{@request_client.get_url(request_options: request_options)}/path/#{operand}/#{maybe_operand}/#{operand_or_color}/#{maybe_operand_or_color}"
+          req.url "#{@request_client.get_url(request_options: request_options)}/path/#{operand}/#{operand_or_color}"
         end
       end
     end

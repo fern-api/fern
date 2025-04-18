@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IncomingMessage, Server } from "http";
 import open from "open";
+
 import { createServer } from "./createServer";
 
 const SUCCESS_PAGE = `

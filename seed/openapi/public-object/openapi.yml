@@ -1,0 +1,17 @@
+openapi: 3.0.1
+info:
+  title: public-object
+  version: ''
+paths:
+  /helloworld.txt:
+    get:
+      operationId: service_get
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+components:
+  schemas: {}
+  securitySchemes: {}

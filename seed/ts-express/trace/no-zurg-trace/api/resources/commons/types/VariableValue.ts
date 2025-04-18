@@ -17,54 +17,54 @@ export type VariableValue =
     | SeedTrace.VariableValue.DoublyLinkedListValue
     | SeedTrace.VariableValue.NullValue;
 
-export declare namespace VariableValue {
-    interface IntegerValue {
+export namespace VariableValue {
+    export interface IntegerValue {
         type: "integerValue";
         value: number;
     }
 
-    interface BooleanValue {
+    export interface BooleanValue {
         type: "booleanValue";
         value: boolean;
     }
 
-    interface DoubleValue {
+    export interface DoubleValue {
         type: "doubleValue";
         value: number;
     }
 
-    interface StringValue {
+    export interface StringValue {
         type: "stringValue";
         value: string;
     }
 
-    interface CharValue {
+    export interface CharValue {
         type: "charValue";
         value: string;
     }
 
-    interface MapValue extends SeedTrace.MapValue {
+    export interface MapValue extends SeedTrace.MapValue {
         type: "mapValue";
     }
 
-    interface ListValue {
+    export interface ListValue {
         type: "listValue";
         value: SeedTrace.VariableValue[];
     }
 
-    interface BinaryTreeValue extends SeedTrace.BinaryTreeValue {
+    export interface BinaryTreeValue extends SeedTrace.BinaryTreeValue {
         type: "binaryTreeValue";
     }
 
-    interface SinglyLinkedListValue extends SeedTrace.SinglyLinkedListValue {
+    export interface SinglyLinkedListValue extends SeedTrace.SinglyLinkedListValue {
         type: "singlyLinkedListValue";
     }
 
-    interface DoublyLinkedListValue extends SeedTrace.DoublyLinkedListValue {
+    export interface DoublyLinkedListValue extends SeedTrace.DoublyLinkedListValue {
         type: "doublyLinkedListValue";
     }
 
-    interface NullValue {
+    export interface NullValue {
         type: "nullValue";
     }
 }

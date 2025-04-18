@@ -1,31 +1,56 @@
-import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
-import { dirname, doesPathExist, AbsoluteFilePath } from "@fern-api/fs-utils";
-import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
-import { WebSocketServer, type WebSocket } from "ws";
+import { type WebSocket, WebSocketServer } from "ws";
+
+import { wrapWithHttps } from "@fern-api/docs-resolver";
+import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
+
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
     apis: {},
+    apisV2: {},
     files: {},
     filesV2: {},
     config: {
-        navigation: {
-            items: []
-        }
+        aiChatConfig: undefined,
+        hideNavLinks: undefined,
+        navigation: undefined,
+        root: undefined,
+        title: undefined,
+        defaultLanguage: undefined,
+        announcement: undefined,
+        navbarLinks: undefined,
+        footerLinks: undefined,
+        logoHeight: undefined,
+        logoHref: undefined,
+        favicon: undefined,
+        metadata: undefined,
+        redirects: undefined,
+        colorsV3: undefined,
+        layout: undefined,
+        typographyV2: undefined,
+        analyticsConfig: undefined,
+        integrations: undefined,
+        css: undefined,
+        js: undefined
     },
     search: {
-        type: "legacyMultiAlgoliaIndex"
-    }
+        type: "legacyMultiAlgoliaIndex",
+        algoliaIndex: undefined
+    },
+    algoliaSearchIndex: undefined,
+    jsFiles: undefined,
+    id: undefined
 };
 
 export async function runPreviewServer({
@@ -56,12 +81,13 @@ export async function runPreviewServer({
             await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
         } catch (err) {
             const pathToBundle = getPathToBundleFolder();
+            if (err instanceof Error) {
+                context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
+            }
             if (await doesPathExist(pathToBundle)) {
-                context.logger.warn("Failed to download latest docs application. Falling back to existing bundle.");
+                context.logger.warn("Falling back to cached bundle...");
             } else {
-                context.logger.warn(
-                    "Failed to download docs application. Please reach out to support@buildwithfern.com."
-                );
+                context.logger.warn("Please reach out to support@buildwithfern.com.");
                 return;
             }
         }
@@ -91,13 +117,17 @@ export async function runPreviewServer({
     app.use(cors());
 
     const instance = new URL(
-        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `http://localhost:${port}`)
     );
 
     let project = initialProject;
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
 
-    const reloadDocsDefinition = async () => {
+    let reloadTimer: NodeJS.Timeout | null = null;
+    let isReloading = false;
+    const RELOAD_DEBOUNCE_MS = 1000;
+
+    const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
         try {
@@ -105,9 +135,11 @@ export async function runPreviewServer({
             context.logger.info("Validating docs...");
             await validateProject(project);
             const newDocsDefinition = await getPreviewDocsDefinition({
-                domain: instance.host,
+                domain: `${instance.host}${instance.pathname}`,
                 project,
-                context
+                context,
+                previousDocsDefinition: docsDefinition,
+                editedAbsoluteFilepaths
             });
             context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;
@@ -117,6 +149,12 @@ export async function runPreviewServer({
             } else {
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
             }
+            if (err instanceof Error) {
+                context.logger.error(err.message);
+                if (err instanceof Error && err.stack) {
+                    context.logger.debug(`Stack Trace:\n${err.stack}`);
+                }
+            }
             return docsDefinition;
         }
     };
@@ -124,31 +162,57 @@ export async function runPreviewServer({
     // initialize docs definition
     docsDefinition = await reloadDocsDefinition();
 
-    const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilepaths());
+    const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
     const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder();
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
-        debounce: 1000,
+        debounce: 100,
         renameDetection: true
     });
+
+    const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
-        sendData({
-            version: 1,
-            type: "startReload"
-        });
-        // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
-        const reloadedDocsDefinition = await reloadDocsDefinition();
-        if (reloadedDocsDefinition != null) {
-            docsDefinition = reloadedDocsDefinition;
+
+        // Don't schedule another reload if one is in progress
+        if (isReloading) {
+            return;
         }
-        sendData({
-            version: 1,
-            type: "finishReload"
-        });
+
+        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
+
+        // Clear any existing timer
+        if (reloadTimer != null) {
+            clearTimeout(reloadTimer);
+        }
+
+        // Set up new timer
+        reloadTimer = setTimeout(() => {
+            void (async () => {
+                isReloading = true;
+                sendData({
+                    version: 1,
+                    type: "startReload"
+                });
+
+                const reloadedDocsDefinition = await reloadDocsDefinition(editedAbsoluteFilepaths);
+                if (reloadedDocsDefinition != null) {
+                    docsDefinition = reloadedDocsDefinition;
+                }
+
+                editedAbsoluteFilepaths.length = 0;
+
+                sendData({
+                    version: 1,
+                    type: "finishReload"
+                });
+                isReloading = false;
+            })();
+        }, RELOAD_DEBOUNCE_MS);
     });
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -162,10 +226,12 @@ export async function runPreviewServer({
                     basePath: instance.pathname
                 },
                 definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== "dark"
+                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
+                orgId: FernNavigation.OrgId(initialProject.config.organization)
             };
             res.send(response);
         } catch (error) {
+            context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
             res.status(500).send();
         }
@@ -195,7 +261,7 @@ export async function runPreviewServer({
 
     context.logger.info(`Running server on http://localhost:${port}`);
 
-    // await infiinitely
+    // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     await new Promise(() => {});
 }

@@ -3,6 +3,7 @@
 package core
 
 import (
+	fmt "fmt"
 	http "net/http"
 	url "net/url"
 )
@@ -49,6 +50,7 @@ func (r *RequestOptions) ToHeader() http.Header {
 	if r.ApiKey != "" {
 		header.Set("Authorization", "Bearer "+r.ApiKey)
 	}
+	header.Set("X-API-Version", fmt.Sprintf("%v", "1.0.0"))
 	return header
 }
 
@@ -57,6 +59,7 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/bearer-token-environment-variable/fern")
 	headers.Set("X-Fern-SDK-Version", "0.0.1")
+	headers.Set("User-Agent", "github.com/bearer-token-environment-variable/fern/0.0.1")
 	return headers
 }
 

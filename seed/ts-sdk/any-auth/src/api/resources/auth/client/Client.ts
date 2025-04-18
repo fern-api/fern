@@ -9,19 +9,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Auth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         apiKey?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -34,17 +38,28 @@ export class Auth {
      *
      * @example
      *     await client.auth.getToken({
-     *         clientId: "string",
-     *         clientSecret: "string",
-     *         scope: "string"
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret",
+     *         scope: "scope"
      *     })
      */
-    public async getToken(
+    public getToken(
         request: SeedAnyAuth.GetTokenRequest,
-        requestOptions?: Auth.RequestOptions
-    ): Promise<SeedAnyAuth.TokenResponse> {
+        requestOptions?: Auth.RequestOptions,
+    ): core.HttpResponsePromise<SeedAnyAuth.TokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
+    }
+
+    private async __getToken(
+        request: SeedAnyAuth.GetTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedAnyAuth.TokenResponse>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/token",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -55,6 +70,7 @@ export class Auth {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await this._getCustomAuthorizationHeaders()),
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -68,18 +84,22 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.TokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.TokenResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAnyAuthError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -88,12 +108,14 @@ export class Auth {
                 throw new errors.SeedAnyAuthError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedAnyAuthTimeoutError();
+                throw new errors.SeedAnyAuthTimeoutError("Timeout exceeded when calling POST /token.");
             case "unknown":
                 throw new errors.SeedAnyAuthError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

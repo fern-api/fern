@@ -2,50 +2,64 @@
 
 namespace Seed\InlinedRequest\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Types\Operand;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
+use Seed\Types\Color;
+use Seed\Core\Types\Union;
 
-class SendEnumInlinedRequest
+class SendEnumInlinedRequest extends JsonSerializableType
 {
     /**
-     * @var Operand $operand
+     * @var value-of<Operand> $operand
      */
-    #[JsonProperty("operand")]
-    public Operand $operand;
+    #[JsonProperty('operand')]
+    public string $operand;
 
     /**
-     * @var mixed $operandOrColor
+     * @var ?value-of<Operand> $maybeOperand
      */
-    #[JsonProperty("operandOrColor")]
-    public mixed $operandOrColor;
+    #[JsonProperty('maybeOperand')]
+    public ?string $maybeOperand;
 
     /**
-     * @var mixed $maybeOperandOrColor
+     * @var (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * ) $operandOrColor
      */
-    #[JsonProperty("maybeOperandOrColor")]
-    public mixed $maybeOperandOrColor;
+    #[JsonProperty('operandOrColor')]
+    public string $operandOrColor;
 
     /**
-     * @var ?Operand $maybeOperand
+     * @var (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * )|null $maybeOperandOrColor
      */
-    #[JsonProperty("maybeOperand")]
-    public ?Operand $maybeOperand;
+    #[JsonProperty('maybeOperandOrColor'), Union('string', 'null')]
+    public string|null $maybeOperandOrColor;
 
     /**
-     * @param Operand $operand
-     * @param mixed $operandOrColor
-     * @param mixed $maybeOperandOrColor
-     * @param ?Operand $maybeOperand
+     * @param array{
+     *   operand: value-of<Operand>,
+     *   operandOrColor: (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * ),
+     *   maybeOperand?: ?value-of<Operand>,
+     *   maybeOperandOrColor?: (
+     *    value-of<Color>
+     *   |value-of<Operand>
+     * )|null,
+     * } $values
      */
     public function __construct(
-        Operand $operand,
-        mixed $operandOrColor,
-        mixed $maybeOperandOrColor,
-        ?Operand $maybeOperand = null,
+        array $values,
     ) {
-        $this->operand = $operand;
-        $this->operandOrColor = $operandOrColor;
-        $this->maybeOperandOrColor = $maybeOperandOrColor;
-        $this->maybeOperand = $maybeOperand;
+        $this->operand = $values['operand'];
+        $this->maybeOperand = $values['maybeOperand'] ?? null;
+        $this->operandOrColor = $values['operandOrColor'];
+        $this->maybeOperandOrColor = $values['maybeOperandOrColor'] ?? null;
     }
 }

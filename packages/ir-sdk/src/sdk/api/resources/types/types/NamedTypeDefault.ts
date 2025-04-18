@@ -6,16 +6,16 @@ import * as FernIr from "../../../index";
 
 export type NamedTypeDefault = FernIr.NamedTypeDefault.Enum;
 
-export declare namespace NamedTypeDefault {
-    interface Enum extends FernIr.EnumValue, _Utils {
+export namespace NamedTypeDefault {
+    export interface Enum extends FernIr.EnumValue, _Utils {
         type: "enum";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.NamedTypeDefault._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         enum: (value: FernIr.EnumValue) => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -28,7 +28,7 @@ export const NamedTypeDefault = {
             type: "enum",
             _visit: function <_Result>(
                 this: FernIr.NamedTypeDefault.Enum,
-                visitor: FernIr.NamedTypeDefault._Visitor<_Result>
+                visitor: FernIr.NamedTypeDefault._Visitor<_Result>,
             ) {
                 return FernIr.NamedTypeDefault._visit(this, visitor);
             },

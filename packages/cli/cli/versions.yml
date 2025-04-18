@@ -1,32 +1,2547 @@
-- changelogEntry: 
-    - summary: | 
-        The API V2 configuration now supports disabling using titles as schema 
+
+- changelogEntry:
+  - summary: |
+      Correctly parse non-string enum values; remove dependency on Fern Definition for v3 Parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.26
+
+- changelogEntry:
+  - summary: |
+      Parse schema-level examples in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.25
+
+- changelogEntry:
+  - summary: |
+      Fix an issue in the OpenAPI importer where discriminated unions with literal discriminant values in the variants would render the discriminant property twice. 
+      The importer now correctly checks if union variants contain the discriminant property as a literal value and handles them appropriately.
+    type: fix
+  irVersion: 57
+  version: 0.57.24
+
+- changelogEntry:
+  - summary: |
+      Correctly package webhooks in the `webhooks` section into IR groups.
+    type: fix
+  irVersion: 57
+  version: 0.57.23
+
+- changelogEntry:
+  - summary: |
+      Parse `anyOf` and `oneOf` schemas with "null" in a first class manner in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.22
+
+- changelogEntry:
+  - summary: |
+      Correctly parse schema-valued additionalProperties in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.21
+
+- changelogEntry:
+  - summary: |
+      Correctly parse primitive type arrays in the v3 OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.20
+
+- changelogEntry:
+  - summary: |
+      Fix an issue in the OpenAPI parser where array references were not being properly resolved. The parser now correctly resolves references 
+      within array schemas, ensuring that arrays of referenced types are properly handled throughout the API definition.
+    type: fix
+  irVersion: 57
+  version: 0.57.19
+
+- changelogEntry:
+  - summary: |
+      Improve the ReadMe migrator to respect the original navigation structure when creating the file hierarchy. Previously, nested navigation groups were 
+      flattened, but now the file structure will mirror the navigation hierarchy, preserving the original organization of documentation.
+    type: fix
+  irVersion: 57
+
+  version: 0.57.18
+
+- changelogEntry:
+  - summary: |
+      Prevent combinatorial explosion of oneOf types when provided a nullable type array in the OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.57.17
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where environment URLs would be incorrectly remapped during the merge IR step.
+    type: fix
+  irVersion: 57
+  version: 0.57.16
+
+- changelogEntry:
+  - summary: |
+      Add support for handling nullable and optional references in the OpenAPI parser. When a reference is marked with `nullable: true` or is not included in the required properties list, the parser now correctly wraps the referenced type in a nullable or optional container. This ensures that references respect the same nullability and optionality rules as inline schemas.
+    type: fix
+  irVersion: 57
+  version: 0.57.15
+
+- changelogEntry:
+  - summary: |
+      Adds support for the `command-a` model in AI chat, while removing support for the `command-r-plus` model.
+    type: chore
+  irVersion: 57
+  version: 0.57.14
+
+- changelogEntry:
+  - summary: |
+      Updates parameter parsing in asyncapi-to-ir to correctly handle enum parameters, along with native support for the x-fern-optional and x-fern-type extensions
+    type: chore
+  irVersion: 57
+  version: 0.57.13
+
+- changelogEntry:
+  - summary: |
+      Add `additional-properties-defaults-to` setting for OpenAPI specs in generators.yml.
+      This setting lets you change the default value for the `additionalProperties` field in the generated IR.
+    type: feat
+  irVersion: 57
+  version: 0.57.12
+
+- changelogEntry:
+  - summary: |
+      Improve parameter parsing in v3 AsyncAPI specs to enable broader support for OpenAPI extensions.
+    type: fix
+  irVersion: 57
+  version: 0.57.11
+
+- changelogEntry:
+  - summary: |
+      Add support for `respect-forward-compatible-enums` configuration option to specify whether to respect forward compatible enums in OpenAPI specifications.
+    type: fix
+  irVersion: 57
+  version: 0.57.11
+
+- changelogEntry:
+  - summary: |
+      Add support for handling integer types without a specified format in the new OpenAPI parser. When a schema defines a property with `type: integer` but doesn't specify a format (like int32, int64, etc.), the parser now defaults to treating it as a standard integer type. This ensures consistent behavior for integer fields regardless of whether a format is explicitly provided.
+    type: fix
+  irVersion: 57
+  version: 0.57.10
+
+- changelogEntry:
+  - summary: |
+      Add support for reading common properties across all oneOf variants in the new OpenAPI parser. When a schema uses `oneOf` with a discriminator, the parser now correctly extracts and includes properties defined at the root level of the schema as base properties of the discriminated union. This ensures that common fields shared by all variants are properly represented in the generated IR.
+    type: fix
+  irVersion: 57
+  version: 0.57.9
+
+- changelogEntry:
+  - summary: |
+      Bump undici timeouts to make sure docs sites get published. This addresses an issue where large documentation sites were timing out during the publishing process. By increasing the timeout values for the undici HTTP client, we ensure that even complex documentation sites have enough time to complete the publishing process.
+
+    type: fix
+  irVersion: 57
+  version: 0.57.8
+
+- changelogEntry:
+  - summary: |
+      Add support for `anyOf` in the new OpenAPI parser. This allows for undiscriminated unions in the OpenAPI schema, where a type can be one of several possible types without a discriminator field. The parser now handles both `oneOf` and `anyOf` schemas in the same way, converting them to undiscriminated unions in the IR.
+
+    type: fix
+  irVersion: 57
+  version: 0.57.7
+
+- changelogEntry:
+  - summary: |
+      Reduce CLI output from the legacy OpenAPI parser when using the experimental `openapiParserV3` option. This makes the logs cleaner and more focused on relevant information when using the newer parser.
+
+    type: fix
+  irVersion: 57
+  version: 0.57.6
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where endpoint ids were not globally unique because they didn't take into account namespaces. This only affects
+      the new OpenAPI -> IR parser.
+
+    type: fix
+  irVersion: 57
+  version: 0.57.5
+
+- changelogEntry:
+  - summary: |
+      Add support for namespaces in OpenAPI imports. This allows for organizing multiple OpenAPI specs into different namespaces within a single API definition. Example:
+
+      ```yml
+      api:
+        specs:
+          - namespace: petsV1
+            openapi: ./openapi-v1.json
+          - namespace: petsV2
+            openapi: ./openapi-v2.json
+      ```
+
+      Each namespace creates a separate package in the generated IR, allowing for clear separation between different versions or components of your API.
+
+    type: feat
+  irVersion: 57
+  version: 0.57.4
+
+- changelogEntry:
+  - summary: |
+      Add support for Cohere's Command R+ model in AI chat - model ID: command-r-plus
+    type: feat
+  irVersion: 57
+  version: 0.57.3
+
+- changelogEntry:
+  - summary: |
+      Add support for parsing `type: enum` in OpenAPI schemas. This allows for proper conversion of enum types that use the
+      non-standard `type: enum` format instead of the standard `type: string` with `enum` values.
+
+    type: feat
+  irVersion: 57
+  version: 0.57.2
+
+- changelogEntry:
+  - summary: |
+      Add AI chat config block to docs.yml for model/system prompt customization. Example:
+
+      ai-chat:
+        model: Claude 3.5
+        system prompt: |
+        You are an AI assistant.
+        Only respond to questions using information from the documents.
+        Include markdown footnotes to the sources of your information.
+
+    type: feat
+  irVersion: 57
+  version: 0.57.1
+
+- changelogEntry:
+  - summary: |
+      Add `use-bytes-for-binary-response` configuration option to specify whether to use the `bytes` type for binary responses.
+    type: feat
+  irVersion: 57
+  version: 0.57.0
+
+- changelogEntry:
+  - summary: |
+      Parse inlined websocket message properties during Fern Definition -> IR.
+    type: fix
+  irVersion: 57
+  version: 0.56.35
+
+- changelogEntry:
+  - summary: |
+      Fix websocket session example generation for 3.x specs.
+    type: fix
+  irVersion: 57
+  version: 0.56.34
+
+- changelogEntry:
+  - summary: |
+      Refactor out schema converter nodes into the `v2-importer-commons` package.
+    type: fix
+  irVersion: 57
+  version: 0.56.33
+
+- changelogEntry:
+  - summary: |
+      Improvements to channel parsing for v3 AsyncAPI specs.
+    type: feat
+  irVersion: 57
+  version: 0.56.32
+
+- changelogEntry:
+  - summary: |
+      Added support for default values in example generation to prevent SDK generation failures due to corrupted OpenAPI examples.
+    type: feat
+  irVersion: 57
+  version: 0.56.31
+
+- changelogEntry:
+  - summary: |
+      The default behavior of `fern generate` now excludes broken link checking by default.
+      This can be overridden by passing `--broken-links` or `--strict-broken-links`.
+    type: feat
+  irVersion: 57
+  version: 0.56.30
+
+- changelogEntry:
+  - summary: |
+      Fix an edge case in the OpenAPI converter where unused types were being incorrectly added to the Fern definition.
+    type: fix
+  irVersion: 57
+  version: 0.56.29
+
+- changelogEntry:
+  - summary: |
+      Remove Fern definition generation warnings when openapi-parser-v3 is enabled for docs dev.
+    type: fix
+  irVersion: 57
+  version: 0.56.28
+
+- changelogEntry:
+  - summary: |
+      This update includes minor improvements and bugfixes to the v2 AsyncAPI parser.
+    type: feat
+  irVersion: 57
+  version: 0.56.27
+
+- changelogEntry:
+  - summary: |
+      The V2 Parser now handles environment merging across multiple OpenAPI specs.
+    type: feat
+  irVersion: 57
+  version: 0.56.26
+
+- changelogEntry:
+  - summary: |
+      The CLI now recognizes that the latest Python SDK uses IRv57.
+    type: internal
+  irVersion: 57
+  version: 0.56.25
+
+- changelogEntry:
+  - summary: |
+      Minor cleanup to simple type schema constructions.
+    type: chore
+  irVersion: 57
+  version: 0.56.24
+
+- changelogEntry:
+  - summary: |
+      CLI now passes validation from OpenAPI to Fern Definition.
+    type: fix
+  irVersion: 57
+  version: 0.56.23
+
+- changelogEntry:
+  - summary: |
+      The `fern init --openapi` command now references the OpenAPI file in
+      place using the new `specs` syntax in generators.yml instead of copying the file into the
+      Fern directory. This makes it easier to maintain the source OpenAPI file separately from the Fern configuration.
+    type: fix
+  irVersion: 57
+  version: 0.56.22
+
+- changelogEntry:
+  - summary: |
+      Correctly evaluate SDK groupName for AsyncAPI channels.
+    type: fix
+  irVersion: 57
+  version: 0.56.21
+
+- changelogEntry:
+  - summary: |
+      Include examples by default for dynamic IR generation (replace dynamic-ir --include-examples option with --disable-examples).
+    type: internal
+  irVersion: 57
+  version: 0.56.20
+
+- changelogEntry:
+  - summary: |
+      The CLI now recognizes that the latest Go SDK uses IRv57.
+    type: internal
+  irVersion: 57
+  version: 0.56.19
+
+- changelogEntry:
+  - summary: |
+      Minor v3 parser bugfixes pertaining to document importing and message parsing.
+    type: fix
+  irVersion: 57
+  version: 0.56.18
+
+- changelogEntry:
+  - summary: |
+      The v3 parser now supports parsing and merging AsyncAPI specs.
+    type: feat
+  irVersion: 57
+  version: 0.56.17
+
+- changelogEntry:
+  - summary: |
+      Revert only construct an enum when all parameter subtypes are literal string values.
+    type: fix
+  irVersion: 57
+  version: 0.56.16
+
+- changelogEntry:
+  - summary: |
+      Only construct an enum when all parameter subtypes are literal string values.
+    type: fix
+  irVersion: 57
+  version: 0.56.15
+
+- changelogEntry:
+  - summary: |
+      Correctly assign a versioned slug to the landing page when applicable.
+    type: fix
+  irVersion: 57
+  version: 0.56.14
+
+- changelogEntry:
+  - summary: |
+      Correctly parse channel descriptions in AsyncAPI v2 and v3 specs.
+    type: fix
+  irVersion: 57
+  version: 0.56.13
+
+- changelogEntry:
+  - summary: |
+      Updated the OpenAPI parser to:
+      - Support parsing references that point to external files (e.g. https://github.com/...)
+      - Enable merging Intermediate Representations (IRs) when APIs have multiple OpenAPI specs
+      - Skip legacy parsers when openapi-parser-v3 is enabled for cleaner CLI logging
+    type: fix
+  irVersion: 57
+  version: 0.56.12
+
+- changelogEntry:
+  - summary: |
+      Add `x-fern-address` extension for AsyncAPI v2.x.x specs to specify the channel address.
+    type: fix
+  irVersion: 57
+  version: 0.56.11
+
+- changelogEntry:
+  - summary: |
+      Enable correct environment generation when only provided an AsyncAPI spec.
+    type: fix
+  irVersion: 57
+  version: 0.56.10
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where default values for query parameters would occasionally be omitted during parsing.
+    type: fix
+  irVersion: 57
+  version: 0.56.9
+
+- changelogEntry:
+  - summary: |
+      OpenAPI file properties can now support descriptions.
+    type: feat
+  irVersion: 57
+  version: 0.56.8
+
+- changelogEntry:
+  - summary: |
+      The CLI now recognizes that the latest C# SDK uses IRv57.
+    type: internal
+  irVersion: 57
+  version: 0.56.7
+
+- changelogEntry:
+  - summary: |
+      The CLI now recognizes that the latest PHP SDK uses IRv57.
+    type: internal
+  irVersion: 57
+  version: 0.56.6
+
+- changelogEntry:
+  - summary: |
+      Updated the CLI to gracefully handle unsupported security schemes (e.g. cookie-based auth) by skipping them
+      instead of throwing an error. This allows the CLI to continue processing the rest of the API definition even when
+      it encounters security schemes it cannot convert.
+    type: fix
+  irVersion: 56
+  version: 0.56.5
+
+- changelogEntry:
+  - summary: |
+      Re-releasing the Fern CLI to fix an issue with the published package.
+    type: fix
+  irVersion: 56
+  version: 0.56.4
+
+- changelogEntry:
+  - summary: |
+      Make the latest C# SDK generator consume IR v56.
+    type: internal
+  irVersion: 56
+  version: 0.56.3
+
+- changelogEntry:
+  - summary: |
+      Re-releasing the Fern CLI to fix an issue with the published package.
+    type: fix
+  irVersion: 56
+  version: 0.56.2
+
+- changelogEntry:
+  - summary: |
+      Re-releasing the Fern CLI to fix an issue with the published package.
+    type: fix
+  irVersion: 56
+  version: 0.56.1
+
+- changelogEntry:
+  - summary: |
+      Fixed several issues with broken link detection in docs:
+      - Fixed handling of redirects to ensure broken links aren't reported when valid redirects exist
+      - Added proper handling of relative paths from different slugs
+      - Improved URL validation and error messages
+
+      Running `fern docs broken-links` will now scan your docs site and log any broken internal links.
+    type: fix
+  irVersion: 56
+  version: 0.56.0
+
+- changelogEntry:
+  - summary: |
+      Hidden sections are now removed from the docs sitemap.
+    type: fix
+  irVersion: 56
+  version: 0.56.0-rc6
+
+- changelogEntry:
+  - summary: |
+      Fixed duplicate validation messages in docs validation by deduplicating violations
+      that have the same message, node path, file path, and severity.
+
+      This prevents showing the same broken link error multiple times.
+    type: fix
+  irVersion: 56
+  version: 0.56.0-rc5
+
+- changelogEntry:
+  - summary: |
+      If experimental.openapi-parser-v3 is enabled in docs.yml, OpenAPI documents will now be
+      converted directly to IR, bypassing the intermediate Fern Definition step.
+
+      This makes sure that the old code path is completely ignored if the flag is enabled.
+    type: feat
+  irVersion: 56
+  version: 0.56.0-rc4
+
+- changelogEntry:
+  - summary: |
+      The new OpenAPI parser now shares example generation with the Fern Definition -> IR pipeline,
+      ensuring consistent example generation across both input formats. This reuse of example
+      generation logic helps maintain parity between OpenAPI and Fern Definition inputs.
+    type: feat
+  irVersion: 56
+  version: 0.56.0-rc3
+
+- changelogEntry:
+  - summary: |
+      You can now specify custom pagination on your API and endpoints.
+      This lets you implement your own pagination strategy in the generated SDKs.
+    type: feat
+  irVersion: 56
+  version: 0.56.0-rc3
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where channel binding parameters with complex schemas were generated with conflicting names.
+    type: fix
+  irVersion: 55
+  version: 0.56.0-rc2
+
+- changelogEntry:
+  - summary: |
+      Add support for a new option `--from-openapi` to the `fern ir` command. This command
+      will allow you to test early versions of the new OpenAPI parser which goes directly from
+      OpenAPI to IR.
+
+      ```bash
+      fern ir ir.json --from-openapi
+      ```
+    type: internal
+  irVersion: 55
+  version: 0.56.0-rc1
+
+- changelogEntry:
+  - summary: |
+      Improve the `fern docs broken-links` output to make it easier to
+      understand. Logged violations now include clickable links to the
+      affected source files (in supported terminals).
+
+      Added a `--broken-links` flag to the `fern check` and `fern docs dev`
+      commands. If set, broken links will be logged.
+    type: feat
+  irVersion: 55
+  version: 0.56.0-rc0
+
+- changelogEntry:
+    - summary: The Conjure Importer now correctly handles the `auth` property in endpoint definitions.
+      type: fix
+  irVersion: 55
+  version: 0.55.1
+
+- changelogEntry:
+  - summary: The Fern definition now supports specifying object properties as `read-only` or `write-only`.
+    type: feat
+  irVersion: 55
+  version: 0.55.0
+
+- changelogEntry:
+    - summary: Add support for the `x-fern-enum` extension in the AsyncAPI v3 parser.
+      type: feat
+  irVersion: 55
+  version: 0.54.1
+
+- changelogEntry:
+    - summary: Add support for specifying C# snippets in the `generators.yml` file.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc12
+
+- changelogEntry:
+    - summary: Improve error logging in AsyncAPI v3 parser when parsing location headers.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc11
+
+- changelogEntry:
+    - summary: Migrate generators.yml without any specs.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc10
+
+- changelogEntry:
+    - summary: Detect swagger as OpenAPI files when migrating to specs configuration in generators.yml.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc9
+
+- changelogEntry:
+    - summary: Migration to specs configuration handles yaml/json files and checks for file existence.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc8
+
+- changelogEntry:
+    - summary: Add Java generator versions to migrations file from v55 to v54
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc7
+
+- changelogEntry:
+    - summary: Improve generators.yml migration to `api.specs` syntax.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc6
+
+- changelogEntry:
+    - summary: |
+        Bump `docs-resolvers` to `0.0.64` to fix an issue with endpoint-level server parsing.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc5
+
+- changelogEntry:
+    - summary: |
+        Handle comments that include '*/' literal values. This previously caused any generator that uses c-style comments to fail.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc4
+
+- changelogEntry:
+    - summary: |
+        Modify the `x-fern-examples` extension to support Websocket session examples for AsyncAPI v3 specs.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc3
+
+- changelogEntry:
+    - summary: |
+        Add the `x-fern-optional` extension to the AsyncAPI v3 parser to allow for optional channel parameters.
+      type: feat
+    - summary: |
+        Improve the violations summary displayed by `fern check` and include elapsed time when available.
+      type: chore
+  irVersion: 55
+  version: 0.54.0-rc2
+
+- changelogEntry:
+    - summary: |
+        Update CLI-side markdown parsing to detect more hrefs and srcs (where src files are automatically uploaded),
+        enabling the <Download src="./path/to/file.pdf">Download me</Download> pattern to work.
+      type: fix
+    - summary: |
+        Update `fern docs broken-links` to handle links within the current directory.
+      type: fix
+  irVersion: 55
+  version: 0.54.0-rc1
+
+- changelogEntry:
+    - summary: |
+        Fix issue where the CLI would not parse asyncapi specs within the `api.specs` array in generators.yml.
+      type: fix
+    - summary: |
+        Migrate old spec configuration in generators.yml to the `api.specs[]` format.
+      type: feat
+    - summary: |
+        Log warnings when old generators.yml syntax is used during parsing.
+      type: feat
+  irVersion: 55
+  version: 0.54.0-rc0
+
+- changelogEntry:
+    - summary: |
+        Fix an issue where de-conflicting message names in AsyncAPI v3 parser would only update subsequent message names,
+        but not the first occurrence.
+      type: fix
+  irVersion: 55
+  version: 0.53.18
+
+- changelogEntry:
+    - summary: |
+        Fix an issue with the OpenAPI v2 parser where recursive subpackage slugs would not generate correctly.
+      type: fix
+  irVersion: 55
+  version: 0.53.17
+
+- changelogEntry:
+    - summary: |
+        Enable `x-fern-sdk-group-name` extension in AsyncAPI v3 parser.
+      type: fix
+  irVersion: 55
+  version: 0.53.16
+
+- changelogEntry:
+    - summary: |
+        Disable broken link checker until it is ready to release.
+      type: fix
+  irVersion: 55
+  version: 0.53.15
+
+- changelogEntry:
+    - summary: |
+        Fixes an issue with the OpenAPI v2 parser where docs configs with no navigation structure would generate incorrect slugs.
+      type: fix
+  irVersion: 55
+  version: 0.53.14
+
+- changelogEntry:
+    - summary: |
+        Resolve error where `fern docs dev` failed in Windows environments.
+      type: fix
+  irVersion: 55
+  version: 0.53.13
+
+- changelogEntry:
+    - summary: |
+        Dynamically deconflict AsyncAPI message names when generating Fern Definition Types to preserve original naming
+        wherever possible.
+      type: fix
+  irVersion: 55
+  version: 0.53.12
+
+- changelogEntry:
+    - summary: |
+        Fix an issue with the OpenAPI v2 parser where schemas with single value arrays were being incorrectly parsed.
+      type: fix
+  irVersion: 55
+  version: 0.53.11
+
+- changelogEntry:
+    - summary: |
+        Support differentiated server URLs in WebSocket channels and correctly generate multi-url environments.
+      type: fix
+  irVersion: 55
+  version: 0.53.10
+
+- changelogEntry:
+    - summary: |
+        Fix an issue with the OpenAPI v2 parser where incorrect slugs were being generated.
+      type: fix
+  irVersion: 55
+  version: 0.53.9
+
+- changelogEntry:
+    - summary: |
+        Fix noindex behavior for section overview pages.
+      type: fix
+  irVersion: 55
+  version: 0.53.8
+
+- changelogEntry:
+    - summary: |
+        Regenerate changelog.
+      type: fix
+  irVersion: 55
+  version: 0.53.7
+
+- changelogEntry:
+    - summary: |
+        Correctly parse out channel address for v3 AsyncAPI specs.
+      type: fix
+  irVersion: 55
+  version: 0.53.6
+
+- changelogEntry:
+    - summary: |
+        Support validation schemas in detailed Union types.
+      type: fix
+  irVersion: 55
+  version: 0.53.5
+
+- changelogEntry:
+    - summary: |
+        Improve error logging on `downloadLocalDocsBundle` failure.
+      type: fix
+  irVersion: 55
+  version: 0.53.4
+
+- changelogEntry:
+    - summary: |
+        `noindex` property in the frontmatter of a page is now implemented for site navigation + `llms.txt`.
+      type: fix
+  irVersion: 55
+  version: 0.53.3
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now prefers the `source` extension set in the OpenAPI spec, and only writes
+        it if it is not already set.
+      type: fix
+  irVersion: 55
+  version: 0.53.2
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI v2 parser now parses Server specifications with variables.
+      type: fix
+  irVersion: 55
+  version: 0.53.1
+
+- changelogEntry:
+    - summary: |
+        Users can now specify the `idiomatic-request-names` option in the `generators.yml` to adapt the behavior of the
+        autogenerated request names. The verb is now in front of the noun (e.g. `UsersListRequest` becomes `ListUsersRequest`).
+
+        This is disabled by default (for backwards compatibility), and can be enabled with the following:
+
+        ```yaml
+        # generators.yml
+        api:
+          specs:
+            - openapi: ./openapi/openapi.json
+              settings:
+                idiomatic-request-names: true
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.53.0
+
+- changelogEntry:
+    - summary: |
+        Introduce the AsyncAPI 3.0.0 parser, which enables conditional parsing of both 2.x and 3.x AsyncAPI specs.
+      type: fix
+  irVersion: 55
+  version: 0.52.0
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI v2 parser now respects object properties as optional, generates display names for undiscriminated union object
+        types, and fixes minor issues with docs dev when using specific navigation locators in docs.yml specification.
+      type: fix
+  irVersion: 55
+  version: 0.51.39
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI v2 parser now ignores optional parameters when generating requests. It also improves upon generation with
+        better fallback logic for sparse requests.
+      type: fix
+  irVersion: 55
+  version: 0.51.38
+
+- changelogEntry:
+    - summary: |
+        Fixed handling of Windows filepaths in the docs generator by ensuring consistent path separators and proper absolute path handling.
+      type: fix
+  irVersion: 55
+  version: 0.51.37
+
+- changelogEntry:
+    - summary: |
+        Type reference example generation now handles extends and base properties correctly, as well as in-lined Alias types.
+      type: fix
+  irVersion: 55
+  version: 0.51.36
+
+- changelogEntry:
+    - summary: |
+        The cli will now respect examples with `null` values in OpenAPI specs. This will allow for null properties to show up when using
+        OpenAPI parser v2.
+      type: fix
+  irVersion: 55
+  version: 0.51.35
+
+- changelogEntry:
+    - summary: |
+        The IR generator now correctly handles exploded form parameters in the docs, ensuring that curl code snippets
+        accurately reflect the expected request format. Previously, exploded parameters were not properly formatted in the documentation, which
+        could lead to incorrect API usage. This fix ensures that array parameters marked as "exploded" are properly expanded in the generated curl examples.
+      type: fix
+  irVersion: 55
+  version: 0.51.34
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser v2 now handles `null` values in examples, parses request and response bodies as unions if multiple, handles required
+        properties for global headers and improves upon example generation for APIs.
+      type: fix
+  irVersion: 55
+  version: 0.51.33
+
+- changelogEntry:
+    - summary: |
+        The Conjure Importer now handles replacing 'rid' types more safely by checking if an import alias starts with 'rid'.
+        Previously, it would replace any 'rid' text with 'string', which could incorrectly modify import aliases that happened to start with 'rid'.
+        Now it only replaces 'rid' when it appears as a standalone type or generic parameter.
+      type: fix
+  irVersion: 55
+  version: 0.51.32
+
+- changelogEntry:
+    - summary: |
+        The IR migrator now recognizes that the PHP SDK generator requires IR version 55.
+      type: internal
+  irVersion: 55
+  version: 0.51.31
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI v2 parser now provides better naming and more robust payloads for examples.
+      type: fix
+  irVersion: 55
+  version: 0.51.30
+
+- changelogEntry:
+    - summary: |
+        The images will be rendered to browser in the format of image ID that matches FileV2.
+        It ensure images will be displayed properly in dev environment.
+      type: fix
+  irVersion: 55
+  version: 0.51.29
+
+- changelogEntry:
+    - summary: |
+        The IR generator now optimizes SDK generation by skipping automatic example generation when manual examples are provided.
+        Previously, it would generate additional examples even when manual examples were specified for an operation.
+        This change improves generation performance by avoiding unnecessary example generation work.
+      type: fix
+  irVersion: 55
+  version: 0.51.28
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now optimizes discriminated union example generation by using the first successful variant.
+        Previously, it would continue trying other variants even after finding a valid one. Now it stops after finding
+        the first valid variant, making example generation more efficient.
+      type: fix
+  irVersion: 55
+  version: 0.51.27
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now correctly generates examples for discriminated unions where a variant may itself be a union.
+        Previously, if a discriminated union variant was itself a union (e.g. `{ type: "foo", value: { type: "bar" } }`),
+        the example generation would skip. Now it recursively handles nested unions to generate valid examples.
+      type: fix
+  irVersion: 55
+  version: 0.51.26
+
+- changelogEntry:
+    - summary: |
+        Literal property values are now accepted as deep object query parameters. Previously, if a query parameter was a deep object
+        with a literal property value (e.g. `{ type: "foo" }`), the CLI would reject it as too complex. Now literal values are
+        allowed since they can be safely serialized.
+      type: fix
+  irVersion: 55
+  version: 0.51.25
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now parses path parameters that are present in the URL but not explicitly declared in the OpenAPI spec.
+        Previously, if a path parameter was used in the URL (e.g. `/users/{userId}`) but not declared in the `parameters` section,
+        the parser would fail. Now it automatically adds these path parameters as required string parameters.
+      type: fix
+  irVersion: 55
+  version: 0.51.24
+
+- changelogEntry:
+    - summary: |
+        The CLI now considers `false` and `true` as keywords for the Java generators.
+      type: fix
+  irVersion: 55
+  version: 0.51.23
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now ignores request bodies on `GET` requests since Fern does not support that.
+        This is not a breaking change, since previously the `fern check` would just fail.
+      type: fix
+  irVersion: 55
+  version: 0.51.22
+
+- changelogEntry:
+    - summary: |
+        The `fern init` command now respects JSON formatting when parsing from an external URL.
+      type: fix
+  irVersion: 55
+  version: 0.51.21
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now supports generating code snippets in the API Explorer.
+      type: fix
+  irVersion: 55
+  version: 0.51.20
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now supports generating code snippets in the API Explorer.
+      type: fix
+  irVersion: 55
+  version: 0.51.19
+
+- changelogEntry:
+    - summary: |
+        The docs will now display errors by default. Previously, errors were hidden by default and needed to be explicitly
+        enabled with `displayErrors: true`.
+      type: fix
+  irVersion: 55
+  version: 0.51.18
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now handles displaying parameters as object examples.
+      type: fix
+  irVersion: 55
+  version: 0.51.17
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now handles displaying optional parameters in the request.
+      type: fix
+  irVersion: 55
+  version: 0.51.15
+
+- changelogEntry:
+    - summary: |
+        Updates `whatwg` so that users eliminate punycode deprecation warning.
+      type: fix
+  irVersion: 55
+  version: 0.51.14
+
+- changelogEntry:
+    - summary: |
+        OpenAPI overrides now support resolving file references from the location of the
+        OpenAPI overrides file itself. Previously, relative paths were only resolved from
+        the OpenAPI source file.
+
+        Most users will experience no change, but this will enable a wider set of file
+        directory layouts depending on the user's preference.
+      type: fix
+  irVersion: 55
+  version: 0.51.13
+
+- changelogEntry:
+    - summary: |
+        The Fern Definition now allows you to declare status codes for the response without having a type.
+        This is useful for `204` response status codes.
+
+        ```yml users.yml
+        service:
+          auth: false
+          base-path: /users
+          endpoints:
+            update:
+              path: ""
+              response:
+                status-code: 204
+        ```
+      type: fix
+  irVersion: 55
+  version: 0.51.12
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser generates response examples that are `{}` for 204 response types.
+      type: fix
+  irVersion: 55
+  version: 0.51.11
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser generates response examples that are `{}` for 204 response types.
+      type: fix
+  irVersion: 55
+  version: 0.51.10
+
+- changelogEntry:
+    - summary: |
+        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating
+        the status code from the OpenAPI spec through the IR and FDR layers.
+      type: fix
+  irVersion: 55
+  version: 0.51.9
+
+- changelogEntry:
+    - summary: |
+        Fixed OpenAPI importer to properly handle response status codes in documentation by propagating
+        the status code from the OpenAPI spec through the IR and FDR layers.
+      type: fix
+  irVersion: 55
+  version: 0.51.8
+
+- changelogEntry:
+    - summary: |
+        Added better error messages when markdown files reference non-existent MDX files, showing the relative path
+        to the missing file rather than just indicating an invalid reference.
+      type: fix
+  irVersion: 55
+  version: 0.51.7
+
+- changelogEntry:
+    - summary: |
+        Fixed OpenAPI importer to properly handle string enums that are specified as integers by coercing them to strings.
+      type: fix
+  irVersion: 55
+  version: 0.51.6
+
+- changelogEntry:
+    - summary: |
+        Added a new rule to validate frontmatter parsing across markdown files, ensuring frontmatter
+        is properly formatted and can be parsed without errors.
+      type: fix
+  irVersion: 55
+  version: 0.51.5
+
+- changelogEntry:
+    - summary: |
+        Various improvements to the Mintlify and Readme importers, including better default styling
+        and spec imports for Mintlify migrations.
+      type: fix
+  irVersion: 55
+  version: 0.51.4
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now prefers the JSON Content-Type variant over
+        others (e.g. application/x-www-form-urlencoded).
+      type: fix
+  irVersion: 55
+  version: 0.51.3
+
+- changelogEntry:
+    - summary: |
+        Improved error messages when docs.yml doesn't match schema by showing more specific
+        validation errors and including the path where the error occurred.
+      type: fix
+  irVersion: 55
+  version: 0.51.2
+
+- changelogEntry:
+    - summary: |
+        Fixed x-fern-resolutions to properly handle escaped forward slashes ("~1") in schema references,
+        correctly converting them to "/" when resolving references.
+      type: fix
+  irVersion: 55
+  version: 0.51.1
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports a --readme flag pointing to the URL of a Readme generated docs site and
+        migrates existing documentation to a fern-compatible repository.
+
+        To use this feature:
+        ```bash
+        fern init --readme https://url-to-readme-docs.com
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.51.0
+
+- changelogEntry:
+    - summary: |
+        Improve performance of `fern docs dev` by only reloading the markdown content when
+        only markdown files are changed, avoiding unnecessary recompilation of the full docs.
+
+      type: fix
+  irVersion: 55
+  version: 0.50.17
+
+- changelogEntry:
+    - summary: |
+        Improve performance of `fern docs dev` by debouncing across edits to multiple files,
+        reducing unnecessary recomputation.
+      type: fix
+  irVersion: 55
+  version: 0.50.16
+
+- changelogEntry:
+    - summary: |
+        This PR improves the performance of `fern docs dev`:
+          - Fern does not generate examples if the user has provided them to us
+          - Temporarily comment out broken link checker until we make it faster
+      type: fix
+  irVersion: 55
+  version: 0.50.16
+
+- changelogEntry:
+    - summary: |
+        Move example generation failure logs to trace level since they are not relevant
+        for users and add noise to debug logs.
+      type: fix
+  irVersion: 55
+  version: 0.50.15
+
+- changelogEntry:
+    - summary: |
+        Fixes a bug where duplicate types in undiscriminated unions (`oneOf` in OpenAPI)
+        were not being deduped, which could lead to invalid generated code.
+      type: fix
+  irVersion: 55
+  version: 0.50.14
+
+- changelogEntry:
+    - summary: |
+        Fixes a bug where `--log-level debug` does not include trace logs.
+      type: fix
+  irVersion: 55
+  version: 0.50.13
+
+- changelogEntry:
+    - summary: |
+        Increase undici timeouts to make sure that `fern generate --docs` completes.
+      type: fix
+  irVersion: 55
+  version: 0.50.12
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports a `--log-level trace` option to filter out noise from the
+        debug log level.
+      type: fix
+  irVersion: 55
+  version: 0.50.11
+
+- changelogEntry:
+    - summary: An addition to the broken link checker to further reduce false positives.
+      type: fix
+  irVersion: 55
+  version: 0.50.10
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI no longer logs the full API request when finishing docs registration,
+        reducing unnecessary log output.
+      type: fix
+  irVersion: 55
+  version: 0.50.9
+
+- changelogEntry:
+    - summary: |
+        An additional fix to the OpenRPC parser for respecting tags when
+        organizing methods in the API Reference.
+      type: fix
+  irVersion: 55
+  version: 0.50.8
+
+- changelogEntry:
+    - summary: |
+        The OpenRPC parser now respects method names as well as tags for
+        organization the navigation.
+      type: fix
+  irVersion: 55
+  version: 0.50.7
+
+- changelogEntry:
+    - summary: |
+        The broken link checker is updated to reduce false positives.
+      type: fix
+  irVersion: 55
+  version: 0.50.6
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI is updated to create the organization if it doesn't exist when `fern token` is called.
+      type: fix
+  irVersion: 55
+  version: 0.50.5
+
+- changelogEntry:
+    - summary: |
+        The preview server is updated such that local previews of both OpenRPC and OpenAPI (legacy parser)
+        are now possible.
+      type: fix
+  irVersion: 55
+  version: 0.50.4
+
+- changelogEntry:
+    - summary: |
+        The docs.yml now supports a separate configuration for `feature-flags` which allows Fern to render
+        pieces of content depending on whether or not certain feature flags are enabled for particular user.
+
+        This feature is in alpha stage; please contact support@buildwithfern.com to learn more!
+
+        ```yml docs.yml
+        navigation:
+          - page: Page 1
+            feature-flag: my-feature-flag-a # single boolean flag
+          - page: Page 2
+            feature: # multiple boolean flags
+              - flag: my-feature-flag-a
+              - flag: my-feature-flag-b
+          - section: Section Title
+            viewers: role-a
+            feature-flag: # configurable match
+              flag: my-feature-flag-a
+              fallback-value: "ga"
+              match: "beta"
+            layout: []
+        ```
+      type: internal
+  irVersion: 55
+  version: 0.50.4
+
+- changelogEntry:
+    - summary: |
+        Fixes an issue where optional, nullable properties resulted in a double optional in the
+        IRv55 -> IRv54 migration.
+      type: internal
+  irVersion: 55
+  version: 0.50.3
+
+- changelogEntry:
+    - summary: |
+        The docs now includes alpha support for parsing openrpc specs. To leverage this feature,
+        simply define an API section in your docs.yml and point at an openrpc spec.
+
+        ```yml docs.yml
+        navigation:
+          - api: API Reference
+            openrpc: <path to openrpc file>
+        ```
+      type: fix
+  irVersion: 55
+  version: 0.50.2
+
+- changelogEntry:
+    - summary: |
+        Fixes an issue where nullable schemas were not coerced into optional values.
+      type: fix
+    - summary: |
+        Fixes an issue where `fern check` would fail for optional, nullable properties.
+      type: fix
+  irVersion: 55
+  version: 0.50.1
+
+- changelogEntry:
+    - summary: |
+        The CLI is capable of migrating the latest TypeScript generator to IRv55.
+      type: internal
+  irVersion: 55
+  version: 0.50.0
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI v2 parser now supports `x-fern-global-headers` and fixes an issue with generating webhook content.
+      type: fix
+  irVersion: 55
+  version: 0.49.1
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports respecting nullable properties in schemas. When enabled, nullable properties will
+        be preserved in the generated SDK. By default (without this setting), nullable properties are treated as `optional`.
+        To enable this, configure the setting in your `generators.yml`:
+
+        ```yml
+        api:
+         specs:
+           - openapi: ./path/to/openapi.yml
+             settings:
+               respect-nullable-schemas: true
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.49.0
+
+- changelogEntry:
+    - summary: |
+        The Mintlify docs importer now correctly generates the proper display-name key in the docs.yml file.
+      type: fix
+  irVersion: 54
+  version: 0.48.1
+
+- changelogEntry:
+    - summary: |
+        Adds support for nullable types in the Fern definition, such as the following:
+
+        ```yaml
+        types:
+          User:
+            properties:
+              name: string
+              email: nullable<string>
+        ```
+      type: feat
+  irVersion: 55
+  version: 0.48.0
+
+- changelogEntry:
+    - summary: |
+        The IR now pulls in additional request properties from the OAuth getToken endpoint to support custom OAuth schemas.
+      type: feat
+  irVersion: 54
+  version: 0.47.6
+
+- changelogEntry:
+    - summary: |
+        Fixes an issue with broken link checking in the OpenAPI v2 parser.
+      type: feat
+  irVersion: 53
+  version: 0.47.5
+
+- changelogEntry:
+    - summary: |
+        Allows for creating nullable types and pass formats on strings using the OpenAPI v2 parser.
+      type: feat
+  irVersion: 53
+  version: 0.47.4
+
+- changelogEntry:
+    - summary: |
+        Add the JSON schema to the generators.yml file for validation and autocomplete.
+      type: feat
+  irVersion: 53
+  version: 0.47.3
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports checking for broken links in your docs. You will see warnings in `fern check` if your docs link to any
+        page that can't be resolved, and the `--strict-broken-links` option will cause the command to fail (exit with a non-zero exit code) if
+        any broken links are found. You can also run the new command `fern docs broken-links` to only check for broken links (ignoring
+        other possible errors), with the `--strict` option to cause the command to fail if any broken links are found.
+      type: feat
+  irVersion: 53
+  version: 0.47.2
+
+- changelogEntry:
+    - summary: |
+        Fixes a bug where the OpenAPI parser stopped respecting the =`unions: v1` setting in your `generators.yml` which configures the parser to generate more
+        idiomatic discriminated unions.
+        ```yml
+        api:
+          specs:
+            - openapi: ./path/to/openapi.yml
+              settings:
+                unions: v1
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.47.1
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports publishing docs using the improved OpenAPI v2 parser. You can set `openapi-parser-v2: true`
+        in your `docs.yml` to use the new parser.
+      type: feat
+  irVersion: 53
+  version: 0.47.0
+
+- changelogEntry:
+    - summary: |
+        The CLI now validates that method and group name overrides in OpenAPI settings are not duplicated.
+      type: feat
+  irVersion: 53
+  version: 0.46.23
+
+- changelogEntry:
+    - summary: |
+        Support configuration of Google Analytics and Google Tag Manager in API Docs.
+      type: feat
+  irVersion: 53
+  version: 0.46.22
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports the `prefer-undiscriminated-unions-with-literals` setting in OpenAPI settings.
+      type: fix
+  irVersion: 53
+  version: 0.46.21
+
+- changelogEntry:
+    - summary: |
+        The `fern init` command now supports a `--mintlify` option. You can pass in
+        the path to your `mint.json` and the Fern CLI will generate a fern documentation
+        website.
+      type: feat
+  irVersion: 53
+  version: 0.46.20
+
+- changelogEntry:
+    - summary: |
+        If a schema in OpenAPI or AsyncAPI has `additionalProperties: true` then the Fern CLI will now respect bringing in
+        example properties that are not defined in the schema. Previously, the CLI would skip them.
+      type: fix
+  irVersion: 53
+  version: 0.46.19
+
+- changelogEntry:
+    - summary: |
+        If an object or request is annotated with `extra-properties: true` then the user can provide an example that includes
+        extra properties that are no longer in the schema.
+
+        For example, check out this fern definition
+
+        ```yml service.yml
+        types:
+          Item:
+            extra-properties: true
+            properties:
+              id: string
+
+
+        service:
+          auth: false
+          base-path: ""
+          endpoints:
+            create:
+              method: POST
+              path: /item
+              request:
+                name: CreateItemRequest
+                body:
+                  extra-properties: true
+                  properties:
+                    id: string
+              response:
+                type: Item
+              examples:
+                - name: "Item"
+                  request:
+                    id: "123"
+                    foo: "bar" # extra property in the example
+                  response:
+                    body:
+                      id: "123"
+                      foo: "bar" # extra property in the example
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.46.18
+
+- changelogEntry:
+    - summary: |
+        Support parsing string values for boolean defaults in OpenAPI schemas.
+        * String values like "true" and "false" are now correctly parsed as boolean defaults.
+      type: fix
+  irVersion: 53
+  version: 0.46.17
+
+- changelogEntry:
+    - summary: |
+        Improve parsing of OpenAPI schemas with an array in the `type` property.
+        * If the array contains `"null"`, it is interpreted as nullable, and removed from the array.
+        * If there is only a single item in the array (after removing "null"), it previously defaulted to `unknown`, but now the specified type is used.
+      type: fix
+  irVersion: 53
+  version: 0.46.16
+
+- changelogEntry:
+    - summary: |
+        Fixed issue where user specified examples would be omitted in favor of autogenerated examples.
+      type: fix
+  irVersion: 53
+  version: 0.46.15
+
+- changelogEntry:
+    - summary: |
+        Boolean default values are now propagated from the Fern Definition through to docs generation.
+      type: fix
+  irVersion: 53
+  version: 0.46.14
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports both `generators.yml` and `generators.yaml` file extensions for generator configuration.
+      type: fix
+  irVersion: 53
+  version: 0.46.13
+
+- changelogEntry:
+    - summary: |
+        Correctly omits readOnly query parameters during openapi to fern definition generation.
+      type: fix
+  irVersion: 53
+  version: 0.46.13
+
+- changelogEntry:
+    - summary: |
+        The CLI now handles parsing service level path parameters with descriptions.
+        This fixes a regression introduced in the CLI since versions 0.45.x.
+      type: fix
+  irVersion: 53
+  version: 0.46.12
+
+- changelogEntry:
+    - summary: |
+        Allow for configuring the depth of example generation in API Docs. For example,
+        if you want to generate optional properties that are 5 levels deep, you can add
+        the following configuration in your `generators.yml`
+
+        ```yml generators.yml
+        api:
+          specs:
+            - openapi: ./openapi.json
+              settings:
+                example-generation:
+                  response:
+                    max-depth: 10
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.46.11
+
+- changelogEntry:
+    - summary: |
+        Correctly support AdditionalProperties on object schemas.
+      type: fix
+  irVersion: 53
+  version: 0.46.10
+
+- changelogEntry:
+    - summary: |
+        SDK generation no longer hard-fails on single example generation errors.
+      type: fix
+  irVersion: 53
+  version: 0.46.9
+
+- changelogEntry:
+    - summary: |
+        The CLI now auto generates SSE and JSON Streaming examples even if those are
+        not provided in the OpenAPI Spec or Fern Definition.
+      type: fix
+  irVersion: 53
+  version: 0.46.8
+
+- changelogEntry:
+    - summary: |
+        The generated Fern Definition now properly supports default values for query parameters.
+      type: fix
+  irVersion: 53
+  version: 0.46.7
+
+- changelogEntry:
+    - summary: |
+        The audiences property on WebSocket channels is now respected when filtering
+        the IR graph based on configured audiences.
+      type: fix
+  irVersion: 53
+  version: 0.46.6
+
+- changelogEntry:
+    - summary: |
+        Previously, when the CLI failed to validate the fern definition yaml file against a JSON Schema,
+        we would log `Failed to parse` without a schema path. Now we grab a relevant schema path.
+      type: fix
+  irVersion: 53
+  version: 0.46.5
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now deduplicates headers that appear in both security schemes and
+        operation-level headers to avoid duplicate header declarations.
+      type: fix
+  irVersion: 53
+  version: 0.46.5
+
+- changelogEntry:
+    - summary: |
+        The generated SSE examples always have `data` and `event` keys so that they are correct.
+      type: fix
+  irVersion: 53
+  version: 0.46.4
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports generating examples for streaming SSE (server-sent-event)
+        endpoints.
+      type: fix
+  irVersion: 53
+  version: 0.46.3
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports parsing a `logo` option from your frontmatter. If
+        you would like to override logo on a specific page you can do so by adding
+        the following:
+
+        ```markdown intro.mdx
+        ---
+        logo: /path/to/my/logo
+        ---
+        ```
+
+        or
+
+        ```markdown intro.mdx
+        ---
+        logo:
+          light: /path/to/my/light/logo
+          dark: /path/to/my/dark/logo
+        ---
+        ```
+
+      type: feat
+  irVersion: 53
+  version: 0.46.2
+
+- changelogEntry:
+    - summary: |
+        Add support for setting the `User-Agent` header value for Go generators.
+      type: fix
+  irVersion: 53
+  version: 0.46.1
+
+- changelogEntry:
+    - summary: |
+        No changes; promote `0.46.0-rc1` release candidate to minor version.
+      type: internal
+  irVersion: 53
+  version: 0.46.0
+
+- changelogEntry:
+    - summary: |
+        * Set `inline: true` for inline enums imported from OpenAPI.
+        * Set `inline: true` for maps generated from OpenAPI additionalProperties.
+      type: fix
+  irVersion: 53
+  version: 0.46.0-rc1
+
+- changelogEntry:
+    - summary: |
+        The Fern Definition now supports `bytes` as a response type.
+
+        ```yml service.yml
+          endpoints:
+            download:
+              response: bytes
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.46.0-rc0
+
+- changelogEntry:
+    - summary: |
+        Defaults are no longer set on datetimes when converting to docs shapes.
+      type: fix
+  irVersion: 53
+  version: 0.45.4
+
+- changelogEntry:
+    - summary: |
+        Unknown schemas are no longer incorrectly marked as `additionalProperties: true`.
+      type: chore
+  irVersion: 53
+  version: 0.45.4-rc1
+
+- changelogEntry:
+    - summary: |
+        The CLI prompts the user to confirm output directory overwrites on fern generate.
+      type: fix
+  irVersion: 53
+  version: 0.45.4-rc0
+
+- changelogEntry:
+    - summary: |
+        Unknown schemas are no longer incorrectly marked as `additionalProperties: true`.
+      type: fix
+  irVersion: 53
+  version: 0.45.3
+
+- changelogEntry:
+    - summary: |
+        Example generation now respects read-only schemas when generating request examples.
+      type: fix
+  irVersion: 53
+  version: 0.45.2
+
+- changelogEntry:
+    - summary: |
+        Generate valid examples using spec validation information; respect `null` entries during example generation.
+      type: fix
+  irVersion: 53
+  version: 0.45.1-rc0
+
+- changelogEntry:
+    - summary: |
+        Add `inline` field to type declarations in the Fern definition and IR.
+        Add support for importing inline types from OpenAPI into Fern definition and IR.
+      type: internal
+  irVersion: 53
+  version: 0.45.1
+
+- changelogEntry:
+    - summary: |
+        Several improvements to docs, conjure importer, and the cli.
+      type: internal
+  irVersion: 53
+  version: 0.45.0
+
+- changelogEntry:
+    - summary: |
+        Docs generation now preserves original model schema names.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc55
+
+- changelogEntry:
+    - summary: |
+        Removes errant minimum and maximums for 'float' types for docs.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc54
+
+- changelogEntry:
+    - summary: |
+        Add support for the `smart-casing` flags in the IR commands.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc53
+
+- changelogEntry:
+    - summary: |
+        Fix bug where max length validation for strings were incorrectly plumbed.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc52
+
+- changelogEntry:
+    - summary: |
+        Add support for the `inline-path-parameters` setting in the OpenAPI
+        importer.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc51
+
+- changelogEntry:
+    - summary: |
+        Increase max recursive depth allowed for example validation.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc50
+
+- changelogEntry:
+    - summary: |
+        Add 'list' to reserved keywords for use in PHP generator.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc49
+
+- changelogEntry:
+    - summary: |
+        OAuth Client Credential Auth Scheme now supports the ability to optionally
+        set token header and prefix fields for use with docs playground.
+
+        ```yml api.yml
+        auth-schemes:
+          OAuth:
+            scheme: oauth
+            type: client-credentials
+            token-header: Fern-Authorization
+            token-prefix: Fern-Bearer
+            ...
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc48
+
+- changelogEntry:
+    - summary: |
+        Support SDK generation provided comma-delineated content-type values in OpenAPI specs.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc47
+
+- changelogEntry:
+    - summary: |
+        The IR handles converting example unions that are aliases.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc46
+
+- changelogEntry:
+    - summary: |
+        Update the IR's `ServiceTypeReferenceInfo` to include all transitive types
+        referenced by a service.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc44
+
+- changelogEntry:
+    - summary: |
+        Support non-standard HTTP code 498; Validate `x-fern-examples` during schema parsing.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc43
+
+- changelogEntry:
+    - summary: |
+        Log error message logging when encountering doc errors during preview server initiation.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc42
+
+- changelogEntry:
+    - summary: Fixes bug introduced in 0.45.0-rc33 where version slugs were not being generated correctly.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc41
+
+- changelogEntry:
+    - summary: |
+        Fixed bug in the Conjure importer where query parameters were overwritten during endpoint parameter parsing.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc40
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports correlating request and response examples by name. When an example name is shared
+        between a request body and response, they will be paired together in the generated Fern definition.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc39
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports respecting readonly properties in schemas. When enabled, readonly properties will be excluded from request bodies for
+        POST/PUT/PATCH endpoints. To enable this, configure the setting in your `generators.yml`:
+
+        ```yml
+        api:
+         specs:
+           - openapi: ./path/to/openapi.yml
+             settings:
+               respect-readonly-schemas: true
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc38
+
+- changelogEntry:
+    - summary: Support parsing alpha and beta version numbers of Fern generators
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc37
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports importing deep object query parameters. To do this, you will
+        need to configure a setting in your `generators.yml`
+
+        ```yml
+        api:
+         specs:
+           - openapi: ./path/to/openapi.yml
+             settings:
+               object-query-paramaters: true
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc36
+
+- changelogEntry:
+    - summary: |
+        The CLI now recognizes the versions of the Go generator that require IRv53.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc34
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports roles and viewers in your docs configuration, if you are on the enterprise plan for docs:
+
+        ```yml docs.ym
+        roles:
+          - internal
+          - beta-users
+          - enterprise-users
+
+        navigation:
+          - section: Internal Section
+            viewers:
+              - internal
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc33
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now supports reading endpoints that have application/x-www-form-urlencoded requests
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc32
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses webhook examples and generates examples for webhooks when none are provided.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc31
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses the `examples` field for primitive schema types like `string`, `number`, `array` and `boolean`.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc30
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now parses the `examples` field that may be present on OpenAPI 3.1 schemas.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc29
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now skips headers in a case-insensitive way (e.g. both "Content-Type" and "content-type" are skipped).
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc28
+
+- changelogEntry:
+    - summary: |
+        The Conjure importer now brings in endpoint level descriptions.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc27
+
+- changelogEntry:
+    - summary: |
+        `fern check` handles validating unions that contain base properties.
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc26
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI temporarily does not support RBAC/Audiences (they will be added in again shortly).
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc25
+
+- changelogEntry:
+    - summary: |
+        `fern docs dev` now runs in Node 16 - Node 22 environments.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc24
+
+- changelogEntry:
+    - summary: |
+        The docs dev server now correctly handles base paths.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc23
+
+- changelogEntry:
+    - summary: |
+        Fixes bug introduced in 0.45.0-rc20 where section children were dropped from the docs definition.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc22
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports orphaned pages in your docs configuration.
+      type: feat
+    - summary: |
+        The RBAC config model is now renamed to `roles` and `viewers`:
+
+        ```yml docs.yml
+        roles:
+          - internal
+
+        navigation:
+          - section: Internal Section
+            viewers:
+              - internal
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc21
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports audiences in your docs configuration:
+
+        ```yml docs.yml
+        # all audiences must be declared at the top level
+        audiences:
+          - internal
+
+        navigation:
+          - section: Internal Section
+            audience: internal # audience is optional
+            contents:
+              - page: Internal Page
+                path: ./internal/page.mdx
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc20
+
+- changelogEntry:
+    - summary: |
+        - Respect `x-fern-ignore` extension in OpenAPI parameters.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc19
+
+- changelogEntry:
+    - summary: |
+        - Add additional debug logging to the CLI when downloading docs preview bundle
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc18
+
+- changelogEntry:
+    - summary: |
+        - Improved union example generation by increasing depth for better handling of recursive structures.
+        - Updated Conjure importer to represent binary types as bytes for requests and file for responses in Fern.
+        - Added detailed error messages when 'fern docs dev' fails, accessible with --log-level debug.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc17
+
+- changelogEntry:
+    - summary: |
+        The Conjure importer now correctly keys the union subvariant by the property of the discriminant.
+
+        ```conjure
+        union:
+          discriminant: type
+          union:
+            square: Square
+            circle: Circle
+        ```
+
+        is equal to the following Fern Definition:
+
+        ```yml fern
+        union:
+          discriminant: type
+          types:
+            square:
+              type: Square
+              key: square
+            circle:
+              type: Circle
+              key: circle
+        ```
+
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc16
+
+- changelogEntry:
+    - summary: |
+        The Conjure importer now correctly imports base-path and docs from your conjure definition.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc15
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now uses a longer timeout to make HTTP requests, which should fix some flakyness with the docs registration process.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc14
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now uses a longer timeout to make HTTP requests, which should fix some flakyness with the docs registration process.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc13
+
+- changelogEntry:
+    - summary: |
+        Undiscriminated unions are now represented using `anyOf` in the generated JSON Schema
+        Nullable properties are now correctly propagated to the JSON Schema
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc12
+
+- changelogEntry:
+    - summary: |
+        Improved JSON Schema generation for object inheritance:
+        - Removed the use of `allOf` for representing object extensions
+        - Properties from parent objects are now directly added to the child object in the JSON Schema
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc11
+
+- changelogEntry:
+    - summary: |
+        Added support for `additionalProperties` on export to JSON Schema.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc10
+
+- changelogEntry:
+    - summary: |
+        Improved JSON Schema generation for object extensions and const values:
+        - Object extensions are now properly represented using `allOf` in the JSON Schema
+        - Literal values (string and boolean) are now correctly represented using `const` in the JSON Schema
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc9
+
+- changelogEntry:
+    - summary: |
+        Add `#!/usr/bin/env node` to the CLI to prevent runtime errors.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc8
+
+- changelogEntry:
+    - summary: |
+        Stop minifying the CLI to prevent javascript runtime errors.
+      type: internal
+  irVersion: 53
+  version: 0.45.0-rc7
+
+- changelogEntry:
+    - summary: |
+        Update the CLI package.json to include the correct files.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc6
+
+- changelogEntry:
+    - summary: |
+        Introduce a new command `fern jsonschema <output-file> --type <type-name>`
+        that outputs the JSON Schema for a given type in your Fern Definition.
+
+        ```sh
+        fern jsonschema ./schema.json --type MyType
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.45.0-rc5
+
+- changelogEntry:
+    - summary: |
+        SCIM has been added as a common initialism.
+      type: chore
+  irVersion: 53
+  version: 0.45.0-rc4
+
+- changelogEntry:
+    - summary: |
+        Numerous fixes to the Conjure API Importer such as reading in request bodies and query parameters.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc3
+
+- changelogEntry:
+    - summary: |
+        The CLI now generates endpoint examples for undiscriminated unions that are recursive.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc2
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now generates streaming examples based on OpenAPI examples.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc1
+
+- changelogEntry:
+    - summary: |
+        The Docs now support rendering `additionalProperties` in the API Playground so that users can send out arbitrary key,value pairs.
+      type: fix
+  irVersion: 53
+  version: 0.45.0-rc0
+
+- changelogEntry:
+    - summary: Several improvements to the conjure importer.
+      type: fix
+  irVersion: 53
+  version: 0.44.11
+
+- changelogEntry:
+    - summary: |
+        API update now supports consuming the API origin from spec V2 configurations.
+      type: fix
+  irVersion: 53
+  version: 0.44.10
+
+- changelogEntry:
+    - summary: |
+        The fern definition now supports descriptions supplied on request and response bodies.
+        You can enable this by simply supplying `docs` in your fern definition, or `description`
+        in your OpenAPI spec.
+      type: feat
+  irVersion: 53
+  version: 0.44.9
+
+- changelogEntry:
+    - summary: |
+        API Configuration V2 schema now takes in `origin` as well, allowing `fern api update` to function as expected in the new config.
+      type: fix
+  irVersion: 53
+  version: 0.44.8
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI command `fern generator list` now accepts filters for the output mode, for example, you may now specify `fern generator list --excluded-modes local-file-system`
+        in order to filter any generators from the list that are outputting locally.
+      type: internal
+  irVersion: 53
+  version: 0.44.7
+
+- changelogEntry:
+    - summary: |
+        The Fern Definition respects endpoint level base-path overrides when validating examples.
+      type: fix
+  irVersion: 53
+  version: 0.44.6
+
+- changelogEntry:
+    - summary: |
+        The Fern Definition now supports overriding `base-path` at the endpoint level.
+        This is useful if you have subset of endpoints that do not live at the
+        configured base-path.
+
+        ```yml imdb.yml
+        service:
+          endpoints:
+            getMovie:
+              method: POST
+              base-path: "latest/" # overrides the base-path configured in api.yml
+              path: "movies/{movieId}"
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.44.5
+
+- changelogEntry:
+    - summary: |
+        Fern's OpenAPI importer will now handle generating examples for declared
+        errors so that they show up in the generated documentation.
+      type: fix
+  irVersion: 53
+  version: 0.44.4
+
+- changelogEntry:
+    - summary: |
+        Fern's OpenAPI importer can now handle `readOnly` properties in the top level
+        request schema. Note that Fern does not handle nested `readOnly` properties
+        just yet; please file a GitHub issue if this is important!
+      type: feat
+  irVersion: 53
+  version: 0.44.3
+
+- changelogEntry:
+    - summary: |
+        Fern's OpenAPI importer can now handle multiple error schemas for the
+        same status code.
+      type: fix
+  irVersion: 53
+  version: 0.44.2
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer used to try and coerce all enums into a literals.
+        In some cases this is not desirable, so we now expose an option called
+        `coerce-enums-to-literals` in your generators.yml.
+
+        ```yml generators.yml
+        api:
+          specs:
+            - openapi: ../openapi.json
+              overrides: ../openapi-overrides.yml
+              settings:
+                title-as-schema-name: false
+                coerce-enums-to-literals: false
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.44.1
+
+- changelogEntry:
+    - summary: |
+        The Fern CLI now supports parsing [Conjure](https://github.com/palantir/conjure), Palantir's
+        home-grown API Definition format.
+
+        If you know a company that is using Conjure that wants API Docs + SDKs, send them our way!
+      type: feat
+  irVersion: 53
+  version: 0.44.0-rc0
+
+- changelogEntry:
+    - summary: |
+        Any markdown files that have custom components are also pushed up to the Fern Docs
+        platform.
+      type: fix
+  irVersion: 53
+  version: 0.43.8
+
+- changelogEntry:
+    - summary: |
+        The `valid-markdown` rule has been updated to try and parse the markdown file into a
+        valid AST. If the file fails to parse, `fern check` will log an error as well
+        as the path to the markdown.
+      type: fix
+  irVersion: 53
+  version: 0.43.7
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now appropriately brings in responses that are under the `text/event-stream`
+        Content-Type if your endpoint is annotated with `x-fern-streaming`.
+        If your endpoint is not annotated with `x-fern-streaming`, then the response will be ignored.
+      type: fix
+  irVersion: 53
+  version: 0.43.6
+
+- changelogEntry:
+    - summary: |
+        If you use the `x-fern-streaming` extension and want to provide different descriptions
+        for the streaming endpoint, then you can now specify `streaming-description`.
+
+        ```yml openapi.yml
+        x-fern-streaming:
+          stream-condition: $request.stream
+          stream-description: The streaming version of this endpoint returns a series of chunks ...
+          response:
+            $ref: #/components/schemas/Response
+          stream-response:
+            $ref: #/components/schemas/ResponseChunk
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.43.5
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI parser now respects the content type in your OpenAPI spec, instead of always sending
+        `application/json`. With this upgrade, your SDKs will also start to send the correct content type.
+      type: fix
+  irVersion: 53
+  version: 0.43.4
+
+- changelogEntry:
+    - summary: |
+        The CLI now passes in the API definition ID once again, this is necessary so that generated snippet templates
+        may reference schemas within the API. This was a regression that was recently introduced.
+      type: chore
+  irVersion: 53
+  version: 0.43.3
+
+- changelogEntry:
+    - summary: |
+        The CLI now prints which API cannot be registered if `fern generate --docs` fails.
+      type: fix
+  irVersion: 53
+  version: 0.43.2
+
+- changelogEntry:
+    - summary: |
+        The CLI now supports running OpenAPI generator 0.1.0 with IR version 53.
+      type: feat
+  irVersion: 53
+  version: 0.43.1
+
+- changelogEntry:
+    - summary: |
+        The CLI now recognizes the fern-php-sdk generator.
+      type: feat
+  irVersion: 53
+  version: 0.43.0
+
+- changelogEntry:
+    - summary: |
+        The documentation resolver now appropriately creates a unique identifier for changelog sections. Previously, if you had multiple
+        changelogs within the same section, despite their title and slug being different, they would be treated as the same section since the ID
+        only took into account the parents' slug, appended the word "changelog" and that was all.
+
+        As a result previously all changelogs within the same section would get highlighted when one was selected, now only the selected changelog
+        is highlighted.
+      type: internal
+  irVersion: 53
+  version: 0.42.15
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now correctly propagates the title field on `oneof` schemas.
+      type: fix
+  irVersion: 53
+  version: 0.42.14
+
+- changelogEntry:
+    - summary: |
+        Example generation now intelligently truncates container examples, for example if the depth limit will be reached on a list of objects,
+        the list will be returned as an empty list, as opposed the previous behavior where an unknown object would be created.
+      type: fix
+  irVersion: 53
+  version: 0.42.13
+
+- changelogEntry:
+    - summary: |
+        Previously, deploying docs from Windows machines led to bad asset paths.
+        Now, the CLI respects Windows paths during run and web paths for retrieving
+        assets.
+      type: fix
+  irVersion: 53
+  version: 0.42.12
+
+- changelogEntry:
+    - summary: |
+        The API V2 configuration now supports disabling using titles as schema
         names. You may want to disable this flag if your OpenAPI adds the same
-        title to multiple schemas. 
+        title to multiple schemas.
 
         ```
-        api: 
-          specs: 
+        api:
+          specs:
             - openapi: /path/to/openapi
-              settings: 
+              settings:
                 use-title-as-schema-name: false
         ```
       type: fix
   irVersion: 53
   version: 0.42.11
 
-- changelogEntry: 
-    - summary: | 
-        Previously, the OpenAPI converter would bring over `title` on every 
-        single property. This field is extraneous, so now we ignore it. 
+- changelogEntry:
+    - summary: |
+        Previously, the OpenAPI converter would bring over `title` on every
+        single property. This field is extraneous, so now we ignore it.
       type: fix
   irVersion: 53
   version: 0.42.10
 
-- changelogEntry: 
-    - summary: | 
-        Previously, the OpenAPI importer would ignore skip parsing arbitrary 
-        content types "*/*". Now it treats this content type as application/json. 
+- changelogEntry:
+    - summary: |
+        Previously, the OpenAPI importer would ignore skip parsing arbitrary
+        content types "*/*". Now it treats this content type as application/json.
 
         ```json openapi.json
         "responses": {
@@ -39,17 +2554,17 @@
   irVersion: 53
   version: 0.42.9
 
-- changelogEntry: 
-    - summary: | 
+- changelogEntry:
+    - summary: |
         The API V2 configuration (in beta) now supports global header overrides.
-        This fixes a bug where those header overrides were getting dropped in 
+        This fixes a bug where those header overrides were getting dropped in
         certain cases.
 
         ```yml generators.yml
-        api: 
-          headers: 
+        api:
+          headers:
             X-API-VERSION: string
-          specs: 
+          specs:
             - openapi: /path/to/openapi
               overrides: /path/to/overrides
         ```
@@ -57,17 +2572,17 @@
   irVersion: 53
   version: 0.42.8
 
-- changelogEntry: 
-    - summary: | 
-        The API V2 configuration (in beta) now supports global header 
-        overrides. To specify global headers that are not in your 
-        OpenAPI spec, simply add the following block in your `generators.yml`: 
+- changelogEntry:
+    - summary: |
+        The API V2 configuration (in beta) now supports global header
+        overrides. To specify global headers that are not in your
+        OpenAPI spec, simply add the following block in your `generators.yml`:
 
         ```yml generators.yml
-        api: 
-          headers: 
+        api:
+          headers:
             X-API-VERSION: string
-          specs: 
+          specs:
             - openapi: /path/to/openapi
               overrides: /path/to/overrides
         ```
@@ -82,7 +2597,7 @@
   version: 0.42.6
 
 - changelogEntry:
-    - summary: Adds additional metadata retrievable by `fern generator get` so you can now get the langauage and the target repo.
+    - summary: Adds additional metadata retrievable by `fern generator get` so you can now get the language and the target repo.
       type: feat
   irVersion: 53
   version: 0.42.5
@@ -97,11 +2612,11 @@
   version: 0.42.4
 
 - changelogEntry:
-    - summary: | 
-        The OpenAPI importer now supports handling encoding on multipart requests. 
-        Previously, the generators would not respect the `contentType` field for 
-        each form input. But, now they do. 
-        ```yml 
+    - summary: |
+        The OpenAPI importer now supports handling encoding on multipart requests.
+        Previously, the generators would not respect the `contentType` field for
+        each form input. But, now they do.
+        ```yml
         requestBody:
           content:
             multipart/form-data:
@@ -111,19 +2626,19 @@
                   file:
                     type: string
                     format: binary
-                    description: The file to upload                 
-              encoding: 
-                file:   
-                  contentType: "application/octet-stream"      
+                    description: The file to upload
+              encoding:
+                file:
+                  contentType: "application/octet-stream"
         ```
       type: fix
-    - summary: | 
-        The OpenAPI importer now correctly parses descriptions of multipart 
-        form requests. Previously these descriptions would be ignored. 
+    - summary: |
+        The OpenAPI importer now correctly parses descriptions of multipart
+        form requests. Previously these descriptions would be ignored.
 
-        For example, previously the description `The file to upload` would be 
-        ignored in the example below. 
-        ```yml 
+        For example, previously the description `The file to upload` would be
+        ignored in the example below.
+        ```yml
         requestBody:
           content:
             multipart/form-data:
@@ -133,9 +2648,9 @@
                   file:
                     type: string
                     format: binary
-                    description: The file to upload                      
+                    description: The file to upload
         ```
-      type: fix      
+      type: fix
 
   irVersion: 53
   version: 0.42.3
@@ -148,24 +2663,24 @@
 
 - changelogEntry:
     - summary: |
-        Make sure to check for optionality when parsing stdout and stderr in CLI. This 
-        removes the error: `Cannot read properties of undefined (reading 'includes')`. 
+        Make sure to check for optionality when parsing stdout and stderr in CLI. This
+        removes the error: `Cannot read properties of undefined (reading 'includes')`.
       type: fix
   irVersion: 53
   version: 0.42.1
 
 - changelogEntry:
     - summary: |
-        If you merge multiple OpenAPI specs with namespaces, `fern check` will no longer 
-        complain about duplicate schema names across namespaces. 
-        In the example below, both OpenAPI specs can have duplicative schema names and 
-        that is okay. 
+        If you merge multiple OpenAPI specs with namespaces, `fern check` will no longer
+        complain about duplicate schema names across namespaces.
+        In the example below, both OpenAPI specs can have duplicative schema names and
+        that is okay.
         ```yml
-        api: 
-          specs: 
+        api:
+          specs:
             - openapi: openapi-bar.yml
               namespace: bar
-            - openapi: opneapi-foo.yml
+            - openapi: openapi-foo.yml
               namespace: foo
         ```
       type: fix
@@ -174,16 +2689,16 @@
 
 - changelogEntry:
     - summary: |
-        Previously the OpenAPI converter would incorrectly mark 
-        the values of `additionalProperties` as optional. Now, we have 
-        introduced a feature flag to turn this behavior off. 
+        Previously the OpenAPI converter would incorrectly mark
+        the values of `additionalProperties` as optional. Now, we have
+        introduced a feature flag to turn this behavior off.
 
-        The feature flag can be configured in generators.yml: 
+        The feature flag can be configured in generators.yml:
         ```yml
-        api: 
-          specs: 
+        api:
+          specs:
             - openapi: /path/to/openapi
-              settings: 
+              settings:
                 optional-additional-properties: false
         ```
       type: fix
@@ -192,8 +2707,8 @@
 
 - changelogEntry:
     - summary: |
-        Performance improvements for stringifiying large Intermediate Representations. If 
-        you have a large OpenAPI spec or Fern Definition, this can potentially shave off 
+        Performance improvements for stringifiying large Intermediate Representations. If
+        you have a large OpenAPI spec or Fern Definition, this can potentially shave off
         minutes from `fern generate`.
       type: internal
   irVersion: 53
@@ -201,21 +2716,21 @@
 
 - changelogEntry:
     - summary: |
-        The Fern Definition now supports `conten-type` on multipart request properties. 
+        The Fern Definition now supports `conten-type` on multipart request properties.
         For example, to specify an `application/octet-stream` and `application/json`
-        contnet types, use the snippet below: 
+        contnet types, use the snippet below:
 
         ```ts
-        service: 
-          endpoints: 
-            upload: 
-              request: 
-                body: 
-                  properties: 
-                    file: 
+        service:
+          endpoints:
+            upload:
+              request:
+                body:
+                  properties:
+                    file:
                       type: file
                       content-type: application/octet-stream
-                    metadata: 
+                    metadata:
                       type: unknown
                       content-type: application/json
         ```
@@ -233,7 +2748,7 @@
     - summary: |
         Running `fern check` will now check to confirm that the generator versions you are running are compatible with your Fern CLI version.
 
-        Each version of SDK generators depends on a version of a libary that is exported by the Fern CLI, and as a result, each generator has a minimum
+        Each version of SDK generators depends on a version of a library that is exported by the Fern CLI, and as a result, each generator has a minimum
         compatible version of the Fern CLI. As an example, if you were to run `fern check` while leveraging `fernapi/fern-python-sdk` version `2.0.0`, on CLI version `0.1.3`, you'd receive the following error:
 
         `The generator fernapi/fern-python-sdk requires CLI version 0.23.0-rc4 or later (current version: 0.1.3-rc0).`
@@ -248,7 +2763,7 @@
 
 - changelogEntry:
     - summary: |
-        The Fern CLI now safely handles a npx file exists error by retrying the command on failure. 
+        The Fern CLI now safely handles a npx file exists error by retrying the command on failure.
         This error typically happens when two or more instances of the Fern CLI are running `npx`
         at the same time.
       type: fix
@@ -257,7 +2772,7 @@
 
 - changelogEntry:
     - summary: |
-        `fern generate --local` no longer crashes on large API Definitions because we 
+        `fern generate --local` no longer crashes on large API Definitions because we
         stream the JSON to file instead of calling `JSON.stringify`. See [PR 4640](https://github.com/fern-api/fern/pull/4640).
       type: fix
   irVersion: 53
@@ -265,7 +2780,7 @@
 
 - changelogEntry:
     - summary: |
-        Adds availability to inlined properties for HTTP Requests, Webhooks, and WebSockets for Fern Definition and OpenAPI. 
+        Adds availability to inlined properties for HTTP Requests, Webhooks, and WebSockets for Fern Definition and OpenAPI.
         You can add availability like so:
 
         Fern Definition:
@@ -353,8 +2868,8 @@
         The Fern generators.yml configuration now supports a new format for namespacing APIs for additional flexibility:
 
         ```yml
-        api: 
-          specs: 
+        api:
+          specs:
             - openapi: path/to/v1/openapi
               overrides: path/to/v1/overrides
               namespace: v1
@@ -371,7 +2886,7 @@
 
 - changelogEntry:
     - summary: |
-        Previously we weren't always awaiting PostHog API calls directly. Now the CLI 
+        Previously we weren't always awaiting PostHog API calls directly. Now the CLI
         awaits these calls so that we can ensure that events are sent.
       type: fix
   createdAt: "2024-09-08"
@@ -419,14 +2934,14 @@
 
 - changelogEntry:
     - summary: |
-        The Fern OpenAPI importer now handles importing an array for the `type` key. 
+        The Fern OpenAPI importer now handles importing an array for the `type` key.
 
         ```
-        User: 
-          properties: 
-            name: 
+        User:
+          properties:
+            name:
               type: ["string"]
-            id: 
+            id:
               type: ["string", "number"]
         ```
       type: feat
@@ -436,12 +2951,12 @@
 
 - changelogEntry:
     - summary: |
-        Allow referencing by method and path. For example, when configuring an 
-        oauth scheme you can now do: 
+        Allow referencing by method and path. For example, when configuring an
+        oauth scheme you can now do:
 
-        ```oauth.yml 
-        auth-schemes: 
-          OAuth: 
+        ```oauth.yml
+        auth-schemes:
+          OAuth:
             scheme: oauth
             type: client-credentials
             get-token:
@@ -459,19 +2974,19 @@
         Fixes an issue introduced in `0.41.1` that ignored server urls for docs generation.
       type: fix
     - summary: |
-        Adds a `auth-schemes` and `auth` block where you can override auth for an existing spec. 
-        See below: 
+        Adds a `auth-schemes` and `auth` block where you can override auth for an existing spec.
+        See below:
 
-        ```generators.yml 
-        auth-schemes: 
-          Oauth: 
+        ```generators.yml
+        auth-schemes:
+          Oauth:
             scheme: oauth
             type: client-credentials
-            get-token: 
+            get-token:
               endpoint: auth.get-token
-        api: 
+        api:
           auth: Oauth # overrides auth scheme
-          specs: 
+          specs:
             - openapi: path/to/openapi
         ```
       type: feat
@@ -482,44 +2997,44 @@
 - changelogEntry:
     - summary: |
         Adds a V2 configuration for the `api` block that is more flexible and allows
-        OpenAPI users to consume Fern Definition features. 
+        OpenAPI users to consume Fern Definition features.
 
-        For example, now you can override environments directly in the api configuration: 
+        For example, now you can override environments directly in the api configuration:
         ```yml
-        api: 
-          environments: 
+        api:
+          environments:
             Production: https://prod.com
             Staging: https://staging.com
-          specs: 
+          specs:
             - openapi: path/to/openapi
               overrides: path/to/overrides
         ```
 
-        If you want to define, multi-url environments, those can be done by configuring the following generators.yml: 
+        If you want to define, multi-url environments, those can be done by configuring the following generators.yml:
         ```yml
-        api: 
-          environments: 
-            Production: 
-              urls: 
+        api:
+          environments:
+            Production:
+              urls:
                 api: https://api.com
                 auth: https://auth.com
-            Staging: 
+            Staging:
                 api: https://stagingapi.com
                 auth: https://stagingauth.com
-          specs: 
+          specs:
             - openapi: path/to/openapi
               overrides: path/to/overrides
         ```
 
-        Note that you will need to use the `x-fern-server-name` annotation on each endpoint to assign it to a relevant server. For example, 
+        Note that you will need to use the `x-fern-server-name` annotation on each endpoint to assign it to a relevant server. For example,
 
         ```yml
-        paths: 
-          /api/users/: 
-            get: 
+        paths:
+          /api/users/:
+            get:
               x-fern-server-name: api
-          /token: 
-            post: 
+          /token:
+            post:
               x-fern-server-name: auth
         ```
       type: feat
@@ -538,7 +3053,7 @@
             properties:
               value: T
               other-value: string
-          
+
           GenericApplication:
             type: GenericTest<string>
         ```
@@ -560,15 +3075,15 @@
 
 - changelogEntry:
     - summary: |
-        Every fern folder that is using OpenAPI must configure an explicit location to the 
-        OpenAPI spec. The location can be configured in your `generators.yml`: 
+        Every fern folder that is using OpenAPI must configure an explicit location to the
+        OpenAPI spec. The location can be configured in your `generators.yml`:
 
         ```yml
-        api: 
+        api:
           path: path/to/openapi.yml
         ```
 
-        If you run **fern upgrade**, the CLI will automatically run a migration for you to 
+        If you run **fern upgrade**, the CLI will automatically run a migration for you to
         ensure that you are compliant!
       type: break
   createdAt: "2024-09-02"
@@ -577,11 +3092,11 @@
 
 - changelogEntry:
     - summary: |
-        `fern check` allows the service base-path to be a slash. For example, the following 
-        would be valid: 
+        `fern check` allows the service base-path to be a slash. For example, the following
+        would be valid:
 
         ```yml
-        service: 
+        service:
           base-path: "/"
         ```
       type: fix
@@ -623,10 +3138,10 @@
       fixed:
         - The OpenAPI importer now handles generating examples for referenced `oneOf` schemas. Previously, examples generation would fail.
         - |
-          The OpenAPI importer now handles generating examples for circular `oneOf` schemas. Previously, the 
-          the converter would only default to generating examples for the first `oneOf` schema. If the first variant, 
-          circularly referenced itself, this would make terminating the example impossible. 
-          Now, the example generator tries every schema in order, guaranteeing that a termination condition will be 
+          The OpenAPI importer now handles generating examples for circular `oneOf` schemas. Previously, the
+          the converter would only default to generating examples for the first `oneOf` schema. If the first variant,
+          circularly referenced itself, this would make terminating the example impossible.
+          Now, the example generator tries every schema in order, guaranteeing that a termination condition will be
           reached.
   createdAt: "2024-08-25"
   irVersion: 53
@@ -646,22 +3161,22 @@
       type: fix
       fixed:
         - |
-          Previously, object declarations with extends and no properties did not have examples 
-          propagating in the Docs and SDKs. The core issue was in IR generation which has now 
-          been resolved. 
+          Previously, object declarations with extends and no properties did not have examples
+          propagating in the Docs and SDKs. The core issue was in IR generation which has now
+          been resolved.
 
-          The following will now work as expected: 
+          The following will now work as expected:
 
           ```yaml
-          types: 
+          types:
 
             ObjectWithNoProperties:
-              extends: 
+              extends:
                 - ParentA
                 - ParentB
-              examples: 
+              examples:
                 - name: Default
-                  value: 
+                  value:
                     propertyFromParentA: foo
                     propertyFromParentB: bar
           ```
@@ -677,7 +3192,7 @@
   version: 0.39.16
 
 - changelogEntry:
-    - summary: Introduce `generator list` and `organization` commands to faciliate actions taken by `fern-bot`
+    - summary: Introduce `generator list` and `organization` commands to facilitate actions taken by `fern-bot`
       type: internal
   createdAt: "2024-08-21"
   irVersion: 53
@@ -1131,7 +3646,7 @@
         \n* c#, improvement: make datetime deserialization more lenient + include millis\
         \ in datetime serialization by @dcb6 in https://github.com/fern-api/fern/pull/4149\r\
         \n* chore: ci workflow gating on ts-sdk changes by @RohinBhargava in https://github.com/fern-api/fern/pull/4152\r\
-        \n* (fix, csharp): map<string, unknown> values are nullable by @amckinney in\
+        \n* (fix, csharp): `map<string, unknown>` values are nullable by @amckinney in\
         \ https://github.com/fern-api/fern/pull/4153\r\n* fix: incorrect code block\
         \ indentation in api-yml.mdx by @abvthecity in https://github.com/fern-api/fern/pull/4158\r\
         \n* (feature, csharp): Add support for allow-multiple query params by @amckinney\
@@ -1438,7 +3953,7 @@
         \n* fix: (regression) parseDocsConfiguration accidentally calls loadAllPages\
         \ with absolutePathToDocsConfig by @abvthecity in https://github.com/fern-api/fern/pull/4026\r\
         \n* (feature, typescript): Add offset step pagination with IRv48 by @amckinney\
-        \ in https://github.com/fern-api/fern/pull/4028\r\n* csharp, fix, feature, improvment:\
+        \ in https://github.com/fern-api/fern/pull/4028\r\n* csharp, fix, feature, improvement:\
         \ Target .NET Standard + Framework, fix various bugs, many small improvements\
         \ by @dcb6 in https://github.com/fern-api/fern/pull/4030\r\n* fix: update unchecked\
         \ base model to not coerce none by @armandobelardo in https://github.com/fern-api/fern/pull/4029\r\
@@ -1526,7 +4041,7 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* (chore): Replace CircleCI with GitHub workflows\
         \ by @amckinney in https://github.com/fern-api/fern/pull/3991\r\n* (fix): Update\
-        \ NPM token envrionment variable by @amckinney in https://github.com/fern-api/fern/pull/3992\r\
+        \ NPM token environment variable by @amckinney in https://github.com/fern-api/fern/pull/3992\r\
         \n* (fix): Update git-version.sh script by @amckinney in https://github.com/fern-api/fern/pull/3993\r\
         \n* (fix): Use github.ref_name by @amckinney in https://github.com/fern-api/fern/pull/3996\r\
         \n* (fix): Add POSTHOG_API_KEY to live-test job by @amckinney in https://github.com/fern-api/fern/pull/3998\r\
@@ -1554,7 +4069,7 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* (chore): Replace CircleCI with GitHub workflows\
         \ by @amckinney in https://github.com/fern-api/fern/pull/3991\r\n* (fix): Update\
-        \ NPM token envrionment variable by @amckinney in https://github.com/fern-api/fern/pull/3992\r\
+        \ NPM token environment variable by @amckinney in https://github.com/fern-api/fern/pull/3992\r\
         \n* (fix): Update git-version.sh script by @amckinney in https://github.com/fern-api/fern/pull/3993\r\
         \n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.15...0.31.17-rc0"
       type: chore
@@ -1582,7 +4097,7 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* (fix, go): Don't send 'null' for nil request\
         \ body by @amckinney in https://github.com/fern-api/fern/pull/3987\r\n* (fix):\
-        \ fern generate --preview doesnt check for env variables by @dsinghvi in https://github.com/fern-api/fern/pull/3988\r\
+        \ fern generate --preview doesn't check for env variables by @dsinghvi in https://github.com/fern-api/fern/pull/3988\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.13...0.31.14"
       type: chore
   createdAt: "2024-07-04"
@@ -1622,7 +4137,7 @@
         \n* fix: python pagination helper types now share generic type by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3973\r\n* chore: update python seed\
         \ after generator-cli update by @armandobelardo in https://github.com/fern-api/fern/pull/3974\r\
-        \n* (charp, fix): Empty Root Client Methods + `.Core` namespace issue by @dcb6\
+        \n* (csharp, fix): Empty Root Client Methods + `.Core` namespace issue by @dcb6\
         \ in https://github.com/fern-api/fern/pull/3975\r\n* (java, improvement): change\
         \ default `JsonInclude` behavior  by @dcb6 in https://github.com/fern-api/fern/pull/3978\r\
         \n* (csharp, fix): base client requests not generated by @dcb6 in https://github.com/fern-api/fern/pull/3976\r\
@@ -1706,7 +4221,7 @@
   version: 0.31.4
 - changelogEntry:
     - summary: "## What's Changed\r\n* fix: the python sdk sends additional properties\
-        \ to the correct reques\u2026 by @armandobelardo in https://github.com/fern-api/fern/pull/3936\r\
+        \ to the correct request\u2026 by @armandobelardo in https://github.com/fern-api/fern/pull/3936\r\
         \n* java, improvement: improve java exception naming by @dcb6 in https://github.com/fern-api/fern/pull/3938\r\
         \n* Bump golang.org/x/tools from 0.21.0 to 0.22.0 in /generators/go by @dependabot\
         \ in https://github.com/fern-api/fern/pull/3823\r\n* (fix): make sure that `exclusiveMaximum`\
@@ -1767,8 +4282,8 @@
     - summary: "## What's Changed\r\n* (feat, IR): support streaming code generation\
         \ with the parameter by @dsinghvi in https://github.com/fern-api/fern/pull/3914\r\
         \n* (feat): update frontmatter docs by @chdeskur in https://github.com/fern-api/fern/pull/3916\r\
-        \n* (fix, cli): examples dont print out where the missing property is by @dsinghvi\
-        \ in https://github.com/fern-api/fern/pull/3919\r\n* (fix): dont error if required\
+        \n* (fix, cli): examples don't print out where the missing property is by @dsinghvi\
+        \ in https://github.com/fern-api/fern/pull/3919\r\n* (fix): don't error if required\
         \ literal parameters are unspecified by @dsinghvi in https://github.com/fern-api/fern/pull/3921\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.31.0-rc3...0.31.0-rc4"
       type: chore
@@ -2298,7 +4813,7 @@
         \n* docs changed trivial anchor text by @atwooddc in https://github.com/fern-api/fern/pull/3687\r\
         \n* docs: unbolded sections for seo by @atwooddc in https://github.com/fern-api/fern/pull/3686\r\
         \n* docs: api definition docs and mdx descriptions for seo by @atwooddc in https://github.com/fern-api/fern/pull/3685\r\
-        \n* (fix, csharp): scan `EnumMember` annotations when serializaing to string\
+        \n* (fix, csharp): scan `EnumMember` annotations when serializing to string\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/3688\r\n* fix, python:\
         \ request bodies respect literals again by @armandobelardo in https://github.com/fern-api/fern/pull/3689\r\
         \n* (fix, python): support  endpoint method names by @dsinghvi in https://github.com/fern-api/fern/pull/3690\r\
@@ -2337,7 +4852,7 @@
     - summary: "## What's Changed\r\n* (feature): Add support for default values and\
         \ validation rules by @amckinney in https://github.com/fern-api/fern/pull/3640\r\
         \n* improvement: add in config to enrich pypi metadata by @armandobelardo in\
-        \ https://github.com/fern-api/fern/pull/3660\r\n* (fix, chsarp): `.csproj` generation\
+        \ https://github.com/fern-api/fern/pull/3660\r\n* (fix, csharp): `.csproj` generation\
         \ includes license, version, and github url by @dsinghvi in https://github.com/fern-api/fern/pull/3659\r\
         \n* feat: allow users to configure pypi details by @armandobelardo in https://github.com/fern-api/fern/pull/3662\r\
         \n* (fix, python): include project URLs in generated pyproject toml by @armandobelardo\
@@ -2358,7 +4873,7 @@
     - summary: "## What's Changed\r\n* (feature): Add support for default values and\
         \ validation rules by @amckinney in https://github.com/fern-api/fern/pull/3640\r\
         \n* improvement: add in config to enrich pypi metadata by @armandobelardo in\
-        \ https://github.com/fern-api/fern/pull/3660\r\n* (fix, chsarp): `.csproj` generation\
+        \ https://github.com/fern-api/fern/pull/3660\r\n* (fix, csharp): `.csproj` generation\
         \ includes license, version, and github url by @dsinghvi in https://github.com/fern-api/fern/pull/3659\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.27.0...0.27.1-rc0"
       type: chore
@@ -2618,7 +5133,7 @@
         \ configuration to the express generator by @dsinghvi in https://github.com/fern-api/fern/pull/3560\r\
         \n* (fix) [wip] java empty response body instead of null by @dcb6 in https://github.com/fern-api/fern/pull/3545\r\
         \n* Document new `background` prop for `Frame` component by @KenzoBenzo in https://github.com/fern-api/fern/pull/3559\r\
-        \n* (improvment, ir): Improve OAuth IR customizability by @amckinney in https://github.com/fern-api/fern/pull/3563\r\
+        \n* (improvement, ir): Improve OAuth IR customizability by @amckinney in https://github.com/fern-api/fern/pull/3563\r\
         \n* (docs) consolidate code snippets and code block markdown pages by @abvthecity\
         \ in https://github.com/fern-api/fern/pull/3562\r\n* fix: deduplicate image\
         \ filepaths to upload by @abvthecity in https://github.com/fern-api/fern/pull/3564\r\
@@ -2738,7 +5253,7 @@
         \n* (internal, test): Stop testing IR generation snapshots by @dsinghvi in https://github.com/fern-api/fern/pull/3508\r\
         \n* fix, python: pipe through the whole kit and caboodle for inlined unions\
         \ by @armandobelardo in https://github.com/fern-api/fern/pull/3507\r\n* fix,\
-        \ python: the SDK generator now generates disciminated unions correctlly by\
+        \ python: the SDK generator now generates discriminated unions correctly by\
         \ @armandobelardo in https://github.com/fern-api/fern/pull/3509\r\n* internal:\
         \ release python generator RC by @armandobelardo in https://github.com/fern-api/fern/pull/3510\r\
         \n* fix, ts, python: snippet template paper cuts by @armandobelardo in https://github.com/fern-api/fern/pull/3511\r\
@@ -2807,7 +5322,7 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* improvement: throw a better error when an invalid\
         \ version is used by @armandobelardo in https://github.com/fern-api/fern/pull/3477\r\
-        \n* (fix, go): Discrimninated unions always include discriminant by @amckinney\
+        \n* (fix, go): Discriminated unions always include discriminant by @amckinney\
         \ in https://github.com/fern-api/fern/pull/3479\r\n* (internal, feat): add \
         \ mode to seed for running the generators directly from source by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/3421\r\n* (fix, docs): improve docs\
@@ -2817,7 +5332,7 @@
         \ in https://github.com/fern-api/fern/pull/3482\r\n* (chore): parse file upload\
         \ and their descriptions by @dsinghvi in https://github.com/fern-api/fern/pull/3485\r\
         \n* (feature, go): Add cursor and offset pagination by @amckinney in https://github.com/fern-api/fern/pull/3486\r\
-        \n* (fix): redo docs for accordion, accorodion groups, callouts, card groups,\
+        \n* (fix): redo docs for accordion, accordion groups, callouts, card groups,\
         \ etc. by @dsinghvi in https://github.com/fern-api/fern/pull/3489\r\n* (fix,\
         \ docs): document frames and endpoint req/res snippets by @dsinghvi in https://github.com/fern-api/fern/pull/3490\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.23.1...0.23.2"
@@ -3589,7 +6104,7 @@
         \ query params correctly in the TypeScript SDK  by @dsinghvi in https://github.com/fern-api/fern/pull/3071\r\
         \n* fix, ruby: Ensure the name passed into the `X-Fern-SDK-Name` header is the\
         \ name of the gem, not the client class by @armandobelardo in https://github.com/fern-api/fern/pull/3073\r\
-        \n* (fix, typescript): sdk code snippets dont render empty dicts for parameters\
+        \n* (fix, typescript): sdk code snippets don't render empty dicts for parameters\
         \ with default values by @dsinghvi in https://github.com/fern-api/fern/pull/3074\r\
         \n* (chore): Refactor Pagination IR to support offset by @amckinney in https://github.com/fern-api/fern/pull/3072\r\
         \n* (chore, internal): move `docs-config` to use local typescript sdk gen by\
@@ -3707,7 +6222,7 @@
         \ in https://github.com/fern-api/fern/pull/3071\r\n* (fix, ruby): Ensure the\
         \ name passed into the `X-Fern-SDK-Name` header is the name of the gem, not\
         \ the client class by @armandobelardo in https://github.com/fern-api/fern/pull/3073\r\
-        \n* (fix, typescript): sdk code snippets dont render empty dicts for parameters\
+        \n* (fix, typescript): sdk code snippets don't render empty dicts for parameters\
         \ with default values by @dsinghvi in https://github.com/fern-api/fern/pull/3074\r\
         \n* (chore): Refactor Pagination IR to support offset by @amckinney in https://github.com/fern-api/fern/pull/3072\r\
         \n* (chore, internal): move `docs-config` to use local typescript sdk gen by\
@@ -4033,7 +6548,7 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* (feature): OpenAPI importer supports format `json-string`\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2827\r\n  ```yaml\r\n\
-        \  MySchema: \r\n    type: striing\r\n    format: json-string # <---- OpenAPI\
+        \  MySchema: \r\n    type: string\r\n    format: json-string # <---- OpenAPI\
         \ importer handles this\r\n  ```\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.40...0.16.41"
       type: chore
   createdAt: "2024-01-29"
@@ -4052,7 +6567,7 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* (release): support scanning env variable for\
         \ auth in python sdk generator 0.8.1  by @dsinghvi in https://github.com/fern-api/fern/pull/2811\r\
-        \n* (feature): introduce nuget ouptut location by @dsinghvi in https://github.com/fern-api/fern/pull/2812\r\
+        \n* (feature): introduce nuget output location by @dsinghvi in https://github.com/fern-api/fern/pull/2812\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.38...0.16.39"
       type: chore
   createdAt: "2024-01-26"
@@ -4474,7 +6989,7 @@
   irVersion: 32
   version: 0.15.13
 - changelogEntry:
-    - summary: "## What's Changed\r\n* internal: seed supports configurable ouptut mode\
+    - summary: "## What's Changed\r\n* internal: seed supports configurable output mode\
         \ by @dsinghvi in https://github.com/fern-api/fern/pull/2430\r\n* internal:\
         \ add examples to literal-headers test definition by @amckinney in https://github.com/fern-api/fern/pull/2437\r\
         \n* internal: seed fixtures are dynamic by @amckinney in https://github.com/fern-api/fern/pull/2440\r\
@@ -4703,7 +7218,7 @@
   irVersion: 30
   version: 0.15.0-rc81
 - changelogEntry:
-    - summary: "## What's Changed\r\n* fix: dont compare root api files if dependency\
+    - summary: "## What's Changed\r\n* fix: don't compare root api files if dependency\
         \ has no endpoints by @dsinghvi in https://github.com/fern-api/fern/pull/2282\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.15.0-rc79...0.15.0-rc80"
       type: chore
@@ -5058,7 +7573,7 @@
   irVersion: 26
   version: 0.15.0-rc22
 - changelogEntry:
-    - summary: "- Only set GA availablity if explicitly defined in the API Definition
+    - summary: "- Only set GA availability if explicitly defined in the API Definition
         (@dsinghvi) "
       type: chore
   createdAt: "2023-09-17"
@@ -6927,7 +9442,7 @@
   version: 0.5.1
 - changelogEntry:
     - summary: "## What's Changed\r\n* Support http streams in responses by @zachkirsch\
-        \ in https://github.com/fern-api/fern/pull/1365\r\n* fix: introduce undiscrminated\
+        \ in https://github.com/fern-api/fern/pull/1365\r\n* fix: introduce undiscriminated\
         \ unions by @dsinghvi in https://github.com/fern-api/fern/pull/1367\r\n* Add\
         \ release blocker for undiscriminated unions by @zachkirsch in https://github.com/fern-api/fern/pull/1369\r\
         \n* Fix undiscriminated union rule by @zachkirsch in https://github.com/fern-api/fern/pull/1370\r\

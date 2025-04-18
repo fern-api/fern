@@ -1,17 +1,49 @@
 {
-  "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/test.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../commons/core-utils" },
-    { "path": "../../core" },
-    { "path": "../../ir-sdk" },
-    { "path": "../auth" },
-    { "path": "../configuration" },
-    { "path": "../generation/ir-generator" },
-    { "path": "../task-context" },
-    { "path": "../workspace-loader" },
-    { "path": "../project-loader" },
-    { "path": "../../commons/fs-utils" },
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../core"
+    },
+    {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../auth"
+    },
+    {
+      "path": "../cli-source-resolver"
+    },
+    {
+      "path": "../configuration"
+    },
+    {
+      "path": "../generation/ir-generator"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../workspace/commons"
+    },
+    {
+      "path": "../project-loader"
+    },
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../../commons/ir-utils"
+    },
   ]
 }

@@ -43,7 +43,7 @@ export const DebugVariableValue: core.serialization.Schema<
     });
 
 export declare namespace DebugVariableValue {
-    type Raw =
+    export type Raw =
         | DebugVariableValue.IntegerValue
         | DebugVariableValue.BooleanValue
         | DebugVariableValue.DoubleValue
@@ -58,61 +58,61 @@ export declare namespace DebugVariableValue {
         | DebugVariableValue.NullValue
         | DebugVariableValue.GenericValue;
 
-    interface IntegerValue {
+    export interface IntegerValue {
         type: "integerValue";
         value: number;
     }
 
-    interface BooleanValue {
+    export interface BooleanValue {
         type: "booleanValue";
         value: boolean;
     }
 
-    interface DoubleValue {
+    export interface DoubleValue {
         type: "doubleValue";
         value: number;
     }
 
-    interface StringValue {
+    export interface StringValue {
         type: "stringValue";
         value: string;
     }
 
-    interface CharValue {
+    export interface CharValue {
         type: "charValue";
         value: string;
     }
 
-    interface MapValue extends serializers.DebugMapValue.Raw {
+    export interface MapValue extends serializers.DebugMapValue.Raw {
         type: "mapValue";
     }
 
-    interface ListValue {
+    export interface ListValue {
         type: "listValue";
         value: serializers.DebugVariableValue.Raw[];
     }
 
-    interface BinaryTreeNodeValue extends serializers.BinaryTreeNodeAndTreeValue.Raw {
+    export interface BinaryTreeNodeValue extends serializers.BinaryTreeNodeAndTreeValue.Raw {
         type: "binaryTreeNodeValue";
     }
 
-    interface SinglyLinkedListNodeValue extends serializers.SinglyLinkedListNodeAndListValue.Raw {
+    export interface SinglyLinkedListNodeValue extends serializers.SinglyLinkedListNodeAndListValue.Raw {
         type: "singlyLinkedListNodeValue";
     }
 
-    interface DoublyLinkedListNodeValue extends serializers.DoublyLinkedListNodeAndListValue.Raw {
+    export interface DoublyLinkedListNodeValue extends serializers.DoublyLinkedListNodeAndListValue.Raw {
         type: "doublyLinkedListNodeValue";
     }
 
-    interface UndefinedValue {
+    export interface UndefinedValue {
         type: "undefinedValue";
     }
 
-    interface NullValue {
+    export interface NullValue {
         type: "nullValue";
     }
 
-    interface GenericValue extends serializers.GenericValue.Raw {
+    export interface GenericValue extends serializers.GenericValue.Raw {
         type: "genericValue";
     }
 }

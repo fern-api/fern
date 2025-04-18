@@ -24,6 +24,16 @@ class _Factory:
 
 
 class UnionWithSingleElement(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithSingleElement_Foo
+
+    UnionWithSingleElement_Foo(
+        name="example1",
+    )
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
@@ -47,6 +57,14 @@ class UnionWithSingleElement(UniversalRootModel):
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
             return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 class _UnionWithSingleElement:

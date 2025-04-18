@@ -6,6 +6,7 @@ package com.seed.basicAuth;
 import com.seed.basicAuth.core.ClientOptions;
 import com.seed.basicAuth.core.Environment;
 import java.util.Base64;
+import okhttp3.OkHttpClient;
 
 public final class SeedBasicAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -24,6 +25,30 @@ public final class SeedBasicAuthClientBuilder {
 
     public SeedBasicAuthClientBuilder url(String url) {
         this.environment = Environment.custom(url);
+        return this;
+    }
+
+    /**
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
+     */
+    public SeedBasicAuthClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedBasicAuthClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedBasicAuthClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

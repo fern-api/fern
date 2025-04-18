@@ -1,3 +1,6 @@
+[project]
+name = "fern_server-sent-events"
+
 [tool.poetry]
 name = "fern_server-sent-events"
 version = "0.0.1"
@@ -49,6 +52,9 @@ asyncio_mode = "auto"
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
+
+[tool.ruff]
+line-length = 120
 
 
 [build-system]

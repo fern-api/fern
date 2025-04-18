@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedOauthClientCredentialsEnvironmentVariables;
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
-
-#nullable enable
 
 namespace SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer;
 
@@ -13,23 +9,23 @@ namespace SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer;
 public class GetTokenWithClientCredentialsTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
-              "client_id": "string",
-              "client_secret": "string",
+              "client_id": "client_id",
+              "client_secret": "client_secret",
               "audience": "https://api.example.com",
               "grant_type": "client_credentials",
-              "scope": "string"
+              "scope": "scope"
             }
             """;
 
         const string mockResponse = """
             {
-              "access_token": "string",
+              "access_token": "access_token",
               "expires_in": 1,
-              "refresh_token": "string"
+              "refresh_token": "refresh_token"
             }
             """;
 
@@ -51,17 +47,16 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
         var response = await Client.Auth.GetTokenWithClientCredentialsAsync(
             new GetTokenRequest
             {
-                ClientId = "string",
-                ClientSecret = "string",
+                ClientId = "client_id",
+                ClientSecret = "client_secret",
                 Audience = "https://api.example.com",
                 GrantType = "client_credentials",
-                Scope = "string",
-            },
-            RequestOptions
+                Scope = "scope",
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<TokenResponse>(mockResponse)).UsingDefaults()
+        );
     }
 }

@@ -1,6 +1,8 @@
-import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter";
 import { getParameterNameForFile } from "./getParameterNameForFile";
 
@@ -9,20 +11,26 @@ export function appendPropertyToFormData({
     context,
     referenceToFormData,
     wrapperName,
-    requestParameter
+    requestParameter,
+    includeSerdeLayer,
+    allowExtraFields,
+    omitUndefined
 }: {
     property: FileUploadRequestProperty;
     context: SdkContext;
     referenceToFormData: ts.Expression;
     wrapperName: string;
     requestParameter: FileUploadRequestParameter | undefined;
+    includeSerdeLayer: boolean;
+    allowExtraFields: boolean;
+    omitUndefined: boolean;
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
 
             let statement = context.coreUtilities.formDataUtils.appendFile({
-                referencetoFormData: referenceToFormData,
+                referenceToFormData,
                 key: property.key.wireValue,
                 value: ts.factory.createIdentifier(
                     getParameterNameForFile({
@@ -60,8 +68,8 @@ export function appendPropertyToFormData({
                     ),
                     ts.factory.createBlock(
                         [
-                            context.coreUtilities.formDataUtils.append({
-                                referencetoFormData: referenceToFormData,
+                            context.coreUtilities.formDataUtils.appendFile({
+                                referenceToFormData,
                                 key: property.key.wireValue,
                                 value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)
                             })
@@ -102,7 +110,52 @@ export function appendPropertyToFormData({
 
             let statement: ts.Statement;
 
-            if (isMaybeIterable(property.valueType, context)) {
+            if (property.style === "form") {
+                statement = ts.factory.createForOfStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createArrayBindingPattern([
+                                    ts.factory.createBindingElement(undefined, undefined, "key"),
+                                    ts.factory.createBindingElement(undefined, undefined, "value")
+                                ]),
+                                undefined,
+                                undefined,
+                                undefined
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    ),
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("Object"),
+                            ts.factory.createIdentifier("entries")
+                        ),
+                        undefined,
+                        [
+                            context.coreUtilities.formDataUtils.encodeAsFormParameter({
+                                referenceToArgument: ts.factory.createObjectLiteralExpression([
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createStringLiteral(property.name.wireValue),
+                                        referenceToBodyProperty
+                                    )
+                                ])
+                            })
+                        ]
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            context.coreUtilities.formDataUtils.append({
+                                referenceToFormData,
+                                key: ts.factory.createIdentifier("key"),
+                                value: ts.factory.createIdentifier("value")
+                            })
+                        ],
+                        true
+                    )
+                );
+            } else if (isMaybeIterable(property.valueType, context)) {
                 statement = ts.factory.createForOfStatement(
                     undefined,
                     ts.factory.createVariableDeclarationList(
@@ -120,7 +173,7 @@ export function appendPropertyToFormData({
                     ts.factory.createBlock(
                         [
                             context.coreUtilities.formDataUtils.append({
-                                referencetoFormData: referenceToFormData,
+                                referenceToFormData,
                                 key: property.name.wireValue,
                                 value: stringifyIterableItemType(
                                     ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
@@ -163,7 +216,7 @@ export function appendPropertyToFormData({
                 }
             } else {
                 statement = context.coreUtilities.formDataUtils.append({
-                    referencetoFormData: referenceToFormData,
+                    referenceToFormData,
                     key: property.name.wireValue,
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
                         includeNullCheckIfOptional: false
@@ -198,6 +251,7 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
                 set: () => true,
                 map: () => false,
                 literal: () => false,
+                nullable: (itemType) => isMaybeIterable(itemType, context),
                 optional: (itemType) => isMaybeIterable(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
@@ -236,6 +290,7 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
                 literal: () => {
                     throw new Error("Literal is not iterable.");
                 },
+                nullable: (itemType) => stringifyIterableItemType(value, itemType, context),
                 optional: (itemType) => stringifyIterableItemType(value, itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
@@ -279,6 +334,7 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
                 set: () => true,
                 map: () => false,
                 literal: () => false,
+                nullable: () => false,
                 optional: (itemType) => isDefinitelyIterable(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
@@ -314,6 +370,7 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
                 set: () => false,
                 map: () => false,
                 literal: () => false,
+                nullable: () => false,
                 optional: (itemType) => isMaybeList(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
@@ -348,6 +405,7 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
                 set: () => true,
                 map: () => false,
                 literal: () => false,
+                nullable: () => false,
                 optional: (itemType) => isMaybeSet(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);

@@ -2,32 +2,41 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class LightweightStackframeInformation extends SerializableType
+class LightweightStackframeInformation extends JsonSerializableType
 {
     /**
      * @var int $numStackFrames
      */
-    #[JsonProperty("numStackFrames")]
+    #[JsonProperty('numStackFrames')]
     public int $numStackFrames;
 
     /**
      * @var string $topStackFrameMethodName
      */
-    #[JsonProperty("topStackFrameMethodName")]
+    #[JsonProperty('topStackFrameMethodName')]
     public string $topStackFrameMethodName;
 
     /**
-     * @param int $numStackFrames
-     * @param string $topStackFrameMethodName
+     * @param array{
+     *   numStackFrames: int,
+     *   topStackFrameMethodName: string,
+     * } $values
      */
     public function __construct(
-        int $numStackFrames,
-        string $topStackFrameMethodName,
+        array $values,
     ) {
-        $this->numStackFrames = $numStackFrames;
-        $this->topStackFrameMethodName = $topStackFrameMethodName;
+        $this->numStackFrames = $values['numStackFrames'];
+        $this->topStackFrameMethodName = $values['topStackFrameMethodName'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

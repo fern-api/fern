@@ -53,4 +53,9 @@ func TestScope(t *testing.T) {
 
 		assert.True(t, scope.Imports.Exists("os"))
 	})
+
+	t.Run("invalid identifier", func(t *testing.T) {
+		scope := NewScope()
+		assert.Equal(t, "ending", scope.Add("$ending"))
+	})
 }

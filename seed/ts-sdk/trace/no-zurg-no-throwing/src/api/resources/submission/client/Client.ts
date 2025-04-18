@@ -8,14 +8,16 @@ import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Submission {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -24,6 +26,8 @@ export declare namespace Submission {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -42,16 +46,29 @@ export class Submission {
      * @example
      *     await client.submission.createExecutionSession("JAVA")
      */
-    public async createExecutionSession(
+    public createExecutionSession(
         language: SeedTrace.Language,
-        requestOptions?: Submission.RequestOptions
-    ): Promise<
+        requestOptions?: Submission.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__createExecutionSession(language, requestOptions));
+    }
+
+    private async __createExecutionSession(
+        language: SeedTrace.Language,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/create-session/${encodeURIComponent(language)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/sessions/create-session/${encodeURIComponent(language)}`,
             ),
             method: "POST",
             headers: {
@@ -66,6 +83,7 @@ export class Submission {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -75,14 +93,23 @@ export class Submission {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.ExecutionSessionResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.ExecutionSessionResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.submission.createExecutionSession.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.submission.createExecutionSession.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -93,18 +120,34 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.getExecutionSession("string")
+     *     await client.submission.getExecutionSession("sessionId")
      */
-    public async getExecutionSession(
+    public getExecutionSession(
         sessionId: string,
-        requestOptions?: Submission.RequestOptions
-    ): Promise<
+        requestOptions?: Submission.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.ExecutionSessionResponse | undefined, SeedTrace.submission.getExecutionSession.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionSession(sessionId, requestOptions));
+    }
+
+    private async __getExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedTrace.ExecutionSessionResponse | undefined,
+                SeedTrace.submission.getExecutionSession.Error
+            >
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/${encodeURIComponent(sessionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/sessions/${encodeURIComponent(sessionId)}`,
             ),
             method: "GET",
             headers: {
@@ -119,6 +162,7 @@ export class Submission {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -128,14 +172,23 @@ export class Submission {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.ExecutionSessionResponse | undefined,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.ExecutionSessionResponse | undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.submission.getExecutionSession.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.submission.getExecutionSession.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -146,16 +199,25 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.stopExecutionSession("string")
+     *     await client.submission.stopExecutionSession("sessionId")
      */
-    public async stopExecutionSession(
+    public stopExecutionSession(
         sessionId: string,
-        requestOptions?: Submission.RequestOptions
-    ): Promise<core.APIResponse<void, SeedTrace.submission.stopExecutionSession.Error>> {
+        requestOptions?: Submission.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.submission.stopExecutionSession.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__stopExecutionSession(sessionId, requestOptions));
+    }
+
+    private async __stopExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.submission.stopExecutionSession.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/stop/${encodeURIComponent(sessionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/sessions/stop/${encodeURIComponent(sessionId)}`,
             ),
             method: "DELETE",
             headers: {
@@ -170,6 +232,7 @@ export class Submission {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -179,14 +242,23 @@ export class Submission {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.submission.stopExecutionSession.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.submission.stopExecutionSession.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -196,18 +268,33 @@ export class Submission {
      * @example
      *     await client.submission.getExecutionSessionsState()
      */
-    public async getExecutionSessionsState(
-        requestOptions?: Submission.RequestOptions
-    ): Promise<
+    public getExecutionSessionsState(
+        requestOptions?: Submission.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<
             SeedTrace.GetExecutionSessionStateResponse,
             SeedTrace.submission.getExecutionSessionsState.Error
         >
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionSessionsState(requestOptions));
+    }
+
+    private async __getExecutionSessionsState(
+        requestOptions?: Submission.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedTrace.GetExecutionSessionStateResponse,
+                SeedTrace.submission.getExecutionSessionsState.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/sessions/execution-sessions-state"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/sessions/execution-sessions-state",
             ),
             method: "GET",
             headers: {
@@ -222,6 +309,7 @@ export class Submission {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -231,14 +319,23 @@ export class Submission {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: _response.body as SeedTrace.GetExecutionSessionStateResponse,
+                data: {
+                    ok: true,
+                    body: _response.body as SeedTrace.GetExecutionSessionStateResponse,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.submission.getExecutionSessionsState.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.submission.getExecutionSessionsState.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -3,7 +3,6 @@
  */
 
 export type BasicType = "primitive" | "literal";
-
 export const BasicType = {
     Primitive: "primitive",
     Literal: "literal",

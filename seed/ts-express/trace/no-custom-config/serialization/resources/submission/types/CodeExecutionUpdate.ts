@@ -29,7 +29,7 @@ export const CodeExecutionUpdate: core.serialization.Schema<
     });
 
 export declare namespace CodeExecutionUpdate {
-    type Raw =
+    export type Raw =
         | CodeExecutionUpdate.BuildingExecutor
         | CodeExecutionUpdate.Running
         | CodeExecutionUpdate.Errored
@@ -42,47 +42,47 @@ export declare namespace CodeExecutionUpdate {
         | CodeExecutionUpdate.InvalidRequest
         | CodeExecutionUpdate.Finished;
 
-    interface BuildingExecutor extends serializers.BuildingExecutorResponse.Raw {
+    export interface BuildingExecutor extends serializers.BuildingExecutorResponse.Raw {
         type: "buildingExecutor";
     }
 
-    interface Running extends serializers.RunningResponse.Raw {
+    export interface Running extends serializers.RunningResponse.Raw {
         type: "running";
     }
 
-    interface Errored extends serializers.ErroredResponse.Raw {
+    export interface Errored extends serializers.ErroredResponse.Raw {
         type: "errored";
     }
 
-    interface Stopped extends serializers.StoppedResponse.Raw {
+    export interface Stopped extends serializers.StoppedResponse.Raw {
         type: "stopped";
     }
 
-    interface Graded extends serializers.GradedResponse.Raw {
+    export interface Graded extends serializers.GradedResponse.Raw {
         type: "graded";
     }
 
-    interface GradedV2 extends serializers.GradedResponseV2.Raw {
+    export interface GradedV2 extends serializers.GradedResponseV2.Raw {
         type: "gradedV2";
     }
 
-    interface WorkspaceRan extends serializers.WorkspaceRanResponse.Raw {
+    export interface WorkspaceRan extends serializers.WorkspaceRanResponse.Raw {
         type: "workspaceRan";
     }
 
-    interface Recording extends serializers.RecordingResponseNotification.Raw {
+    export interface Recording extends serializers.RecordingResponseNotification.Raw {
         type: "recording";
     }
 
-    interface Recorded extends serializers.RecordedResponseNotification.Raw {
+    export interface Recorded extends serializers.RecordedResponseNotification.Raw {
         type: "recorded";
     }
 
-    interface InvalidRequest extends serializers.InvalidRequestResponse.Raw {
+    export interface InvalidRequest extends serializers.InvalidRequestResponse.Raw {
         type: "invalidRequest";
     }
 
-    interface Finished extends serializers.FinishedResponse.Raw {
+    export interface Finished extends serializers.FinishedResponse.Raw {
         type: "finished";
     }
 }

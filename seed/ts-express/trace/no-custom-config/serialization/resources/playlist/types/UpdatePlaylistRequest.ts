@@ -15,7 +15,7 @@ export const UpdatePlaylistRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace UpdatePlaylistRequest {
-    interface Raw {
+    export interface Raw {
         name: string;
         problems: serializers.ProblemId.Raw[];
     }

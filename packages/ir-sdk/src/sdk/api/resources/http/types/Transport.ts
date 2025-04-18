@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type Transport = FernIr.Transport.Http | FernIr.Transport.Grpc;
 
-export declare namespace Transport {
-    interface Http extends _Utils {
+export namespace Transport {
+    export interface Http extends _Utils {
         type: "http";
     }
 
-    interface Grpc extends FernIr.GrpcTransport, _Utils {
+    export interface Grpc extends FernIr.GrpcTransport, _Utils {
         type: "grpc";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Transport._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         http: () => _Result;
         grpc: (value: FernIr.GrpcTransport) => _Result;
         _other: (value: { type: string }) => _Result;

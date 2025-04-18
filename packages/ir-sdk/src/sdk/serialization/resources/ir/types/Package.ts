@@ -30,7 +30,7 @@ export const Package: core.serialization.ObjectSchema<serializers.Package.Raw, F
     .extend(WithDocs);
 
 export declare namespace Package {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         fernFilepath: FernFilepath.Raw;
         service?: ServiceId.Raw | null;
         types: TypeId.Raw[];

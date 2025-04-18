@@ -15,7 +15,7 @@ export const Parameter: core.serialization.ObjectSchema<serializers.v2.v3.Parame
     });
 
 export declare namespace Parameter {
-    interface Raw {
+    export interface Raw {
         parameterId: ParameterId.Raw;
         name: string;
         variableType: serializers.VariableType.Raw;

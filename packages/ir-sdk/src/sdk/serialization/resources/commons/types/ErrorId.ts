@@ -9,5 +9,5 @@ import * as core from "../../../../core";
 export const ErrorId: core.serialization.Schema<serializers.ErrorId.Raw, FernIr.ErrorId> = core.serialization.string();
 
 export declare namespace ErrorId {
-    type Raw = string;
+    export type Raw = string;
 }

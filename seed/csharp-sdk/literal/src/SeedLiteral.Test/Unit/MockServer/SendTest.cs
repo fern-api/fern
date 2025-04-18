@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedLiteral;
 using SeedLiteral.Core;
-
-#nullable enable
 
 namespace SeedLiteral.Test.Unit.MockServer;
 
@@ -13,21 +9,37 @@ namespace SeedLiteral.Test.Unit.MockServer;
 public class SendTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest_1()
+    public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
             {
               "prompt": "You are a helpful assistant",
+              "query": "query",
               "stream": false,
+              "ending": "$ending",
               "context": "You're super wise",
-              "query": "What is the weather today"
+              "maybeContext": "You're super wise",
+              "containerObject": {
+                "nestedObjects": [
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  },
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  }
+                ]
+              }
             }
             """;
 
         const string mockResponse = """
             {
-              "message": "The weather is sunny",
-              "status": 200,
+              "message": "message",
+              "status": 1,
               "success": true
             }
             """;
@@ -51,27 +63,55 @@ public class SendTest : BaseMockServerTest
             new SendRequest
             {
                 Prompt = "You are a helpful assistant",
+                Query = "query",
                 Stream = false,
+                Ending = "$ending",
                 Context = "You're super wise",
-                Query = "What is the weather today",
-            },
-            RequestOptions
+                MaybeContext = "You're super wise",
+                ContainerObject = new ContainerObject
+                {
+                    NestedObjects = new List<NestedObjectWithLiterals>()
+                    {
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                    },
+                },
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
+        );
     }
 
     [Test]
-    public async Task MockServerTest_2()
+    public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string requestJson = """
             {
               "prompt": "You are a helpful assistant",
               "stream": false,
               "context": "You're super wise",
-              "query": "What is the weather today"
+              "query": "What is the weather today",
+              "containerObject": {
+                "nestedObjects": [
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  }
+                ]
+              }
             }
             """;
 
@@ -105,12 +145,23 @@ public class SendTest : BaseMockServerTest
                 Stream = false,
                 Context = "You're super wise",
                 Query = "What is the weather today",
-            },
-            RequestOptions
+                ContainerObject = new ContainerObject
+                {
+                    NestedObjects = new List<NestedObjectWithLiterals>()
+                    {
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                    },
+                },
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<SendResponse>(mockResponse)).UsingDefaults()
+        );
     }
 }

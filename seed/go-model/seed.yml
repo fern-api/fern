@@ -1,7 +1,16 @@
-irVersion: v40
+irVersion: v53
 displayName: Go Model
 image: fernapi/fern-go-model
 changelogLocation: ../../generators/go/model/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - go build -v ./...
+  testScript:
+    commands:
+      - go test -v ./...
+
 publish:
   workingDirectory: generators/go
   preBuildCommands:
@@ -15,7 +24,7 @@ test:
     image: fernapi/fern-go-model:latest
     command: docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest ./generators/go
 language: go
-generatorType: sdk
+generatorType: Model
 defaultOutputMode: github
 fixtures:
   streaming:
@@ -37,7 +46,8 @@ scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
-allowedFailures: 
+allowedFailures:
   - exhaustive
+  - mixed-case
   - reserved-keywords
   - trace

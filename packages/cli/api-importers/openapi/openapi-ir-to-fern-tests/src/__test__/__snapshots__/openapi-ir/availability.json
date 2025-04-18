@@ -1,0 +1,925 @@
+{
+  "title": "Deprecated params and fields",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "description": "collection id",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "availability": "Deprecated",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "active header",
+          "name": "active_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestActiveId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "deprecated_ref_id",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedRefId",
+            "schema": "DeprecatedParam",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "active beta header",
+          "name": "x-fern-availability_path_param",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityPathParam",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "availability": "Beta",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "description": "language code",
+          "name": "deprecated_lang",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedLang",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedLang",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "availability": "Deprecated",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "language code",
+          "name": "active_lang",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestActiveLang",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestActiveLang",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "deprecated_ref_lang",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedRefLang",
+            "value": {
+              "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedRefLang",
+              "schema": "DeprecatedParam",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "active beta query param",
+          "name": "x-fern-availability_query_param",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityQueryParam",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityQueryParam",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "availability": "Beta",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "description": "deprecated header",
+          "name": "X-Deprecated-Header",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXDeprecatedHeader",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXDeprecatedHeader",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "availability": "Deprecated",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "active header",
+          "name": "X-Active-Header",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXActiveHeader",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXActiveHeader",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Deprecated-Ref-Header",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXDeprecatedRefHeader",
+            "value": {
+              "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXDeprecatedRefHeader",
+              "schema": "DeprecatedParam",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "active beta header",
+          "name": "x-fern-availability_header",
+          "schema": {
+            "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityHeader",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityHeader",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "availability": "Beta",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamResponse",
+          "schema": "WholeDeprecatedSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "active_id",
+              "value": {
+                "value": {
+                  "value": "active_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "deprecated_ref_id",
+              "value": {
+                "value": {
+                  "value": "deprecated_ref_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-fern-availability_path_param",
+              "value": {
+                "value": {
+                  "value": "x-fern-availability_path_param",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "fine_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostSuccessRefRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostSuccessRefRequest",
+          "schema": "Settings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "PostSuccessRefResponse",
+          "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/success-ref",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostSuccessInlinePropertyDeprecationRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
+              "key": "deprecated_setting",
+              "schema": {
+                "generatedName": "postSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
+                "availability": "Deprecated",
+                "value": {
+                  "availability": "Deprecated",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "PostSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "availability": "Deprecated"
+            },
+            {
+              "conflict": {},
+              "generatedName": "postSuccessInlinePropertyDeprecationRequestNewSetting",
+              "key": "new_setting",
+              "schema": {
+                "generatedName": "postSuccessInlinePropertyDeprecationRequestNewSetting",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "PostSuccessInlinePropertyDeprecationRequestNewSetting",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostSuccessInlinePropertyDeprecationRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "PostSuccessInlinePropertyDeprecationResponse",
+          "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/success-inline-property-deprecation",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostSuccessInlineObjectDeprecationRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postSuccessInlineObjectDeprecationRequestFineSetting",
+              "key": "fine_setting",
+              "schema": {
+                "generatedName": "postSuccessInlineObjectDeprecationRequestFineSetting",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "PostSuccessInlineObjectDeprecationRequestFineSetting",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostSuccessInlineObjectDeprecationRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "availability": "Deprecated",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "PostSuccessInlineObjectDeprecationResponse",
+          "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "availability": "Deprecated",
+      "method": "POST",
+      "path": "/success-inline-object-deprecation",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostSuccessInlineBetaBodyRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postSuccessInlineBetaBodyRequestFineSetting",
+              "key": "fine_setting",
+              "schema": {
+                "generatedName": "postSuccessInlineBetaBodyRequestFineSetting",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "PostSuccessInlineBetaBodyRequestFineSetting",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostSuccessInlineBetaBodyRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "availability": "Beta",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "PostSuccessInlineBetaBodyResponse",
+          "schema": "NotDeprecatedSettings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "availability": "Beta",
+      "method": "POST",
+      "path": "/success-inline-beta-body",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "not_deprecated_setting": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "DeprecatedParam": {
+        "availability": "Deprecated",
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "DeprecatedParam",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "Settings": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "settingsDeprecatedSetting",
+            "key": "deprecated_setting",
+            "schema": {
+              "generatedName": "settingsDeprecatedSetting",
+              "availability": "Deprecated",
+              "value": {
+                "availability": "Deprecated",
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "SettingsDeprecatedSetting",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "availability": "Deprecated"
+          },
+          {
+            "conflict": {},
+            "generatedName": "settingsNewSetting",
+            "key": "new_setting",
+            "schema": {
+              "generatedName": "settingsNewSetting",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "SettingsNewSetting",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Settings",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "WholeDeprecatedSettings": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "wholeDeprecatedSettingsFineSetting",
+            "key": "fine_setting",
+            "schema": {
+              "generatedName": "wholeDeprecatedSettingsFineSetting",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "WholeDeprecatedSettingsFineSetting",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "WholeDeprecatedSettings",
+        "groupName": [],
+        "additionalProperties": false,
+        "availability": "Deprecated",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "NotDeprecatedSettings": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
+            "key": "not_deprecated_setting",
+            "schema": {
+              "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "NotDeprecatedSettingsNotDeprecatedSetting",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "NotDeprecatedSettings",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -32,20 +32,20 @@ export const ExampleQueryParameterShape: core.serialization.Schema<
     });
 
 export declare namespace ExampleQueryParameterShape {
-    type Raw =
+    export type Raw =
         | ExampleQueryParameterShape.Single
         | ExampleQueryParameterShape.Exploded
         | ExampleQueryParameterShape.CommaSeparated;
 
-    interface Single {
+    export interface Single {
         type: "single";
     }
 
-    interface Exploded {
+    export interface Exploded {
         type: "exploded";
     }
 
-    interface CommaSeparated {
+    export interface CommaSeparated {
         type: "commaSeparated";
     }
 }

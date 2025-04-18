@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { DependencyManager, DependencyType } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { Fetcher } from "./Fetcher";
@@ -31,7 +33,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 "../../stream-wrappers/chooseStreamWrapper":
                     "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
                 "../stream-wrappers/chooseStreamWrapper":
-                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper"
+                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
+                "../RawResponse": "../../../src/core/fetcher/RawResponse",
+                "../HttpResponsePromise": "../../../src/core/fetcher/HttpResponsePromise"
             }
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
@@ -39,25 +43,22 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
-            dependencyManager.addDependency("node-fetch", "2.7.0");
-            dependencyManager.addDependency("qs", "6.11.2");
+            dependencyManager.addDependency("node-fetch", "^2.7.0");
+            dependencyManager.addDependency("qs", "^6.13.1");
             dependencyManager.addDependency("readable-stream", "^4.5.2");
-            dependencyManager.addDependency("@types/qs", "6.9.8", {
+            dependencyManager.addDependency("@types/qs", "^6.9.17", {
                 type: DependencyType.DEV
             });
-            dependencyManager.addDependency("@types/node-fetch", "2.6.9", {
+            dependencyManager.addDependency("@types/node-fetch", "^2.6.12", {
                 type: DependencyType.DEV
             });
-            dependencyManager.addDependency("@types/readable-stream", "^4.0.15", {
+            dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
                 type: DependencyType.DEV
             });
-            dependencyManager.addDependency("fetch-mock-jest", "^1.5.1", {
+            dependencyManager.addDependency("webpack", "^5.97.1", {
                 type: DependencyType.DEV
             });
-            dependencyManager.addDependency("webpack", "^5.94.0", {
-                type: DependencyType.DEV
-            });
-            dependencyManager.addDependency("ts-loader", "^9.3.1", {
+            dependencyManager.addDependency("ts-loader", "^9.5.1", {
                 type: DependencyType.DEV
             });
         }
@@ -221,28 +222,51 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         ok: "ok",
 
         SuccessfulResponse: {
-            _build: (body: ts.Expression): ts.ObjectLiteralExpression =>
+            _build: (
+                body: ts.Expression,
+                headers?: ts.Expression,
+                rawResponse?: ts.Expression
+            ): ts.ObjectLiteralExpression =>
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(this.APIResponse.ok, ts.factory.createTrue()),
-                        ts.factory.createPropertyAssignment(this.APIResponse.SuccessfulResponse.body, body)
+                        ts.factory.createPropertyAssignment(this.APIResponse.SuccessfulResponse.body, body),
+                        ...(headers
+                            ? [
+                                  ts.factory.createPropertyAssignment(
+                                      this.APIResponse.SuccessfulResponse.headers,
+                                      headers
+                                  )
+                              ]
+                            : []),
+                        ...(rawResponse
+                            ? [
+                                  ts.factory.createPropertyAssignment(
+                                      this.APIResponse.SuccessfulResponse.rawResponse,
+                                      rawResponse
+                                  )
+                              ]
+                            : [])
                     ],
                     true
                 ),
             body: "body",
-            headers: "headers"
+            headers: "headers",
+            rawResponse: "rawResponse"
         },
 
         FailedResponse: {
-            _build: (error: ts.Expression): ts.ObjectLiteralExpression =>
+            _build: (error: ts.Expression, rawResponse: ts.Expression): ts.ObjectLiteralExpression =>
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(this.APIResponse.ok, ts.factory.createFalse()),
-                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.error, error)
+                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.error, error),
+                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.rawResponse, rawResponse)
                     ],
                     true
                 ),
-            error: "error"
+            error: "error",
+            rawResponse: "rawResponse"
         }
     };
 
@@ -257,6 +281,22 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ts.factory.createPropertyAccessExpression(Supplier.getExpression(), "get"),
                     undefined,
                     [supplier]
+                )
+            );
+        })
+    };
+
+    public Websocket = {
+        _getReferenceToType: this.withExportedName("Websocket", (Websocket) => (suppliedType: ts.TypeNode) => {
+            return ts.factory.createTypeReferenceNode(Websocket.getEntityName(), [suppliedType]);
+        }),
+
+        get: this.withExportedName("Websocket", (Websocket) => (websocket: ts.Expression) => {
+            return ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(Websocket.getExpression(), "get"),
+                    undefined,
+                    [websocket]
                 )
             );
         })
@@ -294,4 +334,65 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(Fetcher.getEntityName(), typeName))
         );
     }
+
+    public readonly RawResponse = {
+        RawResponse: {
+            _getReferenceToType: this.withExportedName("RawResponse", (RawResponse) => () => RawResponse.getTypeNode())
+        },
+        toRawResponse: {
+            _getReferenceToType: this.withExportedName(
+                "toRawResponse",
+                (RawResponse) => () => RawResponse.getTypeNode()
+            )
+        },
+        WithRawResponse: {
+            _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
+                return this.withExportedName(
+                    "WithRawResponse",
+                    (RawResponse) => () =>
+                        ts.factory.createTypeReferenceNode(RawResponse.getEntityName(), typeArg ? [typeArg] : undefined)
+                )();
+            }
+        }
+    };
+    public readonly HttpResponsePromise = {
+        _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createTypeReferenceNode(
+                        HttpResponsePromise.getEntityName(),
+                        typeArg ? [typeArg] : undefined
+                    )
+            )();
+        },
+        fromPromise: (promise: ts.Expression): ts.Expression => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            HttpResponsePromise.getExpression(),
+                            ts.factory.createIdentifier("fromPromise")
+                        ),
+                        undefined,
+                        [promise]
+                    )
+            )();
+        },
+        interceptFunction: (fn: ts.Expression): ts.Expression => {
+            return this.withExportedName(
+                "HttpResponsePromise",
+                (HttpResponsePromise) => () =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            HttpResponsePromise.getExpression(),
+                            ts.factory.createIdentifier("interceptFunction")
+                        ),
+                        undefined,
+                        [fn]
+                    )
+            )();
+        }
+    };
 }

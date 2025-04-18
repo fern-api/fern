@@ -4,8 +4,6 @@ using System.Threading;
 using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.User;
 
-#nullable enable
-
 namespace SeedMixedFileDirectory;
 
 public partial class UserClient
@@ -23,11 +21,9 @@ public partial class UserClient
     /// <summary>
     /// List all users.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<User>> ListAsync(
         ListUsersRequest request,
         RequestOptions? options = null,
@@ -37,22 +33,24 @@ public partial class UserClient
         var _query = new Dictionary<string, object>();
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.ToString();
+            _query["limit"] = request.Limit.Value.ToString();
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/users/",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/users/",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
@@ -63,10 +61,13 @@ public partial class UserClient
             }
         }
 
-        throw new SeedMixedFileDirectoryApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMixedFileDirectoryApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

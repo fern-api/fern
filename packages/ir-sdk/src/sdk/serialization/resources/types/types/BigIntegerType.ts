@@ -12,7 +12,7 @@ export const BigIntegerType: core.serialization.ObjectSchema<serializers.BigInte
     });
 
 export declare namespace BigIntegerType {
-    interface Raw {
+    export interface Raw {
         default?: string | null;
     }
 }

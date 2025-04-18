@@ -27,13 +27,20 @@ public final class SendRequest {
 
     private final Optional<String> maybeContext;
 
+    private final ContainerObject containerObject;
+
     private final Map<String, Object> additionalProperties;
 
     private SendRequest(
-            String query, String context, Optional<String> maybeContext, Map<String, Object> additionalProperties) {
+            String query,
+            String context,
+            Optional<String> maybeContext,
+            ContainerObject containerObject,
+            Map<String, Object> additionalProperties) {
         this.query = query;
         this.context = context;
         this.maybeContext = maybeContext;
+        this.containerObject = containerObject;
         this.additionalProperties = additionalProperties;
     }
 
@@ -52,6 +59,11 @@ public final class SendRequest {
         return false;
     }
 
+    @JsonProperty("ending")
+    public String getEnding() {
+        return "$ending";
+    }
+
     @JsonProperty("context")
     public String getContext() {
         return context;
@@ -60,6 +72,11 @@ public final class SendRequest {
     @JsonProperty("maybeContext")
     public Optional<String> getMaybeContext() {
         return maybeContext;
+    }
+
+    @JsonProperty("containerObject")
+    public ContainerObject getContainerObject() {
+        return containerObject;
     }
 
     @java.lang.Override
@@ -74,12 +91,15 @@ public final class SendRequest {
     }
 
     private boolean equalTo(SendRequest other) {
-        return query.equals(other.query) && context.equals(other.context) && maybeContext.equals(other.maybeContext);
+        return query.equals(other.query)
+                && context.equals(other.context)
+                && maybeContext.equals(other.maybeContext)
+                && containerObject.equals(other.containerObject);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.query, this.context, this.maybeContext);
+        return Objects.hash(this.query, this.context, this.maybeContext, this.containerObject);
     }
 
     @java.lang.Override
@@ -98,7 +118,11 @@ public final class SendRequest {
     }
 
     public interface ContextStage {
-        _FinalStage context(@NotNull String context);
+        ContainerObjectStage context(@NotNull String context);
+    }
+
+    public interface ContainerObjectStage {
+        _FinalStage containerObject(@NotNull ContainerObject containerObject);
     }
 
     public interface _FinalStage {
@@ -110,10 +134,12 @@ public final class SendRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, ContextStage, _FinalStage {
+    public static final class Builder implements QueryStage, ContextStage, ContainerObjectStage, _FinalStage {
         private String query;
 
         private String context;
+
+        private ContainerObject containerObject;
 
         private Optional<String> maybeContext = Optional.empty();
 
@@ -127,6 +153,7 @@ public final class SendRequest {
             query(other.getQuery());
             context(other.getContext());
             maybeContext(other.getMaybeContext());
+            containerObject(other.getContainerObject());
             return this;
         }
 
@@ -139,8 +166,15 @@ public final class SendRequest {
 
         @java.lang.Override
         @JsonSetter("context")
-        public _FinalStage context(@NotNull String context) {
+        public ContainerObjectStage context(@NotNull String context) {
             this.context = Objects.requireNonNull(context, "context must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("containerObject")
+        public _FinalStage containerObject(@NotNull ContainerObject containerObject) {
+            this.containerObject = Objects.requireNonNull(containerObject, "containerObject must not be null");
             return this;
         }
 
@@ -159,7 +193,7 @@ public final class SendRequest {
 
         @java.lang.Override
         public SendRequest build() {
-            return new SendRequest(query, context, maybeContext, additionalProperties);
+            return new SendRequest(query, context, maybeContext, containerObject, additionalProperties);
         }
     }
 }

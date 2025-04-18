@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPackageYml;
 using SeedPackageYml.Core;
-
-#nullable enable
 
 namespace SeedPackageYml.Test.Unit.MockServer;
 
@@ -13,24 +9,24 @@ namespace SeedPackageYml.Test.Unit.MockServer;
 public class EchoTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest_1()
+    public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
             {
-              "name": "Hello world!",
-              "size": 20
+              "name": "name",
+              "size": 1
             }
             """;
 
         const string mockResponse = """
-            "Hello world!"
+            "string"
             """;
 
         Server
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/string/")
+                    .WithPath("/id/")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -41,19 +37,12 @@ public class EchoTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.EchoAsync(
-            "string",
-            new EchoRequest { Name = "Hello world!", Size = 20 },
-            RequestOptions
-        );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.EchoAsync("id", new EchoRequest { Name = "name", Size = 1 });
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 
     [Test]
-    public async Task MockServerTest_2()
+    public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string requestJson = """
             {
@@ -83,12 +72,8 @@ public class EchoTest : BaseMockServerTest
 
         var response = await Client.EchoAsync(
             "id-ksfd9c1",
-            new EchoRequest { Name = "Hello world!", Size = 20 },
-            RequestOptions
+            new EchoRequest { Name = "Hello world!", Size = 20 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

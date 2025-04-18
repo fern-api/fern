@@ -1,5 +1,7 @@
-import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
+
+import { loggingExeca } from "@fern-api/logging-execa";
+
 import { CliContext } from "./cli-context/CliContext";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 
@@ -35,7 +37,7 @@ export async function rerunFernCliAtVersion({
             [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd()
         }
     });
-    if (stdout?.includes("code EEXIST") || stderr?.includes("code EEXIST")) {
+    if (stdout.includes("code EEXIST") || stderr.includes("code EEXIST")) {
         // try again if there is a npx conflict
         return await rerunFernCliAtVersion({
             version,

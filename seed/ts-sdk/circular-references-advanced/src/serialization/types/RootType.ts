@@ -12,7 +12,7 @@ export const RootType: core.serialization.ObjectSchema<serializers.RootType.Raw,
     });
 
 export declare namespace RootType {
-    interface Raw {
+    export interface Raw {
         s: string;
     }
 }

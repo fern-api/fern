@@ -4,13 +4,11 @@ using SeedAudiences.FolderB;
 using SeedAudiences.FolderC;
 using SeedAudiences.FolderD;
 
-#nullable enable
-
 namespace SeedAudiences;
 
 public partial class SeedAudiencesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedAudiencesClient(ClientOptions? clientOptions = null)
     {
@@ -40,15 +38,15 @@ public partial class SeedAudiencesClient
         Foo = new FooClient(_client);
     }
 
-    public CommonsClient Commons { get; init; }
+    public CommonsClient Commons { get; }
 
-    public FolderAClient FolderA { get; init; }
+    public FolderAClient FolderA { get; }
 
-    public FolderBClient FolderB { get; init; }
+    public FolderBClient FolderB { get; }
 
-    public FolderCClient FolderC { get; init; }
+    public FolderCClient FolderC { get; }
 
-    public FolderDClient FolderD { get; init; }
+    public FolderDClient FolderD { get; }
 
-    public FooClient Foo { get; init; }
+    public FooClient Foo { get; }
 }

@@ -7,18 +7,28 @@ from .http_client import AsyncHttpClient
 
 
 class BaseClientWrapper:
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = None):
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+        version: typing.Optional[str] = None,
+        audit_logging: typing.Optional[str] = None,
+    ):
         self._base_url = base_url
         self._timeout = timeout
+        self._version = version
+        self._audit_logging = audit_logging
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
+            "User-Agent": "fern_literal/0.0.1",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_literal",
             "X-Fern-SDK-Version": "0.0.1",
         }
-        headers["X-API-Version"] = "02-02-2024"
-        headers["X-API-Enable-Audit-Logging"] = "True"
+        headers["X-API-Version"] = self._version if self._version is not None else "02-02-2024"
+        headers["X-API-Enable-Audit-Logging"] = self._audit_logging if self._audit_logging is not None else "True"
         return headers
 
     def get_base_url(self) -> str:
@@ -29,22 +39,38 @@ class BaseClientWrapper:
 
 
 class SyncClientWrapper(BaseClientWrapper):
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = None, httpx_client: httpx.Client):
-        super().__init__(base_url=base_url, timeout=timeout)
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+        version: typing.Optional[str] = None,
+        audit_logging: typing.Optional[str] = None,
+        httpx_client: httpx.Client,
+    ):
+        super().__init__(base_url=base_url, timeout=timeout, version=version, audit_logging=audit_logging)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
-            base_headers=self.get_headers(),
-            base_timeout=self.get_timeout(),
-            base_url=self.get_base_url(),
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )
 
 
 class AsyncClientWrapper(BaseClientWrapper):
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = None, httpx_client: httpx.AsyncClient):
-        super().__init__(base_url=base_url, timeout=timeout)
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+        version: typing.Optional[str] = None,
+        audit_logging: typing.Optional[str] = None,
+        httpx_client: httpx.AsyncClient,
+    ):
+        super().__init__(base_url=base_url, timeout=timeout, version=version, audit_logging=audit_logging)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
-            base_headers=self.get_headers(),
-            base_timeout=self.get_timeout(),
-            base_url=self.get_base_url(),
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )

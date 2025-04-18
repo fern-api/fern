@@ -1,0 +1,5233 @@
+{
+  "title": "",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listAccounts",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "A page number within the paginated result set.",
+          "name": "page",
+          "schema": {
+            "generatedName": "ListAccountsRequestPage",
+            "value": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "ListAccountsRequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "requestNameOverride": "listAccountsRequest",
+      "generatedRequestName": "ListAccountsRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "listAccountsResponseCount",
+              "key": "count",
+              "schema": {
+                "generatedName": "listAccountsResponseCount",
+                "value": {
+                  "schema": {
+                    "example": 123,
+                    "type": "int"
+                  },
+                  "generatedName": "ListAccountsResponseCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listAccountsResponseNext",
+              "key": "next",
+              "schema": {
+                "generatedName": "listAccountsResponseNext",
+                "value": {
+                  "generatedName": "ListAccountsResponseNext",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4",
+                      "type": "string"
+                    },
+                    "generatedName": "ListAccountsResponseNext",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listAccountsResponsePrevious",
+              "key": "previous",
+              "schema": {
+                "generatedName": "listAccountsResponsePrevious",
+                "value": {
+                  "generatedName": "ListAccountsResponsePrevious",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2",
+                      "type": "string"
+                    },
+                    "generatedName": "ListAccountsResponsePrevious",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listAccountsResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "listAccountsResponseResults",
+                "value": {
+                  "value": {
+                    "generatedName": "ListAccountsResponseResultsItem",
+                    "schema": "Room",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "ListAccountsResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ListAccountsResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/accounts/",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "hidden": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "retrieveAccount",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [
+        {
+          "description": "A unique integer value identifying this account.",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RetrieveAccountRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "RetrieveAccountRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "RetrieveAccountResponse",
+          "schema": "Room",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/accounts/{id}/",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "hidden": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listGames",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "A page number within the paginated result set.",
+          "name": "page",
+          "schema": {
+            "generatedName": "ListGamesRequestPage",
+            "value": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "ListGamesRequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "complete",
+          "name": "complete",
+          "schema": {
+            "generatedName": "ListGamesRequestComplete",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListGamesRequestComplete",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Date",
+          "name": "date",
+          "schema": {
+            "generatedName": "ListGamesRequestDate",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListGamesRequestDate",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Before",
+          "name": "before",
+          "schema": {
+            "generatedName": "ListGamesRequestBefore",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListGamesRequestBefore",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "After",
+          "name": "after",
+          "schema": {
+            "generatedName": "ListGamesRequestAfter",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListGamesRequestAfter",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "requestNameOverride": "listGamesRequest",
+      "generatedRequestName": "ListGamesRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "listGamesResponseCount",
+              "key": "count",
+              "schema": {
+                "generatedName": "listGamesResponseCount",
+                "value": {
+                  "schema": {
+                    "example": 123,
+                    "type": "int"
+                  },
+                  "generatedName": "ListGamesResponseCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listGamesResponseNext",
+              "key": "next",
+              "schema": {
+                "generatedName": "listGamesResponseNext",
+                "value": {
+                  "generatedName": "ListGamesResponseNext",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4",
+                      "type": "string"
+                    },
+                    "generatedName": "ListGamesResponseNext",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listGamesResponsePrevious",
+              "key": "previous",
+              "schema": {
+                "generatedName": "listGamesResponsePrevious",
+                "value": {
+                  "generatedName": "ListGamesResponsePrevious",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2",
+                      "type": "string"
+                    },
+                    "generatedName": "ListGamesResponsePrevious",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listGamesResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "listGamesResponseResults",
+                "value": {
+                  "value": {
+                    "generatedName": "ListGamesResponseResultsItem",
+                    "schema": "Game",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "ListGamesResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ListGamesResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/games/",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "date": {
+                          "value": {
+                            "value": "date",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "time": {
+                          "value": {
+                            "value": "time",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "start_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "group": {
+                          "value": {
+                            "value": "group",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "room": {
+                          "value": {
+                            "value": "room",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "photos": {
+                          "value": [
+                            {
+                              "properties": {
+                                "photo": {
+                                  "value": {
+                                    "value": "photo",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "extra_fields": {
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "value": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "present": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "complete": {
+                          "properties": {
+                            "completed_at": {
+                              "value": {
+                                "value": "2024-01-15T09:30:00Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "retrieveGame",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [
+        {
+          "description": "A unique integer value identifying this group.",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RetrieveGameRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "description": "complete",
+          "name": "complete",
+          "schema": {
+            "generatedName": "RetrieveGameRequestComplete",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RetrieveGameRequestComplete",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Date",
+          "name": "date",
+          "schema": {
+            "generatedName": "RetrieveGameRequestDate",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RetrieveGameRequestDate",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Before",
+          "name": "before",
+          "schema": {
+            "generatedName": "RetrieveGameRequestBefore",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RetrieveGameRequestBefore",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "After",
+          "name": "after",
+          "schema": {
+            "generatedName": "RetrieveGameRequestAfter",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RetrieveGameRequestAfter",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "requestNameOverride": "retrieveGameRequest",
+      "generatedRequestName": "RetrieveGameRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "RetrieveGameResponse",
+          "schema": "Game",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/games/{id}/",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "added_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "updated_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "date": {
+                  "value": {
+                    "value": "date",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "time": {
+                  "value": {
+                    "value": "time",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "start_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "group": {
+                  "value": {
+                    "value": "group",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "room": {
+                  "value": {
+                    "value": "room",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "photos": {
+                  "value": [
+                    {
+                      "properties": {
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "photo": {
+                          "value": {
+                            "value": "photo",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "processed_image": {
+                          "value": {
+                            "value": "processed_image",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "ready": {
+                          "value": {
+                            "value": "ready",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "extra_fields": {
+                  "value": [
+                    {
+                      "properties": {
+                        "key": {
+                          "value": {
+                            "value": "key",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "label": {
+                          "value": {
+                            "value": "label",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "value": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "unknown"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        },
+                        "present": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "complete": {
+                  "properties": {
+                    "completed_at": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "did_win": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "hints": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "score": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "completion_time": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listGroups",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "A page number within the paginated result set.",
+          "name": "page",
+          "schema": {
+            "generatedName": "ListGroupsRequestPage",
+            "value": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "ListGroupsRequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "is_event",
+          "name": "is_event",
+          "schema": {
+            "generatedName": "ListGroupsRequestIsEvent",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListGroupsRequestIsEvent",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "complete",
+          "name": "complete",
+          "schema": {
+            "generatedName": "ListGroupsRequestComplete",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListGroupsRequestComplete",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "requestNameOverride": "listGroupsRequest",
+      "generatedRequestName": "ListGroupsRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "listGroupsResponseCount",
+              "key": "count",
+              "schema": {
+                "generatedName": "listGroupsResponseCount",
+                "value": {
+                  "schema": {
+                    "example": 123,
+                    "type": "int"
+                  },
+                  "generatedName": "ListGroupsResponseCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listGroupsResponseNext",
+              "key": "next",
+              "schema": {
+                "generatedName": "listGroupsResponseNext",
+                "value": {
+                  "generatedName": "ListGroupsResponseNext",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4",
+                      "type": "string"
+                    },
+                    "generatedName": "ListGroupsResponseNext",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listGroupsResponsePrevious",
+              "key": "previous",
+              "schema": {
+                "generatedName": "listGroupsResponsePrevious",
+                "value": {
+                  "generatedName": "ListGroupsResponsePrevious",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2",
+                      "type": "string"
+                    },
+                    "generatedName": "ListGroupsResponsePrevious",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listGroupsResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "listGroupsResponseResults",
+                "value": {
+                  "value": {
+                    "generatedName": "ListGroupsResponseResultsItem",
+                    "schema": "Group",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "ListGroupsResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ListGroupsResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/groups/",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "is_event": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "date": {
+                          "value": {
+                            "value": "date",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "time": {
+                          "value": {
+                            "value": "time",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "start_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "games": {
+                          "value": [
+                            {
+                              "properties": {
+                                "date": {
+                                  "value": {
+                                    "value": "date",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "time": {
+                                  "value": {
+                                    "value": "time",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "extra_fields": {
+                                  "value": [
+                                    {
+                                      "properties": {
+                                        "key": {
+                                          "value": {
+                                            "value": "key",
+                                            "type": "string"
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "present": {
+                                          "value": {
+                                            "value": true,
+                                            "type": "boolean"
+                                          },
+                                          "type": "primitive"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  ],
+                                  "type": "array"
+                                },
+                                "complete": {
+                                  "properties": {
+                                    "completed_at": {
+                                      "value": {
+                                        "value": "2024-01-15T09:30:00Z",
+                                        "type": "datetime"
+                                      },
+                                      "type": "primitive"
+                                    }
+                                  },
+                                  "type": "object"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "players": {
+                          "value": [
+                            {
+                              "properties": {
+                                "email": {
+                                  "value": {
+                                    "value": "email",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "phone": {
+                                  "value": {
+                                    "value": "phone",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "extra_fields": {
+                                  "value": [
+                                    {
+                                      "properties": {
+                                        "key": {
+                                          "value": {
+                                            "value": "key",
+                                            "type": "string"
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "present": {
+                                          "value": {
+                                            "value": true,
+                                            "type": "boolean"
+                                          },
+                                          "type": "primitive"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  ],
+                                  "type": "array"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "photos": {
+                          "value": [
+                            {
+                              "properties": {
+                                "photo": {
+                                  "value": {
+                                    "value": "photo",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "retrieveGroup",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [
+        {
+          "description": "A unique integer value identifying this group.",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RetrieveGroupRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "description": "is_event",
+          "name": "is_event",
+          "schema": {
+            "generatedName": "RetrieveGroupRequestIsEvent",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RetrieveGroupRequestIsEvent",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "complete",
+          "name": "complete",
+          "schema": {
+            "generatedName": "RetrieveGroupRequestComplete",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "RetrieveGroupRequestComplete",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "requestNameOverride": "retrieveGroupRequest",
+      "generatedRequestName": "RetrieveGroupRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "RetrieveGroupResponse",
+          "schema": "Group",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/groups/{id}/",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "added_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "updated_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "is_event": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "date": {
+                  "value": {
+                    "value": "date",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "time": {
+                  "value": {
+                    "value": "time",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "start_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "games": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "date": {
+                          "value": {
+                            "value": "date",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "time": {
+                          "value": {
+                            "value": "time",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "start_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "room": {
+                          "value": {
+                            "value": "room",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "extra_fields": {
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "value": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "present": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "complete": {
+                          "properties": {
+                            "completed_at": {
+                              "value": {
+                                "value": "2024-01-15T09:30:00Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "players": {
+                  "value": [
+                    {
+                      "properties": {
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "player": {
+                          "value": {
+                            "value": "player",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "first_name": {
+                          "value": {
+                            "value": "first_name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "last_name": {
+                          "value": {
+                            "value": "last_name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "email": {
+                          "value": {
+                            "value": "email",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "phone": {
+                          "value": {
+                            "value": "phone",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "extra_fields": {
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "value": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "present": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "signature": {
+                          "value": {
+                            "value": "signature",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "photos": {
+                  "value": [
+                    {
+                      "properties": {
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "game": {
+                          "value": {
+                            "value": "game",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "photo": {
+                          "value": {
+                            "value": "photo",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "processed_image": {
+                          "value": {
+                            "value": "processed_image",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "ready": {
+                          "value": {
+                            "value": "ready",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listPlayers",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "A page number within the paginated result set.",
+          "name": "page",
+          "schema": {
+            "generatedName": "ListPlayersRequestPage",
+            "value": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "ListPlayersRequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "requestNameOverride": "listPlayersRequest",
+      "generatedRequestName": "ListPlayersRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "listPlayersResponseCount",
+              "key": "count",
+              "schema": {
+                "generatedName": "listPlayersResponseCount",
+                "value": {
+                  "schema": {
+                    "example": 123,
+                    "type": "int"
+                  },
+                  "generatedName": "ListPlayersResponseCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listPlayersResponseNext",
+              "key": "next",
+              "schema": {
+                "generatedName": "listPlayersResponseNext",
+                "value": {
+                  "generatedName": "ListPlayersResponseNext",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4",
+                      "type": "string"
+                    },
+                    "generatedName": "ListPlayersResponseNext",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listPlayersResponsePrevious",
+              "key": "previous",
+              "schema": {
+                "generatedName": "listPlayersResponsePrevious",
+                "value": {
+                  "generatedName": "ListPlayersResponsePrevious",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2",
+                      "type": "string"
+                    },
+                    "generatedName": "ListPlayersResponsePrevious",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listPlayersResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "listPlayersResponseResults",
+                "value": {
+                  "value": {
+                    "generatedName": "ListPlayersResponseResultsItem",
+                    "schema": "Player",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "ListPlayersResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ListPlayersResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/players/",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "updated_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "first_name": {
+                          "value": {
+                            "value": "first_name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "last_name": {
+                          "value": {
+                            "value": "last_name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "email": {
+                          "value": {
+                            "value": "email",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "phone": {
+                          "value": {
+                            "value": "phone",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "extra_fields": {
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "value": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "present": {
+                                  "value": {
+                                    "value": true,
+                                    "type": "boolean"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "marketing_email_allowed": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "retrievePlayer",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [
+        {
+          "description": "A unique integer value identifying this player.",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RetrievePlayerRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "RetrievePlayerRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "RetrievePlayerResponse",
+          "schema": "Player",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/players/{id}/",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "added_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "updated_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "first_name": {
+                  "value": {
+                    "value": "first_name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "last_name": {
+                  "value": {
+                    "value": "last_name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "phone": {
+                  "value": {
+                    "value": "phone",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "extra_fields": {
+                  "value": [
+                    {
+                      "properties": {
+                        "key": {
+                          "value": {
+                            "value": "key",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "label": {
+                          "value": {
+                            "value": "label",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "value": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": {
+                                    "value": "value",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "type": "unknown"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        },
+                        "present": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "marketing_email_allowed": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listLocations",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "A page number within the paginated result set.",
+          "name": "page",
+          "schema": {
+            "generatedName": "ListLocationsRequestPage",
+            "value": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "ListLocationsRequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "requestNameOverride": "listLocationsRequest",
+      "generatedRequestName": "ListLocationsRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "listLocationsResponseCount",
+              "key": "count",
+              "schema": {
+                "generatedName": "listLocationsResponseCount",
+                "value": {
+                  "schema": {
+                    "example": 123,
+                    "type": "int"
+                  },
+                  "generatedName": "ListLocationsResponseCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listLocationsResponseNext",
+              "key": "next",
+              "schema": {
+                "generatedName": "listLocationsResponseNext",
+                "value": {
+                  "generatedName": "ListLocationsResponseNext",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4",
+                      "type": "string"
+                    },
+                    "generatedName": "ListLocationsResponseNext",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listLocationsResponsePrevious",
+              "key": "previous",
+              "schema": {
+                "generatedName": "listLocationsResponsePrevious",
+                "value": {
+                  "generatedName": "ListLocationsResponsePrevious",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2",
+                      "type": "string"
+                    },
+                    "generatedName": "ListLocationsResponsePrevious",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listLocationsResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "listLocationsResponseResults",
+                "value": {
+                  "value": {
+                    "generatedName": "ListLocationsResponseResultsItem",
+                    "schema": "Room",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "ListLocationsResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ListLocationsResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/rooms/",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "hidden": {
+                          "value": {
+                            "value": true,
+                            "type": "boolean"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "retrieveLocation",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [
+        {
+          "description": "A unique integer value identifying this location.",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RetrieveLocationRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "RetrieveLocationRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "RetrieveLocationResponse",
+          "schema": "Room",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/rooms/{id}/",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "hidden": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listPhotos",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "A page number within the paginated result set.",
+          "name": "page",
+          "schema": {
+            "generatedName": "ListPhotosRequestPage",
+            "value": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "ListPhotosRequestPage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "requestNameOverride": "listPhotosRequest",
+      "generatedRequestName": "ListPhotosRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "listPhotosResponseCount",
+              "key": "count",
+              "schema": {
+                "generatedName": "listPhotosResponseCount",
+                "value": {
+                  "schema": {
+                    "example": 123,
+                    "type": "int"
+                  },
+                  "generatedName": "ListPhotosResponseCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listPhotosResponseNext",
+              "key": "next",
+              "schema": {
+                "generatedName": "listPhotosResponseNext",
+                "value": {
+                  "generatedName": "ListPhotosResponseNext",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=4",
+                      "type": "string"
+                    },
+                    "generatedName": "ListPhotosResponseNext",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listPhotosResponsePrevious",
+              "key": "previous",
+              "schema": {
+                "generatedName": "listPhotosResponsePrevious",
+                "value": {
+                  "generatedName": "ListPhotosResponsePrevious",
+                  "value": {
+                    "schema": {
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?page=2",
+                      "type": "string"
+                    },
+                    "generatedName": "ListPhotosResponsePrevious",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "listPhotosResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "listPhotosResponseResults",
+                "value": {
+                  "value": {
+                    "generatedName": "ListPhotosResponseResultsItem",
+                    "schema": "Photo",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "ListPhotosResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ListPhotosResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/photos/",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "count": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "next": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=4",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "previous": {
+                  "value": {
+                    "value": "http://api.example.org/accounts/?page=2",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "original_image": {
+                          "value": {
+                            "value": "original_image",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "processed": {
+                          "value": [
+                            {
+                              "properties": {
+                                "photo": {
+                                  "value": {
+                                    "value": "photo",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "retrievePhoto",
+      "tags": [
+        "api"
+      ],
+      "pathParameters": [
+        {
+          "description": "",
+          "name": "photo_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "RetrievePhotoRequestPhotoId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "RetrievePhotoRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "RetrievePhotoResponse",
+          "schema": "Photo",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v2/photos/{photo_id}/",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "photo_id",
+              "value": {
+                "value": {
+                  "value": "photo_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "added_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "original_image": {
+                  "value": {
+                    "value": "original_image",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "processed": {
+                  "value": [
+                    {
+                      "properties": {
+                        "added_at": {
+                          "value": {
+                            "value": "2024-01-15T09:30:00Z",
+                            "type": "datetime"
+                          },
+                          "type": "primitive"
+                        },
+                        "game": {
+                          "value": {
+                            "value": "game",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "group": {
+                          "value": {
+                            "value": "group",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "photo": {
+                          "value": {
+                            "value": "photo",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "processed_image": {
+                          "value": {
+                            "value": "processed_image",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "ready": {
+                          "value": {
+                            "value": "ready",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Room": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "roomId",
+            "key": "id",
+            "schema": {
+              "generatedName": "roomId",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "RoomId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "roomName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "maxLength": 255,
+                "type": "string"
+              },
+              "generatedName": "RoomName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "roomHidden",
+            "key": "hidden",
+            "schema": {
+              "generatedName": "roomHidden",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "RoomHidden",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Room",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Game": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "gameId",
+            "key": "id",
+            "schema": {
+              "generatedName": "gameId",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "GameId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameAddedAt",
+            "key": "added_at",
+            "schema": {
+              "generatedName": "gameAddedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "GameAddedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameUpdatedAt",
+            "key": "updated_at",
+            "schema": {
+              "generatedName": "gameUpdatedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "GameUpdatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameName",
+            "key": "name",
+            "schema": {
+              "generatedName": "gameName",
+              "value": {
+                "schema": {
+                  "maxLength": 255,
+                  "type": "string"
+                },
+                "generatedName": "GameName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameDate",
+            "key": "date",
+            "schema": {
+              "schema": {
+                "format": "date",
+                "type": "string"
+              },
+              "generatedName": "GameDate",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameTime",
+            "key": "time",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GameTime",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameStartAt",
+            "key": "start_at",
+            "schema": {
+              "generatedName": "gameStartAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "GameStartAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameGroup",
+            "key": "group",
+            "schema": {
+              "generatedName": "gameGroup",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GameGroup",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameRoom",
+            "key": "room",
+            "schema": {
+              "generatedName": "gameRoom",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GameRoom",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "gamePhotos",
+            "key": "photos",
+            "schema": {
+              "generatedName": "gamePhotos",
+              "value": {
+                "value": {
+                  "allOf": [],
+                  "properties": [
+                    {
+                      "conflict": {},
+                      "generatedName": "gamePhotosItemAddedAt",
+                      "key": "added_at",
+                      "schema": {
+                        "generatedName": "gamePhotosItemAddedAt",
+                        "value": {
+                          "schema": {
+                            "type": "datetime"
+                          },
+                          "generatedName": "GamePhotosItemAddedAt",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "gamePhotosItemPhoto",
+                      "key": "photo",
+                      "schema": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "GamePhotosItemPhoto",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "audiences": []
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "gamePhotosItemProcessedImage",
+                      "key": "processed_image",
+                      "schema": {
+                        "generatedName": "gamePhotosItemProcessedImage",
+                        "value": {
+                          "schema": {
+                            "format": "binary",
+                            "type": "string"
+                          },
+                          "generatedName": "GamePhotosItemProcessedImage",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "gamePhotosItemReady",
+                      "key": "ready",
+                      "schema": {
+                        "generatedName": "gamePhotosItemReady",
+                        "value": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "GamePhotosItemReady",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    }
+                  ],
+                  "allOfPropertyConflicts": [],
+                  "generatedName": "GamePhotosItem",
+                  "groupName": [],
+                  "additionalProperties": false,
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "object"
+                },
+                "generatedName": "GamePhotos",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameExtraFields",
+            "key": "extra_fields",
+            "schema": {
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "gameExtraFieldsItemKey",
+                    "key": "key",
+                    "schema": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "GameExtraFieldsItemKey",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "gameExtraFieldsItemLabel",
+                    "key": "label",
+                    "schema": {
+                      "generatedName": "gameExtraFieldsItemLabel",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "GameExtraFieldsItemLabel",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "gameExtraFieldsItemValue",
+                    "key": "value",
+                    "schema": {
+                      "generatedName": "GameExtraFieldsItemValue",
+                      "value": {
+                        "key": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "GameExtraFieldsItemValueKey",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "value": {
+                          "generatedName": "GameExtraFieldsItemValueValue",
+                          "type": "unknown"
+                        },
+                        "generatedName": "GameExtraFieldsItemValue",
+                        "groupName": [],
+                        "type": "map"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "gameExtraFieldsItemPresent",
+                    "key": "present",
+                    "schema": {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "GameExtraFieldsItemPresent",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "GameExtraFieldsItem",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "generatedName": "GameExtraFields",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "gameComplete",
+            "key": "complete",
+            "schema": {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "gameCompleteCompletedAt",
+                  "key": "completed_at",
+                  "schema": {
+                    "schema": {
+                      "type": "datetime"
+                    },
+                    "generatedName": "GameCompleteCompletedAt",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "gameCompleteDidWin",
+                  "key": "did_win",
+                  "schema": {
+                    "generatedName": "GameCompleteDidWin",
+                    "value": {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "GameCompleteDidWin",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "nullable"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "gameCompleteHints",
+                  "key": "hints",
+                  "schema": {
+                    "generatedName": "GameCompleteHints",
+                    "value": {
+                      "schema": {
+                        "type": "int"
+                      },
+                      "generatedName": "GameCompleteHints",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "nullable"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "gameCompleteScore",
+                  "key": "score",
+                  "schema": {
+                    "generatedName": "GameCompleteScore",
+                    "value": {
+                      "schema": {
+                        "type": "int"
+                      },
+                      "generatedName": "GameCompleteScore",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "nullable"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "gameCompleteCompletionTime",
+                  "key": "completion_time",
+                  "schema": {
+                    "generatedName": "GameCompleteCompletionTime",
+                    "value": {
+                      "schema": {
+                        "type": "int"
+                      },
+                      "generatedName": "GameCompleteCompletionTime",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "nullable"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "GameComplete",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Game",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Group": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "groupId",
+            "key": "id",
+            "schema": {
+              "generatedName": "groupId",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "GroupId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupAddedAt",
+            "key": "added_at",
+            "schema": {
+              "generatedName": "groupAddedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "GroupAddedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupUpdatedAt",
+            "key": "updated_at",
+            "schema": {
+              "generatedName": "groupUpdatedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "GroupUpdatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupIsEvent",
+            "key": "is_event",
+            "schema": {
+              "generatedName": "groupIsEvent",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "GroupIsEvent",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupName",
+            "key": "name",
+            "schema": {
+              "generatedName": "groupName",
+              "value": {
+                "schema": {
+                  "maxLength": 255,
+                  "type": "string"
+                },
+                "generatedName": "GroupName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupDate",
+            "key": "date",
+            "schema": {
+              "schema": {
+                "format": "date",
+                "type": "string"
+              },
+              "generatedName": "GroupDate",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupTime",
+            "key": "time",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GroupTime",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupStartAt",
+            "key": "start_at",
+            "schema": {
+              "generatedName": "groupStartAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "GroupStartAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupGames",
+            "key": "games",
+            "schema": {
+              "generatedName": "groupGames",
+              "value": {
+                "value": {
+                  "allOf": [],
+                  "properties": [
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemId",
+                      "key": "id",
+                      "schema": {
+                        "generatedName": "groupGamesItemId",
+                        "value": {
+                          "schema": {
+                            "type": "int"
+                          },
+                          "generatedName": "GroupGamesItemId",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemAddedAt",
+                      "key": "added_at",
+                      "schema": {
+                        "generatedName": "groupGamesItemAddedAt",
+                        "value": {
+                          "schema": {
+                            "type": "datetime"
+                          },
+                          "generatedName": "GroupGamesItemAddedAt",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemUpdatedAt",
+                      "key": "updated_at",
+                      "schema": {
+                        "generatedName": "groupGamesItemUpdatedAt",
+                        "value": {
+                          "schema": {
+                            "type": "datetime"
+                          },
+                          "generatedName": "GroupGamesItemUpdatedAt",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemName",
+                      "key": "name",
+                      "schema": {
+                        "generatedName": "groupGamesItemName",
+                        "value": {
+                          "schema": {
+                            "maxLength": 255,
+                            "type": "string"
+                          },
+                          "generatedName": "GroupGamesItemName",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": []
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemDate",
+                      "key": "date",
+                      "schema": {
+                        "schema": {
+                          "format": "date",
+                          "type": "string"
+                        },
+                        "generatedName": "GroupGamesItemDate",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "audiences": []
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemTime",
+                      "key": "time",
+                      "schema": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "GroupGamesItemTime",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "audiences": []
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemStartAt",
+                      "key": "start_at",
+                      "schema": {
+                        "generatedName": "groupGamesItemStartAt",
+                        "value": {
+                          "schema": {
+                            "type": "datetime"
+                          },
+                          "generatedName": "GroupGamesItemStartAt",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemRoom",
+                      "key": "room",
+                      "schema": {
+                        "generatedName": "groupGamesItemRoom",
+                        "value": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "GroupGamesItemRoom",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemExtraFields",
+                      "key": "extra_fields",
+                      "schema": {
+                        "value": {
+                          "allOf": [],
+                          "properties": [
+                            {
+                              "conflict": {},
+                              "generatedName": "groupGamesItemExtraFieldsItemKey",
+                              "key": "key",
+                              "schema": {
+                                "schema": {
+                                  "type": "string"
+                                },
+                                "generatedName": "GroupGamesItemExtraFieldsItemKey",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
+                              "audiences": []
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "groupGamesItemExtraFieldsItemLabel",
+                              "key": "label",
+                              "schema": {
+                                "generatedName": "groupGamesItemExtraFieldsItemLabel",
+                                "value": {
+                                  "schema": {
+                                    "type": "string"
+                                  },
+                                  "generatedName": "GroupGamesItemExtraFieldsItemLabel",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "groupName": [],
+                                "type": "optional"
+                              },
+                              "audiences": [],
+                              "readonly": true
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "groupGamesItemExtraFieldsItemValue",
+                              "key": "value",
+                              "schema": {
+                                "generatedName": "GroupGamesItemExtraFieldsItemValue",
+                                "value": {
+                                  "key": {
+                                    "schema": {
+                                      "type": "string"
+                                    },
+                                    "generatedName": "GroupGamesItemExtraFieldsItemValueKey",
+                                    "groupName": [],
+                                    "type": "primitive"
+                                  },
+                                  "value": {
+                                    "generatedName": "GroupGamesItemExtraFieldsItemValueValue",
+                                    "type": "unknown"
+                                  },
+                                  "generatedName": "GroupGamesItemExtraFieldsItemValue",
+                                  "groupName": [],
+                                  "type": "map"
+                                },
+                                "groupName": [],
+                                "type": "nullable"
+                              },
+                              "audiences": []
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "groupGamesItemExtraFieldsItemPresent",
+                              "key": "present",
+                              "schema": {
+                                "schema": {
+                                  "type": "boolean"
+                                },
+                                "generatedName": "GroupGamesItemExtraFieldsItemPresent",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
+                              "audiences": []
+                            }
+                          ],
+                          "allOfPropertyConflicts": [],
+                          "generatedName": "GroupGamesItemExtraFieldsItem",
+                          "groupName": [],
+                          "additionalProperties": false,
+                          "source": {
+                            "file": "../openapi.yml",
+                            "type": "openapi"
+                          },
+                          "type": "object"
+                        },
+                        "generatedName": "GroupGamesItemExtraFields",
+                        "groupName": [],
+                        "type": "array"
+                      },
+                      "audiences": []
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupGamesItemComplete",
+                      "key": "complete",
+                      "schema": {
+                        "allOf": [],
+                        "properties": [
+                          {
+                            "conflict": {},
+                            "generatedName": "groupGamesItemCompleteCompletedAt",
+                            "key": "completed_at",
+                            "schema": {
+                              "schema": {
+                                "type": "datetime"
+                              },
+                              "generatedName": "GroupGamesItemCompleteCompletedAt",
+                              "groupName": [],
+                              "type": "primitive"
+                            },
+                            "audiences": []
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "groupGamesItemCompleteDidWin",
+                            "key": "did_win",
+                            "schema": {
+                              "generatedName": "GroupGamesItemCompleteDidWin",
+                              "value": {
+                                "schema": {
+                                  "type": "boolean"
+                                },
+                                "generatedName": "GroupGamesItemCompleteDidWin",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
+                              "groupName": [],
+                              "type": "nullable"
+                            },
+                            "audiences": []
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "groupGamesItemCompleteHints",
+                            "key": "hints",
+                            "schema": {
+                              "generatedName": "GroupGamesItemCompleteHints",
+                              "value": {
+                                "schema": {
+                                  "type": "int"
+                                },
+                                "generatedName": "GroupGamesItemCompleteHints",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
+                              "groupName": [],
+                              "type": "nullable"
+                            },
+                            "audiences": []
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "groupGamesItemCompleteScore",
+                            "key": "score",
+                            "schema": {
+                              "generatedName": "GroupGamesItemCompleteScore",
+                              "value": {
+                                "schema": {
+                                  "type": "int"
+                                },
+                                "generatedName": "GroupGamesItemCompleteScore",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
+                              "groupName": [],
+                              "type": "nullable"
+                            },
+                            "audiences": []
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "groupGamesItemCompleteCompletionTime",
+                            "key": "completion_time",
+                            "schema": {
+                              "generatedName": "GroupGamesItemCompleteCompletionTime",
+                              "value": {
+                                "schema": {
+                                  "type": "int"
+                                },
+                                "generatedName": "GroupGamesItemCompleteCompletionTime",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
+                              "groupName": [],
+                              "type": "nullable"
+                            },
+                            "audiences": []
+                          }
+                        ],
+                        "allOfPropertyConflicts": [],
+                        "generatedName": "GroupGamesItemComplete",
+                        "groupName": [],
+                        "additionalProperties": false,
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "object"
+                      },
+                      "audiences": []
+                    }
+                  ],
+                  "allOfPropertyConflicts": [],
+                  "generatedName": "GroupGamesItem",
+                  "groupName": [],
+                  "additionalProperties": false,
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "object"
+                },
+                "generatedName": "GroupGames",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupPlayers",
+            "key": "players",
+            "schema": {
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemAddedAt",
+                    "key": "added_at",
+                    "schema": {
+                      "generatedName": "groupPlayersItemAddedAt",
+                      "value": {
+                        "schema": {
+                          "type": "datetime"
+                        },
+                        "generatedName": "GroupPlayersItemAddedAt",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemUpdatedAt",
+                    "key": "updated_at",
+                    "schema": {
+                      "generatedName": "groupPlayersItemUpdatedAt",
+                      "value": {
+                        "schema": {
+                          "type": "datetime"
+                        },
+                        "generatedName": "GroupPlayersItemUpdatedAt",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemPlayer",
+                    "key": "player",
+                    "schema": {
+                      "generatedName": "groupPlayersItemPlayer",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "GroupPlayersItemPlayer",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemFirstName",
+                    "key": "first_name",
+                    "schema": {
+                      "generatedName": "groupPlayersItemFirstName",
+                      "value": {
+                        "schema": {
+                          "maxLength": 255,
+                          "type": "string"
+                        },
+                        "generatedName": "GroupPlayersItemFirstName",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemLastName",
+                    "key": "last_name",
+                    "schema": {
+                      "generatedName": "groupPlayersItemLastName",
+                      "value": {
+                        "schema": {
+                          "maxLength": 255,
+                          "type": "string"
+                        },
+                        "generatedName": "GroupPlayersItemLastName",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemEmail",
+                    "key": "email",
+                    "schema": {
+                      "schema": {
+                        "format": "email",
+                        "type": "string"
+                      },
+                      "generatedName": "GroupPlayersItemEmail",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemPhone",
+                    "key": "phone",
+                    "schema": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "GroupPlayersItemPhone",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemExtraFields",
+                    "key": "extra_fields",
+                    "schema": {
+                      "value": {
+                        "allOf": [],
+                        "properties": [
+                          {
+                            "conflict": {},
+                            "generatedName": "groupPlayersItemExtraFieldsItemKey",
+                            "key": "key",
+                            "schema": {
+                              "schema": {
+                                "type": "string"
+                              },
+                              "generatedName": "GroupPlayersItemExtraFieldsItemKey",
+                              "groupName": [],
+                              "type": "primitive"
+                            },
+                            "audiences": []
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "groupPlayersItemExtraFieldsItemLabel",
+                            "key": "label",
+                            "schema": {
+                              "generatedName": "groupPlayersItemExtraFieldsItemLabel",
+                              "value": {
+                                "schema": {
+                                  "type": "string"
+                                },
+                                "generatedName": "GroupPlayersItemExtraFieldsItemLabel",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
+                              "groupName": [],
+                              "type": "optional"
+                            },
+                            "audiences": [],
+                            "readonly": true
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "groupPlayersItemExtraFieldsItemValue",
+                            "key": "value",
+                            "schema": {
+                              "generatedName": "GroupPlayersItemExtraFieldsItemValue",
+                              "value": {
+                                "key": {
+                                  "schema": {
+                                    "type": "string"
+                                  },
+                                  "generatedName": "GroupPlayersItemExtraFieldsItemValueKey",
+                                  "groupName": [],
+                                  "type": "primitive"
+                                },
+                                "value": {
+                                  "generatedName": "GroupPlayersItemExtraFieldsItemValueValue",
+                                  "type": "unknown"
+                                },
+                                "generatedName": "GroupPlayersItemExtraFieldsItemValue",
+                                "groupName": [],
+                                "type": "map"
+                              },
+                              "groupName": [],
+                              "type": "nullable"
+                            },
+                            "audiences": []
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "groupPlayersItemExtraFieldsItemPresent",
+                            "key": "present",
+                            "schema": {
+                              "schema": {
+                                "type": "boolean"
+                              },
+                              "generatedName": "GroupPlayersItemExtraFieldsItemPresent",
+                              "groupName": [],
+                              "type": "primitive"
+                            },
+                            "audiences": []
+                          }
+                        ],
+                        "allOfPropertyConflicts": [],
+                        "generatedName": "GroupPlayersItemExtraFieldsItem",
+                        "groupName": [],
+                        "additionalProperties": false,
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "object"
+                      },
+                      "generatedName": "GroupPlayersItemExtraFields",
+                      "groupName": [],
+                      "type": "array"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "groupPlayersItemSignature",
+                    "key": "signature",
+                    "schema": {
+                      "generatedName": "groupPlayersItemSignature",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "GroupPlayersItemSignature",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "GroupPlayersItem",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "generatedName": "GroupPlayers",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "groupPhotos",
+            "key": "photos",
+            "schema": {
+              "generatedName": "groupPhotos",
+              "value": {
+                "value": {
+                  "allOf": [],
+                  "properties": [
+                    {
+                      "conflict": {},
+                      "generatedName": "groupPhotosItemAddedAt",
+                      "key": "added_at",
+                      "schema": {
+                        "generatedName": "groupPhotosItemAddedAt",
+                        "value": {
+                          "schema": {
+                            "type": "datetime"
+                          },
+                          "generatedName": "GroupPhotosItemAddedAt",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupPhotosItemGame",
+                      "key": "game",
+                      "schema": {
+                        "generatedName": "groupPhotosItemGame",
+                        "value": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "GroupPhotosItemGame",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupPhotosItemPhoto",
+                      "key": "photo",
+                      "schema": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "GroupPhotosItemPhoto",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "audiences": []
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupPhotosItemProcessedImage",
+                      "key": "processed_image",
+                      "schema": {
+                        "generatedName": "groupPhotosItemProcessedImage",
+                        "value": {
+                          "schema": {
+                            "format": "binary",
+                            "type": "string"
+                          },
+                          "generatedName": "GroupPhotosItemProcessedImage",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "groupPhotosItemReady",
+                      "key": "ready",
+                      "schema": {
+                        "generatedName": "groupPhotosItemReady",
+                        "value": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "GroupPhotosItemReady",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "readonly": true
+                    }
+                  ],
+                  "allOfPropertyConflicts": [],
+                  "generatedName": "GroupPhotosItem",
+                  "groupName": [],
+                  "additionalProperties": false,
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "object"
+                },
+                "generatedName": "GroupPhotos",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Group",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Player": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "playerId",
+            "key": "id",
+            "schema": {
+              "generatedName": "playerId",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "PlayerId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "playerAddedAt",
+            "key": "added_at",
+            "schema": {
+              "generatedName": "playerAddedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "PlayerAddedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "playerUpdatedAt",
+            "key": "updated_at",
+            "schema": {
+              "generatedName": "playerUpdatedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "PlayerUpdatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "playerFirstName",
+            "key": "first_name",
+            "schema": {
+              "generatedName": "playerFirstName",
+              "value": {
+                "schema": {
+                  "maxLength": 255,
+                  "type": "string"
+                },
+                "generatedName": "PlayerFirstName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "playerLastName",
+            "key": "last_name",
+            "schema": {
+              "generatedName": "playerLastName",
+              "value": {
+                "schema": {
+                  "maxLength": 255,
+                  "type": "string"
+                },
+                "generatedName": "PlayerLastName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "playerEmail",
+            "key": "email",
+            "schema": {
+              "schema": {
+                "format": "email",
+                "type": "string"
+              },
+              "generatedName": "PlayerEmail",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "playerPhone",
+            "key": "phone",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PlayerPhone",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "playerExtraFields",
+            "key": "extra_fields",
+            "schema": {
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "playerExtraFieldsItemKey",
+                    "key": "key",
+                    "schema": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "PlayerExtraFieldsItemKey",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "playerExtraFieldsItemLabel",
+                    "key": "label",
+                    "schema": {
+                      "generatedName": "playerExtraFieldsItemLabel",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "PlayerExtraFieldsItemLabel",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "playerExtraFieldsItemValue",
+                    "key": "value",
+                    "schema": {
+                      "generatedName": "PlayerExtraFieldsItemValue",
+                      "value": {
+                        "key": {
+                          "schema": {
+                            "type": "string"
+                          },
+                          "generatedName": "PlayerExtraFieldsItemValueKey",
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "value": {
+                          "generatedName": "PlayerExtraFieldsItemValueValue",
+                          "type": "unknown"
+                        },
+                        "generatedName": "PlayerExtraFieldsItemValue",
+                        "groupName": [],
+                        "type": "map"
+                      },
+                      "groupName": [],
+                      "type": "nullable"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "playerExtraFieldsItemPresent",
+                    "key": "present",
+                    "schema": {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "PlayerExtraFieldsItemPresent",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "PlayerExtraFieldsItem",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "generatedName": "PlayerExtraFields",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "playerMarketingEmailAllowed",
+            "key": "marketing_email_allowed",
+            "schema": {
+              "generatedName": "playerMarketingEmailAllowed",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "PlayerMarketingEmailAllowed",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Player",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Photo": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "photoId",
+            "key": "id",
+            "schema": {
+              "generatedName": "photoId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PhotoId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "photoAddedAt",
+            "key": "added_at",
+            "schema": {
+              "generatedName": "photoAddedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "PhotoAddedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "photoOriginalImage",
+            "key": "original_image",
+            "schema": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              },
+              "generatedName": "PhotoOriginalImage",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "photoProcessed",
+            "key": "processed",
+            "schema": {
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "photoProcessedItemAddedAt",
+                    "key": "added_at",
+                    "schema": {
+                      "generatedName": "photoProcessedItemAddedAt",
+                      "value": {
+                        "schema": {
+                          "type": "datetime"
+                        },
+                        "generatedName": "PhotoProcessedItemAddedAt",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "photoProcessedItemGame",
+                    "key": "game",
+                    "schema": {
+                      "generatedName": "photoProcessedItemGame",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "PhotoProcessedItemGame",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "photoProcessedItemGroup",
+                    "key": "group",
+                    "schema": {
+                      "generatedName": "photoProcessedItemGroup",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "PhotoProcessedItemGroup",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "photoProcessedItemPhoto",
+                    "key": "photo",
+                    "schema": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "PhotoProcessedItemPhoto",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "photoProcessedItemProcessedImage",
+                    "key": "processed_image",
+                    "schema": {
+                      "generatedName": "photoProcessedItemProcessedImage",
+                      "value": {
+                        "schema": {
+                          "format": "binary",
+                          "type": "string"
+                        },
+                        "generatedName": "PhotoProcessedItemProcessedImage",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "photoProcessedItemReady",
+                    "key": "ready",
+                    "schema": {
+                      "generatedName": "photoProcessedItemReady",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "PhotoProcessedItemReady",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "readonly": true
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "PhotoProcessedItem",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "generatedName": "PhotoProcessed",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Photo",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "bearerAuth": {
+      "type": "bearer"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

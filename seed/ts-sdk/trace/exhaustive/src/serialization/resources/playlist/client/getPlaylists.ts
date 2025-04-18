@@ -11,5 +11,5 @@ export const Response: core.serialization.Schema<serializers.playlist.getPlaylis
     core.serialization.list(Playlist);
 
 export declare namespace Response {
-    type Raw = Playlist.Raw[];
+    export type Raw = Playlist.Raw[];
 }

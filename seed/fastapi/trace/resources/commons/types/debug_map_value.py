@@ -9,14 +9,10 @@ from ....core.pydantic_utilities import update_forward_refs
 
 
 class DebugMapValue(UniversalBaseModel):
-    key_value_pairs: typing.List["DebugKeyValuePairs"] = pydantic.Field(
-        alias="keyValuePairs"
-    )
+    key_value_pairs: typing.List["DebugKeyValuePairs"] = pydantic.Field(alias="keyValuePairs")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -25,5 +21,4 @@ class DebugMapValue(UniversalBaseModel):
 
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
 
-update_forward_refs(DebugKeyValuePairs, DebugMapValue=DebugMapValue)
 update_forward_refs(DebugMapValue)

@@ -1,0 +1,315 @@
+---
+title: "Custom Tools"
+description: "Interact with the real world mid-call using custom tools."
+---
+
+## Introduction
+
+Custom tools allow your agent to interact with any web API mid-call. Do things like:
+
+<CardGroup cols={2}>
+  <Card title="Send a message" icon="message">
+    Dispatch SMS or emails using the person's contact info.
+  </Card>
+  <Card title="Schedule an appointment" icon="calendar">
+    Set appointments using live calendar availability.
+  </Card>
+  <Card title="Create a support ticket" icon="ticket">
+    Generate support tickets in your issue tracker.
+  </Card>
+  <Card title="Update your CRM" icon="database">
+    Update your CRM with relevant details during the call.
+  </Card>
+</CardGroup>
+
+## Background
+
+To understand how custom tools work, let's take a peek under the hood of the Bland AI phone agent.
+
+During the conversation, the phone agent is constantly listening to figure out when it's supposed to respond. When the phone agent realizes it's time to respond, it reviews the tools in its toolbox and picks between them.
+
+Those tools include a `speak`, `wait`, and `button press` tool. When you create a custom tool, you add it to the existing 'toolbox' for the phone agent to pick from.
+
+A few natural questions arise:
+
+1. How do I define my custom tool?
+2. How do I make sure my tool gets picked at the right time?
+3. How does information from the call get passed to my custom tool's API request?
+4. How do I fill the silence (when my custom tool is running)?
+5. How does the response from my custom tool get added to the call?
+
+Keep reading to find out.
+
+# Creating your custom tool
+
+## Defining the API request
+
+Imagine you're creating an AI phone agent to take restaurant orders. You want your phone agent to have the ability to place orders, by pinging your backend API.
+
+Here's what that request might look like:
+
+```json
+{
+  "method": "POST",
+  "url": "https://api.your-restaurant.com/orders",
+  "headers": {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_API_KEY"
+  },
+  "body": {
+    "items": [
+      {
+        "name": "burger",
+        "patties": 2,
+        "quantity": 1
+      },
+      {
+        "name": "fry",
+        "size": "lg",
+        "quantity": 1
+      }
+    ]
+  }
+}
+```
+
+## From API request to custom tool
+
+The next step is to convert the API request into a custom tool. Custom tools have the following properties:
+
+- `name` - the agent will see this in the list of tools
+- `description` - a short explanation of what the tool does
+- `input_schema` - a JSON schema describing the input data
+- `speech` (optional) - a string that will be spoken to the agent while your tool waits for a response
+- `response_data` - An array of objects that describe how to extract data from the response. Within the response data, you can create variables that the phone agent can reference in its prompt.
+
+### Name & Description
+
+The agent will see the name in the list of tools. The name, plus the description, help the AI phone agent when it decides which tool to use.
+
+For this example we'll set the name to `PlaceOrder`, and the description to `Places the final order for the drive thru`.
+
+### Input Schema
+
+The input schema is critical. It defines the shape of the API request, the different inputs the request can take, and also includes an example (which helps our system when creating requests).
+
+Here's what the input schema could look like:
+
+```json
+"input_schema": {
+    "example": {
+        "items": [
+            {
+                "name": "burger",
+                "patties": 2,
+                "quantity": 3
+            },
+            {
+                "name": "fry",
+                "size": "lg",
+                "quantity": 2
+            }
+        ]
+    },
+    "type": "object",
+    "properties": {
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "patties": {
+                        "type": "integer"
+                    },
+                    "size": {
+                        "type": "string",
+                        "enum": [
+                            "sm",
+                            "md",
+                            "lg"
+                        ]
+                    },
+                    "flavor": {
+                        "type": "string",
+                        "enum": [
+                            "chocolate",
+                            "strawberry",
+                            "vanilla"
+                        ],
+                        "default": "vanilla"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "name",
+                    "quantity"
+                ]
+            }
+        }
+    }
+}
+```
+
+Two important notes about input schema:
+
+1. `input_schema` is converted into the variable `"{{input}}"` that you can use in the request body/query/headers
+2. To access nested properties, use dot notation: `"{{input.property.subproperty}}"`
+
+Scroll down to see the full example.
+
+### Speech
+
+Because requesting external APIs might take a while, we enable you to define a `speech` property. The phone agent will say the `speech` while it makes the request.
+
+An example speech might look like: `Perfect, I'll schedule that right now, give me just a second.`
+
+For the restaurant ordering example, the speech could be `Thank you, placing that order now.`
+
+### Response data
+
+Once your API request comes back, you need to extract the response data, and then make the phone agent aware of the new information.
+
+The `data` field determines how you extract the data while the `name` field determines the variable name for reference in the prompt.
+
+Here's an example response data:
+
+```json
+"response_data": [
+    {
+        "name": "order_price",
+        "data": "$.price"
+    }
+]
+```
+
+## Full example
+
+Below is the entire API request for sending a phone call using the outlined custom tool:
+
+```json
+{
+  "phone_number": "...",
+  // note that the returned value ({{order_price}}) in the task is populated only after the tool is run
+  "task": "You are taking a drive thru order from a customer. Find out everything that they want like a drive thru cashier. Continue until they say they're done. Repeat the full order back to them after that, and ask if that's correct. If they confirm that it's correct, then and only then will you place their order using the PlaceOrder tool. After you place it, tell them their order total and to pull forward. Their order price is {{order_price}}",
+  "first_sentence": "Hi, what can I get started for you today?",
+  "request_data": {
+    "menu": {
+      "burger": ["patties"],
+      "fry": ["size"],
+      "shake": ["flavor", "size"]
+    }
+  },
+  "tools": [
+    {
+      "name": "PlaceOrder",
+      "description": "Places the final order for the drive thru.",
+      "speech": "Thank you, placing that order now.",
+      "input_schema": {
+        "example": {
+          "items": [
+            {
+              "name": "burger",
+              "patties": 2,
+              "quantity": 3
+            },
+            {
+              "name": "fry",
+              "size": "lg",
+              "quantity": 2
+            }
+          ]
+        },
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "patties": {
+                  "type": "integer"
+                },
+                "size": {
+                  "type": "string",
+                  "enum": ["sm", "md", "lg"]
+                },
+                "flavor": {
+                  "type": "string",
+                  "enum": ["chocolate", "strawberry", "vanilla"],
+                  "default": "vanilla"
+                },
+                "quantity": {
+                  "type": "integer"
+                }
+              },
+              "required": ["name", "quantity"]
+            }
+          }
+        }
+      },
+      "url": "https://api.your-restaurant.com/orders",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ..."
+      },
+      "body": {
+        "items": "{{input.items}}"
+      },
+      "response_data": [
+        {
+          "name": "order_price",
+          "data": "$.price"
+        }
+      ]
+    }
+  ]
+}
+```
+
+# Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="How does the phone agent determine what it sends an API request?">
+    The phone agent refers to the input schema and the `example` within it. Both of those pieces of information provide context about what data to pass.
+    
+    Then the phone agent extracts the information from the transcript and passes it to the request body.
+
+    You can improve the accuracy of the input data by creating a very clear `input_schema`. That includes providing a detailed `example` within.
+
+  </Accordion>
+
+{" "}
+
+<Accordion title="How does the phone agent decide when to use the custom tool?">
+  The phone agent looks at the tool's name and description. Then it looks at the current context of the conversation to
+  decide whether using the tool makes sense.
+</Accordion>
+
+  <Accordion title="How do I access the info the custom tool responds with?">
+    When the API response from the custom tool comes back, you can extract the API response and create variables. You can do this within the `response_data` property.
+
+    Once you've given the variable a `name`, you can reference it in the prompt using double brackets (`{{}}`).
+
+    Note, with the current setup, you might reference variables that have null values. Here's the restaurant example prompt:
+
+    You are taking a drive thru order from a customer. Find out everything that they want like a drive thru cashier. Continue until they say they're done. Repeat the full order back to them after that, and ask if that's correct. If they confirm that it's correct, then and only then will you place their order using the PlaceOrder tool. After you place it, tell them their order total and to pull forward. Their order price is `{{order_price}}`
+
+    In the above prompt, the `order_price` will be null until the data comes back. That's okay though. The prompt is structured to first take the order, then use the PlaceOrder tool, and then finally respond with the order price.
+
+    By the time the phone agent is asked for the order price, it will have the information.
+
+    Custom tools will continue getting more robust, to further prevent scenarios where variables without value from being referenced in prompts.
+
+  </Accordion>
+</AccordionGroup>
+
+If you have any additional questions, reach out at hello@bland.ai and one of our engineers will help.

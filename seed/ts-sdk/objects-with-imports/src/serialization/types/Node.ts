@@ -15,7 +15,7 @@ export const Node: core.serialization.ObjectSchema<serializers.Node.Raw, SeedObj
     });
 
 export declare namespace Node {
-    interface Raw {
+    export interface Raw {
         id: string;
         label?: string | null;
         metadata?: Metadata.Raw | null;

@@ -1,8 +1,0 @@
-openapi: 3.0.1
-info:
-  title: bytes
-  version: ''
-paths: {}
-components:
-  schemas: {}
-  securitySchemes: {}

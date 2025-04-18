@@ -1,10 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedVersion;
 using SeedVersion.Core;
-
-#nullable enable
 
 namespace SeedVersion.Test.Unit.MockServer;
 
@@ -12,17 +9,17 @@ namespace SeedVersion.Test.Unit.MockServer;
 public class GetUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
-              "id": "string",
-              "name": "string"
+              "id": "id",
+              "name": "name"
             }
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/string").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/userId").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -30,10 +27,10 @@ public class GetUserTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.User.GetUserAsync("string", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.User.GetUserAsync("userId");
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+        );
     }
 }

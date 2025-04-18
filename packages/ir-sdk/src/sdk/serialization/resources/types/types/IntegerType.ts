@@ -14,7 +14,7 @@ export const IntegerType: core.serialization.ObjectSchema<serializers.IntegerTyp
     });
 
 export declare namespace IntegerType {
-    interface Raw {
+    export interface Raw {
         default?: number | null;
         validation?: IntegerValidationRules.Raw | null;
     }

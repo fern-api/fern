@@ -20,13 +20,13 @@ export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.
         });
 
 export declare namespace TestCaseGrade {
-    type Raw = TestCaseGrade.Hidden | TestCaseGrade.NonHidden;
+    export type Raw = TestCaseGrade.Hidden | TestCaseGrade.NonHidden;
 
-    interface Hidden extends TestCaseHiddenGrade.Raw {
+    export interface Hidden extends TestCaseHiddenGrade.Raw {
         type: "hidden";
     }
 
-    interface NonHidden extends TestCaseNonHiddenGrade.Raw {
+    export interface NonHidden extends TestCaseNonHiddenGrade.Raw {
         type: "nonHidden";
     }
 }

@@ -1,84 +1,10 @@
-channel:
-  path: marketDataV1
-  auth: false
-  path-parameters:
-    symbol:
-      type: string
-      docs: >
-        Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
-        quantities are in CCY1. To read more click
-        [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-  query-parameters:
-    heartbeat:
-      type: optional<boolean>
-      docs: >-
-        Optionally add this parameter and set to true to receive a heartbeat
-        every 5 seconds
-    top_of_book:
-      type: optional<boolean>
-      docs: >-
-        If absent or false, receive full order book depth; if present and true,
-        receive top of book only. Only applies to bids and offers.
-    bids:
-      type: optional<boolean>
-      docs: Include bids in change events
-    offers:
-      type: optional<boolean>
-      docs: Include asks in change events
-    trades:
-      type: optional<boolean>
-      docs: Include trade events
-    auctions:
-      type: optional<boolean>
-      docs: Include auction events
-  messages: {}
-  examples:
-    - messages: []
 types:
-  Market:
-    discriminated: false
-    union:
-      - Heartbeat
-      - Update
-    source:
-      openapi: asyncapi/sample.yml
-  Heartbeat:
-    properties:
-      type: literal<"heartbeat">
-    extends:
-      - Default
-    source:
-      openapi: asyncapi/sample.yml
-  Update:
-    properties:
-      type: literal<"update">
-      eventId:
-        type: integer
-        docs: >-
-          A monotonically increasing sequence number indicating when this change
-          occurred. These numbers are persistent and consistent between market
-          data connections.
-      events: Events
-      timestamp:
-        type: double
-        docs: >-
-          The timestamp in seconds for this group of events (included for
-          compatibility reasons). We recommend using the timestampms field
-          instead.
-      timestampms:
-        type: double
-        docs: The timestamp in milliseconds for this group of events.
-    extends:
-      - Default
-    source:
-      openapi: asyncapi/sample.yml
   Default:
     docs: >-
       This object is always part of the payload. In case of type=heartbeat,
       these are the only fields.
     properties:
       socket_sequence:
-        type: integer
         docs: >-
           zero-indexed monotonic increasing sequence number attached to each
           message sent - if there is a gap in this sequence, you have missed a
@@ -86,59 +12,7 @@ types:
           messages will share a single increasing sequence. See [Sequence
           Numbers](https://docs.sandbox.gemini.com/websocket-api/#sequence-numbers)
           for more information.
-    source:
-      openapi: asyncapi/sample.yml
-  EventsItemType:
-    enum:
-      - trade
-      - change
-      - value: auction, block_trade
-        name: AuctionBlockTrade
-    source:
-      openapi: asyncapi/sample.yml
-  EventsItemSide:
-    enum:
-      - bid
-      - side
-    source:
-      openapi: asyncapi/sample.yml
-  EventsItemReason:
-    enum:
-      - place
-      - trade
-      - cancel
-      - initial
-    docs: >-
-      Indicates why the change has occurred. initial is for the initial response
-      message, which will show the entire existing state of the order book.
-    source:
-      openapi: asyncapi/sample.yml
-  EventsItem:
-    properties:
-      type: optional<EventsItemType>
-      price:
-        type: optional<double>
-        docs: The price of this order book entry.
-        validation:
-          multipleOf: 0.01
-      side: optional<EventsItemSide>
-      reason:
-        type: optional<EventsItemReason>
-        docs: >-
-          Indicates why the change has occurred. initial is for the initial
-          response message, which will show the entire existing state of the
-          order book.
-      remaining:
-        type: optional<double>
-        docs: >-
-          The quantity remaining at that price level after this change occurred.
-          May be zero if all orders at this price level have been filled or
-          canceled.
-      delta:
-        type: optional<double>
-        docs: >-
-          The quantity changed. May be negative, if an order is filled or
-          canceled. For initial messages, delta will equal remaining.
+        type: integer
     source:
       openapi: asyncapi/sample.yml
   Events:
@@ -146,3 +20,96 @@ types:
       Either a change to the order book, or the indication that a trade has
       occurred.
     type: list<EventsItem>
+  EventsItem:
+    properties:
+      delta:
+        docs: >-
+          The quantity changed. May be negative, if an order is filled or
+          canceled. For initial messages, delta will equal remaining.
+        type: optional<double>
+      price:
+        docs: The price of this order book entry.
+        type: optional<double>
+        validation:
+          multipleOf: 0.01
+      reason:
+        docs: >-
+          Indicates why the change has occurred. initial is for the initial
+          response message, which will show the entire existing state of the
+          order book.
+        type: optional<EventsItemReason>
+      remaining:
+        docs: >-
+          The quantity remaining at that price level after this change occurred.
+          May be zero if all orders at this price level have been filled or
+          canceled.
+        type: optional<double>
+      side: optional<EventsItemSide>
+      type: optional<EventsItemType>
+    source:
+      openapi: asyncapi/sample.yml
+  EventsItemReason:
+    docs: >-
+      Indicates why the change has occurred. initial is for the initial response
+      message, which will show the entire existing state of the order book.
+    enum:
+      - place
+      - trade
+      - cancel
+      - initial
+    inline: true
+    source:
+      openapi: asyncapi/sample.yml
+  EventsItemSide:
+    enum:
+      - bid
+      - side
+    inline: true
+    source:
+      openapi: asyncapi/sample.yml
+  EventsItemType:
+    enum:
+      - trade
+      - change
+      - name: AuctionBlockTrade
+        value: auction, block_trade
+    inline: true
+    source:
+      openapi: asyncapi/sample.yml
+  Heartbeat:
+    extends:
+      - Default
+    properties:
+      type: literal<"heartbeat">
+    source:
+      openapi: asyncapi/sample.yml
+  Market:
+    discriminated: false
+    source:
+      openapi: asyncapi/sample.yml
+    union:
+      - Heartbeat
+      - Update
+  Update:
+    extends:
+      - Default
+    properties:
+      eventId:
+        docs: >-
+          A monotonically increasing sequence number indicating when this change
+          occurred. These numbers are persistent and consistent between market
+          data connections.
+        type: integer
+      events: Events
+      timestamp:
+        docs: >-
+          The timestamp in seconds for this group of events (included for
+          compatibility reasons). We recommend using the timestamps field
+          instead.
+        type: double
+      timestamps:
+        docs: The timestamp in milliseconds for this group of events.
+        type: double
+      type: literal<"update">
+    source:
+      openapi: asyncapi/sample.yml

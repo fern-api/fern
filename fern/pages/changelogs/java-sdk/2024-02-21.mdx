@@ -1,0 +1,13 @@
+## 0.8.2
+**`(fix):`** File upload endpoints no longer fail to compile because the reference to
+the mime type variable is present.
+
+```java
+// Code that failed to compile
+String fileMimeType = Files.probeContentType(file.toPath());
+MediaType fileMediaType = fileMimeType != null ? MediaType.parse(mimeType) : null; // mimeType undefined
+// Code that now compiles
+MediaType fileMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+```
+
+

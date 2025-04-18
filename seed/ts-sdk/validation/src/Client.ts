@@ -9,17 +9,21 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedValidationClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,18 +36,29 @@ export class SeedValidationClient {
      *
      * @example
      *     await client.create({
-     *         decimal: 1.1,
-     *         even: 1,
-     *         name: "string",
+     *         decimal: 2.2,
+     *         even: 100,
+     *         name: "foo",
      *         shape: "SQUARE"
      *     })
      */
-    public async create(
+    public create(
         request: SeedValidation.CreateRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
-    ): Promise<SeedValidation.Type> {
+        requestOptions?: SeedValidationClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedValidation.Type> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: SeedValidation.CreateRequest,
+        requestOptions?: SeedValidationClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedValidation.Type>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/create"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/create",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -52,6 +67,7 @@ export class SeedValidationClient {
                 "User-Agent": "@fern/validation/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -61,18 +77,22 @@ export class SeedValidationClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Type.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Type.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedValidationError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -81,12 +101,14 @@ export class SeedValidationClient {
                 throw new errors.SeedValidationError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedValidationTimeoutError();
+                throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling POST /create.");
             case "unknown":
                 throw new errors.SeedValidationError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -97,22 +119,31 @@ export class SeedValidationClient {
      *
      * @example
      *     await client.get({
-     *         decimal: 1.1,
-     *         even: 1,
-     *         name: "string"
+     *         decimal: 2.2,
+     *         even: 100,
+     *         name: "foo"
      *     })
      */
-    public async get(
+    public get(
         request: SeedValidation.GetRequest,
-        requestOptions?: SeedValidationClient.RequestOptions
-    ): Promise<SeedValidation.Type> {
+        requestOptions?: SeedValidationClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedValidation.Type> {
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    }
+
+    private async __get(
+        request: SeedValidation.GetRequest,
+        requestOptions?: SeedValidationClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedValidation.Type>> {
         const { decimal, even, name } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["decimal"] = decimal.toString();
         _queryParams["even"] = even.toString();
         _queryParams["name"] = name;
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -121,6 +152,7 @@ export class SeedValidationClient {
                 "User-Agent": "@fern/validation/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -130,18 +162,22 @@ export class SeedValidationClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Type.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Type.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedValidationError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -150,12 +186,14 @@ export class SeedValidationClient {
                 throw new errors.SeedValidationError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedValidationTimeoutError();
+                throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedValidationError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

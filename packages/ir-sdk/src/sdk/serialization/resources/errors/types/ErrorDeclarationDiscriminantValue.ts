@@ -30,13 +30,13 @@ export const ErrorDeclarationDiscriminantValue: core.serialization.Schema<
     });
 
 export declare namespace ErrorDeclarationDiscriminantValue {
-    type Raw = ErrorDeclarationDiscriminantValue.Property | ErrorDeclarationDiscriminantValue.StatusCode;
+    export type Raw = ErrorDeclarationDiscriminantValue.Property | ErrorDeclarationDiscriminantValue.StatusCode;
 
-    interface Property extends NameAndWireValue.Raw {
+    export interface Property extends NameAndWireValue.Raw {
         type: "property";
     }
 
-    interface StatusCode {
+    export interface StatusCode {
         type: "statusCode";
     }
 }

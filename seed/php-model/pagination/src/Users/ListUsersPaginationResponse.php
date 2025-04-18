@@ -2,51 +2,58 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class ListUsersPaginationResponse extends SerializableType
+class ListUsersPaginationResponse extends JsonSerializableType
 {
-    /**
-     * @var int $totalCount The totall number of /users
-     */
-    #[JsonProperty("total_count")]
-    public int $totalCount;
-
-    /**
-     * @var array<User> $data
-     */
-    #[JsonProperty("data"), ArrayType([User::class])]
-    public array $data;
-
     /**
      * @var ?bool $hasNextPage
      */
-    #[JsonProperty("hasNextPage")]
+    #[JsonProperty('hasNextPage')]
     public ?bool $hasNextPage;
 
     /**
      * @var ?Page $page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public ?Page $page;
 
     /**
-     * @param int $totalCount The totall number of /users
-     * @param array<User> $data
-     * @param ?bool $hasNextPage
-     * @param ?Page $page
+     * @var int $totalCount The totall number of /users
+     */
+    #[JsonProperty('total_count')]
+    public int $totalCount;
+
+    /**
+     * @var array<User> $data
+     */
+    #[JsonProperty('data'), ArrayType([User::class])]
+    public array $data;
+
+    /**
+     * @param array{
+     *   totalCount: int,
+     *   data: array<User>,
+     *   hasNextPage?: ?bool,
+     *   page?: ?Page,
+     * } $values
      */
     public function __construct(
-        int $totalCount,
-        array $data,
-        ?bool $hasNextPage = null,
-        ?Page $page = null,
+        array $values,
     ) {
-        $this->totalCount = $totalCount;
-        $this->data = $data;
-        $this->hasNextPage = $hasNextPage;
-        $this->page = $page;
+        $this->hasNextPage = $values['hasNextPage'] ?? null;
+        $this->page = $values['page'] ?? null;
+        $this->totalCount = $values['totalCount'];
+        $this->data = $values['data'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

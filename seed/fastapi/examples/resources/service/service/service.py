@@ -6,6 +6,7 @@ import abc
 from ...types.types.movie_id import MovieId
 import typing
 from ...types.types.metadata import Metadata
+from ...types.types.big_entity import BigEntity
 from ...types.types.response import Response
 import fastapi
 import inspect
@@ -40,7 +41,7 @@ class AbstractServiceService(AbstractFernService):
     ) -> Metadata: ...
 
     @abc.abstractmethod
-    def get_response(self) -> Response: ...
+    def create_big_entity(self, *, body: BigEntity) -> Response: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -52,26 +53,20 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_get_movie(router=router)
         cls.__init_create_movie(router=router)
         cls.__init_get_metadata(router=router)
-        cls.__init_get_response(router=router)
+        cls.__init_create_big_entity(router=router)
 
     @classmethod
     def __init_get_movie(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_movie)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "movie_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_movie,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_movie, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_movie)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Movie:
@@ -100,20 +95,14 @@ class AbstractServiceService(AbstractFernService):
     def __init_create_movie(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_movie)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.create_movie,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.create_movie, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.create_movie)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> MovieId:
@@ -142,30 +131,18 @@ class AbstractServiceService(AbstractFernService):
     def __init_get_metadata(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_metadata)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "shallow":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
             elif parameter_name == "tag":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
             elif parameter_name == "x_api_version":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Header(alias="X-API-Version"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-API-Version")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_metadata,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_metadata)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Metadata:
@@ -191,29 +168,25 @@ class AbstractServiceService(AbstractFernService):
         )(wrapper)
 
     @classmethod
-    def __init_get_response(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.get_response)
+    def __init_create_big_entity(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.create_big_entity)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_response,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.create_big_entity, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
-        @functools.wraps(cls.get_response)
+        @functools.wraps(cls.create_big_entity)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Response:
             try:
-                return cls.get_response(*args, **kwargs)
+                return cls.create_big_entity(*args, **kwargs)
             except FernHTTPException as e:
                 logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
-                    f"Endpoint 'get_response' unexpectedly threw {e.__class__.__name__}. "
+                    f"Endpoint 'create_big_entity' unexpectedly threw {e.__class__.__name__}. "
                     + f"If this was intentional, please add {e.__class__.__name__} to "
                     + "the endpoint's errors list in your Fern Definition."
                 )
@@ -221,11 +194,11 @@ class AbstractServiceService(AbstractFernService):
 
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_response.__globals__)
+        wrapper.__globals__.update(cls.create_big_entity.__globals__)
 
         router.post(
-            path="/response",
+            path="/big-entity",
             response_model=Response,
-            description=AbstractServiceService.get_response.__doc__,
-            **get_route_args(cls.get_response, default_tag="service"),
+            description=AbstractServiceService.create_big_entity.__doc__,
+            **get_route_args(cls.create_big_entity, default_tag="service"),
         )(wrapper)

@@ -28,7 +28,7 @@ export const SubmissionResponse: core.serialization.Schema<
     });
 
 export declare namespace SubmissionResponse {
-    type Raw =
+    export type Raw =
         | SubmissionResponse.ServerInitialized
         | SubmissionResponse.ProblemInitialized
         | SubmissionResponse.WorkspaceInitialized
@@ -36,29 +36,29 @@ export declare namespace SubmissionResponse {
         | SubmissionResponse.CodeExecutionUpdate
         | SubmissionResponse.Terminated;
 
-    interface ServerInitialized {
+    export interface ServerInitialized {
         type: "serverInitialized";
     }
 
-    interface ProblemInitialized {
+    export interface ProblemInitialized {
         type: "problemInitialized";
         value: serializers.ProblemId.Raw;
     }
 
-    interface WorkspaceInitialized {
+    export interface WorkspaceInitialized {
         type: "workspaceInitialized";
     }
 
-    interface ServerErrored extends serializers.ExceptionInfo.Raw {
+    export interface ServerErrored extends serializers.ExceptionInfo.Raw {
         type: "serverErrored";
     }
 
-    interface CodeExecutionUpdate {
+    export interface CodeExecutionUpdate {
         type: "codeExecutionUpdate";
         value: serializers.CodeExecutionUpdate.Raw;
     }
 
-    interface Terminated extends serializers.TerminatedResponse.Raw {
+    export interface Terminated extends serializers.TerminatedResponse.Raw {
         type: "terminated";
     }
 }

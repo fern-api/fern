@@ -125,7 +125,7 @@ exports[`migrateFromV38ToV37 > snapshot 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": {
-                  "query": "string",
+                  "query": "query",
                 },
                 "properties": [
                   {
@@ -153,11 +153,11 @@ exports[`migrateFromV38ToV37 > snapshot 1`] = `
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": "query",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "string",
+                            "original": "query",
                           },
                           "type": "string",
                         },

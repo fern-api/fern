@@ -1,21 +1,24 @@
+import chalk from "chalk";
+import { readFile } from "fs/promises";
+import { writeFile } from "fs/promises";
+import * as prettier from "prettier2";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
-    generatorsYml,
     RESOLVED_SNIPPET_TEMPLATES_MD,
     SNIPPET_JSON_FILENAME,
-    SNIPPET_TEMPLATES_JSON_FILENAME
+    SNIPPET_TEMPLATES_JSON_FILENAME,
+    generatorsYml
 } from "@fern-api/configuration";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { HttpEndpoint } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { Fern, Template } from "@fern-api/sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import chalk from "chalk";
+
+import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
-import { readFile } from "fs/promises";
-import { Fern, Template } from "@fern-api/sdk";
-import { HttpEndpoint } from "@fern-api/ir-sdk";
-import { writeFile } from "fs/promises";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import * as prettier from "prettier";
 
 export async function runLocalGenerationForSeed({
     organization,
@@ -25,7 +28,9 @@ export async function runLocalGenerationForSeed({
     keepDocker,
     context,
     irVersionOverride,
-    outputVersionOverride
+    outputVersionOverride,
+    shouldGenerateDynamicSnippetTests,
+    skipUnstableDynamicSnippetTests
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -35,6 +40,8 @@ export async function runLocalGenerationForSeed({
     context: TaskContext;
     irVersionOverride: string;
     outputVersionOverride: string | undefined;
+    shouldGenerateDynamicSnippetTests: boolean | undefined;
+    skipUnstableDynamicSnippetTests?: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -54,7 +61,7 @@ export async function runLocalGenerationForSeed({
                               )
                           )
                         : undefined;
-                    const absolutePathToResolvedSnipppetTemplates = generatorInvocation.absolutePathToLocalOutput
+                    const absolutePathToResolvedSnippetTemplates = generatorInvocation.absolutePathToLocalOutput
                         ? AbsoluteFilePath.of(
                               join(
                                   generatorInvocation.absolutePathToLocalOutput,
@@ -62,7 +69,7 @@ export async function runLocalGenerationForSeed({
                               )
                           )
                         : undefined;
-                    const { ir } = await writeFilesToDiskAndRunGenerator({
+                    const { ir, generatorConfig } = await writeFilesToDiskAndRunGenerator({
                         organization,
                         absolutePathToFernConfig,
                         workspace,
@@ -85,15 +92,16 @@ export async function runLocalGenerationForSeed({
                         outputVersionOverride,
                         writeUnitTests: true,
                         generateOauthClients: true,
-                        generatePaginatedClients: true
+                        generatePaginatedClients: true,
+                        includeOptionalRequestPropertyExamples: true
                     });
                     if (
                         absolutePathToLocalSnippetTemplateJSON != null &&
-                        absolutePathToResolvedSnipppetTemplates != null
+                        absolutePathToResolvedSnippetTemplates != null
                     ) {
                         await writeResolvedSnippetsJson({
                             absolutePathToLocalSnippetTemplateJSON,
-                            absolutePathToResolvedSnipppetTemplates,
+                            absolutePathToResolvedSnippetTemplates,
                             ir,
                             generatorInvocation
                         });
@@ -101,6 +109,24 @@ export async function runLocalGenerationForSeed({
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                     );
+
+                    if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
+                        interactiveTaskContext.logger.info(
+                            `Writing dynamic snippet tests to ${generatorInvocation.absolutePathToLocalOutput}`
+                        );
+                        await generateDynamicSnippetTests({
+                            context: interactiveTaskContext,
+                            ir,
+                            config: generatorConfig,
+                            language: generatorInvocation.language,
+                            outputDir: generatorInvocation.absolutePathToLocalOutput,
+                            skipUnstable: skipUnstableDynamicSnippetTests
+                        });
+                    } else {
+                        interactiveTaskContext.logger.info(
+                            `Skipping dynamic snippet tests; shouldGenerateDynamicSnippetTests: ${shouldGenerateDynamicSnippetTests}, language: ${generatorInvocation.language}`
+                        );
+                    }
                 }
             });
         })
@@ -112,12 +138,12 @@ export async function runLocalGenerationForSeed({
 }
 
 export async function writeResolvedSnippetsJson({
-    absolutePathToResolvedSnipppetTemplates,
+    absolutePathToResolvedSnippetTemplates,
     absolutePathToLocalSnippetTemplateJSON,
     ir,
     generatorInvocation
 }: {
-    absolutePathToResolvedSnipppetTemplates: AbsoluteFilePath;
+    absolutePathToResolvedSnippetTemplates: AbsoluteFilePath;
     absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath;
     ir: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -197,15 +223,15 @@ export async function writeResolvedSnippetsJson({
             } catch (err) {}
         }
     }
-    let resovledMd = "";
+    let resolvedMd = "";
     for (const snippet of snippets) {
-        resovledMd += `\`\`\`${generatorInvocation.language}
-${snippet} 
-\`\`\`                        
+        resolvedMd += `\`\`\`${generatorInvocation.language}
+${snippet}
+\`\`\`
 \n\n`;
     }
-    if (resovledMd.length > 0) {
-        await writeFile(absolutePathToResolvedSnipppetTemplates, resovledMd);
+    if (resolvedMd.length > 0) {
+        await writeFile(absolutePathToResolvedSnippetTemplates, resolvedMd);
     }
 }
 

@@ -5,13 +5,16 @@ import typing
 from ..types.some_literal import SomeLiteral
 import typing_extensions
 from ...core.serialization import FieldMetadata
+from .container_object import ContainerObjectParams
 
 
 class SendRequestParams(typing_extensions.TypedDict):
     prompt: typing.Literal["You are a helpful assistant"]
     query: str
     stream: typing.Literal[False]
+    ending: typing.Literal["$ending"]
     context: SomeLiteral
     maybe_context: typing_extensions.NotRequired[
         typing_extensions.Annotated[SomeLiteral, FieldMetadata(alias="maybeContext")]
     ]
+    container_object: typing_extensions.Annotated[ContainerObjectParams, FieldMetadata(alias="containerObject")]

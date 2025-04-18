@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Service.PostAsync("string", "string", "string", 1);
+await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
 ```
 </dd>
 </dl>

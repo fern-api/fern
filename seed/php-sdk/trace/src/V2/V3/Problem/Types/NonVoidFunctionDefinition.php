@@ -2,32 +2,41 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class NonVoidFunctionDefinition extends SerializableType
+class NonVoidFunctionDefinition extends JsonSerializableType
 {
     /**
      * @var NonVoidFunctionSignature $signature
      */
-    #[JsonProperty("signature")]
+    #[JsonProperty('signature')]
     public NonVoidFunctionSignature $signature;
 
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
-    #[JsonProperty("code")]
+    #[JsonProperty('code')]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**
-     * @param NonVoidFunctionSignature $signature
-     * @param FunctionImplementationForMultipleLanguages $code
+     * @param array{
+     *   signature: NonVoidFunctionSignature,
+     *   code: FunctionImplementationForMultipleLanguages,
+     * } $values
      */
     public function __construct(
-        NonVoidFunctionSignature $signature,
-        FunctionImplementationForMultipleLanguages $code,
+        array $values,
     ) {
-        $this->signature = $signature;
-        $this->code = $code;
+        $this->signature = $values['signature'];
+        $this->code = $values['code'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

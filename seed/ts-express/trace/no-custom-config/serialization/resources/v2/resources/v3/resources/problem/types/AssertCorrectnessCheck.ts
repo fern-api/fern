@@ -20,13 +20,13 @@ export const AssertCorrectnessCheck: core.serialization.Schema<
     });
 
 export declare namespace AssertCorrectnessCheck {
-    type Raw = AssertCorrectnessCheck.DeepEquality | AssertCorrectnessCheck.Custom;
+    export type Raw = AssertCorrectnessCheck.DeepEquality | AssertCorrectnessCheck.Custom;
 
-    interface DeepEquality extends serializers.v2.v3.DeepEqualityCorrectnessCheck.Raw {
+    export interface DeepEquality extends serializers.v2.v3.DeepEqualityCorrectnessCheck.Raw {
         type: "deepEquality";
     }
 
-    interface Custom extends serializers.v2.v3.VoidFunctionDefinitionThatTakesActualResult.Raw {
+    export interface Custom extends serializers.v2.v3.VoidFunctionDefinitionThatTakesActualResult.Raw {
         type: "custom";
     }
 }

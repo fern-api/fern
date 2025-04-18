@@ -1,0 +1,162 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PythonFile > Add a Method 1`] = `
+"def test_method() -> str:
+    pass
+
+"
+`;
+
+exports[`PythonFile > Add a class that inherits from a class imported from another file 1`] = `
+"from .base import BaseClass
+
+class DerivedClass(BaseClass):
+    pass
+"
+`;
+
+exports[`PythonFile > Add a class with a reference that uses a python standard library reference 1`] = `
+"from itertools import chain
+
+class TestClass:
+    flat_list = list(itertools.chain([[1, 2], [3, 4]]))
+
+"
+`;
+
+exports[`PythonFile > Add a class with a reference that uses a relative import 1`] = `
+"from .level_1 import OtherClass
+from .level_1.level_2 import DeepClass
+
+class TestClass(OtherClass):
+    pass
+
+class DeeplyNestedTestClass(DeepClass):
+    pass
+"
+`;
+
+exports[`PythonFile > Add a class with a reference to itself 1`] = `
+"from parent_module import ParentTestClass
+
+class TestClass(ParentTestClass):
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]):
+        instance = TestClass(data)
+        return instance
+
+"
+`;
+
+exports[`PythonFile > Add a class with a relative import and alias 1`] = `
+"from .test.sibling_dir import SiblingClass as AliasedSibling
+
+class TestClassWithRelativeAlias(AliasedSibling):
+    pass
+"
+`;
+
+exports[`PythonFile > Add a class with an absolute import and alias 1`] = `
+"from external_module.submodule import ExternalClass as AliasedClass
+
+class TestClassWithAlias(AliasedClass):
+    pass
+"
+`;
+
+exports[`PythonFile > Add a class with no references 1`] = `
+"class TestClass:
+    pass
+"
+`;
+
+exports[`PythonFile > Add a code block 1`] = `
+"print('Hello, World!')
+"
+`;
+
+exports[`PythonFile > Add a field with a list of reference type and initializer 1`] = `
+"from typing import List
+from .cars import Car
+
+cars: List[Car] = [Car(), Car()]
+"
+`;
+
+exports[`PythonFile > Add a reference with no module path 1`] = `
+"car: MyCar
+"
+`;
+
+exports[`PythonFile > Ensure we don't duplicate imports 1`] = `
+"from typing import List
+
+var_a: List[str]
+
+var_b: List[str]
+"
+`;
+
+exports[`PythonFile > Initialize with a statement containing a reference 1`] = `
+"from uuid import UUID
+
+my_id = UUID("1234")
+"
+`;
+
+exports[`PythonFile > Multiple imports from the same module should work 1`] = `
+"from typing import Union, List, Set
+
+variable: Union[List[str], Set[str]]
+"
+`;
+
+exports[`PythonFile > References to other nodes in same module in __init__.py work 1`] = `
+"from ..trains import Train
+
+exported_car: Train
+"
+`;
+
+exports[`PythonFile > Set a variable to a nested attribute of an imported reference 1`] = `
+"from external_module import ImportedClass
+
+my_variable: ImportedClass.nested.attribute
+"
+`;
+
+exports[`PythonFile > Write duplicative import names 1`] = `
+"from .cars import Car as CarsCar
+from .transportation.vehicles import Car as VehiclesCar
+from .automobiles import Car as AutomobilesCar
+from .vehicles.automobiles import Car as VehiclesAutomobilesCar
+
+class Car:
+    car = CarsCar()
+    car = VehiclesCar()
+    automobile = AutomobilesCar()
+    vehicle = VehiclesAutomobilesCar()
+
+"
+`;
+
+exports[`PythonFile > Write star imports 1`] = `
+"# flake8: noqa: F401, F403
+
+from uuid import UUID
+from .my_module_a import *
+from .my_module_b import *
+
+my_id = UUID("1234")
+"
+`;
+
+exports[`PythonFile > Write top of file comments 1`] = `
+"# !/usr/bin/env python
+# flake8: noqa: F401, F403
+
+from uuid import UUID
+
+my_id = UUID("1234")
+"
+`;

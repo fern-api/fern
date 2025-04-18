@@ -1,4 +1,8 @@
+import path from "path";
+import urlJoin from "url-join";
+
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     ExampleContainer,
@@ -8,11 +12,13 @@ import {
     ExampleTypeShape,
     HttpEndpoint
 } from "@fern-fern/ir-sdk/api";
-import path from "path";
-import urlJoin from "url-join";
+
 import { GeneratedFile } from "../utils/GeneratedFile";
 import { generateEnumNameFromValues } from "../utils/NamingUtilities";
 import { Argument } from "./Argument";
+import { ExampleNode } from "./ExampleNode";
+import { Import } from "./Import";
+import { Property } from "./Property";
 import {
     ArrayInstance,
     ClassReferenceFactory,
@@ -23,12 +29,9 @@ import {
 } from "./classes/ClassReference";
 import { Class_ } from "./classes/Class_";
 import { AstNode } from "./core/AstNode";
-import { ExampleNode } from "./ExampleNode";
 import { Expression } from "./expressions/Expression";
 import { FunctionInvocation } from "./functions/FunctionInvocation";
 import { Function_ } from "./functions/Function_";
-import { Import } from "./Import";
-import { Property } from "./Property";
 
 export declare namespace ExampleGenerator {
     export interface Init {

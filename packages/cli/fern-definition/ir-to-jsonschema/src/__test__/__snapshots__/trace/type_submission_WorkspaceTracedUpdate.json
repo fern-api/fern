@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "traceResponsesSize": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "traceResponsesSize"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

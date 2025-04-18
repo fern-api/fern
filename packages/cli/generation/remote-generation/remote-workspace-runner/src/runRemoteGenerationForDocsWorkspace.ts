@@ -1,12 +1,15 @@
 import { FernToken } from "@fern-api/auth";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+
+import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { publishDocs } from "./publishDocs";
 
 export async function runRemoteGenerationForDocsWorkspace({
     organization,
-    fernWorkspaces,
+    apiWorkspaces,
+    ossWorkspaces,
     docsWorkspace,
     context,
     token,
@@ -14,7 +17,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     preview
 }: {
     organization: string;
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    ossWorkspaces: OSSWorkspace[];
     docsWorkspace: DocsWorkspace;
     context: TaskContext;
     token: FernToken;
@@ -75,9 +79,9 @@ export async function runRemoteGenerationForDocsWorkspace({
             token,
             organization,
             context,
-            fernWorkspaces,
+            apiWorkspaces,
+            ossWorkspaces,
             preview,
-            audiences: maybeInstance.audiences,
             editThisPage: maybeInstance.editThisPage,
             isPrivate: maybeInstance.private
         });

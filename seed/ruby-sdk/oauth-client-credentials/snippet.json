@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
-                "client": "require \"fern_oauth_client_credentials\"\n\noauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials.auth.get_token_with_client_credentials(\n  client_id: \"string\",\n  client_secret: \"string\",\n  scope: \"string\"\n)",
+                "client": "require \"fern_oauth_client_credentials\"\n\noauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials.auth.get_token_with_client_credentials(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_auth.refreshToken"
             },
             "snippet": {
-                "client": "require \"fern_oauth_client_credentials\"\n\noauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials.auth.refresh_token(\n  client_id: \"string\",\n  client_secret: \"string\",\n  refresh_token: \"string\",\n  scope: \"string\"\n)",
+                "client": "require \"fern_oauth_client_credentials\"\n\noauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials.auth.refresh_token(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },
@@ -29,7 +29,7 @@
                 "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
-                "client": "require \"fern_oauth_client_credentials\"\n\noauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials.auth.get_token_with_client_credentials(\n  client_id: \"string\",\n  client_secret: \"string\",\n  scope: \"string\"\n)",
+                "client": "require \"fern_oauth_client_credentials\"\n\noauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials.auth.get_token_with_client_credentials(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },
@@ -40,7 +40,7 @@
                 "identifierOverride": "endpoint_auth.refreshToken"
             },
             "snippet": {
-                "client": "require \"fern_oauth_client_credentials\"\n\noauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials.auth.refresh_token(\n  client_id: \"string\",\n  client_secret: \"string\",\n  refresh_token: \"string\",\n  scope: \"string\"\n)",
+                "client": "require \"fern_oauth_client_credentials\"\n\noauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: \"https://api.example.com\")\noauth_client_credentials.auth.refresh_token(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  refresh_token: \"refresh_token\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         }

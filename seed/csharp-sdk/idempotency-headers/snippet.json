@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_payment.create"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });\n"
             }
         },
@@ -21,8 +21,8 @@
                 "identifier_override": "endpoint_payment.delete"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.DeleteAsync(\"string\");\n"
+                "type": "csharp",
+                "client": "using SeedIdempotencyHeaders;\n\nvar client = new SeedIdempotencyHeadersClient(\"TOKEN\");\nawait client.Payment.DeleteAsync(\"paymentId\");\n"
             }
         }
     ]

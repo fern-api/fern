@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```csharp
-await client.User.GetUserAsync("string");
+await client.User.GetUserAsync("userId");
 ```
 </dd>
 </dl>
@@ -86,7 +86,7 @@ This endpoint is used to create a new user.
 <dd>
 
 ```csharp
-await client.User.CreateUserAsync(new CreateUserRequest { Name = "string", Age = 1 });
+await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
 ```
 </dd>
 </dl>

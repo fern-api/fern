@@ -9,27 +9,27 @@ export type ExampleEndpointSuccessResponse =
     | FernIr.ExampleEndpointSuccessResponse.Stream
     | FernIr.ExampleEndpointSuccessResponse.Sse;
 
-export declare namespace ExampleEndpointSuccessResponse {
-    interface Body extends _Utils {
+export namespace ExampleEndpointSuccessResponse {
+    export interface Body extends _Utils {
         type: "body";
         value: FernIr.ExampleTypeReference | undefined;
     }
 
-    interface Stream extends _Utils {
+    export interface Stream extends _Utils {
         type: "stream";
         value: FernIr.ExampleTypeReference[];
     }
 
-    interface Sse extends _Utils {
+    export interface Sse extends _Utils {
         type: "sse";
         value: FernIr.ExampleServerSideEvent[];
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         body: (value: FernIr.ExampleTypeReference | undefined) => _Result;
         stream: (value: FernIr.ExampleTypeReference[]) => _Result;
         sse: (value: FernIr.ExampleServerSideEvent[]) => _Result;
@@ -44,7 +44,7 @@ export const ExampleEndpointSuccessResponse = {
             type: "body",
             _visit: function <_Result>(
                 this: FernIr.ExampleEndpointSuccessResponse.Body,
-                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>
+                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>,
             ) {
                 return FernIr.ExampleEndpointSuccessResponse._visit(this, visitor);
             },
@@ -57,7 +57,7 @@ export const ExampleEndpointSuccessResponse = {
             type: "stream",
             _visit: function <_Result>(
                 this: FernIr.ExampleEndpointSuccessResponse.Stream,
-                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>
+                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>,
             ) {
                 return FernIr.ExampleEndpointSuccessResponse._visit(this, visitor);
             },
@@ -70,7 +70,7 @@ export const ExampleEndpointSuccessResponse = {
             type: "sse",
             _visit: function <_Result>(
                 this: FernIr.ExampleEndpointSuccessResponse.Sse,
-                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>
+                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>,
             ) {
                 return FernIr.ExampleEndpointSuccessResponse._visit(this, visitor);
             },
@@ -79,7 +79,7 @@ export const ExampleEndpointSuccessResponse = {
 
     _visit: <_Result>(
         value: FernIr.ExampleEndpointSuccessResponse,
-        visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>
+        visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "body":

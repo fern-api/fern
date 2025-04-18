@@ -88,6 +88,7 @@ public final class TestCaseFunction {
     }
 
     @JsonTypeName("withActualResult")
+    @JsonIgnoreProperties("type")
     private static final class WithActualResultValue implements Value {
         @JsonUnwrapped
         private TestCaseWithActualResultImplementation value;
@@ -126,6 +127,7 @@ public final class TestCaseFunction {
     }
 
     @JsonTypeName("custom")
+    @JsonIgnoreProperties("type")
     private static final class CustomValue implements Value {
         @JsonUnwrapped
         private VoidFunctionDefinition value;
@@ -163,6 +165,7 @@ public final class TestCaseFunction {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

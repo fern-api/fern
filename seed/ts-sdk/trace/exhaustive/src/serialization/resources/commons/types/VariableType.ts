@@ -51,7 +51,7 @@ export const VariableType: core.serialization.Schema<serializers.VariableType.Ra
         });
 
 export declare namespace VariableType {
-    type Raw =
+    export type Raw =
         | VariableType.IntegerType
         | VariableType.DoubleType
         | VariableType.BooleanType
@@ -63,43 +63,43 @@ export declare namespace VariableType {
         | VariableType.SinglyLinkedListType
         | VariableType.DoublyLinkedListType;
 
-    interface IntegerType {
+    export interface IntegerType {
         type: "integerType";
     }
 
-    interface DoubleType {
+    export interface DoubleType {
         type: "doubleType";
     }
 
-    interface BooleanType {
+    export interface BooleanType {
         type: "booleanType";
     }
 
-    interface StringType {
+    export interface StringType {
         type: "stringType";
     }
 
-    interface CharType {
+    export interface CharType {
         type: "charType";
     }
 
-    interface ListType extends serializers.ListType.Raw {
+    export interface ListType extends serializers.ListType.Raw {
         type: "listType";
     }
 
-    interface MapType extends serializers.MapType.Raw {
+    export interface MapType extends serializers.MapType.Raw {
         type: "mapType";
     }
 
-    interface BinaryTreeType {
+    export interface BinaryTreeType {
         type: "binaryTreeType";
     }
 
-    interface SinglyLinkedListType {
+    export interface SinglyLinkedListType {
         type: "singlyLinkedListType";
     }
 
-    interface DoublyLinkedListType {
+    export interface DoublyLinkedListType {
         type: "doublyLinkedListType";
     }
 }

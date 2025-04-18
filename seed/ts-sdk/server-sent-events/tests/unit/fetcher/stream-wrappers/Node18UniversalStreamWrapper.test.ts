@@ -60,7 +60,7 @@ describe("Node18UniversalStreamWrapper", () => {
             },
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
-        const dest = new (await import("stream")).Writable({
+        const dest = new (await import("readable-stream")).Writable({
             write(chunk, encoding, callback) {
                 expect(chunk.toString()).toEqual("test");
                 callback();
@@ -159,7 +159,7 @@ describe("Node18UniversalStreamWrapper", () => {
         expect(data).toEqual({ test: "test" });
     });
 
-    it("should allow use with async iteratable stream", async () => {
+    it("should allow use with async iterable stream", async () => {
         const rawStream = new ReadableStream({
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));

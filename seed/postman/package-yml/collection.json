@@ -122,12 +122,12 @@
                     {
                       "key": "id",
                       "description": null,
-                      "value": "string"
+                      "value": "id"
                     },
                     {
                       "key": "nestedId",
                       "description": null,
-                      "value": "string"
+                      "value": "nestedId"
                     }
                   ]
                 },
@@ -257,7 +257,7 @@
                 {
                   "key": "id",
                   "description": null,
-                  "value": "string"
+                  "value": "id"
                 }
               ]
             },
@@ -272,7 +272,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"Hello world!\",\n    \"size\": 20\n}",
+              "raw": "{\n    \"name\": \"name\",\n    \"size\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -281,7 +281,7 @@
             }
           },
           "description": null,
-          "body": "\"Hello world!\"",
+          "body": "\"string\"",
           "_postman_previewlanguage": "json"
         }
       ]

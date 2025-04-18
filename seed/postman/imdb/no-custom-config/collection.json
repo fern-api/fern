@@ -36,7 +36,7 @@
           "_type": "endpoint",
           "name": "Create Movie",
           "request": {
-            "description": "Add a movie to the database",
+            "description": "Add a movie to the database using the movies/* /... path.",
             "url": {
               "raw": "{{baseUrl}}/movies/create-movie",
               "host": [
@@ -60,7 +60,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"string\",\n    \"rating\": 1.1\n}",
+              "raw": "{\n    \"title\": \"title\",\n    \"rating\": 1.1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -74,7 +74,7 @@
               "status": "OK",
               "code": 200,
               "originalRequest": {
-                "description": "Add a movie to the database",
+                "description": "Add a movie to the database using the movies/* /... path.",
                 "url": {
                   "raw": "{{baseUrl}}/movies/create-movie",
                   "host": [
@@ -98,7 +98,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"string\",\n    \"rating\": 1.1\n}",
+                  "raw": "{\n    \"title\": \"title\",\n    \"rating\": 1.1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -131,7 +131,7 @@
                 {
                   "key": "movieId",
                   "description": null,
-                  "value": "string"
+                  "value": "movieId"
                 }
               ]
             },
@@ -167,7 +167,7 @@
                     {
                       "key": "movieId",
                       "description": null,
-                      "value": "string"
+                      "value": "movieId"
                     }
                   ]
                 },
@@ -183,46 +183,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"rating\": 1.1\n}",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Movie Does Not Exist Error",
-              "status": "Movie Does Not Exist Error",
-              "code": 404,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/movies/:movieId",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "movies",
-                    ":movieId"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "movieId",
-                      "description": null,
-                      "value": "string"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "auth": null,
-                "body": null
-              },
-              "description": null,
-              "body": "",
+              "body": "{\n    \"id\": \"id\",\n    \"title\": \"title\",\n    \"rating\": 1.1\n}",
               "_postman_previewlanguage": "json"
             }
           ]

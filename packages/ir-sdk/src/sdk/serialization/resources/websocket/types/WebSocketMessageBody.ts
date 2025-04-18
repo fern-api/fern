@@ -31,13 +31,13 @@ export const WebSocketMessageBody: core.serialization.Schema<
     });
 
 export declare namespace WebSocketMessageBody {
-    type Raw = WebSocketMessageBody.InlinedBody | WebSocketMessageBody.Reference;
+    export type Raw = WebSocketMessageBody.InlinedBody | WebSocketMessageBody.Reference;
 
-    interface InlinedBody extends InlinedWebSocketMessageBody.Raw {
+    export interface InlinedBody extends InlinedWebSocketMessageBody.Raw {
         type: "inlinedBody";
     }
 
-    interface Reference extends WebSocketMessageBodyReference.Raw {
+    export interface Reference extends WebSocketMessageBodyReference.Raw {
         type: "reference";
     }
 }

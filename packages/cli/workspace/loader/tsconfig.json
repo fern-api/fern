@@ -1,0 +1,50 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*",
+    "./src/**/*.json"
+  ],
+  "references": [
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../commons/logging-execa"
+    },
+    {
+      "path": "../../../core"
+    },
+    {
+      "path": "../../configuration-loader"
+    },
+    {
+      "path": "../../cli-logger"
+    },
+    {
+      "path": "../../logger"
+    },
+    {
+      "path": "../../semver-utils"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../commons"
+    },
+    {
+      "path": "../lazy-fern-workspace"
+    }
+  ]
+}

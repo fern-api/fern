@@ -244,6 +244,38 @@ client.query.send(
 <dl>
 <dd>
 
+**optional_prompt:** `typing.Optional[typing.Literal["You are a helpful assistant"]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_optional_prompt:** `typing.Optional[AliasToPrompt]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_stream:** `typing.Optional[typing.Literal[False]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_optional_stream:** `typing.Optional[AliasToStream]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -271,12 +303,20 @@ client.query.send(
 
 ```python
 from seed import SeedLiteral
+from seed.reference import ContainerObject, NestedObjectWithLiterals
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
 client.reference.send(
     query="What is the weather today",
+    container_object=ContainerObject(
+        nested_objects=[
+            NestedObjectWithLiterals(
+                str_prop="strProp",
+            )
+        ],
+    ),
 )
 
 ```
@@ -294,6 +334,14 @@ client.reference.send(
 <dd>
 
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container_object:** `ContainerObject` 
     
 </dd>
 </dl>

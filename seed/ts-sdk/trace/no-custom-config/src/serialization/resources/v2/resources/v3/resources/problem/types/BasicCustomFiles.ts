@@ -21,7 +21,7 @@ export const BasicCustomFiles: core.serialization.ObjectSchema<
 });
 
 export declare namespace BasicCustomFiles {
-    interface Raw {
+    export interface Raw {
         methodName: string;
         signature: NonVoidFunctionSignature.Raw;
         additionalFiles: Record<Language.Raw, Files.Raw | null | undefined>;

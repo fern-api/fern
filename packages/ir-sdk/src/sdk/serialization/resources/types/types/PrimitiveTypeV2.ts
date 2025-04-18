@@ -73,7 +73,7 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
         });
 
 export declare namespace PrimitiveTypeV2 {
-    type Raw =
+    export type Raw =
         | PrimitiveTypeV2.Integer
         | PrimitiveTypeV2.Long
         | PrimitiveTypeV2.Uint
@@ -88,55 +88,55 @@ export declare namespace PrimitiveTypeV2 {
         | PrimitiveTypeV2.Base64
         | PrimitiveTypeV2.BigInteger;
 
-    interface Integer extends IntegerType.Raw {
+    export interface Integer extends IntegerType.Raw {
         type: "integer";
     }
 
-    interface Long extends LongType.Raw {
+    export interface Long extends LongType.Raw {
         type: "long";
     }
 
-    interface Uint extends UintType.Raw {
+    export interface Uint extends UintType.Raw {
         type: "uint";
     }
 
-    interface Uint64 extends Uint64Type.Raw {
+    export interface Uint64 extends Uint64Type.Raw {
         type: "uint64";
     }
 
-    interface Float extends FloatType.Raw {
+    export interface Float extends FloatType.Raw {
         type: "float";
     }
 
-    interface Double extends DoubleType.Raw {
+    export interface Double extends DoubleType.Raw {
         type: "double";
     }
 
-    interface Boolean extends BooleanType.Raw {
+    export interface Boolean extends BooleanType.Raw {
         type: "boolean";
     }
 
-    interface String extends StringType.Raw {
+    export interface String extends StringType.Raw {
         type: "string";
     }
 
-    interface Date extends DateType.Raw {
+    export interface Date extends DateType.Raw {
         type: "date";
     }
 
-    interface DateTime extends DateTimeType.Raw {
+    export interface DateTime extends DateTimeType.Raw {
         type: "dateTime";
     }
 
-    interface Uuid extends UuidType.Raw {
+    export interface Uuid extends UuidType.Raw {
         type: "uuid";
     }
 
-    interface Base64 extends Base64Type.Raw {
+    export interface Base64 extends Base64Type.Raw {
         type: "base64";
     }
 
-    interface BigInteger extends BigIntegerType.Raw {
+    export interface BigInteger extends BigIntegerType.Raw {
         type: "bigInteger";
     }
 }

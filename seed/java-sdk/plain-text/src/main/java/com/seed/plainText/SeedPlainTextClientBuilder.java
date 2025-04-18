@@ -5,6 +5,7 @@ package com.seed.plainText;
 
 import com.seed.plainText.core.ClientOptions;
 import com.seed.plainText.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedPlainTextClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -13,6 +14,30 @@ public final class SeedPlainTextClientBuilder {
 
     public SeedPlainTextClientBuilder url(String url) {
         this.environment = Environment.custom(url);
+        return this;
+    }
+
+    /**
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
+     */
+    public SeedPlainTextClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedPlainTextClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedPlainTextClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

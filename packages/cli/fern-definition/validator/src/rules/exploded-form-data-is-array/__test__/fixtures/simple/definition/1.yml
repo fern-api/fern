@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+
+service:
+  base-path: /documents
+  auth: false
+  endpoints:
+    uploadDocument:
+      path: /upload
+      method: POST
+      request:
+        name: UploadDocumentRequest
+        body:
+          properties:
+            file: file
+            invalid-exploded: 
+              type: string
+              style: exploded
+            exploded: 
+              type: list<string>
+              style: exploded
+            exploded2: 
+              type: optional<list<string>>
+              style: exploded

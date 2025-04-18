@@ -22,9 +22,7 @@ class AbstractOptionalService(AbstractFernService):
 
     @abc.abstractmethod
     def send_optional_body(
-        self,
-        *,
-        body: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        self, *, body: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
     ) -> str: ...
 
     """
@@ -40,20 +38,14 @@ class AbstractOptionalService(AbstractFernService):
     def __init_send_optional_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_optional_body)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.send_optional_body,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.send_optional_body, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.send_optional_body)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:

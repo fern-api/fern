@@ -1,0 +1,38 @@
+{
+  "anyOf": [
+    {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/MetadataValue"
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    }
+  ],
+  "definitions": {
+    "MetadataValue": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    }
+  }
+}

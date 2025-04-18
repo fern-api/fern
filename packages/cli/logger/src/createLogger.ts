@@ -1,8 +1,11 @@
-import { Logger } from "./Logger";
 import { LogLevel } from "./LogLevel";
+import { Logger } from "./Logger";
 
 class LoggerImpl implements Logger {
-    constructor(public readonly log: (level: LogLevel, ...args: string[]) => void, private enabled: boolean = true) {}
+    constructor(
+        public readonly log: (level: LogLevel, ...args: string[]) => void,
+        private enabled: boolean = true
+    ) {}
 
     public disable(): void {
         this.enabled = false;
@@ -33,6 +36,12 @@ class LoggerImpl implements Logger {
     public error(...args: string[]): void {
         if (this.enabled) {
             this.log(LogLevel.Error, ...args);
+        }
+    }
+
+    public trace(...args: string[]): void {
+        if (this.enabled) {
+            this.log(LogLevel.Trace, ...args);
         }
     }
 }

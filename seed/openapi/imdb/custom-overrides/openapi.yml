@@ -1,18 +1,18 @@
+openapi: 3.0.1
 info:
-  license: MIT
   title: api
   version: ''
-openapi: 3.0.1
+  license: MIT
 paths:
   /movies/create-movie:
     post:
-      description: Add a movie to the database
+      description: Add a movie to the database using the movies/* /... path.
       operationId: imdb_createMovie
       tags:
         - Imdb
       parameters: []
       responses:
-        '200':
+        '201':
           description: ''
           content:
             application/json:

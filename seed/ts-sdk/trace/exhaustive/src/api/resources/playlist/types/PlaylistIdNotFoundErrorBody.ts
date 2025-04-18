@@ -8,21 +8,21 @@ export type PlaylistIdNotFoundErrorBody =
     | SeedTrace.PlaylistIdNotFoundErrorBody.PlaylistId
     | SeedTrace.PlaylistIdNotFoundErrorBody._Unknown;
 
-export declare namespace PlaylistIdNotFoundErrorBody {
-    interface PlaylistId extends _Utils {
+export namespace PlaylistIdNotFoundErrorBody {
+    export interface PlaylistId extends _Utils {
         type: "playlistId";
         value: SeedTrace.PlaylistId;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         playlistId: (value: SeedTrace.PlaylistId) => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -35,7 +35,7 @@ export const PlaylistIdNotFoundErrorBody = {
             type: "playlistId",
             _visit: function <_Result>(
                 this: SeedTrace.PlaylistIdNotFoundErrorBody.PlaylistId,
-                visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>
+                visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>,
             ) {
                 return SeedTrace.PlaylistIdNotFoundErrorBody._visit(this, visitor);
             },
@@ -47,7 +47,7 @@ export const PlaylistIdNotFoundErrorBody = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.PlaylistIdNotFoundErrorBody._Unknown,
-                visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>
+                visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>,
             ) {
                 return SeedTrace.PlaylistIdNotFoundErrorBody._visit(this, visitor);
             },
@@ -56,7 +56,7 @@ export const PlaylistIdNotFoundErrorBody = {
 
     _visit: <_Result>(
         value: SeedTrace.PlaylistIdNotFoundErrorBody,
-        visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>
+        visitor: SeedTrace.PlaylistIdNotFoundErrorBody._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "playlistId":

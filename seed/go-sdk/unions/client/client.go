@@ -3,7 +3,9 @@
 package client
 
 import (
+	bigunion "github.com/fern-api/unions-go/bigunion"
 	core "github.com/fern-api/unions-go/core"
+	internal "github.com/fern-api/unions-go/internal"
 	option "github.com/fern-api/unions-go/option"
 	union "github.com/fern-api/unions-go/union"
 	http "net/http"
@@ -11,23 +13,25 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
-	Union *union.Client
+	Bigunion *bigunion.Client
+	Union    *union.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
-		Union:  union.NewClient(opts...),
+		header:   options.ToHeader(),
+		Bigunion: bigunion.NewClient(opts...),
+		Union:    union.NewClient(opts...),
 	}
 }

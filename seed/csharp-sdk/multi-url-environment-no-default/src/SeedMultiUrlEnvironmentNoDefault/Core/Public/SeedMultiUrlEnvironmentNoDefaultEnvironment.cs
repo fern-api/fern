@@ -2,14 +2,14 @@ namespace SeedMultiUrlEnvironmentNoDefault;
 
 public class SeedMultiUrlEnvironmentNoDefaultEnvironment
 {
-    public static SeedMultiUrlEnvironmentNoDefaultEnvironment Production =
+    public static readonly SeedMultiUrlEnvironmentNoDefaultEnvironment Production =
         new SeedMultiUrlEnvironmentNoDefaultEnvironment
         {
             Ec2 = "https://ec2.aws.com",
             S3 = "https://s3.aws.com",
         };
 
-    public static SeedMultiUrlEnvironmentNoDefaultEnvironment Staging =
+    public static readonly SeedMultiUrlEnvironmentNoDefaultEnvironment Staging =
         new SeedMultiUrlEnvironmentNoDefaultEnvironment
         {
             Ec2 = "https://staging.ec2.aws.com",
@@ -19,10 +19,22 @@ public class SeedMultiUrlEnvironmentNoDefaultEnvironment
     /// <summary>
     /// URL for the ec2 service
     /// </summary>
-    public string Ec2 { get; init; }
+    public string Ec2 { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// URL for the s3 service
     /// </summary>
-    public string S3 { get; init; }
+    public string S3 { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

@@ -1,8 +1,8 @@
 ---
-title: Integrating PyPI
+title: Publish your Python SDK with PyPI
 ---
 
-To authenticate and integrate the Python Package Index within your Python SDK, you'll need to [create an PyPI token](/learn/sdks/package-managers/pypi#creating-a-pypi-token) and [add it to your repository](/learn/sdks/package-managers/pypi#adding-tokens-to-your-github-repository). 
+To make your Python SDK publicly accessible, publish to [PyPI](https://pypi.org/). Once you've followed the steps below to connect your PyPI account to your SDK, Fern will automatically publish the latest version of your SDK. 
 
 ## Creating a PyPI token
 <Steps>
@@ -35,3 +35,5 @@ You can also use the url `https://github.com/<your-repo>/settings/secrets/action
 ### Add Secret
 Select **New repository secret**. Name your secret (we recommend `PYPI_TOKEN`), add the corresponding token, and click **Add secret**. 
 </Steps>
+
+Once you regenerate your SDK, a GitHub action will run to publish directly to PyPI!

@@ -3,7 +3,6 @@
  */
 
 export type AvailabilityStatus = "IN_DEVELOPMENT" | "PRE_RELEASE" | "GENERAL_AVAILABILITY" | "DEPRECATED";
-
 export const AvailabilityStatus = {
     InDevelopment: "IN_DEVELOPMENT",
     PreRelease: "PRE_RELEASE",
@@ -25,8 +24,8 @@ export const AvailabilityStatus = {
     },
 } as const;
 
-export declare namespace AvailabilityStatus {
-    interface Visitor<R> {
+export namespace AvailabilityStatus {
+    export interface Visitor<R> {
         inDevelopment: () => R;
         preRelease: () => R;
         generalAvailability: () => R;

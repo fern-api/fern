@@ -1,0 +1,55 @@
+components:
+  schemas:
+    UserUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        lastName:
+          # This property is not in the original schema, so we should
+          # expect to see it in the final result.
+          type: string
+        email:
+          type: string
+          nullable: true
+        settings:
+          # We resolve the reference based on the _this_ filepath.
+          $ref: '../common/common.yml#/components/schemas/UserSettings'
+          nullable: true
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+        settings:
+          # We can still resolve the reference based on the OpenAPI source
+          # filepath, too.
+          $ref: 'common/common.yml#/components/schemas/UserSettings'
+          nullable: true
+        stats:
+          $ref: '#/components/schemas/UserStats'
+          nullable: true
+
+    UserStats:
+      type: object
+      properties:
+        totalLogins:
+          type: integer
+          nullable: true
+        lastLoginTime:
+          type: string
+          format: date-time
+          nullable: true
+        accountStatus:
+          type: string
+          enum: [active, suspended, deleted, inactive] # Add inactive
+          nullable: true

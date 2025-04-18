@@ -1,10 +1,8 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using OneOf;
+using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
-
-#nullable enable
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 
@@ -12,13 +10,11 @@ namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 public class GetMetadataTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest_1()
+    public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string mockResponse = """
             {
-              "name": "exampleName",
-              "value": "exampleValue",
-              "default": "exampleDefault"
+              "name": "string"
             }
             """;
 
@@ -31,15 +27,18 @@ public class GetMetadataTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Union.GetMetadataAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Union.GetMetadataAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(
+                    JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(mockResponse)
+                )
+                .UsingDefaults()
+        );
     }
 
     [Test]
-    public async Task MockServerTest_2()
+    public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string mockResponse = """
             {
@@ -58,10 +57,13 @@ public class GetMetadataTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Union.GetMetadataAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Union.GetMetadataAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(
+                    JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(mockResponse)
+                )
+                .UsingDefaults()
+        );
     }
 }

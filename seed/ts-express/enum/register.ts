@@ -13,7 +13,7 @@ export function register(
         inlinedRequest: InlinedRequestService;
         pathParam: PathParamService;
         queryParam: QueryParamService;
-    }
+    },
 ): void {
     (expressApp as any).use("", services.inlinedRequest.toRouter());
     (expressApp as any).use("", services.pathParam.toRouter());

@@ -1,6 +1,6 @@
+import { RawSchemas, isInlineRequestBody, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { PrimitiveTypeV1 } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 
 export const REQUEST_PREFIX = "$request.";
 export const RESPONSE_PREFIX = "$response.";
@@ -213,7 +213,10 @@ export function maybePrimitiveType(resolvedType: ResolvedType | undefined): Prim
     if (resolvedType?._type === "primitive") {
         return resolvedType.primitive.v1;
     }
-    if (resolvedType?._type === "container" && resolvedType.container._type === "optional") {
+    if (
+        resolvedType?._type === "container" &&
+        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
+    ) {
         return maybePrimitiveType(resolvedType.container.itemType);
     }
     return undefined;
@@ -226,7 +229,10 @@ export function maybeFileFromResolvedType(resolvedType: ResolvedType | undefined
     if (resolvedType._type === "named") {
         return resolvedType.file;
     }
-    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
+    if (
+        resolvedType._type === "container" &&
+        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
+    ) {
         return maybeFileFromResolvedType(resolvedType.container.itemType);
     }
     return undefined;
@@ -363,7 +369,10 @@ function maybeObjectSchema(resolvedType: ResolvedType | undefined): RawSchemas.O
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return resolvedType.declaration;
     }
-    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
+    if (
+        resolvedType._type === "container" &&
+        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
+    ) {
         return maybeObjectSchema(resolvedType.container.itemType);
     }
     return undefined;

@@ -15,9 +15,12 @@
 <dd>
 
 ```typescript
-await client.completions.stream({
-    query: "string",
+const response = await client.completions.stream({
+    query: "query",
 });
+for await (const item of response) {
+    console.log(item);
+}
 ```
 
 </dd>

@@ -13,6 +13,7 @@ export const ExampleContainer: core.serialization.Schema<serializers.ExampleCont
             list: core.serialization.lazyObject(() => serializers.ExampleListContainer),
             set: core.serialization.lazyObject(() => serializers.ExampleSetContainer),
             optional: core.serialization.lazyObject(() => serializers.ExampleOptionalContainer),
+            nullable: core.serialization.lazyObject(() => serializers.ExampleNullableContainer),
             map: core.serialization.lazyObject(() => serializers.ExampleMapContainer),
             literal: ExampleLiteralContainer,
         })
@@ -25,6 +26,8 @@ export const ExampleContainer: core.serialization.Schema<serializers.ExampleCont
                         return FernIr.ExampleContainer.set(value);
                     case "optional":
                         return FernIr.ExampleContainer.optional(value);
+                    case "nullable":
+                        return FernIr.ExampleContainer.nullable(value);
                     case "map":
                         return FernIr.ExampleContainer.map(value);
                     case "literal":
@@ -37,30 +40,35 @@ export const ExampleContainer: core.serialization.Schema<serializers.ExampleCont
         });
 
 export declare namespace ExampleContainer {
-    type Raw =
+    export type Raw =
         | ExampleContainer.List
         | ExampleContainer.Set
         | ExampleContainer.Optional
+        | ExampleContainer.Nullable
         | ExampleContainer.Map
         | ExampleContainer.Literal;
 
-    interface List extends serializers.ExampleListContainer.Raw {
+    export interface List extends serializers.ExampleListContainer.Raw {
         type: "list";
     }
 
-    interface Set extends serializers.ExampleSetContainer.Raw {
+    export interface Set extends serializers.ExampleSetContainer.Raw {
         type: "set";
     }
 
-    interface Optional extends serializers.ExampleOptionalContainer.Raw {
+    export interface Optional extends serializers.ExampleOptionalContainer.Raw {
         type: "optional";
     }
 
-    interface Map extends serializers.ExampleMapContainer.Raw {
+    export interface Nullable extends serializers.ExampleNullableContainer.Raw {
+        type: "nullable";
+    }
+
+    export interface Map extends serializers.ExampleMapContainer.Raw {
         type: "map";
     }
 
-    interface Literal extends ExampleLiteralContainer.Raw {
+    export interface Literal extends ExampleLiteralContainer.Raw {
         type: "literal";
     }
 }

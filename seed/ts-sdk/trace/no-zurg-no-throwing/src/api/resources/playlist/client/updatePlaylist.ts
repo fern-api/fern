@@ -9,18 +9,18 @@ export type Error =
     | SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError
     | SeedTrace.playlist.updatePlaylist.Error._Unknown;
 
-export declare namespace Error {
-    interface PlaylistIdNotFoundError {
+export namespace Error {
+    export interface PlaylistIdNotFoundError {
         errorName: "PlaylistIdNotFoundError";
         content: SeedTrace.PlaylistIdNotFoundErrorBody;
     }
 
-    interface _Unknown {
+    export interface _Unknown {
         errorName: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         playlistIdNotFoundError: (value: SeedTrace.PlaylistIdNotFoundErrorBody) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -28,7 +28,7 @@ export declare namespace Error {
 
 export const Error = {
     playlistIdNotFoundError: (
-        value: SeedTrace.PlaylistIdNotFoundErrorBody
+        value: SeedTrace.PlaylistIdNotFoundErrorBody,
     ): SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError => {
         return {
             content: value,
@@ -45,7 +45,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: SeedTrace.playlist.updatePlaylist.Error,
-        visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>
+        visitor: SeedTrace.playlist.updatePlaylist.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.errorName) {
             case "PlaylistIdNotFoundError":

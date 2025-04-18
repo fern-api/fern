@@ -23,30 +23,30 @@ export const SubmissionRequest: core.serialization.Schema<
     });
 
 export declare namespace SubmissionRequest {
-    type Raw =
+    export type Raw =
         | SubmissionRequest.InitializeProblemRequest
         | SubmissionRequest.InitializeWorkspaceRequest
         | SubmissionRequest.SubmitV2
         | SubmissionRequest.WorkspaceSubmit
         | SubmissionRequest.Stop;
 
-    interface InitializeProblemRequest extends serializers.InitializeProblemRequest.Raw {
+    export interface InitializeProblemRequest extends serializers.InitializeProblemRequest.Raw {
         type: "initializeProblemRequest";
     }
 
-    interface InitializeWorkspaceRequest {
+    export interface InitializeWorkspaceRequest {
         type: "initializeWorkspaceRequest";
     }
 
-    interface SubmitV2 extends serializers.SubmitRequestV2.Raw {
+    export interface SubmitV2 extends serializers.SubmitRequestV2.Raw {
         type: "submitV2";
     }
 
-    interface WorkspaceSubmit extends serializers.WorkspaceSubmitRequest.Raw {
+    export interface WorkspaceSubmit extends serializers.WorkspaceSubmitRequest.Raw {
         type: "workspaceSubmit";
     }
 
-    interface Stop extends serializers.StopRequest.Raw {
+    export interface Stop extends serializers.StopRequest.Raw {
         type: "stop";
     }
 }

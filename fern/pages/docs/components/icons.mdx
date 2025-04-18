@@ -1,0 +1,80 @@
+---
+title: 'Icons'
+description: 'Use Font Awesome icons in your documentation'
+---
+
+Add Font Awesome icons to your docs with customizable styles, colors and sizes using the `Icon` component. All Font Awesome Pro styles are supported.
+
+## Examples 
+
+<Tabs>
+  <Tab title="Example">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+      <div><Icon icon="rocket" /> Basic icon</div>
+      <div><Icon icon="check" color="#22C55E" /> Colored icon</div>
+      <div><Icon icon="warning" size="7" /> Large icon</div>
+    </div>
+  </Tab>
+  <Tab title="Markdown">
+    ```jsx
+    <Icon icon="rocket" /> Basic icon
+    <Icon icon="check" color="#22C55E" /> Colored icon
+    <Icon icon="warning" size="7" /> Large icon
+    ```
+  </Tab>
+</Tabs>
+
+## Properties
+
+<ParamField path="icon" type="string" required={true}>
+  Name of the Font Awesome icon (e.g., "heart" or "fa-solid fa-heart")
+</ParamField>
+
+<ParamField path="color" type="string">
+  Icon color (hex, RGB, or color name)
+</ParamField>
+
+<ParamField path="size" type="number">
+  Size in 0.25rem increments (e.g., 4 = 1rem)
+</ParamField>
+
+## Font Awesome Styles
+
+You can use any Font Awesome style by using either:
+- Short syntax: `icon="heart"` (defaults to solid)
+- Full syntax: `icon="fa-regular fa-heart"` (specific style)
+
+<br />
+
+<Tabs>
+  <Tab title="Example">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+      <div><Icon icon="heart" /> Default (Solid)</div>
+      <div><Icon icon="fa-regular fa-heart" /> Regular</div>
+      <div><Icon icon="fa-light fa-heart" /> Light</div>
+      <div><Icon icon="fa-thin fa-heart" /> Thin</div>
+      <div><Icon icon="fa-duotone fa-heart" /> Duotone</div>
+      <div><Icon icon="fa-sharp fa-solid fa-heart" /> Sharp Solid</div>
+      <div><Icon icon="fa-brands fa-github" /> Brands</div>
+    </div>
+  </Tab>
+  <Tab title="Markdown">
+    ```jsx
+    <Icon icon="heart" /> Default (Solid)
+    <Icon icon="fa-regular fa-heart" /> Regular
+    <Icon icon="fa-light fa-heart" /> Light
+    <Icon icon="fa-thin fa-heart" /> Thin
+    <Icon icon="fa-duotone fa-heart" /> Duotone
+    <Icon icon="fa-sharp fa-solid fa-heart" /> Sharp Solid
+    <Icon icon="fa-brands fa-github" /> Brands
+    ```
+  </Tab>
+</Tabs>
+
+## Best Practices
+
+- Use icons consistently throughout your documentation
+- Keep icon sizes appropriate for their context (16-24px for inline, larger for featured items)
+- Ensure sufficient color contrast for accessibility
+- Use semantic icons that reinforce your message (e.g., warning icon for cautions)
+- Avoid using too many different icons which can create visual noise

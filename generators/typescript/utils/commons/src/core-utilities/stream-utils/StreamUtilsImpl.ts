@@ -1,7 +1,9 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { CoreUtility } from "../CoreUtility";
-import { StreamingFetcher, StreamUtils } from "./StreamUtils";
+import { StreamUtils, StreamingFetcher } from "./StreamUtils";
 
 export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
     public readonly MANIFEST = {

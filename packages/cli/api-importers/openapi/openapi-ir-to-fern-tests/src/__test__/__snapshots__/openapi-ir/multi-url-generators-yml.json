@@ -1,0 +1,530 @@
+{
+  "title": "User and Token API",
+  "description": "API for retrieving user information and authentication tokens",
+  "servers": [
+    {
+      "url": "https://a.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "List Users",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetUsersRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "GetUsersResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "401": {
+          "generatedName": "UnauthorizedError",
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "type": "unknown"
+          },
+          "description": "Unauthorized",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "type": "unknown"
+          },
+          "description": "User not found",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "description": "List information about all users",
+      "authed": false,
+      "method": "GET",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "username": {
+                  "value": {
+                    "value": "username",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get user information",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "userId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetUsersUserIdRequestUserId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetUsersUserIdRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "GetUsersUserIdResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "401": {
+          "generatedName": "UnauthorizedError",
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "type": "unknown"
+          },
+          "description": "Unauthorized",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "type": "unknown"
+          },
+          "description": "User not found",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [
+        {
+          "name": "user"
+        }
+      ],
+      "description": "Retrieve detailed information about a specific user",
+      "authed": false,
+      "method": "GET",
+      "path": "/users/{userId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "value": {
+                  "value": "userId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "username": {
+                  "value": {
+                    "value": "username",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get authentication token",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetTokenRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "GetTokenResponse",
+          "schema": "Token",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "401": {
+          "generatedName": "UnauthorizedError",
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "type": "unknown"
+          },
+          "description": "Unauthorized",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [
+        {
+          "name": "auth"
+        }
+      ],
+      "description": "Retrieve an authentication token for the API",
+      "authed": false,
+      "method": "GET",
+      "path": "/token",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "accessToken": {
+                  "value": {
+                    "value": "accessToken",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "tokenType": {
+                  "value": {
+                    "value": "tokenType",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "expiresIn": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "generatedName": "userId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userUsername",
+            "key": "username",
+            "schema": {
+              "generatedName": "userUsername",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserUsername",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userEmail",
+            "key": "email",
+            "schema": {
+              "generatedName": "userEmail",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "generatedName": "userCreatedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "UserCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "User",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Token": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "tokenAccessToken",
+            "key": "accessToken",
+            "schema": {
+              "generatedName": "tokenAccessToken",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TokenAccessToken",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "tokenTokenType",
+            "key": "tokenType",
+            "schema": {
+              "generatedName": "tokenTokenType",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TokenTokenType",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "tokenExpiresIn",
+            "key": "expiresIn",
+            "schema": {
+              "generatedName": "tokenExpiresIn",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "TokenExpiresIn",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Token",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

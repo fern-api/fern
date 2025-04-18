@@ -2,23 +2,33 @@
 
 namespace Seed\Inlined;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ANestedLiteral extends SerializableType
+class ANestedLiteral extends JsonSerializableType
 {
     /**
-     * @var string $myLiteral
+     * @var 'How super cool' $myLiteral
      */
-    #[JsonProperty("myLiteral")]
+    #[JsonProperty('myLiteral')]
     public string $myLiteral;
 
     /**
-     * @param string $myLiteral
+     * @param array{
+     *   myLiteral: 'How super cool',
+     * } $values
      */
     public function __construct(
-        string $myLiteral,
+        array $values,
     ) {
-        $this->myLiteral = $myLiteral;
+        $this->myLiteral = $values['myLiteral'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

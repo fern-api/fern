@@ -2,26 +2,36 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\Language;
 use Seed\V2\Problem\Types\Files;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class WorkspaceStarterFilesResponseV2 extends SerializableType
+class WorkspaceStarterFilesResponseV2 extends JsonSerializableType
 {
     /**
-     * @var array<Language, Files> $filesByLanguage
+     * @var array<value-of<Language>, Files> $filesByLanguage
      */
-    #[JsonProperty("filesByLanguage"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('filesByLanguage'), ArrayType(['string' => Files::class])]
     public array $filesByLanguage;
 
     /**
-     * @param array<Language, Files> $filesByLanguage
+     * @param array{
+     *   filesByLanguage: array<value-of<Language>, Files>,
+     * } $values
      */
     public function __construct(
-        array $filesByLanguage,
+        array $values,
     ) {
-        $this->filesByLanguage = $filesByLanguage;
+        $this->filesByLanguage = $values['filesByLanguage'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

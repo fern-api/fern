@@ -1,12 +1,19 @@
 import { Values } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/path-utils";
+
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+
+import { generatorsYml } from "..";
 import { Audiences } from "../commons";
-import { APIDefinitionSettingsSchema } from "./schemas/APIConfigurationSchema";
-import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
-import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
-import { ReadmeSchema } from "./schemas/ReadmeSchema";
+import {
+    ApiDefinitionSettingsSchema,
+    GeneratorInvocationSchema,
+    GeneratorsConfigurationSchema,
+    OpenApiFilterSchema,
+    OpenRpcSpecSchema,
+    ReadmeSchema
+} from "./schemas";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -19,7 +26,7 @@ export interface GeneratorsConfiguration {
     absolutePathToConfiguration: AbsoluteFilePath;
 }
 
-export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition;
+export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition | ConjureAPIDefinition;
 
 export interface SingleNamespaceAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
@@ -38,11 +45,32 @@ export interface MultiNamespaceAPIDefinition
     definitions: Record<string, APIDefinitionLocation[]>;
 }
 
+export interface ConjureAPIDefinition
+    extends RawSchemas.WithEnvironmentsSchema,
+        RawSchemas.WithAuthSchema,
+        RawSchemas.WithHeadersSchema {
+    type: "conjure";
+    pathToConjureDefinition: string;
+}
+
 export interface APIDefinitionSettings {
     shouldUseTitleAsName: boolean | undefined;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
+    shouldUseIdiomaticRequestNames: boolean | undefined;
     asyncApiMessageNaming: "v1" | "v2" | undefined;
     shouldUseOptionalAdditionalProperties: boolean | undefined;
+    coerceEnumsToLiterals: boolean | undefined;
+    objectQueryParameters: boolean | undefined;
+    respectReadonlySchemas: boolean | undefined;
+    respectNullableSchemas: boolean | undefined;
+    onlyIncludeReferencedSchemas: boolean | undefined;
+    inlinePathParameters: boolean | undefined;
+    useBytesForBinaryResponse: boolean | undefined;
+    respectForwardCompatibleEnums: boolean | undefined;
+    filter: OpenApiFilterSchema | undefined;
+    defaultFormParameterEncoding: "form" | "json" | undefined;
+    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+    additionalPropertiesDefaultsTo: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {
@@ -53,7 +81,7 @@ export interface APIDefinitionLocation {
     settings: APIDefinitionSettings | undefined;
 }
 
-export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema;
+export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema;
 
 export interface ProtoAPIDefinitionSchema {
     type: "protobuf";
@@ -64,6 +92,11 @@ export interface ProtoAPIDefinitionSchema {
 
 export interface OSSAPIDefinitionSchema {
     type: "oss";
+    path: string;
+}
+
+export interface OpenRPCDefinitionSchema {
+    type: "openrpc";
     path: string;
 }
 
@@ -101,7 +134,7 @@ export interface GeneratorInvocation {
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;
-    settings: APIDefinitionSettingsSchema | undefined;
+    settings: ApiDefinitionSettingsSchema | undefined;
 }
 
 export const GenerationLanguage = {
@@ -122,6 +155,9 @@ export function getPackageName({
 }: {
     generatorInvocation: GeneratorInvocation;
 }): string | undefined {
+    if (generatorInvocation.language === "go") {
+        return getGoPackageName(generatorInvocation);
+    }
     return generatorInvocation.outputMode._visit<string | undefined>({
         downloadFiles: () => undefined,
         github: (val) =>
@@ -144,6 +180,21 @@ export function getPackageName({
                 nuget: (val) => val.packageName,
                 _other: () => undefined
             }),
+        publish: () => undefined,
+        publishV2: () => undefined,
+        _other: () => undefined
+    });
+}
+
+/**
+ * Go doesn't use a central package manager; the Go Module Proxy simply uses the name
+ * of the GitHub repository.
+ */
+function getGoPackageName(generatorInvocation: GeneratorInvocation): string | undefined {
+    return generatorInvocation.outputMode._visit<string | undefined>({
+        downloadFiles: () => undefined,
+        github: (val) => `github.com/${val.owner}/${val.repo}`,
+        githubV2: (val) => `github.com/${val.owner}/${val.repo}`,
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined

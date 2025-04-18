@@ -1,11 +1,11 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration-loader";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 
 export function convertDocsSnippetsConfigToFdr(
     snippetsConfiguration: docsYml.RawSchemas.SnippetsConfiguration | undefined
 ): APIV1Write.SnippetsConfig {
     if (snippetsConfiguration == null) {
-        return {};
+        return {} as APIV1Write.SnippetsConfig;
     }
     return {
         pythonSdk:
@@ -69,6 +69,19 @@ export function convertDocsSnippetsConfigToFdr(
                           typeof snippetsConfiguration.ruby === "string"
                               ? undefined
                               : snippetsConfiguration.ruby.version
+                  }
+                : undefined,
+        csharpSdk:
+            snippetsConfiguration.csharp != null
+                ? {
+                      package:
+                          typeof snippetsConfiguration.csharp === "string"
+                              ? snippetsConfiguration.csharp
+                              : snippetsConfiguration.csharp.package,
+                      version:
+                          typeof snippetsConfiguration.csharp === "string"
+                              ? undefined
+                              : snippetsConfiguration.csharp.version
                   }
                 : undefined
     };

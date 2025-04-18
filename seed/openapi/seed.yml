@@ -1,4 +1,4 @@
-irVersion: v23
+irVersion: v53
 displayName: OpenAPI
 image: fernapi/fern-openapi
 changelogLocation: ../../generators/openapi/versions.yml
@@ -20,11 +20,30 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        customOverrides: 
+          components: 
+            schemas: 
+              MovieId: 
+                type: null
+      outputFolder: override
+    - customConfig:
         customOverrides:
           info: 
             license: MIT
       outputFolder: custom-overrides
     - customConfig:
+        filename: imdb.yaml
+      outputFolder: custom-filename
+    - customConfig:
         format: json
       outputFolder: json-format
-
+  enum: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customOverrides: 
+          components: 
+            schemas: 
+              Operand: 
+                type: null     
+      outputFolder: custom-overrides  

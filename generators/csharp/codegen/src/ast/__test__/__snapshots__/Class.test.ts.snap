@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`class > basic 1`] = `
+"namespace Automotive;
+
+public class Car(string make,string model);"
+`;

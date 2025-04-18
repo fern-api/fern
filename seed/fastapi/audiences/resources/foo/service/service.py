@@ -23,9 +23,7 @@ class AbstractFooService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def find(
-        self, *, body: FindRequest, optional_string: typing.Optional[str] = None
-    ) -> ImportingType: ...
+    def find(self, *, body: FindRequest, optional_string: typing.Optional[str] = None) -> ImportingType: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -40,26 +38,16 @@ class AbstractFooService(AbstractFernService):
     def __init_find(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.find)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_string":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=..., alias="optionalString")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=..., alias="optionalString")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.find,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.find, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.find)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ImportingType:

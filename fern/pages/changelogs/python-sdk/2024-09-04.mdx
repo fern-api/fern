@@ -1,0 +1,8 @@
+## 3.11.0-rc0
+**`(chore):`** Remove Pydantic field aliases and leverage an internal representation.
+
+### What's been fixed
+- Pydantic field aliases are removed and replaced with an internal representation. This allows for more robust handling of field aliases and prevents issues with Pydantic V2 and mypy.
+Previously, you'd have for V1 and V2 compatibility in Pydantic, you'd want to conditionally apply the config class within the base model, however this would lead to mypy errors when filling out a model with it's field alias. To solve this, We used the deprecated `class Config`, regardless of the Pydantic version to satisfy mypy, which lead to warnings in the console.
+Now, we've removed the field aliases and replaced them with an internal representation, which allows us to avoid pydantic config altogether.
+

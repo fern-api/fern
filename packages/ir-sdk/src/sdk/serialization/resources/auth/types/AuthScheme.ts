@@ -36,21 +36,21 @@ export const AuthScheme: core.serialization.Schema<serializers.AuthScheme.Raw, F
     });
 
 export declare namespace AuthScheme {
-    type Raw = AuthScheme.Bearer | AuthScheme.Basic | AuthScheme.Header | AuthScheme.Oauth;
+    export type Raw = AuthScheme.Bearer | AuthScheme.Basic | AuthScheme.Header | AuthScheme.Oauth;
 
-    interface Bearer extends BearerAuthScheme.Raw {
+    export interface Bearer extends BearerAuthScheme.Raw {
         _type: "bearer";
     }
 
-    interface Basic extends BasicAuthScheme.Raw {
+    export interface Basic extends BasicAuthScheme.Raw {
         _type: "basic";
     }
 
-    interface Header extends HeaderAuthScheme.Raw {
+    export interface Header extends HeaderAuthScheme.Raw {
         _type: "header";
     }
 
-    interface Oauth extends OAuthScheme.Raw {
+    export interface Oauth extends OAuthScheme.Raw {
         _type: "oauth";
     }
 }

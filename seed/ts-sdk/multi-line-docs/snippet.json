@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser(\"string\");\n"
+                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser(\"userId\");\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"string\",\n    age: 1\n});\n"
+                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"name\",\n    age: 1\n});\n"
             }
         }
     ],

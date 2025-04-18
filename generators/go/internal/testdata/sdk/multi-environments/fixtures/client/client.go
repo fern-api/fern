@@ -5,6 +5,7 @@ package client
 import (
 	auth "github.com/fern-api/fern-go/internal/testdata/sdk/multi-environments/fixtures/auth"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/multi-environments/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/multi-environments/fixtures/internal"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/multi-environments/fixtures/option"
 	plant "github.com/fern-api/fern-go/internal/testdata/sdk/multi-environments/fixtures/plant"
 	http "net/http"
@@ -12,7 +13,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	Auth  *auth.Client
@@ -23,8 +24,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

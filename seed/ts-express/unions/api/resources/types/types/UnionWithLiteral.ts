@@ -4,15 +4,22 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "fern",
+ *         value: "fern"
+ *     }
+ */
 export type UnionWithLiteral = SeedUnions.UnionWithLiteral.Fern;
 
-export declare namespace UnionWithLiteral {
-    interface Fern extends _Base {
+export namespace UnionWithLiteral {
+    export interface Fern extends _Base {
         type: "fern";
         value: "fern";
     }
 
-    interface _Base {
+    export interface _Base {
         base: "base";
     }
 }

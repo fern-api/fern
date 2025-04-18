@@ -297,7 +297,7 @@ await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a
 <dd>
 
 ```typescript
-await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
+await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", {
     result: {
         result: {
             expectedResult: {
@@ -308,14 +308,12 @@ await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "
                 type: "value",
                 value: {
                     type: "integerValue",
-                    value: {
-                        key: "value",
-                    },
+                    value: 1,
                 },
             },
             passed: true,
         },
-        stdout: "string",
+        stdout: "stdout",
     },
     traceResponses: [
         {
@@ -332,20 +330,67 @@ await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "
             stack: {
                 numStackFrames: 1,
                 topStackFrame: {
-                    methodName: "string",
+                    methodName: "methodName",
                     lineNumber: 1,
                     scopes: [
                         {
                             variables: {
-                                string: {
-                                    key: "value",
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
+                            },
+                        },
+                        {
+                            variables: {
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
                                 },
                             },
                         },
                     ],
                 },
             },
-            stdout: "string",
+            stdout: "stdout",
+        },
+        {
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            lineNumber: 1,
+            returnValue: {
+                type: "integerValue",
+                value: 1,
+            },
+            expressionLocation: {
+                start: 1,
+                offset: 1,
+            },
+            stack: {
+                numStackFrames: 1,
+                topStackFrame: {
+                    methodName: "methodName",
+                    lineNumber: 1,
+                    scopes: [
+                        {
+                            variables: {
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
+                            },
+                        },
+                        {
+                            variables: {
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
+                            },
+                        },
+                    ],
+                },
+            },
+            stdout: "stdout",
         },
     ],
 });
@@ -412,13 +457,13 @@ await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "
 <dd>
 
 ```typescript
-await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [
+await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", [
     {
         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         lineNumber: 1,
         file: {
-            filename: "string",
-            directory: "string",
+            filename: "filename",
+            directory: "directory",
         },
         returnValue: {
             type: "integerValue",
@@ -431,20 +476,71 @@ await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         stack: {
             numStackFrames: 1,
             topStackFrame: {
-                methodName: "string",
+                methodName: "methodName",
                 lineNumber: 1,
                 scopes: [
                     {
                         variables: {
-                            string: {
-                                key: "value",
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                    },
+                    {
+                        variables: {
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
                             },
                         },
                     },
                 ],
             },
         },
-        stdout: "string",
+        stdout: "stdout",
+    },
+    {
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        lineNumber: 1,
+        file: {
+            filename: "filename",
+            directory: "directory",
+        },
+        returnValue: {
+            type: "integerValue",
+            value: 1,
+        },
+        expressionLocation: {
+            start: 1,
+            offset: 1,
+        },
+        stack: {
+            numStackFrames: 1,
+            topStackFrame: {
+                methodName: "methodName",
+                lineNumber: 1,
+                scopes: [
+                    {
+                        variables: {
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                    },
+                    {
+                        variables: {
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                    },
+                ],
+            },
+        },
+        stdout: "stdout",
     },
 ]);
 ```
@@ -514,16 +610,16 @@ await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", 
     workspaceRunDetails: {
         exceptionV2: {
             type: "generic",
-            exceptionType: "string",
-            exceptionMessage: "string",
-            exceptionStacktrace: "string",
+            exceptionType: "exceptionType",
+            exceptionMessage: "exceptionMessage",
+            exceptionStacktrace: "exceptionStacktrace",
         },
         exception: {
-            exceptionType: "string",
-            exceptionMessage: "string",
-            exceptionStacktrace: "string",
+            exceptionType: "exceptionType",
+            exceptionMessage: "exceptionMessage",
+            exceptionStacktrace: "exceptionStacktrace",
         },
-        stdout: "string",
+        stdout: "stdout",
     },
     traceResponses: [
         {
@@ -540,20 +636,67 @@ await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", 
             stack: {
                 numStackFrames: 1,
                 topStackFrame: {
-                    methodName: "string",
+                    methodName: "methodName",
                     lineNumber: 1,
                     scopes: [
                         {
                             variables: {
-                                string: {
-                                    key: "value",
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
+                            },
+                        },
+                        {
+                            variables: {
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
                                 },
                             },
                         },
                     ],
                 },
             },
-            stdout: "string",
+            stdout: "stdout",
+        },
+        {
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            lineNumber: 1,
+            returnValue: {
+                type: "integerValue",
+                value: 1,
+            },
+            expressionLocation: {
+                start: 1,
+                offset: 1,
+            },
+            stack: {
+                numStackFrames: 1,
+                topStackFrame: {
+                    methodName: "methodName",
+                    lineNumber: 1,
+                    scopes: [
+                        {
+                            variables: {
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
+                            },
+                        },
+                        {
+                            variables: {
+                                variables: {
+                                    type: "integerValue",
+                                    value: 1,
+                                },
+                            },
+                        },
+                    ],
+                },
+            },
+            stdout: "stdout",
         },
     ],
 });
@@ -617,8 +760,8 @@ await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
         submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         lineNumber: 1,
         file: {
-            filename: "string",
-            directory: "string",
+            filename: "filename",
+            directory: "directory",
         },
         returnValue: {
             type: "integerValue",
@@ -631,20 +774,71 @@ await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
         stack: {
             numStackFrames: 1,
             topStackFrame: {
-                methodName: "string",
+                methodName: "methodName",
                 lineNumber: 1,
                 scopes: [
                     {
                         variables: {
-                            string: {
-                                key: "value",
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                    },
+                    {
+                        variables: {
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
                             },
                         },
                     },
                 ],
             },
         },
-        stdout: "string",
+        stdout: "stdout",
+    },
+    {
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        lineNumber: 1,
+        file: {
+            filename: "filename",
+            directory: "directory",
+        },
+        returnValue: {
+            type: "integerValue",
+            value: 1,
+        },
+        expressionLocation: {
+            start: 1,
+            offset: 1,
+        },
+        stack: {
+            numStackFrames: 1,
+            topStackFrame: {
+                methodName: "methodName",
+                lineNumber: 1,
+                scopes: [
+                    {
+                        variables: {
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                    },
+                    {
+                        variables: {
+                            variables: {
+                                type: "integerValue",
+                                value: 1,
+                            },
+                        },
+                    },
+                ],
+            },
+        },
+        stdout: "stdout",
     },
 ]);
 ```
@@ -744,7 +938,7 @@ await client.homepage.getHomepageProblems();
 <dd>
 
 ```typescript
-await client.homepage.setHomepageProblems(["string"]);
+await client.homepage.setHomepageProblems(["string", "string"]);
 ```
 
 </dd>
@@ -795,7 +989,7 @@ await client.homepage.setHomepageProblems(["string"]);
 
 ```typescript
 await client.migration.getAttemptedMigrations({
-    adminKeyHeader: "string",
+    adminKeyHeader: "admin-key-header",
 });
 ```
 
@@ -865,8 +1059,8 @@ await client.playlist.createPlaylist(1, {
     datetime: "2024-01-15T09:30:00Z",
     optionalDatetime: "2024-01-15T09:30:00Z",
     body: {
-        name: "string",
-        problems: ["string"],
+        name: "name",
+        problems: ["problems", "problems"],
     },
 });
 ```
@@ -941,10 +1135,10 @@ Returns the user's playlists
 ```typescript
 await client.playlist.getPlaylists(1, {
     limit: 1,
-    otherField: "string",
-    multiLineDocs: "string",
-    optionalMultipleField: "string",
-    multipleField: "string",
+    otherField: "otherField",
+    multiLineDocs: "multiLineDocs",
+    optionalMultipleField: "optionalMultipleField",
+    multipleField: "multipleField",
 });
 ```
 
@@ -1016,7 +1210,7 @@ Returns a playlist
 <dd>
 
 ```typescript
-await client.playlist.getPlaylist(1, "string");
+await client.playlist.getPlaylist(1, "playlistId");
 ```
 
 </dd>
@@ -1087,9 +1281,9 @@ Updates a playlist
 <dd>
 
 ```typescript
-await client.playlist.updatePlaylist(1, "string", {
-    name: "string",
-    problems: ["string"],
+await client.playlist.updatePlaylist(1, "playlistId", {
+    name: "name",
+    problems: ["problems", "problems"],
 });
 ```
 
@@ -1169,7 +1363,7 @@ Deletes a playlist
 <dd>
 
 ```typescript
-await client.playlist.deletePlaylist(1, "string");
+await client.playlist.deletePlaylist(1, "playlist_id");
 ```
 
 </dd>
@@ -1243,25 +1437,33 @@ Creates a problem
 
 ```typescript
 await client.problem.createProblem({
-    problemName: "string",
+    problemName: "problemName",
     problemDescription: {
         boards: [
             {
                 type: "html",
-                value: "string",
+                value: "boards",
+            },
+            {
+                type: "html",
+                value: "boards",
             },
         ],
     },
     files: {
         ["JAVA"]: {
             solutionFile: {
-                filename: "string",
-                contents: "string",
+                filename: "filename",
+                contents: "contents",
             },
             readOnlyFiles: [
                 {
-                    filename: "string",
-                    contents: "string",
+                    filename: "filename",
+                    contents: "contents",
+                },
+                {
+                    filename: "filename",
+                    contents: "contents",
                 },
             ],
         },
@@ -1271,7 +1473,13 @@ await client.problem.createProblem({
             variableType: {
                 type: "integerType",
             },
-            name: "string",
+            name: "name",
+        },
+        {
+            variableType: {
+                type: "integerType",
+            },
+            name: "name",
         },
     ],
     outputType: {
@@ -1280,8 +1488,31 @@ await client.problem.createProblem({
     testcases: [
         {
             testCase: {
-                id: "string",
+                id: "id",
                 params: [
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                ],
+            },
+            expectedResult: {
+                type: "integerValue",
+                value: 1,
+            },
+        },
+        {
+            testCase: {
+                id: "id",
+                params: [
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
                     {
                         type: "integerValue",
                         value: 1,
@@ -1294,7 +1525,7 @@ await client.problem.createProblem({
             },
         },
     ],
-    methodName: "string",
+    methodName: "methodName",
 });
 ```
 
@@ -1358,26 +1589,34 @@ Updates a problem
 <dd>
 
 ```typescript
-await client.problem.updateProblem("string", {
-    problemName: "string",
+await client.problem.updateProblem("problemId", {
+    problemName: "problemName",
     problemDescription: {
         boards: [
             {
                 type: "html",
-                value: "string",
+                value: "boards",
+            },
+            {
+                type: "html",
+                value: "boards",
             },
         ],
     },
     files: {
         ["JAVA"]: {
             solutionFile: {
-                filename: "string",
-                contents: "string",
+                filename: "filename",
+                contents: "contents",
             },
             readOnlyFiles: [
                 {
-                    filename: "string",
-                    contents: "string",
+                    filename: "filename",
+                    contents: "contents",
+                },
+                {
+                    filename: "filename",
+                    contents: "contents",
                 },
             ],
         },
@@ -1387,7 +1626,13 @@ await client.problem.updateProblem("string", {
             variableType: {
                 type: "integerType",
             },
-            name: "string",
+            name: "name",
+        },
+        {
+            variableType: {
+                type: "integerType",
+            },
+            name: "name",
         },
     ],
     outputType: {
@@ -1396,8 +1641,31 @@ await client.problem.updateProblem("string", {
     testcases: [
         {
             testCase: {
-                id: "string",
+                id: "id",
                 params: [
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                ],
+            },
+            expectedResult: {
+                type: "integerValue",
+                value: 1,
+            },
+        },
+        {
+            testCase: {
+                id: "id",
+                params: [
+                    {
+                        type: "integerValue",
+                        value: 1,
+                    },
                     {
                         type: "integerValue",
                         value: 1,
@@ -1410,7 +1678,7 @@ await client.problem.updateProblem("string", {
             },
         },
     ],
-    methodName: "string",
+    methodName: "methodName",
 });
 ```
 
@@ -1482,7 +1750,7 @@ Soft deletes a problem
 <dd>
 
 ```typescript
-await client.problem.deleteProblem("string");
+await client.problem.deleteProblem("problemId");
 ```
 
 </dd>
@@ -1551,13 +1819,19 @@ await client.problem.getDefaultStarterFiles({
             variableType: {
                 type: "integerType",
             },
-            name: "string",
+            name: "name",
+        },
+        {
+            variableType: {
+                type: "integerType",
+            },
+            name: "name",
         },
     ],
     outputType: {
         type: "integerType",
     },
-    methodName: "string",
+    methodName: "methodName",
 });
 ```
 
@@ -1686,7 +1960,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```typescript
-await client.submission.getExecutionSession("string");
+await client.submission.getExecutionSession("sessionId");
 ```
 
 </dd>
@@ -1749,7 +2023,7 @@ Stops execution session.
 <dd>
 
 ```typescript
-await client.submission.stopExecutionSession("string");
+await client.submission.stopExecutionSession("sessionId");
 ```
 
 </dd>
@@ -2062,7 +2336,7 @@ Returns latest version of a problem
 <dd>
 
 ```typescript
-await client.v2.problem.getLatestProblem("string");
+await client.v2.problem.getLatestProblem("problemId");
 ```
 
 </dd>
@@ -2125,7 +2399,7 @@ Returns requested version of a problem
 <dd>
 
 ```typescript
-await client.v2.problem.getProblemVersion("string", 1);
+await client.v2.problem.getProblemVersion("problemId", 1);
 ```
 
 </dd>
@@ -2308,7 +2582,7 @@ Returns latest version of a problem
 <dd>
 
 ```typescript
-await client.v2.v3.problem.getLatestProblem("string");
+await client.v2.v3.problem.getLatestProblem("problemId");
 ```
 
 </dd>
@@ -2371,7 +2645,7 @@ Returns requested version of a problem
 <dd>
 
 ```typescript
-await client.v2.v3.problem.getProblemVersion("string", 1);
+await client.v2.v3.problem.getProblemVersion("problemId", 1);
 ```
 
 </dd>

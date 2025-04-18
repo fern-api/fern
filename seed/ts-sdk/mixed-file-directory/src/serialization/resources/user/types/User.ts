@@ -15,7 +15,7 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedMix
     });
 
 export declare namespace User {
-    interface Raw {
+    export interface Raw {
         id: Id.Raw;
         name: string;
         age: number;

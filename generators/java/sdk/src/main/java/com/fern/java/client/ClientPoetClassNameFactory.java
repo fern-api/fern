@@ -6,6 +6,7 @@ import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
+import com.fern.java.ICustomConfig;
 import com.fern.java.utils.CasingUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.Optional;
 
 public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
-    public ClientPoetClassNameFactory(List<String> packagePrefixTokens) {
-        super(packagePrefixTokens);
+    public ClientPoetClassNameFactory(List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        super(packagePrefixTokens, packageLayout);
     }
 
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
@@ -22,6 +23,14 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(
                 packageName,
                 errorDeclaration.getName().getName().getPascalCase().getSafeName());
+    }
+
+    public ClassName getInputStreamRequestBodyClassName() {
+        return ClassName.get(getCorePackage(), "InputStreamRequestBody");
+    }
+
+    public ClassName getFileStreamClassName() {
+        return ClassName.get(getCorePackage(), "FileStream");
     }
 
     public ClassName getRetryInterceptorClassName() {
@@ -34,6 +43,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
 
     public ClassName getResponseBodyReaderClassName() {
         return ClassName.get(getCorePackage(), "ResponseBodyReader");
+    }
+
+    public ClassName getApiVersionClassName() {
+        return ClassName.get(getCorePackage(), "ApiVersion");
     }
 
     public ClassName getRequestOptionsClassName() {
@@ -54,8 +67,16 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
     }
 
     public ClassName getRequestWrapperBodyClassName(HttpService httpService, SdkRequestWrapper sdkRequestWrapper) {
-        String packageName =
-                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
+        String packageName;
+        switch (packageLayout) {
+            case FLAT:
+                packageName = getTypesPackageName(httpService.getName().getFernFilepath());
+                break;
+            case NESTED:
+            default:
+                packageName = getResourcesPackage(
+                        Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
+        }
         return ClassName.get(
                 packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
     }
@@ -76,6 +97,13 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 .orElseGet(() ->
                         customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
                                 + "Exception");
+        return getCoreClassName(name);
+    }
+
+    public ClassName getHttpResponseClassName(
+            String organization, String workspaceName, JavaSdkCustomConfig customConfig) {
+        String name = customConfig.clientClassName().orElseGet(() -> getBaseNamePrefix(organization, workspaceName))
+                + "HttpResponse";
         return getCoreClassName(name);
     }
 

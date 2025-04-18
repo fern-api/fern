@@ -1,11 +1,15 @@
-name: api
-error-discrimination:
-  strategy: status-code
-display-name: Train Travel API
-default-environment: Production
-environments:
-  Production: https://api.example.com
+auth: BearerAuthScheme
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer
-auth: BearerAuthScheme
+default-environment: Production
+default-url: Base
+display-name: Train Travel API
+environments:
+  Production:
+    urls:
+      Base: https://api.example.com
+      public: wss://api.gemini.com
+error-discrimination:
+  strategy: status-code
+name: api

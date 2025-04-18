@@ -78,7 +78,7 @@ public final class Type {
         }
 
         @java.lang.Override
-        public Type deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public Type deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, BasicType.class));

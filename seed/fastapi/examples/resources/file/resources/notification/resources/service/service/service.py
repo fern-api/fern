@@ -39,24 +39,16 @@ class AbstractFileNotificationServiceService(AbstractFernService):
     def __init_get_exception(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_exception)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "notification_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "auth":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Depends(FernAuth))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_exception,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_exception, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_exception)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Exception:
@@ -78,7 +70,5 @@ class AbstractFileNotificationServiceService(AbstractFernService):
             path="/file/notification/{notification_id}",
             response_model=Exception,
             description=AbstractFileNotificationServiceService.get_exception.__doc__,
-            **get_route_args(
-                cls.get_exception, default_tag="file.notification.service"
-            ),
+            **get_route_args(cls.get_exception, default_tag="file.notification.service"),
         )(wrapper)

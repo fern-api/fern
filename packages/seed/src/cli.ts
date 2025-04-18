@@ -1,10 +1,16 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { askToLogin } from "@fern-api/login";
-import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { askToLogin } from "@fern-api/login";
+
+import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
+
+import { Semaphore } from "./Semaphore";
+import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
+import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { publishCli } from "./commands/publish/publishCli";
@@ -19,7 +25,6 @@ import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
-import { Semaphore } from "./Semaphore";
 
 void tryRunCli();
 
@@ -41,6 +46,7 @@ export async function tryRunCli(): Promise<void> {
     addPublishCommands(cli);
     addValidateCommands(cli);
     addLatestCommands(cli);
+    addGenerateCommands(cli);
 
     await cli.parse();
 }
@@ -95,6 +101,12 @@ function addTestCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
+                })
+                .option("allow-unexpected-failures", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Allow unexpected test failures without failing the command"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -112,7 +124,11 @@ function addTestCommand(cli: Argv) {
                     continue;
                 }
                 let testRunner;
-                const scriptRunner = new ScriptRunner(generator, argv.skipScripts);
+                const scriptRunner = new ScriptRunner(
+                    generator,
+                    argv.skipScripts,
+                    taskContextFactory.create("script-runner")
+                );
                 if (argv.local && generator.workspaceConfig.test.local != null) {
                     testRunner = new LocalTestRunner({
                         generator,
@@ -149,8 +165,8 @@ function addTestCommand(cli: Argv) {
                 await scriptRunner.stop();
             }
 
-            // If any of the tests failed, exit with a non-zero status code
-            if (results.includes(false)) {
+            // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
+            if (results.includes(false) && !argv["allow-unexpected-failures"]) {
                 process.exit(1);
             }
         }
@@ -178,6 +194,11 @@ function addRunCommand(cli: Argv) {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
                 })
+                .option("skip-scripts", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false
+                })
                 .option("audience", {
                     string: true,
                     demandOption: false
@@ -199,7 +220,8 @@ function addRunCommand(cli: Argv) {
                     : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path)),
                 workspace: generator,
                 logLevel: argv["log-level"],
-                audience: argv.audience
+                audience: argv.audience,
+                skipScripts: argv.skipScripts
             });
         }
     );
@@ -571,6 +593,115 @@ function addValidateCommands(cli: Argv) {
                     }
                 }
             );
+    });
+}
+
+function addGenerateCommands(cli: Argv) {
+    cli.command("generate", "generate artifacts based on your seed declarations", (yargs) => {
+        yargs.command("changelog", "generate a changelog in the Fern Docs format", (tlYargs) => {
+            tlYargs
+                .command(
+                    "cli",
+                    "Generate a changelog for CLI releases",
+                    (addtlYargs) =>
+                        addtlYargs
+                            .option("log-level", {
+                                default: LogLevel.Info,
+                                choices: LOG_LEVELS
+                            })
+                            .option("output", {
+                                alias: "o",
+                                description:
+                                    "Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.",
+                                string: true,
+                                demandOption: false
+                            })
+                            .option("clean-directory", {
+                                type: "boolean",
+                                demandOption: false,
+                                description:
+                                    "If true, we will delete the contents of the output directory before generating the changelog."
+                            }),
+                    async (argv) => {
+                        const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                        const context = taskContextFactory.create("Changelog");
+
+                        const token = await askToLogin(context);
+                        const fdrClient = createFdrService({ token: token.value });
+
+                        await generateCliChangelog({
+                            context,
+                            outputPath: argv.output,
+                            fdrClient,
+                            cleanOutputDirectory: argv.cleanDirectory ?? false
+                        });
+                    }
+                )
+                .command(
+                    "generator",
+                    "Generate a changelog for generator releases.",
+                    (yargs) =>
+                        yargs
+                            // This would ideally be positional, but you can't have positional arguments that are arrays with yargs
+                            .option("generators", {
+                                array: true,
+                                type: "string",
+                                demandOption: false,
+                                description: "Generator(s) to register"
+                            })
+                            .option("output", {
+                                alias: "o",
+                                description:
+                                    "Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.",
+                                string: true,
+                                demandOption: false
+                            })
+                            .option("log-level", {
+                                default: LogLevel.Info,
+                                choices: LOG_LEVELS
+                            })
+                            .option("clean-directory", {
+                                type: "boolean",
+                                demandOption: false,
+                                description:
+                                    "If true, we will delete the contents of the output directory before generating the changelog."
+                            }),
+                    async (argv) => {
+                        const generators = await loadGeneratorWorkspaces();
+                        if (argv.generators != null) {
+                            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators });
+                        }
+                        const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                        const context = taskContextFactory.create("Changelog");
+
+                        const token = await askToLogin(context);
+                        const fdrClient = createFdrService({ token: token.value });
+
+                        for (const generator of generators) {
+                            // If you've specified a list of generators, and the current generator is not in that list, skip it
+                            if (argv.generators != null && !argv.generators.includes(generator.workspaceName)) {
+                                continue;
+                            }
+
+                            let outputPath = argv.output;
+                            if (argv.generators == null || argv.generators?.length > 1) {
+                                outputPath = join(
+                                    RelativeFilePath.of(argv.output ?? "./"),
+                                    RelativeFilePath.of(generator.workspaceName)
+                                );
+                            }
+
+                            await generateGeneratorChangelog({
+                                context,
+                                generator,
+                                outputPath,
+                                fdrClient,
+                                cleanOutputDirectory: argv.cleanDirectory ?? false
+                            });
+                        }
+                    }
+                );
+        });
     });
 }
 

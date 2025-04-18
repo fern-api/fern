@@ -1,4 +1,13 @@
-import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook } from "@fern-api/ir-sdk";
+import {
+    ErrorDeclaration,
+    HttpEndpoint,
+    HttpService,
+    TypeDeclaration,
+    WebSocketChannel,
+    WebSocketChannelId,
+    Webhook
+} from "@fern-api/ir-sdk";
+
 import { IdGenerator } from "../IdGenerator";
 import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 
@@ -17,6 +26,7 @@ export interface FilteredIr {
     hasRequestProperty(endpoint: string, property: string): boolean;
     hasQueryParameter(endpoint: string, parameter: string): boolean;
     hasSubpackageId(subpackageId: string): boolean;
+    hasChannel(channel: WebSocketChannel): boolean;
 }
 
 export class FilteredIrImpl implements FilteredIr {
@@ -30,6 +40,7 @@ export class FilteredIrImpl implements FilteredIr {
     private queryParameters: Record<EndpointId, Set<string> | undefined>;
     private webhooks: Set<WebhookId> = new Set();
     private webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
+    private channels: Set<WebSocketChannelId> = new Set();
     private subpackages: Set<SubpackageId> = new Set();
 
     public constructor({
@@ -43,7 +54,8 @@ export class FilteredIrImpl implements FilteredIr {
         subpackages,
         queryParameters,
         requestProperties,
-        webhookPayloadProperties
+        webhookPayloadProperties,
+        channels
     }: {
         types: Set<TypeId>;
         properties: Record<TypeId, Set<string> | undefined>;
@@ -56,6 +68,7 @@ export class FilteredIrImpl implements FilteredIr {
         webhooks: Set<WebhookId>;
         webhookPayloadProperties: Record<WebhookId, Set<string> | undefined>;
         subpackages: Set<SubpackageId>;
+        channels: Set<WebSocketChannelId>;
     }) {
         this.environments = environments;
         this.types = types;
@@ -68,6 +81,7 @@ export class FilteredIrImpl implements FilteredIr {
         this.subpackages = subpackages;
         this.requestProperties = requestProperties;
         this.queryParameters = queryParameters;
+        this.channels = channels;
     }
 
     public hasTypeId(typeId: string): boolean {
@@ -143,6 +157,13 @@ export class FilteredIrImpl implements FilteredIr {
     public hasWebhook(webhook: Webhook): boolean {
         if (webhook.id) {
             return this.webhooks.has(webhook.id);
+        }
+        return true;
+    }
+
+    public hasChannel(channel: WebSocketChannel): boolean {
+        if (channel.name.originalName) {
+            return this.channels.has(channel.name.originalName);
         }
         return true;
     }

@@ -17,7 +17,7 @@ export const ExampleTypeReference: core.serialization.ObjectSchema<
     .extend(WithJsonExample);
 
 export declare namespace ExampleTypeReference {
-    interface Raw extends WithJsonExample.Raw {
+    export interface Raw extends WithJsonExample.Raw {
         shape: serializers.ExampleTypeReferenceShape.Raw;
     }
 }

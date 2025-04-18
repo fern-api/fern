@@ -16,9 +16,9 @@
 
 ```typescript
 await client.auth.getToken({
-    clientId: "string",
-    clientSecret: "string",
-    scope: "string",
+    clientId: "client_id",
+    clientSecret: "client_secret",
+    scope: "scope",
 });
 ```
 

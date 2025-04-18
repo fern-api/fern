@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getErrorMessageForIncorrectType = void 0;
+exports.getErrorMessageForIncorrectType = getErrorMessageForIncorrectType;
 function getErrorMessageForIncorrectType(value, expectedType) {
     return `Expected ${expectedType}. Received ${getTypeAsString(value)}.`;
 }
-exports.getErrorMessageForIncorrectType = getErrorMessageForIncorrectType;
 function getTypeAsString(value) {
     if (Array.isArray(value)) {
         return "list";

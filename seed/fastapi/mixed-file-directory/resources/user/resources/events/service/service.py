@@ -22,9 +22,7 @@ class AbstractUserEventsService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def list_events(
-        self, *, limit: typing.Optional[int] = None
-    ) -> typing.Sequence[Event]:
+    def list_events(self, *, limit: typing.Optional[int] = None) -> typing.Sequence[Event]:
         """
         List all user events.
         """
@@ -43,27 +41,18 @@ class AbstractUserEventsService(AbstractFernService):
     def __init_list_events(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_events)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "limit":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The maximum number of results to return.",
-                        )
+                        default=fastapi.Query(default=None, description="The maximum number of results to return.")
                     )
                 )
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.list_events,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.list_events, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.list_events)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[Event]:

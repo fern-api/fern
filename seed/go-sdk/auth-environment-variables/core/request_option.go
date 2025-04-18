@@ -58,6 +58,9 @@ func (r *RequestOptions) ToHeader() http.Header {
 	if envValue := os.Getenv("VERSION"); envValue != "" {
 		xApiVersion = envValue
 	}
+	if r.XApiVersion != "" {
+		xApiVersion = r.XApiVersion
+	}
 	header.Set("X-API-Version", xApiVersion)
 	return header
 }
@@ -67,6 +70,7 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/auth-environment-variables/fern")
 	headers.Set("X-Fern-SDK-Version", "0.0.1")
+	headers.Set("User-Agent", "github.com/auth-environment-variables/fern/0.0.1")
 	return headers
 }
 

@@ -2,17 +2,27 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawServiceClient
 from ..types.types.movie_id import MovieId
 from ..core.request_options import RequestOptions
 from ..types.types.movie import Movie
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..commons.types.types.tag import Tag
-from ..types.types.metadata import Metadata
+from ..types.types.metadata import Metadata as types_types_metadata_Metadata
+from ..types.types.cast_member import CastMember
+from ..types.types.extended_movie import ExtendedMovie
+from ..types.types.entity import Entity
+from ..commons.types.types.metadata import Metadata as commons_types_types_metadata_Metadata
+from ..commons.types.types.event_info import EventInfo
+from ..commons.types.types.data import Data
+from ..types.types.migration import Migration
+from ..types.types.exception import Exception
+from ..types.types.test import Test
+from ..types.types.node import Node
+from ..types.types.directory import Directory
+from ..types.types.moment import Moment
 from ..types.types.response import Response
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawServiceClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -20,7 +30,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawServiceClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawServiceClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawServiceClient
+        """
+        return self._raw_client
 
     def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
@@ -48,24 +69,8 @@ class ServiceClient:
             movie_id="movie-c06a4ad7",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"movie/{jsonable_encoder(movie_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Movie,
-                    parse_obj_as(
-                        type_=Movie,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get_movie(movie_id, request_options=request_options)
+        return response.data
 
     def create_movie(
         self,
@@ -134,37 +139,19 @@ class ServiceClient:
             revenue=1000000,
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "movie",
-            method="POST",
-            json={
-                "id": id,
-                "prequel": prequel,
-                "title": title,
-                "from": from_,
-                "rating": rating,
-                "tag": tag,
-                "book": book,
-                "metadata": metadata,
-                "revenue": revenue,
-                "type": "movie",
-            },
+        response = self._raw_client.create_movie(
+            id=id,
+            title=title,
+            from_=from_,
+            rating=rating,
+            tag=tag,
+            metadata=metadata,
+            revenue=revenue,
+            prequel=prequel,
+            book=book,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    MovieId,
-                    parse_obj_as(
-                        type_=MovieId,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get_metadata(
         self,
@@ -173,7 +160,7 @@ class ServiceClient:
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Metadata:
+    ) -> types_types_metadata_Metadata:
         """
         Parameters
         ----------
@@ -188,7 +175,7 @@ class ServiceClient:
 
         Returns
         -------
-        Metadata
+        types_types_metadata_Metadata
 
         Examples
         --------
@@ -205,36 +192,58 @@ class ServiceClient:
             tag="development",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "metadata",
-            method="GET",
-            params={
-                "shallow": shallow,
-                "tag": tag,
-            },
-            headers={
-                "X-API-Version": str(x_api_version) if x_api_version is not None else None,
-            },
-            request_options=request_options,
+        response = self._raw_client.get_metadata(
+            x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Metadata,
-                    parse_obj_as(
-                        type_=Metadata,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
-    def get_response(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
+    def create_big_entity(
+        self,
+        *,
+        cast_member: typing.Optional[CastMember] = OMIT,
+        extended_movie: typing.Optional[ExtendedMovie] = OMIT,
+        entity: typing.Optional[Entity] = OMIT,
+        metadata: typing.Optional[types_types_metadata_Metadata] = OMIT,
+        common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = OMIT,
+        event_info: typing.Optional[EventInfo] = OMIT,
+        data: typing.Optional[Data] = OMIT,
+        migration: typing.Optional[Migration] = OMIT,
+        exception: typing.Optional[Exception] = OMIT,
+        test: typing.Optional[Test] = OMIT,
+        node: typing.Optional[Node] = OMIT,
+        directory: typing.Optional[Directory] = OMIT,
+        moment: typing.Optional[Moment] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Response:
         """
         Parameters
         ----------
+        cast_member : typing.Optional[CastMember]
+
+        extended_movie : typing.Optional[ExtendedMovie]
+
+        entity : typing.Optional[Entity]
+
+        metadata : typing.Optional[types_types_metadata_Metadata]
+
+        common_metadata : typing.Optional[commons_types_types_metadata_Metadata]
+
+        event_info : typing.Optional[EventInfo]
+
+        data : typing.Optional[Data]
+
+        migration : typing.Optional[Migration]
+
+        exception : typing.Optional[Exception]
+
+        test : typing.Optional[Test]
+
+        node : typing.Optional[Node]
+
+        directory : typing.Optional[Directory]
+
+        moment : typing.Optional[Moment]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -244,38 +253,266 @@ class ServiceClient:
 
         Examples
         --------
+        import datetime
+        import uuid
+
         from seed import SeedExhaustive
+        from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
         from seed.environment import SeedExhaustiveEnvironment
+        from seed.types import (
+            Actor,
+            Directory,
+            Entity,
+            Exception_Generic,
+            ExtendedMovie,
+            File,
+            Metadata_Html,
+            Migration,
+            Moment,
+            Node,
+            Test_And,
+            Tree,
+        )
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        client.service.get_response()
+        client.service.create_big_entity(
+            cast_member=Actor(
+                name="name",
+                id="id",
+            ),
+            extended_movie=ExtendedMovie(
+                id="id",
+                prequel="prequel",
+                title="title",
+                from_="from",
+                rating=1.1,
+                tag="tag",
+                book="book",
+                metadata={"metadata": {"key": "value"}},
+                revenue=1000000,
+                cast=["cast", "cast"],
+            ),
+            entity=Entity(
+                type="primitive",
+                name="name",
+            ),
+            metadata=Metadata_Html(value="metadata"),
+            common_metadata=Metadata(
+                id="id",
+                data={"data": "data"},
+                json_string="jsonString",
+            ),
+            event_info=EventInfo_Metadata(
+                id="id",
+                data={"data": "data"},
+                json_string="jsonString",
+            ),
+            data=Data_String(value="data"),
+            migration=Migration(
+                name="name",
+                status="RUNNING",
+            ),
+            exception=Exception_Generic(
+                exception_type="exceptionType",
+                exception_message="exceptionMessage",
+                exception_stacktrace="exceptionStacktrace",
+            ),
+            test=Test_And(value=True),
+            node=Node(
+                name="name",
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                        ],
+                        trees=[
+                            Tree(
+                                nodes=[],
+                            ),
+                            Tree(
+                                nodes=[],
+                            ),
+                        ],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                        ],
+                        trees=[
+                            Tree(
+                                nodes=[],
+                            ),
+                            Tree(
+                                nodes=[],
+                            ),
+                        ],
+                    ),
+                ],
+                trees=[
+                    Tree(
+                        nodes=[
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                        ],
+                    ),
+                    Tree(
+                        nodes=[
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+            directory=Directory(
+                name="name",
+                files=[
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                ],
+                directories=[
+                    Directory(
+                        name="name",
+                        files=[
+                            File(
+                                name="name",
+                                contents="contents",
+                            ),
+                            File(
+                                name="name",
+                                contents="contents",
+                            ),
+                        ],
+                        directories=[
+                            Directory(
+                                name="name",
+                                files=[],
+                                directories=[],
+                            ),
+                            Directory(
+                                name="name",
+                                files=[],
+                                directories=[],
+                            ),
+                        ],
+                    ),
+                    Directory(
+                        name="name",
+                        files=[
+                            File(
+                                name="name",
+                                contents="contents",
+                            ),
+                            File(
+                                name="name",
+                                contents="contents",
+                            ),
+                        ],
+                        directories=[
+                            Directory(
+                                name="name",
+                                files=[],
+                                directories=[],
+                            ),
+                            Directory(
+                                name="name",
+                                files=[],
+                                directories=[],
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+            moment=Moment(
+                id=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            ),
+        )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "response",
-            method="POST",
+        response = self._raw_client.create_big_entity(
+            cast_member=cast_member,
+            extended_movie=extended_movie,
+            entity=entity,
+            metadata=metadata,
+            common_metadata=common_metadata,
+            event_info=event_info,
+            data=data,
+            migration=migration,
+            exception=exception,
+            test=test,
+            node=node,
+            directory=directory,
+            moment=moment,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Response,
-                    parse_obj_as(
-                        type_=Response,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawServiceClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawServiceClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawServiceClient
+        """
+        return self._raw_client
 
     async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
@@ -311,24 +548,8 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"movie/{jsonable_encoder(movie_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Movie,
-                    parse_obj_as(
-                        type_=Movie,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get_movie(movie_id, request_options=request_options)
+        return response.data
 
     async def create_movie(
         self,
@@ -405,37 +626,19 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "movie",
-            method="POST",
-            json={
-                "id": id,
-                "prequel": prequel,
-                "title": title,
-                "from": from_,
-                "rating": rating,
-                "tag": tag,
-                "book": book,
-                "metadata": metadata,
-                "revenue": revenue,
-                "type": "movie",
-            },
+        response = await self._raw_client.create_movie(
+            id=id,
+            title=title,
+            from_=from_,
+            rating=rating,
+            tag=tag,
+            metadata=metadata,
+            revenue=revenue,
+            prequel=prequel,
+            book=book,
             request_options=request_options,
-            omit=OMIT,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    MovieId,
-                    parse_obj_as(
-                        type_=MovieId,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get_metadata(
         self,
@@ -444,7 +647,7 @@ class AsyncServiceClient:
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Metadata:
+    ) -> types_types_metadata_Metadata:
         """
         Parameters
         ----------
@@ -459,7 +662,7 @@ class AsyncServiceClient:
 
         Returns
         -------
-        Metadata
+        types_types_metadata_Metadata
 
         Examples
         --------
@@ -484,36 +687,58 @@ class AsyncServiceClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "metadata",
-            method="GET",
-            params={
-                "shallow": shallow,
-                "tag": tag,
-            },
-            headers={
-                "X-API-Version": str(x_api_version) if x_api_version is not None else None,
-            },
-            request_options=request_options,
+        response = await self._raw_client.get_metadata(
+            x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Metadata,
-                    parse_obj_as(
-                        type_=Metadata,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
-    async def get_response(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
+    async def create_big_entity(
+        self,
+        *,
+        cast_member: typing.Optional[CastMember] = OMIT,
+        extended_movie: typing.Optional[ExtendedMovie] = OMIT,
+        entity: typing.Optional[Entity] = OMIT,
+        metadata: typing.Optional[types_types_metadata_Metadata] = OMIT,
+        common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = OMIT,
+        event_info: typing.Optional[EventInfo] = OMIT,
+        data: typing.Optional[Data] = OMIT,
+        migration: typing.Optional[Migration] = OMIT,
+        exception: typing.Optional[Exception] = OMIT,
+        test: typing.Optional[Test] = OMIT,
+        node: typing.Optional[Node] = OMIT,
+        directory: typing.Optional[Directory] = OMIT,
+        moment: typing.Optional[Moment] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Response:
         """
         Parameters
         ----------
+        cast_member : typing.Optional[CastMember]
+
+        extended_movie : typing.Optional[ExtendedMovie]
+
+        entity : typing.Optional[Entity]
+
+        metadata : typing.Optional[types_types_metadata_Metadata]
+
+        common_metadata : typing.Optional[commons_types_types_metadata_Metadata]
+
+        event_info : typing.Optional[EventInfo]
+
+        data : typing.Optional[Data]
+
+        migration : typing.Optional[Migration]
+
+        exception : typing.Optional[Exception]
+
+        test : typing.Optional[Test]
+
+        node : typing.Optional[Node]
+
+        directory : typing.Optional[Directory]
+
+        moment : typing.Optional[Moment]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -524,9 +749,26 @@ class AsyncServiceClient:
         Examples
         --------
         import asyncio
+        import datetime
+        import uuid
 
         from seed import AsyncSeedExhaustive
+        from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
         from seed.environment import SeedExhaustiveEnvironment
+        from seed.types import (
+            Actor,
+            Directory,
+            Entity,
+            Exception_Generic,
+            ExtendedMovie,
+            File,
+            Metadata_Html,
+            Migration,
+            Moment,
+            Node,
+            Test_And,
+            Tree,
+        )
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -535,26 +777,225 @@ class AsyncServiceClient:
 
 
         async def main() -> None:
-            await client.service.get_response()
+            await client.service.create_big_entity(
+                cast_member=Actor(
+                    name="name",
+                    id="id",
+                ),
+                extended_movie=ExtendedMovie(
+                    id="id",
+                    prequel="prequel",
+                    title="title",
+                    from_="from",
+                    rating=1.1,
+                    tag="tag",
+                    book="book",
+                    metadata={"metadata": {"key": "value"}},
+                    revenue=1000000,
+                    cast=["cast", "cast"],
+                ),
+                entity=Entity(
+                    type="primitive",
+                    name="name",
+                ),
+                metadata=Metadata_Html(value="metadata"),
+                common_metadata=Metadata(
+                    id="id",
+                    data={"data": "data"},
+                    json_string="jsonString",
+                ),
+                event_info=EventInfo_Metadata(
+                    id="id",
+                    data={"data": "data"},
+                    json_string="jsonString",
+                ),
+                data=Data_String(value="data"),
+                migration=Migration(
+                    name="name",
+                    status="RUNNING",
+                ),
+                exception=Exception_Generic(
+                    exception_type="exceptionType",
+                    exception_message="exceptionMessage",
+                    exception_stacktrace="exceptionStacktrace",
+                ),
+                test=Test_And(value=True),
+                node=Node(
+                    name="name",
+                    nodes=[
+                        Node(
+                            name="name",
+                            nodes=[
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                            ],
+                            trees=[
+                                Tree(
+                                    nodes=[],
+                                ),
+                                Tree(
+                                    nodes=[],
+                                ),
+                            ],
+                        ),
+                        Node(
+                            name="name",
+                            nodes=[
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                            ],
+                            trees=[
+                                Tree(
+                                    nodes=[],
+                                ),
+                                Tree(
+                                    nodes=[],
+                                ),
+                            ],
+                        ),
+                    ],
+                    trees=[
+                        Tree(
+                            nodes=[
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                            ],
+                        ),
+                        Tree(
+                            nodes=[
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                directory=Directory(
+                    name="name",
+                    files=[
+                        File(
+                            name="name",
+                            contents="contents",
+                        ),
+                        File(
+                            name="name",
+                            contents="contents",
+                        ),
+                    ],
+                    directories=[
+                        Directory(
+                            name="name",
+                            files=[
+                                File(
+                                    name="name",
+                                    contents="contents",
+                                ),
+                                File(
+                                    name="name",
+                                    contents="contents",
+                                ),
+                            ],
+                            directories=[
+                                Directory(
+                                    name="name",
+                                    files=[],
+                                    directories=[],
+                                ),
+                                Directory(
+                                    name="name",
+                                    files=[],
+                                    directories=[],
+                                ),
+                            ],
+                        ),
+                        Directory(
+                            name="name",
+                            files=[
+                                File(
+                                    name="name",
+                                    contents="contents",
+                                ),
+                                File(
+                                    name="name",
+                                    contents="contents",
+                                ),
+                            ],
+                            directories=[
+                                Directory(
+                                    name="name",
+                                    files=[],
+                                    directories=[],
+                                ),
+                                Directory(
+                                    name="name",
+                                    files=[],
+                                    directories=[],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                moment=Moment(
+                    id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2023-01-15",
+                    ),
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                ),
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "response",
-            method="POST",
+        response = await self._raw_client.create_big_entity(
+            cast_member=cast_member,
+            extended_movie=extended_movie,
+            entity=entity,
+            metadata=metadata,
+            common_metadata=common_metadata,
+            event_info=event_info,
+            data=data,
+            migration=migration,
+            exception=exception,
+            test=test,
+            node=node,
+            directory=directory,
+            moment=moment,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Response,
-                    parse_obj_as(
-                        type_=Response,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

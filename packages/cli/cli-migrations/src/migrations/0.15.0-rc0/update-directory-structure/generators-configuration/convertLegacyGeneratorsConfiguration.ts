@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { LegacyGenerators, MigratedGenerators } from ".";
 import { DocsURL } from "../docs-config";
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "./legacy/GeneratorsConfigurationSchema";
@@ -9,7 +10,7 @@ export interface ConvertedGeneratorsConfiguration {
     docsURLs: DocsURL[];
 }
 
-export type PathModificationStrategy = typeof PathModificationStrategy[keyof typeof PathModificationStrategy];
+export type PathModificationStrategy = (typeof PathModificationStrategy)[keyof typeof PathModificationStrategy];
 export const PathModificationStrategy = {
     Nest: "Nest",
     MoveUp: "MoveUp"

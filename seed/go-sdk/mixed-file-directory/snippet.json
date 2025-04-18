@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-file-directory/fern\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organization.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateOrganizationRequest{\n\t\tName: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-file-directory/fern\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organization.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateOrganizationRequest{\n\t\tName: \"name\",\n\t},\n)\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tevents \"github.com/mixed-file-directory/fern/user/events\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Events.Metadata.GetMetadata(\n\tcontext.TODO(),\n\t\u0026events.GetEventMetadataRequest{\n\t\tId: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tevents \"github.com/mixed-file-directory/fern/user/events\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Events.Metadata.GetMetadata(\n\tcontext.TODO(),\n\t\u0026events.GetEventMetadataRequest{\n\t\tId: \"id\",\n\t},\n)\n"
             }
         }
     ]

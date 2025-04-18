@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.record = void 0;
+exports.record = record;
 const Schema_1 = require("../../Schema");
 const entries_1 = require("../../utils/entries");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
@@ -43,7 +43,6 @@ function record(keySchema, valueSchema) {
     };
     return Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, schema_utils_1.getSchemaUtils)(baseSchema));
 }
-exports.record = record;
 function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transformValue, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
@@ -57,8 +56,7 @@ function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transfo
         };
     }
     return (0, entries_1.entries)(value).reduce((accPromise, [stringKey, value]) => {
-        // skip nullish keys
-        if (value == null) {
+        if (value === undefined) {
             return accPromise;
         }
         const acc = accPromise;

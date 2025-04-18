@@ -1,17 +1,24 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
+    RawSchemas,
+    isRawTextType,
+    parseRawBytesType,
+    parseRawFileType,
+    parseRawTextType
+} from "@fern-api/fern-definition-schema";
+import {
     HttpResponse,
     HttpResponseBody,
     JsonResponse,
     NonStreamHttpResponseBody,
     StreamingResponse
 } from "@fern-api/ir-sdk";
-import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType";
 
-export async function convertHttpResponse({
+export function convertHttpResponse({
     endpoint,
     file,
     typeResolver
@@ -19,8 +26,8 @@ export async function convertHttpResponse({
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<HttpResponse | undefined> {
-    const responseBody = await convertHttpResponseBody({
+}): HttpResponse | undefined {
+    const responseBody = convertHttpResponseBody({
         endpoint,
         file,
         typeResolver
@@ -31,7 +38,7 @@ export async function convertHttpResponse({
     };
 }
 
-export async function convertHttpResponseBody({
+export function convertHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -39,14 +46,14 @@ export async function convertHttpResponseBody({
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<HttpResponseBody | undefined> {
-    const response = await convertNonStreamHttpResponseBody({
+}): HttpResponseBody | undefined {
+    const response = convertNonStreamHttpResponseBody({
         endpoint,
         file,
         typeResolver
     });
 
-    const streamResponse = await convertStreamHttpResponseBody({
+    const streamResponse = convertStreamHttpResponseBody({
         endpoint,
         file,
         typeResolver
@@ -69,6 +76,10 @@ export async function convertHttpResponseBody({
                 nonStreamResponse = NonStreamHttpResponseBody.text({ ...response });
                 break;
             }
+            case "bytes": {
+                nonStreamResponse = NonStreamHttpResponseBody.bytes({ ...response });
+                break;
+            }
             default:
                 assertNever(response);
         }
@@ -85,7 +96,7 @@ export async function convertHttpResponseBody({
     return undefined;
 }
 
-export async function convertNonStreamHttpResponseBody({
+export function convertNonStreamHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -93,30 +104,39 @@ export async function convertNonStreamHttpResponseBody({
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Promise<HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Json | undefined> {
+}): HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Json | HttpResponseBody.Bytes | undefined {
     const { response } = endpoint;
 
     if (response != null) {
         const docs = typeof response !== "string" ? response.docs : undefined;
         const responseType = typeof response === "string" ? response : response.type;
 
-        if (parseRawFileType(responseType) != null) {
-            return HttpResponseBody.fileDownload({
-                docs
-            });
-        } else if (parseRawTextType(responseType) != null) {
-            return HttpResponseBody.text({
-                docs
-            });
-        } else {
-            return await convertJsonResponse(response, docs, file, typeResolver);
+        if (responseType != null) {
+            if (parseRawFileType(responseType) != null) {
+                return HttpResponseBody.fileDownload({
+                    docs,
+                    v2Examples: undefined
+                });
+            } else if (parseRawTextType(responseType) != null) {
+                return HttpResponseBody.text({
+                    docs,
+                    v2Examples: undefined
+                });
+            } else if (parseRawBytesType(responseType) != null) {
+                return HttpResponseBody.bytes({
+                    docs,
+                    v2Examples: undefined
+                });
+            } else {
+                return convertJsonResponse(response, docs, file, typeResolver);
+            }
         }
     }
 
     return undefined;
 }
 
-export async function convertStreamHttpResponseBody({
+export function convertStreamHttpResponseBody({
     endpoint,
     file,
     typeResolver
@@ -124,28 +144,31 @@ export async function convertStreamHttpResponseBody({
     endpoint: RawSchemas.HttpEndpointSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-}): Promise<StreamingResponse | undefined> {
+}): StreamingResponse | undefined {
     const { ["response-stream"]: responseStream } = endpoint;
 
     if (responseStream != null) {
         const docs = typeof responseStream !== "string" ? responseStream.docs : undefined;
         const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
-        const streamFormat = typeof responseStream === "string" ? "json" : responseStream.format ?? "json";
+        const streamFormat = typeof responseStream === "string" ? "json" : (responseStream.format ?? "json");
         if (isRawTextType(typeReference)) {
             return StreamingResponse.text({
-                docs
+                docs,
+                v2Examples: undefined
             });
         } else if (typeof responseStream !== "string" && streamFormat === "sse") {
             return StreamingResponse.sse({
                 docs,
                 payload: file.parseTypeReference(typeReference),
-                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
+                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+                v2Examples: undefined
             });
         } else {
             return StreamingResponse.json({
                 docs,
                 payload: file.parseTypeReference(typeReference),
-                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
+                terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+                v2Examples: undefined
             });
         }
     }
@@ -153,15 +176,21 @@ export async function convertStreamHttpResponseBody({
     return undefined;
 }
 
-async function convertJsonResponse(
+function convertJsonResponse(
     response: RawSchemas.HttpResponseSchema | string,
     docs: string | undefined,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Promise<HttpResponseBody.Json> {
-    const responseBodyType = file.parseTypeReference(response);
+): HttpResponseBody.Json | undefined {
+    const responseTypeReference = typeof response !== "string" ? response.type : response;
+    if (responseTypeReference == null) {
+        return undefined;
+    }
+    const responseBodyType = file.parseTypeReference(
+        typeof response === "string" ? response : { ...response, type: responseTypeReference }
+    );
     const resolvedType = typeResolver.resolveTypeOrThrow({
-        type: typeof response !== "string" ? response.type : response,
+        type: responseTypeReference,
         file
     });
     const responseProperty = typeof response !== "string" ? response.property : undefined;
@@ -170,19 +199,21 @@ async function convertJsonResponse(
             JsonResponse.nestedPropertyAsResponse({
                 docs,
                 responseBodyType,
-                responseProperty: await getObjectPropertyFromResolvedType({
+                responseProperty: getObjectPropertyFromResolvedType({
                     typeResolver,
                     file,
                     resolvedType,
                     property: responseProperty
-                })
+                }),
+                v2Examples: undefined
             })
         );
     }
     return HttpResponseBody.json(
         JsonResponse.response({
             docs,
-            responseBodyType
+            responseBodyType,
+            v2Examples: undefined
         })
     );
 }

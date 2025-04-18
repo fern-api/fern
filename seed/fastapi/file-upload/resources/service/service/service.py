@@ -6,9 +6,11 @@ import fastapi
 from ..types.my_object import MyObject
 from ..types.object_type import ObjectType
 from ..types.id import Id
+from ..types.my_alias_object import MyAliasObject
+from ..types.my_collection_alias_object import MyCollectionAliasObject
 import abc
+from ..types.my_object_with_optional import MyObjectWithOptional
 import inspect
-import typing_extensions
 from ....core.exceptions.fern_http_exception import FernHTTPException
 import logging
 import functools
@@ -41,6 +43,9 @@ class AbstractServiceService(AbstractFernService):
         optional_metadata: typing.Optional[typing.Optional[typing.Any]] = None,
         optional_object_type: typing.Optional[ObjectType] = None,
         optional_id: typing.Optional[Id] = None,
+        alias_object: MyAliasObject,
+        list_of_alias_object: typing.List[MyAliasObject],
+        alias_list_of_object: MyCollectionAliasObject,
     ) -> None: ...
 
     @abc.abstractmethod
@@ -60,8 +65,41 @@ class AbstractServiceService(AbstractFernService):
 
     @abc.abstractmethod
     def with_content_type(
-        self, *, file: fastapi.UploadFile, foo: str, bar: MyObject
+        self, *, file: fastapi.UploadFile, foo: str, bar: MyObject, foo_bar: typing.Optional[MyObject] = None
     ) -> None: ...
+
+    @abc.abstractmethod
+    def with_form_encoding(self, *, file: fastapi.UploadFile, foo: str, bar: MyObject) -> None: ...
+
+    @abc.abstractmethod
+    def with_form_encoded_containers(
+        self,
+        *,
+        maybe_string: typing.Optional[str] = None,
+        integer: int,
+        file: fastapi.UploadFile,
+        file_list: typing.List[fastapi.UploadFile],
+        maybe_file: typing.Union[fastapi.UploadFile, None],
+        maybe_file_list: typing.Optional[typing.List[fastapi.UploadFile]] = None,
+        maybe_integer: typing.Optional[int] = None,
+        optional_list_of_strings: typing.Optional[typing.List[str]] = None,
+        list_of_objects: typing.List[MyObject],
+        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = None,
+        optional_object_type: typing.Optional[ObjectType] = None,
+        optional_id: typing.Optional[Id] = None,
+        list_of_objects_with_optionals: typing.List[MyObjectWithOptional],
+        alias_object: MyAliasObject,
+        list_of_alias_object: typing.List[MyAliasObject],
+        alias_list_of_object: MyCollectionAliasObject,
+    ) -> None: ...
+
+    @abc.abstractmethod
+    def optional_args(
+        self,
+        *,
+        image_file: typing.Union[fastapi.UploadFile, None],
+        request: typing.Optional[typing.Optional[typing.Any]] = None,
+    ) -> str: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -74,84 +112,50 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_just_file(router=router)
         cls.__init_just_file_with_query_params(router=router)
         cls.__init_with_content_type(router=router)
+        cls.__init_with_form_encoding(router=router)
+        cls.__init_with_form_encoded_containers(router=router)
+        cls.__init_optional_args(router=router)
 
     @classmethod
     def __init_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="maybeString"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "integer":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "file_list":
-                new_parameters.append(
-                    parameter.replace(
-                        default=typing_extensions.Annotated[
-                            typing.List[fastapi.UploadFile],
-                            fastapi.File(alias="fileList"),
-                        ]
-                    )
-                )
+                new_parameters.append(parameter.replace(default=typing.List[fastapi.UploadFile]))
             elif parameter_name == "maybe_file":
-                new_parameters.append(
-                    parameter.replace(
-                        default=typing_extensions.Annotated[
-                            typing.Union[fastapi.UploadFile, None],
-                            fastapi.File(alias="maybeFile"),
-                        ]
-                    )
-                )
+                new_parameters.append(parameter.replace(default=typing.Union[fastapi.UploadFile, None]))
             elif parameter_name == "maybe_file_list":
-                new_parameters.append(
-                    parameter.replace(
-                        default=typing_extensions.Annotated[
-                            typing.Optional[typing.List[fastapi.UploadFile]],
-                            fastapi.File(alias="maybeFileList"),
-                        ]
-                    )
-                )
+                new_parameters.append(parameter.replace(default=typing.Optional[typing.List[fastapi.UploadFile]]))
             elif parameter_name == "maybe_integer":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="maybeInteger"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_list_of_strings":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Body(alias="optionalListOfStrings")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "list_of_objects":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="listOfObjects"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_metadata":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="optionalMetadata"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_object_type":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="optionalObjectType"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "optional_id":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Body(alias="optionalId"))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "alias_object":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "list_of_alias_object":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "alias_list_of_object":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.post,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.post, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.post)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -181,20 +185,14 @@ class AbstractServiceService(AbstractFernService):
     def __init_just_file(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.just_file)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.just_file,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.just_file, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.just_file)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -224,50 +222,26 @@ class AbstractServiceService(AbstractFernService):
     def __init_just_file_with_query_params(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.just_file_with_query_params)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "maybe_string":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=None, alias="maybeString")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="maybeString")))
             elif parameter_name == "integer":
-                new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=...))
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
             elif parameter_name == "maybe_integer":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=None, alias="maybeInteger")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="maybeInteger")))
             elif parameter_name == "list_of_strings":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(default=[], alias="listOfStrings")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Query(default=[], alias="listOfStrings")))
             elif parameter_name == "optional_list_of_strings":
                 new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Query(
-                            default=None, alias="optionalListOfStrings"
-                        )
-                    )
+                    parameter.replace(default=fastapi.Query(default=None, alias="optionalListOfStrings"))
                 )
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.just_file_with_query_params,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.just_file_with_query_params, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.just_file_with_query_params)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -297,9 +271,7 @@ class AbstractServiceService(AbstractFernService):
     def __init_with_content_type(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_content_type)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
@@ -308,13 +280,11 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "bar":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "foo_bar":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.with_content_type,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.with_content_type, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.with_content_type)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
@@ -338,4 +308,150 @@ class AbstractServiceService(AbstractFernService):
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.with_content_type.__doc__,
             **get_route_args(cls.with_content_type, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_with_form_encoding(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.with_form_encoding)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "file":
+                new_parameters.append(parameter.replace(default=fastapi.UploadFile))
+            elif parameter_name == "foo":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "bar":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.with_form_encoding, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.with_form_encoding)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.with_form_encoding(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'with_form_encoding' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.with_form_encoding.__globals__)
+
+        router.post(
+            path="/with-form-encoding",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.with_form_encoding.__doc__,
+            **get_route_args(cls.with_form_encoding, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_with_form_encoded_containers(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.with_form_encoded_containers)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "maybe_string":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "integer":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "file":
+                new_parameters.append(parameter.replace(default=fastapi.UploadFile))
+            elif parameter_name == "file_list":
+                new_parameters.append(parameter.replace(default=typing.List[fastapi.UploadFile]))
+            elif parameter_name == "maybe_file":
+                new_parameters.append(parameter.replace(default=typing.Union[fastapi.UploadFile, None]))
+            elif parameter_name == "maybe_file_list":
+                new_parameters.append(parameter.replace(default=typing.Optional[typing.List[fastapi.UploadFile]]))
+            elif parameter_name == "maybe_integer":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "optional_list_of_strings":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "list_of_objects":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "optional_metadata":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "optional_object_type":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "optional_id":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "list_of_objects_with_optionals":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "alias_object":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "list_of_alias_object":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "alias_list_of_object":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.with_form_encoded_containers, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.with_form_encoded_containers)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:
+            try:
+                return cls.with_form_encoded_containers(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'with_form_encoded_containers' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.with_form_encoded_containers.__globals__)
+
+        router.post(
+            path="/",
+            response_model=None,
+            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            description=AbstractServiceService.with_form_encoded_containers.__doc__,
+            **get_route_args(cls.with_form_encoded_containers, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_optional_args(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.optional_args)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "image_file":
+                new_parameters.append(parameter.replace(default=typing.Union[fastapi.UploadFile, None]))
+            elif parameter_name == "request":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.optional_args, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.optional_args)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
+            try:
+                return cls.optional_args(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'optional_args' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.optional_args.__globals__)
+
+        router.post(
+            path="/optional-args",
+            response_model=str,
+            description=AbstractServiceService.optional_args.__doc__,
+            **get_route_args(cls.optional_args, default_tag="service"),
         )(wrapper)

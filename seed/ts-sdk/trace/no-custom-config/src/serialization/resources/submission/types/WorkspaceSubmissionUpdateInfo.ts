@@ -33,7 +33,7 @@ export const WorkspaceSubmissionUpdateInfo: core.serialization.Schema<
     });
 
 export declare namespace WorkspaceSubmissionUpdateInfo {
-    type Raw =
+    export type Raw =
         | WorkspaceSubmissionUpdateInfo.Running
         | WorkspaceSubmissionUpdateInfo.Ran
         | WorkspaceSubmissionUpdateInfo.Stopped
@@ -42,33 +42,33 @@ export declare namespace WorkspaceSubmissionUpdateInfo {
         | WorkspaceSubmissionUpdateInfo.Errored
         | WorkspaceSubmissionUpdateInfo.Finished;
 
-    interface Running {
+    export interface Running {
         type: "running";
         value: RunningSubmissionState.Raw;
     }
 
-    interface Ran extends WorkspaceRunDetails.Raw {
+    export interface Ran extends WorkspaceRunDetails.Raw {
         type: "ran";
     }
 
-    interface Stopped {
+    export interface Stopped {
         type: "stopped";
     }
 
-    interface Traced {
+    export interface Traced {
         type: "traced";
     }
 
-    interface TracedV2 extends WorkspaceTracedUpdate.Raw {
+    export interface TracedV2 extends WorkspaceTracedUpdate.Raw {
         type: "tracedV2";
     }
 
-    interface Errored {
+    export interface Errored {
         type: "errored";
         value: ErrorInfo.Raw;
     }
 
-    interface Finished {
+    export interface Finished {
         type: "finished";
     }
 }

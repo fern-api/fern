@@ -1,0 +1,192 @@
+{
+  "type": "object",
+  "properties": {
+    "file": {
+      "$ref": "#/definitions/v2.v3.problem.FileInfoV2"
+    },
+    "relatedTypes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons.VariableType"
+      }
+    }
+  },
+  "required": [
+    "file",
+    "relatedTypes"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.v3.problem.FileInfoV2": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "editable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "filename",
+        "directory",
+        "contents",
+        "editable"
+      ],
+      "additionalProperties": false
+    },
+    "commons.VariableType": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "integerType",
+            "doubleType",
+            "booleanType",
+            "stringType",
+            "charType",
+            "listType",
+            "mapType",
+            "binaryTreeType",
+            "singlyLinkedListType",
+            "doublyLinkedListType"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "integerType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doubleType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "booleanType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stringType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "charType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "listType"
+            },
+            "valueType": {
+              "$ref": "#/definitions/commons.VariableType"
+            },
+            "isFixedLength": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "valueType"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "mapType"
+            },
+            "keyType": {
+              "$ref": "#/definitions/commons.VariableType"
+            },
+            "valueType": {
+              "$ref": "#/definitions/commons.VariableType"
+            }
+          },
+          "required": [
+            "type",
+            "keyType",
+            "valueType"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "binaryTreeType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "singlyLinkedListType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "doublyLinkedListType"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    }
+  }
+}

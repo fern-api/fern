@@ -15,7 +15,7 @@ export const UndiscriminatedUnionTypeDeclaration: core.serialization.ObjectSchem
 });
 
 export declare namespace UndiscriminatedUnionTypeDeclaration {
-    interface Raw {
+    export interface Raw {
         members: UndiscriminatedUnionMember.Raw[];
     }
 }

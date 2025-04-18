@@ -1,0 +1,15 @@
+{
+  "ignores": [
+    "@types/jest",
+    "globals",
+    "@trivago/prettier-plugin-sort-imports",
+    "@types/node",
+    "esbuild",
+    "@yarnpkg/esbuild-plugin-pnp",
+    "@fern-fern/ir-sdk"
+  ],
+  "ignore-patterns": [
+    "lib",
+    "dist"
+  ]
+}

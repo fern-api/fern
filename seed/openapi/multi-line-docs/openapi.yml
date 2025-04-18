@@ -48,15 +48,15 @@ paths:
               properties:
                 name:
                   type: string
-                  description: |
+                  description: |-
                     The name of the user to create.
                     This name is unique to each user.
                 age:
                   type: integer
                   nullable: true
-                  description: |
+                  description: |-
                     The age of the user.
-                    This propery is not required.
+                    This property is not required.
               required:
                 - name
 components:
@@ -69,16 +69,15 @@ components:
         - '='
         - less_than
       description: |-
-        Tests enum name and value can be
+        Tests enum name and value can be 
         different.
     User:
       title: User
       type: object
       description: |-
         A user object. This type is used throughout the following APIs:
-
-        - createUser
-        - getUser
+          - createUser
+          - getUser
       properties:
         id:
           type: string
@@ -87,13 +86,9 @@ components:
           description: >-
             The user's name. This name is unique to each user. A few examples
             are included below:
-
-
-            - Alice
-
-            - Bob
-
-            - Charlie
+             - Alice
+             - Bob
+             - Charlie
         age:
           type: integer
           nullable: true

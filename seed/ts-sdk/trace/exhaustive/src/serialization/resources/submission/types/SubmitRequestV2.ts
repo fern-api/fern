@@ -23,7 +23,7 @@ export const SubmitRequestV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace SubmitRequestV2 {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
         language: Language.Raw;
         submissionFiles: SubmissionFileInfo.Raw[];

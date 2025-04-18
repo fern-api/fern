@@ -1,12 +1,10 @@
 using SeedMixedCase.Core;
 
-#nullable enable
-
 namespace SeedMixedCase;
 
 public partial class SeedMixedCaseClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedMixedCaseClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedMixedCaseClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 }

@@ -13,34 +13,34 @@ export type WorkspaceSubmissionUpdateInfo =
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Errored
     | SeedTrace.WorkspaceSubmissionUpdateInfo.Finished;
 
-export declare namespace WorkspaceSubmissionUpdateInfo {
-    interface Running {
+export namespace WorkspaceSubmissionUpdateInfo {
+    export interface Running {
         type: "running";
         value: SeedTrace.RunningSubmissionState;
     }
 
-    interface Ran extends SeedTrace.WorkspaceRunDetails {
+    export interface Ran extends SeedTrace.WorkspaceRunDetails {
         type: "ran";
     }
 
-    interface Stopped {
+    export interface Stopped {
         type: "stopped";
     }
 
-    interface Traced {
+    export interface Traced {
         type: "traced";
     }
 
-    interface TracedV2 extends SeedTrace.WorkspaceTracedUpdate {
+    export interface TracedV2 extends SeedTrace.WorkspaceTracedUpdate {
         type: "tracedV2";
     }
 
-    interface Errored {
+    export interface Errored {
         type: "errored";
         value: SeedTrace.ErrorInfo;
     }
 
-    interface Finished {
+    export interface Finished {
         type: "finished";
     }
 }

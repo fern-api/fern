@@ -1,6 +1,8 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts";
+
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl";
 
 export declare namespace RequestWrapperGenerator {
@@ -13,6 +15,8 @@ export declare namespace RequestWrapperGenerator {
             includeSerdeLayer: boolean;
             retainOriginalCasing: boolean;
             inlineFileProperties: boolean;
+            enableInlineTypes: boolean;
+            shouldInlinePathParameters: boolean;
         }
     }
 }
@@ -25,7 +29,9 @@ export class RequestWrapperGenerator {
         wrapperName,
         includeSerdeLayer,
         retainOriginalCasing,
-        inlineFileProperties
+        inlineFileProperties,
+        enableInlineTypes,
+        shouldInlinePathParameters
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
@@ -34,7 +40,9 @@ export class RequestWrapperGenerator {
             wrapperName,
             includeSerdeLayer,
             retainOriginalCasing,
-            inlineFileProperties
+            inlineFileProperties,
+            enableInlineTypes,
+            shouldInlinePathParameters
         });
     }
 }

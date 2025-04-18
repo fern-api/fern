@@ -2,32 +2,41 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ListType extends SerializableType
+class ListType extends JsonSerializableType
 {
     /**
-     * @var mixed $valueType
+     * @var VariableType $valueType
      */
-    #[JsonProperty("valueType")]
-    public mixed $valueType;
+    #[JsonProperty('valueType')]
+    public VariableType $valueType;
 
     /**
      * @var ?bool $isFixedLength Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
      */
-    #[JsonProperty("isFixedLength")]
+    #[JsonProperty('isFixedLength')]
     public ?bool $isFixedLength;
 
     /**
-     * @param mixed $valueType
-     * @param ?bool $isFixedLength Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+     * @param array{
+     *   valueType: VariableType,
+     *   isFixedLength?: ?bool,
+     * } $values
      */
     public function __construct(
-        mixed $valueType,
-        ?bool $isFixedLength = null,
+        array $values,
     ) {
-        $this->valueType = $valueType;
-        $this->isFixedLength = $isFixedLength;
+        $this->valueType = $values['valueType'];
+        $this->isFixedLength = $values['isFixedLength'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

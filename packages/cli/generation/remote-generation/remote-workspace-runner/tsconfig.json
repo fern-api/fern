@@ -1,20 +1,55 @@
 {
-  "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../../commons/core-utils" },
-    { "path": "../../../../commons/fs-utils" },
-    { "path": "../../../../core" },
-    { "path": "../../../../ir-sdk" },
-    { "path": "../../../auth" },
-    { "path": "../../../configuration" },
-    { "path": "../../../docs-resolver" },
-    { "path": "../../../logger" },
-    { "path": "../../../register" },
-    { "path": "../../../task-context" },
-    { "path": "../../../workspace-loader" },
-    { "path": "../../ir-generator" },
-    { "path": "../../ir-migrations" }
+    {
+      "path": "../../../../commons/core-utils"
+    },
+    {
+      "path": "../../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../../core"
+    },
+    {
+      "path": "../../../../ir-sdk"
+    },
+    {
+      "path": "../../../auth"
+    },
+    {
+      "path": "../../../cli-source-resolver"
+    },
+    {
+      "path": "../../../configuration"
+    },
+    {
+      "path": "../../../docs-resolver"
+    },
+    {
+      "path": "../../../logger"
+    },
+    {
+      "path": "../../../register"
+    },
+    {
+      "path": "../../../task-context"
+    },
+    {
+      "path": "../../../workspace/loader"
+    },
+    {
+      "path": "../../ir-generator"
+    },
+    {
+      "path": "../../ir-migrations"
+    }
   ]
 }

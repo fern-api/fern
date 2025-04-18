@@ -1,0 +1,27 @@
+openapi: 3.0.1
+info:
+  title: accept
+  version: ''
+paths:
+  /container/:
+    delete:
+      operationId: service_endpoint
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+      security:
+        - BearerAuth: []
+components:
+  schemas: {}
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

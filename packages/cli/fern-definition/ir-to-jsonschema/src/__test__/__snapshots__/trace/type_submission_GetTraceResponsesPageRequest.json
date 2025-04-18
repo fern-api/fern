@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "offset": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedCrossPackageTypeNames;
 using SeedCrossPackageTypeNames.Core;
-
-#nullable enable
 
 namespace SeedCrossPackageTypeNames.Test.Unit.MockServer;
 
@@ -13,18 +9,18 @@ namespace SeedCrossPackageTypeNames.Test.Unit.MockServer;
 public class FindTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
-              "publicProperty": "string",
+              "publicProperty": "publicProperty",
               "privateProperty": 1
             }
             """;
 
         const string mockResponse = """
             {
-              "imported": "string"
+              "imported": "imported"
             }
             """;
 
@@ -33,7 +29,7 @@ public class FindTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
-                    .WithParam("optionalString", "string")
+                    .WithParam("optionalString", "optionalString")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -47,15 +43,14 @@ public class FindTest : BaseMockServerTest
         var response = await Client.Foo.FindAsync(
             new FindRequest
             {
-                OptionalString = "string",
-                PublicProperty = "string",
+                OptionalString = "optionalString",
+                PublicProperty = "publicProperty",
                 PrivateProperty = 1,
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<ImportingType>(mockResponse)).UsingDefaults()
+        );
     }
 }

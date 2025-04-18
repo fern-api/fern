@@ -5,9 +5,10 @@ package option
 import (
 	core "github.com/server-sent-events/fern/core"
 	http "net/http"
+	url "net/url"
 )
 
-// RequestOption adapts the behavior of an indivdual request.
+// RequestOption adapts the behavior of an individual request.
 type RequestOption = core.RequestOption
 
 // WithBaseURL sets the base URL, overriding the default
@@ -30,6 +31,28 @@ func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {
 	return &core.HTTPHeaderOption{
 		// Clone the headers so they can't be modified after the option call.
 		HTTPHeader: httpHeader.Clone(),
+	}
+}
+
+// WithBodyProperties adds the given body properties to the request.
+func WithBodyProperties(bodyProperties map[string]interface{}) *core.BodyPropertiesOption {
+	copiedBodyProperties := make(map[string]interface{}, len(bodyProperties))
+	for key, value := range bodyProperties {
+		copiedBodyProperties[key] = value
+	}
+	return &core.BodyPropertiesOption{
+		BodyProperties: copiedBodyProperties,
+	}
+}
+
+// WithQueryParameters adds the given query parameters to the request.
+func WithQueryParameters(queryParameters url.Values) *core.QueryParametersOption {
+	copiedQueryParameters := make(url.Values, len(queryParameters))
+	for key, values := range queryParameters {
+		copiedQueryParameters[key] = values
+	}
+	return &core.QueryParametersOption{
+		QueryParameters: copiedQueryParameters,
 	}
 }
 

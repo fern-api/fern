@@ -13,7 +13,7 @@ export const Dog: core.serialization.ObjectSchema<serializers.types.Dog.Raw, See
     });
 
 export declare namespace Dog {
-    interface Raw {
+    export interface Raw {
         name: string;
         likesToWoof: boolean;
     }

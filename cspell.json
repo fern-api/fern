@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "path": "./cspell-words.txt",
+      "addWords": true
+    }
+  ],
+  "caseSensitive": true,
+  "allowCompoundWords": true,
+  "dictionaries": [
+    "project-words"
+  ],
+  "ignorePaths": [
+    "./seed/*/*/*",
+    ".git",
+    ".vscode",
+    "**/__snapshots__/**",
+    "**/__test__/**/fixtures",
+    "**/__test__/**/output",
+    "**/__test__/**/outputs",
+    "**/.next",
+    "**/.pnp.*",
+    "**/.turbo",
+    "**/.yarn",
+    "**/*.tsbuildinfo",
+    "**/build",
+    "**/dist",
+    "**/generated",
+    "**/lib",
+    "**/node_modules",
+    "**/out",
+    "**/storybook-static",
+    "/project-words.txt",
+    "fern/vale-styles",
+    "pnpm-lock.yaml",
+    "**/generate/fixtures",
+    "**/__test__/**/*.json",
+    "fern/apis/fhir/definition/__package__.yml",
+    "packages/cli/cli/build.*.cjs"
+  ]
+}

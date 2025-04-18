@@ -9,24 +9,24 @@ export type TestCaseGrade =
     | SeedTrace.TestCaseGrade.NonHidden
     | SeedTrace.TestCaseGrade._Unknown;
 
-export declare namespace TestCaseGrade {
-    interface Hidden extends SeedTrace.TestCaseHiddenGrade, _Utils {
+export namespace TestCaseGrade {
+    export interface Hidden extends SeedTrace.TestCaseHiddenGrade, _Utils {
         type: "hidden";
     }
 
-    interface NonHidden extends SeedTrace.TestCaseNonHiddenGrade, _Utils {
+    export interface NonHidden extends SeedTrace.TestCaseNonHiddenGrade, _Utils {
         type: "nonHidden";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.TestCaseGrade._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         hidden: (value: SeedTrace.TestCaseHiddenGrade) => _Result;
         nonHidden: (value: SeedTrace.TestCaseNonHiddenGrade) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -40,7 +40,7 @@ export const TestCaseGrade = {
             type: "hidden",
             _visit: function <_Result>(
                 this: SeedTrace.TestCaseGrade.Hidden,
-                visitor: SeedTrace.TestCaseGrade._Visitor<_Result>
+                visitor: SeedTrace.TestCaseGrade._Visitor<_Result>,
             ) {
                 return SeedTrace.TestCaseGrade._visit(this, visitor);
             },
@@ -53,7 +53,7 @@ export const TestCaseGrade = {
             type: "nonHidden",
             _visit: function <_Result>(
                 this: SeedTrace.TestCaseGrade.NonHidden,
-                visitor: SeedTrace.TestCaseGrade._Visitor<_Result>
+                visitor: SeedTrace.TestCaseGrade._Visitor<_Result>,
             ) {
                 return SeedTrace.TestCaseGrade._visit(this, visitor);
             },
@@ -65,7 +65,7 @@ export const TestCaseGrade = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.TestCaseGrade._Unknown,
-                visitor: SeedTrace.TestCaseGrade._Visitor<_Result>
+                visitor: SeedTrace.TestCaseGrade._Visitor<_Result>,
             ) {
                 return SeedTrace.TestCaseGrade._visit(this, visitor);
             },

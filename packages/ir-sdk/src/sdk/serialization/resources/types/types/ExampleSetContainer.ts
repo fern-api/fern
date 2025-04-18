@@ -15,7 +15,7 @@ export const ExampleSetContainer: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleSetContainer {
-    interface Raw {
+    export interface Raw {
         set: serializers.ExampleTypeReference.Raw[];
         itemType: serializers.TypeReference.Raw;
     }

@@ -15,7 +15,7 @@ export const FernFilepath: core.serialization.ObjectSchema<serializers.FernFilep
     });
 
 export declare namespace FernFilepath {
-    interface Raw {
+    export interface Raw {
         allParts: Name.Raw[];
         packagePath: Name.Raw[];
         file?: Name.Raw | null;

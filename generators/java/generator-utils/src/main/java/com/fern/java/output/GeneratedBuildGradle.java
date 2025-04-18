@@ -90,7 +90,10 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.addLine("targetCompatibility = 1.8");
         writer.addNewLine();
 
-        customBlocks().forEach(writer::addLine);
+        customBlocks().forEach((block) -> {
+            writer.addLine((block));
+            writer.addNewLine();
+        });
 
         // add publishing
         if (gradlePublishingConfig().isPresent()) {
@@ -108,18 +111,50 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.endControlFlow();
             writer.endControlFlow();
 
-            writer.beginControlFlow("repositories");
-            writer.beginControlFlow("maven");
-            writer.addLine("url \"$System.env." + MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR + "\"");
-            writer.beginControlFlow("credentials");
-            writer.addLine("username \"$System.env." + MAVEN_USERNAME_ENV_VAR + "\"");
-            writer.addLine("password \"$System.env." + MAVEN_PASSWORD_ENV_VAR + "\"");
-            writer.endControlFlow();
-            writer.endControlFlow();
-            writer.endControlFlow();
-
+            if (!shouldSignPackage()) {
+                writer.beginControlFlow("repositories");
+                writer.beginControlFlow("maven");
+                writer.addLine("url \"$System.env." + MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR + "\"");
+                writer.beginControlFlow("credentials");
+                writer.addLine("username \"$System.env." + MAVEN_USERNAME_ENV_VAR + "\"");
+                writer.addLine("password \"$System.env." + MAVEN_PASSWORD_ENV_VAR + "\"");
+                writer.endControlFlow();
+                writer.endControlFlow();
+                writer.endControlFlow();
+            }
             writer.endControlFlow();
             writer.addNewLine();
+
+            if (shouldSignPackage()) {
+                writer.beginControlFlow("sonatypeCentralUpload");
+                writer.addLine("username = \"$System.env." + MAVEN_USERNAME_ENV_VAR + "\"");
+                writer.addLine("password = \"$System.env." + MAVEN_PASSWORD_ENV_VAR + "\"");
+                writer.addNewLine();
+                writer.addLine("archives = files(");
+                writer.addLine("    \"$buildDir/libs/"
+                        + gradlePublishingConfig().get().artifact() + "-\" + version + \".jar\",");
+                writer.addLine("    \"$buildDir/libs/"
+                        + gradlePublishingConfig().get().artifact() + "-\" + version + \"-sources.jar\",");
+                writer.addLine("    \"$buildDir/libs/"
+                        + gradlePublishingConfig().get().artifact() + "-\" + version + \"-javadoc.jar\"");
+                writer.addLine(")");
+                writer.addNewLine();
+                writer.addLine("pom = file(\"$buildDir/publications/maven/pom-default.xml\")");
+                writer.addLine("signingKey = \"$System.env." + MAVEN_SIGNING_KEY + "\"");
+                writer.addLine("signingKeyPassphrase = \"$System.env." + MAVEN_SIGNING_PASSWORD + "\"");
+                writer.endControlFlow();
+                writer.addNewLine();
+
+                writer.beginControlFlow("signing");
+                writer.addLine("def signingKeyId = \"$System.env." + MAVEN_SIGNING_KEY + "\"");
+                writer.addLine("def signingPassword = \"$System.env." + MAVEN_SIGNING_PASSWORD + "\"");
+                writer.addLine("useInMemoryPgpKeys(signingKeyId, signingPassword)");
+                writer.addLine("sign publishing.publications.maven");
+                writer.endControlFlow();
+
+                writer.addNewLine();
+                writer.addLine("sonatypeCentralUpload.dependsOn build");
+            }
         }
         return writer.getContents();
     }
@@ -177,6 +212,13 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.beginControlFlow("licenses");
             writer.beginControlFlow("license");
             writer.addLine("name = '" + license.get() + "'");
+            writer.endControlFlow();
+            writer.endControlFlow();
+        } else {
+            writer.beginControlFlow("licenses");
+            writer.beginControlFlow("license");
+            writer.addLine("name = 'The MIT License (MIT)'");
+            writer.addLine("url = 'https://mit-license.org/'");
             writer.endControlFlow();
             writer.endControlFlow();
         }

@@ -1,0 +1,5 @@
+name: simple-api
+auth: bearer
+pagination:
+  type: custom
+  results: $response.results

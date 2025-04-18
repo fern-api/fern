@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         xEndpointHeader: "string"
+ *         xEndpointHeader: "X-Endpoint-Header"
  *     }
  */
 export interface HeaderAuthRequest {

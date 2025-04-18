@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/submission.SubmissionId"
+    },
+    "state": {
+      "$ref": "#/definitions/submission.RunningSubmissionState"
+    }
+  },
+  "required": [
+    "submissionId",
+    "state"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "submission.RunningSubmissionState": {
+      "type": "string",
+      "enum": [
+        "QUEUEING_SUBMISSION",
+        "KILLING_HISTORICAL_SUBMISSIONS",
+        "WRITING_SUBMISSION_TO_FILE",
+        "COMPILING_SUBMISSION",
+        "RUNNING_SUBMISSION"
+      ]
+    }
+  }
+}

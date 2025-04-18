@@ -10,5 +10,5 @@ export const Base64Type: core.serialization.ObjectSchema<serializers.Base64Type.
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace Base64Type {
-    interface Raw {}
+    export interface Raw {}
 }

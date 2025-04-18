@@ -1,0 +1,176 @@
+{
+  "title": "Enum of separator characters",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PatchSettingsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PatchSettingsRequest",
+          "schema": "Settings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "PatchSettingsResponse",
+          "schema": "Settings",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "PATCH",
+      "path": "/settings",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "separator": {
+                  "value": "/",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Settings": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "settingsSeparator",
+            "key": "separator",
+            "schema": {
+              "generatedName": "settingsSeparator",
+              "value": {
+                "generatedName": "SettingsSeparator",
+                "schema": "DocumentIDSeparators",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Settings",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "DocumentIDSeparators": {
+        "generatedName": "DocumentIdSeparators",
+        "values": [
+          {
+            "generatedName": "SLASH",
+            "value": "/",
+            "casing": {}
+          },
+          {
+            "generatedName": "HYPHEN",
+            "value": "-",
+            "casing": {}
+          },
+          {
+            "generatedName": "PIPE",
+            "value": "|",
+            "casing": {}
+          },
+          {
+            "generatedName": "DOT",
+            "value": ".",
+            "casing": {}
+          },
+          {
+            "generatedName": "EMPTY",
+            "value": "",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

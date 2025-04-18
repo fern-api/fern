@@ -5,7 +5,6 @@ from ......core.pydantic_utilities import UniversalBaseModel
 from .object_with_optional_field import ObjectWithOptionalField
 import pydantic
 import typing
-import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
@@ -14,10 +13,6 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2
 class NestedObjectWithRequiredField(UniversalBaseModel):
     string: str
     nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
-
-    class Partial(typing.TypedDict):
-        string: typing_extensions.NotRequired[str]
-        nested_object: typing_extensions.NotRequired[ObjectWithOptionalField]
 
     class Validators:
         """
@@ -36,12 +31,8 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[NestedObjectWithRequiredField.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[NestedObjectWithRequiredField.Validators._RootValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[NestedObjectWithRequiredField.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[NestedObjectWithRequiredField.Validators._RootValidator]] = []
         _string_pre_validators: typing.ClassVar[
             typing.List[NestedObjectWithRequiredField.Validators.PreStringValidator]
         ] = []
@@ -49,9 +40,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
             typing.List[NestedObjectWithRequiredField.Validators.StringValidator]
         ] = []
         _nested_object_pre_validators: typing.ClassVar[
-            typing.List[
-                NestedObjectWithRequiredField.Validators.PreNestedObjectValidator
-            ]
+            typing.List[NestedObjectWithRequiredField.Validators.PreNestedObjectValidator]
         ] = []
         _nested_object_post_validators: typing.ClassVar[
             typing.List[NestedObjectWithRequiredField.Validators.NestedObjectValidator]
@@ -95,10 +84,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["string"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["string"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
             [NestedObjectWithRequiredField.Validators.StringValidator],
             NestedObjectWithRequiredField.Validators.StringValidator,
@@ -106,10 +92,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["nested_object"],
-            *,
-            pre: typing.Literal[True],
+            cls, field_name: typing.Literal["nested_object"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
             [NestedObjectWithRequiredField.Validators.PreNestedObjectValidator],
             NestedObjectWithRequiredField.Validators.PreNestedObjectValidator,
@@ -117,10 +100,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["nested_object"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["nested_object"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
             [NestedObjectWithRequiredField.Validators.NestedObjectValidator],
             NestedObjectWithRequiredField.Validators.NestedObjectValidator,
@@ -143,25 +123,17 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
             return decorator
 
         class PreStringValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: NestedObjectWithRequiredField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: NestedObjectWithRequiredField.Partial) -> typing.Any: ...
 
         class StringValidator(typing.Protocol):
-            def __call__(
-                self, __v: str, __values: NestedObjectWithRequiredField.Partial
-            ) -> str: ...
+            def __call__(self, __v: str, __values: NestedObjectWithRequiredField.Partial) -> str: ...
 
         class PreNestedObjectValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: NestedObjectWithRequiredField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: NestedObjectWithRequiredField.Partial) -> typing.Any: ...
 
         class NestedObjectValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: ObjectWithOptionalField,
-                __values: NestedObjectWithRequiredField.Partial,
+                self, __v: ObjectWithOptionalField, __values: NestedObjectWithRequiredField.Partial
             ) -> ObjectWithOptionalField: ...
 
         class _PreRootValidator(typing.Protocol):
@@ -189,22 +161,14 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
         return values
 
     @universal_field_validator("string", pre=True)
-    def _pre_validate_string(
-        cls, v: str, values: NestedObjectWithRequiredField.Partial
-    ) -> str:
-        for (
-            validator
-        ) in NestedObjectWithRequiredField.Validators._string_pre_validators:
+    def _pre_validate_string(cls, v: str, values: NestedObjectWithRequiredField.Partial) -> str:
+        for validator in NestedObjectWithRequiredField.Validators._string_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("string", pre=False)
-    def _post_validate_string(
-        cls, v: str, values: NestedObjectWithRequiredField.Partial
-    ) -> str:
-        for (
-            validator
-        ) in NestedObjectWithRequiredField.Validators._string_post_validators:
+    def _post_validate_string(cls, v: str, values: NestedObjectWithRequiredField.Partial) -> str:
+        for validator in NestedObjectWithRequiredField.Validators._string_post_validators:
             v = validator(v, values)
         return v
 
@@ -212,9 +176,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
     def _pre_validate_nested_object(
         cls, v: ObjectWithOptionalField, values: NestedObjectWithRequiredField.Partial
     ) -> ObjectWithOptionalField:
-        for (
-            validator
-        ) in NestedObjectWithRequiredField.Validators._nested_object_pre_validators:
+        for validator in NestedObjectWithRequiredField.Validators._nested_object_pre_validators:
             v = validator(v, values)
         return v
 
@@ -222,16 +184,12 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
     def _post_validate_nested_object(
         cls, v: ObjectWithOptionalField, values: NestedObjectWithRequiredField.Partial
     ) -> ObjectWithOptionalField:
-        for (
-            validator
-        ) in NestedObjectWithRequiredField.Validators._nested_object_post_validators:
+        for validator in NestedObjectWithRequiredField.Validators._nested_object_post_validators:
             v = validator(v, values)
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

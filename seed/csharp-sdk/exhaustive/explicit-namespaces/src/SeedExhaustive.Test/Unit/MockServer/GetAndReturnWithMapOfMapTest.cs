@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
-
-#nullable enable
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -13,13 +9,13 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
               "map": {
-                "string": {
-                  "string": "string"
+                "map": {
+                  "map": "map"
                 }
               }
             }
@@ -28,8 +24,8 @@ public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
         const string mockResponse = """
             {
               "map": {
-                "string": {
-                  "string": "string"
+                "map": {
+                  "map": "map"
                 }
               }
             }
@@ -56,16 +52,15 @@ public class GetAndReturnWithMapOfMapTest : BaseMockServerTest
                 Map = new Dictionary<string, Dictionary<string, string>>()
                 {
                     {
-                        "string",
-                        new Dictionary<string, string>() { { "string", "string" } }
+                        "map",
+                        new Dictionary<string, string>() { { "map", "map" } }
                     },
                 },
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithMapOfMap>(mockResponse)).UsingDefaults()
+        );
     }
 }

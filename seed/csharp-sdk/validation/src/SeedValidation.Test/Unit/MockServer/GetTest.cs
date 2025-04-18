@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedValidation;
 using SeedValidation.Core;
-
-#nullable enable
 
 namespace SeedValidation.Test.Unit.MockServer;
 
@@ -13,13 +9,13 @@ namespace SeedValidation.Test.Unit.MockServer;
 public class GetTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
-              "decimal": 1.1,
-              "even": 2,
-              "name": "rules",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             }
             """;
@@ -29,9 +25,9 @@ public class GetTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
-                    .WithParam("decimal", "1.1")
-                    .WithParam("even", "1")
-                    .WithParam("name", "string")
+                    .WithParam("decimal", "2.2")
+                    .WithParam("even", "100")
+                    .WithParam("name", "foo")
                     .UsingGet()
             )
             .RespondWith(
@@ -44,15 +40,14 @@ public class GetTest : BaseMockServerTest
         var response = await Client.GetAsync(
             new GetRequest
             {
-                Decimal = 1.1,
-                Even = 1,
-                Name = "string",
-            },
-            RequestOptions
+                Decimal = 2.2,
+                Even = 100,
+                Name = "foo",
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingDefaults()
+        );
     }
 }

@@ -9,14 +9,16 @@ import { Problem } from "../resources/problem/client/Client";
 import { V3 } from "../resources/v3/client/Client";
 
 export declare namespace V2 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,11 +27,24 @@ export declare namespace V2 {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class V2 {
+    protected _problem: Problem | undefined;
+    protected _v3: V3 | undefined;
+
     constructor(protected readonly _options: V2.Options = {}) {}
+
+    public get problem(): Problem {
+        return (this._problem ??= new Problem(this._options));
+    }
+
+    public get v3(): V3 {
+        return (this._v3 ??= new V3(this._options));
+    }
 
     /**
      * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
@@ -37,9 +52,20 @@ export class V2 {
      * @example
      *     await client.v2.test()
      */
-    public async test(requestOptions?: V2.RequestOptions): Promise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
+    public test(
+        requestOptions?: V2.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__test(requestOptions));
+    }
+
+    private async __test(
+        requestOptions?: V2.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.v2.test.Error>>> {
         const _response = await core.fetcher({
-            url: (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)) ??
+                environments.SeedTraceEnvironment.Prod,
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -53,6 +79,7 @@ export class V2 {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -62,27 +89,24 @@ export class V2 {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.test.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.test.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
-    }
-
-    protected _problem: Problem | undefined;
-
-    public get problem(): Problem {
-        return (this._problem ??= new Problem(this._options));
-    }
-
-    protected _v3: V3 | undefined;
-
-    public get v3(): V3 {
-        return (this._v3 ??= new V3(this._options));
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

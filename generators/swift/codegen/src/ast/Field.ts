@@ -1,6 +1,6 @@
-import { AstNode, Writer } from "./core";
 import Swift, { AccessLevel, Type } from "..";
 import { VariableType } from "./VariableType";
+import { AstNode, Writer } from "./core";
 
 export declare namespace Field {
     interface Args {

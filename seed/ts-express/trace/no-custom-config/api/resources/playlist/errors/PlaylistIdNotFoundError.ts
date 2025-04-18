@@ -15,7 +15,7 @@ export class PlaylistIdNotFoundError extends errors.SeedTraceError {
 
     public async send(res: express.Response): Promise<void> {
         res.status(404).json(
-            serializers.PlaylistIdNotFoundErrorBody.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
+            serializers.PlaylistIdNotFoundErrorBody.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }),
         );
     }
 }

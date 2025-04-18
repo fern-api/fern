@@ -16,7 +16,8 @@
     "@types/node",
     "@types/node-fetch",
     "@types/qs",
-    "@types/url-join"
+    "@types/url-join",
+    "@trivago/prettier-plugin-sort-imports"
   ],
   "ignore-patterns": ["lib", "lib", "docker/bundle.js"]
 }

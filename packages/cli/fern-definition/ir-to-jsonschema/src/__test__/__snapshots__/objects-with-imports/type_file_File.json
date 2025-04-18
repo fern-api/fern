@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "contents": {
+      "type": "string"
+    },
+    "info": {
+      "$ref": "#/definitions/file.FileInfo"
+    }
+  },
+  "required": [
+    "name",
+    "contents",
+    "info"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "file.FileInfo": {
+      "type": "string",
+      "enum": [
+        "REGULAR",
+        "DIRECTORY"
+      ]
+    }
+  }
+}

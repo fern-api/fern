@@ -14,7 +14,7 @@ export const Child: core.serialization.ObjectSchema<serializers.Child.Raw, SeedA
     .extend(Parent);
 
 export declare namespace Child {
-    interface Raw extends Parent.Raw {
+    export interface Raw extends Parent.Raw {
         child: string;
     }
 }

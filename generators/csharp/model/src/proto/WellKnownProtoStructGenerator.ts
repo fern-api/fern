@@ -1,9 +1,11 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE } from "./constants";
 
 export declare namespace WellKnownProtoStructGenerator {
     interface Args {
@@ -39,7 +41,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         const class_ = csharp.class_({
             name: this.classReference.name,
             namespace: this.classReference.namespace,
-            access: "public",
+            access: csharp.Access.Public,
             sealed: true,
             parentClassReference: csharp.Type.map(
                 csharp.Type.string(),
@@ -67,14 +69,14 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
 
     private getDefaultConstructor(): csharp.Class.Constructor {
         return {
-            access: "public",
+            access: csharp.Access.Public,
             parameters: []
         };
     }
 
     private getKeyValuePairConstructor(): csharp.Class.Constructor {
         return {
-            access: "public",
+            access: csharp.Access.Public,
             parameters: [
                 csharp.parameter({
                     name: "value",
@@ -106,7 +108,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
     private getToProtoMethod(): csharp.Method {
         return csharp.method({
             name: "ToProto",
-            access: "internal",
+            access: csharp.Access.Internal,
             isAsync: false,
             parameters: [],
             return_: csharp.Type.reference(EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE),
@@ -136,7 +138,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
     private getFromProtoMethod(): csharp.Method {
         return csharp.method({
             name: "FromProto",
-            access: "internal",
+            access: csharp.Access.Internal,
             type: csharp.MethodType.STATIC,
             isAsync: false,
             parameters: [

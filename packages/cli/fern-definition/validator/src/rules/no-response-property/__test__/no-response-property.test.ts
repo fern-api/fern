@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoResponsePropertyRule } from "../no-response-property";
 
@@ -18,7 +19,7 @@ describe("no-response-property", () => {
                 message: "Response does not have a property named id.",
                 nodePath: ["service", "endpoints", "getMovie"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

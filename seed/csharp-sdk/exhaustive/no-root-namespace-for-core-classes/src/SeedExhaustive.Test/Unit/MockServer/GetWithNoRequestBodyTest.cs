@@ -1,10 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-
-#nullable enable
+using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -12,7 +9,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetWithNoRequestBodyTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -26,15 +23,16 @@ public class GetWithNoRequestBodyTest : BaseMockServerTest
               "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "base64": "SGVsbG8gd29ybGQh",
               "list": [
-                "string"
+                "list",
+                "list"
               ],
               "set": [
-                "string"
+                "set"
               ],
               "map": {
-                "1": "string"
+                "1": "map"
               },
-              "bigint": "123456789123456789"
+              "bigint": "1000000"
             }
             """;
 
@@ -47,10 +45,10 @@ public class GetWithNoRequestBodyTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.NoReqBody.GetWithNoRequestBodyAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.NoReqBody.GetWithNoRequestBodyAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+        );
     }
 }

@@ -2,32 +2,41 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WorkspaceRanResponse extends SerializableType
+class WorkspaceRanResponse extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var WorkspaceRunDetails $runDetails
      */
-    #[JsonProperty("runDetails")]
+    #[JsonProperty('runDetails')]
     public WorkspaceRunDetails $runDetails;
 
     /**
-     * @param string $submissionId
-     * @param WorkspaceRunDetails $runDetails
+     * @param array{
+     *   submissionId: string,
+     *   runDetails: WorkspaceRunDetails,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        WorkspaceRunDetails $runDetails,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->runDetails = $runDetails;
+        $this->submissionId = $values['submissionId'];
+        $this->runDetails = $values['runDetails'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

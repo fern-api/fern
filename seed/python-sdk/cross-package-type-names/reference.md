@@ -113,8 +113,8 @@ client = SeedCrossPackageTypeNames(
     base_url="https://yourhost.com/path/to/api",
 )
 client.foo.find(
-    optional_string="string",
-    public_property="string",
+    optional_string="optionalString",
+    public_property="publicProperty",
     private_property=1,
 )
 

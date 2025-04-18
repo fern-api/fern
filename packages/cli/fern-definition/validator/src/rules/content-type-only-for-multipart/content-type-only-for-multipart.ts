@@ -1,4 +1,5 @@
-import { parseFileUploadRequest, isInlineRequestBody } from "@fern-api/fern-definition-schema";
+import { isInlineRequestBody, parseFileUploadRequest } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ContentTypeOnlyForMultipartRule: Rule = {
@@ -31,7 +32,7 @@ export const ContentTypeOnlyForMultipartRule: Rule = {
                             }
                             if (propertyDeclaration["content-type"] != null) {
                                 violations.push({
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: `${propertyName} has content-type, but the request is not multipart`
                                 });
                             }

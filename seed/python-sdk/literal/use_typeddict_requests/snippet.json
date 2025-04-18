@@ -61,8 +61,8 @@
                 "identifier_override": "endpoint_reference.send"
             },
             "snippet": {
-                "sync_client": "from seed import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.reference.send(\n    query=\"What is the weather today\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.reference.send(\n        query=\"What is the weather today\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.reference.send(\n    query=\"What is the weather today\",\n    container_object={\n        \"nested_objects\": [\n            {\n                \"literal_1\": \"literal1\",\n                \"literal_2\": \"literal2\",\n                \"str_prop\": \"strProp\",\n            }\n        ]\n    },\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.reference.send(\n        query=\"What is the weather today\",\n        container_object={\n            \"nested_objects\": [\n                {\n                    \"literal_1\": \"literal1\",\n                    \"literal_2\": \"literal2\",\n                    \"str_prop\": \"strProp\",\n                }\n            ]\n        },\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

@@ -1,10 +1,8 @@
 from typing import Literal, Optional
 
-from typing_extensions import Self
-
 import pydantic
-
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
+from typing_extensions import Self
 
 UnionNamingVersions = Literal["v0", "v1"]
 
@@ -52,9 +50,12 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
         version_compat = self.version
         use_wrapped_aliases = self.wrapped_aliases
 
-        if use_wrapped_aliases and version_compat != PydanticVersionCompatibility.V1:
+        if use_wrapped_aliases and version_compat not in [
+            PydanticVersionCompatibility.V1,
+            PydanticVersionCompatibility.V1_ON_V2,
+        ]:
             raise ValueError(
-                "Wrapped aliases are only supported in Pydantic V1, please update your `version` field to be 'v1' to continue using wrapped aliases."
+                "Wrapped aliases are only supported in Pydantic V1 or V1_ON_V2, please update your `version` field appropriately to continue using wrapped aliases."
             )
 
         if self.enum_type != "literals":

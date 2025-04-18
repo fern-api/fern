@@ -8,6 +8,7 @@ import {
     SerializableObject,
     UndiscriminatedUnion
 } from "@fern-api/ruby-codegen";
+
 import {
     AliasTypeDeclaration,
     EnumTypeDeclaration,

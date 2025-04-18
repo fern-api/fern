@@ -1,0 +1,84 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/submission.SubmissionId"
+    },
+    "language": {
+      "$ref": "#/definitions/commons.Language"
+    },
+    "submissionFiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/submission.SubmissionFileInfo"
+      }
+    },
+    "problemId": {
+      "$ref": "#/definitions/commons.ProblemId"
+    },
+    "problemVersion": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "userId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "submissionId",
+    "language",
+    "submissionFiles",
+    "problemId"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "commons.Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission.SubmissionFileInfo": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "directory",
+        "filename",
+        "contents"
+      ],
+      "additionalProperties": false
+    },
+    "commons.ProblemId": {
+      "type": "string"
+    }
+  }
+}

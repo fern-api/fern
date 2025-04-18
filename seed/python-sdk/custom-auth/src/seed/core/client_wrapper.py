@@ -14,6 +14,7 @@ class BaseClientWrapper:
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
+            "User-Agent": "fern_custom-auth/0.0.1",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_custom-auth",
             "X-Fern-SDK-Version": "0.0.1",
@@ -40,9 +41,9 @@ class SyncClientWrapper(BaseClientWrapper):
         super().__init__(custom_auth_scheme=custom_auth_scheme, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
-            base_headers=self.get_headers(),
-            base_timeout=self.get_timeout(),
-            base_url=self.get_base_url(),
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )
 
 
@@ -58,7 +59,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         super().__init__(custom_auth_scheme=custom_auth_scheme, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
-            base_headers=self.get_headers(),
-            base_timeout=self.get_timeout(),
-            base_url=self.get_base_url(),
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )

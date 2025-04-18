@@ -15,7 +15,7 @@ export const ListUsersBodyCursorPaginationRequest: core.serialization.Schema<
 });
 
 export declare namespace ListUsersBodyCursorPaginationRequest {
-    interface Raw {
+    export interface Raw {
         pagination?: WithCursor.Raw | null;
     }
 }

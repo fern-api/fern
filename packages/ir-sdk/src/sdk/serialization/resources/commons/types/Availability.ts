@@ -14,7 +14,7 @@ export const Availability: core.serialization.ObjectSchema<serializers.Availabil
     });
 
 export declare namespace Availability {
-    interface Raw {
+    export interface Raw {
         status: AvailabilityStatus.Raw;
         message?: string | null;
     }

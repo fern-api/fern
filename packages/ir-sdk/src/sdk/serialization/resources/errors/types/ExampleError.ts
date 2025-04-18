@@ -19,7 +19,7 @@ export const ExampleError: core.serialization.ObjectSchema<serializers.ExampleEr
         .extend(WithDocs);
 
 export declare namespace ExampleError {
-    interface Raw extends WithJsonExample.Raw, WithDocs.Raw {
+    export interface Raw extends WithJsonExample.Raw, WithDocs.Raw {
         name?: Name.Raw | null;
         shape: serializers.ExampleTypeReference.Raw;
     }

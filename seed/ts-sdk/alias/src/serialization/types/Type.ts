@@ -13,7 +13,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedAli
 });
 
 export declare namespace Type {
-    interface Raw {
+    export interface Raw {
         id: TypeId.Raw;
         name: string;
     }

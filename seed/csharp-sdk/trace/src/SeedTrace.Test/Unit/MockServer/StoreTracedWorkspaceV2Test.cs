@@ -1,14 +1,12 @@
 using NUnit.Framework;
 using SeedTrace;
 
-#nullable enable
-
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class StoreTracedWorkspaceV2Test : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """
@@ -17,11 +15,12 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                 "submissionId": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 "lineNumber": 1,
                 "file": {
-                  "filename": "string",
-                  "directory": "string"
+                  "filename": "filename",
+                  "directory": "directory"
                 },
                 "returnValue": {
-                  "type": "integerValue"
+                  "type": "integerValue",
+                  "value": 1
                 },
                 "expressionLocation": {
                   "start": 1,
@@ -30,20 +29,71 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                 "stack": {
                   "numStackFrames": 1,
                   "topStackFrame": {
-                    "methodName": "string",
+                    "methodName": "methodName",
                     "lineNumber": 1,
                     "scopes": [
                       {
                         "variables": {
-                          "string": {
-                            "key": "value"
+                          "variables": {
+                            "type": "integerValue",
+                            "value": 1
+                          }
+                        }
+                      },
+                      {
+                        "variables": {
+                          "variables": {
+                            "type": "integerValue",
+                            "value": 1
                           }
                         }
                       }
                     ]
                   }
                 },
-                "stdout": "string"
+                "stdout": "stdout"
+              },
+              {
+                "submissionId": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "lineNumber": 1,
+                "file": {
+                  "filename": "filename",
+                  "directory": "directory"
+                },
+                "returnValue": {
+                  "type": "integerValue",
+                  "value": 1
+                },
+                "expressionLocation": {
+                  "start": 1,
+                  "offset": 1
+                },
+                "stack": {
+                  "numStackFrames": 1,
+                  "topStackFrame": {
+                    "methodName": "methodName",
+                    "lineNumber": 1,
+                    "scopes": [
+                      {
+                        "variables": {
+                          "variables": {
+                            "type": "integerValue",
+                            "value": 1
+                          }
+                        }
+                      },
+                      {
+                        "variables": {
+                          "variables": {
+                            "type": "integerValue",
+                            "value": 1
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "stdout": "stdout"
               }
             ]
             """;
@@ -70,7 +120,11 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                         {
                             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             LineNumber = 1,
-                            File = new TracedFile { Filename = "string", Directory = "string" },
+                            File = new TracedFile
+                            {
+                                Filename = "filename",
+                                Directory = "directory",
+                            },
                             ReturnValue = 1,
                             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
                             Stack = new StackInformation
@@ -78,7 +132,7 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                                 NumStackFrames = 1,
                                 TopStackFrame = new StackFrame
                                 {
-                                    MethodName = "string",
+                                    MethodName = "methodName",
                                     LineNumber = 1,
                                     Scopes = new List<Scope>()
                                     {
@@ -86,22 +140,61 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
                                         {
                                             Variables = new Dictionary<string, object>()
                                             {
-                                                {
-                                                    "string",
-                                                    new Dictionary<object, object?>()
-                                                    {
-                                                        { "key", "value" },
-                                                    }
-                                                },
+                                                { "variables", 1 },
+                                            },
+                                        },
+                                        new Scope
+                                        {
+                                            Variables = new Dictionary<string, object>()
+                                            {
+                                                { "variables", 1 },
                                             },
                                         },
                                     },
                                 },
                             },
-                            Stdout = "string",
+                            Stdout = "stdout",
                         },
-                    },
-                    RequestOptions
+                        new TraceResponseV2
+                        {
+                            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                            LineNumber = 1,
+                            File = new TracedFile
+                            {
+                                Filename = "filename",
+                                Directory = "directory",
+                            },
+                            ReturnValue = 1,
+                            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                            Stack = new StackInformation
+                            {
+                                NumStackFrames = 1,
+                                TopStackFrame = new StackFrame
+                                {
+                                    MethodName = "methodName",
+                                    LineNumber = 1,
+                                    Scopes = new List<Scope>()
+                                    {
+                                        new Scope
+                                        {
+                                            Variables = new Dictionary<string, object>()
+                                            {
+                                                { "variables", 1 },
+                                            },
+                                        },
+                                        new Scope
+                                        {
+                                            Variables = new Dictionary<string, object>()
+                                            {
+                                                { "variables", 1 },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                            Stdout = "stdout",
+                        },
+                    }
                 )
         );
     }

@@ -3,7 +3,6 @@
  */
 
 export type TwitterCardSetting = "summary" | "summary_large_image" | "app" | "player";
-
 export const TwitterCardSetting = {
     Summary: "summary",
     SummaryLargeImage: "summary_large_image",

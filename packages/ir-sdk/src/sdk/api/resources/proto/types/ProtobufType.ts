@@ -9,21 +9,21 @@ import * as FernIr from "../../../index";
  */
 export type ProtobufType = FernIr.ProtobufType.WellKnown | FernIr.ProtobufType.UserDefined;
 
-export declare namespace ProtobufType {
-    interface WellKnown extends _Utils {
+export namespace ProtobufType {
+    export interface WellKnown extends _Utils {
         type: "wellKnown";
         value: FernIr.WellKnownProtobufType;
     }
 
-    interface UserDefined extends FernIr.UserDefinedProtobufType, _Utils {
+    export interface UserDefined extends FernIr.UserDefinedProtobufType, _Utils {
         type: "userDefined";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ProtobufType._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         wellKnown: (value: FernIr.WellKnownProtobufType) => _Result;
         userDefined: (value: FernIr.UserDefinedProtobufType) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -37,7 +37,7 @@ export const ProtobufType = {
             type: "wellKnown",
             _visit: function <_Result>(
                 this: FernIr.ProtobufType.WellKnown,
-                visitor: FernIr.ProtobufType._Visitor<_Result>
+                visitor: FernIr.ProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.ProtobufType._visit(this, visitor);
             },
@@ -50,7 +50,7 @@ export const ProtobufType = {
             type: "userDefined",
             _visit: function <_Result>(
                 this: FernIr.ProtobufType.UserDefined,
-                visitor: FernIr.ProtobufType._Visitor<_Result>
+                visitor: FernIr.ProtobufType._Visitor<_Result>,
             ) {
                 return FernIr.ProtobufType._visit(this, visitor);
             },

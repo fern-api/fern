@@ -4,18 +4,31 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "foo",
+ *         name: "example1"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "bar",
+ *         name: "example1"
+ *     }
+ */
 export type UnionWithoutKey =
     | SeedUnions.UnionWithoutKey.Foo
     /**
      * This is a bar field. */
     | SeedUnions.UnionWithoutKey.Bar;
 
-export declare namespace UnionWithoutKey {
-    interface Foo extends SeedUnions.Foo {
+export namespace UnionWithoutKey {
+    export interface Foo extends SeedUnions.Foo {
         type: "foo";
     }
 
-    interface Bar extends SeedUnions.Bar {
+    export interface Bar extends SeedUnions.Bar {
         type: "bar";
     }
 }

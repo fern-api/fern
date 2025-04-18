@@ -1,15 +1,43 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../commons/core-utils" },
-    { "path": "../../../commons/fs-utils" },
-    { "path": "../../../ir-sdk" },
-    { "path": "../../configuration" },
-    { "path": "../../project-loader" },
-    { "path": "../../task-context" },
-    { "path": "../../workspace-loader" },
-    { "path": "../../fern-definition/schema" }
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/path-utils"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../configuration"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../source-resolver"
+    },
+    {
+      "path": "../../workspace/commons"
+    },
+    {
+      "path": "../../../commons/casings-generator"
+    },
+    {
+      "path": "../../../commons/ir-utils"
+    }
   ]
 }

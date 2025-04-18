@@ -1,5 +1,6 @@
 import { ExportedFilePath, ImportsManager, Reference } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
+
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 
 const ERRORS_DIRECTORY = "errors";

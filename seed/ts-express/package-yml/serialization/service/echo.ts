@@ -8,5 +8,5 @@ import * as core from "../../core";
 export const Response: core.serialization.Schema<serializers.echo.Response.Raw, string> = core.serialization.string();
 
 export declare namespace Response {
-    type Raw = string;
+    export type Raw = string;
 }

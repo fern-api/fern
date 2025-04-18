@@ -14,7 +14,7 @@ export const TestCaseHiddenGrade: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestCaseHiddenGrade {
-    interface Raw {
+    export interface Raw {
         passed: boolean;
     }
 }

@@ -16,11 +16,11 @@
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
     {
-        ClientId = "string",
-        ClientSecret = "string",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = "string",
+        Scope = "scope",
     }
 );
 ```
@@ -65,12 +65,12 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 await client.Auth.RefreshTokenAsync(
     new RefreshTokenRequest
     {
-        ClientId = "string",
-        ClientSecret = "string",
-        RefreshToken = "string",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
+        RefreshToken = "refresh_token",
         Audience = "https://api.example.com",
         GrantType = "refresh_token",
-        Scope = "string",
+        Scope = "scope",
     }
 );
 ```

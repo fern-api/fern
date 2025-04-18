@@ -9,14 +9,16 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Admin {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,6 +27,8 @@ export declare namespace Admin {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -41,15 +45,27 @@ export class Admin {
      *         type: "stopped"
      *     })
      */
-    public async updateTestSubmissionStatus(
+    public updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionStatus,
-        requestOptions?: Admin.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Admin.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateTestSubmissionStatus(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __updateTestSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionStatus,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status/${encodeURIComponent(submissionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-submission-status/${encodeURIComponent(submissionId)}`,
             ),
             method: "POST",
             headers: {
@@ -64,6 +80,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -73,13 +90,14 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -88,12 +106,16 @@ export class Admin {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-submission-status/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -112,15 +134,27 @@ export class Admin {
      *         }
      *     })
      */
-    public async sendTestSubmissionUpdate(
+    public sendTestSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionUpdate,
-        requestOptions?: Admin.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Admin.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendTestSubmissionUpdate(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __sendTestSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionUpdate,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status-v2/${encodeURIComponent(submissionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-submission-status-v2/${encodeURIComponent(submissionId)}`,
             ),
             method: "POST",
             headers: {
@@ -135,6 +169,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -144,13 +179,14 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -159,12 +195,16 @@ export class Admin {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-submission-status-v2/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -179,15 +219,27 @@ export class Admin {
      *         type: "stopped"
      *     })
      */
-    public async updateWorkspaceSubmissionStatus(
+    public updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionStatus,
-        requestOptions?: Admin.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Admin.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateWorkspaceSubmissionStatus(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __updateWorkspaceSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionStatus,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status/${encodeURIComponent(submissionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-submission-status/${encodeURIComponent(submissionId)}`,
             ),
             method: "POST",
             headers: {
@@ -202,6 +254,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -211,13 +264,14 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -226,12 +280,16 @@ export class Admin {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-submission-status/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -250,15 +308,27 @@ export class Admin {
      *         }
      *     })
      */
-    public async sendWorkspaceSubmissionUpdate(
+    public sendWorkspaceSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionUpdate,
-        requestOptions?: Admin.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Admin.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __sendWorkspaceSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionUpdate,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(submissionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(submissionId)}`,
             ),
             method: "POST",
             headers: {
@@ -273,6 +343,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -282,13 +353,14 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -297,12 +369,16 @@ export class Admin {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-submission-status-v2/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -314,7 +390,7 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
+     *     await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", {
      *         result: {
      *             result: {
      *                 expectedResult: {
@@ -325,14 +401,12 @@ export class Admin {
      *                     type: "value",
      *                     value: {
      *                         type: "integerValue",
-     *                         value: {
-     *                             "key": "value"
-     *                         }
+     *                         value: 1
      *                     }
      *                 },
      *                 passed: true
      *             },
-     *             stdout: "string"
+     *             stdout: "stdout"
      *         },
      *         traceResponses: [{
      *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -348,33 +422,86 @@ export class Admin {
      *                 stack: {
      *                     numStackFrames: 1,
      *                     topStackFrame: {
-     *                         methodName: "string",
+     *                         methodName: "methodName",
      *                         lineNumber: 1,
      *                         scopes: [{
      *                                 variables: {
-     *                                     "string": {
-     *                                         "key": "value"
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
      *                                     }
      *                                 }
      *                             }]
      *                     }
      *                 },
-     *                 stdout: "string"
+     *                 stdout: "stdout"
+     *             }, {
+     *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 lineNumber: 1,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
+     *                 stdout: "stdout"
      *             }]
      *     })
      */
-    public async storeTracedTestCase(
+    public storeTracedTestCase(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: string,
         request: SeedTrace.StoreTracedTestCaseRequest,
-        requestOptions?: Admin.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Admin.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCase(submissionId, testCaseId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedTestCase(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: string,
+        request: SeedTrace.StoreTracedTestCaseRequest,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace/submission/${encodeURIComponent(submissionId)}/testCase/${encodeURIComponent(
-                    testCaseId
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-trace/submission/${encodeURIComponent(submissionId)}/testCase/${encodeURIComponent(testCaseId)}`,
             ),
             method: "POST",
             headers: {
@@ -389,6 +516,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -398,13 +526,14 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -413,12 +542,16 @@ export class Admin {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -430,12 +563,12 @@ export class Admin {
      * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [{
+     *     await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", [{
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
      *             file: {
-     *                 filename: "string",
-     *                 directory: "string"
+     *                 filename: "filename",
+     *                 directory: "directory"
      *             },
      *             returnValue: {
      *                 type: "integerValue",
@@ -448,32 +581,89 @@ export class Admin {
      *             stack: {
      *                 numStackFrames: 1,
      *                 topStackFrame: {
-     *                     methodName: "string",
+     *                     methodName: "methodName",
      *                     lineNumber: 1,
      *                     scopes: [{
      *                             variables: {
-     *                                 "string": {
-     *                                     "key": "value"
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
      *                                 }
      *                             }
      *                         }]
      *                 }
      *             },
-     *             stdout: "string"
+     *             stdout: "stdout"
+     *         }, {
+     *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
+     *             stdout: "stdout"
      *         }])
      */
-    public async storeTracedTestCaseV2(
+    public storeTracedTestCaseV2(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: SeedTrace.v2.TestCaseId,
         request: SeedTrace.TraceResponseV2[],
-        requestOptions?: Admin.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Admin.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedTestCaseV2(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: SeedTrace.v2.TestCaseId,
+        request: SeedTrace.TraceResponseV2[],
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace-v2/submission/${encodeURIComponent(
-                    submissionId
-                )}/testCase/${encodeURIComponent(testCaseId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-trace-v2/submission/${encodeURIComponent(submissionId)}/testCase/${encodeURIComponent(testCaseId)}`,
             ),
             method: "POST",
             headers: {
@@ -488,6 +678,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -497,13 +688,14 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -512,12 +704,16 @@ export class Admin {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -532,16 +728,16 @@ export class Admin {
      *         workspaceRunDetails: {
      *             exceptionV2: {
      *                 type: "generic",
-     *                 exceptionType: "string",
-     *                 exceptionMessage: "string",
-     *                 exceptionStacktrace: "string"
+     *                 exceptionType: "exceptionType",
+     *                 exceptionMessage: "exceptionMessage",
+     *                 exceptionStacktrace: "exceptionStacktrace"
      *             },
      *             exception: {
-     *                 exceptionType: "string",
-     *                 exceptionMessage: "string",
-     *                 exceptionStacktrace: "string"
+     *                 exceptionType: "exceptionType",
+     *                 exceptionMessage: "exceptionMessage",
+     *                 exceptionStacktrace: "exceptionStacktrace"
      *             },
-     *             stdout: "string"
+     *             stdout: "stdout"
      *         },
      *         traceResponses: [{
      *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -557,30 +753,82 @@ export class Admin {
      *                 stack: {
      *                     numStackFrames: 1,
      *                     topStackFrame: {
-     *                         methodName: "string",
+     *                         methodName: "methodName",
      *                         lineNumber: 1,
      *                         scopes: [{
      *                                 variables: {
-     *                                     "string": {
-     *                                         "key": "value"
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
      *                                     }
      *                                 }
      *                             }]
      *                     }
      *                 },
-     *                 stdout: "string"
+     *                 stdout: "stdout"
+     *             }, {
+     *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 lineNumber: 1,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
+     *                 stdout: "stdout"
      *             }]
      *     })
      */
-    public async storeTracedWorkspace(
+    public storeTracedWorkspace(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.StoreTracedWorkspaceRequest,
-        requestOptions?: Admin.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Admin.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__storeTracedWorkspace(submissionId, request, requestOptions));
+    }
+
+    private async __storeTracedWorkspace(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.StoreTracedWorkspaceRequest,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace/submission/${encodeURIComponent(submissionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-trace/submission/${encodeURIComponent(submissionId)}`,
             ),
             method: "POST",
             headers: {
@@ -595,6 +843,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -604,13 +853,14 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -619,12 +869,16 @@ export class Admin {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-trace/submission/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -639,8 +893,8 @@ export class Admin {
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
      *             file: {
-     *                 filename: "string",
-     *                 directory: "string"
+     *                 filename: "filename",
+     *                 directory: "directory"
      *             },
      *             returnValue: {
      *                 type: "integerValue",
@@ -653,29 +907,87 @@ export class Admin {
      *             stack: {
      *                 numStackFrames: 1,
      *                 topStackFrame: {
-     *                     methodName: "string",
+     *                     methodName: "methodName",
      *                     lineNumber: 1,
      *                     scopes: [{
      *                             variables: {
-     *                                 "string": {
-     *                                     "key": "value"
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
      *                                 }
      *                             }
      *                         }]
      *                 }
      *             },
-     *             stdout: "string"
+     *             stdout: "stdout"
+     *         }, {
+     *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
+     *             stdout: "stdout"
      *         }])
      */
-    public async storeTracedWorkspaceV2(
+    public storeTracedWorkspaceV2(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TraceResponseV2[],
-        requestOptions?: Admin.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Admin.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedWorkspaceV2(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedWorkspaceV2(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TraceResponseV2[],
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(submissionId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(submissionId)}`,
             ),
             method: "POST",
             headers: {
@@ -690,6 +1002,7 @@ export class Admin {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -699,13 +1012,14 @@ export class Admin {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -714,12 +1028,16 @@ export class Admin {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /admin/store-workspace-trace-v2/submission/{submissionId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

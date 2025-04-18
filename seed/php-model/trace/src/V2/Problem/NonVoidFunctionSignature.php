@@ -2,33 +2,43 @@
 
 namespace Seed\V2\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
+use Seed\Commons\VariableType;
 
-class NonVoidFunctionSignature extends SerializableType
+class NonVoidFunctionSignature extends JsonSerializableType
 {
     /**
      * @var array<Parameter> $parameters
      */
-    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('parameters'), ArrayType([Parameter::class])]
     public array $parameters;
 
     /**
-     * @var mixed $returnType
+     * @var VariableType $returnType
      */
-    #[JsonProperty("returnType")]
-    public mixed $returnType;
+    #[JsonProperty('returnType')]
+    public VariableType $returnType;
 
     /**
-     * @param array<Parameter> $parameters
-     * @param mixed $returnType
+     * @param array{
+     *   parameters: array<Parameter>,
+     *   returnType: VariableType,
+     * } $values
      */
     public function __construct(
-        array $parameters,
-        mixed $returnType,
+        array $values,
     ) {
-        $this->parameters = $parameters;
-        $this->returnType = $returnType;
+        $this->parameters = $values['parameters'];
+        $this->returnType = $values['returnType'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

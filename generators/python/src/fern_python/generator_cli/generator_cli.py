@@ -1,14 +1,11 @@
+import json
 import os
 import subprocess
 import tempfile
-from math import e
 from typing import Dict, List, Optional, Union
 
-import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
 import generatorcli
 import yaml  # type: ignore
-
 from fern_python.codegen import ProjectConfig
 from fern_python.codegen.project import Project
 from fern_python.generator_cli.readme_snippet_builder import ReadmeSnippetBuilder
@@ -21,6 +18,9 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
     GeneratedRootClient,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+
+import fern.generator_exec as generator_exec
+import fern.ir.resources as ir_types
 
 README_FILENAME = "README.md"
 REFERENCE_FILENAME = "reference.md"
@@ -78,6 +78,9 @@ class GeneratorCli:
         reference_config = reference_config_builder.generate_reference_config()
         if self._should_write_reference(reference_config):
             reference_config_filepath = self._write_reference_config(reference_config=reference_config)
+            print(
+                f"running command: {' '.join([GENERATOR_CLI, 'generate-reference', '--config', reference_config_filepath])}"
+            )
             return self._run_command(
                 command=[GENERATOR_CLI, "generate-reference", "--config", reference_config_filepath]
             )
@@ -91,12 +94,14 @@ class GeneratorCli:
         github_repo_url: Optional[str] = None,
         github_installation_token: Optional[str] = None,
         pagination_enabled: Union[bool, None] = False,
+        websocket_enabled: bool = False,
     ) -> str:
         readme_snippet_builder = ReadmeSnippetBuilder(
             ir=self._ir,
             package_name=self._package_name,
             snippets=snippets,
             pagination_enabled=pagination_enabled,
+            websocket_enabled=websocket_enabled,
             generated_root_client=generated_root_client,
             api_error_reference=self._context.core_utilities.get_reference_to_api_error(as_snippet=True),
             endpoint_metadata=self._endpoint_metadata,
@@ -128,7 +133,7 @@ class GeneratorCli:
         reference_config: generatorcli.reference.ReferenceConfig,
     ) -> str:
         file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
-        file.write(reference_config.json())
+        file.write(json.dumps(reference_config.dict()))
         file.flush()
         return file.name
 
@@ -144,7 +149,7 @@ class GeneratorCli:
             github_installation_token=github_installation_token,
         )
         file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
-        file.write(readme_config.json())
+        file.write(json.dumps(readme_config.dict()))
         file.flush()
         return file.name
 
@@ -178,6 +183,7 @@ class GeneratorCli:
             api_reference_link=self._ir.readme_config.api_reference_link if self._ir.readme_config else None,
             banner_link=self._ir.readme_config.banner_link if self._ir.readme_config else None,
             features=features,
+            reference_markdown_path=f"./{REFERENCE_FILENAME}",
         )
 
     def _read_feature_config(self) -> generatorcli.feature.FeatureConfig:
@@ -191,19 +197,16 @@ class GeneratorCli:
         github_installation_token: Optional[str] = None,
     ) -> Optional[generatorcli.readme.Remote]:
         if github_repo_url is not None and github_installation_token is not None:
-            return generatorcli.readme.Remote.factory.github(
-                generatorcli.readme.GithubRemote(
-                    repo_url=github_repo_url,
-                    installation_token=github_installation_token,
-                ),
+            return generatorcli.readme.Remote(
+                type="github",
+                repo_url=github_repo_url,
+                installation_token=github_installation_token,
             )
         return None
 
     def _get_language_info(self) -> generatorcli.readme.LanguageInfo:
-        return generatorcli.readme.LanguageInfo.factory.python(
-            generatorcli.readme.PythonInfo(
-                publish_info=generatorcli.readme.PypiPublishInfo(package_name=self._package_name)
-            )
+        return generatorcli.readme.LanguageInfo_Python(
+            publish_info=generatorcli.readme.PypiPublishInfo(package_name=self._package_name),
         )
 
     def _get_feature_config_filepath(self) -> str:

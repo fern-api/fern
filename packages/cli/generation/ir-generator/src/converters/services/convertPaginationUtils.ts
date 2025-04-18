@@ -1,10 +1,14 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getRequestPropertyComponents, getResponsePropertyComponents } from "./convertProperty";
 
-export type PaginationPropertyComponents = CursorPaginationPropertyComponents | OffsetPaginationPropertyComponents;
+export type PaginationPropertyComponents =
+    | CursorPaginationPropertyComponents
+    | OffsetPaginationPropertyComponents
+    | CustomPaginationPropertyComponents;
 
 export interface CursorPaginationPropertyComponents {
     type: "cursor";
@@ -21,6 +25,11 @@ export interface OffsetPaginationPropertyComponents {
     hasNextPage: string[] | undefined;
 }
 
+export interface CustomPaginationPropertyComponents {
+    type: "custom";
+    results: string[];
+}
+
 export function getPaginationPropertyComponents(
     endpointPagination: RawSchemas.PaginationSchema
 ): PaginationPropertyComponents {
@@ -35,13 +44,20 @@ export function getPaginationPropertyComponents(
                     ? getResponsePropertyComponents(endpointPagination["has-next-page"])
                     : undefined
         };
+    } else if (isRawCursorPaginationSchema(endpointPagination)) {
+        return {
+            type: "cursor",
+            cursor: getRequestPropertyComponents(endpointPagination.cursor),
+            next_cursor: getResponsePropertyComponents(endpointPagination.next_cursor),
+            results: getResponsePropertyComponents(endpointPagination.results)
+        };
+    } else if (isRawCustomPaginationSchema(endpointPagination)) {
+        return {
+            type: "custom",
+            results: getResponsePropertyComponents(endpointPagination.results)
+        };
     }
-    return {
-        type: "cursor",
-        cursor: getRequestPropertyComponents(endpointPagination.cursor),
-        next_cursor: getResponsePropertyComponents(endpointPagination.next_cursor),
-        results: getResponsePropertyComponents(endpointPagination.results)
-    };
+    throw new Error("Invalid pagination schema");
 }
 
 export function resolveResponseType({
@@ -59,6 +75,12 @@ export function resolveResponseType({
     });
 }
 
+function isRawCursorPaginationSchema(
+    rawPaginationSchema: RawSchemas.PaginationSchema
+): rawPaginationSchema is RawSchemas.CursorPaginationSchema {
+    return (rawPaginationSchema as RawSchemas.CursorPaginationSchema).cursor != null;
+}
+
 function isRawOffsetPaginationSchema(
     rawPaginationSchema: RawSchemas.PaginationSchema
 ): rawPaginationSchema is RawSchemas.OffsetPaginationSchema {
@@ -66,4 +88,10 @@ function isRawOffsetPaginationSchema(
         (rawPaginationSchema as RawSchemas.OffsetPaginationSchema).offset != null &&
         (rawPaginationSchema as RawSchemas.OffsetPaginationSchema).results != null
     );
+}
+
+function isRawCustomPaginationSchema(
+    rawPaginationSchema: RawSchemas.PaginationSchema
+): rawPaginationSchema is RawSchemas.CustomPaginationSchema {
+    return "type" in rawPaginationSchema && rawPaginationSchema.type === "custom";
 }

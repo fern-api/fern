@@ -1,24 +1,24 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetAttemptedMigrationsTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [
               {
-                "name": "string",
+                "name": "name",
+                "status": "RUNNING"
+              },
+              {
+                "name": "name",
                 "status": "RUNNING"
               }
             ]
@@ -29,7 +29,7 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/migration-info/all")
-                    .WithHeader("admin-key-header", "string")
+                    .WithHeader("admin-key-header", "admin-key-header")
                     .UsingGet()
             )
             .RespondWith(
@@ -40,12 +40,11 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
             );
 
         var response = await Client.Migration.GetAttemptedMigrationsAsync(
-            new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" },
-            RequestOptions
+            new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Migration>>(mockResponse)).UsingDefaults()
+        );
     }
 }

@@ -40,17 +40,17 @@
                 {
                   "key": "pathParam",
                   "description": null,
-                  "value": "string"
+                  "value": "pathParam"
                 },
                 {
                   "key": "serviceParam",
                   "description": null,
-                  "value": "string"
+                  "value": "serviceParam"
                 },
                 {
                   "key": "resourceParam",
                   "description": null,
-                  "value": "string"
+                  "value": "resourceParam"
                 },
                 {
                   "key": "endpointParam",
@@ -94,17 +94,17 @@
                     {
                       "key": "pathParam",
                       "description": null,
-                      "value": "string"
+                      "value": "pathParam"
                     },
                     {
                       "key": "serviceParam",
                       "description": null,
-                      "value": "string"
+                      "value": "serviceParam"
                     },
                     {
                       "key": "resourceParam",
                       "description": null,
-                      "value": "string"
+                      "value": "resourceParam"
                     },
                     {
                       "key": "endpointParam",

@@ -15,7 +15,7 @@ export const CreateUserRequest: core.serialization.Schema<
 });
 
 export declare namespace CreateUserRequest {
-    interface Raw {
+    export interface Raw {
         name: string;
         age?: number | null;
     }

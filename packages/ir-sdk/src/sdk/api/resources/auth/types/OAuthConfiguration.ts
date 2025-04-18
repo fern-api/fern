@@ -6,16 +6,16 @@ import * as FernIr from "../../../index";
 
 export type OAuthConfiguration = FernIr.OAuthConfiguration.ClientCredentials;
 
-export declare namespace OAuthConfiguration {
-    interface ClientCredentials extends FernIr.OAuthClientCredentials, _Utils {
+export namespace OAuthConfiguration {
+    export interface ClientCredentials extends FernIr.OAuthClientCredentials, _Utils {
         type: "clientCredentials";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.OAuthConfiguration._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         clientCredentials: (value: FernIr.OAuthClientCredentials) => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -28,7 +28,7 @@ export const OAuthConfiguration = {
             type: "clientCredentials",
             _visit: function <_Result>(
                 this: FernIr.OAuthConfiguration.ClientCredentials,
-                visitor: FernIr.OAuthConfiguration._Visitor<_Result>
+                visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
             ) {
                 return FernIr.OAuthConfiguration._visit(this, visitor);
             },
@@ -37,7 +37,7 @@ export const OAuthConfiguration = {
 
     _visit: <_Result>(
         value: FernIr.OAuthConfiguration,
-        visitor: FernIr.OAuthConfiguration._Visitor<_Result>
+        visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "clientCredentials":

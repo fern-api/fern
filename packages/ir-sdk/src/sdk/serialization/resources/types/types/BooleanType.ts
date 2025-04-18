@@ -12,7 +12,7 @@ export const BooleanType: core.serialization.ObjectSchema<serializers.BooleanTyp
     });
 
 export declare namespace BooleanType {
-    interface Raw {
+    export interface Raw {
         default?: boolean | null;
     }
 }

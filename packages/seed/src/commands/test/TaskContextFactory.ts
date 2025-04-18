@@ -1,7 +1,9 @@
-import { assertNever } from "@fern-api/core-utils";
-import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+
+import { assertNever } from "@fern-api/core-utils";
+import { CONSOLE_LOGGER, LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { TaskContext } from "@fern-api/task-context";
+
 import { TaskContextImpl } from "../../TaskContextImpl";
 
 const TASK_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
@@ -24,6 +26,9 @@ export class TaskContextFactory {
                     const parts = log.parts.flatMap((parts) => parts).flatMap((part) => part.split("\n"));
                     for (const part of parts) {
                         switch (log.level) {
+                            case "trace":
+                                CONSOLE_LOGGER.trace(`[${prefixWithColor}]: `, part);
+                                break;
                             case "debug":
                                 CONSOLE_LOGGER.debug(`[${prefixWithColor}]: `, part);
                                 break;

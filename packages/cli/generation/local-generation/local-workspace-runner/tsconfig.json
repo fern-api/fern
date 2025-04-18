@@ -1,16 +1,70 @@
 {
-  "extends": "../../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../../commons/fs-utils" },
-    { "path": "../../../../commons/logging-execa" },
-    { "path": "../../../../ir-sdk" },
-    { "path": "../../../configuration" },
-    { "path": "../../../task-context" },
-    { "path": "../../../workspace-loader" },
-    { "path": "../../ir-generator" },
-    { "path": "../../ir-migrations" },
-    { "path": "../docker-utils" }
+    {
+      "path": "../../../../../generators/browser-compatible-base"
+    },
+    {
+      "path": "../../../../../generators/csharp/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/go-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/java-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/php/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/python-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/typescript-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../../../commons/core-utils"
+    },
+    {
+      "path": "../../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../../commons/logging-execa"
+    },
+    {
+      "path": "../../../../ir-sdk"
+    },
+    {
+      "path": "../../../cli-source-resolver"
+    },
+    {
+      "path": "../../../configuration"
+    },
+    {
+      "path": "../../../task-context"
+    },
+    {
+      "path": "../../../workspace/loader"
+    },
+    {
+      "path": "../../../workspace/commons"
+    },
+    {
+      "path": "../../ir-generator"
+    },
+    {
+      "path": "../../ir-migrations"
+    },
+    {
+      "path": "../docker-utils"
+    }
   ]
 }

@@ -6,21 +6,21 @@ import * as FernIr from "../../../index";
 
 export type ExampleResponse = FernIr.ExampleResponse.Ok | FernIr.ExampleResponse.Error_;
 
-export declare namespace ExampleResponse {
-    interface Ok extends _Utils {
+export namespace ExampleResponse {
+    export interface Ok extends _Utils {
         type: "ok";
         value: FernIr.ExampleEndpointSuccessResponse;
     }
 
-    interface Error_ extends FernIr.ExampleEndpointErrorResponse, _Utils {
+    export interface Error_ extends FernIr.ExampleEndpointErrorResponse, _Utils {
         type: "error";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleResponse._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         ok: (value: FernIr.ExampleEndpointSuccessResponse) => _Result;
         error: (value: FernIr.ExampleEndpointErrorResponse) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -34,7 +34,7 @@ export const ExampleResponse = {
             type: "ok",
             _visit: function <_Result>(
                 this: FernIr.ExampleResponse.Ok,
-                visitor: FernIr.ExampleResponse._Visitor<_Result>
+                visitor: FernIr.ExampleResponse._Visitor<_Result>,
             ) {
                 return FernIr.ExampleResponse._visit(this, visitor);
             },
@@ -47,7 +47,7 @@ export const ExampleResponse = {
             type: "error",
             _visit: function <_Result>(
                 this: FernIr.ExampleResponse.Error_,
-                visitor: FernIr.ExampleResponse._Visitor<_Result>
+                visitor: FernIr.ExampleResponse._Visitor<_Result>,
             ) {
                 return FernIr.ExampleResponse._visit(this, visitor);
             },

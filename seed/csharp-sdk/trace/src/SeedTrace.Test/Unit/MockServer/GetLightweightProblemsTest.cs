@@ -1,24 +1,30 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetLightweightProblemsTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [
               {
-                "problemId": "string",
-                "problemName": "string",
+                "problemId": "problemId",
+                "problemName": "problemName",
+                "problemVersion": 1,
+                "variableTypes": [
+                  {
+                    "type": "integerType"
+                  }
+                ]
+              },
+              {
+                "problemId": "problemId",
+                "problemName": "problemName",
                 "problemVersion": 1,
                 "variableTypes": [
                   {
@@ -43,10 +49,13 @@ public class GetLightweightProblemsTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.V2.V3.Problem.GetLightweightProblemsAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.V2.V3.Problem.GetLightweightProblemsAsync();
+        Assert.That(
+            response,
+            Is.EqualTo(
+                    JsonUtils.Deserialize<IEnumerable<V2.V3.LightweightProblemInfoV2>>(mockResponse)
+                )
+                .UsingDefaults()
+        );
     }
 }

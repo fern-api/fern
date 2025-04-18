@@ -12,7 +12,7 @@ export const DebugMapValue: core.serialization.ObjectSchema<serializers.DebugMap
     });
 
 export declare namespace DebugMapValue {
-    interface Raw {
+    export interface Raw {
         keyValuePairs: serializers.DebugKeyValuePairs.Raw[];
     }
 }

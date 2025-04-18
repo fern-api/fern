@@ -9,17 +9,21 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 
 export declare namespace SeedAliasExtendsClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,16 +36,26 @@ export class SeedAliasExtendsClient {
      *
      * @example
      *     await client.extendedInlineRequestBody({
-     *         child: "string",
-     *         parent: "string"
+     *         child: "child"
      *     })
      */
-    public async extendedInlineRequestBody(
+    public extendedInlineRequestBody(
         request: SeedAliasExtends.InlinedChildRequest,
-        requestOptions?: SeedAliasExtendsClient.RequestOptions
-    ): Promise<void> {
+        requestOptions?: SeedAliasExtendsClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__extendedInlineRequestBody(request, requestOptions));
+    }
+
+    private async __extendedInlineRequestBody(
+        request: SeedAliasExtends.InlinedChildRequest,
+        requestOptions?: SeedAliasExtendsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/extends/extended-inline-request-body"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/extends/extended-inline-request-body",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -50,6 +64,7 @@ export class SeedAliasExtendsClient {
                 "User-Agent": "@fern/alias-extends/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -59,13 +74,14 @@ export class SeedAliasExtendsClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAliasExtendsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -74,12 +90,16 @@ export class SeedAliasExtendsClient {
                 throw new errors.SeedAliasExtendsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedAliasExtendsTimeoutError();
+                throw new errors.SeedAliasExtendsTimeoutError(
+                    "Timeout exceeded when calling POST /extends/extended-inline-request-body.",
+                );
             case "unknown":
                 throw new errors.SeedAliasExtendsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

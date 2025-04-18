@@ -16,7 +16,7 @@ export const ErrorDiscriminationByPropertyStrategy: core.serialization.ObjectSch
 });
 
 export declare namespace ErrorDiscriminationByPropertyStrategy {
-    interface Raw {
+    export interface Raw {
         discriminant: NameAndWireValue.Raw;
         contentProperty: NameAndWireValue.Raw;
     }

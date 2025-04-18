@@ -1,13 +1,21 @@
-import { generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
-import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import YAML from "yaml";
-import { CliContext } from "../../cli-context/CliContext";
+
+import {
+    getGeneratorNameOrThrow,
+    getLatestGeneratorVersion,
+    getPathToGeneratorsConfiguration,
+    loadRawGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
+
 import { FernRegistry } from "@fern-fern/generators-sdk";
+
+import { CliContext } from "../../cli-context/CliContext";
 
 export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
@@ -26,9 +34,9 @@ export async function loadAndUpdateGenerators({
     channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
 }): Promise<string | undefined> {
-    const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
-    if (!(await doesPathExist(filepath))) {
-        context.failAndThrow("Generators configuration file was not found, no generators to upgrade.");
+    const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    if (filepath == null || !(await doesPathExist(filepath))) {
+        context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
         return undefined;
     }
     const contents = await readFile(filepath);
@@ -39,7 +47,7 @@ export async function loadAndUpdateGenerators({
     // is there a better, type-safe way to do this???
     const generatorGroups = parsedDocument.get("groups");
     if (generatorGroups == null) {
-        context.failAndThrow("No groups were found within the generators configuration, no generators to upgrade.");
+        context.logger.debug("No groups were found within the generators configuration, no generators to upgrade.");
         return undefined;
     }
     if (!YAML.isMap(generatorGroups)) {
@@ -91,11 +99,11 @@ export async function loadAndUpdateGenerators({
                 continue;
             }
 
-            const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generatorName, context);
+            const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
             const currentGeneratorVersion = generator.get("version") as string;
 
-            const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+            const latestVersion = await getLatestGeneratorVersion({
                 generatorName: normalizedGeneratorName,
                 cliVersion,
                 currentGeneratorVersion,
@@ -137,21 +145,25 @@ export async function upgradeGenerator({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 // Not totally necessary, but keeping around to ensure the schema is valid
                 const generatorsConfiguration =
-                    (await generatorsYml.loadRawGeneratorsConfiguration({
-                        absolutePathToWorkspace: workspace.absoluteFilepath,
+                    (await loadRawGeneratorsConfiguration({
+                        absolutePathToWorkspace: workspace.absoluteFilePath,
                         context
                     })) ?? {};
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {
-                    context.failAndThrow(
+                    context.logger.debug(
                         "No groups were found within the generators configuration, no generators to upgrade."
                     );
                     return;
                 }
 
-                context.logger.info(`Upgrading generators in workspace: ${workspace.workspaceName}`);
+                if (workspace.workspaceName == null) {
+                    context.logger.info("Upgrading generators.");
+                } else {
+                    context.logger.info(`Upgrading generators in workspace: ${workspace.workspaceName}.`);
+                }
 
                 const updatedConfiguration = await loadAndUpdateGenerators({
-                    absolutePathToWorkspace: workspace.absoluteFilepath,
+                    absolutePathToWorkspace: workspace.absoluteFilePath,
                     context,
                     generatorFilter: generator,
                     groupFilter: group,
@@ -160,14 +172,12 @@ export async function upgradeGenerator({
                     cliVersion: cliContext.environment.packageVersion
                 });
 
-                if (updatedConfiguration != null) {
-                    await writeFile(
-                        workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-                            generatorsYml.getPathToGeneratorsConfiguration({
-                                absolutePathToWorkspace: workspace.absoluteFilepath
-                            }),
-                        updatedConfiguration
-                    );
+                const absolutePathToGeneratorsConfiguration = await getPathToGeneratorsConfiguration({
+                    absolutePathToWorkspace: workspace.absoluteFilePath
+                });
+
+                if (absolutePathToGeneratorsConfiguration != null && updatedConfiguration != null) {
+                    await writeFile(absolutePathToGeneratorsConfiguration, updatedConfiguration);
                 }
             });
         })

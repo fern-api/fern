@@ -9,7 +9,7 @@ await client.optional.sendOptionalBody(
 		}
 	}
 )
- 
-```                        
+
+```
 
 

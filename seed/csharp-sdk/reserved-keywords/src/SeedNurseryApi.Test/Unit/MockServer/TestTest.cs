@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedNurseryApi;
 
-#nullable enable
-
 namespace SeedNurseryApi.Test.Unit.MockServer;
 
 [TestFixture]
@@ -16,14 +14,13 @@ public class TestTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
-                    .WithParam("for", "string")
+                    .WithParam("for", "for")
                     .UsingPost()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Package.TestAsync(new TestRequest { For = "string" }, RequestOptions)
+            async () => await Client.Package.TestAsync(new TestRequest { For = "for" })
         );
     }
 }

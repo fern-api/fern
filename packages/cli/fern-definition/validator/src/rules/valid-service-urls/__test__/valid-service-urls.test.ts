@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidServiceUrlsRule } from "../valid-service-url";
 
 describe("valid-service-urls", () => {
@@ -18,7 +19,7 @@ describe("valid-service-urls", () => {
                 message: '"url" cannot be configured unless you specify multiple URLs for each environment in api.yml',
                 nodePath: ["service", "url"],
                 relativeFilepath: RelativeFilePath.of("with-url.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 
@@ -43,7 +44,7 @@ describe("valid-service-urls", () => {
   - C`,
                 nodePath: ["service", "url"],
                 relativeFilepath: RelativeFilePath.of("with-invalid-url.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: `"url" is missing. Please specify one of the configured environment URLs:
@@ -52,7 +53,7 @@ describe("valid-service-urls", () => {
   - C`,
                 nodePath: ["service", "endpoints", "test", "url"],
                 relativeFilepath: RelativeFilePath.of("without-url.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 

@@ -10,5 +10,5 @@ export const AliasType: core.serialization.ObjectSchema<serializers.AliasType.Ra
     core.serialization.lazyObject(() => serializers.Parent);
 
 export declare namespace AliasType {
-    type Raw = serializers.Parent.Raw;
+    export type Raw = serializers.Parent.Raw;
 }

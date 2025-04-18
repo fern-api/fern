@@ -1,0 +1,151 @@
+---
+title: "Validate Dynamic Data"
+api: "POST https://api.bland.ai/dynamic_data/test"
+description: "This endpoint is designed for validating and processing dynamic data obtained from external APIs. The data is used in AI phone calls to ensure compliance with format requirements and functionality."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your unique API key for authentication. This key must be included in the header of each request.
+</ParamField>
+
+### Body
+
+<ParamField body="dynamic_data" type="array" required>
+  An array of objects, each specifying an external API to fetch data from. These objects must include the API endpoint,
+  the HTTP method, a cache flag, and details on parsing and integrating the response.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Indicates the outcome of the validation process. Possible values are `success` or `error`.
+</ResponseField>
+
+<ResponseField name="elapsed" type="number">
+  The duration in milliseconds from receiving the request to completing the data fetch.
+</ResponseField>
+
+<ResponseField name="dynamic_data_response" type="array">
+  Contains the results from the dynamic data fetch. Each object in this array shows the cache status, the name of the
+  data, and the processed prompt with the inserted data.
+</ResponseField>
+
+<ResponseField name="dynamic_data_request" type="array">
+  Reflects the original dynamic data request for cross-reference purposes.
+</ResponseField>
+
+<ResponseField name="variables" type="object">
+  The parsed data from fetching the dynamic data. This can be used in other requests, the `task` or `prompt` fields,
+  even other dynamic data requests through the `{{ variable }}` syntax.
+</ResponseField>
+
+<ResponseField name="url_responses" type="array">
+  Contains the raw responses from the external APIs. This is useful for debugging purposes.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "elapsed": 342,
+    "dynamic_data_response": [
+        {
+            "cached": false,
+            "name": "Cat Fact",
+            "prompt": "\n\n Fun fact about cats: A cat can travel at a top speed of approximately 31 mph (49 km) over a short distance."
+        },
+        {
+            "cached": true,
+            "name": "BTC Price USD",
+            "prompt": "\n\n Current Bitcoin value: $42,489.3598 USD"
+        },
+        {
+            "cached": true,
+            "name": "BTC Price EUR",
+            "prompt": "\n\n Current Bitcoin value: €41,390.8399 EUR"
+        }
+    ],
+    "dynamic_data_request": [
+        {
+            "url": "https://catfact.ninja/fact",
+            "method": "GET",
+            "cache": false,
+            "response_data": [
+                {
+                    "name": "Cat Fact",
+                    "data": "fact",
+                    "context": "Fun fact about cats: {{Cat Fact}}"
+                }
+            ]
+        },
+        {
+            "url": "https://api.coindesk.com/v1/bpi/currentprice.json",
+            "cache": true,
+            "response_data": [
+                {
+                    "name": "BTC Price USD",
+                    "data": "bpi.USD.rate",
+                    "context": "Current Bitcoin value: ${{BTC Price USD}} USD"
+                },
+                {
+                    "name": "BTC Price EUR",
+                    "data": "bpi.EUR.rate",
+                    "context": "Current Bitcoin value: €{{BTC Price EUR}} EUR"
+                }
+            ]
+        }
+    ],
+    "variables": {
+        "Cat Fact": "A cat can travel at a top speed of approximately 31 mph (49 km) over a short distance.",
+        "BTC Price USD": "42,489.3598",
+        "BTC Price EUR": "41,390.8399"
+    },
+    "url_responses": [
+        {
+            "url": "https://catfact.ninja/fact",
+            "body": {
+                "fact": "A cat can travel at a top speed of approximately 31 mph (49 km) over a short distance.",
+                "length": 86
+            }
+        },
+        {
+            "url": "https://api.coindesk.com/v1/bpi/currentprice.json",
+            "body": {
+                "time": {
+                    "updated": "Dec 31, 2023 14:52:00 UTC",
+                    "updatedISO": "2023-12-31T14:52:00+00:00",
+                    "updateduk": "Dec 31, 2023 at 14:52 GMT"
+                },
+                "disclaimer": "This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org",
+                "chartName": "Bitcoin",
+                "bpi": {
+                    "USD": {
+                        "code": "USD",
+                        "symbol": "&#36;",
+                        "rate": "42,489.3598",
+                        "description": "United States Dollar",
+                        "rate_float": 42489.3598
+                    },
+                    "GBP": {
+                        "code": "GBP",
+                        "symbol": "&pound;",
+                        "rate": "35,503.7691",
+                        "description": "British Pound Sterling",
+                        "rate_float": 35503.7691
+                    },
+                    "EUR": {
+                        "code": "EUR",
+                        "symbol": "&euro;",
+                        "rate": "41,390.8399",
+                        "description": "Euro",
+                        "rate_float": 41390.8399
+                    }
+                }
+            }
+        }
+    ]
+}
+```
+</ResponseExample>

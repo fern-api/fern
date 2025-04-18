@@ -18,9 +18,7 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return UnionWithTime(root=_UnionWithTime.Value(type="value", value=value))  # type: ignore
         else:
-            return UnionWithTime(
-                __root__=_UnionWithTime.Value(type="value", value=value)
-            )  # type: ignore
+            return UnionWithTime(__root__=_UnionWithTime.Value(type="value", value=value))  # type: ignore
 
     def date(self, value: dt.date) -> UnionWithTime:
         if IS_PYDANTIC_V2:
@@ -30,45 +28,37 @@ class _Factory:
 
     def datetime(self, value: dt.datetime) -> UnionWithTime:
         if IS_PYDANTIC_V2:
-            return UnionWithTime(
-                root=_UnionWithTime.Datetime(type="datetime", value=value)
-            )  # type: ignore
+            return UnionWithTime(root=_UnionWithTime.Datetime(type="datetime", value=value))  # type: ignore
         else:
-            return UnionWithTime(
-                __root__=_UnionWithTime.Datetime(type="datetime", value=value)
-            )  # type: ignore
+            return UnionWithTime(__root__=_UnionWithTime.Datetime(type="datetime", value=value))  # type: ignore
 
 
 class UnionWithTime(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.unions.resources.types import UnionWithTime_Value
+
+    UnionWithTime_Value(value=5)
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[
-                _UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime
-            ],
+            typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime],
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime
-        ]:
+        def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[
-                _UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime
-            ],
+            typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime],
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime
-        ]:
+        def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:

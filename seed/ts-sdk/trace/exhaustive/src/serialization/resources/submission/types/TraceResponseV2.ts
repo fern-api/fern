@@ -24,7 +24,7 @@ export const TraceResponseV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace TraceResponseV2 {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
         lineNumber: number;
         file: TracedFile.Raw;

@@ -39,7 +39,7 @@ module SeedTraceClient
     #    service_param: 1,
     #    datetime: DateTime.parse("2024-01-15T09:30:00.000Z"),
     #    optional_datetime: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    request: { name: "string", problems: ["string"] }
+    #    request: { name: "name", problems: ["problems", "problems"] }
     #  )
     def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
       response = @request_client.conn.post do |req|
@@ -82,10 +82,10 @@ module SeedTraceClient
     #  trace.playlist.get_playlists(
     #    service_param: 1,
     #    limit: 1,
-    #    other_field: "string",
-    #    multi_line_docs: "string",
-    #    optional_multiple_field: "string",
-    #    multiple_field: "string"
+    #    other_field: "otherField",
+    #    multi_line_docs: "multiLineDocs",
+    #    optional_multiple_field: "optionalMultipleField",
+    #    multiple_field: "multipleField"
     #  )
     def get_playlists(service_param:, other_field:, multi_line_docs:, multiple_field:, limit: nil,
                       optional_multiple_field: nil, request_options: nil)
@@ -130,7 +130,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.playlist.get_playlist(service_param: 1, playlist_id: "string")
+    #  trace.playlist.get_playlist(service_param: 1, playlist_id: "playlistId")
     def get_playlist(service_param:, playlist_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -169,8 +169,8 @@ module SeedTraceClient
     #  )
     #  trace.playlist.update_playlist(
     #    service_param: 1,
-    #    playlist_id: "string",
-    #    request: { name: "string", problems: ["string"] }
+    #    playlist_id: "playlistId",
+    #    request: { name: "name", problems: ["problems", "problems"] }
     #  )
     def update_playlist(service_param:, playlist_id:, request: nil, request_options: nil)
       response = @request_client.conn.put do |req|
@@ -203,7 +203,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.playlist.delete_playlist(service_param: 1, playlist_id: "string")
+    #  trace.playlist.delete_playlist(service_param: 1, playlist_id: "playlist_id")
     def delete_playlist(service_param:, playlist_id:, request_options: nil)
       @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -255,7 +255,7 @@ module SeedTraceClient
     #    service_param: 1,
     #    datetime: DateTime.parse("2024-01-15T09:30:00.000Z"),
     #    optional_datetime: DateTime.parse("2024-01-15T09:30:00.000Z"),
-    #    request: { name: "string", problems: ["string"] }
+    #    request: { name: "name", problems: ["problems", "problems"] }
     #  )
     def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
       Async do
@@ -300,10 +300,10 @@ module SeedTraceClient
     #  trace.playlist.get_playlists(
     #    service_param: 1,
     #    limit: 1,
-    #    other_field: "string",
-    #    multi_line_docs: "string",
-    #    optional_multiple_field: "string",
-    #    multiple_field: "string"
+    #    other_field: "otherField",
+    #    multi_line_docs: "multiLineDocs",
+    #    optional_multiple_field: "optionalMultipleField",
+    #    multiple_field: "multipleField"
     #  )
     def get_playlists(service_param:, other_field:, multi_line_docs:, multiple_field:, limit: nil,
                       optional_multiple_field: nil, request_options: nil)
@@ -350,7 +350,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.playlist.get_playlist(service_param: 1, playlist_id: "string")
+    #  trace.playlist.get_playlist(service_param: 1, playlist_id: "playlistId")
     def get_playlist(service_param:, playlist_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -391,8 +391,8 @@ module SeedTraceClient
     #  )
     #  trace.playlist.update_playlist(
     #    service_param: 1,
-    #    playlist_id: "string",
-    #    request: { name: "string", problems: ["string"] }
+    #    playlist_id: "playlistId",
+    #    request: { name: "name", problems: ["problems", "problems"] }
     #  )
     def update_playlist(service_param:, playlist_id:, request: nil, request_options: nil)
       Async do
@@ -427,7 +427,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.playlist.delete_playlist(service_param: 1, playlist_id: "string")
+    #  trace.playlist.delete_playlist(service_param: 1, playlist_id: "playlist_id")
     def delete_playlist(service_param:, playlist_id:, request_options: nil)
       Async do
         @request_client.conn.delete do |req|

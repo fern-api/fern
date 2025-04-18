@@ -12,36 +12,36 @@ export type SubmissionRequest =
     | SeedTrace.SubmissionRequest.Stop
     | SeedTrace.SubmissionRequest._Unknown;
 
-export declare namespace SubmissionRequest {
-    interface InitializeProblemRequest extends SeedTrace.InitializeProblemRequest, _Utils {
+export namespace SubmissionRequest {
+    export interface InitializeProblemRequest extends SeedTrace.InitializeProblemRequest, _Utils {
         type: "initializeProblemRequest";
     }
 
-    interface InitializeWorkspaceRequest extends _Utils {
+    export interface InitializeWorkspaceRequest extends _Utils {
         type: "initializeWorkspaceRequest";
     }
 
-    interface SubmitV2 extends SeedTrace.SubmitRequestV2, _Utils {
+    export interface SubmitV2 extends SeedTrace.SubmitRequestV2, _Utils {
         type: "submitV2";
     }
 
-    interface WorkspaceSubmit extends SeedTrace.WorkspaceSubmitRequest, _Utils {
+    export interface WorkspaceSubmit extends SeedTrace.WorkspaceSubmitRequest, _Utils {
         type: "workspaceSubmit";
     }
 
-    interface Stop extends SeedTrace.StopRequest, _Utils {
+    export interface Stop extends SeedTrace.StopRequest, _Utils {
         type: "stop";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.SubmissionRequest._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         initializeProblemRequest: (value: SeedTrace.InitializeProblemRequest) => _Result;
         initializeWorkspaceRequest: () => _Result;
         submitV2: (value: SeedTrace.SubmitRequestV2) => _Result;
@@ -53,14 +53,14 @@ export declare namespace SubmissionRequest {
 
 export const SubmissionRequest = {
     initializeProblemRequest: (
-        value: SeedTrace.InitializeProblemRequest
+        value: SeedTrace.InitializeProblemRequest,
     ): SeedTrace.SubmissionRequest.InitializeProblemRequest => {
         return {
             ...value,
             type: "initializeProblemRequest",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionRequest.InitializeProblemRequest,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
+                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionRequest._visit(this, visitor);
             },
@@ -72,7 +72,7 @@ export const SubmissionRequest = {
             type: "initializeWorkspaceRequest",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionRequest.InitializeWorkspaceRequest,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
+                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionRequest._visit(this, visitor);
             },
@@ -85,7 +85,7 @@ export const SubmissionRequest = {
             type: "submitV2",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionRequest.SubmitV2,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
+                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionRequest._visit(this, visitor);
             },
@@ -98,7 +98,7 @@ export const SubmissionRequest = {
             type: "workspaceSubmit",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionRequest.WorkspaceSubmit,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
+                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionRequest._visit(this, visitor);
             },
@@ -111,7 +111,7 @@ export const SubmissionRequest = {
             type: "stop",
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionRequest.Stop,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
+                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionRequest._visit(this, visitor);
             },
@@ -123,7 +123,7 @@ export const SubmissionRequest = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.SubmissionRequest._Unknown,
-                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
+                visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
             ) {
                 return SeedTrace.SubmissionRequest._visit(this, visitor);
             },
@@ -132,7 +132,7 @@ export const SubmissionRequest = {
 
     _visit: <_Result>(
         value: SeedTrace.SubmissionRequest,
-        visitor: SeedTrace.SubmissionRequest._Visitor<_Result>
+        visitor: SeedTrace.SubmissionRequest._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "initializeProblemRequest":

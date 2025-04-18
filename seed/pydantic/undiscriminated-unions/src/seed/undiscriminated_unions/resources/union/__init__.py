@@ -3,6 +3,21 @@
 from .key import Key
 from .key_type import KeyType
 from .metadata import Metadata
+from .metadata_union import MetadataUnion
 from .my_union import MyUnion
+from .named_metadata import NamedMetadata
+from .optional_metadata import OptionalMetadata
+from .request import Request
+from .type_with_optional_union import TypeWithOptionalUnion
 
-__all__ = ["Key", "KeyType", "Metadata", "MyUnion"]
+__all__ = [
+    "Key",
+    "KeyType",
+    "Metadata",
+    "MetadataUnion",
+    "MyUnion",
+    "NamedMetadata",
+    "OptionalMetadata",
+    "Request",
+    "TypeWithOptionalUnion",
+]

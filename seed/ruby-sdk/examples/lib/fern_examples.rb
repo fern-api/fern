@@ -7,6 +7,8 @@ require_relative "fern_examples/file/client"
 require_relative "fern_examples/health/client"
 require_relative "fern_examples/service/client"
 require "json"
+require_relative "fern_examples/types/type"
+require_relative "fern_examples/types/identifier"
 
 module SeedExamplesClient
   class Client
@@ -59,6 +61,30 @@ module SeedExamplesClient
       end
       JSON.parse(response.body)
     end
+
+    # @param request [SeedExamplesClient::BasicType, SeedExamplesClient::ComplexType]
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [SeedExamplesClient::Identifier]
+    # @example
+    #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  examples.create_type(request: PRIMITIVE)
+    def create_type(request:, request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/"
+      end
+      SeedExamplesClient::Identifier.from_json(json_object: response.body)
+    end
   end
 
   class AsyncClient
@@ -110,6 +136,30 @@ module SeedExamplesClient
         req.url "#{@async_request_client.get_url(request_options: request_options)}/"
       end
       JSON.parse(response.body)
+    end
+
+    # @param request [SeedExamplesClient::BasicType, SeedExamplesClient::ComplexType]
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [SeedExamplesClient::Identifier]
+    # @example
+    #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  examples.create_type(request: PRIMITIVE)
+    def create_type(request:, request_options: nil)
+      response = @async_request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@async_request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@async_request_client.get_url(request_options: request_options)}/"
+      end
+      SeedExamplesClient::Identifier.from_json(json_object: response.body)
     end
   end
 end

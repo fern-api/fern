@@ -29,10 +29,14 @@ public final class SendRequest {
 
   private final Optional<SomeLiteral> maybeContext;
 
-  private SendRequest(String query, SomeLiteral context, Optional<SomeLiteral> maybeContext) {
+  private final ContainerObject containerObject;
+
+  private SendRequest(String query, SomeLiteral context, Optional<SomeLiteral> maybeContext,
+      ContainerObject containerObject) {
     this.query = query;
     this.context = context;
     this.maybeContext = maybeContext;
+    this.containerObject = containerObject;
   }
 
   @JsonProperty("prompt")
@@ -50,6 +54,11 @@ public final class SendRequest {
     return false;
   }
 
+  @JsonProperty("ending")
+  public String getEnding() {
+    return "$ending";
+  }
+
   @JsonProperty("context")
   public SomeLiteral getContext() {
     return context;
@@ -60,6 +69,11 @@ public final class SendRequest {
     return maybeContext;
   }
 
+  @JsonProperty("containerObject")
+  public ContainerObject getContainerObject() {
+    return containerObject;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -67,12 +81,12 @@ public final class SendRequest {
   }
 
   private boolean equalTo(SendRequest other) {
-    return query.equals(other.query) && context.equals(other.context) && maybeContext.equals(other.maybeContext);
+    return query.equals(other.query) && context.equals(other.context) && maybeContext.equals(other.maybeContext) && containerObject.equals(other.containerObject);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.query, this.context, this.maybeContext);
+    return Objects.hash(this.query, this.context, this.maybeContext, this.containerObject);
   }
 
   @java.lang.Override
@@ -91,7 +105,11 @@ public final class SendRequest {
   }
 
   public interface ContextStage {
-    _FinalStage context(@NotNull SomeLiteral context);
+    ContainerObjectStage context(@NotNull SomeLiteral context);
+  }
+
+  public interface ContainerObjectStage {
+    _FinalStage containerObject(@NotNull ContainerObject containerObject);
   }
 
   public interface _FinalStage {
@@ -105,10 +123,12 @@ public final class SendRequest {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements QueryStage, ContextStage, _FinalStage {
+  public static final class Builder implements QueryStage, ContextStage, ContainerObjectStage, _FinalStage {
     private String query;
 
     private SomeLiteral context;
+
+    private ContainerObject containerObject;
 
     private Optional<SomeLiteral> maybeContext = Optional.empty();
 
@@ -120,6 +140,7 @@ public final class SendRequest {
       query(other.getQuery());
       context(other.getContext());
       maybeContext(other.getMaybeContext());
+      containerObject(other.getContainerObject());
       return this;
     }
 
@@ -132,8 +153,15 @@ public final class SendRequest {
 
     @java.lang.Override
     @JsonSetter("context")
-    public _FinalStage context(@NotNull SomeLiteral context) {
+    public ContainerObjectStage context(@NotNull SomeLiteral context) {
       this.context = Objects.requireNonNull(context, "context must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("containerObject")
+    public _FinalStage containerObject(@NotNull ContainerObject containerObject) {
+      this.containerObject = Objects.requireNonNull(containerObject, "containerObject must not be null");
       return this;
     }
 
@@ -155,7 +183,7 @@ public final class SendRequest {
 
     @java.lang.Override
     public SendRequest build() {
-      return new SendRequest(query, context, maybeContext);
+      return new SendRequest(query, context, maybeContext, containerObject);
     }
   }
 }

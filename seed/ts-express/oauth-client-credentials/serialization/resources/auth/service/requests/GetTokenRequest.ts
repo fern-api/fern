@@ -18,7 +18,7 @@ export const GetTokenRequest: core.serialization.Schema<
 });
 
 export declare namespace GetTokenRequest {
-    interface Raw {
+    export interface Raw {
         client_id: string;
         client_secret: string;
         audience: "https://api.example.com";

@@ -12,14 +12,7 @@
 <dd>
 
 ```csharp
-await client.ExtendedInlineRequestBodyAsync(
-    new Inlined
-    {
-        Unique = "string",
-        Name = "string",
-        Docs = "string",
-    }
-);
+await client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" });
 ```
 </dd>
 </dl>

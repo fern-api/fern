@@ -1,0 +1,9 @@
+instances:
+  - url: https://fern-platform-test.docs.dev.buildwithfern.com
+  - url: https://fern-platform-test.docs.buildwithfern.com
+title: SmokeTest | Documentation
+navigation:
+  - api: API Reference
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'

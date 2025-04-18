@@ -1,12 +1,15 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
-import { PlaygroundConfig } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/commons";
+
+import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
 
 export async function registerApi({
@@ -26,17 +29,18 @@ export async function registerApi({
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
 }): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
-    const ir = await generateIntermediateRepresentation({
+    const ir = generateIntermediateRepresentation({
         workspace,
         audiences,
         generationLanguage: undefined,
         keywords: undefined,
         smartCasing: false,
-        disableExamples: false,
+        exampleGeneration: { disabled: false },
         readme: undefined,
         version: undefined,
         packageName: undefined,
-        context
+        context,
+        sourceResolver: new SourceResolverImpl(context, workspace)
     });
 
     const fdrService = createFdrService({
@@ -44,10 +48,9 @@ export async function registerApi({
     });
 
     const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
-    context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
     const response = await fdrService.api.v1.register.registerApiDefinition({
-        orgId: organization,
-        apiId: ir.apiName.originalName,
+        orgId: FdrCjsSdk.OrgId(organization),
+        apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),
         definition: apiDefinition
     });
 

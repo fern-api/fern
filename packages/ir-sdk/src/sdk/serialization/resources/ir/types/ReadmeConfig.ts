@@ -18,7 +18,7 @@ export const ReadmeConfig: core.serialization.ObjectSchema<serializers.ReadmeCon
     });
 
 export declare namespace ReadmeConfig {
-    interface Raw {
+    export interface Raw {
         defaultEndpoint?: EndpointId.Raw | null;
         bannerLink?: string | null;
         introduction?: string | null;

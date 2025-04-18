@@ -1,0 +1,85 @@
+openapi: 3.0.1
+info:
+  title: api
+  version: ''
+paths:
+  /movies/create-movie:
+    post:
+      description: Add a movie to the database using the movies/* /... path.
+      operationId: imdb_createMovie
+      tags:
+        - Imdb
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieRequest'
+  /movies/{movieId}:
+    get:
+      operationId: imdb_getMovie
+      tags:
+        - Imdb
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/MovieId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieId'
+components:
+  schemas:
+    MovieId:
+      title: MovieId
+    Movie:
+      title: Movie
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MovieId'
+        title:
+          type: string
+        rating:
+          type: number
+          format: double
+          description: The rating scale is one to five stars
+      required:
+        - id
+        - title
+        - rating
+    CreateMovieRequest:
+      title: CreateMovieRequest
+      type: object
+      properties:
+        title:
+          type: string
+        rating:
+          type: number
+          format: double
+      required:
+        - title
+        - rating
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

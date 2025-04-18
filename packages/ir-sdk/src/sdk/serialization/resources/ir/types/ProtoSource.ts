@@ -14,7 +14,7 @@ export const ProtoSource: core.serialization.ObjectSchema<serializers.ProtoSourc
     });
 
 export declare namespace ProtoSource {
-    interface Raw {
+    export interface Raw {
         id: ApiDefinitionSourceId.Raw;
         protoRootUrl: string;
     }

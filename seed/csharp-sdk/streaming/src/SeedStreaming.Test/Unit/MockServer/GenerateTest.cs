@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedStreaming;
 using SeedStreaming.Core;
-
-#nullable enable
 
 namespace SeedStreaming.Test.Unit.MockServer;
 
@@ -13,12 +9,12 @@ namespace SeedStreaming.Test.Unit.MockServer;
 public class GenerateTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest_1()
+    public async global::System.Threading.Tasks.Task MockServerTest_1()
     {
         const string requestJson = """
             {
               "stream": false,
-              "num_events": 5
+              "num_events": 1
             }
             """;
 
@@ -45,17 +41,16 @@ public class GenerateTest : BaseMockServerTest
             );
 
         var response = await Client.Dummy.GenerateAsync(
-            new Generateequest { Stream = false, NumEvents = 5 },
-            RequestOptions
+            new Generateequest { Stream = false, NumEvents = 1 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<StreamResponse>(mockResponse)).UsingDefaults()
+        );
     }
 
     [Test]
-    public async Task MockServerTest_2()
+    public async global::System.Threading.Tasks.Task MockServerTest_2()
     {
         const string requestJson = """
             {
@@ -87,12 +82,11 @@ public class GenerateTest : BaseMockServerTest
             );
 
         var response = await Client.Dummy.GenerateAsync(
-            new Generateequest { Stream = false, NumEvents = 5 },
-            RequestOptions
+            new Generateequest { Stream = false, NumEvents = 5 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<StreamResponse>(mockResponse)).UsingDefaults()
+        );
     }
 }

@@ -24,7 +24,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}?for=string",
+              "raw": "{{baseUrl}}?for=for",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -33,7 +33,7 @@
                 {
                   "key": "for",
                   "description": null,
-                  "value": "string"
+                  "value": "for"
                 }
               ],
               "variable": []
@@ -57,7 +57,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}?for=string",
+                  "raw": "{{baseUrl}}?for=for",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -66,7 +66,7 @@
                     {
                       "key": "for",
                       "description": null,
-                      "value": "string"
+                      "value": "for"
                     }
                   ],
                   "variable": []

@@ -1,4 +1,5 @@
 import latestVersion from "latest-version";
+
 import { CliEnvironment } from "../CliEnvironment";
 
 export async function getLatestVersionOfCli({
@@ -8,9 +9,9 @@ export async function getLatestVersionOfCli({
     cliEnvironment: CliEnvironment;
     includePreReleases?: boolean;
 }): Promise<string> {
-    // when running a non-published version of the CLI (e.g. in ETE tests),
+    // when running a non-prod version of the CLI (e.g. dev-cli in ETE tests),
     // don't try to upgrade
-    if (cliEnvironment.packageVersion === "0.0.0") {
+    if (cliEnvironment.packageName !== "fern-api") {
         return cliEnvironment.packageVersion;
     }
     return latestVersion(cliEnvironment.packageName, {

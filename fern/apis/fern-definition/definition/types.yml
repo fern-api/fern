@@ -1,0 +1,243 @@
+imports:
+  commons: commons.yml
+  encoding: encoding.yml
+  validation: validation.yml
+  examples: examples.yml
+  source: source.yml
+
+types:
+  TypeDeclarationSchema:
+    discriminated: false
+    union:
+      - string
+      - ObjectSchema
+      - EnumSchema
+      - DiscriminatedUnionSchema
+      - UndiscriminatedUnionSchema
+      - AliasSchema
+
+  # InlinedTypeDeclaration:
+  #   discriminated: false
+  #   union:
+  #     - InlinedObjectSchema
+  #     - InlinedEnumSchema
+  #     - InlinedDiscriminatedUnionSchema
+  #     - InlinedUndiscriminatedUnionSchema
+
+  # InlinedObjectSchema:
+  #   extends: ObjectSchema
+  #   properties:
+  #     name: string
+
+  # InlinedEnumSchema:
+  #   extends: EnumSchema
+  #   properties:
+  #     name: string
+
+  # InlinedDiscriminatedUnionSchema:
+  #   extends: DiscriminatedUnionSchema
+  #   properties:
+  #     name: string
+
+  # InlinedUndiscriminatedUnionSchema:
+  #   extends: UndiscriminatedUnionSchema
+  #   properties:
+  #     name: string
+
+  TypeReferenceSchema:
+    discriminated: false
+    union:
+      - string
+      - TypeReferenceDetailedSchema
+
+  BaseTypeReferenceSchema:
+    extends:
+      - commons.WithDocsSchema
+      - commons.WithAvailability
+    properties:
+      default: optional<unknown>
+      encoding: optional<encoding.EncodingSchema>
+      validation: optional<validation.ValidationSchema>
+
+  TypeReferenceDetailedSchema:
+    extends:
+      - BaseTypeReferenceSchema
+      - commons.WithName
+      - commons.WithAudiences
+    properties:
+      type: string
+
+  TypeReferenceDeclarationWithNameSchema:
+    discriminated: false
+    union:
+      - string
+      - TypeReferenceDeclarationWithName
+
+  TypeReferenceDeclarationWithName:
+    extends:
+      - BaseTypeReferenceSchema
+      - commons.WithName
+      - commons.WithAudiences
+    properties:
+      type: string
+
+  BaseTypeDeclarationSchema:
+    extends:
+      - commons.WithDocsSchema
+      - commons.WithAvailability
+      - commons.WithAudiences
+    properties:
+      examples: optional<list<examples.ExampleTypeSchema>>
+      encoding: optional<encoding.EncodingSchema>
+      source: optional<source.SourceSchema>
+      inline: optional<boolean>
+
+  ### Aliases ####
+
+  AliasSchema:
+    extends: BaseTypeDeclarationSchema
+    properties:
+      type: string
+      validation: optional<validation.ValidationSchema>
+
+  #### Objects ####
+
+  ObjectSchema:
+    extends: BaseTypeDeclarationSchema
+    properties:
+      extends: optional<ObjectExtendsSchema>
+      properties: optional<map<string, ObjectPropertySchema>>
+      extra-properties: optional<boolean>
+
+  ObjectPropertySchema:
+    discriminated: false
+    union:
+      - string
+      - ObjectPropertyWithAccessSchema
+
+  ObjectPropertyWithAccessSchema:
+    extends:
+      - TypeReferenceDeclarationWithName
+    properties:
+      access: optional<ObjectPropertyAccess>
+
+  ObjectPropertyAccess:
+    enum:
+      - value: read-only
+        name: ReadOnly
+      - value: write-only
+        name: WriteOnly
+
+  ObjectExtendsSchema:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+
+  # ObjectPropertyDeclaration:
+  #   discriminated: false
+  #   union:
+  #     - TypeReference
+  #     - InlinedTypeDeclaration
+
+  #### Enums ####
+
+  EnumSchema:
+    extends: BaseTypeDeclarationSchema
+    properties:
+      default: optional<string>
+      enum: list<EnumValue>
+
+  EnumValue:
+    discriminated: false
+    union:
+      - string
+      - EnumValueSchema
+
+  EnumValueSchema:
+    extends:
+      - commons.WithDocsSchema
+      - commons.WithName
+    properties:
+      value: string
+      casing: optional<CasingOverridesSchema>
+
+  CasingOverridesSchema:
+    properties:
+      camel: optional<string>
+      snake: optional<string>
+      pascal: optional<string>
+      screaming-snake: optional<string>
+
+  #### Discriminated Union ####
+
+  SingleUnionTypeSchema:
+    discriminated: false
+    union:
+      - string
+      - SingleUnionTypeDetailedSchema
+
+  SingleUnionTypeDetailedSchema:
+    extends:
+      - commons.WithDocsSchema
+      - commons.WithName
+      - commons.WithAvailability
+      - commons.WithDisplayName
+    properties:
+      type: optional<string>
+      key: optional<SingleUnionTypeKey>
+
+  SingleUnionTypeKey:
+    discriminated: false
+    union:
+      - string
+      - SingleUnionTypeKeySchema
+
+  SingleUnionTypeKeySchema:
+    extends:
+      - commons.WithName
+    properties:
+      value: string
+
+  DiscriminatedUnionSchema:
+    extends: BaseTypeDeclarationSchema
+    properties:
+      discriminant: optional<UnionDiscriminant>
+      extends: optional<ObjectExtendsSchema>
+      base-properties: optional<map<string, TypeReferenceSchema>>
+      union: map<string, SingleUnionTypeSchema>
+
+  UnionDiscriminant:
+    discriminated: false
+    union:
+      - string
+      - UnionDiscriminantSchema
+
+  UnionDiscriminantSchema:
+    extends:
+      - commons.WithName
+    properties:
+      value: string
+
+  #### Undiscriminated Union ####
+
+  UndiscriminatedUnionSchema:
+    extends: BaseTypeDeclarationSchema
+    properties:
+      discriminated: literal<false>
+      union: list<SingleUndiscriminatedUnionTypeSchema>
+
+  SingleUndiscriminatedUnionTypeSchema:
+    discriminated: false
+    union:
+      - string
+      - SingleUndiscriminatedUnionTypeDetailedSchema
+
+  SingleUndiscriminatedUnionTypeDetailedSchema:
+    extends:
+      - commons.WithDocsSchema
+      - commons.WithDisplayName
+      - commons.WithValidation
+
+    properties:
+      type: string

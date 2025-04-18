@@ -1,7 +1,6 @@
-import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
-import { GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
+import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
@@ -9,7 +8,10 @@ import {
     TypeReferenceToSchemaConverter
 } from "@fern-typescript/type-reference-converters";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { SourceFile } from "ts-morph";
+import { SourceFile, ts } from "ts-morph";
+
+import { DeclaredTypeName, ShapeType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 
@@ -18,7 +20,7 @@ export declare namespace TypeSchemaContextImpl {
         sourceFile: SourceFile;
         coreUtilities: CoreUtilities;
         importsManager: ImportsManager;
-        typeResolver: TypeResolver;
+        context: BaseContext;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeGenerator: TypeGenerator;
@@ -27,6 +29,9 @@ export declare namespace TypeSchemaContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         useBigInt: boolean;
+        enableInlineTypes: boolean;
+        allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -38,7 +43,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToRawTypeNodeConverter: TypeReferenceToRawTypeNodeConverter;
     private typeReferenceToSchemaConverter: TypeReferenceToSchemaConverter;
-    private typeResolver: TypeResolver;
+    private context: BaseContext;
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
     private includeSerdeLayer: boolean;
@@ -48,7 +53,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         sourceFile,
         coreUtilities,
         importsManager,
-        typeResolver,
+        context,
         typeDeclarationReferencer,
         typeGenerator,
         typeSchemaDeclarationReferencer,
@@ -56,29 +61,39 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         treatUnknownAsAny,
         includeSerdeLayer,
         retainOriginalCasing,
-        useBigInt
+        useBigInt,
+        enableInlineTypes,
+        allowExtraFields,
+        omitUndefined
     }: TypeSchemaContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
         this.importsManager = importsManager;
         this.typeReferenceToRawTypeNodeConverter = new TypeReferenceToRawTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToRawNamedType(typeName).getEntityName(),
-            typeResolver,
+            generateForInlineUnion: (typeName) => this.generateForInlineUnion(typeName),
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
-            useBigInt
+            useBigInt,
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
             zurg: this.coreUtilities.zurg,
-            typeResolver,
+            context,
             treatUnknownAsAny,
             includeSerdeLayer,
-            useBigInt
+            useBigInt,
+            enableInlineTypes,
+            allowExtraFields,
+            omitUndefined
         });
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeSchemaDeclarationReferencer = typeSchemaDeclarationReferencer;
-        this.typeResolver = typeResolver;
+        this.context = context;
         this.typeGenerator = typeGenerator;
         this.typeSchemaGenerator = typeSchemaGenerator;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -86,7 +101,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     public getGeneratedTypeSchema(typeName: DeclaredTypeName): GeneratedTypeSchema {
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
+        const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         const examples = typeDeclaration.userProvidedExamples;
         if (examples.length === 0) {
             examples.push(...typeDeclaration.autogeneratedExamples);
@@ -101,10 +116,11 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     docs: typeDeclaration.docs ?? undefined,
                     examples,
                     fernFilepath: typeDeclaration.name.fernFilepath,
-                    typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
+                    typeName: this.getTypeNameForDeclaration(typeDeclaration),
                     getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
                     includeSerdeLayer: this.includeSerdeLayer,
-                    retainOriginalCasing: this.retainOriginalCasing
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    inline: typeDeclaration.inline ?? false
                 }),
             getReferenceToGeneratedType: () =>
                 this.typeDeclarationReferencer
@@ -130,12 +146,16 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
     }
 
+    private getTypeNameForDeclaration(typeDeclaration: TypeDeclaration): string {
+        return this.typeDeclarationReferencer.getExportedName(typeDeclaration.name);
+    }
+
     public getReferenceToRawType(typeReference: TypeReference): TypeReferenceNode {
-        return this.typeReferenceToRawTypeNodeConverter.convert(typeReference);
+        return this.typeReferenceToRawTypeNodeConverter.convert({ typeReference });
     }
 
     public getReferenceToRawNamedType(typeName: DeclaredTypeName): Reference {
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
+        const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         const isCircular = typeDeclaration.referencedTypes.has(typeName.typeId);
 
         return this.typeSchemaDeclarationReferencer.getReferenceToType({
@@ -154,15 +174,19 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
     }
 
+    private generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
+        throw new Error("Internal error; inline unions are not supported in schemas.");
+    }
+
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
-        return this.typeReferenceToSchemaConverter.convert(typeReference);
+        return this.typeReferenceToSchemaConverter.convert({ typeReference });
     }
 
     public getSchemaOfNamedType(
         typeName: DeclaredTypeName,
         { isGeneratingSchema }: { isGeneratingSchema: boolean }
     ): Zurg.Schema {
-        const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
+        const typeDeclaration = this.context.type.getTypeDeclaration(typeName);
         const isCircular = typeDeclaration.referencedTypes.has(typeName.typeId);
 
         const referenceToSchema = this.typeSchemaDeclarationReferencer
@@ -200,7 +224,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     private wrapSchemaWithLazy(schema: Zurg.Schema, typeName: DeclaredTypeName): Zurg.Schema {
-        const resolvedType = this.typeResolver.resolveTypeName(typeName);
+        const resolvedType = this.context.type.resolveTypeName(typeName);
         return resolvedType.type === "named" && resolvedType.shape === ShapeType.Object
             ? this.coreUtilities.zurg.lazyObject(schema)
             : this.coreUtilities.zurg.lazy(schema);

@@ -23,17 +23,17 @@ export const Resource: core.serialization.Schema<serializers.Resource.Raw, SeedM
     });
 
 export declare namespace Resource {
-    type Raw = Resource.User | Resource.Organization;
+    export type Raw = Resource.User | Resource.Organization;
 
-    interface User extends _Base, User.Raw {
+    export interface User extends _Base, User.Raw {
         resource_type: "user";
     }
 
-    interface Organization extends _Base, Organization.Raw {
+    export interface Organization extends _Base, Organization.Raw {
         resource_type: "Organization";
     }
 
-    interface _Base {
+    export interface _Base {
         status: ResourceStatus.Raw;
     }
 }

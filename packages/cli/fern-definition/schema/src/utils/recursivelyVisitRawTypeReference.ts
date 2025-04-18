@@ -1,5 +1,6 @@
 import { Literal, PrimitiveType } from "@fern-api/ir-sdk";
-import { ValidationSchema } from "../schemas/ValidationSchema";
+
+import { ValidationSchema } from "../schemas";
 import { visitRawTypeReference } from "./visitRawTypeReference";
 
 export interface RecursiveRawTypeReferenceVisitor<R> {
@@ -8,6 +9,7 @@ export interface RecursiveRawTypeReferenceVisitor<R> {
     list: (valueType: R) => R;
     set: (valueType: R) => R;
     optional: (valueType: R) => R;
+    nullable: (valueType: R) => R;
     literal: (literal: Literal) => R;
     named: (named: string) => R;
     unknown: () => R;
@@ -65,6 +67,8 @@ export function recursivelyVisitRawTypeReference<R>({
                 ),
             optional: (valueType) =>
                 visitor.optional(recursivelyVisitRawTypeReference({ type: valueType, _default, validation, visitor })),
+            nullable: (valueType) =>
+                visitor.nullable(recursivelyVisitRawTypeReference({ type: valueType, _default, validation, visitor })),
             literal: visitor.literal,
             named: visitor.named,
             unknown: visitor.unknown

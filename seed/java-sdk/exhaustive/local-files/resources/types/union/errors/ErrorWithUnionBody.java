@@ -6,6 +6,7 @@ package com.fern.sdk.resources.types.union.errors;
 
 import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.resources.types.union.types.Animal;
+import okhttp3.Response;
 
 public final class ErrorWithUnionBody extends SeedExhaustiveApiException {
   /**
@@ -15,6 +16,11 @@ public final class ErrorWithUnionBody extends SeedExhaustiveApiException {
 
   public ErrorWithUnionBody(Animal body) {
     super("ErrorWithUnionBody", 400, body);
+    this.body = body;
+  }
+
+  public ErrorWithUnionBody(Animal body, Response rawResponse) {
+    super("ErrorWithUnionBody", 400, body, rawResponse);
     this.body = body;
   }
 

@@ -1,7 +1,7 @@
 import { SchemaUtils } from "./builders";
-export declare type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
-export declare type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw : never;
-export declare type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
+export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
+export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw : never;
+export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
 export interface BaseSchema<Raw, Parsed> {
     parse: (raw: unknown, opts?: SchemaOptions) => MaybeValid<Parsed>;
     json: (parsed: unknown, opts?: SchemaOptions) => MaybeValid<Raw>;
@@ -24,10 +24,12 @@ export declare const SchemaType: {
     readonly SET: "set";
     readonly UNION: "union";
     readonly UNDISCRIMINATED_UNION: "undiscriminatedUnion";
+    readonly NULLABLE: "nullable";
     readonly OPTIONAL: "optional";
+    readonly OPTIONAL_NULLABLE: "optionalNullable";
 };
-export declare type SchemaType = typeof SchemaType[keyof typeof SchemaType];
-export declare type MaybeValid<T> = Valid<T> | Invalid;
+export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType];
+export type MaybeValid<T> = Valid<T> | Invalid;
 export interface Valid<T> {
     ok: true;
     value: T;

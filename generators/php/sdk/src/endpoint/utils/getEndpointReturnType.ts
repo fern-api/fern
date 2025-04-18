@@ -1,5 +1,7 @@
 import { php } from "@fern-api/php-codegen";
+
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export function getEndpointReturnType({
@@ -13,6 +15,7 @@ export function getEndpointReturnType({
         return undefined;
     }
     return endpoint.response.body._visit({
+        bytes: () => undefined,
         streamParameter: () => undefined,
         fileDownload: () => undefined,
         json: (reference) => {

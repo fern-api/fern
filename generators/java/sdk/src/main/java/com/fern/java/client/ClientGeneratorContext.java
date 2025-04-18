@@ -19,6 +19,11 @@ public final class ClientGeneratorContext
     }
 
     @Override
+    public GeneratorType getType() {
+        return GeneratorType.SDK;
+    }
+
+    @Override
     public boolean deserializeWithAdditionalProperties() {
         return true;
     }

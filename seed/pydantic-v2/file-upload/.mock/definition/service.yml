@@ -1,0 +1,78 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: ""
+      method: POST
+      request:
+        name: MyRequest
+        body:
+          properties:
+            maybeString: optional<string>
+            integer: integer
+            file: file
+            fileList: list<file>
+            maybeFile: optional<file>
+            maybeFileList: optional<list<file>>
+            maybeInteger: optional<integer>
+            optionalListOfStrings: optional<list<string>>
+            listOfObjects: list<MyObject>
+            optionalMetadata: optional<unknown>
+            optionalObjectType: optional<ObjectType>
+            optionalId: optional<Id>
+
+    justFile:
+      path: /just-file
+      method: POST
+      request:
+        name: JustFileRequest
+        body:
+          properties:
+            file: file
+
+    justFileWithQueryParams:
+      path: /just-file-with-query-params
+      method: POST
+      request:
+        name: JustFileWithQueryParamsRequest
+        query-parameters:
+          maybeString: optional<string>
+          integer: integer
+          maybeInteger: optional<integer>
+          listOfStrings:
+            type: string
+            allow-multiple: true
+          optionalListOfStrings:
+            type: optional<string>
+            allow-multiple: true
+        body:
+          properties:
+            file: file
+
+    withContentType:
+      path: "/with-content-type"
+      method: POST
+      request:
+        name: WithContentTypeRequest
+        body:
+          properties:
+            file:
+              type: file
+              content-type: application/octet-stream
+            foo: string
+            bar:
+              type: MyObject
+              content-type: application/json
+
+types:
+  Id: string
+
+  MyObject:
+    properties:
+      foo: string
+
+  ObjectType:
+    enum:
+      - FOO
+      - BAR

@@ -19,7 +19,7 @@ export const InlinedWebSocketMessageBody: core.serialization.ObjectSchema<
 });
 
 export declare namespace InlinedWebSocketMessageBody {
-    interface Raw {
+    export interface Raw {
         name: Name.Raw;
         extends: DeclaredTypeName.Raw[];
         properties: InlinedWebSocketMessageBodyProperty.Raw[];

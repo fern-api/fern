@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type SdkRequestBodyType = FernIr.SdkRequestBodyType.TypeReference | FernIr.SdkRequestBodyType.Bytes;
 
-export declare namespace SdkRequestBodyType {
-    interface TypeReference extends FernIr.HttpRequestBodyReference, _Utils {
+export namespace SdkRequestBodyType {
+    export interface TypeReference extends FernIr.HttpRequestBodyReference, _Utils {
         type: "typeReference";
     }
 
-    interface Bytes extends FernIr.BytesRequest, _Utils {
+    export interface Bytes extends FernIr.BytesRequest, _Utils {
         type: "bytes";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.SdkRequestBodyType._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         typeReference: (value: FernIr.HttpRequestBodyReference) => _Result;
         bytes: (value: FernIr.BytesRequest) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const SdkRequestBodyType = {
             type: "typeReference",
             _visit: function <_Result>(
                 this: FernIr.SdkRequestBodyType.TypeReference,
-                visitor: FernIr.SdkRequestBodyType._Visitor<_Result>
+                visitor: FernIr.SdkRequestBodyType._Visitor<_Result>,
             ) {
                 return FernIr.SdkRequestBodyType._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const SdkRequestBodyType = {
             type: "bytes",
             _visit: function <_Result>(
                 this: FernIr.SdkRequestBodyType.Bytes,
-                visitor: FernIr.SdkRequestBodyType._Visitor<_Result>
+                visitor: FernIr.SdkRequestBodyType._Visitor<_Result>,
             ) {
                 return FernIr.SdkRequestBodyType._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const SdkRequestBodyType = {
 
     _visit: <_Result>(
         value: FernIr.SdkRequestBodyType,
-        visitor: FernIr.SdkRequestBodyType._Visitor<_Result>
+        visitor: FernIr.SdkRequestBodyType._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "typeReference":

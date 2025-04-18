@@ -1,7 +1,5 @@
 using NUnit.Framework;
 
-#nullable enable
-
 namespace SeedPackageYml.Test.Unit.MockServer;
 
 [TestFixture]
@@ -11,12 +9,10 @@ public class NopTest : BaseMockServerTest
     public void MockServerTest_1()
     {
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/string//string").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/id//nestedId").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Service.NopAsync("string", "string", RequestOptions)
-        );
+        Assert.DoesNotThrowAsync(async () => await Client.Service.NopAsync("id", "nestedId"));
     }
 
     [Test]
@@ -32,7 +28,7 @@ public class NopTest : BaseMockServerTest
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(
-            async () => await Client.Service.NopAsync("id-a2ijs82", "id-219xca8", RequestOptions)
+            async () => await Client.Service.NopAsync("id-a2ijs82", "id-219xca8")
         );
     }
 }

@@ -2,59 +2,81 @@
 
 namespace Seed\Reference\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SendRequest extends SerializableType
+class SendRequest extends JsonSerializableType
 {
     /**
-     * @var string $prompt
+     * @var 'You are a helpful assistant' $prompt
      */
-    #[JsonProperty("prompt")]
+    #[JsonProperty('prompt')]
     public string $prompt;
 
     /**
      * @var string $query
      */
-    #[JsonProperty("query")]
+    #[JsonProperty('query')]
     public string $query;
 
     /**
-     * @var bool $stream
+     * @var false $stream
      */
-    #[JsonProperty("stream")]
+    #[JsonProperty('stream')]
     public bool $stream;
 
     /**
-     * @var string $context
+     * @var '$ending' $ending
      */
-    #[JsonProperty("context")]
+    #[JsonProperty('ending')]
+    public string $ending;
+
+    /**
+     * @var "You're super wise" $context
+     */
+    #[JsonProperty('context')]
     public string $context;
 
     /**
-     * @var ?string $maybeContext
+     * @var ?"You're super wise" $maybeContext
      */
-    #[JsonProperty("maybeContext")]
+    #[JsonProperty('maybeContext')]
     public ?string $maybeContext;
 
     /**
-     * @param string $prompt
-     * @param string $query
-     * @param bool $stream
-     * @param string $context
-     * @param ?string $maybeContext
+     * @var ContainerObject $containerObject
+     */
+    #[JsonProperty('containerObject')]
+    public ContainerObject $containerObject;
+
+    /**
+     * @param array{
+     *   prompt: 'You are a helpful assistant',
+     *   query: string,
+     *   stream: false,
+     *   ending: '$ending',
+     *   context: "You're super wise",
+     *   containerObject: ContainerObject,
+     *   maybeContext?: ?"You're super wise",
+     * } $values
      */
     public function __construct(
-        string $prompt,
-        string $query,
-        bool $stream,
-        string $context,
-        ?string $maybeContext = null,
+        array $values,
     ) {
-        $this->prompt = $prompt;
-        $this->query = $query;
-        $this->stream = $stream;
-        $this->context = $context;
-        $this->maybeContext = $maybeContext;
+        $this->prompt = $values['prompt'];
+        $this->query = $values['query'];
+        $this->stream = $values['stream'];
+        $this->ending = $values['ending'];
+        $this->context = $values['context'];
+        $this->maybeContext = $values['maybeContext'] ?? null;
+        $this->containerObject = $values['containerObject'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

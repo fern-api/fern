@@ -1,0 +1,189 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "initializeProblemRequest",
+        "initializeWorkspaceRequest",
+        "submitV2",
+        "workspaceSubmit",
+        "stop"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "initializeProblemRequest"
+        },
+        "problemId": {
+          "$ref": "#/definitions/commons.ProblemId"
+        },
+        "problemVersion": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "problemId"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "initializeWorkspaceRequest"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "submitV2"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission.SubmissionId"
+        },
+        "language": {
+          "$ref": "#/definitions/commons.Language"
+        },
+        "submissionFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/submission.SubmissionFileInfo"
+          }
+        },
+        "problemId": {
+          "$ref": "#/definitions/commons.ProblemId"
+        },
+        "problemVersion": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "userId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "language",
+        "submissionFiles",
+        "problemId"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "workspaceSubmit"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission.SubmissionId"
+        },
+        "language": {
+          "$ref": "#/definitions/commons.Language"
+        },
+        "submissionFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/submission.SubmissionFileInfo"
+          }
+        },
+        "userId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "submissionId",
+        "language",
+        "submissionFiles"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "stop"
+        },
+        "submissionId": {
+          "$ref": "#/definitions/submission.SubmissionId"
+        }
+      },
+      "required": [
+        "type",
+        "submissionId"
+      ]
+    }
+  ],
+  "definitions": {
+    "commons.ProblemId": {
+      "type": "string"
+    },
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "commons.Language": {
+      "type": "string",
+      "enum": [
+        "JAVA",
+        "JAVASCRIPT",
+        "PYTHON"
+      ]
+    },
+    "submission.SubmissionFileInfo": {
+      "type": "object",
+      "properties": {
+        "directory": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "directory",
+        "filename",
+        "contents"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

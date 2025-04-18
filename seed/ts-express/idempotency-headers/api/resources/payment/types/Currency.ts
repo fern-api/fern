@@ -3,7 +3,6 @@
  */
 
 export type Currency = "USD" | "YEN";
-
 export const Currency = {
     Usd: "USD",
     Yen: "YEN",

@@ -2,22 +2,30 @@
 
 namespace Seed\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Traits\AliasType;
+use Seed\Core\Json\JsonProperty;
 
-class InlinedChildRequest
+class InlinedChildRequest extends JsonSerializableType
 {
+    use AliasType;
+
     /**
      * @var string $child
      */
-    #[JsonProperty("child")]
+    #[JsonProperty('child')]
     public string $child;
 
     /**
-     * @param string $child
+     * @param array{
+     *   child: string,
+     *   parent: string,
+     * } $values
      */
     public function __construct(
-        string $child,
+        array $values,
     ) {
-        $this->child = $child;
+        $this->child = $values['child'];
+        $this->parent = $values['parent'];
     }
 }

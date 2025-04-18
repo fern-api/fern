@@ -1,6 +1,8 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
+
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+
 import { Migration } from "../../../types/Migration";
 import { getAllRootApiYamlFiles } from "./getAllRootApiYamlFiles";
 

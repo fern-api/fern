@@ -1,10 +1,10 @@
 import { Access } from "./Access";
+import { Attribute } from "./Attribute";
 import { CodeBlock } from "./CodeBlock";
+import { Comment } from "./Comment";
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { Comment } from "./Comment";
-import { Attribute } from "./Attribute";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
 export declare namespace Field {
@@ -25,6 +25,8 @@ export declare namespace Field {
         inlineDocs?: string;
         /* Field attributes */
         attributes?: Attribute[];
+        /* Indicates that this field is inherited and should not be written to the class. */
+        inherited?: boolean;
     }
 }
 
@@ -37,8 +39,9 @@ export class Field extends AstNode {
     private docs: string | undefined;
     private inlineDocs: string | undefined;
     private attributes: Attribute[];
+    public readonly inherited: boolean;
 
-    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes }: Field.Args) {
+    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes, inherited }: Field.Args) {
         super();
         this.name = convertToPhpVariableName(name);
         this.type = type;
@@ -48,6 +51,7 @@ export class Field extends AstNode {
         this.docs = docs;
         this.inlineDocs = inlineDocs;
         this.attributes = attributes ?? [];
+        this.inherited = inherited ?? false;
     }
 
     public write(writer: Writer): void {

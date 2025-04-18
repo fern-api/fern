@@ -1,3 +1,7 @@
+import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
+import { VariableDeclarationKind, ts } from "ts-morph";
+
 import {
     EnvironmentBaseUrlId,
     EnvironmentBaseUrlWithId,
@@ -5,9 +9,6 @@ import {
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments
 } from "@fern-fern/ir-sdk/api";
-import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
-import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedMultipleUrlsEnvironmentsImpl {
     export interface Init {
@@ -136,11 +137,11 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         baseUrlId: EnvironmentBaseUrlId | undefined;
     }): ts.Expression {
         if (baseUrlId == null) {
-            throw new Error("Cannot get reference to environment URL because baseUrlId is not defined");
+            throw new Error("Cannot get reference to multiple environment URL because baseUrlId is not defined");
         }
         const baseUrl = this.environments.baseUrls.find((otherBaseUrl) => otherBaseUrl.id === baseUrlId);
         if (baseUrl == null) {
-            throw new Error(`Cannot get reference to environment URL because ${baseUrlId} is not defined`);
+            throw new Error(`Cannot get reference to multiple environment URL because ${baseUrlId} is not defined`);
         }
         return ts.factory.createPropertyAccessExpression(referenceToEnvironmentValue, this.getNameOfBaseUrl(baseUrl));
     }

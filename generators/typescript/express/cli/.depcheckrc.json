@@ -2,7 +2,11 @@
   "ignores": [
     "@types/jest",
     "globals",
+    "@trivago/prettier-plugin-sort-imports",
+    "@trivago/prettier-plugin-sort-imports",
     "globals",
+    "@trivago/prettier-plugin-sort-imports",
+    "@trivago/prettier-plugin-sort-imports",
     "@types/node",
     "@ts-morph/common",
     "ts-loader",

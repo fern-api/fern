@@ -45,7 +45,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"string\"\n}",
+              "raw": "{\n    \"name\": \"name\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -82,7 +82,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"name\": \"string\"\n}",
+                  "raw": "{\n    \"name\": \"name\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -91,7 +91,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"users\": [\n        {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"age\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"users\": [\n        {\n            \"id\": \"id\",\n            \"name\": \"name\",\n            \"age\": 1\n        },\n        {\n            \"id\": \"id\",\n            \"name\": \"name\",\n            \"age\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -119,7 +119,7 @@
                   "request": {
                     "description": "Get event metadata.",
                     "url": {
-                      "raw": "{{baseUrl}}/users/events/metadata?id=string",
+                      "raw": "{{baseUrl}}/users/events/metadata?id=id",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -132,7 +132,7 @@
                         {
                           "key": "id",
                           "description": null,
-                          "value": "string"
+                          "value": "id"
                         }
                       ],
                       "variable": []
@@ -156,7 +156,7 @@
                       "originalRequest": {
                         "description": "Get event metadata.",
                         "url": {
-                          "raw": "{{baseUrl}}/users/events/metadata?id=string",
+                          "raw": "{{baseUrl}}/users/events/metadata?id=id",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -169,7 +169,7 @@
                             {
                               "key": "id",
                               "description": null,
-                              "value": "string"
+                              "value": "id"
                             }
                           ],
                           "variable": []
@@ -186,7 +186,7 @@
                         "body": null
                       },
                       "description": null,
-                      "body": "{\n    \"id\": \"string\",\n    \"value\": {\n        \"key\": \"value\"\n    }\n}",
+                      "body": "{\n    \"id\": \"id\",\n    \"value\": {\n        \"key\": \"value\"\n    }\n}",
                       "_postman_previewlanguage": "json"
                     }
                   ]
@@ -264,7 +264,7 @@
                     "body": null
                   },
                   "description": null,
-                  "body": "[\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    }\n]",
+                  "body": "[\n    {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    },\n    {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n]",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -340,7 +340,7 @@
                 "body": null
               },
               "description": null,
-              "body": "[\n    {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"age\": 1\n    }\n]",
+              "body": "[\n    {\n        \"id\": \"id\",\n        \"name\": \"name\",\n        \"age\": 1\n    },\n    {\n        \"id\": \"id\",\n        \"name\": \"name\",\n        \"age\": 1\n    }\n]",
               "_postman_previewlanguage": "json"
             }
           ]

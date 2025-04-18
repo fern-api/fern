@@ -39,7 +39,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.problem.create_problem(request: { problem_name: "string", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "string", contents: "string" }, read_only_files: [{ filename: "string", contents: "string" }] } }, input_params: [{ name: "string" }], testcases: [{ test_case: { id: "string", params:  } }], method_name: "string" })
+    #  trace.problem.create_problem(request: { problem_name: "problemName", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "filename", contents: "contents" }, read_only_files: [{ filename: "filename", contents: "contents" }, { filename: "filename", contents: "contents" }] } }, input_params: [{ name: "name" }, { name: "name" }], testcases: [{ test_case: { id: "id", params:  } }, { test_case: { id: "id", params:  } }], method_name: "methodName" })
     def create_problem(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -79,7 +79,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.problem.update_problem(problem_id: "string", request: { problem_name: "string", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "string", contents: "string" }, read_only_files: [{ filename: "string", contents: "string" }] } }, input_params: [{ name: "string" }], testcases: [{ test_case: { id: "string", params:  } }], method_name: "string" })
+    #  trace.problem.update_problem(problem_id: "problemId", request: { problem_name: "problemName", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "filename", contents: "contents" }, read_only_files: [{ filename: "filename", contents: "contents" }, { filename: "filename", contents: "contents" }] } }, input_params: [{ name: "name" }, { name: "name" }], testcases: [{ test_case: { id: "id", params:  } }, { test_case: { id: "id", params:  } }], method_name: "methodName" })
     def update_problem(problem_id:, request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -110,7 +110,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.problem.delete_problem(problem_id: "string")
+    #  trace.problem.delete_problem(problem_id: "problemId")
     def delete_problem(problem_id:, request_options: nil)
       @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -151,7 +151,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.problem.get_default_starter_files(input_params: [{ name: "string" }], method_name: "string")
+    #  trace.problem.get_default_starter_files(input_params: [{ name: "name" }, { name: "name" }], method_name: "methodName")
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -206,7 +206,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.problem.create_problem(request: { problem_name: "string", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "string", contents: "string" }, read_only_files: [{ filename: "string", contents: "string" }] } }, input_params: [{ name: "string" }], testcases: [{ test_case: { id: "string", params:  } }], method_name: "string" })
+    #  trace.problem.create_problem(request: { problem_name: "problemName", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "filename", contents: "contents" }, read_only_files: [{ filename: "filename", contents: "contents" }, { filename: "filename", contents: "contents" }] } }, input_params: [{ name: "name" }, { name: "name" }], testcases: [{ test_case: { id: "id", params:  } }, { test_case: { id: "id", params:  } }], method_name: "methodName" })
     def create_problem(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -248,7 +248,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.problem.update_problem(problem_id: "string", request: { problem_name: "string", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "string", contents: "string" }, read_only_files: [{ filename: "string", contents: "string" }] } }, input_params: [{ name: "string" }], testcases: [{ test_case: { id: "string", params:  } }], method_name: "string" })
+    #  trace.problem.update_problem(problem_id: "problemId", request: { problem_name: "problemName", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "filename", contents: "contents" }, read_only_files: [{ filename: "filename", contents: "contents" }, { filename: "filename", contents: "contents" }] } }, input_params: [{ name: "name" }, { name: "name" }], testcases: [{ test_case: { id: "id", params:  } }, { test_case: { id: "id", params:  } }], method_name: "methodName" })
     def update_problem(problem_id:, request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -281,7 +281,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.problem.delete_problem(problem_id: "string")
+    #  trace.problem.delete_problem(problem_id: "problemId")
     def delete_problem(problem_id:, request_options: nil)
       Async do
         @request_client.conn.delete do |req|
@@ -324,7 +324,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.problem.get_default_starter_files(input_params: [{ name: "string" }], method_name: "string")
+    #  trace.problem.get_default_starter_files(input_params: [{ name: "name" }, { name: "name" }], method_name: "methodName")
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

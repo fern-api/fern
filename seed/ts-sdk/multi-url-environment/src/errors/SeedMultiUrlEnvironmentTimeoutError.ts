@@ -3,8 +3,8 @@
  */
 
 export class SeedMultiUrlEnvironmentTimeoutError extends Error {
-    constructor() {
-        super("Timeout");
+    constructor(message: string) {
+        super(message);
         Object.setPrototypeOf(this, SeedMultiUrlEnvironmentTimeoutError.prototype);
     }
 }

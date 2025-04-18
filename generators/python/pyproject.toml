@@ -7,46 +7,67 @@ authors = []
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = "^2.8.2"
-typer = {extras = ["all"], version = "^0.6.1"}
-fern-fern-generator-exec-sdk = {version = "0.82.5", source = "fern-prod"}
+typer = { extras = ["all"], version = "^0.6.1" }
+fern-fern-generator-exec-sdk = { version = "0.82.5", source = "fern-prod" }
 ordered-set = "^4.1.0"
 pydantic-core = "^2.18.2"
-fern-fern-fdr-sdk = {version = "0.98.20", source = "fern-prod"}
-fern-fern-generator-cli-sdk = {version = "0.0.59", source = "fern-prod"}
-fern_fern_ir_v53 = "53.12.0"
+fern-fern-fdr-sdk = { version = "0.98.20", source = "fern-prod" }
+fern-fern-generator-cli-sdk = { version = "0.0.18", source = "fern-prod" }
+fern_fern_ir_v57 = "57.0.0"
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.4.2"
-typing_extensions = ">=4.10.0,<5"
-mypy = "^1.11.1"
-black = "^23.9.1"
-flake8 = "^5.0.4"
-isort = "^5.10.1"
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+isort = "^6.0.1"
+mypy = "^1.13.0"
 pre-commit = "^2.20.0"
+pytest = "^7.4.2"
+pytest-only = "^2.0.0"
+ruff = "^0.5.7"
 snapshottest = "^0.6.0"
 
 [[tool.poetry.source]]
 name = "fern-prod"
 url = "https://pypi.buildwithfern.com/"
-default = false
-secondary = true
-
-[tool.poetry.group.dev.dependencies]
-pytest-only = "^2.0.0"
-ruff = "^0.5.6"
+priority = "supplemental"
 
 [tool.black]
 line-length = 120
 target-version = ['py38']
 include = '\.pyi?$'
 
-
 [tool.isort]
 profile = "black"
 
 [tool.pytest.ini_options]
-testpaths = [ "tests" ]
+testpaths = ["tests"]
 addopts = "--ignore-glob=tests/**/generated --ignore-glob=tests/**/snapshots"
+
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+include = ["*.py", "*.pyi"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+]
+# E501 (Line too long) is currently ignored because auto-fixing these errors is unsafe, as auto-fixing these errors
+# potentially moves type-ignore comments to incorrectl ines.
+ignore = [
+    "E402",  # Module level import not at top of file
+    "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+    "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+    "E722",  # Do not use bare `except`
+    "E731",  # Do not assign a `lambda` expression, use a `def`
+    "E501",  # Line too long
+    "E711",  # Comparison to `None` should be `cond is not None`
+    "F841"   # Local variable ... is assigned to but never used
+]
+
+[tool.ruff.isort]
+section-order = ["future", "standard-library", "third-party", "first-party"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

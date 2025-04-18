@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.get"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedAlias;\n\nvar client = new SeedAliasClient();\nawait client.GetAsync(\"type-kaljhv87\");\n"
+                "type": "csharp",
+                "client": "using SeedAlias;\n\nvar client = new SeedAliasClient();\nawait client.GetAsync(\"typeId\");\n"
             }
         }
     ]

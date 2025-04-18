@@ -17,7 +17,7 @@ export const DoublyLinkedListNodeValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace DoublyLinkedListNodeValue {
-    interface Raw {
+    export interface Raw {
         nodeId: serializers.NodeId.Raw;
         val: number;
         next?: serializers.NodeId.Raw | null;

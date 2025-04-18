@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedOauthClientCredentialsEnvironmentVariables;\n\nvar client = new SeedOauthClientCredentialsEnvironmentVariablesClient();\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"string\",\n        ClientSecret = \"string\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"string\",\n    }\n);\n"
+                "type": "csharp",
+                "client": "using SeedOauthClientCredentialsEnvironmentVariables;\n\nvar client = new SeedOauthClientCredentialsEnvironmentVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
             }
         },
         {
@@ -21,8 +21,8 @@
                 "identifier_override": "endpoint_auth.refreshToken"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedOauthClientCredentialsEnvironmentVariables;\n\nvar client = new SeedOauthClientCredentialsEnvironmentVariablesClient();\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"string\",\n        ClientSecret = \"string\",\n        RefreshToken = \"string\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"string\",\n    }\n);\n"
+                "type": "csharp",
+                "client": "using SeedOauthClientCredentialsEnvironmentVariables;\n\nvar client = new SeedOauthClientCredentialsEnvironmentVariablesClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"scope\",\n    }\n);\n"
             }
         }
     ]

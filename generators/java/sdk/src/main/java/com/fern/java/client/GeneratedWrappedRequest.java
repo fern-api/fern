@@ -1,6 +1,7 @@
 package com.fern.java.client;
 
 import com.fern.ir.model.http.FileProperty;
+import com.fern.ir.model.http.FileUploadBodyProperty;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
@@ -16,6 +17,8 @@ public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile 
     public abstract List<EnrichedObjectProperty> headerParams();
 
     public abstract List<EnrichedObjectProperty> queryParams();
+
+    public abstract List<EnrichedObjectProperty> pathParams();
 
     public abstract Optional<RequestBodyGetter> requestBodyGetter();
 
@@ -66,6 +69,8 @@ public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile 
     @StagedBuilderImmutablesStyle
     public interface JsonFileUploadProperty extends FileUploadProperty {
         EnrichedObjectProperty objectProperty();
+
+        FileUploadBodyProperty rawProperty();
 
         static ImmutableJsonFileUploadProperty.ObjectPropertyBuildStage builder() {
             return ImmutableJsonFileUploadProperty.builder();

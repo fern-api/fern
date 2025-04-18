@@ -1,0 +1,163 @@
+{
+  "title": "Test extension `x-fern-parameter-name` for parameters.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "get_user",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "userId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetUserRequestUserId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "parameterNameOverride": "id",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "foo",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetUserRequestFoo",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "parameterNameOverride": "bar",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "name": "X-API-Version",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetUserRequestXApiVersion",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "parameterNameOverride": "version",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetUserRequest",
+      "response": {
+        "description": "Success!",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "GetUserResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/user/{userId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "userId",
+              "parameterNameOverride": "id",
+              "value": {
+                "value": {
+                  "value": "userId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": "foo",
+              "value": {
+                "value": {
+                  "value": "foo",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "headers": [
+            {
+              "name": "X-API-Version",
+              "value": {
+                "value": {
+                  "value": "X-API-Version",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

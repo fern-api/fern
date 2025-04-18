@@ -49,7 +49,7 @@ public final class ListUsersOffsetStepPaginationRequest {
     }
 
     /**
-     * @return The maxiumum number of elements to return.
+     * @return The maximum number of elements to return.
      * This is also used as the step size in this
      * paginated endpoint.
      */

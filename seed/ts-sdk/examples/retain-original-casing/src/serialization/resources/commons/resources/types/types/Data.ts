@@ -22,14 +22,14 @@ export const Data: core.serialization.Schema<serializers.commons.Data.Raw, SeedE
         });
 
 export declare namespace Data {
-    type Raw = Data.String | Data.Base64;
+    export type Raw = Data.String | Data.Base64;
 
-    interface String {
+    export interface String {
         type: "string";
         value: string;
     }
 
-    interface Base64 {
+    export interface Base64 {
         type: "base64";
         value: string;
     }

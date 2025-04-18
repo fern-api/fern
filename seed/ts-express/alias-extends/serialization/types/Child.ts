@@ -13,7 +13,7 @@ export const Child: core.serialization.ObjectSchema<serializers.Child.Raw, SeedA
     .extend(core.serialization.lazyObject(() => serializers.Parent));
 
 export declare namespace Child {
-    interface Raw extends serializers.Parent.Raw {
+    export interface Raw extends serializers.Parent.Raw {
         child: string;
     }
 }

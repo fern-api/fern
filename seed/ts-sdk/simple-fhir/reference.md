@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.getAccount("string");
+await client.getAccount("account_id");
 ```
 
 </dd>

@@ -27,6 +27,14 @@ class _Factory:
 
 
 class UnionWithPrimitive(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithPrimitive_Integer
+
+    UnionWithPrimitive_Integer(value=9)
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
@@ -56,6 +64,14 @@ class UnionWithPrimitive(UniversalRootModel):
             return integer(unioned_value.value)
         if unioned_value.type == "string":
             return string(unioned_value.value)
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 class _UnionWithPrimitive:

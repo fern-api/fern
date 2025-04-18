@@ -1,7 +1,9 @@
-import { ExampleEndpointCall, HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { ExampleEndpointCall, HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-sdk/api";
+
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
 export class FileUploadRequestParameter extends AbstractRequestParameter {
@@ -65,6 +67,19 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
             queryParamSetter,
             queryParamItemSetter
         });
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        const pathParameter = this.endpoint.allPathParameters.find(
+            (pathParam) => pathParam.name.originalName === pathParameterKey
+        );
+        if (pathParameter == null) {
+            throw new Error("Path parameter does not exist: " + pathParameterKey);
+        }
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
+        return this.getReferenceToProperty(
+            generatedRequestWrapper.getPropertyNameOfPathParameter(pathParameter).propertyName
+        );
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

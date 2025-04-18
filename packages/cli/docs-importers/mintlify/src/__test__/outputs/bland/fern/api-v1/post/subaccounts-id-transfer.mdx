@@ -1,0 +1,51 @@
+---
+title: Transfer Credit to a Subaccount
+subtitle: Transfer API credits from your account to a subaccount.
+slug: api-v1/post/subaccounts-id-transfer
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="subaccount_id" type="string" required>
+  The unique identifier of the subaccount to which you want to transfer credits.
+</ParamField>
+
+### Body
+
+<ParamField body="amount" type="integer" required>
+    This many of your API credits will be transferred to the subaccount.
+
+    The balance must be a positive integer that is at least 1, and less than your current account balance.
+
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Whether the subaccount creation succeeded.
+</ResponseField>
+
+<ResponseField name="new_parent_balance" type="number">
+  The new balance of your account after the transfer.
+</ResponseField>
+
+<ResponseField name="new_subaccount_balance" type="number">
+  The new balance of the subaccount after the transfer.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "new_parent_balance": 1200,
+    "new_subaccount_balance": 500
+}
+```
+</ResponseExample>

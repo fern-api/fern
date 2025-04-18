@@ -14,7 +14,7 @@ export interface BasicAuthServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     postWithBasicAuth(
         req: express.Request<never, boolean, unknown, never>,
@@ -23,19 +23,22 @@ export interface BasicAuthServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class BasicAuthService {
     private router;
 
-    constructor(private readonly methods: BasicAuthServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: BasicAuthServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -54,13 +57,13 @@ export class BasicAuthService {
                             res.json(
                                 serializers.basicAuth.getWithBasicAuth.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -72,7 +75,7 @@ export class BasicAuthService {
                             console.warn(
                                 `Endpoint 'getWithBasicAuth' unexpectedly threw ${error.constructor.name}.` +
                                     ` If this was intentional, please add ${error.constructor.name} to` +
-                                    " the endpoint's errors list in your Fern Definition."
+                                    " the endpoint's errors list in your Fern Definition.",
                             );
                     }
                     await error.send(res);
@@ -91,13 +94,13 @@ export class BasicAuthService {
                             res.json(
                                 serializers.basicAuth.postWithBasicAuth.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -110,7 +113,7 @@ export class BasicAuthService {
                             console.warn(
                                 `Endpoint 'postWithBasicAuth' unexpectedly threw ${error.constructor.name}.` +
                                     ` If this was intentional, please add ${error.constructor.name} to` +
-                                    " the endpoint's errors list in your Fern Definition."
+                                    " the endpoint's errors list in your Fern Definition.",
                             );
                     }
                     await error.send(res);

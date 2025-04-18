@@ -24,8 +24,8 @@ module SeedAudiencesClient
     # @example
     #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
     #  audiences.foo.find(
-    #    optional_string: "string",
-    #    public_property: "string",
+    #    optional_string: "optionalString",
+    #    public_property: "publicProperty",
     #    private_property: 1
     #  )
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
@@ -69,8 +69,8 @@ module SeedAudiencesClient
     # @example
     #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
     #  audiences.foo.find(
-    #    optional_string: "string",
-    #    public_property: "string",
+    #    optional_string: "optionalString",
+    #    public_property: "publicProperty",
     #    private_property: 1
     #  )
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)

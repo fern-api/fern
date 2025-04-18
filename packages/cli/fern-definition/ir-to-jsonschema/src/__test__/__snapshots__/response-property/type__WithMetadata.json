@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "metadata"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -1,0 +1,78 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/submission.SubmissionId"
+    },
+    "testCaseId": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "lineNumber": {
+      "type": "integer"
+    },
+    "lightweightStackInfo": {
+      "$ref": "#/definitions/submission.LightweightStackframeInformation"
+    },
+    "tracedFile": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/submission.TracedFile"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "submissionId",
+    "lineNumber",
+    "lightweightStackInfo"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "submission.LightweightStackframeInformation": {
+      "type": "object",
+      "properties": {
+        "numStackFrames": {
+          "type": "integer"
+        },
+        "topStackFrameMethodName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "numStackFrames",
+        "topStackFrameMethodName"
+      ],
+      "additionalProperties": false
+    },
+    "submission.TracedFile": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "directory"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

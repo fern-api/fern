@@ -1,62 +1,34 @@
-const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
-const { build } = require("esbuild");
-const path = require("path");
-const { chmod, writeFile, mkdir } = require("fs/promises");
-
 const packageJson = require("./package.json");
-const jsoncParserResolverPlugin = require("./jsoncParserResolverPlugin.cjs");
+const tsup = require('tsup');
+const { writeFile } = require("fs/promises");
+const path = require("path");
 
 main();
 
 async function main() {
-    const options = {
-        platform: "node",
-        target: "node14",
-        entryPoints: ["./src/cli.ts"],
-        outfile: "./dist/dev/bundle.cjs",
-        bundle: true,
-        external: ["cpu-features"],
-        plugins: [jsoncParserResolverPlugin, pnpPlugin()],
-        loader: {
-            ".node": "file"
+    await tsup.build({
+        entry: ['src/cli.ts'],
+        format: ['cjs'],
+        outDir: 'dist/dev',
+        minify: false,
+        env: {
+            AUTH0_DOMAIN: "fern-dev.us.auth0.com",
+            AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
+            DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
+            DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com",
+            DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com",
+            VENUS_AUDIENCE: "venus-dev",
+            LOCAL_STORAGE_FOLDER: ".fern-dev",
+            POSTHOG_API_KEY: null,
+            DOCS_DOMAIN_SUFFIX: "docs.dev.buildwithfern.com",
+            DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle2.s3.amazonaws.com/',
+            CLI_NAME: "fern-dev",
+            CLI_VERSION: process.argv[2] || packageJson.version,
+            CLI_PACKAGE_NAME: "@fern-api/fern-api-dev",
         },
-        define: {
-            "process.env.CLI_NAME": JSON.stringify("fern-dev"),
-            "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
-            "process.env.CLI_PACKAGE_NAME": JSON.stringify("@fern-api/fern-api-dev"),
-            "process.env.AUTH0_DOMAIN": getEnvironmentVariable("AUTH0_DOMAIN"),
-            "process.env.AUTH0_CLIENT_ID": getEnvironmentVariable("AUTH0_CLIENT_ID"),
-            "process.env.DEFAULT_FIDDLE_ORIGIN": getEnvironmentVariable("DEFAULT_FIDDLE_ORIGIN"),
-            "process.env.DEFAULT_VENUS_ORIGIN": getEnvironmentVariable("DEFAULT_VENUS_ORIGIN"),
-            "process.env.DEFAULT_FDR_ORIGIN": getEnvironmentVariable("DEFAULT_FDR_ORIGIN"),
-            "process.env.VENUS_AUDIENCE": getEnvironmentVariable("VENUS_AUDIENCE"),
-            "process.env.LOCAL_STORAGE_FOLDER": getEnvironmentVariable("LOCAL_STORAGE_FOLDER"),
-            "process.env.POSTHOG_API_KEY": getEnvironmentVariable("POSTHOG_API_KEY"),
-            "process.env.DOCS_DOMAIN_SUFFIX": getEnvironmentVariable("DOCS_DOMAIN_SUFFIX"),
-            "process.env.DOCS_PREVIEW_BUCKET": getEnvironmentVariable("DOCS_PREVIEW_BUCKET")
-        }
-    };
-
-    function getEnvironmentVariable(environmentVariable) {
-        const value = process.env[environmentVariable];
-        if (value != null) {
-            return JSON.stringify(value);
-        }
-        throw new Error(`Environment variable ${environmentVariable} is not defined.`);
-    }
-
-    await build(options).catch(() => process.exit(1));
+    });
 
     process.chdir(path.join(__dirname, "dist/dev"));
-
-    // write cli executable
-    await writeFile(
-        "cli.cjs",
-        `#!/usr/bin/env node
-
-require("./bundle.cjs");`
-    );
-    await chmod("cli.cjs", "755");
 
     // write cli's package.json
     await writeFile(
@@ -64,15 +36,13 @@ require("./bundle.cjs");`
         JSON.stringify(
             {
                 name: "@fern-api/fern-api-dev",
-                version: packageJson.version,
+                version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
-                files: ["bundle.cjs", "cli.cjs"],
+                files: ["cli.cjs"],
                 bin: { "fern-dev": "cli.cjs" }
             },
             undefined,
             2
         )
     );
-
-
 }

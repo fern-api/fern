@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst client = new SeedOauthClientCredentialsDefaultClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    clientId: \"client_id\",\n    clientSecret: \"client_secret\"\n});\n"
             }
         }
     ],

@@ -12,12 +12,12 @@ export const WorkspaceStarterFilesResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     files: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.WorkspaceFiles).optional()
+        core.serialization.lazyObject(() => serializers.WorkspaceFiles).optional(),
     ),
 });
 
 export declare namespace WorkspaceStarterFilesResponse {
-    interface Raw {
+    export interface Raw {
         files: Record<serializers.Language.Raw, serializers.WorkspaceFiles.Raw | null | undefined>;
     }
 }

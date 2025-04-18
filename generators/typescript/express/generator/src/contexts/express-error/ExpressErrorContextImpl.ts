@@ -1,9 +1,11 @@
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
 import { ExpressErrorContext, GeneratedExpressError } from "@fern-typescript/contexts";
 import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
+
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
 
 export declare namespace ExpressErrorContextImpl {

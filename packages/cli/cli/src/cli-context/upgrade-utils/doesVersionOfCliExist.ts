@@ -1,4 +1,5 @@
 import latestVersion from "latest-version";
+
 import { CliEnvironment } from "../CliEnvironment";
 
 export async function doesVersionOfCliExist({

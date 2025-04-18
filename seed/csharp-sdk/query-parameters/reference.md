@@ -23,43 +23,48 @@ await client.User.GetUsernameAsync(
         Bytes = "SGVsbG8gd29ybGQh",
         User = new User
         {
-            Name = "string",
-            Tags = new List<string>() { "string" },
+            Name = "name",
+            Tags = new List<string>() { "tags", "tags" },
         },
         UserList = new List<User>()
         {
             new User
             {
-                Name = "string",
-                Tags = new List<string>() { "string" },
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
+            },
+            new User
+            {
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
             },
         },
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        KeyValue = new Dictionary<string, string>() { { "string", "string" } },
-        OptionalString = "string",
+        KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
+        OptionalString = "optionalString",
         NestedUser = new NestedUser
         {
-            Name = "string",
+            Name = "name",
             User = new User
             {
-                Name = "string",
-                Tags = new List<string>() { "string" },
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
             },
         },
         OptionalUser = new User
         {
-            Name = "string",
-            Tags = new List<string>() { "string" },
+            Name = "name",
+            Tags = new List<string>() { "tags", "tags" },
         },
         ExcludeUser =
         [
             new User
             {
-                Name = "string",
-                Tags = new List<string>() { "string" },
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
             },
         ],
-        Filter = ["string"],
+        Filter = ["filter"],
     }
 );
 ```

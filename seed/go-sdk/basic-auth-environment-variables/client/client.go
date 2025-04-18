@@ -5,6 +5,7 @@ package client
 import (
 	basicauth "github.com/basic-auth-environment-variables/fern/basicauth"
 	core "github.com/basic-auth-environment-variables/fern/core"
+	internal "github.com/basic-auth-environment-variables/fern/internal"
 	option "github.com/basic-auth-environment-variables/fern/option"
 	http "net/http"
 	os "os"
@@ -12,7 +13,7 @@ import (
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 
 	BasicAuth *basicauth.Client
@@ -23,13 +24,13 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.Username == "" {
 		options.Username = os.Getenv("USERNAME")
 	}
-	if options.Password == "" {
-		options.Password = os.Getenv("PASSWORD")
+	if options.AccessToken == "" {
+		options.AccessToken = os.Getenv("PASSWORD")
 	}
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

@@ -7,6 +7,7 @@ import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.Environment;
 import com.seed.anyAuth.core.OAuthTokenSupplier;
 import com.seed.anyAuth.resources.auth.AuthClient;
+import okhttp3.OkHttpClient;
 
 public final class SeedAnyAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -59,6 +60,30 @@ public final class SeedAnyAuthClientBuilder {
 
     public SeedAnyAuthClientBuilder url(String url) {
         this.environment = Environment.custom(url);
+        return this;
+    }
+
+    /**
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
+     */
+    public SeedAnyAuthClientBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedAnyAuthClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedAnyAuthClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

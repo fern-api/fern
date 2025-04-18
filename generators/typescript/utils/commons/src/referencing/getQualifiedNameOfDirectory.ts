@@ -1,6 +1,8 @@
-import { keys } from "@fern-api/core-utils";
 import path from "path";
-import { convertExportedDirectoryPathToFilePath, ExportedDirectory } from "../exports-manager/ExportedFilePath";
+
+import { keys } from "@fern-api/core-utils";
+
+import { ExportedDirectory, convertExportedDirectoryPathToFilePath } from "../exports-manager/ExportedFilePath";
 
 export declare namespace getQualifiedNameOfDirectory {
     export interface Args<QualifiedName> {
@@ -17,7 +19,7 @@ export function getQualifiedNameOfDirectory<QualifiedName>({
     constructQualifiedName,
     prefix
 }: getQualifiedNameOfDirectory.Args<QualifiedName>): QualifiedName {
-    const { initial, remainingDirectories } = splitQualifieidName({ convertToQualifiedName, prefix, pathToDirectory });
+    const { initial, remainingDirectories } = splitQualifiedName({ convertToQualifiedName, prefix, pathToDirectory });
 
     let qualifiedReference = initial;
 
@@ -57,7 +59,7 @@ export function getQualifiedNameOfDirectory<QualifiedName>({
     return qualifiedReference;
 }
 
-function splitQualifieidName<QualifiedName>({
+function splitQualifiedName<QualifiedName>({
     convertToQualifiedName,
     pathToDirectory,
     prefix

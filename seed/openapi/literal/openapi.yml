@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: literal
   version: ''
-  description: Test definition for literal schemas.
+  description: 'Test definition for literal schemas. '
 paths:
   /headers:
     post:
@@ -15,8 +15,8 @@ paths:
           required: true
           schema:
             type: string
-            enum:
-              - 02-12-2024
+            const: 02-12-2024
+          example: 02-12-2024
           examples:
             Example1:
               value: 02-12-2024
@@ -25,6 +25,8 @@ paths:
           required: true
           schema:
             type: boolean
+            const: true
+          example: true
           examples:
             Example1:
               value: true
@@ -85,12 +87,10 @@ paths:
               properties:
                 prompt:
                   type: string
-                  enum:
-                    - You are a helpful assistant
+                  const: You are a helpful assistant
                 context:
                   type: string
-                  enum:
-                    - You're super wise
+                  const: You're super wise
                   nullable: true
                 query:
                   type: string
@@ -101,7 +101,7 @@ paths:
                   nullable: true
                 stream:
                   type: boolean
-                  example: false
+                  const: false
                 aliasedContext:
                   $ref: '#/components/schemas/SomeAliasedLiteral'
                 maybeContext:
@@ -139,8 +139,8 @@ paths:
           required: true
           schema:
             type: string
-            enum:
-              - '123'
+            const: '123'
+          example: '123'
           examples:
             Example1:
               value: '123'
@@ -168,8 +168,38 @@ paths:
           required: true
           schema:
             type: string
-            enum:
-              - You are a helpful assistant
+            const: You are a helpful assistant
+          example: You are a helpful assistant
+          examples:
+            Example1:
+              value: You are a helpful assistant
+        - name: optional_prompt
+          in: query
+          required: false
+          schema:
+            type: string
+            const: You are a helpful assistant
+            nullable: true
+          example: You are a helpful assistant
+          examples:
+            Example1:
+              value: You are a helpful assistant
+        - name: alias_prompt
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AliasToPrompt'
+          example: You are a helpful assistant
+          examples:
+            Example1:
+              value: You are a helpful assistant
+        - name: alias_optional_prompt
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/AliasToPrompt'
+            nullable: true
+          example: You are a helpful assistant
           examples:
             Example1:
               value: You are a helpful assistant
@@ -178,6 +208,7 @@ paths:
           required: true
           schema:
             type: string
+          example: What is the weather today
           examples:
             Example1:
               value: What is the weather today
@@ -186,6 +217,38 @@ paths:
           required: true
           schema:
             type: boolean
+            const: false
+          example: false
+          examples:
+            Example1:
+              value: false
+        - name: optional_stream
+          in: query
+          required: false
+          schema:
+            type: boolean
+            const: false
+            nullable: true
+          example: false
+          examples:
+            Example1:
+              value: false
+        - name: alias_stream
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AliasToStream'
+          example: false
+          examples:
+            Example1:
+              value: false
+        - name: alias_optional_stream
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/AliasToStream'
+            nullable: true
+          example: false
           examples:
             Example1:
               value: false
@@ -234,6 +297,11 @@ paths:
                   stream: false
                   context: You're super wise
                   query: What is the weather today
+                  containerObject:
+                    nestedObjects:
+                      - literal1: literal1
+                        literal2: literal2
+                        strProp: strProp
 components:
   schemas:
     SendResponse:
@@ -248,7 +316,7 @@ components:
           example: 200
         success:
           type: boolean
-          example: true
+          const: true
       required:
         - message
         - status
@@ -256,8 +324,7 @@ components:
     SomeAliasedLiteral:
       title: SomeAliasedLiteral
       type: string
-      enum:
-        - You're super wise
+      const: You're super wise
     ATopLevelLiteral:
       title: ATopLevelLiteral
       type: object
@@ -272,37 +339,81 @@ components:
       properties:
         myLiteral:
           type: string
-          enum:
-            - How super cool
+          const: How super cool
       required:
         - myLiteral
+    UndiscriminatedLiteral:
+      title: UndiscriminatedLiteral
+      oneOf:
+        - type: string
+        - type: string
+          const: $ending
+    AliasToPrompt:
+      title: AliasToPrompt
+      type: string
+      const: You are a helpful assistant
+    AliasToStream:
+      title: AliasToStream
+      type: boolean
+      const: false
     SendRequest:
       title: SendRequest
       type: object
       properties:
         prompt:
           type: string
-          enum:
-            - You are a helpful assistant
+          const: You are a helpful assistant
         query:
           type: string
           example: What is the weather today
         stream:
           type: boolean
-          example: false
+          const: false
+        ending:
+          type: string
+          const: $ending
         context:
           $ref: '#/components/schemas/SomeLiteral'
         maybeContext:
           $ref: '#/components/schemas/SomeLiteral'
           nullable: true
+        containerObject:
+          $ref: '#/components/schemas/ContainerObject'
       required:
         - prompt
         - query
         - stream
+        - ending
         - context
+        - containerObject
+    ContainerObject:
+      title: ContainerObject
+      type: object
+      properties:
+        nestedObjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedObjectWithLiterals'
+      required:
+        - nestedObjects
+    NestedObjectWithLiterals:
+      title: NestedObjectWithLiterals
+      type: object
+      properties:
+        literal1:
+          type: string
+          const: literal1
+        literal2:
+          type: string
+          const: literal2
+        strProp:
+          type: string
+      required:
+        - literal1
+        - literal2
+        - strProp
     SomeLiteral:
       title: SomeLiteral
       type: string
-      enum:
-        - You're super wise
+      const: You're super wise
   securitySchemes: {}

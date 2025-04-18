@@ -13,42 +13,42 @@ export type TestSubmissionUpdateInfo =
     | SeedTrace.TestSubmissionUpdateInfo.Finished
     | SeedTrace.TestSubmissionUpdateInfo._Unknown;
 
-export declare namespace TestSubmissionUpdateInfo {
-    interface Running extends _Utils {
+export namespace TestSubmissionUpdateInfo {
+    export interface Running extends _Utils {
         type: "running";
         value: SeedTrace.RunningSubmissionState;
     }
 
-    interface Stopped extends _Utils {
+    export interface Stopped extends _Utils {
         type: "stopped";
     }
 
-    interface Errored extends _Utils {
+    export interface Errored extends _Utils {
         type: "errored";
         value: SeedTrace.ErrorInfo;
     }
 
-    interface GradedTestCase extends SeedTrace.GradedTestCaseUpdate, _Utils {
+    export interface GradedTestCase extends SeedTrace.GradedTestCaseUpdate, _Utils {
         type: "gradedTestCase";
     }
 
-    interface RecordedTestCase extends SeedTrace.RecordedTestCaseUpdate, _Utils {
+    export interface RecordedTestCase extends SeedTrace.RecordedTestCaseUpdate, _Utils {
         type: "recordedTestCase";
     }
 
-    interface Finished extends _Utils {
+    export interface Finished extends _Utils {
         type: "finished";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         running: (value: SeedTrace.RunningSubmissionState) => _Result;
         stopped: () => _Result;
         errored: (value: SeedTrace.ErrorInfo) => _Result;
@@ -66,7 +66,7 @@ export const TestSubmissionUpdateInfo = {
             type: "running",
             _visit: function <_Result>(
                 this: SeedTrace.TestSubmissionUpdateInfo.Running,
-                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.TestSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -78,7 +78,7 @@ export const TestSubmissionUpdateInfo = {
             type: "stopped",
             _visit: function <_Result>(
                 this: SeedTrace.TestSubmissionUpdateInfo.Stopped,
-                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.TestSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -91,7 +91,7 @@ export const TestSubmissionUpdateInfo = {
             type: "errored",
             _visit: function <_Result>(
                 this: SeedTrace.TestSubmissionUpdateInfo.Errored,
-                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.TestSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -104,7 +104,7 @@ export const TestSubmissionUpdateInfo = {
             type: "gradedTestCase",
             _visit: function <_Result>(
                 this: SeedTrace.TestSubmissionUpdateInfo.GradedTestCase,
-                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.TestSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -112,14 +112,14 @@ export const TestSubmissionUpdateInfo = {
     },
 
     recordedTestCase: (
-        value: SeedTrace.RecordedTestCaseUpdate
+        value: SeedTrace.RecordedTestCaseUpdate,
     ): SeedTrace.TestSubmissionUpdateInfo.RecordedTestCase => {
         return {
             ...value,
             type: "recordedTestCase",
             _visit: function <_Result>(
                 this: SeedTrace.TestSubmissionUpdateInfo.RecordedTestCase,
-                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.TestSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -131,7 +131,7 @@ export const TestSubmissionUpdateInfo = {
             type: "finished",
             _visit: function <_Result>(
                 this: SeedTrace.TestSubmissionUpdateInfo.Finished,
-                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.TestSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -143,7 +143,7 @@ export const TestSubmissionUpdateInfo = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.TestSubmissionUpdateInfo._Unknown,
-                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>
+                visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>,
             ) {
                 return SeedTrace.TestSubmissionUpdateInfo._visit(this, visitor);
             },
@@ -152,7 +152,7 @@ export const TestSubmissionUpdateInfo = {
 
     _visit: <_Result>(
         value: SeedTrace.TestSubmissionUpdateInfo,
-        visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>
+        visitor: SeedTrace.TestSubmissionUpdateInfo._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "running":

@@ -27,7 +27,10 @@ def test_pyproject_toml_gen(tmpdir: Path) -> None:
 
     assert (
         pyproject_output
-        == """[tool.poetry]
+        == """[project]
+name = "fern-fern-ir-model"
+
+[tool.poetry]
 name = "fern-fern-ir-model"
 version = "0.0.0"
 description = ""

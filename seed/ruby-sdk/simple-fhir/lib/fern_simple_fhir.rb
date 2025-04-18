@@ -23,7 +23,7 @@ module SeedApiClient
     # @return [SeedApiClient::Account]
     # @example
     #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
-    #  api.get_account(account_id: "string")
+    #  api.get_account(account_id: "account_id")
     def get_account(account_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -62,7 +62,7 @@ module SeedApiClient
     # @return [SeedApiClient::Account]
     # @example
     #  api = SeedApiClient::Client.new(base_url: "https://api.example.com")
-    #  api.get_account(account_id: "string")
+    #  api.get_account(account_id: "account_id")
     def get_account(account_id:, request_options: nil)
       response = @async_request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

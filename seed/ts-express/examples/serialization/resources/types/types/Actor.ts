@@ -13,7 +13,7 @@ export const Actor: core.serialization.ObjectSchema<serializers.Actor.Raw, SeedE
     });
 
 export declare namespace Actor {
-    interface Raw {
+    export interface Raw {
         name: string;
         id: string;
     }

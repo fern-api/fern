@@ -34,11 +34,11 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 			)
 			continue
 		}
-		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `header:\"", header.Name.Name.OriginalName, "\"`")
 	}
 	for _, queryParam := range endpoint.QueryParameters {
-		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
@@ -70,7 +70,7 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 		}
 		return nil
 	}
-	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals)
+	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals, false /* inlineFileProperties */)
 	if err != nil {
 		return err
 	}
@@ -95,7 +95,7 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
 		referenceType = strings.TrimPrefix(
-			typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 			"*",
 		)
 		referenceIsPointer = reference.RequestBodyType.Named != nil && isPointer(f.types[reference.RequestBodyType.Named.TypeId])

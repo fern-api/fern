@@ -1,7 +1,7 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
+import { Import } from "../Import";
 import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
-import { Import } from "../Import";
 
 export interface Condition {
     rightSide?: string | AstNode;

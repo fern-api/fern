@@ -1,6 +1,16 @@
 # Contributing
 
-Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition, the OpenAPI importer, as well as all of our generators.
+Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition,
+the OpenAPI importer, as well as all of our generators.
+
+Fern is open source, but many of the people working on it do so as their day job. As a potential contributor,
+your changes and ideas are welcome, but we can't guarantee that they will be prioritized nor reviewed in a
+timely manner (_if ever_). With that said, we generally encourage users to start with a GitHub issue to
+discuss a feature or fix before writing any code. You're still welcome to include a patch as a proof-of-concept,
+but please do not be offended if we rewrite your patch from scratch.
+
+Like all open-source projects, Fern's resources are limited. If your patch isn’t a top priority, it may not
+receive the attention you expect.
 
 <br>
 
@@ -95,7 +105,7 @@ To build a CLI that communicates with Fern's development cloud environment, run 
 Once the CLI has been built, you can navigate to any `fern` folder and invoke it by running
 
 ```sh
-FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/dev/cli.cjsn <args>
+FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/dev/cli.cjs <args>
 ```
 
 <br>
@@ -111,7 +121,7 @@ in the generator.
 
 ### Generator Testing
 
-**Note**: Please make sure that the docker daemon is running before running commands below. 
+**Note**: Please make sure that the docker daemon is running before running commands below.
 
 To test our generators we have built a CLI called seed.
 

@@ -1,0 +1,4117 @@
+{
+  "title": "Superagent",
+  "description": "Bring your agents to production",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "List All Agents",
+      "audiences": [],
+      "operationId": "List_all_agents_api_v1_agents_get",
+      "tags": [
+        "Agent"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListAllAgentsApiV1AgentsGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "ListAllAgentsApiV1AgentsGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "List all agents",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/agents",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create Agent",
+      "audiences": [],
+      "operationId": "Create_agent_api_v1_agents_post",
+      "tags": [
+        "Agent"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateAgentApiV1AgentsPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateAgentApiV1AgentsPostRequest",
+          "schema": "Agent",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "CreateAgentApiV1AgentsPostResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Create a new agent",
+      "authed": true,
+      "method": "POST",
+      "path": "/api/v1/agents",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": {
+                "value": {
+                  "value": "type",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Agent",
+      "audiences": [],
+      "operationId": "Get_agent_api_v1_agents__agentId__get",
+      "tags": [
+        "Agent"
+      ],
+      "pathParameters": [
+        {
+          "name": "agentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetAgentApiV1AgentsAgentIdGetRequestAgentId",
+            "nameOverride": "Agentid",
+            "title": "Agentid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetAgentApiV1AgentsAgentIdGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "GetAgentApiV1AgentsAgentIdGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Get a specific agent",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/agents/{agentId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "agentId",
+              "value": {
+                "value": {
+                  "value": "agentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Delete Agent",
+      "audiences": [],
+      "operationId": "Delete_agent_api_v1_agents__agentId__delete",
+      "tags": [
+        "Agent"
+      ],
+      "pathParameters": [
+        {
+          "name": "agentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteAgentApiV1AgentsAgentIdDeleteRequestAgentId",
+            "nameOverride": "Agentid",
+            "title": "Agentid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeleteAgentApiV1AgentsAgentIdDeleteRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "DeleteAgentApiV1AgentsAgentIdDeleteResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Delete a specific agent",
+      "authed": true,
+      "method": "DELETE",
+      "path": "/api/v1/agents/{agentId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "agentId",
+              "value": {
+                "value": {
+                  "value": "agentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Patch Agent",
+      "audiences": [],
+      "operationId": "Patch_agent_api_v1_agents__agentId__patch",
+      "tags": [
+        "Agent"
+      ],
+      "pathParameters": [
+        {
+          "name": "agentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestAgentId",
+            "nameOverride": "Agentid",
+            "title": "Agentid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PatchAgentApiV1AgentsAgentIdPatchRequest",
+      "request": {
+        "schema": {
+          "key": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "value": {
+            "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequestValue",
+            "type": "unknown"
+          },
+          "generatedName": "PatchAgentApiV1AgentsAgentIdPatchRequest",
+          "title": "Body",
+          "nameOverride": "Body",
+          "groupName": [],
+          "type": "map"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "PatchAgentApiV1AgentsAgentIdPatchResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Patch a specific agent",
+      "authed": true,
+      "method": "PATCH",
+      "path": "/api/v1/agents/{agentId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "agentId",
+              "value": {
+                "value": {
+                  "value": "agentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": [
+              {
+                "key": {
+                  "value": "key",
+                  "type": "string"
+                },
+                "value": {
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "unknown"
+                }
+              }
+            ],
+            "type": "map"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Prompt Agent",
+      "audiences": [],
+      "operationId": "Prompt_agent_api_v1_agents__agentId__predict_post",
+      "tags": [
+        "Agent"
+      ],
+      "pathParameters": [
+        {
+          "name": "agentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PromptAgentApiV1AgentsAgentIdPredictPostRequestAgentId",
+            "nameOverride": "Agentid",
+            "title": "Agentid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PromptAgentApiV1AgentsAgentIdPredictPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PromptAgentApiV1AgentsAgentIdPredictPostRequest",
+          "schema": "PredictAgent",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "PromptAgentApiV1AgentsAgentIdPredictPostResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Invoke a specific agent",
+      "authed": true,
+      "method": "POST",
+      "path": "/api/v1/agents/{agentId}/predict",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "agentId",
+              "value": {
+                "value": {
+                  "value": "agentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "input": {
+                "value": [
+                  {
+                    "key": {
+                      "value": "key",
+                      "type": "string"
+                    },
+                    "value": {
+                      "value": {
+                        "value": {
+                          "value": "value",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "type": "unknown"
+                    }
+                  }
+                ],
+                "type": "map"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Sign In",
+      "audiences": [],
+      "operationId": "sign_in_api_v1_auth_sign_in_post",
+      "tags": [
+        "Auth"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "SignInApiV1AuthSignInPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "SignInApiV1AuthSignInPostRequest",
+          "schema": "SignIn",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "SignInApiV1AuthSignInPostResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/api/v1/auth/sign-in",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "email": {
+                "value": {
+                  "value": "email",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "password": {
+                "value": {
+                  "value": "password",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Sign Up",
+      "audiences": [],
+      "operationId": "sign_up_api_v1_auth_sign_up_post",
+      "tags": [
+        "Auth"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "SignUpApiV1AuthSignUpPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "SignUpApiV1AuthSignUpPostRequest",
+          "schema": "SignUp",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "SignUpApiV1AuthSignUpPostResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/api/v1/auth/sign-up",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "email": {
+                "value": {
+                  "value": "email",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "password": {
+                "value": {
+                  "value": "password",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Read User Me",
+      "audiences": [],
+      "operationId": "read_user_me_api_v1_users_me_get",
+      "tags": [
+        "User"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ReadUserMeApiV1UsersMeGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "ReadUserMeApiV1UsersMeGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/users/me",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Read User",
+      "audiences": [],
+      "operationId": "read_user_api_v1_users__userId__get",
+      "tags": [
+        "User"
+      ],
+      "pathParameters": [
+        {
+          "name": "userId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ReadUserApiV1UsersUserIdGetRequestUserId",
+            "nameOverride": "Userid",
+            "title": "Userid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ReadUserApiV1UsersUserIdGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "ReadUserApiV1UsersUserIdGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/api/v1/users/{userId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "value": {
+                  "value": "userId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "List Api Tokens",
+      "audiences": [],
+      "operationId": "List_API_tokens_api_v1_api_tokens_get",
+      "tags": [
+        "Api token"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListApiTokensApiV1ApiTokensGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "ListApiTokensApiV1ApiTokensGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "List all API tokens",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/api-tokens",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create Api Token",
+      "audiences": [],
+      "operationId": "Create_API_token_api_v1_api_tokens_post",
+      "tags": [
+        "Api token"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateApiTokenApiV1ApiTokensPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateApiTokenApiV1ApiTokensPostRequest",
+          "schema": "ApiToken",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "CreateApiTokenApiV1ApiTokensPostResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Create a new API token",
+      "authed": true,
+      "method": "POST",
+      "path": "/api/v1/api-tokens",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "description": {
+                "value": {
+                  "value": "description",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Api Token",
+      "audiences": [],
+      "operationId": "Get_API_token_api_v1_api_tokens__tokenId__get",
+      "tags": [
+        "Api token"
+      ],
+      "pathParameters": [
+        {
+          "name": "tokenId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetApiTokenApiV1ApiTokensTokenIdGetRequestTokenId",
+            "nameOverride": "Tokenid",
+            "title": "Tokenid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetApiTokenApiV1ApiTokensTokenIdGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "GetApiTokenApiV1ApiTokensTokenIdGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Get a specific API token",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/api-tokens/{tokenId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "tokenId",
+              "value": {
+                "value": {
+                  "value": "tokenId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Delete Api Token",
+      "audiences": [],
+      "operationId": "Delete_API_token_api_v1_api_tokens__tokenId__delete",
+      "tags": [
+        "Api token"
+      ],
+      "pathParameters": [
+        {
+          "name": "tokenId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestTokenId",
+            "nameOverride": "Tokenid",
+            "title": "Tokenid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Delete a specific API token",
+      "authed": true,
+      "method": "DELETE",
+      "path": "/api/v1/api-tokens/{tokenId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "tokenId",
+              "value": {
+                "value": {
+                  "value": "tokenId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "List Documents",
+      "audiences": [],
+      "operationId": "List_documents_api_v1_documents_get",
+      "tags": [
+        "Documents"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListDocumentsApiV1DocumentsGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "ListDocumentsApiV1DocumentsGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "List all documents",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/documents",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create Document",
+      "audiences": [],
+      "operationId": "Create_document_api_v1_documents_post",
+      "tags": [
+        "Documents"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateDocumentApiV1DocumentsPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateDocumentApiV1DocumentsPostRequest",
+          "schema": "Document",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "CreateDocumentApiV1DocumentsPostResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Create a new document",
+      "authed": true,
+      "method": "POST",
+      "path": "/api/v1/documents",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "type": {
+                "value": {
+                  "value": "type",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "url": {
+                "value": {
+                  "value": "url",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Document",
+      "audiences": [],
+      "operationId": "Get_document_api_v1_documents__documentId__get",
+      "tags": [
+        "Documents"
+      ],
+      "pathParameters": [
+        {
+          "name": "documentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetDocumentApiV1DocumentsDocumentIdGetRequestDocumentId",
+            "nameOverride": "Documentid",
+            "title": "Documentid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetDocumentApiV1DocumentsDocumentIdGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "GetDocumentApiV1DocumentsDocumentIdGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Get a specific document",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/documents/{documentId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "documentId",
+              "value": {
+                "value": {
+                  "value": "documentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Delete Document",
+      "audiences": [],
+      "operationId": "Delete_document_api_v1_documents__documentId__delete",
+      "tags": [
+        "Documents"
+      ],
+      "pathParameters": [
+        {
+          "name": "documentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestDocumentId",
+            "nameOverride": "Documentid",
+            "title": "Documentid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "DeleteDocumentApiV1DocumentsDocumentIdDeleteResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Delete a specific document",
+      "authed": true,
+      "method": "DELETE",
+      "path": "/api/v1/documents/{documentId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "documentId",
+              "value": {
+                "value": {
+                  "value": "documentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "List Prompts",
+      "audiences": [],
+      "operationId": "List_prompts_api_v1_prompts_get",
+      "tags": [
+        "Prompts"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListPromptsApiV1PromptsGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "ListPromptsApiV1PromptsGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "List all prompts",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/prompts",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create A Prompt",
+      "audiences": [],
+      "operationId": "Create_a_prompt_api_v1_prompts_post",
+      "tags": [
+        "Prompts"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateAPromptApiV1PromptsPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateAPromptApiV1PromptsPostRequest",
+          "schema": "Prompt",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "CreateAPromptApiV1PromptsPostResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Create a new prompt",
+      "authed": true,
+      "method": "POST",
+      "path": "/api/v1/prompts",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "input_variables": {
+                "value": [],
+                "type": "array"
+              },
+              "template": {
+                "value": {
+                  "value": "template",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Prompt",
+      "audiences": [],
+      "operationId": "Get_prompt_api_v1_prompts__promptId__get",
+      "tags": [
+        "Prompts"
+      ],
+      "pathParameters": [
+        {
+          "name": "promptId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetPromptApiV1PromptsPromptIdGetRequestPromptId",
+            "nameOverride": "Promptid",
+            "title": "Promptid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetPromptApiV1PromptsPromptIdGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "GetPromptApiV1PromptsPromptIdGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Get a specific prompt",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/prompts/{promptId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "promptId",
+              "value": {
+                "value": {
+                  "value": "promptId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Delete Prompt",
+      "audiences": [],
+      "operationId": "Delete_prompt_api_v1_prompts__promptId__delete",
+      "tags": [
+        "Prompts"
+      ],
+      "pathParameters": [
+        {
+          "name": "promptId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeletePromptApiV1PromptsPromptIdDeleteRequestPromptId",
+            "nameOverride": "Promptid",
+            "title": "Promptid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeletePromptApiV1PromptsPromptIdDeleteRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "DeletePromptApiV1PromptsPromptIdDeleteResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Delete a specific prompt",
+      "authed": true,
+      "method": "DELETE",
+      "path": "/api/v1/prompts/{promptId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "promptId",
+              "value": {
+                "value": {
+                  "value": "promptId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Patch Prompt",
+      "audiences": [],
+      "operationId": "Patch_prompt_api_v1_prompts__promptId__patch",
+      "tags": [
+        "Prompts"
+      ],
+      "pathParameters": [
+        {
+          "name": "promptId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestPromptId",
+            "nameOverride": "Promptid",
+            "title": "Promptid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PatchPromptApiV1PromptsPromptIdPatchRequest",
+      "request": {
+        "schema": {
+          "key": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "value": {
+            "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequestValue",
+            "type": "unknown"
+          },
+          "generatedName": "PatchPromptApiV1PromptsPromptIdPatchRequest",
+          "title": "Body",
+          "nameOverride": "Body",
+          "groupName": [],
+          "type": "map"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "PatchPromptApiV1PromptsPromptIdPatchResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Patch a specific prompt",
+      "authed": true,
+      "method": "PATCH",
+      "path": "/api/v1/prompts/{promptId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "promptId",
+              "value": {
+                "value": {
+                  "value": "promptId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": [
+              {
+                "key": {
+                  "value": "key",
+                  "type": "string"
+                },
+                "value": {
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "type": "unknown"
+                }
+              }
+            ],
+            "type": "map"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "List Tools",
+      "audiences": [],
+      "operationId": "List_tools_api_v1_tools_get",
+      "tags": [
+        "Tools"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListToolsApiV1ToolsGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "ListToolsApiV1ToolsGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "List all tools",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/tools",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create A Tool",
+      "audiences": [],
+      "operationId": "Create_a_tool_api_v1_tools_post",
+      "tags": [
+        "Tools"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateAToolApiV1ToolsPostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateAToolApiV1ToolsPostRequest",
+          "schema": "Tool",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "CreateAToolApiV1ToolsPostResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Create a new tool",
+      "authed": true,
+      "method": "POST",
+      "path": "/api/v1/tools",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": {
+                "value": {
+                  "value": "type",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Tool",
+      "audiences": [],
+      "operationId": "Get_tool_api_v1_tools__toolId__get",
+      "tags": [
+        "Tools"
+      ],
+      "pathParameters": [
+        {
+          "name": "toolId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetToolApiV1ToolsToolIdGetRequestToolId",
+            "nameOverride": "Toolid",
+            "title": "Toolid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetToolApiV1ToolsToolIdGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "GetToolApiV1ToolsToolIdGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Get a specific tool",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/tools/{toolId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "toolId",
+              "value": {
+                "value": {
+                  "value": "toolId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Delete Tool",
+      "audiences": [],
+      "operationId": "Delete_tool_api_v1_tools__toolId__delete",
+      "tags": [
+        "Tools"
+      ],
+      "pathParameters": [
+        {
+          "name": "toolId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteToolApiV1ToolsToolIdDeleteRequestToolId",
+            "nameOverride": "Toolid",
+            "title": "Toolid",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeleteToolApiV1ToolsToolIdDeleteRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "DeleteToolApiV1ToolsToolIdDeleteResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "422": {
+          "generatedName": "UnprocessableEntityError",
+          "schema": {
+            "generatedName": "UnprocessableEntityErrorBody",
+            "schema": "HTTPValidationError",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Validation Error",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Delete a specific tool",
+      "authed": true,
+      "method": "DELETE",
+      "path": "/api/v1/tools/{toolId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "toolId",
+              "value": {
+                "value": {
+                  "value": "toolId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "List Agent Traces",
+      "audiences": [],
+      "operationId": "List_agent_traces_api_v1_traces_get",
+      "tags": [
+        "Traces"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListAgentTracesApiV1TracesGetRequest",
+      "response": {
+        "description": "Successful Response",
+        "schema": {
+          "generatedName": "ListAgentTracesApiV1TracesGetResponse",
+          "type": "unknown"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "List all agent traces",
+      "authed": true,
+      "method": "GET",
+      "path": "/api/v1/traces",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": {
+                      "value": "value",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Agent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "agentName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AgentName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "agentType",
+            "key": "type",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AgentType",
+              "nameOverride": "Type",
+              "title": "Type",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "agentLlm",
+            "key": "llm",
+            "schema": {
+              "generatedName": "agentLlm",
+              "nameOverride": "Agent",
+              "title": "Agent",
+              "value": {
+                "key": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "AgentLlmKey",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "value": {
+                  "generatedName": "AgentLlmValue",
+                  "type": "unknown"
+                },
+                "generatedName": "AgentLlm",
+                "title": "Llm",
+                "nameOverride": "Llm",
+                "groupName": [],
+                "type": "map"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "agentHasMemory",
+            "key": "has_memory",
+            "schema": {
+              "generatedName": "agentHasMemory",
+              "nameOverride": "Agent",
+              "title": "Agent",
+              "value": {
+                "schema": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "generatedName": "AgentHasMemory",
+                "title": "Has Memory",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "agentDocumentId",
+            "key": "documentId",
+            "schema": {
+              "generatedName": "agentDocumentId",
+              "nameOverride": "Agent",
+              "title": "Agent",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AgentDocumentId",
+                "nameOverride": "Documentid",
+                "title": "Documentid",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "agentPromptId",
+            "key": "promptId",
+            "schema": {
+              "generatedName": "agentPromptId",
+              "nameOverride": "Agent",
+              "title": "Agent",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AgentPromptId",
+                "nameOverride": "Promptid",
+                "title": "Promptid",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "agentToolId",
+            "key": "toolId",
+            "schema": {
+              "generatedName": "agentToolId",
+              "nameOverride": "Agent",
+              "title": "Agent",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AgentToolId",
+                "nameOverride": "Toolid",
+                "title": "Toolid",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Agent",
+        "nameOverride": "Agent",
+        "title": "Agent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ApiToken": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "apiTokenDescription",
+            "key": "description",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiTokenDescription",
+              "nameOverride": "Description",
+              "title": "Description",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ApiToken",
+        "nameOverride": "ApiToken",
+        "title": "ApiToken",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Document": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "documentType",
+            "key": "type",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "DocumentType",
+              "nameOverride": "Type",
+              "title": "Type",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentUrl",
+            "key": "url",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "DocumentUrl",
+              "nameOverride": "Url",
+              "title": "Url",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "DocumentName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentAuthorization",
+            "key": "authorization",
+            "schema": {
+              "generatedName": "documentAuthorization",
+              "nameOverride": "Document",
+              "title": "Document",
+              "value": {
+                "key": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "DocumentAuthorizationKey",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "value": {
+                  "generatedName": "DocumentAuthorizationValue",
+                  "type": "unknown"
+                },
+                "generatedName": "DocumentAuthorization",
+                "title": "Authorization",
+                "nameOverride": "Authorization",
+                "groupName": [],
+                "type": "map"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentFromPage",
+            "key": "from_page",
+            "schema": {
+              "generatedName": "documentFromPage",
+              "nameOverride": "Document",
+              "title": "Document",
+              "value": {
+                "schema": {
+                  "default": [
+                    1
+                  ],
+                  "type": "int"
+                },
+                "generatedName": "DocumentFromPage",
+                "title": "From Page",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentToPage",
+            "key": "to_page",
+            "schema": {
+              "generatedName": "documentToPage",
+              "nameOverride": "Document",
+              "title": "Document",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "DocumentToPage",
+                "title": "To Page",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "documentSplitter",
+            "key": "splitter",
+            "schema": {
+              "generatedName": "documentSplitter",
+              "nameOverride": "Document",
+              "title": "Document",
+              "value": {
+                "key": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "DocumentSplitterKey",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "value": {
+                  "generatedName": "DocumentSplitterValue",
+                  "type": "unknown"
+                },
+                "generatedName": "DocumentSplitter",
+                "title": "Splitter",
+                "nameOverride": "Splitter",
+                "groupName": [],
+                "type": "map"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Document",
+        "nameOverride": "Document",
+        "title": "Document",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "httpValidationErrorDetail",
+            "key": "detail",
+            "schema": {
+              "generatedName": "httpValidationErrorDetail",
+              "nameOverride": "HTTPValidationError",
+              "title": "HTTPValidationError",
+              "value": {
+                "value": {
+                  "generatedName": "HttpValidationErrorDetailItem",
+                  "schema": "ValidationError",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "HttpValidationErrorDetail",
+                "nameOverride": "Detail",
+                "title": "Detail",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "HttpValidationError",
+        "nameOverride": "HTTPValidationError",
+        "title": "HTTPValidationError",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "PredictAgent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "predictAgentInput",
+            "key": "input",
+            "schema": {
+              "key": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PredictAgentInputKey",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "value": {
+                "generatedName": "PredictAgentInputValue",
+                "type": "unknown"
+              },
+              "generatedName": "PredictAgentInput",
+              "title": "Input",
+              "nameOverride": "Input",
+              "groupName": [],
+              "type": "map"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "predictAgentHasStreaming",
+            "key": "has_streaming",
+            "schema": {
+              "generatedName": "predictAgentHasStreaming",
+              "nameOverride": "PredictAgent",
+              "title": "PredictAgent",
+              "value": {
+                "schema": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "generatedName": "PredictAgentHasStreaming",
+                "title": "Has Streaming",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "PredictAgent",
+        "nameOverride": "PredictAgent",
+        "title": "PredictAgent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Prompt": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "promptName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PromptName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "promptInputVariables",
+            "key": "input_variables",
+            "schema": {
+              "value": {
+                "generatedName": "PromptInputVariablesItem",
+                "type": "unknown"
+              },
+              "generatedName": "PromptInputVariables",
+              "title": "Input Variables",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "promptTemplate",
+            "key": "template",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PromptTemplate",
+              "nameOverride": "Template",
+              "title": "Template",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Prompt",
+        "nameOverride": "Prompt",
+        "title": "Prompt",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SignIn": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "signInEmail",
+            "key": "email",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SignInEmail",
+              "nameOverride": "Email",
+              "title": "Email",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "signInPassword",
+            "key": "password",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SignInPassword",
+              "nameOverride": "Password",
+              "title": "Password",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "SignIn",
+        "nameOverride": "SignIn",
+        "title": "SignIn",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SignUp": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "signUpEmail",
+            "key": "email",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SignUpEmail",
+              "nameOverride": "Email",
+              "title": "Email",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "signUpPassword",
+            "key": "password",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SignUpPassword",
+              "nameOverride": "Password",
+              "title": "Password",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "signUpName",
+            "key": "name",
+            "schema": {
+              "generatedName": "signUpName",
+              "nameOverride": "SignUp",
+              "title": "SignUp",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SignUpName",
+                "nameOverride": "Name",
+                "title": "Name",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "signUpMetadata",
+            "key": "metadata",
+            "schema": {
+              "generatedName": "signUpMetadata",
+              "nameOverride": "SignUp",
+              "title": "SignUp",
+              "value": {
+                "key": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "SignUpMetadataKey",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "value": {
+                  "generatedName": "SignUpMetadataValue",
+                  "type": "unknown"
+                },
+                "generatedName": "SignUpMetadata",
+                "title": "Metadata",
+                "nameOverride": "Metadata",
+                "groupName": [],
+                "type": "map"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "SignUp",
+        "nameOverride": "SignUp",
+        "title": "SignUp",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Tool": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "toolName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ToolName",
+              "nameOverride": "Name",
+              "title": "Name",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "toolType",
+            "key": "type",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ToolType",
+              "nameOverride": "Type",
+              "title": "Type",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "toolAuthorization",
+            "key": "authorization",
+            "schema": {
+              "generatedName": "toolAuthorization",
+              "nameOverride": "Tool",
+              "title": "Tool",
+              "value": {
+                "key": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ToolAuthorizationKey",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "value": {
+                  "generatedName": "ToolAuthorizationValue",
+                  "type": "unknown"
+                },
+                "generatedName": "ToolAuthorization",
+                "title": "Authorization",
+                "nameOverride": "Authorization",
+                "groupName": [],
+                "type": "map"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Tool",
+        "nameOverride": "Tool",
+        "title": "Tool",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ValidationError": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "validationErrorLoc",
+            "key": "loc",
+            "schema": {
+              "value": {
+                "value": {
+                  "generatedName": "ValidationErrorLocItem",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ValidationErrorLocItem",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    {
+                      "schema": {
+                        "type": "int"
+                      },
+                      "generatedName": "ValidationErrorLocItem",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "undiscriminated"
+                },
+                "type": "oneOf"
+              },
+              "generatedName": "ValidationErrorLoc",
+              "nameOverride": "Location",
+              "title": "Location",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "validationErrorMsg",
+            "key": "msg",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ValidationErrorMsg",
+              "nameOverride": "Message",
+              "title": "Message",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "validationErrorType",
+            "key": "type",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ValidationErrorType",
+              "title": "Error Type",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ValidationError",
+        "nameOverride": "ValidationError",
+        "title": "ValidationError",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "JWTBearer": {
+      "type": "bearer"
+    },
+    "APIKeyHeader": {
+      "headerName": "X_SUPERAGENT_API_KEY",
+      "type": "header"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

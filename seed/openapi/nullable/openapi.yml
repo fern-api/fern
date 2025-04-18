@@ -1,0 +1,231 @@
+openapi: 3.0.1
+info:
+  title: nullable
+  version: ''
+paths:
+  /users:
+    get:
+      operationId: nullable_getUsers
+      tags:
+        - Nullable
+      parameters:
+        - name: usernames
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
+        - name: avatar
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: activated
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: boolean
+              nullable: true
+        - name: tags
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
+        - name: extra
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      operationId: nullable_createUser
+      tags:
+        - Nullable
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  nullable: true
+                metadata:
+                  $ref: '#/components/schemas/Metadata'
+                  nullable: true
+                avatar:
+                  type: string
+                  nullable: true
+              required:
+                - username
+    delete:
+      operationId: nullable_deleteUser
+      tags:
+        - Nullable
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  nullable: true
+                  description: The user to delete.
+components:
+  schemas:
+    Email:
+      title: Email
+      type: string
+      nullable: true
+    UserId:
+      title: UserId
+      type: string
+    WeirdNumber:
+      title: WeirdNumber
+      oneOf:
+        - type: integer
+        - type: integer
+          format: float
+          nullable: true
+        - type: string
+          nullable: true
+        - type: number
+          format: double
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          $ref: '#/components/schemas/UserId'
+        tags:
+          type: array
+          items:
+            type: string
+          nullable: true
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          nullable: true
+        email:
+          $ref: '#/components/schemas/Email'
+        favorite-number:
+          $ref: '#/components/schemas/WeirdNumber'
+        numbers:
+          type: array
+          items:
+            type: integer
+          nullable: true
+        strings:
+          type: object
+          additionalProperties: true
+          nullable: true
+      required:
+        - name
+        - id
+        - email
+        - favorite-number
+    Status:
+      title: Status
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - active
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - archived
+            value:
+              type: string
+              format: date-time
+              nullable: true
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - soft-deleted
+            value:
+              type: string
+              format: date-time
+              nullable: true
+          required:
+            - type
+    Metadata:
+      title: Metadata
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        avatar:
+          type: string
+          nullable: true
+        activated:
+          type: boolean
+          nullable: true
+        status:
+          $ref: '#/components/schemas/Status'
+        values:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+      required:
+        - createdAt
+        - updatedAt
+        - status
+  securitySchemes: {}

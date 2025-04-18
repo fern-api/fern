@@ -1,12 +1,17 @@
+import { writeFile } from "fs/promises";
+import tmp, { DirectoryResult } from "tmp-promise";
+
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-import { writeFile } from "fs/promises";
-import tmp, { DirectoryResult } from "tmp-promise";
+
+import { LocalTaskHandler } from "./LocalTaskHandler";
 import {
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
     DOCKER_GENERATOR_CONFIG_PATH,
@@ -15,10 +20,10 @@ import {
 } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
-import { LocalTaskHandler } from "./LocalTaskHandler";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
+    generatorConfig: FernGeneratorExec.GeneratorConfig;
     /* Path to the generated IR */
     absolutePathToIr: AbsoluteFilePath;
     /* Path to the generated config.json */
@@ -41,7 +46,8 @@ export async function writeFilesToDiskAndRunGenerator({
     outputVersionOverride,
     writeUnitTests,
     generateOauthClients,
-    generatePaginatedClients
+    generatePaginatedClients,
+    includeOptionalRequestPropertyExamples
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -59,6 +65,7 @@ export async function writeFilesToDiskAndRunGenerator({
     writeUnitTests: boolean;
     generateOauthClients: boolean;
     generatePaginatedClients: boolean;
+    includeOptionalRequestPropertyExamples?: boolean;
 }): Promise<GeneratorRunResponse> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -68,7 +75,8 @@ export async function writeFilesToDiskAndRunGenerator({
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
         version: outputVersionOverride,
-        sourceConfig: getSourceConfig(workspace)
+        sourceConfig: getSourceConfig(workspace),
+        includeOptionalRequestPropertyExamples
     });
     const absolutePathToIr = await writeIrToFile({
         workspaceTempDir,
@@ -107,7 +115,7 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
     }
 
-    await runGenerator({
+    const { generatorConfig } = await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
         absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
@@ -139,7 +147,8 @@ export async function writeFilesToDiskAndRunGenerator({
     return {
         absolutePathToIr,
         absolutePathToConfigJson: absolutePathToWriteConfigJson,
-        ir: latest
+        ir: latest,
+        generatorConfig
     };
 }
 
@@ -181,6 +190,10 @@ export declare namespace runGenerator {
         generatePaginatedClients: boolean;
         sources: IdentifiableSource[];
     }
+
+    export interface Return {
+        generatorConfig: FernGeneratorExec.GeneratorConfig;
+    }
 }
 
 export async function runGenerator({
@@ -193,12 +206,13 @@ export async function runGenerator({
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
+    context,
     generatorInvocation,
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
     sources
-}: runGenerator.Args): Promise<void> {
+}: runGenerator.Args): Promise<runGenerator.Return> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
 
@@ -238,11 +252,16 @@ export async function runGenerator({
     }
 
     await runDocker({
+        logger: context.logger,
         imageName,
         args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,
         removeAfterCompletion: !keepDocker
     });
+
+    return {
+        generatorConfig: config
+    };
 }
 
 function getSourceConfig(workspace: FernWorkspace): SourceConfig {

@@ -1,7 +1,8 @@
 import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
-import { NumberValidationSchema } from "../schemas/NumberValidationSchema";
-import { StringValidationSchema } from "../schemas/StringValidationSchema";
-import { ValidationSchema } from "../schemas/ValidationSchema";
+
+import { NumberValidationSchema } from "../schemas";
+import { StringValidationSchema } from "../schemas";
+import { ValidationSchema } from "../schemas";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {
@@ -9,6 +10,7 @@ export const FernContainerRegex = {
     LIST: /^list<\s*(.*)\s*>$/,
     SET: /^set<\s*(.*)\s*>$/,
     OPTIONAL: /^optional<\s*(.*)\s*>$/,
+    NULLABLE: /^nullable<\s*(.*)\s*>$/,
     LITERAL: /^literal<\s*(?:"(.*)"|(true|false))\s*>$/
 };
 
@@ -18,6 +20,7 @@ export interface RawTypeReferenceVisitor<R> {
     list: (valueType: string) => R;
     set: (valueType: string) => R;
     optional: (valueType: string) => R;
+    nullable: (valueType: string) => R;
     literal: (literal: Literal) => R;
     named: (named: string) => R;
     unknown: () => R;
@@ -99,12 +102,16 @@ export function visitRawTypeReference<R>({
         case RawPrimitiveType.long:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Long,
-                v2: undefined
+                v2: PrimitiveTypeV2.long({
+                    default: _default != null ? (_default as number) : undefined
+                })
             });
         case RawPrimitiveType.boolean:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Boolean,
-                v2: undefined
+                v2: PrimitiveTypeV2.boolean({
+                    default: _default != null ? (_default as boolean) : undefined
+                })
             });
         case RawPrimitiveType.datetime:
             return visitor.primitive({
@@ -129,7 +136,9 @@ export function visitRawTypeReference<R>({
         case RawPrimitiveType.bigint:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.BigInteger,
-                v2: undefined
+                v2: PrimitiveTypeV2.bigInteger({
+                    default: _default != null ? (_default as string) : undefined
+                })
             });
         case RawPrimitiveType.uint:
             return visitor.primitive({
@@ -166,6 +175,11 @@ export function visitRawTypeReference<R>({
     const optionalMatch = type.match(FernContainerRegex.OPTIONAL);
     if (optionalMatch?.[1] != null) {
         return visitor.optional(optionalMatch[1]);
+    }
+
+    const nullableMatch = type.match(FernContainerRegex.NULLABLE);
+    if (nullableMatch?.[1] != null) {
+        return visitor.nullable(nullableMatch[1]);
     }
 
     const literalMatch = type.match(FernContainerRegex.LITERAL);

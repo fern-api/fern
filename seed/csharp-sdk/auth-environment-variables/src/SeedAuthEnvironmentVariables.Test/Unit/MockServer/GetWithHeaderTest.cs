@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedAuthEnvironmentVariables;
 using SeedAuthEnvironmentVariables.Core;
-
-#nullable enable
 
 namespace SeedAuthEnvironmentVariables.Test.Unit.MockServer;
 
@@ -13,7 +9,7 @@ namespace SeedAuthEnvironmentVariables.Test.Unit.MockServer;
 public class GetWithHeaderTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             "string"
@@ -24,7 +20,7 @@ public class GetWithHeaderTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/apiKeyInHeader")
-                    .WithHeader("X-Endpoint-Header", "string")
+                    .WithHeader("X-Endpoint-Header", "X-Endpoint-Header")
                     .UsingGet()
             )
             .RespondWith(
@@ -35,12 +31,8 @@ public class GetWithHeaderTest : BaseMockServerTest
             );
 
         var response = await Client.Service.GetWithHeaderAsync(
-            new HeaderAuthRequest { XEndpointHeader = "string" },
-            RequestOptions
+            new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

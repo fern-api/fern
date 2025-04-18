@@ -1,23 +1,22 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { readFile, writeFile } from "fs/promises";
+import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import merge from "lodash-es/merge";
 import path from "path";
-import { convertToOpenApi } from "./convertToOpenApi";
-import { getCustomConfig } from "./customConfig";
+
 import {
-    GeneratorNotificationService,
-    GeneratorExecParsing,
-    GeneratorUpdate,
     ExitStatusUpdate,
+    GeneratorNotificationService,
+    GeneratorUpdate,
     parseGeneratorConfig,
     parseIR
-} from "@fern-api/generator-commons";
+} from "@fern-api/base-generator";
+import { mergeWithOverrides } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-const OPENAPI_JSON_FILENAME = "openapi.json";
-const OPENAPI_YML_FILENAME = "openapi.yml";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+
+import { convertToOpenApi } from "./convertToOpenApi";
+import { getCustomConfig } from "./customConfig";
 
 export type Mode = "stoplight" | "openapi";
 
@@ -38,27 +37,47 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 
             const ir = await loadIntermediateRepresentation(config.irFilepath);
 
-            const openApiDefinition = convertToOpenApi({
+            let openapi = convertToOpenApi({
                 apiName: config.workspaceName,
                 ir,
                 mode
             });
 
-            const openApiDefinitionWithCustomOverrides = merge(customConfig.customOverrides, openApiDefinition);
+            if (openapi == null) {
+                throw new Error("Failed to convert IR to OpenAPI");
+            }
 
+            // eslint-disable-next-line no-console
+            console.log(`openapi before override ${JSON.stringify(openapi)}`);
+
+            if (customConfig.customOverrides != null) {
+                openapi = mergeWithOverrides({
+                    data: openapi,
+                    overrides: customConfig.customOverrides
+                });
+                // eslint-disable-next-line no-console
+                console.log(`openapi after override ${JSON.stringify(openapi)}`);
+            }
+
+            let filename: string = customConfig.filename ?? "openapi.yml";
             if (customConfig.format === "json") {
-                await writeFile(
-                    path.join(config.output.path, OPENAPI_JSON_FILENAME),
-                    JSON.stringify(openApiDefinitionWithCustomOverrides, undefined, 2)
-                );
+                filename = path.join(config.output.path, replaceExtension(filename, "json"));
+                await writeFile(filename, JSON.stringify(openapi, undefined, 2));
             } else {
-                await writeFile(
-                    path.join(config.output.path, OPENAPI_YML_FILENAME),
-                    yaml.dump(openApiDefinitionWithCustomOverrides)
-                );
+                filename =
+                    filename.endsWith("yml") || filename.endsWith("yaml")
+                        ? filename
+                        : replaceExtension(filename, "yml");
+                await writeFile(path.join(config.output.path, filename), yaml.dump(openapi));
             }
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
+            if (e instanceof Error) {
+                // eslint-disable-next-line no-console
+                console.log((e as Error)?.message);
+                // eslint-disable-next-line no-console
+                console.log((e as Error)?.stack);
+            }
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
@@ -79,4 +98,9 @@ async function loadIntermediateRepresentation(pathToFile: string): Promise<Inter
         absolutePathToIR: AbsoluteFilePath.of(pathToFile),
         parse: IrSerialization.IntermediateRepresentation.parse
     });
+}
+
+function replaceExtension(filename: string, newExtension: string): string {
+    const baseName = filename.substring(0, filename.lastIndexOf("."));
+    return `${baseName}.${newExtension}`;
 }

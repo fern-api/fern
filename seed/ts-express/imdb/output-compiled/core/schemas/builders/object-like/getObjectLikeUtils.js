@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.withParsedProperties = exports.getObjectLikeUtils = void 0;
+exports.getObjectLikeUtils = getObjectLikeUtils;
+exports.withParsedProperties = withParsedProperties;
 const filterObject_1 = require("../../utils/filterObject");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const isPlainObject_1 = require("../../utils/isPlainObject");
@@ -10,7 +11,6 @@ function getObjectLikeUtils(schema) {
         withParsedProperties: (properties) => withParsedProperties(schema, properties),
     };
 }
-exports.getObjectLikeUtils = getObjectLikeUtils;
 /**
  * object-like utils are defined in one file to resolve issues with circular imports
  */
@@ -51,4 +51,3 @@ function withParsedProperties(objectLike, properties) {
     };
     return Object.assign(Object.assign(Object.assign({}, objectSchema), (0, schema_utils_1.getSchemaUtils)(objectSchema)), getObjectLikeUtils(objectSchema));
 }
-exports.withParsedProperties = withParsedProperties;

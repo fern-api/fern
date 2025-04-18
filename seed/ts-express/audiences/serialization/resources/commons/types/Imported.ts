@@ -10,5 +10,5 @@ export const Imported: core.serialization.Schema<serializers.Imported.Raw, SeedA
     core.serialization.string();
 
 export declare namespace Imported {
-    type Raw = string;
+    export type Raw = string;
 }

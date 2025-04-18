@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "aliasVariant"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "aliasVariant"
+        },
+        "value": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/OtherAliasVariant"
+          }
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "OtherAliasVariantType": {
+      "type": "object",
+      "properties": {
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prop"
+      ],
+      "additionalProperties": false
+    },
+    "OtherAliasVariant": {
+      "$ref": "#/definitions/OtherAliasVariantType"
+    }
+  }
+}

@@ -10,5 +10,5 @@ export const FloatType: core.serialization.ObjectSchema<serializers.FloatType.Ra
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace FloatType {
-    interface Raw {}
+    export interface Raw {}
 }

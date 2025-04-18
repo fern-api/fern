@@ -13,12 +13,12 @@ export const BinaryTreeValue: core.serialization.ObjectSchema<
     root: core.serialization.lazy(() => serializers.NodeId).optional(),
     nodes: core.serialization.record(
         core.serialization.lazy(() => serializers.NodeId),
-        core.serialization.lazyObject(() => serializers.BinaryTreeNodeValue)
+        core.serialization.lazyObject(() => serializers.BinaryTreeNodeValue),
     ),
 });
 
 export declare namespace BinaryTreeValue {
-    interface Raw {
+    export interface Raw {
         root?: serializers.NodeId.Raw | null;
         nodes: Record<serializers.NodeId.Raw, serializers.BinaryTreeNodeValue.Raw>;
     }

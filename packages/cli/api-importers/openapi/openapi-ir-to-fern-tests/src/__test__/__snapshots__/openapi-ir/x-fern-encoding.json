@@ -1,0 +1,110 @@
+{
+  "title": "Test extension `x-fern-encoding` for schemas",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Metadata": {
+        "key": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "MetadataKey",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "value": {
+          "generatedName": "MetadataValue",
+          "schema": "MetadataValue",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "generatedName": "Metadata",
+        "groupName": [],
+        "encoding": {
+          "typeName": "google.protobuf.Struct",
+          "type": "protobuf"
+        },
+        "type": "map"
+      },
+      "MetadataValue": {
+        "generatedName": "MetadataValue",
+        "value": {
+          "value": {
+            "generatedName": "MetadataValue",
+            "schemas": [
+              {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "MetadataValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "MetadataValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "MetadataValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              {
+                "value": {
+                  "generatedName": "MetadataValueItem",
+                  "schema": "Value",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "MetadataValue",
+                "groupName": [],
+                "type": "array"
+              }
+            ],
+            "groupName": [],
+            "encoding": {
+              "typeName": "google.protobuf.Value",
+              "type": "protobuf"
+            },
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "groupName": [],
+        "type": "nullable"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

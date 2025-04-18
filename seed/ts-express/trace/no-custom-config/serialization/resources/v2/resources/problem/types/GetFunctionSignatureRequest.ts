@@ -14,7 +14,7 @@ export const GetFunctionSignatureRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetFunctionSignatureRequest {
-    interface Raw {
+    export interface Raw {
         functionSignature: serializers.v2.FunctionSignature.Raw;
     }
 }

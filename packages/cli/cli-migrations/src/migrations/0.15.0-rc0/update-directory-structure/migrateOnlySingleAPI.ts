@@ -1,6 +1,8 @@
-import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
 import { rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
+
 import {
     convertLegacyGeneratorsConfiguration,
     getAbsolutePathToGeneratorsConfiguration,
@@ -11,7 +13,7 @@ import {
  * fern/  <------ path to fern directory
  *   api/ <------ path to workspace
  *    definition/...
- *    generatiors.yml
+ *    generators.yml
  *
  * This function moves everything from the workspace directory into the fern directory.
  */

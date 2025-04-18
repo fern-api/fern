@@ -1,4 +1,5 @@
 import { vi } from "vitest";
+
 import { replaceEnvVariables } from "../replaceEnvVars";
 
 describe("replaceEnvVariables", () => {

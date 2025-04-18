@@ -40,16 +40,16 @@ paths:
             format: byte
         - name: user
           in: query
-          required: false
+          required: true
           schema:
-            type: string
-            nullable: true
+            $ref: '#/components/schemas/User'
         - name: userList
           in: query
-          required: false
+          required: true
           schema:
-            type: string
-            nullable: true
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
         - name: optionalDeadline
           in: query
           required: false
@@ -59,10 +59,11 @@ paths:
             nullable: true
         - name: keyValue
           in: query
-          required: false
+          required: true
           schema:
-            type: string
-            nullable: true
+            type: object
+            additionalProperties:
+              type: string
         - name: optionalString
           in: query
           required: false
@@ -71,24 +72,22 @@ paths:
             nullable: true
         - name: nestedUser
           in: query
-          required: false
+          required: true
           schema:
-            type: string
-            nullable: true
+            $ref: '#/components/schemas/NestedUser'
         - name: optionalUser
           in: query
           required: false
           schema:
-            type: string
+            $ref: '#/components/schemas/User'
             nullable: true
         - name: excludeUser
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              $ref: '#/components/schemas/User'
         - name: filter
           in: query
           required: true

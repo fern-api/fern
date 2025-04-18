@@ -13,17 +13,13 @@ class MapType(UniversalBaseModel):
     value_type: "VariableType" = pydantic.Field(alias="valueType")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:
             extra = pydantic.Extra.forbid
 
 
-from .list_type import ListType  # noqa: E402
 from .variable_type import VariableType  # noqa: E402
 
-update_forward_refs(ListType, MapType=MapType)
 update_forward_refs(MapType)

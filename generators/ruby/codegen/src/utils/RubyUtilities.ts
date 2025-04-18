@@ -1,12 +1,15 @@
+import { camelCase, snakeCase, upperFirst } from "lodash-es";
+
 import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
-import { camelCase, snakeCase, upperFirst } from "lodash-es";
-import { Expression } from "../ast/expressions/Expression";
+
 import { ExternalDependency } from "../ast/ExternalDependency";
-import { Gemspec } from "../ast/gem/Gemspec";
 import { Module_ } from "../ast/Module_";
+import { Expression } from "../ast/expressions/Expression";
+import { Gemspec } from "../ast/gem/Gemspec";
 import { GeneratedFile } from "./GeneratedFile";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
 
@@ -43,8 +46,8 @@ task default: %i[test rubocop]
 Rake::TestTask.new do |t|
     t.pattern = "./test/**/test_*.rb"
 end
-    
-RuboCop::RakeTask.new   
+
+RuboCop::RakeTask.new
 `;
     return new GeneratedFile("Rakefile", RelativeFilePath.of("."), content);
 }
@@ -112,7 +115,7 @@ export function generateGemspec(
     });
 }
 
-// To ensure configuration may be managed independently from dependenies, we introduce a new config file that
+// To ensure configuration may be managed independently from dependencies, we introduce a new config file that
 // users are encouraged to fernignore and update, while allowing the traditional gemspec to remain generated
 export function generateGemConfig(clientName: string, repoUrl?: string): GeneratedRubyFile {
     const gemspec = new Module_({
@@ -184,7 +187,7 @@ jobs:
 
           - name: Test gem
             run: bundle install && bundle exec rake test
-              
+
           - name: Build and Push Gem
             env:
               GEM_HOST_API_KEY: \${{ secrets.${apiKeyEnvVar} }}
@@ -199,11 +202,11 @@ jobs:
 export function generateRubocopConfig(): GeneratedFile {
     const content = `AllCops:
   TargetRubyVersion: ${MINIMUM_RUBY_VERSION}
-  
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
-  
+
 Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes

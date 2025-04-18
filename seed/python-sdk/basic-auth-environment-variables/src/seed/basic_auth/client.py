@@ -2,14 +2,10 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawBasicAuthClient
 from ..core.request_options import RequestOptions
-from ..core.pydantic_utilities import parse_obj_as
-from ..errors.errors.unauthorized_request import UnauthorizedRequest
-from ..errors.types.unauthorized_request_error_body import UnauthorizedRequestErrorBody
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
-from ..errors.errors.bad_request import BadRequest
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawBasicAuthClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -17,7 +13,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class BasicAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawBasicAuthClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawBasicAuthClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawBasicAuthClient
+        """
+        return self._raw_client
 
     def get_with_basic_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -38,39 +45,13 @@ class BasicAuthClient:
 
         client = SeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.basic_auth.get_with_basic_auth()
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "basic-auth",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool,
-                    parse_obj_as(
-                        type_=bool,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedRequest(
-                    typing.cast(
-                        UnauthorizedRequestErrorBody,
-                        parse_obj_as(
-                            type_=UnauthorizedRequestErrorBody,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get_with_basic_auth(request_options=request_options)
+        return response.data
 
     def post_with_basic_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -95,50 +76,31 @@ class BasicAuthClient:
 
         client = SeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.basic_auth.post_with_basic_auth(
             request={"key": "value"},
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "basic-auth",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool,
-                    parse_obj_as(
-                        type_=bool,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedRequest(
-                    typing.cast(
-                        UnauthorizedRequestErrorBody,
-                        parse_obj_as(
-                            type_=UnauthorizedRequestErrorBody,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 400:
-                raise BadRequest()
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
+        return response.data
 
 
 class AsyncBasicAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawBasicAuthClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawBasicAuthClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawBasicAuthClient
+        """
+        return self._raw_client
 
     async def get_with_basic_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -161,7 +123,7 @@ class AsyncBasicAuthClient:
 
         client = AsyncSeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -172,34 +134,8 @@ class AsyncBasicAuthClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "basic-auth",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool,
-                    parse_obj_as(
-                        type_=bool,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedRequest(
-                    typing.cast(
-                        UnauthorizedRequestErrorBody,
-                        parse_obj_as(
-                            type_=UnauthorizedRequestErrorBody,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get_with_basic_auth(request_options=request_options)
+        return response.data
 
     async def post_with_basic_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -226,7 +162,7 @@ class AsyncBasicAuthClient:
 
         client = AsyncSeedBasicAuthEnvironmentVariables(
             username="YOUR_USERNAME",
-            password="YOUR_PASSWORD",
+            access_token="YOUR_ACCESS_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -239,35 +175,5 @@ class AsyncBasicAuthClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "basic-auth",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool,
-                    parse_obj_as(
-                        type_=bool,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 401:
-                raise UnauthorizedRequest(
-                    typing.cast(
-                        UnauthorizedRequestErrorBody,
-                        parse_obj_as(
-                            type_=UnauthorizedRequestErrorBody,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            if _response.status_code == 400:
-                raise BadRequest()
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
+        return response.data

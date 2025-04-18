@@ -2,32 +2,41 @@
 
 namespace Seed\Types\Union\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Dog extends SerializableType
+class Dog extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var bool $likesToWoof
      */
-    #[JsonProperty("likesToWoof")]
+    #[JsonProperty('likesToWoof')]
     public bool $likesToWoof;
 
     /**
-     * @param string $name
-     * @param bool $likesToWoof
+     * @param array{
+     *   name: string,
+     *   likesToWoof: bool,
+     * } $values
      */
     public function __construct(
-        string $name,
-        bool $likesToWoof,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->likesToWoof = $likesToWoof;
+        $this->name = $values['name'];
+        $this->likesToWoof = $values['likesToWoof'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -9,26 +9,26 @@ export type CreateProblemResponse =
     | SeedTrace.CreateProblemResponse.Error_
     | SeedTrace.CreateProblemResponse._Unknown;
 
-export declare namespace CreateProblemResponse {
-    interface Success extends _Utils {
+export namespace CreateProblemResponse {
+    export interface Success extends _Utils {
         type: "success";
         value: SeedTrace.ProblemId;
     }
 
-    interface Error_ extends _Utils {
+    export interface Error_ extends _Utils {
         type: "error";
         value: SeedTrace.CreateProblemError;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         success: (value: SeedTrace.ProblemId) => _Result;
         error: (value: SeedTrace.CreateProblemError) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -42,7 +42,7 @@ export const CreateProblemResponse = {
             type: "success",
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemResponse.Success,
-                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemResponse._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const CreateProblemResponse = {
             type: "error",
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemResponse.Error_,
-                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemResponse._visit(this, visitor);
             },
@@ -67,7 +67,7 @@ export const CreateProblemResponse = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemResponse._Unknown,
-                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemResponse._visit(this, visitor);
             },
@@ -76,7 +76,7 @@ export const CreateProblemResponse = {
 
     _visit: <_Result>(
         value: SeedTrace.CreateProblemResponse,
-        visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>
+        visitor: SeedTrace.CreateProblemResponse._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "success":

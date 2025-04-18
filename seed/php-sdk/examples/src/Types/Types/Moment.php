@@ -2,43 +2,51 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use DateTime;
-use Seed\Core\DateType;
+use Seed\Core\Types\Date;
 
-class Moment extends SerializableType
+class Moment extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var DateTime $date
      */
-    #[JsonProperty("date"), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date'), Date(Date::TYPE_DATE)]
     public DateTime $date;
 
     /**
      * @var DateTime $datetime
      */
-    #[JsonProperty("datetime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime'), Date(Date::TYPE_DATETIME)]
     public DateTime $datetime;
 
     /**
-     * @param string $id
-     * @param DateTime $date
-     * @param DateTime $datetime
+     * @param array{
+     *   id: string,
+     *   date: DateTime,
+     *   datetime: DateTime,
+     * } $values
      */
     public function __construct(
-        string $id,
-        DateTime $date,
-        DateTime $datetime,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->date = $date;
-        $this->datetime = $datetime;
+        $this->id = $values['id'];
+        $this->date = $values['date'];
+        $this->datetime = $values['datetime'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

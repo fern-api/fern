@@ -6,13 +6,13 @@ import * as SeedTrace from "../../../index";
 
 export type CreateProblemResponse = SeedTrace.CreateProblemResponse.Success | SeedTrace.CreateProblemResponse.Error_;
 
-export declare namespace CreateProblemResponse {
-    interface Success {
+export namespace CreateProblemResponse {
+    export interface Success {
         type: "success";
         value: SeedTrace.ProblemId;
     }
 
-    interface Error_ {
+    export interface Error_ {
         type: "error";
         value: SeedTrace.CreateProblemError;
     }

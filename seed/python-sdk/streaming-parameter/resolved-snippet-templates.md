@@ -6,8 +6,8 @@ client.dummy.generate(
 	stream=false,
 	num_events=5
 )
- 
-```                        
+
+```
 
 
 ```python
@@ -15,10 +15,10 @@ client.dummy.generate(
 
 client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )        
 client.dummy.generate(
-	stream=false,
-	num_events=5
+	stream=true,
+	num_events=1
 )
- 
-```                        
+
+```
 
 

@@ -1,0 +1,3630 @@
+{
+  "title": "Axle API",
+  "servers": [
+    {
+      "url": "https://api.axle.insure",
+      "description": "Production",
+      "name": "Production"
+    },
+    {
+      "url": "https://sandbox.axle.insure",
+      "description": "Sandbox",
+      "name": "Sandbox"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Start Ignition",
+      "audiences": [],
+      "operationId": "StartIgnition",
+      "tags": [
+        "Ignition"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "description": "Your client ID. This will be shared with you during onboarding.",
+          "name": "x-client-id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "StartIgnitionRequestXClientId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+          "name": "x-client-secret",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "StartIgnitionRequestXClientSecret",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "StartIgnitionRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "startIgnitionRequestRedirectUri",
+              "key": "redirectUri",
+              "schema": {
+                "generatedName": "startIgnitionRequestRedirectUri",
+                "value": {
+                  "description": "The URI we should direct the user to after authenticating successfully.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "StartIgnitionRequestRedirectUri",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "startIgnitionRequestWebhookUri",
+              "key": "webhookUri",
+              "schema": {
+                "generatedName": "startIgnitionRequestWebhookUri",
+                "value": {
+                  "description": "The URI we should send updates about this session or the resulting account to.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "StartIgnitionRequestWebhookUri",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "startIgnitionRequestUser",
+              "key": "user",
+              "schema": {
+                "generatedName": "startIgnitionRequestUser",
+                "value": {
+                  "generatedName": "StartIgnitionRequestUser",
+                  "schema": "User",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "startIgnitionRequestMetadata",
+              "key": "metadata",
+              "schema": {
+                "generatedName": "startIgnitionRequestMetadata",
+                "value": {
+                  "description": "Optional object to store ephermeral information about the session, such as `reservationTime`. Will be returned in webhook events.",
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "StartIgnitionRequestMetadataKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "StartIgnitionRequestMetadataValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "StartIgnitionRequestMetadata",
+                  "groupName": [],
+                  "type": "map"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "description": "",
+          "generatedName": "StartIgnitionRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [
+          {
+            "value": {
+              "redirectUri": "https://example.com/redirect",
+              "webhookUri": "https://example.com/webhook"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "startIgnitionResponseSuccess",
+              "key": "success",
+              "schema": {
+                "generatedName": "StartIgnitionResponseSuccess",
+                "schema": "Success",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "startIgnitionResponseData",
+              "key": "data",
+              "schema": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "startIgnitionResponseDataIgnitionUri",
+                    "key": "ignitionUri",
+                    "schema": {
+                      "description": "The url you should direct the user to to link their account.",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "StartIgnitionResponseDataIgnitionUri",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "startIgnitionResponseDataIgnitionToken",
+                    "key": "ignitionToken",
+                    "schema": {
+                      "description": "The unique ID for the ignition session.",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "StartIgnitionResponseDataIgnitionToken",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "StartIgnitionResponseData",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "description": "",
+          "generatedName": "StartIgnitionResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [
+          {
+            "value": {
+              "success": true,
+              "data": {
+                "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z",
+                "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z"
+              }
+            }
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
+      "authed": false,
+      "method": "POST",
+      "path": "/ignition",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "x-client-id",
+              "value": {
+                "value": {
+                  "value": "x-client-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-client-secret",
+              "value": {
+                "value": {
+                  "value": "x-client-secret",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "request": {
+            "properties": {
+              "redirectUri": {
+                "value": {
+                  "value": "https://example.com/redirect",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "webhookUri": {
+                "value": {
+                  "value": "https://example.com/webhook",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "success": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "data": {
+                  "properties": {
+                    "ignitionUri": {
+                      "value": {
+                        "value": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "ignitionToken": {
+                      "value": {
+                        "value": "ur7EPeAa0km4wRlDrPJ4Z",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Exchange Token",
+      "audiences": [],
+      "operationId": "ExchangeToken",
+      "tags": [
+        "Tokens"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "description": "Your client ID. This will be shared with you during onboarding.",
+          "name": "x-client-id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ExchangeTokenRequestXClientId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+          "name": "x-client-secret",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ExchangeTokenRequestXClientSecret",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "ExchangeTokenRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "exchangeTokenRequestAuthCode",
+              "key": "authCode",
+              "schema": {
+                "description": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ExchangeTokenRequestAuthCode",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "description": "",
+          "generatedName": "ExchangeTokenRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "exchangeTokenResponseSuccess",
+              "key": "success",
+              "schema": {
+                "generatedName": "ExchangeTokenResponseSuccess",
+                "schema": "Success",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "exchangeTokenResponseData",
+              "key": "data",
+              "schema": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "exchangeTokenResponseDataAccessToken",
+                    "key": "accessToken",
+                    "schema": {
+                      "description": "The token required for access to the requested Account and Policy objects.",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ExchangeTokenResponseDataAccessToken",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "exchangeTokenResponseDataAccount",
+                    "key": "account",
+                    "schema": {
+                      "description": "The unique id for the Account object.",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ExchangeTokenResponseDataAccount",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "exchangeTokenResponseDataPolicies",
+                    "key": "policies",
+                    "schema": {
+                      "description": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
+                      "value": {
+                        "generatedName": "ExchangeTokenResponseDataPolicies",
+                        "type": "unknown"
+                      },
+                      "generatedName": "ExchangeTokenResponseDataPolicies",
+                      "groupName": [],
+                      "type": "array"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "ExchangeTokenResponseData",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "description": "",
+          "generatedName": "ExchangeTokenResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.\n\nAuth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
+      "authed": false,
+      "method": "POST",
+      "path": "/token/exchange",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "x-client-id",
+              "value": {
+                "value": {
+                  "value": "x-client-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-client-secret",
+              "value": {
+                "value": {
+                  "value": "x-client-secret",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "request": {
+            "properties": {
+              "authCode": {
+                "value": {
+                  "value": "authCode",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "success": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "data": {
+                  "properties": {
+                    "accessToken": {
+                      "value": {
+                        "value": "accessToken",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "account": {
+                      "value": {
+                        "value": "account",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "policies": {
+                      "value": [
+                        {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        }
+                      ],
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Account",
+      "audiences": [],
+      "operationId": "GetAccount",
+      "tags": [
+        "Accounts"
+      ],
+      "pathParameters": [
+        {
+          "description": "The unique ID for the requested account. Returned as part of the Token Exchange flow in exchangeToken.",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetAccountRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "description": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
+          "name": "expand",
+          "schema": {
+            "generatedName": "GetAccountRequestExpand",
+            "value": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "GetAccountRequestExpand",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "description": "Your client ID. This will be shared with you during onboarding.",
+          "name": "x-client-id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetAccountRequestXClientId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+          "name": "x-client-secret",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetAccountRequestXClientSecret",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetAccountRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getAccountResponseSuccess",
+              "key": "success",
+              "schema": {
+                "generatedName": "getAccountResponseSuccess",
+                "value": {
+                  "generatedName": "GetAccountResponseSuccess",
+                  "schema": "Success",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "getAccountResponseData",
+              "key": "data",
+              "schema": {
+                "generatedName": "getAccountResponseData",
+                "value": {
+                  "generatedName": "GetAccountResponseData",
+                  "schema": "Account",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetAccountResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
+      "authed": false,
+      "method": "GET",
+      "path": "/accounts/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "x-client-id",
+              "value": {
+                "value": {
+                  "value": "x-client-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-client-secret",
+              "value": {
+                "value": {
+                  "value": "x-client-secret",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "response": {
+            "value": {
+              "properties": {
+                "success": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "data": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "carrier": {
+                      "value": {
+                        "value": "carrier",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "firstName": {
+                      "value": {
+                        "value": "firstName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastName": {
+                      "value": {
+                        "value": "lastName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "phone": {
+                      "value": {
+                        "value": "phone",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "email": {
+                      "value": {
+                        "value": "email",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "policies": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "policies",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "createdAt": {
+                      "value": {
+                        "value": "createdAt",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "modifiedAt": {
+                      "value": {
+                        "value": "modifiedAt",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "refreshedAt": {
+                      "value": {
+                        "value": "refreshedAt",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Policy",
+      "audiences": [],
+      "operationId": "GetPolicy",
+      "tags": [
+        "Policies"
+      ],
+      "pathParameters": [
+        {
+          "description": "The unique ID for the requested policy. Returned by Get Account for each Policy associated with the Account.",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetPolicyRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "description": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
+          "name": "expand",
+          "schema": {
+            "generatedName": "GetPolicyRequestExpand",
+            "value": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "GetPolicyRequestExpand",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "description": "Your client ID. This will be shared with you during onboarding.",
+          "name": "x-client-id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetPolicyRequestXClientId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+          "name": "x-client-secret",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetPolicyRequestXClientSecret",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetPolicyRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getPolicyResponseSuccess",
+              "key": "success",
+              "schema": {
+                "generatedName": "getPolicyResponseSuccess",
+                "value": {
+                  "generatedName": "GetPolicyResponseSuccess",
+                  "schema": "Success",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "getPolicyResponseData",
+              "key": "data",
+              "schema": {
+                "generatedName": "getPolicyResponseData",
+                "value": {
+                  "generatedName": "GetPolicyResponseData",
+                  "schema": "Policy",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetPolicyResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
+      "authed": false,
+      "method": "GET",
+      "path": "/policies/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "x-client-id",
+              "value": {
+                "value": {
+                  "value": "x-client-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-client-secret",
+              "value": {
+                "value": {
+                  "value": "x-client-secret",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "response": {
+            "value": {
+              "properties": {
+                "success": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "data": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "account": {
+                      "value": {
+                        "value": "account",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": {
+                      "value": "auto",
+                      "type": "enum"
+                    },
+                    "carrier": {
+                      "value": {
+                        "value": "carrier",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "policyNumber": {
+                      "value": {
+                        "value": "policyNumber",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "isActive": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "effectiveDate": {
+                      "value": {
+                        "value": "effectiveDate",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "expirationDate": {
+                      "value": {
+                        "value": "expirationDate",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "address": {
+                      "properties": {
+                        "addressLine1": {
+                          "value": {
+                            "value": "addressLine1",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "country": {
+                          "value": {
+                            "value": "country",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "addressLine2": {
+                          "value": {
+                            "value": "addressLine2",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "state": {
+                          "value": {
+                            "value": "state",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "city": {
+                          "value": {
+                            "value": "city",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "postalCode": {
+                          "value": {
+                            "value": "postalCode",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "coverages": {
+                      "value": [
+                        {
+                          "properties": {
+                            "code": {
+                              "value": "BI",
+                              "type": "enum"
+                            },
+                            "label": {
+                              "value": {
+                                "value": "Bodily Injury Liability",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "limitPerPerson": {
+                              "value": {
+                                "value": 250000,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            },
+                            "limitPerAccident": {
+                              "value": {
+                                "value": 500000,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "properties": {
+                      "value": [
+                        {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "prp_uSdzLVpi8c76H7kl6AQ-F",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": {
+                              "value": {
+                                "value": "vehicle",
+                                "type": "string"
+                              },
+                              "type": "literal"
+                            },
+                            "data": {
+                              "properties": {
+                                "vin": {
+                                  "value": {
+                                    "value": "SMTD44GN3HT812287",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "model": {
+                                  "value": {
+                                    "value": "STREET SCRAMBLER",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "year": {
+                                  "value": {
+                                    "value": "2017",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "make": {
+                                  "value": {
+                                    "value": "TRIUMPH",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "insureds": {
+                      "value": [
+                        {
+                          "properties": {
+                            "firstName": {
+                              "value": {
+                                "value": "Armaan",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "lastName": {
+                              "value": {
+                                "value": "Sikand",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "dateOfBirthYear": {
+                              "value": {
+                                "value": "1993",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "licenseNo": {
+                              "value": {
+                                "value": "•••••7259",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "licenseState": {
+                              "value": {
+                                "value": "GA",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "licenseStatus": {
+                              "value": {
+                                "value": "Valid",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "dateOfBirth": {
+                              "value": {
+                                "value": "",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": {
+                              "value": {
+                                "value": "Primary named insured",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "thirdParties": {
+                      "value": [
+                        {
+                          "properties": {
+                            "type": {
+                              "value": "lienholder",
+                              "type": "enum"
+                            },
+                            "name": {
+                              "value": {
+                                "value": "Georgias Own Credit Union",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "address": {
+                              "properties": {
+                                "addressLine1": {
+                                  "value": {
+                                    "value": "Po Box 105205",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "state": {
+                                  "value": {
+                                    "value": "GA",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "city": {
+                                  "value": {
+                                    "value": "Atlanta",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "postalCode": {
+                                  "value": {
+                                    "value": "30348-5205",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "createdAt": {
+                      "value": {
+                        "value": "createdAt",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "modifiedAt": {
+                      "value": {
+                        "value": "modifiedAt",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "refreshedAt": {
+                      "value": {
+                        "value": "refreshedAt",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Carrier",
+      "audiences": [],
+      "operationId": "GetCarrier",
+      "tags": [
+        "Carriers"
+      ],
+      "pathParameters": [
+        {
+          "description": "The unique ID for the requested carrier. Returned in Account and Policy objects as `carrier`.",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetCarrierRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [
+        {
+          "description": "Your client ID. This will be shared with you during onboarding.",
+          "name": "x-client-id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetCarrierRequestXClientId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+          "name": "x-client-secret",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetCarrierRequestXClientSecret",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetCarrierRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getCarrierResponseSuccess",
+              "key": "success",
+              "schema": {
+                "generatedName": "getCarrierResponseSuccess",
+                "value": {
+                  "generatedName": "GetCarrierResponseSuccess",
+                  "schema": "Success",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "getCarrierResponseData",
+              "key": "data",
+              "schema": {
+                "generatedName": "getCarrierResponseData",
+                "value": {
+                  "generatedName": "GetCarrierResponseData",
+                  "schema": "Carrier",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetCarrierResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
+      "authed": false,
+      "method": "GET",
+      "path": "/carriers/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "x-client-id",
+              "value": {
+                "value": {
+                  "value": "x-client-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-client-secret",
+              "value": {
+                "value": {
+                  "value": "x-client-secret",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "response": {
+            "value": {
+              "properties": {
+                "success": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "data": {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "domain": {
+                      "value": {
+                        "value": "domain",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "address": {
+                      "properties": {
+                        "addressLine1": {
+                          "value": {
+                            "value": "addressLine1",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "country": {
+                          "value": {
+                            "value": "country",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "addressLine2": {
+                          "value": {
+                            "value": "addressLine2",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "state": {
+                          "value": {
+                            "value": "state",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "city": {
+                          "value": {
+                            "value": "city",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "postalCode": {
+                          "value": {
+                            "value": "postalCode",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "phone": {
+                      "value": {
+                        "value": "phone",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "logoUrl": {
+                      "value": {
+                        "value": "logoUrl",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "modifiedAt": {
+                      "value": {
+                        "value": "modifiedAt",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get Carriers",
+      "audiences": [],
+      "operationId": "GetCarriers",
+      "tags": [
+        "Carriers"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "description": "Your client ID. This will be shared with you during onboarding.",
+          "name": "x-client-id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetCarriersRequestXClientId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+          "name": "x-client-secret",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetCarriersRequestXClientSecret",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetCarriersRequest",
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getCarriersResponseSuccess",
+              "key": "success",
+              "schema": {
+                "generatedName": "getCarriersResponseSuccess",
+                "value": {
+                  "generatedName": "GetCarriersResponseSuccess",
+                  "schema": "Success",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "getCarriersResponseData",
+              "key": "data",
+              "schema": {
+                "generatedName": "getCarriersResponseData",
+                "value": {
+                  "value": {
+                    "generatedName": "GetCarriersResponseDataItem",
+                    "schema": "Carrier",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "GetCarriersResponseData",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetCarriersResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "The Get Carriers method returns an array of Carrier objects.",
+      "authed": false,
+      "method": "GET",
+      "path": "/carriers",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "x-client-id",
+              "value": {
+                "value": {
+                  "value": "x-client-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-client-secret",
+              "value": {
+                "value": {
+                  "value": "x-client-secret",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "response": {
+            "value": {
+              "properties": {
+                "success": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "domain": {
+                          "value": {
+                            "value": "domain",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "address": {
+                          "properties": {},
+                          "type": "object"
+                        },
+                        "phone": {
+                          "value": {
+                            "value": "phone",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "logoUrl": {
+                          "value": {
+                            "value": "logoUrl",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "modifiedAt": {
+                          "value": {
+                            "value": "modifiedAt",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Account": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "accountId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountCarrier",
+            "key": "carrier",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountCarrier",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountFirstName",
+            "key": "firstName",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountFirstName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountLastName",
+            "key": "lastName",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountLastName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountPhone",
+            "key": "phone",
+            "schema": {
+              "generatedName": "accountPhone",
+              "nameOverride": "Account",
+              "title": "Account",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AccountPhone",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [
+                "Accounts"
+              ],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountEmail",
+            "key": "email",
+            "schema": {
+              "generatedName": "accountEmail",
+              "nameOverride": "Account",
+              "title": "Account",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AccountEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [
+                "Accounts"
+              ],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountPolicies",
+            "key": "policies",
+            "schema": {
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AccountPoliciesItem",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "generatedName": "AccountPolicies",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountCreatedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountModifiedAt",
+            "key": "modifiedAt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountModifiedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accountRefreshedAt",
+            "key": "refreshedAt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AccountRefreshedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
+        "generatedName": "Account",
+        "nameOverride": "Account",
+        "title": "Account",
+        "groupName": [
+          "Accounts"
+        ],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Policy": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "policyId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyAccount",
+            "key": "account",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyAccount",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyType",
+            "key": "type",
+            "schema": {
+              "generatedName": "PolicyType",
+              "values": [
+                {
+                  "generatedName": "auto",
+                  "value": "auto",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "motorcycle",
+                  "value": "motorcycle",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyCarrier",
+            "key": "carrier",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyCarrier",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyPolicyNumber",
+            "key": "policyNumber",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyPolicyNumber",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyIsActive",
+            "key": "isActive",
+            "schema": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "PolicyIsActive",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyEffectiveDate",
+            "key": "effectiveDate",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyEffectiveDate",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyExpirationDate",
+            "key": "expirationDate",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyExpirationDate",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyAddress",
+            "key": "address",
+            "schema": {
+              "generatedName": "PolicyAddress",
+              "schema": "Address",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyCoverages",
+            "key": "coverages",
+            "schema": {
+              "description": "",
+              "value": {
+                "generatedName": "PolicyCoveragesItem",
+                "schema": "Coverage",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "generatedName": "PolicyCoverages",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyProperties",
+            "key": "properties",
+            "schema": {
+              "description": "",
+              "value": {
+                "generatedName": "PolicyPropertiesItem",
+                "schema": "Property",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "generatedName": "PolicyProperties",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyInsureds",
+            "key": "insureds",
+            "schema": {
+              "description": "",
+              "value": {
+                "generatedName": "PolicyInsuredsItem",
+                "schema": "Insured",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "generatedName": "PolicyInsureds",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyThirdParties",
+            "key": "thirdParties",
+            "schema": {
+              "description": "",
+              "value": {
+                "generatedName": "PolicyThirdPartiesItem",
+                "schema": "ThirdParty",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "generatedName": "PolicyThirdParties",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyCreatedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyModifiedAt",
+            "key": "modifiedAt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyModifiedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "policyRefreshedAt",
+            "key": "refreshedAt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PolicyRefreshedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
+        "generatedName": "Policy",
+        "nameOverride": "Policy",
+        "title": "Policy",
+        "groupName": [
+          "Accounts"
+        ],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Address": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "addressAddressLine1",
+            "key": "addressLine1",
+            "schema": {
+              "generatedName": "addressAddressLine1",
+              "nameOverride": "Address",
+              "title": "Address",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AddressAddressLine1",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "addressCountry",
+            "key": "country",
+            "schema": {
+              "generatedName": "addressCountry",
+              "nameOverride": "Address",
+              "title": "Address",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AddressCountry",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "addressAddressLine2",
+            "key": "addressLine2",
+            "schema": {
+              "generatedName": "addressAddressLine2",
+              "nameOverride": "Address",
+              "title": "Address",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AddressAddressLine2",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "addressState",
+            "key": "state",
+            "schema": {
+              "generatedName": "addressState",
+              "nameOverride": "Address",
+              "title": "Address",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AddressState",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "addressCity",
+            "key": "city",
+            "schema": {
+              "generatedName": "addressCity",
+              "nameOverride": "Address",
+              "title": "Address",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AddressCity",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "addressPostalCode",
+            "key": "postalCode",
+            "schema": {
+              "generatedName": "addressPostalCode",
+              "nameOverride": "Address",
+              "title": "Address",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AddressPostalCode",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Address",
+        "nameOverride": "Address",
+        "title": "Address",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Carrier": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "carrierId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CarrierId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "carrierName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CarrierName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "carrierDomain",
+            "key": "domain",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CarrierDomain",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "carrierAddress",
+            "key": "address",
+            "schema": {
+              "generatedName": "CarrierAddress",
+              "schema": "Address",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "carrierPhone",
+            "key": "phone",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CarrierPhone",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "carrierLogoUrl",
+            "key": "logoUrl",
+            "schema": {
+              "generatedName": "carrierLogoUrl",
+              "nameOverride": "Carrier",
+              "title": "Carrier",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CarrierLogoUrl",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "carrierModifiedAt",
+            "key": "modifiedAt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CarrierModifiedAt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Carrier",
+        "nameOverride": "Carrier",
+        "title": "Carrier",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Coverage": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "coverageProperty",
+            "key": "property",
+            "schema": {
+              "generatedName": "coverageProperty",
+              "nameOverride": "Coverage",
+              "title": "Coverage",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CoverageProperty",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "coverageCode",
+            "key": "code",
+            "schema": {
+              "generatedName": "CoverageCode",
+              "values": [
+                {
+                  "generatedName": "BI",
+                  "value": "BI",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PD",
+                  "value": "PD",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "UMBI",
+                  "value": "UMBI",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "UMPD",
+                  "value": "UMPD",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "UIMBI",
+                  "value": "UIMBI",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "UIMPD",
+                  "value": "UIMPD",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "COLL",
+                  "value": "COLL",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "COMP",
+                  "value": "COMP",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "coverageLabel",
+            "key": "label",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CoverageLabel",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "coverageLimitPerPerson",
+            "key": "limitPerPerson",
+            "schema": {
+              "generatedName": "coverageLimitPerPerson",
+              "nameOverride": "Coverage",
+              "title": "Coverage",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "CoverageLimitPerPerson",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "coverageLimitPerAccident",
+            "key": "limitPerAccident",
+            "schema": {
+              "generatedName": "coverageLimitPerAccident",
+              "nameOverride": "Coverage",
+              "title": "Coverage",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "CoverageLimitPerAccident",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "coverageDeductible",
+            "key": "deductible",
+            "schema": {
+              "generatedName": "coverageDeductible",
+              "nameOverride": "Coverage",
+              "title": "Coverage",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "CoverageDeductible",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Coverage",
+        "nameOverride": "Coverage",
+        "title": "Coverage",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Property": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "propertyId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PropertyId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "propertyType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "vehicle",
+                "type": "string"
+              },
+              "generatedName": "PropertyType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "propertyData",
+            "key": "data",
+            "schema": {
+              "generatedName": "PropertyData",
+              "schema": "Vehicle",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Property",
+        "nameOverride": "Property",
+        "title": "Property",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Vehicle": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "vehicleBodyStyle",
+            "key": "bodyStyle",
+            "schema": {
+              "generatedName": "vehicleBodyStyle",
+              "nameOverride": "Vehicle",
+              "title": "Vehicle",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "VehicleBodyStyle",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "vehicleVin",
+            "key": "vin",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "VehicleVin",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "vehicleModel",
+            "key": "model",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "VehicleModel",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "vehicleYear",
+            "key": "year",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "VehicleYear",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "vehicleMake",
+            "key": "make",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "VehicleMake",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Vehicle",
+        "nameOverride": "Vehicle",
+        "title": "Vehicle",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Insured": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "insuredProperty",
+            "key": "property",
+            "schema": {
+              "generatedName": "insuredProperty",
+              "nameOverride": "Insured",
+              "title": "Insured",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InsuredProperty",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "insuredFirstName",
+            "key": "firstName",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "InsuredFirstName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "insuredLastName",
+            "key": "lastName",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "InsuredLastName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "insuredDateOfBirthYear",
+            "key": "dateOfBirthYear",
+            "schema": {
+              "generatedName": "insuredDateOfBirthYear",
+              "nameOverride": "Insured",
+              "title": "Insured",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InsuredDateOfBirthYear",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "insuredLicenseNo",
+            "key": "licenseNo",
+            "schema": {
+              "generatedName": "insuredLicenseNo",
+              "nameOverride": "Insured",
+              "title": "Insured",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InsuredLicenseNo",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "insuredLicenseState",
+            "key": "licenseState",
+            "schema": {
+              "generatedName": "insuredLicenseState",
+              "nameOverride": "Insured",
+              "title": "Insured",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InsuredLicenseState",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "insuredLicenseStatus",
+            "key": "licenseStatus",
+            "schema": {
+              "generatedName": "insuredLicenseStatus",
+              "nameOverride": "Insured",
+              "title": "Insured",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InsuredLicenseStatus",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "insuredDateOfBirth",
+            "key": "dateOfBirth",
+            "schema": {
+              "generatedName": "insuredDateOfBirth",
+              "nameOverride": "Insured",
+              "title": "Insured",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InsuredDateOfBirth",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "insuredType",
+            "key": "type",
+            "schema": {
+              "generatedName": "insuredType",
+              "nameOverride": "Insured",
+              "title": "Insured",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InsuredType",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Insured",
+        "nameOverride": "Insured",
+        "title": "Insured",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ThirdParty": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "thirdPartyProperty",
+            "key": "property",
+            "schema": {
+              "generatedName": "thirdPartyProperty",
+              "title": "Third Party",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ThirdPartyProperty",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "thirdPartyType",
+            "key": "type",
+            "schema": {
+              "generatedName": "ThirdPartyType",
+              "values": [
+                {
+                  "generatedName": "lienholder",
+                  "value": "lienholder",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "lessor",
+                  "value": "lessor",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "interest",
+                  "value": "interest",
+                  "casing": {}
+                }
+              ],
+              "default": {
+                "generatedName": "interest",
+                "value": "interest",
+                "casing": {}
+              },
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "thirdPartyName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ThirdPartyName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "thirdPartyAddress",
+            "key": "address",
+            "schema": {
+              "generatedName": "thirdPartyAddress",
+              "title": "Third Party",
+              "value": {
+                "generatedName": "ThirdPartyAddress",
+                "schema": "Address",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ThirdParty",
+        "title": "Third Party",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "description": "Your application's unique user id.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "UserId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userFirstName",
+            "key": "firstName",
+            "schema": {
+              "generatedName": "userFirstName",
+              "nameOverride": "User",
+              "title": "User",
+              "value": {
+                "description": "User's first name.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserFirstName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userLastName",
+            "key": "lastName",
+            "schema": {
+              "generatedName": "userLastName",
+              "nameOverride": "User",
+              "title": "User",
+              "value": {
+                "description": "User's last name.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserLastName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userEmail",
+            "key": "email",
+            "schema": {
+              "generatedName": "userEmail",
+              "nameOverride": "User",
+              "title": "User",
+              "value": {
+                "description": "User's email address.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userPhone",
+            "key": "phone",
+            "schema": {
+              "generatedName": "userPhone",
+              "nameOverride": "User",
+              "title": "User",
+              "value": {
+                "description": "User's phone number in E.164 format.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserPhone",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "User to attach to Ignition session. If user is set, unique `id` must be provided.",
+        "generatedName": "User",
+        "nameOverride": "User",
+        "title": "User",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Success": {
+        "description": "Indicates whether the operation was performed successfully.",
+        "schema": {
+          "type": "boolean"
+        },
+        "generatedName": "Success",
+        "nameOverride": "Success",
+        "title": "Success",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "Error": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "errorSuccess",
+            "key": "success",
+            "schema": {
+              "generatedName": "errorSuccess",
+              "nameOverride": "Error",
+              "title": "Error",
+              "value": {
+                "generatedName": "ErrorSuccess",
+                "schema": "Success",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "errorMessage",
+            "key": "message",
+            "schema": {
+              "generatedName": "errorMessage",
+              "nameOverride": "Error",
+              "title": "Error",
+              "value": {
+                "description": "Provides a reason for why the operation failed, if available.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ErrorMessage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Error",
+        "nameOverride": "Error",
+        "title": "Error",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "apiKeyAuth": {
+      "headerName": "x-access-token",
+      "type": "header"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

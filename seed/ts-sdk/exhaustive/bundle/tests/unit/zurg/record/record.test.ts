@@ -15,7 +15,7 @@ describe("record", () => {
                 path: [],
                 message: "Expected object. Received list.",
             },
-        ]
+        ],
     );
 
     itValidate("invalid key type", record(number(), string()), { hello: "world" }, [

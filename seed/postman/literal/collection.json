@@ -2,7 +2,7 @@
   "info": {
     "name": "Literal",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Test definition for literal schemas."
+    "description": "Test definition for literal schemas. "
   },
   "variable": [
     {
@@ -158,7 +158,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"query\": \"query\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -167,7 +167,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -283,7 +283,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"temperature\": 10.1,\n    \"prompt\": \"You are a helpful assistant\",\n    \"context\": \"You're super wise\",\n    \"aliasedContext\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"objectWithLiteral\": {\n        \"nestedLiteral\": {\n            \"myLiteral\": \"How super cool\"\n        }\n    },\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"context\": \"You're super wise\",\n    \"query\": \"query\",\n    \"temperature\": 1.1,\n    \"stream\": false,\n    \"aliasedContext\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"objectWithLiteral\": {\n        \"nestedLiteral\": {\n            \"myLiteral\": \"How super cool\"\n        }\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -292,7 +292,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -414,7 +414,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -432,7 +432,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&stream=false&query=What+is+the+weather+today",
+              "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&optional_prompt=You+are+a+helpful+assistant&alias_prompt=You+are+a+helpful+assistant&alias_optional_prompt=You+are+a+helpful+assistant&stream=false&optional_stream=false&alias_stream=false&alias_optional_stream=false&query=What+is+the+weather+today",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -446,7 +446,37 @@
                   "value": "You are a helpful assistant"
                 },
                 {
+                  "key": "optional_prompt",
+                  "description": null,
+                  "value": "You are a helpful assistant"
+                },
+                {
+                  "key": "alias_prompt",
+                  "description": null,
+                  "value": "You are a helpful assistant"
+                },
+                {
+                  "key": "alias_optional_prompt",
+                  "description": null,
+                  "value": "You are a helpful assistant"
+                },
+                {
                   "key": "stream",
+                  "description": null,
+                  "value": "false"
+                },
+                {
+                  "key": "optional_stream",
+                  "description": null,
+                  "value": "false"
+                },
+                {
+                  "key": "alias_stream",
+                  "description": null,
+                  "value": "false"
+                },
+                {
+                  "key": "alias_optional_stream",
                   "description": null,
                   "value": "false"
                 },
@@ -477,7 +507,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&stream=false&query=What+is+the+weather+today",
+                  "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&optional_prompt=You+are+a+helpful+assistant&alias_prompt=You+are+a+helpful+assistant&alias_optional_prompt=You+are+a+helpful+assistant&stream=false&optional_stream=false&alias_stream=false&alias_optional_stream=false&query=What+is+the+weather+today",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -491,7 +521,37 @@
                       "value": "You are a helpful assistant"
                     },
                     {
+                      "key": "optional_prompt",
+                      "description": null,
+                      "value": "You are a helpful assistant"
+                    },
+                    {
+                      "key": "alias_prompt",
+                      "description": null,
+                      "value": "You are a helpful assistant"
+                    },
+                    {
+                      "key": "alias_optional_prompt",
+                      "description": null,
+                      "value": "You are a helpful assistant"
+                    },
+                    {
                       "key": "stream",
+                      "description": null,
+                      "value": "false"
+                    },
+                    {
+                      "key": "optional_stream",
+                      "description": null,
+                      "value": "false"
+                    },
+                    {
+                      "key": "alias_stream",
+                      "description": null,
+                      "value": "false"
+                    },
+                    {
+                      "key": "alias_optional_stream",
                       "description": null,
                       "value": "false"
                     },
@@ -525,7 +585,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&query=string&stream=false",
+                  "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&optional_prompt=You+are+a+helpful+assistant&alias_prompt=You+are+a+helpful+assistant&alias_optional_prompt=You+are+a+helpful+assistant&query=query&stream=false&optional_stream=false&alias_stream=false&alias_optional_stream=false",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -539,12 +599,42 @@
                       "value": "You are a helpful assistant"
                     },
                     {
+                      "key": "optional_prompt",
+                      "description": null,
+                      "value": "You are a helpful assistant"
+                    },
+                    {
+                      "key": "alias_prompt",
+                      "description": null,
+                      "value": "You are a helpful assistant"
+                    },
+                    {
+                      "key": "alias_optional_prompt",
+                      "description": null,
+                      "value": "You are a helpful assistant"
+                    },
+                    {
                       "key": "query",
                       "description": null,
-                      "value": "string"
+                      "value": "query"
                     },
                     {
                       "key": "stream",
+                      "description": null,
+                      "value": "false"
+                    },
+                    {
+                      "key": "optional_stream",
+                      "description": null,
+                      "value": "false"
+                    },
+                    {
+                      "key": "alias_stream",
+                      "description": null,
+                      "value": "false"
+                    },
+                    {
+                      "key": "alias_optional_stream",
                       "description": null,
                       "value": "false"
                     }
@@ -563,7 +653,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -602,7 +692,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
+              "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\",\n    \"containerObject\": {\n        \"nestedObjects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            }\n        ]\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -639,7 +729,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\",\n    \"containerObject\": {\n        \"nestedObjects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            }\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -679,7 +769,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"query\": \"query\",\n    \"stream\": false,\n    \"ending\": \"$ending\",\n    \"context\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"containerObject\": {\n        \"nestedObjects\": [\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            },\n            {\n                \"literal1\": \"literal1\",\n                \"literal2\": \"literal2\",\n                \"strProp\": \"strProp\"\n            }\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -688,7 +778,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "body": "{\n    \"message\": \"message\",\n    \"status\": 1,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
             }
           ]

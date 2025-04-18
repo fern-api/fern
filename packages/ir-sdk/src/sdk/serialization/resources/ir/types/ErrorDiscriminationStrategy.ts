@@ -30,13 +30,13 @@ export const ErrorDiscriminationStrategy: core.serialization.Schema<
     });
 
 export declare namespace ErrorDiscriminationStrategy {
-    type Raw = ErrorDiscriminationStrategy.StatusCode | ErrorDiscriminationStrategy.Property;
+    export type Raw = ErrorDiscriminationStrategy.StatusCode | ErrorDiscriminationStrategy.Property;
 
-    interface StatusCode {
+    export interface StatusCode {
         type: "statusCode";
     }
 
-    interface Property extends ErrorDiscriminationByPropertyStrategy.Raw {
+    export interface Property extends ErrorDiscriminationByPropertyStrategy.Raw {
         type: "property";
     }
 }

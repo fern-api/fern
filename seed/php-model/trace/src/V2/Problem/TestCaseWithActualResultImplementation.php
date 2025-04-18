@@ -2,32 +2,41 @@
 
 namespace Seed\V2\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseWithActualResultImplementation extends SerializableType
+class TestCaseWithActualResultImplementation extends JsonSerializableType
 {
     /**
      * @var NonVoidFunctionDefinition $getActualResult
      */
-    #[JsonProperty("getActualResult")]
+    #[JsonProperty('getActualResult')]
     public NonVoidFunctionDefinition $getActualResult;
 
     /**
-     * @var mixed $assertCorrectnessCheck
+     * @var AssertCorrectnessCheck $assertCorrectnessCheck
      */
-    #[JsonProperty("assertCorrectnessCheck")]
-    public mixed $assertCorrectnessCheck;
+    #[JsonProperty('assertCorrectnessCheck')]
+    public AssertCorrectnessCheck $assertCorrectnessCheck;
 
     /**
-     * @param NonVoidFunctionDefinition $getActualResult
-     * @param mixed $assertCorrectnessCheck
+     * @param array{
+     *   getActualResult: NonVoidFunctionDefinition,
+     *   assertCorrectnessCheck: AssertCorrectnessCheck,
+     * } $values
      */
     public function __construct(
-        NonVoidFunctionDefinition $getActualResult,
-        mixed $assertCorrectnessCheck,
+        array $values,
     ) {
-        $this->getActualResult = $getActualResult;
-        $this->assertCorrectnessCheck = $assertCorrectnessCheck;
+        $this->getActualResult = $values['getActualResult'];
+        $this->assertCorrectnessCheck = $values['assertCorrectnessCheck'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

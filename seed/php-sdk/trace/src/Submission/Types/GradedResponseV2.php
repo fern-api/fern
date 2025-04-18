@@ -2,33 +2,42 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class GradedResponseV2 extends SerializableType
+class GradedResponseV2 extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
-     * @var array<string, mixed> $testCases
+     * @var array<string, TestCaseGrade> $testCases
      */
-    #[JsonProperty("testCases"), ArrayType(["string" => "mixed"])]
+    #[JsonProperty('testCases'), ArrayType(['string' => TestCaseGrade::class])]
     public array $testCases;
 
     /**
-     * @param string $submissionId
-     * @param array<string, mixed> $testCases
+     * @param array{
+     *   submissionId: string,
+     *   testCases: array<string, TestCaseGrade>,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        array $testCases,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->testCases = $testCases;
+        $this->submissionId = $values['submissionId'];
+        $this->testCases = $values['testCases'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

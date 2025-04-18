@@ -5,7 +5,7 @@ package crosspackagetypenames
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/cross-package-type-names/fern/core"
+	internal "github.com/cross-package-type-names/fern/internal"
 )
 
 type FindRequest struct {
@@ -18,7 +18,14 @@ type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (i *ImportingType) GetImported() Imported {
+	if i == nil {
+		return ""
+	}
+	return i.Imported
 }
 
 func (i *ImportingType) GetExtraProperties() map[string]interface{} {
@@ -32,24 +39,22 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = ImportingType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
 	if err != nil {
 		return err
 	}
 	i.extraProperties = extraProperties
-
-	i._rawJSON = json.RawMessage(data)
+	i.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (i *ImportingType) String() string {
-	if len(i._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(i._rawJSON); err == nil {
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(i); err == nil {
+	if value, err := internal.StringifyJSON(i); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)

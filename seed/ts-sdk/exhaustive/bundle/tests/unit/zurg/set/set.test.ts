@@ -24,7 +24,7 @@ describe("set", () => {
                 path: [],
                 message: "Expected Set. Received list.",
             },
-        ]
+        ],
     );
 
     itValidateParse(
@@ -36,7 +36,7 @@ describe("set", () => {
                 path: ["[0]"],
                 message: "Expected string. Received 42.",
             },
-        ]
+        ],
     );
 
     itValidateJson("invalid item type", set(string()), new Set([42]), [

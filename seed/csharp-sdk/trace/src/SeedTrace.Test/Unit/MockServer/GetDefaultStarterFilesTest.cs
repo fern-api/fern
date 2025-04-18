@@ -1,19 +1,15 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetDefaultStarterFilesTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -22,28 +18,38 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
                   "variableType": {
                     "type": "integerType"
                   },
-                  "name": "string"
+                  "name": "name"
+                },
+                {
+                  "variableType": {
+                    "type": "integerType"
+                  },
+                  "name": "name"
                 }
               ],
               "outputType": {
                 "type": "integerType"
               },
-              "methodName": "string"
+              "methodName": "methodName"
             }
             """;
 
         const string mockResponse = """
             {
               "files": {
-                "string": {
+                "JAVA": {
                   "solutionFile": {
-                    "filename": "string",
-                    "contents": "string"
+                    "filename": "filename",
+                    "contents": "contents"
                   },
                   "readOnlyFiles": [
                     {
-                      "filename": "string",
-                      "contents": "string"
+                      "filename": "filename",
+                      "contents": "contents"
+                    },
+                    {
+                      "filename": "filename",
+                      "contents": "contents"
                     }
                   ]
                 }
@@ -71,20 +77,17 @@ public class GetDefaultStarterFilesTest : BaseMockServerTest
             {
                 InputParams = new List<VariableTypeAndName>()
                 {
-                    new VariableTypeAndName
-                    {
-                        VariableType = "no-properties-union",
-                        Name = "string",
-                    },
+                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
                 },
                 OutputType = "no-properties-union",
-                MethodName = "string",
-            },
-            RequestOptions
+                MethodName = "methodName",
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(mockResponse))
+                .UsingDefaults()
+        );
     }
 }

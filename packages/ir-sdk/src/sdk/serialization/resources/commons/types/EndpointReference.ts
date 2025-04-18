@@ -19,7 +19,7 @@ export const EndpointReference: core.serialization.ObjectSchema<
 });
 
 export declare namespace EndpointReference {
-    interface Raw {
+    export interface Raw {
         endpointId: EndpointId.Raw;
         serviceId: ServiceId.Raw;
         subpackageId?: SubpackageId.Raw | null;

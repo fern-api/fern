@@ -2,32 +2,41 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class User extends SerializableType
+class User extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var int $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public int $id;
 
     /**
-     * @param string $name
-     * @param int $id
+     * @param array{
+     *   name: string,
+     *   id: int,
+     * } $values
      */
     public function __construct(
-        string $name,
-        int $id,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->id = $id;
+        $this->name = $values['name'];
+        $this->id = $values['id'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

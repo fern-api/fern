@@ -9,7 +9,10 @@
     "@types/node-fetch",
     "@types/qs",
     "jest-environment-jsdom",
-    "ts-loader"
+    "ts-loader",
+    "@trivago/prettier-plugin-sort-imports"
   ],
-  "ignore-patterns": ["lib"]
+  "ignore-patterns": [
+    "lib"
+  ]
 }

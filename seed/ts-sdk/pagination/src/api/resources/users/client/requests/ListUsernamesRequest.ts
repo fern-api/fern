@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         startingAfter: "string"
+ *         startingAfter: "starting_after"
  *     }
  */
 export interface ListUsernamesRequest {

@@ -1,6 +1,8 @@
-import { EndpointId, ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
 import { NpmPackage } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
+
+import { EndpointId, ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
+
 import { SdkContext } from "..";
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
@@ -15,5 +17,13 @@ export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
         example: ExampleEndpointCall;
         clientReference: ts.Identifier;
     }): ts.Expression | undefined;
+
     getEndpoint(args: { context: SdkContext; endpointId: string }): GeneratedEndpointImplementation | undefined;
+
+    maybeLeverageInvocation: (args: {
+        context: SdkContext;
+        endpointId: EndpointId;
+        example: ExampleEndpointCall;
+        clientReference: ts.Identifier;
+    }) => ts.Node[] | undefined;
 }

@@ -13,7 +13,7 @@ export const InternalError: core.serialization.ObjectSchema<serializers.Internal
     });
 
 export declare namespace InternalError {
-    interface Raw {
+    export interface Raw {
         exceptionInfo: ExceptionInfo.Raw;
     }
 }

@@ -1,0 +1,226 @@
+{
+  "title": "Test spec for `description` settings defined in anyOf.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "Post",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostRequest",
+          "schema": "Request",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "PostResponse",
+          "schema": "Response",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/post",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "value": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Request": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "requestId",
+            "key": "id",
+            "schema": {
+              "generatedName": "requestId",
+              "title": "A simple request title",
+              "value": {
+                "generatedName": "RequestId",
+                "description": "An optional string value.\n",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "RequestId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A generic request type used throughout the API.\n",
+        "generatedName": "Request",
+        "title": "A simple request title",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Response": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "responseValue",
+            "key": "value",
+            "schema": {
+              "generatedName": "responseValue",
+              "title": "A simple response title",
+              "value": {
+                "generatedName": "ResponseValue",
+                "description": "An optional numerical value.\n",
+                "value": {
+                  "schema": {
+                    "type": "double"
+                  },
+                  "generatedName": "ResponseValue",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A generic response type used throughout the API.\n",
+        "generatedName": "Response",
+        "title": "A simple response title",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SampleUnion": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "type",
+          "generatedName": "SampleUnion",
+          "schemas": {
+            "request": {
+              "generatedName": "ComponentsSchemasRequest",
+              "schema": "Request",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "response": {
+              "generatedName": "ComponentsSchemasResponse",
+              "schema": "Response",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type RequestPropertyValue = FernIr.RequestPropertyValue.Query | FernIr.RequestPropertyValue.Body;
 
-export declare namespace RequestPropertyValue {
-    interface Query extends FernIr.QueryParameter, _Utils {
+export namespace RequestPropertyValue {
+    export interface Query extends FernIr.QueryParameter, _Utils {
         type: "query";
     }
 
-    interface Body extends FernIr.ObjectProperty, _Utils {
+    export interface Body extends FernIr.ObjectProperty, _Utils {
         type: "body";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.RequestPropertyValue._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         query: (value: FernIr.QueryParameter) => _Result;
         body: (value: FernIr.ObjectProperty) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const RequestPropertyValue = {
             type: "query",
             _visit: function <_Result>(
                 this: FernIr.RequestPropertyValue.Query,
-                visitor: FernIr.RequestPropertyValue._Visitor<_Result>
+                visitor: FernIr.RequestPropertyValue._Visitor<_Result>,
             ) {
                 return FernIr.RequestPropertyValue._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const RequestPropertyValue = {
             type: "body",
             _visit: function <_Result>(
                 this: FernIr.RequestPropertyValue.Body,
-                visitor: FernIr.RequestPropertyValue._Visitor<_Result>
+                visitor: FernIr.RequestPropertyValue._Visitor<_Result>,
             ) {
                 return FernIr.RequestPropertyValue._visit(this, visitor);
             },
@@ -55,7 +55,7 @@ export const RequestPropertyValue = {
 
     _visit: <_Result>(
         value: FernIr.RequestPropertyValue,
-        visitor: FernIr.RequestPropertyValue._Visitor<_Result>
+        visitor: FernIr.RequestPropertyValue._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "query":

@@ -14,7 +14,7 @@ export const DoubleOptional: core.serialization.ObjectSchema<
 });
 
 export declare namespace DoubleOptional {
-    interface Raw {
+    export interface Raw {
         optionalAlias?: (serializers.types.OptionalAlias.Raw | undefined) | null;
     }
 }

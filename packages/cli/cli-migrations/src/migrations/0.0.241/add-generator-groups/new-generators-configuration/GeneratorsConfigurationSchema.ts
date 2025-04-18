@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
 
 export const GeneratorsConfigurationSchema = z.strictObject({

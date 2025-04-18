@@ -1,0 +1,81 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "rootApiFile": {
+    "contents": {
+      "name": "api",
+      "error-discrimination": {
+        "strategy": "status-code"
+      }
+    },
+    "rawContents": "name: api\nerror-discrimination:\n  strategy: status-code\n"
+  },
+  "namedDefinitionFiles": {
+    "Debug/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "rawContents": "service:\n  auth: false\n  base-path: /debug\n  endpoints:\n    debugEndpointAlpha:\n      auth: true\n      path: /debug-endpoint-alpha\n      method: GET\n      response: string\n      docs: Test endpoint alpha.\n      request:\n        body: string\n    debugEndpointBeta:\n      auth: true\n      path: /debug-endpoint-beta/{param1}\n      method: GET\n      response: string\n      docs: Test endpoint beta.\n      path-parameters:\n        param1:\n          type: string\n      request:\n        query-parameters:\n          param2: string\n        name: debugEndpointBetaRequest\n    debugEndpointGamma:\n      auth: true\n      path: /debug-endpoint-beta/{param1}/test\n      method: POST\n      response: string\n      docs: Test endpoint gamma.\n      path-parameters:\n        param1:\n          type: string\n      request:\n        query-parameters:\n          param2: string\n          param3: string\n        body: bytes\n        name: debugEndpointGammaRequest\n",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "/debug",
+          "endpoints": {
+            "debugEndpointAlpha": {
+              "auth": true,
+              "path": "/debug-endpoint-alpha",
+              "method": "GET",
+              "response": "string",
+              "docs": "Test endpoint alpha.",
+              "request": {
+                "body": "string"
+              }
+            },
+            "debugEndpointBeta": {
+              "auth": true,
+              "path": "/debug-endpoint-beta/{param1}",
+              "method": "GET",
+              "response": "string",
+              "docs": "Test endpoint beta.",
+              "path-parameters": {
+                "param1": {
+                  "type": "string"
+                }
+              },
+              "request": {
+                "query-parameters": {
+                  "param2": "string"
+                },
+                "name": "debugEndpointBetaRequest"
+              }
+            },
+            "debugEndpointGamma": {
+              "auth": true,
+              "path": "/debug-endpoint-beta/{param1}/test",
+              "method": "POST",
+              "response": "string",
+              "docs": "Test endpoint gamma.",
+              "path-parameters": {
+                "param1": {
+                  "type": "string"
+                }
+              },
+              "request": {
+                "query-parameters": {
+                  "param2": "string",
+                  "param3": "string"
+                },
+                "body": "bytes",
+                "name": "debugEndpointGammaRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "rawContents": "{}\n",
+      "contents": {}
+    }
+  },
+  "packageMarkers": {},
+  "importedDefinitions": {}
+}

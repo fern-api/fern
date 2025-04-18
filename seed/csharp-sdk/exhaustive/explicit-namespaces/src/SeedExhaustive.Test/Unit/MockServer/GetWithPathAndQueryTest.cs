@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedExhaustive.Endpoints.Params;
 
-#nullable enable
-
 namespace SeedExhaustive.Test.Unit.MockServer;
 
 [TestFixture]
@@ -15,8 +13,8 @@ public class GetWithPathAndQueryTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/params/path-query/string")
-                    .WithParam("query", "string")
+                    .WithPath("/params/path-query/param")
+                    .WithParam("query", "query")
                     .UsingGet()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
@@ -24,9 +22,8 @@ public class GetWithPathAndQueryTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Endpoints.Params.GetWithPathAndQueryAsync(
-                    "string",
-                    new GetWithPathAndQuery { Query = "string" },
-                    RequestOptions
+                    "param",
+                    new GetWithPathAndQuery { Query = "query" }
                 )
         );
     }

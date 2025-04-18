@@ -1,3 +1,6 @@
+[project]
+name = "fern_streaming-parameter"
+
 [tool.poetry]
 name = "fern_streaming-parameter"
 version = "0.0.1"

@@ -1,37 +1,35 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class UpdatePlaylistTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
-              "name": "string",
+              "name": "name",
               "problems": [
-                "string"
+                "problems",
+                "problems"
               ]
             }
             """;
 
         const string mockResponse = """
             {
-              "playlist_id": "string",
-              "owner-id": "string",
-              "name": "string",
+              "name": "name",
               "problems": [
-                "string"
-              ]
+                "problems",
+                "problems"
+              ],
+              "playlist_id": "playlist_id",
+              "owner-id": "owner-id"
             }
             """;
 
@@ -39,7 +37,7 @@ public class UpdatePlaylistTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/v2/playlist/1/string")
+                    .WithPath("/v2/playlist/1/playlistId")
                     .UsingPut()
                     .WithBodyAsJson(requestJson)
             )
@@ -52,17 +50,16 @@ public class UpdatePlaylistTest : BaseMockServerTest
 
         var response = await Client.Playlist.UpdatePlaylistAsync(
             1,
-            "string",
+            "playlistId",
             new UpdatePlaylistRequest
             {
-                Name = "string",
-                Problems = new List<string>() { "string" },
-            },
-            RequestOptions
+                Name = "name",
+                Problems = new List<string>() { "problems", "problems" },
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Playlist?>(mockResponse)).UsingDefaults()
+        );
     }
 }

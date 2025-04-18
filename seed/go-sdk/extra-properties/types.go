@@ -5,7 +5,7 @@ package extraproperties
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/extra-properties/fern/core"
+	internal "github.com/extra-properties/fern/internal"
 )
 
 type Failure struct {
@@ -13,15 +13,15 @@ type Failure struct {
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
-	_rawJSON json.RawMessage
-}
-
-func (f *Failure) GetExtraProperties() map[string]interface{} {
-	return f.ExtraProperties
+	rawJSON json.RawMessage
 }
 
 func (f *Failure) Status() string {
 	return f.status
+}
+
+func (f *Failure) GetExtraProperties() map[string]interface{} {
+	return f.ExtraProperties
 }
 
 func (f *Failure) UnmarshalJSON(data []byte) error {
@@ -40,14 +40,12 @@ func (f *Failure) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "failure", unmarshaler.Status)
 	}
 	f.status = unmarshaler.Status
-
-	extraProperties, err := core.ExtractExtraProperties(data, *f, "status")
+	extraProperties, err := internal.ExtractExtraProperties(data, *f, "status")
 	if err != nil {
 		return err
 	}
 	f.ExtraProperties = extraProperties
-
-	f._rawJSON = json.RawMessage(data)
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -60,16 +58,16 @@ func (f *Failure) MarshalJSON() ([]byte, error) {
 		embed:  embed(*f),
 		Status: "failure",
 	}
-	return core.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
+	return internal.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
 }
 
 func (f *Failure) String() string {
-	if len(f._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(f); err == nil {
+	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)

@@ -1,0 +1,129 @@
+imports: 
+  commons: commons.yml
+
+types: 
+  
+  ExampleTypeSchema: 
+    audiences:
+      - docs-parsers
+    extends: 
+      - commons.WithName
+      - commons.WithDocsSchema
+    properties: 
+      value: ExampleTypeValueSchema
+  
+  ExampleTypeValueSchema: unknown
+  
+  ExampleWebSocketSession: 
+    extends: 
+      - commons.WithName
+      - commons.WithDocsSchema
+    properties: 
+      path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
+      query-parameters: optional<map<string, ExampleTypeReferenceSchema>>
+      headers: optional<map<string, ExampleTypeReferenceSchema>>
+      messages: list<ExampleWebSocketMessage>
+  
+  ExampleWebSocketMessage: 
+    properties: 
+      type: string
+      body: unknown
+
+  ExampleEndpointCallArraySchema: list<ExampleEndpointCallSchema>
+  
+  ExampleEndpointCallSchema:
+    audiences:
+      - docs-parsers
+    extends: 
+      - commons.WithName
+      - commons.WithDocsSchema     
+    properties: 
+      id: optional<string>
+      path-parameters: optional<map<string, ExampleTypeReferenceSchema>>
+      query-parameters: optional<map<string, ExampleTypeReferenceSchema>>
+      headers: optional<map<string, ExampleTypeReferenceSchema>>
+      request: optional<ExampleTypeReferenceSchema>
+      response: optional<ExampleResponseSchema>
+      code-samples: optional<list<ExampleCodeSampleSchema>>
+  
+  ExampleWebhookCallSchema: 
+    audiences:
+      - docs-parsers
+    extends: 
+      - commons.WithName
+      - commons.WithDocsSchema      
+    properties: 
+      id: optional<string>
+      payload: ExampleTypeReferenceSchema
+
+  ExampleResponseSchema:  
+    discriminated: false
+    union: 
+      - ExampleBodyResponseSchema
+      - type: ExampleStreamResponseSchema
+        docs: JSON Streams
+      - type: ExampleSseResponseSchema
+        docs: Server-Sent Event streams
+  
+  ExampleBodyResponseSchema: 
+    properties: 
+      error: optional<string>
+      body: optional<ExampleTypeReferenceSchema>
+  
+  ExampleStreamResponseSchema: 
+    properties: 
+      stream: list<ExampleTypeReferenceSchema>
+  
+  ExampleSseResponseSchema: 
+    properties: 
+      stream: list<ExampleSseEventSchema>
+
+  ExampleSseEventSchema: 
+    properties: 
+      event: string
+      data: optional<ExampleTypeReferenceSchema>
+  
+  ExampleTypeReferenceSchema: unknown
+
+  ExampleCodeSampleSchema: 
+    discriminated: false
+    union: 
+      - ExampleCodeSampleSchemaSdk
+      - ExampleCodeSampleSchemaLanguage
+  
+  ExampleCodeSampleSchemaSdk: 
+    extends: 
+      - commons.WithDocsSchema
+      - commons.WithName  
+    properties: 
+      sdk: SupportedSdkLanguageSchema
+      code: string
+  
+  SupportedSdkLanguageSchema: 
+    enum:
+      - curl
+      - python
+      - javascript
+      - typescript
+      - go
+      - ruby
+      - csharp
+      - java
+      - js
+      - node
+      - ts
+      - nodets
+      - golang
+      - dotnet
+      - jvm
+      - value: c#
+        name: csharp2  
+    
+  ExampleCodeSampleSchemaLanguage: 
+    extends: 
+      - commons.WithDocsSchema
+      - commons.WithName
+    properties: 
+      language: string
+      code: string
+      install: optional<string>

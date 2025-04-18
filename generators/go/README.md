@@ -1,9 +1,9 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-go&utm_content=logo">
-    <img src="../../fern/images/logo-primary.png" height="50" align="center" alt="header" />
+    <img src="../../fern/images/logo-primary.svg" height="50" align="center" alt="header" />
   </a>
-  
+
   <br/>
 
 # Go Generator
@@ -36,7 +36,7 @@ Fern handles transforming an API definition -- either an OpenAPI or Fern specifi
 
 Fern is a toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
 
-Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-go&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/docs/intro?utm_source=github&utm_medium=readme&utm_campaign=fern-go&utm_content=documentation) to dive straight in and find out what Fern can do for you!
+Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-go&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/learn?utm_source=github&utm_medium=readme&utm_campaign=fern-go&utm_content=documentation) to dive straight in and find out what Fern can do for you!
 
 ## Generating Go
 
@@ -54,7 +54,7 @@ By default, Fern runs the generators in the cloud.
 
 ## Using local file generation
 
-To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
+To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/learn/cli-reference#running-locally)
 
 When Fern is configured to generate code locally, it can write its output anywhere
 on the local filesystem. The Go generator needs to know where to resolve its import
@@ -63,7 +63,7 @@ to do so.
 
 ### Package name
 
-You can customzie the name of the package generated with the following `generators.yml` configuration:
+You can customize the name of the package generated with the following `generators.yml` configuration:
 
 ```yaml
 default-group: local
@@ -227,8 +227,4 @@ Fern will handle the rest automatically.
 
 ## Contributing
 
-We greatly value community contributions. All the work on Fern generators happens right here on GitHub, both Fern developers and community contributors work together through submitting code via Pull Requests. See the contribution guidelines in [CONTRIBUTING](./CONTRIBUTING.md) on how you can contribute to Fern!
-
-<a href="https://github.com/fern-api/fern-go/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=fern-api/fern-go" />
-</a>
+We greatly value community contributions. All the work on Fern generators happens right here on GitHub, both Fern developers and community contributors work together through submitting code via Pull Requests. See the contribution guidelines in [CONTRIBUTING](../../CONTRIBUTING.md) on how you can contribute to Fern!

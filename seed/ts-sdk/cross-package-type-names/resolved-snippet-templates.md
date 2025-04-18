@@ -5,8 +5,8 @@ const client = new SeedCrossPackageTypeNamesClient({
   environment: "YOUR_BASE_URL",
 });
 await client.folderA.service.getDirectThread();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -16,8 +16,8 @@ const client = new SeedCrossPackageTypeNamesClient({
   environment: "YOUR_BASE_URL",
 });
 await client.folderD.service.getDirectThread();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -27,11 +27,11 @@ const client = new SeedCrossPackageTypeNamesClient({
   environment: "YOUR_BASE_URL",
 });
 await client.foo.find({
-  optionalString: "string",
-  publicProperty: "string",
+  optionalString: "optionalString",
+  publicProperty: "publicProperty",
   privateProperty: 1,
 });
- 
-```                        
+
+```
 
 

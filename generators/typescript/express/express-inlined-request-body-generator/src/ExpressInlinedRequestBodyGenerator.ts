@@ -1,5 +1,7 @@
-import { InlinedRequestBody } from "@fern-fern/ir-sdk/api";
 import { GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
+
+import { InlinedRequestBody } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedExpressInlinedRequestBodyImpl } from "./GeneratedExpressInlinedRequestBodyImpl";
 
 export declare namespace ExpressInlinedRequestBodyGenerator {

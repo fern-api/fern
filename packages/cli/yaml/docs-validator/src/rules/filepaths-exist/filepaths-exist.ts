@@ -1,4 +1,5 @@
 import { doesPathExist } from "@fern-api/fs-utils";
+
 import { Rule } from "../../Rule";
 
 export const FilepathsExistRule: Rule = {
@@ -9,7 +10,7 @@ export const FilepathsExistRule: Rule = {
                 if (!(await doesPathExist(absoluteFilepath))) {
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message: `Path ${value} does not exist`
                         }
                     ];

@@ -14,7 +14,7 @@ export const FinishedResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace FinishedResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
     }
 }

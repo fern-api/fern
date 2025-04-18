@@ -1,12 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas, parseRawFileType, parseRawTextType } from "@fern-api/fern-definition-schema";
 import {
-    constructFernFileContext,
     FernFileContext,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl
+    TypeResolverImpl,
+    constructFernFileContext
 } from "@fern-api/ir-generator";
-import { parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -22,6 +23,9 @@ export const NoResponsePropertyRule: Rule = {
                         return [];
                     }
                     const responseType = typeof response === "string" ? response : response.type;
+                    if (responseType == null) {
+                        return [];
+                    }
                     if (parseRawFileType(responseType) != null) {
                         return [];
                     } else if (parseRawTextType(responseType) != null) {
@@ -37,8 +41,12 @@ export const NoResponsePropertyRule: Rule = {
                         rootApiFile: workspace.definition.rootApiFile.contents,
                         casingsGenerator: CASINGS_GENERATOR
                     });
+                    const responseTypeReference = typeof response !== "string" ? response.type : response;
+                    if (responseTypeReference == null) {
+                        return [];
+                    }
                     const resolvedType = typeResolver.resolveTypeOrThrow({
-                        type: typeof response !== "string" ? response.type : response,
+                        type: responseTypeReference,
                         file
                     });
                     const result = resolvedTypeHasProperty(resolvedType, responseProperty, file, typeResolver);
@@ -62,14 +70,14 @@ function resultToRuleViolations(result: Result, responseProperty: string): RuleV
         case Result.DoesNotContainProperty:
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: `Response does not have a property named ${responseProperty}.`
                 }
             ];
         case Result.IsNotObject:
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: "Response must be an object in order to return a property as a response."
                 }
             ];
@@ -84,7 +92,7 @@ function resolvedTypeHasProperty(
 ): Result {
     switch (resolvedType._type) {
         case "container":
-            if (resolvedType.container._type !== "optional") {
+            if (resolvedType.container._type !== "optional" && resolvedType.container._type !== "nullable") {
                 return Result.IsNotObject;
             }
             return resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);

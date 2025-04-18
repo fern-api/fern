@@ -12,7 +12,7 @@ export const Square: core.serialization.ObjectSchema<serializers.Square.Raw, See
     });
 
 export declare namespace Square {
-    interface Raw {
+    export interface Raw {
         length: number;
     }
 }

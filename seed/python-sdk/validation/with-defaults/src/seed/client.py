@@ -3,13 +3,12 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .raw_client import RawSeedValidation
 from .types.shape import Shape
 from .core.request_options import RequestOptions
 from .types.type import Type
-from .core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawSeedValidation
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -50,7 +49,9 @@ class SeedValidation:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -60,6 +61,18 @@ class SeedValidation:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawSeedValidation(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSeedValidation:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSeedValidation
+        """
+        return self._raw_client
 
     def create(
         self,
@@ -96,37 +109,16 @@ class SeedValidation:
             base_url="https://yourhost.com/path/to/api",
         )
         client.create(
-            decimal=1.1,
-            even=1,
-            name="string",
+            decimal=2.2,
+            even=100,
+            name="foo",
             shape="SQUARE",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "create",
-            method="POST",
-            json={
-                "decimal": decimal,
-                "even": even,
-                "name": name,
-                "shape": shape,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.create(
+            decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Type,
-                    parse_obj_as(
-                        type_=Type,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get(
         self,
@@ -160,33 +152,13 @@ class SeedValidation:
             base_url="https://yourhost.com/path/to/api",
         )
         client.get(
-            decimal=1.1,
-            even=1,
-            name="string",
+            decimal=2.2,
+            even=100,
+            name="foo",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            method="GET",
-            params={
-                "decimal": decimal,
-                "even": even,
-                "name": name,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Type,
-                    parse_obj_as(
-                        type_=Type,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
+        return response.data
 
 
 class AsyncSeedValidation:
@@ -224,7 +196,9 @@ class AsyncSeedValidation:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -234,6 +208,18 @@ class AsyncSeedValidation:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawSeedValidation(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSeedValidation:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSeedValidation
+        """
+        return self._raw_client
 
     async def create(
         self,
@@ -275,40 +261,19 @@ class AsyncSeedValidation:
 
         async def main() -> None:
             await client.create(
-                decimal=1.1,
-                even=1,
-                name="string",
+                decimal=2.2,
+                even=100,
+                name="foo",
                 shape="SQUARE",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "create",
-            method="POST",
-            json={
-                "decimal": decimal,
-                "even": even,
-                "name": name,
-                "shape": shape,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.create(
+            decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Type,
-                    parse_obj_as(
-                        type_=Type,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get(
         self,
@@ -347,33 +312,13 @@ class AsyncSeedValidation:
 
         async def main() -> None:
             await client.get(
-                decimal=1.1,
-                even=1,
-                name="string",
+                decimal=2.2,
+                even=100,
+                name="foo",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="GET",
-            params={
-                "decimal": decimal,
-                "even": even,
-                "name": name,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Type,
-                    parse_obj_as(
-                        type_=Type,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
+        return response.data

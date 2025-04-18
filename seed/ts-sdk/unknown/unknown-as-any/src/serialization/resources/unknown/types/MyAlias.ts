@@ -10,5 +10,5 @@ export const MyAlias: core.serialization.Schema<serializers.MyAlias.Raw, SeedUnk
     core.serialization.any();
 
 export declare namespace MyAlias {
-    type Raw = any;
+    export type Raw = any;
 }

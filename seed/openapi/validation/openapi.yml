@@ -30,6 +30,8 @@ paths:
                   type: integer
                 name:
                   type: string
+                  format: custom
+                  pattern: ^[a-z]+$
                 shape:
                   $ref: '#/components/schemas/Shape'
               required:
@@ -59,6 +61,8 @@ paths:
           required: true
           schema:
             type: string
+            format: custom
+            pattern: ^[a-z]+$
       responses:
         '200':
           description: ''
@@ -105,6 +109,8 @@ components:
           example: 2
         name:
           type: string
+          format: custom
+          pattern: ^[a-z]+$
           example: rules
         shape:
           $ref: '#/components/schemas/Shape'

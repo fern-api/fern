@@ -10,5 +10,5 @@ import { Parent } from "./Parent";
 export const AliasType: core.serialization.ObjectSchema<serializers.AliasType.Raw, SeedAliasExtends.AliasType> = Parent;
 
 export declare namespace AliasType {
-    type Raw = Parent.Raw;
+    export type Raw = Parent.Raw;
 }

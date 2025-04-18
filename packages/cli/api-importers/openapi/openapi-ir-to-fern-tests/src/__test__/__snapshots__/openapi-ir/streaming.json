@@ -1,0 +1,1196 @@
+{
+  "title": "Streaming API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "user_stream",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UserStreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userStreamRequestId",
+              "key": "id",
+              "schema": {
+                "generatedName": "userStreamRequestId",
+                "value": {
+                  "description": "",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserStreamRequestId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userStreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "UserStreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserStreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "UserStreamResponse",
+          "schema": "StreamUser",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v1/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "user",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UserRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userRequestId",
+              "key": "id",
+              "schema": {
+                "generatedName": "userRequestId",
+                "value": {
+                  "description": "",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserRequestId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "UserRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "UserResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v1/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "user_v2_stream",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UserV2StreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV2StreamRequestId",
+              "key": "id",
+              "schema": {
+                "generatedName": "userV2StreamRequestId",
+                "value": {
+                  "description": "",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserV2StreamRequestId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV2StreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "UserV2StreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserV2StreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "UserV2StreamResponse",
+          "schema": "StreamUser-2",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "name": {
+                    "value": {
+                      "value": "name",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "streamed": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "literal"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "user_v2",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UserV2Request",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV2RequestId",
+              "key": "id",
+              "schema": {
+                "generatedName": "userV2RequestId",
+                "value": {
+                  "description": "",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserV2RequestId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV2RequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "UserV2RequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserV2Request",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "UserV2Response",
+          "schema": "User-2",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "streamed": {
+                  "value": {
+                    "value": false,
+                    "type": "boolean"
+                  },
+                  "type": "literal"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "user_v3_stream",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UserV3StreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV3StreamRequestId",
+              "key": "id",
+              "schema": {
+                "generatedName": "userV3StreamRequestId",
+                "value": {
+                  "description": "",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserV3StreamRequestId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV3StreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "UserV3StreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserV3StreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "properties": [
+            {
+              "key": "id",
+              "schema": {
+                "generatedName": "userV3StreamResponseId",
+                "value": {
+                  "generatedName": "UserV3StreamResponseId",
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseId"
+            },
+            {
+              "key": "inline",
+              "schema": {
+                "generatedName": "userV3StreamResponseInline",
+                "value": {
+                  "generatedName": "UserV3StreamResponseInline",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseInline"
+            },
+            {
+              "key": "streamed",
+              "schema": {
+                "generatedName": "userV3StreamResponseStreamed",
+                "value": {
+                  "generatedName": "UserV3StreamResponseStreamed",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "userV3StreamResponseStreamed"
+            }
+          ],
+          "generatedName": "UserV3StreamResponse",
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "groupName": [],
+          "fullExamples": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v3/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "inline": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "streamed": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "user_v3",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UserV3Request",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV3RequestId",
+              "key": "id",
+              "schema": {
+                "generatedName": "userV3RequestId",
+                "value": {
+                  "description": "",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserV3RequestId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV3RequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "UserV3RequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserV3Request",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV3ResponseId",
+              "key": "id",
+              "schema": {
+                "generatedName": "userV3ResponseId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "UserV3ResponseId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV3ResponseInline",
+              "key": "inline",
+              "schema": {
+                "generatedName": "userV3ResponseInline",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "UserV3ResponseInline",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserV3Response",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v3/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "inline": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "generatedName": "userId",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "UserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "User",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "StreamUser": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "streamUserId",
+            "key": "id",
+            "schema": {
+              "generatedName": "streamUserId",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "StreamUserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "StreamUser",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "User-2": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "user2Id",
+            "key": "id",
+            "schema": {
+              "generatedName": "user2Id",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "User2Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "user2Name",
+            "key": "name",
+            "schema": {
+              "generatedName": "user2Name",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "User2Name",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "user2Streamed",
+            "key": "streamed",
+            "schema": {
+              "generatedName": "user2Streamed",
+              "value": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "User2Streamed",
+                "groupName": [],
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "User2",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "StreamUser-2": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "streamUser2Id",
+            "key": "id",
+            "schema": {
+              "generatedName": "streamUser2Id",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "StreamUser2Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "streamUser2Name",
+            "key": "name",
+            "schema": {
+              "generatedName": "streamUser2Name",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "StreamUser2Name",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "streamUser2Streamed",
+            "key": "streamed",
+            "schema": {
+              "generatedName": "streamUser2Streamed",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "StreamUser2Streamed",
+                "groupName": [],
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "StreamUser2",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

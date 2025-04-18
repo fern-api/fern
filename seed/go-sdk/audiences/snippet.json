@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/audiences/fern\"\n\tfernclient \"github.com/audiences/fern/client\"\n\toption \"github.com/audiences/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithBaseURL(\n\t\tfern.Environments.EnvironmentA,\n\t),\n)\nresponse, err := client.Foo.Find(\n\tcontext.TODO(),\n\t\u0026fern.FindRequest{\n\t\tOptionalString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tPublicProperty: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tPrivateProperty: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/audiences/fern\"\n\tfernclient \"github.com/audiences/fern/client\"\n\toption \"github.com/audiences/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithBaseURL(\n\t\tfern.Environments.EnvironmentA,\n\t),\n)\nresponse, err := client.Foo.Find(\n\tcontext.TODO(),\n\t\u0026fern.FindRequest{\n\t\tOptionalString: fern.String(\n\t\t\t\"optionalString\",\n\t\t),\n\t\tPublicProperty: fern.String(\n\t\t\t\"publicProperty\",\n\t\t),\n\t\tPrivateProperty: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
             }
         },
         {

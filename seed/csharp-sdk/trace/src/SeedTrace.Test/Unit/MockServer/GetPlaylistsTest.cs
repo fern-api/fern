@@ -1,29 +1,35 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetPlaylistsTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             [
               {
-                "playlist_id": "string",
-                "owner-id": "string",
-                "name": "string",
+                "name": "name",
                 "problems": [
-                  "string"
-                ]
+                  "problems",
+                  "problems"
+                ],
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id"
+              },
+              {
+                "name": "name",
+                "problems": [
+                  "problems",
+                  "problems"
+                ],
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id"
               }
             ]
             """;
@@ -34,10 +40,10 @@ public class GetPlaylistsTest : BaseMockServerTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/all")
                     .WithParam("limit", "1")
-                    .WithParam("otherField", "string")
-                    .WithParam("multiLineDocs", "string")
-                    .WithParam("optionalMultipleField", "string")
-                    .WithParam("multipleField", "string")
+                    .WithParam("otherField", "otherField")
+                    .WithParam("multiLineDocs", "multiLineDocs")
+                    .WithParam("optionalMultipleField", "optionalMultipleField")
+                    .WithParam("multipleField", "multipleField")
                     .UsingGet()
             )
             .RespondWith(
@@ -52,16 +58,15 @@ public class GetPlaylistsTest : BaseMockServerTest
             new GetPlaylistsRequest
             {
                 Limit = 1,
-                OtherField = "string",
-                MultiLineDocs = "string",
-                OptionalMultipleField = ["string"],
-                MultipleField = ["string"],
-            },
-            RequestOptions
+                OtherField = "otherField",
+                MultiLineDocs = "multiLineDocs",
+                OptionalMultipleField = ["optionalMultipleField"],
+                MultipleField = ["multipleField"],
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Playlist>>(mockResponse)).UsingDefaults()
+        );
     }
 }

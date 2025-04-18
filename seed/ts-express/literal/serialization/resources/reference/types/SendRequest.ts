@@ -11,16 +11,20 @@ export const SendRequest: core.serialization.ObjectSchema<serializers.SendReques
         prompt: core.serialization.stringLiteral("You are a helpful assistant"),
         query: core.serialization.string(),
         stream: core.serialization.booleanLiteral(false),
+        ending: core.serialization.stringLiteral("$ending"),
         context: core.serialization.lazy(() => serializers.SomeLiteral),
         maybeContext: core.serialization.lazy(() => serializers.SomeLiteral).optional(),
+        containerObject: core.serialization.lazyObject(() => serializers.ContainerObject),
     });
 
 export declare namespace SendRequest {
-    interface Raw {
+    export interface Raw {
         prompt: "You are a helpful assistant";
         query: string;
         stream: false;
+        ending: "$ending";
         context: serializers.SomeLiteral.Raw;
         maybeContext?: serializers.SomeLiteral.Raw | null;
+        containerObject: serializers.ContainerObject.Raw;
     }
 }

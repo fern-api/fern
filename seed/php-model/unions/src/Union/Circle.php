@@ -2,23 +2,33 @@
 
 namespace Seed\Union;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Circle extends SerializableType
+class Circle extends JsonSerializableType
 {
     /**
      * @var float $radius
      */
-    #[JsonProperty("radius")]
+    #[JsonProperty('radius')]
     public float $radius;
 
     /**
-     * @param float $radius
+     * @param array{
+     *   radius: float,
+     * } $values
      */
     public function __construct(
-        float $radius,
+        array $values,
     ) {
-        $this->radius = $radius;
+        $this->radius = $values['radius'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

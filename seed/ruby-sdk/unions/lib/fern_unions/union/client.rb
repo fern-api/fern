@@ -21,7 +21,7 @@ module SeedUnionsClient
     # @return [SeedUnionsClient::Union::Shape]
     # @example
     #  unions = SeedUnionsClient::Client.new(base_url: "https://api.example.com")
-    #  unions.union.get(id: "string")
+    #  unions.union.get(id: "id")
     def get(id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -80,7 +80,7 @@ module SeedUnionsClient
     # @return [SeedUnionsClient::Union::Shape]
     # @example
     #  unions = SeedUnionsClient::Client.new(base_url: "https://api.example.com")
-    #  unions.union.get(id: "string")
+    #  unions.union.get(id: "id")
     def get(id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

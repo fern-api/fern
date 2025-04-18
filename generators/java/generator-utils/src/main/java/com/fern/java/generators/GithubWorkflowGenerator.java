@@ -82,12 +82,12 @@ public final class GithubWorkflowGenerator {
                 + "\n"
                 + "      - name: Publish to maven\n"
                 + "        run: |\n";
-
         if (maybeSignatureGithubInfo.isPresent()) {
-            content = content + "          ./.publish/prepare.sh\n";
+            content = content + "          ./gradlew sonatypeCentralUpload\n";
+        } else {
+            content = content + "          ./gradlew publish\n";
         }
         content = content
-                + "          ./gradlew  publish\n"
                 + "        env:\n"
                 + "          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}\n"
                 + "          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}\n"

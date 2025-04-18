@@ -35,20 +35,20 @@ export const InvalidRequestCause: core.serialization.Schema<
     });
 
 export declare namespace InvalidRequestCause {
-    type Raw =
+    export type Raw =
         | InvalidRequestCause.SubmissionIdNotFound
         | InvalidRequestCause.CustomTestCasesUnsupported
         | InvalidRequestCause.UnexpectedLanguage;
 
-    interface SubmissionIdNotFound extends SubmissionIdNotFound.Raw {
+    export interface SubmissionIdNotFound extends SubmissionIdNotFound.Raw {
         type: "submissionIdNotFound";
     }
 
-    interface CustomTestCasesUnsupported extends CustomTestCasesUnsupported.Raw {
+    export interface CustomTestCasesUnsupported extends CustomTestCasesUnsupported.Raw {
         type: "customTestCasesUnsupported";
     }
 
-    interface UnexpectedLanguage extends UnexpectedLanguageError.Raw {
+    export interface UnexpectedLanguage extends UnexpectedLanguageError.Raw {
         type: "unexpectedLanguage";
     }
 }

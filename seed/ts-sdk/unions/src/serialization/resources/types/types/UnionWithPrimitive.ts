@@ -24,14 +24,14 @@ export const UnionWithPrimitive: core.serialization.Schema<
     });
 
 export declare namespace UnionWithPrimitive {
-    type Raw = UnionWithPrimitive.Integer | UnionWithPrimitive.String;
+    export type Raw = UnionWithPrimitive.Integer | UnionWithPrimitive.String;
 
-    interface Integer {
+    export interface Integer {
         type: "integer";
         value: number;
     }
 
-    interface String {
+    export interface String {
         type: "string";
         value: string;
     }

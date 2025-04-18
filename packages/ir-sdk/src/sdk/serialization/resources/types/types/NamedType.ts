@@ -20,7 +20,7 @@ export const NamedType: core.serialization.ObjectSchema<serializers.NamedType.Ra
     });
 
 export declare namespace NamedType {
-    interface Raw {
+    export interface Raw {
         typeId: TypeId.Raw;
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;

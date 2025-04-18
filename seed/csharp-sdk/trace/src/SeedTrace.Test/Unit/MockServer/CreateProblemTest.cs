@@ -1,46 +1,45 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class CreateProblemTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
-              "problemName": "string",
+              "problemName": "problemName",
               "problemDescription": {
                 "boards": [
                   {
-                    "0": "s",
-                    "1": "t",
-                    "2": "r",
-                    "3": "i",
-                    "4": "n",
-                    "5": "g",
-                    "type": "html"
+                    "type": "html",
+                    "value": "boards"
+                  },
+                  {
+                    "type": "html",
+                    "value": "boards"
                   }
                 ]
               },
               "files": {
-                "string": {
+                "JAVA": {
                   "solutionFile": {
-                    "filename": "string",
-                    "contents": "string"
+                    "filename": "filename",
+                    "contents": "contents"
                   },
                   "readOnlyFiles": [
                     {
-                      "filename": "string",
-                      "contents": "string"
+                      "filename": "filename",
+                      "contents": "contents"
+                    },
+                    {
+                      "filename": "filename",
+                      "contents": "contents"
                     }
                   ]
                 }
@@ -50,7 +49,13 @@ public class CreateProblemTest : BaseMockServerTest
                   "variableType": {
                     "type": "integerType"
                   },
-                  "name": "string"
+                  "name": "name"
+                },
+                {
+                  "variableType": {
+                    "type": "integerType"
+                  },
+                  "name": "name"
                 }
               ],
               "outputType": {
@@ -59,31 +64,51 @@ public class CreateProblemTest : BaseMockServerTest
               "testcases": [
                 {
                   "testCase": {
-                    "id": "string",
+                    "id": "id",
                     "params": [
                       {
-                        "type": "integerValue"
+                        "type": "integerValue",
+                        "value": 1
+                      },
+                      {
+                        "type": "integerValue",
+                        "value": 1
                       }
                     ]
                   },
                   "expectedResult": {
-                    "type": "integerValue"
+                    "type": "integerValue",
+                    "value": 1
+                  }
+                },
+                {
+                  "testCase": {
+                    "id": "id",
+                    "params": [
+                      {
+                        "type": "integerValue",
+                        "value": 1
+                      },
+                      {
+                        "type": "integerValue",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "expectedResult": {
+                    "type": "integerValue",
+                    "value": 1
                   }
                 }
               ],
-              "methodName": "string"
+              "methodName": "methodName"
             }
             """;
 
         const string mockResponse = """
             {
-              "0": "s",
-              "1": "t",
-              "2": "r",
-              "3": "i",
-              "4": "n",
-              "5": "g",
-              "type": "success"
+              "type": "success",
+              "value": "string"
             }
             """;
 
@@ -105,10 +130,10 @@ public class CreateProblemTest : BaseMockServerTest
         var response = await Client.Problem.CreateProblemAsync(
             new CreateProblemRequest
             {
-                ProblemName = "string",
+                ProblemName = "problemName",
                 ProblemDescription = new ProblemDescription
                 {
-                    Boards = new List<object>() { "string" },
+                    Boards = new List<object>() { "boards", "boards" },
                 },
                 Files = new Dictionary<Language, ProblemFiles>()
                 {
@@ -118,23 +143,21 @@ public class CreateProblemTest : BaseMockServerTest
                         {
                             SolutionFile = new FileInfo
                             {
-                                Filename = "string",
-                                Contents = "string",
+                                Filename = "filename",
+                                Contents = "contents",
                             },
                             ReadOnlyFiles = new List<FileInfo>()
                             {
-                                new FileInfo { Filename = "string", Contents = "string" },
+                                new FileInfo { Filename = "filename", Contents = "contents" },
+                                new FileInfo { Filename = "filename", Contents = "contents" },
                             },
                         }
                     },
                 },
                 InputParams = new List<VariableTypeAndName>()
                 {
-                    new VariableTypeAndName
-                    {
-                        VariableType = "no-properties-union",
-                        Name = "string",
-                    },
+                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+                    new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
                 },
                 OutputType = "no-properties-union",
                 Testcases = new List<TestCaseWithExpectedResult>()
@@ -143,19 +166,27 @@ public class CreateProblemTest : BaseMockServerTest
                     {
                         TestCase = new TestCase
                         {
-                            Id = "string",
-                            Params = new List<object>() { 1 },
+                            Id = "id",
+                            Params = new List<object>() { 1, 1 },
+                        },
+                        ExpectedResult = 1,
+                    },
+                    new TestCaseWithExpectedResult
+                    {
+                        TestCase = new TestCase
+                        {
+                            Id = "id",
+                            Params = new List<object>() { 1, 1 },
                         },
                         ExpectedResult = 1,
                     },
                 },
-                MethodName = "string",
-            },
-            RequestOptions
+                MethodName = "methodName",
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<object>(mockResponse)).UsingDefaults()
+        );
     }
 }

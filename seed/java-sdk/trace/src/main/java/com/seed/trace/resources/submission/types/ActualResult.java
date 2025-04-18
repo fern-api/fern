@@ -84,7 +84,7 @@ public final class ActualResult {
     }
 
     @JsonValue
-    private Value getValue() {
+    private Value getValue_() {
         return this.value;
     }
 
@@ -110,6 +110,7 @@ public final class ActualResult {
     }
 
     @JsonTypeName("value")
+    @JsonIgnoreProperties("type")
     private static final class ValueValue implements Value {
         @JsonProperty("value")
         private VariableValue value;
@@ -146,6 +147,7 @@ public final class ActualResult {
     }
 
     @JsonTypeName("exception")
+    @JsonIgnoreProperties("type")
     private static final class ExceptionValue implements Value {
         @JsonUnwrapped
         private ExceptionInfo value;
@@ -184,6 +186,7 @@ public final class ActualResult {
     }
 
     @JsonTypeName("exceptionV2")
+    @JsonIgnoreProperties("type")
     private static final class ExceptionV2Value implements Value {
         @JsonProperty("value")
         private ExceptionV2 value;
@@ -219,6 +222,7 @@ public final class ActualResult {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

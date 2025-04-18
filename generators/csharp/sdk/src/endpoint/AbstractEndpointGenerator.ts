@@ -1,11 +1,16 @@
+import { assertNever } from "@fern-api/core-utils";
 import { csharp } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
-import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
+import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, PathParameter, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
-import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
+
+type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
 
 export abstract class AbstractEndpointGenerator {
     private exampleGenerator: ExampleGenerator;
@@ -23,51 +28,165 @@ export abstract class AbstractEndpointGenerator {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
     }): EndpointSignatureInfo {
-        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
+        return this.hasPagination(endpoint)
+            ? this.getPagerEndpointSignatureInfo({ serviceId, endpoint })
+            : this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
+    }
+
+    protected getUnpagedEndpointSignatureInfo({
+        serviceId,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+    }): EndpointSignatureInfo {
+        return this.getEndpointSignatureInfoFor({
+            serviceId,
+            endpoint,
+            endpointType: "unpaged"
+        });
+    }
+
+    protected getPagerEndpointSignatureInfo({
+        serviceId,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+    }): EndpointSignatureInfo {
+        return this.getEndpointSignatureInfoFor({
+            serviceId,
+            endpoint,
+            endpointType: "paged"
+        });
+    }
+
+    protected getEndpointSignatureInfoFor({
+        serviceId,
+        endpoint,
+        endpointType
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+        endpointType: "unpaged" | "paged";
+    }): EndpointSignatureInfo {
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
         const requestParameter =
             request != null
                 ? csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
                 : undefined;
+        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
+            endpoint,
+            requestParameter
+        });
+        let returnType: csharp.Type | undefined;
+        switch (endpointType) {
+            case "unpaged":
+                returnType = getEndpointReturnType({ context: this.context, endpoint });
+                break;
+            case "paged":
+                returnType = this.getPagerReturnType(endpoint);
+                break;
+            default:
+                assertNever(endpointType);
+        }
         return {
             baseParameters: [...pathParameters, requestParameter].filter((p): p is csharp.Parameter => p != null),
             pathParameters,
             pathParameterReferences,
             request,
             requestParameter,
-            returnType: getEndpointReturnType({ context: this.context, endpoint })
+            returnType
         };
     }
 
-    private getAllPathParameters({
-        serviceId,
-        endpoint
-    }: {
-        serviceId: ServiceId;
-        endpoint: HttpEndpoint;
-    }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
-        const pathParameters: csharp.Parameter[] = [];
-        const service = this.context.getHttpServiceOrThrow(serviceId);
-        const pathParameterReferences: Record<string, string> = {};
-        for (const pathParam of [
-            ...this.context.ir.pathParameters,
-            ...service.pathParameters,
-            ...endpoint.pathParameters
-        ]) {
-            const parameterName = pathParam.name.camelCase.safeName;
-            pathParameterReferences[pathParam.name.originalName] = parameterName;
-            pathParameters.push(
-                csharp.parameter({
-                    docs: pathParam.docs,
-                    name: parameterName,
-                    type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
+    protected getPagerReturnType(endpoint: HttpEndpoint): csharp.Type {
+        const itemType = this.getPaginationItemType(endpoint);
+        if (endpoint.pagination?.type === "custom") {
+            return csharp.Type.reference(
+                this.context.getCustomPagerClassReference({
+                    itemType
                 })
             );
+        }
+        return csharp.Type.reference(
+            this.context.getPagerClassReference({
+                itemType
+            })
+        );
+    }
+
+    protected getPaginationItemType(endpoint: HttpEndpoint): csharp.Type {
+        this.assertHasPagination(endpoint);
+        const listItemType = this.context.csharpTypeMapper.convert({
+            reference: (() => {
+                switch (endpoint.pagination.type) {
+                    case "offset":
+                        return endpoint.pagination.results.property.valueType;
+                    case "cursor":
+                        return endpoint.pagination.results.property.valueType;
+                    case "custom":
+                        return endpoint.pagination.results.property.valueType;
+                    default:
+                        assertNever(endpoint.pagination);
+                }
+            })(),
+            unboxOptionals: true
+        });
+
+        if (listItemType.internalType.type !== "list") {
+            throw new Error(
+                `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.internalType.type}.`
+            );
+        }
+        return listItemType.internalType.value;
+    }
+
+    protected getAllPathParameters({
+        endpoint,
+        requestParameter
+    }: {
+        endpoint: HttpEndpoint;
+        requestParameter: csharp.Parameter | undefined;
+    }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
+        const pathParameters: csharp.Parameter[] = [];
+        const pathParameterReferences: Record<string, string> = {};
+        const includePathParametersInEndpointSignature = this.includePathParametersInEndpointSignature({ endpoint });
+        for (const pathParam of endpoint.allPathParameters) {
+            const parameterName = this.getPathParameterName({
+                pathParameter: pathParam,
+                includePathParametersInEndpointSignature,
+                requestParameter
+            });
+            if (includePathParametersInEndpointSignature) {
+                pathParameters.push(
+                    csharp.parameter({
+                        docs: pathParam.docs,
+                        name: parameterName,
+                        type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
+                    })
+                );
+            }
+            pathParameterReferences[pathParam.name.originalName] = parameterName;
         }
         return {
             pathParameters,
             pathParameterReferences
         };
+    }
+
+    protected hasPagination(endpoint: HttpEndpoint): endpoint is PagingEndpoint {
+        if (!this.context.config.generatePaginatedClients) {
+            return false;
+        }
+        return endpoint.pagination !== undefined;
+    }
+
+    protected assertHasPagination(endpoint: HttpEndpoint): asserts endpoint is PagingEndpoint {
+        if (this.hasPagination(endpoint)) {
+            return;
+        }
+        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
     }
 
     protected generateEndpointSnippet({
@@ -96,7 +215,7 @@ export abstract class AbstractEndpointGenerator {
         if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
             return undefined;
         }
-        const args = this.getNonEndpointArguments(example, parseDatetimes);
+        const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
@@ -110,18 +229,18 @@ export abstract class AbstractEndpointGenerator {
         for (const endParameter of additionalEndParameters ?? []) {
             args.push(endParameter);
         }
-
         getEndpointReturnType({ context: this.context, endpoint });
-        return new csharp.MethodInvocation({
+        return csharp.invokeMethod({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on,
             async: true,
+            configureAwait: true,
             generics: []
         });
     }
 
-    private getEndpointRequestSnippet(
+    protected getEndpointRequestSnippet(
         exampleEndpointCall: ExampleEndpointCall,
         endpoint: HttpEndpoint,
         serviceId: ServiceId,
@@ -145,6 +264,57 @@ export abstract class AbstractEndpointGenerator {
         return undefined;
     }
 
+    protected wrapWithExceptionHandler({
+        body,
+        returnType
+    }: {
+        body: csharp.CodeBlock;
+        returnType: csharp.Type | undefined;
+    }): csharp.CodeBlock {
+        if (!this.context.includeExceptionHandler()) {
+            return body;
+        }
+        return csharp.codeblock((writer) => {
+            if (this.context.includeExceptionHandler()) {
+                if (returnType != null) {
+                    writer.write("return ");
+                }
+                writer.writeLine("await _client.Options.ExceptionHandler.TryCatchAsync(async () => {");
+                writer.indent();
+            }
+            body.write(writer);
+            if (this.context.includeExceptionHandler()) {
+                writer.dedent();
+                writer.writeLine("}).ConfigureAwait(false);");
+            }
+        });
+    }
+
+    protected getNonEndpointArguments({
+        endpoint,
+        example,
+        parseDatetimes
+    }: {
+        endpoint: HttpEndpoint;
+        example: ExampleEndpointCall;
+        parseDatetimes: boolean;
+    }): csharp.CodeBlock[] {
+        if (!this.includePathParametersInEndpointSignature({ endpoint })) {
+            return [];
+        }
+        const pathParameters = [
+            ...example.rootPathParameters,
+            ...example.servicePathParameters,
+            ...example.endpointPathParameters
+        ];
+        return pathParameters.map((pathParameter) =>
+            this.exampleGenerator.getSnippetForTypeReference({
+                exampleTypeReference: pathParameter.value,
+                parseDatetimes
+            })
+        );
+    }
+
     private getJustRequestBodySnippet(
         exampleRequestBody: ExampleRequestBody,
         parseDatetimes: boolean
@@ -158,17 +328,28 @@ export abstract class AbstractEndpointGenerator {
         });
     }
 
-    private getNonEndpointArguments(example: ExampleEndpointCall, parseDatetimes: boolean): csharp.CodeBlock[] {
-        const pathParameters = [
-            ...example.rootPathParameters,
-            ...example.servicePathParameters,
-            ...example.endpointPathParameters
-        ];
-        return pathParameters.map((pathParameter) =>
-            this.exampleGenerator.getSnippetForTypeReference({
-                exampleTypeReference: pathParameter.value,
-                parseDatetimes
-            })
-        );
+    private includePathParametersInEndpointSignature({ endpoint }: { endpoint: HttpEndpoint }): boolean {
+        if (endpoint.sdkRequest?.shape.type !== "wrapper") {
+            return true;
+        }
+        return !this.context.includePathParametersInWrappedRequest({
+            endpoint,
+            wrapper: endpoint.sdkRequest.shape
+        });
+    }
+
+    private getPathParameterName({
+        pathParameter,
+        includePathParametersInEndpointSignature,
+        requestParameter
+    }: {
+        pathParameter: PathParameter;
+        includePathParametersInEndpointSignature: boolean;
+        requestParameter?: csharp.Parameter;
+    }): string {
+        if (!includePathParametersInEndpointSignature && requestParameter != null) {
+            return `${requestParameter?.name}.${pathParameter.name.pascalCase.safeName}`;
+        }
+        return pathParameter.name.camelCase.safeName;
     }
 }

@@ -2,51 +2,59 @@
 
 namespace Seed\V2\V3\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Commons\VariableType;
+use Seed\Core\Types\ArrayType;
 
-class LightweightProblemInfoV2 extends SerializableType
+class LightweightProblemInfoV2 extends JsonSerializableType
 {
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
-     * @var array<mixed> $variableTypes
+     * @var array<VariableType> $variableTypes
      */
-    #[JsonProperty("variableTypes"), ArrayType(["mixed"])]
+    #[JsonProperty('variableTypes'), ArrayType([VariableType::class])]
     public array $variableTypes;
 
     /**
-     * @param string $problemId
-     * @param string $problemName
-     * @param int $problemVersion
-     * @param array<mixed> $variableTypes
+     * @param array{
+     *   problemId: string,
+     *   problemName: string,
+     *   problemVersion: int,
+     *   variableTypes: array<VariableType>,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        string $problemName,
-        int $problemVersion,
-        array $variableTypes,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->problemName = $problemName;
-        $this->problemVersion = $problemVersion;
-        $this->variableTypes = $variableTypes;
+        $this->problemId = $values['problemId'];
+        $this->problemName = $values['problemName'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->variableTypes = $values['variableTypes'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

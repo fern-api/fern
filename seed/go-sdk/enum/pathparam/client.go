@@ -6,13 +6,14 @@ import (
 	context "context"
 	fern "github.com/enum/fern"
 	core "github.com/enum/fern/core"
+	internal "github.com/enum/fern/internal"
 	option "github.com/enum/fern/option"
 	http "net/http"
 )
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -20,8 +21,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -33,37 +34,32 @@ func NewClient(opts ...option.RequestOption) *Client {
 func (c *Client) Send(
 	ctx context.Context,
 	operand fern.Operand,
-	maybeOperand *fern.Operand,
 	operandOrColor *fern.ColorOrOperand,
-	maybeOperandOrColor *fern.ColorOrOperand,
 	opts ...option.RequestOption,
 ) error {
 	options := core.NewRequestOptions(opts...)
-
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := core.EncodeURL(
-		baseURL+"/path/%v/%v/%v/%v",
-		operand,
-		maybeOperand,
-		operandOrColor,
-		maybeOperandOrColor,
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
 	)
-
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	endpointURL := internal.EncodeURL(
+		baseURL+"/path/%v/%v",
+		operand,
+		operandOrColor,
+	)
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
 
 	if err := c.caller.Call(
 		ctx,
-		&core.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
-			MaxAttempts:     options.MaxAttempts,
 			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,

@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_package.test"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedNurseryApi;\n\nvar client = new SeedNurseryApiClient();\nawait client.Package.TestAsync(new TestRequest { For = \"string\" });\n"
+                "type": "csharp",
+                "client": "using SeedNurseryApi;\n\nvar client = new SeedNurseryApiClient();\nawait client.Package.TestAsync(new TestRequest { For = \"for\" });\n"
             }
         }
     ]

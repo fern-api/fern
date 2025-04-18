@@ -23,7 +23,7 @@ export const WebSocketMessage: core.serialization.ObjectSchema<
     .extend(Declaration);
 
 export declare namespace WebSocketMessage {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         type: WebSocketMessageId.Raw;
         displayName?: string | null;
         origin: WebSocketMessageOrigin.Raw;

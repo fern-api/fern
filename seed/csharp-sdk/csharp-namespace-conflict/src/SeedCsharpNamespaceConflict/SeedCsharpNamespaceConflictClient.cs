@@ -2,13 +2,11 @@ using SeedCsharpNamespaceConflict.A;
 using SeedCsharpNamespaceConflict.B;
 using SeedCsharpNamespaceConflict.Core;
 
-#nullable enable
-
 namespace SeedCsharpNamespaceConflict;
 
 public partial class SeedCsharpNamespaceConflictClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedCsharpNamespaceConflictClient(ClientOptions? clientOptions = null)
     {
@@ -35,9 +33,9 @@ public partial class SeedCsharpNamespaceConflictClient
         Tasktest = new TasktestClient(_client);
     }
 
-    public AClient A { get; init; }
+    public AClient A { get; }
 
-    public BClient B { get; init; }
+    public BClient B { get; }
 
-    public TasktestClient Tasktest { get; init; }
+    public TasktestClient Tasktest { get; }
 }

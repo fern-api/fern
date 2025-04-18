@@ -1,5 +1,12 @@
+- version: 0.0.2
+  createdAt: "2025-03-02"
+  changelogEntry:
+    - type: internal
+      summary: Upgrade to IR version 56.
+  irVersion: 56
+
 - version: 0.0.1
-  createdAt: '2024-03-31'
+  createdAt: "2024-03-31"
   changelogEntry:
     - type: internal
       summary: Initial release.

@@ -7,7 +7,7 @@ import * as SeedMixedFileDirectory from "../../../../../../../../index";
 /**
  * @example
  *     {
- *         id: "string"
+ *         id: "id"
  *     }
  */
 export interface GetEventMetadataRequest {

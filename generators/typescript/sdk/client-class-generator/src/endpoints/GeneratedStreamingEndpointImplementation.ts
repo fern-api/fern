@@ -1,9 +1,11 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
-import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
@@ -33,7 +35,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public readonly endpoint: HttpEndpoint;
 
-    private response: GeneratedEndpointResponse;
+    public response: GeneratedEndpointResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
@@ -62,6 +64,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+    }
+    public isPaginated(context: SdkContext): boolean {
+        return false;
     }
 
     public getExample(args: {
@@ -92,14 +97,72 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         );
     }
 
-    public getOverloads(): EndpointSignature[] {
+    public maybeLeverageInvocation({
+        invocation,
+        context
+    }: {
+        invocation: ts.Expression;
+        context: SdkContext;
+    }): ts.Node[] {
+        const responseVariableName = "response";
+        const itemVariableName = "item";
+        return [
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(responseVariableName),
+                            undefined,
+                            undefined,
+                            invocation
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ts.factory.createForOfStatement(
+                ts.factory.createToken(ts.SyntaxKind.AwaitKeyword),
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(itemVariableName),
+                            undefined,
+                            undefined,
+                            undefined
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                ),
+                ts.factory.createIdentifier(responseVariableName),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("console"),
+                                    ts.factory.createIdentifier("log")
+                                ),
+                                undefined,
+                                [ts.factory.createIdentifier(itemVariableName)]
+                            )
+                        )
+                    ],
+                    true
+                )
+            )
+        ];
+    }
+
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): EndpointSignature {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
+        const returnType = this.response.getReturnType(context);
         return {
             parameters: this.getEndpointParameters(context),
-            returnTypeWithoutPromise: this.response.getReturnType(context)
+            returnTypeWithoutPromise: returnType
         };
     }
 
@@ -113,7 +176,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getDocs(): string | undefined {
-        return this.endpoint.docs ?? undefined;
+        return this.endpoint.docs;
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
@@ -128,27 +191,30 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return this.request.getBuildRequestStatements(context);
     }
 
-    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
-        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+            }
         });
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
         } else {
-            return referenceToEnvironment;
+            return baseUrl;
         }
     }
 
     public invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
-            url: this.getReferenceToEnvironment(context),
+            url: this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
@@ -193,6 +259,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         return this.request.getReferenceToRequestBody(context);
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        return this.request.getReferenceToPathParameter(pathParameterKey, context);
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

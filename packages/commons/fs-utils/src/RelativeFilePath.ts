@@ -1,5 +1,7 @@
 import path from "path";
 
+import { convertToOsPath } from "./osPathConverter";
+
 export type RelativeFilePath = string & {
     __RelativeFilePath: void;
 };
@@ -9,6 +11,6 @@ export const RelativeFilePath = {
         if (path.isAbsolute(value)) {
             throw new Error("Filepath is not relative: " + value);
         }
-        return value as RelativeFilePath;
+        return convertToOsPath(value) as RelativeFilePath;
     }
 };

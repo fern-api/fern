@@ -19,7 +19,7 @@ module SeedMultiUrlEnvironmentNoDefaultClient
     # @return [Void]
     # @example
     #  multi_url_environment_no_default = SeedMultiUrlEnvironmentNoDefaultClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  multi_url_environment_no_default.ec_2.boot_instance(size: "string")
+    #  multi_url_environment_no_default.ec_2.boot_instance(size: "size")
     def boot_instance(size:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -53,7 +53,7 @@ module SeedMultiUrlEnvironmentNoDefaultClient
     # @return [Void]
     # @example
     #  multi_url_environment_no_default = SeedMultiUrlEnvironmentNoDefaultClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  multi_url_environment_no_default.ec_2.boot_instance(size: "string")
+    #  multi_url_environment_no_default.ec_2.boot_instance(size: "size")
     def boot_instance(size:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

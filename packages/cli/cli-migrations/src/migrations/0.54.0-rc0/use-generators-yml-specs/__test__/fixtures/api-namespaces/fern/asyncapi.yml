@@ -1,0 +1,17 @@
+asyncapi: 2.6.0
+defaultContentType: application/json
+id: https://buildwithfern.com/asyncapi
+
+info:
+  title: async api sample
+  version: 1.0.0
+
+servers: {}
+
+tags: []
+
+channels: {}
+components:
+  messages: {}
+  schemas: {}
+  securitySchemes: {}

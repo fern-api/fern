@@ -1,0 +1,13 @@
+## 0.45.0-rc36
+**`(fix):`** The OpenAPI importer now supports importing deep object query parameters. To do this, you will
+need to configure a setting in your `generators.yml`
+
+```yml
+api:
+ specs:
+   - openapi: ./path/to/openapi.yml
+     settings:
+       object-query-paramaters: true
+```
+
+

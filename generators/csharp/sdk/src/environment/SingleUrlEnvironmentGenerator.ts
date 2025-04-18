@@ -1,6 +1,9 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -27,18 +30,18 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
         const class_ = csharp.class_({
             ...this.context.getEnvironmentsClassReference(),
             partial: false,
-            access: "public"
+            access: csharp.Access.Public
         });
 
         for (const environment of this.singleUrlEnvironments.environments) {
             class_.addField(
                 csharp.field({
-                    access: "public",
+                    access: csharp.Access.Public,
+                    const_: true,
                     name:
-                        this.context.customConfig["pascal-case-environments"] ?? true
+                        (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
-                    static_: true,
                     type: csharp.Type.string(),
                     initializer: csharp.codeblock(`"${environment.url}"`)
                 })

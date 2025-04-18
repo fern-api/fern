@@ -62,6 +62,14 @@ class Animal(UniversalRootModel):
         if unioned_value.animal == "cat":
             return cat(types_union_types_cat_Cat(**unioned_value.dict(exclude_unset=True, exclude={"animal"})))
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+
 
 class _Animal:
     class Dog(types_union_types_dog_Dog):

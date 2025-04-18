@@ -1,0 +1,154 @@
+{
+  "title": "Webhooks",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [
+    {
+      "method": "POST",
+      "operationId": "CreatePet",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "CreatePetPayload",
+      "payload": {
+        "generatedName": "CreatePetPayload",
+        "schema": "Pet",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "examples": [
+        {
+          "name": "Example 1",
+          "payload": {
+            "value": [
+              {
+                "key": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "value": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              {
+                "key": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "value": {
+                  "value": {
+                    "value": "Scratch",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              {
+                "key": {
+                  "value": "tag",
+                  "type": "string"
+                },
+                "value": {
+                  "value": {
+                    "value": "Cat",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              }
+            ],
+            "type": "map"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Pet": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "petId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "int64"
+              },
+              "generatedName": "PetId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "PetName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "petTag",
+            "key": "tag",
+            "schema": {
+              "generatedName": "petTag",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PetTag",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Pet",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

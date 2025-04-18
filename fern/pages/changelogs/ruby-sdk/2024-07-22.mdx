@@ -1,0 +1,7 @@
+## 0.8.1
+**`(fix):`** Address serialization issues within iterable types
+
+### What's been fixed
+- Nested `hash` types are recursively resolved in `from_json` such that they come back as true hashes, as opposed to structs
+- Pass through additional params from request options even if the original request did not have those types of params (ex: query parameters)
+

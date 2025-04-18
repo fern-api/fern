@@ -9,14 +9,16 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace Problem {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,6 +27,8 @@ export declare namespace Problem {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -39,15 +43,27 @@ export class Problem {
      * @example
      *     await client.v2.problem.getLightweightProblems()
      */
-    public async getLightweightProblems(
-        requestOptions?: Problem.RequestOptions
-    ): Promise<
+    public getLightweightProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<SeedTrace.v2.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getLightweightProblems(requestOptions));
+    }
+
+    private async __getLightweightProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<SeedTrace.v2.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error>
+        >
     > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/lightweight-problem-info"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/problems-v2/lightweight-problem-info",
             ),
             method: "GET",
             headers: {
@@ -62,6 +78,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -72,19 +89,28 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.v2.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.v2.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.problem.getLightweightProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.problem.getLightweightProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -96,13 +122,25 @@ export class Problem {
      * @example
      *     await client.v2.problem.getProblems()
      */
-    public async getProblems(
-        requestOptions?: Problem.RequestOptions
-    ): Promise<core.APIResponse<SeedTrace.v2.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error>> {
+    public getProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getProblems(requestOptions));
+    }
+
+    private async __getProblems(
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/problem-info"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/problems-v2/problem-info",
             ),
             method: "GET",
             headers: {
@@ -117,6 +155,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -127,19 +166,28 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.v2.problem.getProblems.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.v2.problem.getProblems.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.problem.getProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.problem.getProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -150,16 +198,29 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.v2.problem.getLatestProblem(SeedTrace.ProblemId("string"))
+     *     await client.v2.problem.getLatestProblem(SeedTrace.ProblemId("problemId"))
      */
-    public async getLatestProblem(
+    public getLatestProblem(
         problemId: SeedTrace.ProblemId,
-        requestOptions?: Problem.RequestOptions
-    ): Promise<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error>> {
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getLatestProblem(problemId, requestOptions));
+    }
+
+    private async __getLatestProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`,
             ),
             method: "GET",
             headers: {
@@ -174,6 +235,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -184,19 +246,28 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.problem.getLatestProblem.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.problem.getLatestProblem.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -208,19 +279,33 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.v2.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1)
+     *     await client.v2.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1)
      */
-    public async getProblemVersion(
+    public getProblemVersion(
         problemId: SeedTrace.ProblemId,
         problemVersion: number,
-        requestOptions?: Problem.RequestOptions
-    ): Promise<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error>> {
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getProblemVersion(problemId, problemVersion, requestOptions),
+        );
+    }
+
+    private async __getProblemVersion(
+        problemId: SeedTrace.ProblemId,
+        problemVersion: number,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(
-                    serializers.ProblemId.jsonOrThrow(problemId)
-                )}/version/${encodeURIComponent(problemVersion)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}/version/${encodeURIComponent(problemVersion)}`,
             ),
             method: "GET",
             headers: {
@@ -235,6 +320,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -245,19 +331,28 @@ export class Problem {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.v2.problem.getProblemVersion.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.v2.problem.getProblemVersion.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

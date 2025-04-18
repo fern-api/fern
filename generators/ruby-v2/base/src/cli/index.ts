@@ -1,0 +1,1 @@
+export { AbstractRubyGeneratorCli } from "./AbstractRubyGeneratorCli";

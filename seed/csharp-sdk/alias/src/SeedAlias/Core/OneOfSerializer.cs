@@ -9,7 +9,7 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
 {
     public override IOneOf? Read(
         ref Utf8JsonReader reader,
-        System.Type typeToConvert,
+        global::System.Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -38,13 +38,19 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
         JsonSerializer.Serialize(writer, value.Value, options);
     }
 
-    private static (System.Type type, MethodInfo cast)[] GetOneOfTypes(System.Type typeToConvert)
+    private static (global::System.Type type, MethodInfo cast)[] GetOneOfTypes(
+        global::System.Type typeToConvert
+    )
     {
-        var casts = typeToConvert
-            .GetRuntimeMethods()
+        var type = typeToConvert;
+        if (Nullable.GetUnderlyingType(type) is { } underlyingType)
+        {
+            type = underlyingType;
+        }
+
+        var casts = type.GetRuntimeMethods()
             .Where(m => m.IsSpecialName && m.Name == "op_Implicit")
             .ToArray();
-        var type = typeToConvert;
         while (type != null)
         {
             if (
@@ -52,17 +58,33 @@ internal class OneOfSerializer : JsonConverter<IOneOf>
                 && (type.Name.StartsWith("OneOf`") || type.Name.StartsWith("OneOfBase`"))
             )
             {
-                return type.GetGenericArguments()
+                var genericArguments = type.GetGenericArguments();
+                if (genericArguments.Length == 1)
+                {
+                    return [(genericArguments[0], casts[0])];
+                }
+
+                // if object type is present, make sure it is last
+                var indexOfObjectType = Array.IndexOf(genericArguments, typeof(object));
+                if (indexOfObjectType != -1 && genericArguments.Length - 1 != indexOfObjectType)
+                {
+                    genericArguments = genericArguments
+                        .OrderBy(t => t == typeof(object) ? 1 : 0)
+                        .ToArray();
+                }
+
+                return genericArguments
                     .Select(t => (t, casts.First(c => c.GetParameters()[0].ParameterType == t)))
                     .ToArray();
             }
 
             type = type.BaseType;
         }
+
         throw new InvalidOperationException($"{type} isn't OneOf or OneOfBase");
     }
 
-    public override bool CanConvert(System.Type typeToConvert)
+    public override bool CanConvert(global::System.Type typeToConvert)
     {
         return typeof(IOneOf).IsAssignableFrom(typeToConvert);
     }

@@ -1,0 +1,206 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Zep Documentation",
+  "logo": {
+    "dark": "/logo/zep-name-logo-pink.svg",
+    "light": "/logo/zep-name-logo-gradient.svg"
+  },
+  "favicon": "/logo/favicon.png",
+  "colors": {
+    "primary": "#D5479D",
+    "light": "#D5479D",
+    "dark": "#D5479D",
+    "anchors": {
+      "from": "#5b2da8",
+      "to": "#D5479D"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:help@getzep.com"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://app.getzep.com"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://blog.getzep.com"
+    },
+    {
+      "name": "Community",
+      "icon": "discord",
+      "url": "https://discord.gg/W8Kw6bsgXQ"
+    },
+    {
+      "name": "Service Status",
+      "icon": "gear",
+      "url": "https://status.getzep.com/"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": ["sdks", "projects", "users"]
+    },
+    {
+      "group": "Chat History Memory",
+      "pages": [
+        "chat-history-memory/overview",
+        "chat-history-memory/memories",
+        "chat-history-memory/sessions",
+        "chat-history-memory/messages",
+        "chat-history-memory/summaries",
+        "chat-history-memory/search"
+      ]
+    },
+    {
+      "group": "Dialog Tools",
+      "pages": ["dialog-classification", "question-synthesis"]
+    },
+    {
+      "group": "Working with Search",
+      "pages": ["working-with-search"]
+    },
+    {
+      "group": "Document Collections",
+      "pages": ["document-collections"]
+    },
+    {
+      "group": "Ecosystem",
+      "pages": [
+        {
+          "group": "LangChain",
+          "pages": [
+            "langchain/overview",
+            "langchain/messagehistory",
+            "langchain/vectorstore",
+            {
+              "group": "Examples",
+              "pages": [
+                "langchain/examples/messagehistory-example",
+                "langchain/examples/vectorstore-example",
+                "langchain/examples/rag-message-history-example"
+              ]
+            }
+          ]
+        },
+        "ecosystem/flowise",
+        "ecosystem/chainlit",
+        "ecosystem/llamaindex",
+        "ecosystem/langflow",
+        "ecosystem/n8n"
+      ]
+    },
+    {
+      "group": "Legal",
+      "pages": ["legal/privacy-policy", "legal/terms-of-service", "legal/website-terms-of-use"]
+    },
+    {
+      "group": "document",
+      "pages": [
+        "api-reference/document/updates-a-document-in-a-documentcollection-by-uuid",
+        "api-reference/document/gets-a-document-from-a-documentcollection-by-uuid",
+        "api-reference/document/creates-multiple-documents-in-a-documentcollection",
+        "api-reference/document/batch-deletes-documents-from-a-documentcollection-by-uuid",
+        "api-reference/document/batch-gets-documents-from-a-documentcollection",
+        "api-reference/document/batch-updates-documents-in-a-documentcollection",
+        "api-reference/document/delete-document-from-a-documentcollection-by-uuid",
+        "api-reference/document/searches-documents-in-a-documentcollection"
+      ]
+    },
+    {
+      "group": "collection",
+      "pages": [
+        "api-reference/collection/gets-a-list-of-documentcollections",
+        "api-reference/collection/gets-a-documentcollection",
+        "api-reference/collection/creates-a-new-documentcollection",
+        "api-reference/collection/deletes-a-documentcollection",
+        "api-reference/collection/updates-a-documentcollection",
+        "api-reference/collection/creates-an-index-for-a-documentcollection"
+      ]
+    },
+    {
+      "group": "session",
+      "pages": [
+        "api-reference/session/returns-all-sessions",
+        "api-reference/session/add-a-session",
+        "api-reference/session/returns-a-session-by-id",
+        "api-reference/session/add-a-session-1",
+        "api-reference/session/classify-a-session",
+        "api-reference/session/returns-a-sessions-summaries-by-id"
+      ]
+    },
+    {
+      "group": "memory",
+      "pages": [
+        "api-reference/memory/returns-a-memory-latest-summary-and-list-of-messages-for-a-given-session",
+        "api-reference/memory/add-memory-messages-to-a-given-session",
+        "api-reference/memory/delete-memory-messages-for-a-given-session",
+        "api-reference/memory/synthesize-a-question-for-a-given-session"
+      ]
+    },
+    {
+      "group": "messages",
+      "pages": [
+        "api-reference/messages/retrieves-all-messages-for-a-specific-session",
+        "api-reference/messages/retrieves-a-specific-message",
+        "api-reference/messages/updates-the-metadata-of-a-specific-message"
+      ]
+    },
+    {
+      "group": "search",
+      "pages": ["api-reference/search/search-memory-messages-for-a-given-session"]
+    },
+    {
+      "group": "user",
+      "pages": [
+        "api-reference/user/list-all-users",
+        "api-reference/user/add-a-user",
+        "api-reference/user/list-all-users-1",
+        "api-reference/user/returns-a-user-by-id",
+        "api-reference/user/delete-a-user",
+        "api-reference/user/update-a-user",
+        "api-reference/user/list-all-sessions-for-a-user"
+      ]
+    }
+  ],
+  "openapi": ["/api-reference/openapi.json"],
+  "footerSocials": {
+    "twitter": "https://twitter.com/zep_ai",
+    "github": "https://github.com/getzep",
+    "linkedin": "https://www.linkedin.com/company/zep-ai"
+  },
+  "redirects": [
+    {
+      "source": "/privacy-policy",
+      "destination": "/legal/privacy-policy"
+    },
+    {
+      "source": "/website-terms-of-use",
+      "destination": "/legal/website-terms-of-use"
+    },
+    {
+      "source": "/terms-of-service",
+      "destination": "/legal/terms-of-service"
+    }
+  ],
+  "analytics": {
+    "posthog": {
+      "apiKey": "phc_dFYKy1OKnu2iKIl1Vvm8F256hEuk7aBkkImriWLdnbQ"
+    },
+    "gtm": {
+      "tagId": "GTM-NS32L7KR"
+    }
+  }
+}

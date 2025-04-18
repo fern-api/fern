@@ -16,7 +16,7 @@ export const Account: core.serialization.ObjectSchema<serializers.Account.Raw, S
     .extend(core.serialization.lazyObject(() => serializers.BaseResource));
 
 export declare namespace Account {
-    interface Raw extends serializers.BaseResource.Raw {
+    export interface Raw extends serializers.BaseResource.Raw {
         resource_type: "Account";
         name: string;
         patient?: serializers.Patient.Raw | null;

@@ -1,9 +1,10 @@
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ImportsManager } from "../imports-manager";
+import { ExternalDependencies } from "./ExternalDependencies";
 import { BlobImpl } from "./blob/BlobImpl";
 import { ExpressImpl } from "./express/ExpressImpl";
-import { ExternalDependencies } from "./ExternalDependencies";
 import { FsImpl } from "./fs/FsImpl";
+import { QsImpl } from "./qs/QsImpl";
 import { StreamImpl } from "./stream/StreamImpl";
 import { UrlJoinImpl } from "./url-join/UrlJoinImpl";
 
@@ -23,6 +24,7 @@ export function createExternalDependencies({
         express: new ExpressImpl({ importsManager, dependencyManager }),
         fs: new FsImpl({ importsManager, dependencyManager }),
         stream: new StreamImpl({ importsManager, dependencyManager }),
-        blob: new BlobImpl({ importsManager, dependencyManager })
+        blob: new BlobImpl({ importsManager, dependencyManager }),
+        qs: new QsImpl({ importsManager, dependencyManager })
     };
 }

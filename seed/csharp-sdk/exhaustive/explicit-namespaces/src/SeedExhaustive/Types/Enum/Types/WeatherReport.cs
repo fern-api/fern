@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive.Types.Enum;
 
-[JsonConverter(typeof(StringEnumSerializer<WeatherReport>))]
+[JsonConverter(typeof(EnumSerializer<WeatherReport>))]
 public enum WeatherReport
 {
     [EnumMember(Value = "SUNNY")]

@@ -1,12 +1,10 @@
 using SeedFileDownload.Core;
 
-#nullable enable
-
 namespace SeedFileDownload;
 
 public partial class SeedFileDownloadClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedFileDownloadClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedFileDownloadClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 }

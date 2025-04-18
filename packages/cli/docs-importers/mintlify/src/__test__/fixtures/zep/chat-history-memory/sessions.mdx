@@ -1,0 +1,176 @@
+<Card title="Chat Sessions" icon="comments">
+Sessions represent a conversation. Sessions can be associated with [Users](/users) in a 1:M relationship.
+
+Chat messages are added to sessions in the form of [Memories](memories). Each session can have many messages
+associated with it.
+
+The `SessionID` is a string key that accepts arbitrary identifiers. Related data you'd like to store can be persisted
+as metadata.
+
+</Card>
+
+## Adding a Session
+
+`SessionIDs` are arbitrary identifiers that you can map to relevant business objects in your app, such as users or a
+conversation a user might have with your app
+
+<Note>
+**Sessions don't need to be explicitly created**
+
+Sessions are created automatically when adding Memories. If the SessionID already exists, then the Memory is upserted into the Session.
+
+Manually creating a session can be useful if you want to associate it with a user or add metadata.
+
+</Note>
+<Tabs group="sessions">
+
+<Tab title="Python" group-key="python">
+
+```python
+async with ZepClient(api_key=api_key) as client:
+    session_id = uuid.uuid4().hex # A new session identifier
+    session = Session(
+                session_id=session_id,
+                user_id=user_id,  # Optionally associate this session with a user
+                metadata={"foo" : "bar"}
+            )
+    await client.memory.aadd_session(session)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const client: ZepClient = await ZepClient.init(api_key);
+const session_id: string = uuid.v4(); // Generate a new session identifier
+const session: Session = new Session({
+  session_id,
+  user_id: user.user_id, // Optionally associate this session with a user
+  metadata: { foo: "bar" },
+});
+await client.memory.addSession(session);
+```
+
+</Tab>
+</Tabs>
+
+<Info>Looking to associate a Session with a User? Check out our [User Management](/users) docs.</Info>
+
+## Updating Session Metadata
+
+You can update a session's metadata by providing a Session object with new metadata. Note that
+metadata is merged, so any existing metadata will be preserved.
+
+<Tabs group="sessions">
+
+<Tab title="Python" group-key="python">
+
+```python
+session = Session(session_id=session_id, metadata={"qax" : "baz"})
+await client.memory.aupdate_session(session)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const session: Session = new Session({
+  session_id,
+  metadata: { qax: "baz" },
+});
+await client.memory.updateSession(session);
+```
+
+</Tab>
+</Tabs>
+
+## Getting a Session
+
+<Tabs group="sessions">
+
+<Tab title="Python" group-key="python">
+
+```python
+session = await client.memory.aget_session(session_id)
+print(session.dict())
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+const session = await client.memory.getSession(session_id);
+console.log(session);
+```
+
+</Tab>
+</Tabs>
+
+## Deleting a Session
+
+Deleting a Session soft-deletes the Session and all associated Memories. The Session and Memories are still available in
+the database, but are marked as deleted and will not be returned in search results.
+
+If you persist memory to a deleted Session, it will be undeleted. Deleted Memories will, however, remain deleted.
+
+Soft-deleted data is hard-deleted periodically.
+
+<Tabs group="sessions">
+
+<Tab title="Python" group-key="python">
+
+```python
+await client.memory.adelete_memory(session_id)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+await client.memory.deleteMemory(session_id);
+```
+
+</Tab>
+</Tabs>
+
+## Listing Sessions
+
+You can list all Sessions in the Zep Memory Store with optional limit and cursor parameters for pagination. We also
+provider a helper generator function making it simple to iterate over all Sessions.
+
+<Tabs group="sessions">
+
+<Tab title="Python" group-key="python">
+
+```python
+# List the first 10 Sessions
+sessions = client.memory.list_sessions(limit=10, cursor=0)
+for session in sessions:
+    print(session)
+
+# List All Sessions using a generator
+all_sessions = client.memory.list_all_sessions(chunk_size=100)
+for session_chunk in all_sessions:
+    for session in session_chunk:
+        print(session)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+// List the first 10 Sessions
+const sessions: Session[] = await client.memory.listSessions(10, 0);
+console.log("First 10 Sessions:");
+sessions.forEach((session) => console.log(session));
+
+// List All Sessions using a generator
+console.log("All Sessions:");
+const allSessionsGenerator = client.memory.listSessionsChunked(100);
+for await (const sessionChunk of allSessionsGenerator) {
+  sessionChunk.forEach((session) => console.log(session));
+}
+```
+
+</Tab>
+</Tabs>

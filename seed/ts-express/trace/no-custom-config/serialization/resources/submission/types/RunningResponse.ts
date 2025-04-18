@@ -15,7 +15,7 @@ export const RunningResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace RunningResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
         state: serializers.RunningSubmissionState.Raw;
     }

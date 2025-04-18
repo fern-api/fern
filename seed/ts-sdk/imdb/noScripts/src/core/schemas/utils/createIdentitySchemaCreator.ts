@@ -1,5 +1,5 @@
-import { getSchemaUtils } from "../builders/schema-utils";
 import { BaseSchema, MaybeValid, Schema, SchemaOptions, SchemaType } from "../Schema";
+import { getSchemaUtils } from "../builders/schema-utils";
 import { maybeSkipValidation } from "./maybeSkipValidation";
 
 export function createIdentitySchemaCreator<T>(

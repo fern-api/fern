@@ -21,7 +21,7 @@ export const ExecutionSessionState: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExecutionSessionState {
-    interface Raw {
+    export interface Raw {
         lastTimeContacted?: string | null;
         sessionId: string;
         isWarmInstance: boolean;

@@ -16,7 +16,7 @@ export const NonVoidFunctionSignature: core.serialization.ObjectSchema<
 });
 
 export declare namespace NonVoidFunctionSignature {
-    interface Raw {
+    export interface Raw {
         parameters: Parameter.Raw[];
         returnType: serializers.VariableType.Raw;
     }

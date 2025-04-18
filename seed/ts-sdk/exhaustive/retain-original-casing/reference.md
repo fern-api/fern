@@ -15,7 +15,7 @@
 <dd>
 
 ```typescript
-await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
+await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
 ```
 
 </dd>
@@ -64,6 +64,9 @@ await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 
 ```typescript
 await client.endpoints.container.getAndReturnListOfObjects([
+    {
+        string: "string",
+    },
     {
         string: "string",
     },
@@ -168,7 +171,7 @@ await client.endpoints.container.getAndReturnSetOfObjects(
         {
             string: "string",
         },
-    ])
+    ]),
 );
 ```
 
@@ -356,6 +359,136 @@ await client.endpoints.container.getAndReturnOptional({
 </dl>
 </details>
 
+## Endpoints ContentType
+
+<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.contentType.postJsonPatchContentType({
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: new Set(["set"]),
+    map: {
+        1: "map",
+    },
+    bigint: "1000000",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithOptionalField`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentType.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.contentType.<a href="/src/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["list", "list"],
+    set: new Set(["set"]),
+    map: {
+        1: "map",
+    },
+    bigint: "1000000",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithOptionalField`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentType.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Enum
 
 <details><summary><code>client.endpoints.enum.<a href="/src/api/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> SeedExhaustive.WeatherReport</code></summary>
@@ -421,7 +554,7 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
 <dd>
 
 ```typescript
-await client.endpoints.httpMethods.testGet("string");
+await client.endpoints.httpMethods.testGet("id");
 ```
 
 </dd>
@@ -519,7 +652,7 @@ await client.endpoints.httpMethods.testPost({
 <dd>
 
 ```typescript
-await client.endpoints.httpMethods.testPut("string", {
+await client.endpoints.httpMethods.testPut("id", {
     string: "string",
 });
 ```
@@ -577,7 +710,7 @@ await client.endpoints.httpMethods.testPut("string", {
 <dd>
 
 ```typescript
-await client.endpoints.httpMethods.testPatch("string", {
+await client.endpoints.httpMethods.testPatch("id", {
     string: "string",
     integer: 1,
     long: 1000000,
@@ -587,12 +720,12 @@ await client.endpoints.httpMethods.testPatch("string", {
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
-    list: ["string"],
-    set: new Set(["string"]),
+    list: ["list", "list"],
+    set: new Set(["set"]),
     map: {
-        1: "string",
+        1: "map",
     },
-    bigint: "123456789123456789",
+    bigint: "1000000",
 });
 ```
 
@@ -649,7 +782,7 @@ await client.endpoints.httpMethods.testPatch("string", {
 <dd>
 
 ```typescript
-await client.endpoints.httpMethods.testDelete("string");
+await client.endpoints.httpMethods.testDelete("id");
 ```
 
 </dd>
@@ -709,12 +842,12 @@ await client.endpoints.object.getAndReturnWithOptionalField({
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
-    list: ["string"],
-    set: new Set(["string"]),
+    list: ["list", "list"],
+    set: new Set(["set"]),
     map: {
-        1: "string",
+        1: "map",
     },
-    bigint: "123456789123456789",
+    bigint: "1000000",
 });
 ```
 
@@ -815,8 +948,8 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 ```typescript
 await client.endpoints.object.getAndReturnWithMapOfMap({
     map: {
-        string: {
-            string: "string",
+        map: {
+            map: "map",
         },
     },
 });
@@ -879,12 +1012,12 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
-        list: ["string"],
-        set: new Set(["string"]),
+        list: ["list", "list"],
+        set: new Set(["set"]),
         map: {
-            1: "string",
+            1: "map",
         },
-        bigint: "123456789123456789",
+        bigint: "1000000",
     },
 });
 ```
@@ -946,12 +1079,12 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
-        list: ["string"],
-        set: new Set(["string"]),
+        list: ["list", "list"],
+        set: new Set(["set"]),
         map: {
-            1: "string",
+            1: "map",
         },
-        bigint: "123456789123456789",
+        bigint: "1000000",
     },
 });
 ```
@@ -1022,12 +1155,32 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
-            list: ["string"],
-            set: new Set(["string"]),
+            list: ["list", "list"],
+            set: new Set(["set"]),
             map: {
-                1: "string",
+                1: "map",
             },
-            bigint: "123456789123456789",
+            bigint: "1000000",
+        },
+    },
+    {
+        string: "string",
+        NestedObject: {
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: new Set(["set"]),
+            map: {
+                1: "map",
+            },
+            bigint: "1000000",
         },
     },
 ]);
@@ -1095,7 +1248,7 @@ GET with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithPath("string");
+await client.endpoints.params.getWithPath("param");
 ```
 
 </dd>
@@ -1112,6 +1265,77 @@ await client.endpoints.params.getWithPath("string");
 <dd>
 
 **param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.getWithInlinePath("param");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.GetWithInlinePath`
 
 </dd>
 </dl>
@@ -1159,7 +1383,7 @@ GET with query param
 
 ```typescript
 await client.endpoints.params.getWithQuery({
-    query: "string",
+    query: "query",
     number: 1,
 });
 ```
@@ -1225,8 +1449,8 @@ GET with multiple of same query param
 
 ```typescript
 await client.endpoints.params.getWithAllowMultipleQuery({
-    query: "string",
-    numer: 1,
+    query: "query",
+    number: 1,
 });
 ```
 
@@ -1290,8 +1514,8 @@ GET with path and query params
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithPathAndQuery("string", {
-    query: "string",
+await client.endpoints.params.getWithPathAndQuery("param", {
+    query: "query",
 });
 ```
 
@@ -1317,6 +1541,79 @@ await client.endpoints.params.getWithPathAndQuery("string", {
 <dd>
 
 **request:** `SeedExhaustive.endpoints.GetWithPathAndQuery`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>(param, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.getWithInlinePathAndQuery("param", {
+    query: "query",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.GetWithInlinePathAndQuery`
 
 </dd>
 </dl>
@@ -1363,7 +1660,7 @@ PUT to update with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.modifyWithPath("string", "string");
+await client.endpoints.params.modifyWithPath("param", "string");
 ```
 
 </dd>
@@ -1388,6 +1685,79 @@ await client.endpoints.params.modifyWithPath("string", "string");
 <dd>
 
 **request:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Params.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.modifyWithInlinePath("param", {
+    body: "string",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.ModifyResourceAtInlinedPath`
 
 </dd>
 </dl>
@@ -1840,6 +2210,64 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 </dl>
 </details>
 
+## Endpoints Put
+
+<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>(id, { ...params }) -> SeedExhaustive.PutResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.put.add("id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.PutRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Put.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Union
 
 <details><summary><code>client.endpoints.union.<a href="/src/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> SeedExhaustive.Animal</code></summary>
@@ -1857,7 +2285,7 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 ```typescript
 await client.endpoints.union.getAndReturnUnion({
     animal: "dog",
-    name: "string",
+    name: "name",
     likesToWoof: true,
 });
 ```
@@ -1937,12 +2365,12 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
-        list: ["string"],
-        set: new Set(["string"]),
+        list: ["list", "list"],
+        set: new Set(["set"]),
         map: {
-            1: "string",
+            1: "map",
         },
-        bigint: "123456789123456789",
+        bigint: "1000000",
     },
 });
 ```
@@ -2144,8 +2572,8 @@ await client.noReqBody.postWithNoRequestBody();
 
 ```typescript
 await client.reqWithHeaders.getWithCustomHeader({
-    "X-TEST-SERVICE-HEADER": "string",
-    "X-TEST-ENDPOINT-HEADER": "string",
+    "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+    "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
     body: "string",
 });
 ```

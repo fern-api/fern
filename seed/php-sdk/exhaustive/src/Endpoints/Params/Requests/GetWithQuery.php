@@ -2,7 +2,9 @@
 
 namespace Seed\Endpoints\Params\Requests;
 
-class GetWithQuery
+use Seed\Core\Json\JsonSerializableType;
+
+class GetWithQuery extends JsonSerializableType
 {
     /**
      * @var string $query
@@ -15,14 +17,15 @@ class GetWithQuery
     public int $number;
 
     /**
-     * @param string $query
-     * @param int $number
+     * @param array{
+     *   query: string,
+     *   number: int,
+     * } $values
      */
     public function __construct(
-        string $query,
-        int $number,
+        array $values,
     ) {
-        $this->query = $query;
-        $this->number = $number;
+        $this->query = $values['query'];
+        $this->number = $values['number'];
     }
 }

@@ -14,7 +14,7 @@ export const HttpPath: core.serialization.ObjectSchema<serializers.HttpPath.Raw,
     });
 
 export declare namespace HttpPath {
-    interface Raw {
+    export interface Raw {
         head: string;
         parts: HttpPathPart.Raw[];
     }

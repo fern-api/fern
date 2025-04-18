@@ -2,50 +2,58 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Commons\Types\VariableValue;
 
-class TestCaseNonHiddenGrade extends SerializableType
+class TestCaseNonHiddenGrade extends JsonSerializableType
 {
     /**
      * @var bool $passed
      */
-    #[JsonProperty("passed")]
+    #[JsonProperty('passed')]
     public bool $passed;
 
     /**
-     * @var mixed $actualResult
+     * @var ?VariableValue $actualResult
      */
-    #[JsonProperty("actualResult")]
-    public mixed $actualResult;
+    #[JsonProperty('actualResult')]
+    public ?VariableValue $actualResult;
 
     /**
-     * @var mixed $exception
+     * @var ?ExceptionV2 $exception
      */
-    #[JsonProperty("exception")]
-    public mixed $exception;
+    #[JsonProperty('exception')]
+    public ?ExceptionV2 $exception;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**
-     * @param bool $passed
-     * @param mixed $actualResult
-     * @param mixed $exception
-     * @param string $stdout
+     * @param array{
+     *   passed: bool,
+     *   stdout: string,
+     *   actualResult?: ?VariableValue,
+     *   exception?: ?ExceptionV2,
+     * } $values
      */
     public function __construct(
-        bool $passed,
-        mixed $actualResult,
-        mixed $exception,
-        string $stdout,
+        array $values,
     ) {
-        $this->passed = $passed;
-        $this->actualResult = $actualResult;
-        $this->exception = $exception;
-        $this->stdout = $stdout;
+        $this->passed = $values['passed'];
+        $this->actualResult = $values['actualResult'] ?? null;
+        $this->exception = $values['exception'] ?? null;
+        $this->stdout = $values['stdout'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

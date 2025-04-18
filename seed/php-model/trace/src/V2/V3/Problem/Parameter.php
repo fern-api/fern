@@ -2,41 +2,50 @@
 
 namespace Seed\V2\V3\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Commons\VariableType;
 
-class Parameter extends SerializableType
+class Parameter extends JsonSerializableType
 {
     /**
      * @var string $parameterId
      */
-    #[JsonProperty("parameterId")]
+    #[JsonProperty('parameterId')]
     public string $parameterId;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @var mixed $variableType
+     * @var VariableType $variableType
      */
-    #[JsonProperty("variableType")]
-    public mixed $variableType;
+    #[JsonProperty('variableType')]
+    public VariableType $variableType;
 
     /**
-     * @param string $parameterId
-     * @param string $name
-     * @param mixed $variableType
+     * @param array{
+     *   parameterId: string,
+     *   name: string,
+     *   variableType: VariableType,
+     * } $values
      */
     public function __construct(
-        string $parameterId,
-        string $name,
-        mixed $variableType,
+        array $values,
     ) {
-        $this->parameterId = $parameterId;
-        $this->name = $name;
-        $this->variableType = $variableType;
+        $this->parameterId = $values['parameterId'];
+        $this->name = $values['name'];
+        $this->variableType = $values['variableType'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

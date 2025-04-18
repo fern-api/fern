@@ -14,7 +14,7 @@ export const ExampleAliasType: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleAliasType {
-    interface Raw {
+    export interface Raw {
         value: serializers.ExampleTypeReference.Raw;
     }
 }

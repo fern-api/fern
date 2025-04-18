@@ -19,7 +19,7 @@ module SeedNurseryApiClient
     # @return [Void]
     # @example
     #  nursery_api = SeedNurseryApiClient::Client.new(base_url: "https://api.example.com")
-    #  nursery_api.package.test(for_: "string")
+    #  nursery_api.package.test(for_: "for")
     def test(for_:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -52,7 +52,7 @@ module SeedNurseryApiClient
     # @return [Void]
     # @example
     #  nursery_api = SeedNurseryApiClient::Client.new(base_url: "https://api.example.com")
-    #  nursery_api.package.test(for_: "string")
+    #  nursery_api.package.test(for_: "for")
     def test(for_:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

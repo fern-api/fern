@@ -39,23 +39,23 @@ export const TypeReference: core.serialization.Schema<serializers.TypeReference.
         });
 
 export declare namespace TypeReference {
-    type Raw = TypeReference.Container | TypeReference.Named | TypeReference.Primitive | TypeReference.Unknown;
+    export type Raw = TypeReference.Container | TypeReference.Named | TypeReference.Primitive | TypeReference.Unknown;
 
-    interface Container {
+    export interface Container {
         _type: "container";
         container: serializers.ContainerType.Raw;
     }
 
-    interface Named extends NamedType.Raw {
+    export interface Named extends NamedType.Raw {
         _type: "named";
     }
 
-    interface Primitive {
+    export interface Primitive {
         _type: "primitive";
         primitive: PrimitiveType.Raw;
     }
 
-    interface Unknown {
+    export interface Unknown {
         _type: "unknown";
     }
 }

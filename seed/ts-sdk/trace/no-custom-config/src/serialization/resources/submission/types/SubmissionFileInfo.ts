@@ -16,7 +16,7 @@ export const SubmissionFileInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace SubmissionFileInfo {
-    interface Raw {
+    export interface Raw {
         directory: string;
         filename: string;
         contents: string;

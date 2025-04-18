@@ -34,6 +34,14 @@ class _Factory:
 
 
 class UnionWithTime(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithTime_Value
+
+    UnionWithTime_Value(value=5)
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
@@ -72,6 +80,14 @@ class UnionWithTime(UniversalRootModel):
             return date(unioned_value.value)
         if unioned_value.type == "datetime":
             return datetime(unioned_value.value)
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 class _UnionWithTime:

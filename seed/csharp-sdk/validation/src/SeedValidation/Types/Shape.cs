@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedValidation.Core;
 
-#nullable enable
-
 namespace SeedValidation;
 
-[JsonConverter(typeof(StringEnumSerializer<Shape>))]
+[JsonConverter(typeof(EnumSerializer<Shape>))]
 public enum Shape
 {
     [EnumMember(Value = "SQUARE")]

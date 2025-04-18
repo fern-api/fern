@@ -2,23 +2,33 @@
 
 namespace Seed\Unknown;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class MyObject extends SerializableType
+class MyObject extends JsonSerializableType
 {
     /**
      * @var mixed $unknown
      */
-    #[JsonProperty("unknown")]
+    #[JsonProperty('unknown')]
     public mixed $unknown;
 
     /**
-     * @param mixed $unknown
+     * @param array{
+     *   unknown: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $unknown,
+        array $values,
     ) {
-        $this->unknown = $unknown;
+        $this->unknown = $values['unknown'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

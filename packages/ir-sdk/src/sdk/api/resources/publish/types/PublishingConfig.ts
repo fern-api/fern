@@ -12,20 +12,20 @@ export type PublishingConfig =
      * Publish directly from the generator */
     | FernIr.PublishingConfig.Direct;
 
-export declare namespace PublishingConfig {
-    interface Github extends FernIr.GithubPublish, _Utils {
+export namespace PublishingConfig {
+    export interface Github extends FernIr.GithubPublish, _Utils {
         type: "github";
     }
 
-    interface Direct extends FernIr.DirectPublish, _Utils {
+    export interface Direct extends FernIr.DirectPublish, _Utils {
         type: "direct";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishingConfig._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         github: (value: FernIr.GithubPublish) => _Result;
         direct: (value: FernIr.DirectPublish) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -39,7 +39,7 @@ export const PublishingConfig = {
             type: "github",
             _visit: function <_Result>(
                 this: FernIr.PublishingConfig.Github,
-                visitor: FernIr.PublishingConfig._Visitor<_Result>
+                visitor: FernIr.PublishingConfig._Visitor<_Result>,
             ) {
                 return FernIr.PublishingConfig._visit(this, visitor);
             },
@@ -52,7 +52,7 @@ export const PublishingConfig = {
             type: "direct",
             _visit: function <_Result>(
                 this: FernIr.PublishingConfig.Direct,
-                visitor: FernIr.PublishingConfig._Visitor<_Result>
+                visitor: FernIr.PublishingConfig._Visitor<_Result>,
             ) {
                 return FernIr.PublishingConfig._visit(this, visitor);
             },

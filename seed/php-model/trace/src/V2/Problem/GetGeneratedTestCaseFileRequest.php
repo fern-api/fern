@@ -2,32 +2,41 @@
 
 namespace Seed\V2\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GetGeneratedTestCaseFileRequest extends SerializableType
+class GetGeneratedTestCaseFileRequest extends JsonSerializableType
 {
-    /**
-     * @var TestCaseV2 $testCase
-     */
-    #[JsonProperty("testCase")]
-    public TestCaseV2 $testCase;
-
     /**
      * @var ?TestCaseTemplate $template
      */
-    #[JsonProperty("template")]
+    #[JsonProperty('template')]
     public ?TestCaseTemplate $template;
 
     /**
-     * @param TestCaseV2 $testCase
-     * @param ?TestCaseTemplate $template
+     * @var TestCaseV2 $testCase
+     */
+    #[JsonProperty('testCase')]
+    public TestCaseV2 $testCase;
+
+    /**
+     * @param array{
+     *   testCase: TestCaseV2,
+     *   template?: ?TestCaseTemplate,
+     * } $values
      */
     public function __construct(
-        TestCaseV2 $testCase,
-        ?TestCaseTemplate $template = null,
+        array $values,
     ) {
-        $this->testCase = $testCase;
-        $this->template = $template;
+        $this->template = $values['template'] ?? null;
+        $this->testCase = $values['testCase'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

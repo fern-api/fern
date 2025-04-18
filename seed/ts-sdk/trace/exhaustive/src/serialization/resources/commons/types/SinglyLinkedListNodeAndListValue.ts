@@ -17,7 +17,7 @@ export const SinglyLinkedListNodeAndListValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace SinglyLinkedListNodeAndListValue {
-    interface Raw {
+    export interface Raw {
         nodeId: NodeId.Raw;
         fullList: SinglyLinkedListValue.Raw;
     }

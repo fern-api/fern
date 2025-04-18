@@ -10,14 +10,16 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Migration {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -26,6 +28,8 @@ export declare namespace Migration {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -38,18 +42,27 @@ export class Migration {
      *
      * @example
      *     await client.migration.getAttemptedMigrations({
-     *         adminKeyHeader: "string"
+     *         adminKeyHeader: "admin-key-header"
      *     })
      */
-    public async getAttemptedMigrations(
+    public getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
-        requestOptions?: Migration.RequestOptions
-    ): Promise<SeedTrace.Migration[]> {
+        requestOptions?: Migration.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.Migration[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
+    }
+
+    private async __getAttemptedMigrations(
+        request: SeedTrace.GetAttemptedMigrationsRequest,
+        requestOptions?: Migration.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
         const { adminKeyHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/migration-info/all"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/migration-info/all",
             ),
             method: "GET",
             headers: {
@@ -65,6 +78,7 @@ export class Migration {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "admin-key-header": adminKeyHeader,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -73,18 +87,22 @@ export class Migration {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -93,12 +111,14 @@ export class Migration {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /migration-info/all.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

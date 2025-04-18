@@ -65,7 +65,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    \"string\"\n]",
+                  "raw": "[\n    \"string\",\n    \"string\"\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -103,7 +103,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n    \"string\"\n]",
+                      "raw": "[\n    \"string\",\n    \"string\"\n]",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -112,7 +112,7 @@
                     }
                   },
                   "description": null,
-                  "body": "[\n    \"string\"\n]",
+                  "body": "[\n    \"string\",\n    \"string\"\n]",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -145,7 +145,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    {\n        \"string\": \"string\"\n    }\n]",
+                  "raw": "[\n    {\n        \"string\": \"string\"\n    },\n    {\n        \"string\": \"string\"\n    }\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -183,7 +183,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n    {\n        \"string\": \"string\"\n    }\n]",
+                      "raw": "[\n    {\n        \"string\": \"string\"\n    },\n    {\n        \"string\": \"string\"\n    }\n]",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -192,7 +192,7 @@
                     }
                   },
                   "description": null,
-                  "body": "[\n    {\n        \"string\": \"string\"\n    }\n]",
+                  "body": "[\n    {\n        \"string\": \"string\"\n    },\n    {\n        \"string\": \"string\"\n    }\n]",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -602,6 +602,173 @@
         {
           "_type": "container",
           "description": null,
+          "name": "Content Type",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Post Json Patch Content Type",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo/bar",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo",
+                    "bar"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/foo/bar",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "foo",
+                        "bar"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Post Json Patch Content With Charset Type",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/foo/baz",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "foo",
+                    "baz"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/foo/baz",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "foo",
+                        "baz"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
           "name": "Enum",
           "item": [
             {
@@ -708,7 +875,7 @@
                     {
                       "key": "id",
                       "description": null,
-                      "value": "string"
+                      "value": "id"
                     }
                   ]
                 },
@@ -744,7 +911,7 @@
                         {
                           "key": "id",
                           "description": null,
-                          "value": "string"
+                          "value": "id"
                         }
                       ]
                     },
@@ -838,7 +1005,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -862,7 +1029,7 @@
                     {
                       "key": "id",
                       "description": null,
-                      "value": "string"
+                      "value": "id"
                     }
                   ]
                 },
@@ -906,7 +1073,7 @@
                         {
                           "key": "id",
                           "description": null,
-                          "value": "string"
+                          "value": "id"
                         }
                       ]
                     },
@@ -930,7 +1097,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -954,7 +1121,7 @@
                     {
                       "key": "id",
                       "description": null,
-                      "value": "string"
+                      "value": "id"
                     }
                   ]
                 },
@@ -969,7 +1136,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -998,7 +1165,7 @@
                         {
                           "key": "id",
                           "description": null,
-                          "value": "string"
+                          "value": "id"
                         }
                       ]
                     },
@@ -1013,7 +1180,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1022,7 +1189,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1046,7 +1213,7 @@
                     {
                       "key": "id",
                       "description": null,
-                      "value": "string"
+                      "value": "id"
                     }
                   ]
                 },
@@ -1082,7 +1249,7 @@
                         {
                           "key": "id",
                           "description": null,
-                          "value": "string"
+                          "value": "id"
                         }
                       ]
                     },
@@ -1138,7 +1305,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1176,7 +1343,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1185,7 +1352,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1298,7 +1465,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"map\": {\n        \"string\": {\n            \"string\": \"string\"\n        }\n    }\n}",
+                  "raw": "{\n    \"map\": {\n        \"map\": {\n            \"map\": \"map\"\n        }\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1336,7 +1503,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n    \"map\": {\n        \"string\": {\n            \"string\": \"string\"\n        }\n    }\n}",
+                      "raw": "{\n    \"map\": {\n        \"map\": {\n            \"map\": \"map\"\n        }\n    }\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1345,7 +1512,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"map\": {\n        \"string\": {\n            \"string\": \"string\"\n        }\n    }\n}",
+                  "body": "{\n    \"map\": {\n        \"map\": {\n            \"map\": \"map\"\n        }\n    }\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1378,7 +1545,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1416,7 +1583,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1425,7 +1592,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1465,7 +1632,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1510,7 +1677,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1519,7 +1686,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1552,7 +1719,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"string\"\n            ],\n            \"set\": [\n                \"string\"\n            ],\n            \"map\": {\n                \"1\": \"string\"\n            },\n            \"bigint\": \"123456789123456789\"\n        }\n    }\n]",
+                  "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"list\",\n                \"list\"\n            ],\n            \"set\": [\n                \"set\"\n            ],\n            \"map\": {\n                \"1\": \"map\"\n            },\n            \"bigint\": \"1000000\"\n        }\n    },\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"list\",\n                \"list\"\n            ],\n            \"set\": [\n                \"set\"\n            ],\n            \"map\": {\n                \"1\": \"map\"\n            },\n            \"bigint\": \"1000000\"\n        }\n    }\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1590,7 +1757,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"string\"\n            ],\n            \"set\": [\n                \"string\"\n            ],\n            \"map\": {\n                \"1\": \"string\"\n            },\n            \"bigint\": \"123456789123456789\"\n        }\n    }\n]",
+                      "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"list\",\n                \"list\"\n            ],\n            \"set\": [\n                \"set\"\n            ],\n            \"map\": {\n                \"1\": \"map\"\n            },\n            \"bigint\": \"1000000\"\n        }\n    },\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"list\",\n                \"list\"\n            ],\n            \"set\": [\n                \"set\"\n            ],\n            \"map\": {\n                \"1\": \"map\"\n            },\n            \"bigint\": \"1000000\"\n        }\n    }\n]",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -1599,7 +1766,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -1631,7 +1798,7 @@
                     {
                       "key": "param",
                       "description": null,
-                      "value": "string"
+                      "value": "param"
                     }
                   ]
                 },
@@ -1668,7 +1835,85 @@
                         {
                           "key": "param",
                           "description": null,
-                          "value": "string"
+                          "value": "param"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get With Inline Path",
+              "request": {
+                "description": "GET with path param",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with path param",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "param"
                         }
                       ]
                     },
@@ -1695,7 +1940,7 @@
               "request": {
                 "description": "GET with query param",
                 "url": {
-                  "raw": "{{baseUrl}}/params?query=string&number=1",
+                  "raw": "{{baseUrl}}/params?query=query&number=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -1706,7 +1951,7 @@
                     {
                       "key": "query",
                       "description": null,
-                      "value": "string"
+                      "value": "query"
                     },
                     {
                       "key": "number",
@@ -1735,7 +1980,7 @@
                   "originalRequest": {
                     "description": "GET with query param",
                     "url": {
-                      "raw": "{{baseUrl}}/params?query=string&number=1",
+                      "raw": "{{baseUrl}}/params?query=query&number=1",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -1746,7 +1991,7 @@
                         {
                           "key": "query",
                           "description": null,
-                          "value": "string"
+                          "value": "query"
                         },
                         {
                           "key": "number",
@@ -1779,7 +2024,7 @@
               "request": {
                 "description": "GET with multiple of same query param",
                 "url": {
-                  "raw": "{{baseUrl}}/params?query=string&numer=1",
+                  "raw": "{{baseUrl}}/params?query=query&number=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -1790,10 +2035,10 @@
                     {
                       "key": "query",
                       "description": null,
-                      "value": "string"
+                      "value": "query"
                     },
                     {
-                      "key": "numer",
+                      "key": "number",
                       "description": null,
                       "value": "1"
                     }
@@ -1819,7 +2064,7 @@
                   "originalRequest": {
                     "description": "GET with multiple of same query param",
                     "url": {
-                      "raw": "{{baseUrl}}/params?query=string&numer=1",
+                      "raw": "{{baseUrl}}/params?query=query&number=1",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -1830,10 +2075,10 @@
                         {
                           "key": "query",
                           "description": null,
-                          "value": "string"
+                          "value": "query"
                         },
                         {
-                          "key": "numer",
+                          "key": "number",
                           "description": null,
                           "value": "1"
                         }
@@ -1863,7 +2108,7 @@
               "request": {
                 "description": "GET with path and query params",
                 "url": {
-                  "raw": "{{baseUrl}}/params/path-query/:param?query=string",
+                  "raw": "{{baseUrl}}/params/path-query/:param?query=query",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -1876,14 +2121,14 @@
                     {
                       "key": "query",
                       "description": null,
-                      "value": "string"
+                      "value": "query"
                     }
                   ],
                   "variable": [
                     {
                       "key": "param",
                       "description": null,
-                      "value": "string"
+                      "value": "param"
                     }
                   ]
                 },
@@ -1906,7 +2151,7 @@
                   "originalRequest": {
                     "description": "GET with path and query params",
                     "url": {
-                      "raw": "{{baseUrl}}/params/path-query/:param?query=string",
+                      "raw": "{{baseUrl}}/params/path-query/:param?query=query",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -1919,14 +2164,104 @@
                         {
                           "key": "query",
                           "description": null,
-                          "value": "string"
+                          "value": "query"
                         }
                       ],
                       "variable": [
                         {
                           "key": "param",
                           "description": null,
-                          "value": "string"
+                          "value": "param"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Get With Inline Path And Query",
+              "request": {
+                "description": "GET with path and query params",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path-query/:param?query=query",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path-query",
+                    ":param"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "description": null,
+                      "value": "query"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with path and query params",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path-query/:param?query=query",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path-query",
+                        ":param"
+                      ],
+                      "query": [
+                        {
+                          "key": "query",
+                          "description": null,
+                          "value": "query"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "param"
                         }
                       ]
                     },
@@ -1967,7 +2302,7 @@
                     {
                       "key": "param",
                       "description": null,
-                      "value": "string"
+                      "value": "param"
                     }
                   ]
                 },
@@ -2012,7 +2347,101 @@
                         {
                           "key": "param",
                           "description": null,
-                          "value": "string"
+                          "value": "param"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "PUT",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"string\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Modify With Inline Path",
+              "request": {
+                "description": "PUT to update with path param",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"string\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "PUT to update with path param",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "param"
                         }
                       ]
                     },
@@ -2773,6 +3202,87 @@
         {
           "_type": "container",
           "description": null,
+          "name": "Put",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Put",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        ":id"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "description": null,
+                          "value": "id"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "PUT",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "{\n    \"errors\": [\n        {\n            \"category\": \"API_ERROR\",\n            \"code\": \"INTERNAL_SERVER_ERROR\",\n            \"detail\": \"detail\",\n            \"field\": \"field\"\n        },\n        {\n            \"category\": \"API_ERROR\",\n            \"code\": \"INTERNAL_SERVER_ERROR\",\n            \"detail\": \"detail\",\n            \"field\": \"field\"\n        }\n    ]\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
           "name": "Union",
           "item": [
             {
@@ -2802,7 +3312,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"animal\": \"dog\",\n    \"name\": \"string\",\n    \"likesToWoof\": true\n}",
+                  "raw": "{\n    \"animal\": \"dog\",\n    \"name\": \"name\",\n    \"likesToWoof\": true\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2839,7 +3349,7 @@
                     "auth": null,
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n    \"animal\": \"dog\",\n    \"name\": \"string\",\n    \"likesToWoof\": true\n}",
+                      "raw": "{\n    \"animal\": \"dog\",\n    \"name\": \"name\",\n    \"likesToWoof\": true\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -2848,7 +3358,7 @@
                     }
                   },
                   "description": null,
-                  "body": "{\n    \"animal\": \"dog\",\n    \"name\": \"string\",\n    \"likesToWoof\": true\n}",
+                  "body": "{\n    \"animal\": \"dog\",\n    \"name\": \"name\",\n    \"likesToWoof\": true\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]
@@ -2890,7 +3400,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+              "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2928,7 +3438,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"list\",\n            \"list\"\n        ],\n        \"set\": [\n            \"set\"\n        ],\n        \"map\": {\n            \"1\": \"map\"\n        },\n        \"bigint\": \"1000000\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2937,48 +3447,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Bad Request Body",
-              "status": "Bad Request Body",
-              "code": 400,
-              "originalRequest": {
-                "description": "POST with custom object in request body, response is an object",
-                "url": {
-                  "raw": "{{baseUrl}}/req-bodies/object",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "req-bodies",
-                    "object"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "description": null,
-              "body": "",
+              "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -3065,46 +3534,6 @@
               "description": null,
               "body": "true",
               "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Bad Request Body",
-              "status": "Bad Request Body",
-              "code": 400,
-              "originalRequest": {
-                "description": "POST request with no auth",
-                "url": {
-                  "raw": "{{baseUrl}}/no-auth",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "no-auth"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"key\": \"value\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "description": null,
-              "body": "",
-              "_postman_previewlanguage": "json"
             }
           ]
         }
@@ -3172,7 +3601,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+              "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"list\",\n        \"list\"\n    ],\n    \"set\": [\n        \"set\"\n    ],\n    \"map\": {\n        \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -3268,13 +3697,13 @@
                 "key": "X-TEST-SERVICE-HEADER",
                 "description": null,
                 "type": "text",
-                "value": "\"string\""
+                "value": "\"X-TEST-SERVICE-HEADER\""
               },
               {
                 "key": "X-TEST-ENDPOINT-HEADER",
                 "description": null,
                 "type": "text",
-                "value": "\"string\""
+                "value": "\"X-TEST-ENDPOINT-HEADER\""
               },
               {
                 "type": "text",
@@ -3318,13 +3747,13 @@
                     "key": "X-TEST-SERVICE-HEADER",
                     "description": null,
                     "type": "text",
-                    "value": "\"string\""
+                    "value": "\"X-TEST-SERVICE-HEADER\""
                   },
                   {
                     "key": "X-TEST-ENDPOINT-HEADER",
                     "description": null,
                     "type": "text",
-                    "value": "\"string\""
+                    "value": "\"X-TEST-ENDPOINT-HEADER\""
                   },
                   {
                     "type": "text",

@@ -3,7 +3,6 @@
  */
 
 export type WeatherReport = "SUNNY" | "CLOUDY" | "RAINING" | "SNOWING";
-
 export const WeatherReport = {
     Sunny: "SUNNY",
     Cloudy: "CLOUDY",

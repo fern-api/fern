@@ -1,0 +1,6 @@
+name: endpoint-base-path
+base-path: /{a}/{b}/{c}
+path-parameters: 
+  a: string
+  b: string
+  c: string

@@ -15,7 +15,7 @@ export const SubmissionIdNotFound: core.serialization.ObjectSchema<
 });
 
 export declare namespace SubmissionIdNotFound {
-    interface Raw {
+    export interface Raw {
         missingSubmissionId: SubmissionId.Raw;
     }
 }

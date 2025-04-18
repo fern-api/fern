@@ -3,19 +3,25 @@
 from .types import SendResponse
 from . import headers, inlined, path, query, reference
 from .client import AsyncSeedLiteral, SeedLiteral
-from .inlined import ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral
-from .reference import SendRequest, SomeLiteral
+from .inlined import ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral, UndiscriminatedLiteral
+from .query import AliasToPrompt, AliasToStream
+from .reference import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
 from .version import __version__
 
 __all__ = [
     "ANestedLiteral",
     "ATopLevelLiteral",
+    "AliasToPrompt",
+    "AliasToStream",
     "AsyncSeedLiteral",
+    "ContainerObject",
+    "NestedObjectWithLiterals",
     "SeedLiteral",
     "SendRequest",
     "SendResponse",
     "SomeAliasedLiteral",
     "SomeLiteral",
+    "UndiscriminatedLiteral",
     "__version__",
     "headers",
     "inlined",

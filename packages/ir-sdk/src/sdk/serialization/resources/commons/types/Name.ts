@@ -17,7 +17,7 @@ export const Name: core.serialization.ObjectSchema<serializers.Name.Raw, FernIr.
     });
 
 export declare namespace Name {
-    interface Raw {
+    export interface Raw {
         originalName: string;
         camelCase: SafeAndUnsafeString.Raw;
         pascalCase: SafeAndUnsafeString.Raw;

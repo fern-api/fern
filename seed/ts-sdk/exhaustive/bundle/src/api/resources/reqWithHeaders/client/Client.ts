@@ -8,18 +8,22 @@ import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace ReqWithHeaders {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,18 +36,29 @@ export class ReqWithHeaders {
      *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
-     *         xTestServiceHeader: "string",
-     *         xTestEndpointHeader: "string",
+     *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+     *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
      */
-    public async getWithCustomHeader(
+    public getWithCustomHeader(
         request: Fiddle.ReqWithHeaders,
-        requestOptions?: ReqWithHeaders.RequestOptions
-    ): Promise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
+        requestOptions?: ReqWithHeaders.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
+    }
+
+    private async __getWithCustomHeader(
+        request: Fiddle.ReqWithHeaders,
+        requestOptions?: ReqWithHeaders.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, Fiddle.reqWithHeaders.getWithCustomHeader.Error>>> {
         const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/test-headers/custom-header"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/test-headers/custom-header",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -55,6 +70,7 @@ export class ReqWithHeaders {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "X-TEST-SERVICE-HEADER": xTestServiceHeader,
                 "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -67,14 +83,23 @@ export class ReqWithHeaders {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.reqWithHeaders.getWithCustomHeader.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.reqWithHeaders.getWithCustomHeader.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -1,8 +1,11 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { exec } from "child_process";
 import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
+
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
+
 import { runDocker } from "../runDocker";
 
 const promisifiedExec = promisify(exec);
@@ -33,6 +36,7 @@ describe("runDocker", () => {
         const expectedOutputFilePath = "my-file.txt";
 
         await runDocker({
+            logger: CONSOLE_LOGGER,
             imageName: BASIC_WRITER_IMAGE_NAME,
             args: [expectedOutputFilePath],
             binds: [`${HOST_OUTPUT_DIR}:${IMAGE_OUTPUT_DIR}`]

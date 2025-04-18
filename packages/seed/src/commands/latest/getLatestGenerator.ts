@@ -1,8 +1,10 @@
-import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import semver from "semver";
+
+import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { GeneratorWorkspace, loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
 
 export async function getLatestGenerator({
     context,
@@ -25,7 +27,8 @@ export async function getLatestGenerator({
             return undefined;
         }
 
-        await parseCliReleasesFile({
+        await parseGeneratorReleasesFile({
+            generatorId: generator.workspaceName,
             changelogPath: absolutePathToChangelogLocation,
             context,
             action: async (release) => {

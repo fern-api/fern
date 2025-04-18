@@ -3,5 +3,6 @@
 from .a_nested_literal import ANestedLiteral
 from .a_top_level_literal import ATopLevelLiteral
 from .some_aliased_literal import SomeAliasedLiteral
+from .undiscriminated_literal import UndiscriminatedLiteral
 
-__all__ = ["ANestedLiteral", "ATopLevelLiteral", "SomeAliasedLiteral"]
+__all__ = ["ANestedLiteral", "ATopLevelLiteral", "SomeAliasedLiteral", "UndiscriminatedLiteral"]

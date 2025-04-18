@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedMultiLineDocs.Core;
 
-#nullable enable
-
 namespace SeedMultiLineDocs;
 
-[JsonConverter(typeof(StringEnumSerializer<Operand>))]
+[JsonConverter(typeof(EnumSerializer<Operand>))]
 public enum Operand
 {
     [EnumMember(Value = ">")]

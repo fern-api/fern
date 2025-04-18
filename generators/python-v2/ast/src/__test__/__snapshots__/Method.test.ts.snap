@@ -1,0 +1,94 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Method > toString > should generate a class method 1`] = `
+"@classmethod
+def class_method(cls):
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method with a body 1`] = `
+"def with_body():
+    return True
+"
+`;
+
+exports[`Method > toString > should generate a method with a decorator 1`] = `
+"@decorator_with_reference
+def with_decorator():
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method with a docstring 1`] = `
+"def with_docstring():
+    """This is a docstring"""
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method with a specified return type 1`] = `
+"def with_return() -> bool:
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method with local classes 1`] = `
+"def method_with_local_classes():
+    class ChildClass(ParentClass):
+        def child_method(self: str):
+            self.parent_method()
+            return "Child method called"
+
+    return ChildClass()
+"
+`;
+
+exports[`Method > toString > should generate a method with multiple arguments 1`] = `
+"def multi_args(arg1: str, arg2: int):
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method with one argument including types 1`] = `
+"def one_arg(arg1: str):
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method with one argument without a type 1`] = `
+"def one_arg(arg1):
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method without a body 1`] = `
+"def without_body():
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method without a docstring 1`] = `
+"def without_docstring():
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a method without a specified return type 1`] = `
+"def without_return():
+    pass
+"
+`;
+
+exports[`Method > toString > should generate a static method 1`] = `
+"@staticmethod
+def static_method():
+    pass
+"
+`;
+
+exports[`Method > toString > should generate an instance method 1`] = `
+"def instance_method(self):
+    pass
+"
+`;

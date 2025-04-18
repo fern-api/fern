@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/internal"
 )
 
 type ScheduleNew struct {
@@ -37,11 +37,32 @@ type Error struct {
 	Message *string `json:"message,omitempty" url:"message,omitempty"`
 	// If the error is parameter-specific, the parameter related to the error.
 	Param *string `json:"param,omitempty" url:"param,omitempty"`
-	// If multiple errors occured (e.g., with param validation), the list of errors that occured.
+	// If multiple errors occurred (e.g., with param validation), the list of errors that occurred.
 	Errors []*Error `json:"errors,omitempty" url:"errors,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (e *Error) GetMessage() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Message
+}
+
+func (e *Error) GetParam() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Param
+}
+
+func (e *Error) GetErrors() []*Error {
+	if e == nil {
+		return nil
+	}
+	return e.Errors
 }
 
 func (e *Error) GetExtraProperties() map[string]interface{} {
@@ -55,24 +76,22 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Error(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
-	e._rawJSON = json.RawMessage(data)
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (e *Error) String() string {
-	if len(e._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(e._rawJSON); err == nil {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -92,7 +111,28 @@ type Request struct {
 	Body *string `json:"body,omitempty" url:"body,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (r *Request) GetUrl() string {
+	if r == nil {
+		return ""
+	}
+	return r.Url
+}
+
+func (r *Request) GetHeaders() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.Headers
+}
+
+func (r *Request) GetBody() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Body
 }
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
@@ -106,24 +146,22 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Request(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
-	r._rawJSON = json.RawMessage(data)
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (r *Request) String() string {
-	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
@@ -153,7 +191,77 @@ type Schedule struct {
 	CreatedAt *CreatedAt `json:"created_at,omitempty" url:"created_at,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (s *Schedule) GetId() *Id {
+	if s == nil {
+		return nil
+	}
+	return s.Id
+}
+
+func (s *Schedule) GetName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Name
+}
+
+func (s *Schedule) GetQueue() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Queue
+}
+
+func (s *Schedule) GetDescription() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Description
+}
+
+func (s *Schedule) GetCron() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Cron
+}
+
+func (s *Schedule) GetRrule() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Rrule
+}
+
+func (s *Schedule) GetDtstart() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Dtstart
+}
+
+func (s *Schedule) GetPaused() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.Paused
+}
+
+func (s *Schedule) GetRequest() *Request {
+	if s == nil {
+		return nil
+	}
+	return s.Request
+}
+
+func (s *Schedule) GetCreatedAt() *CreatedAt {
+	if s == nil {
+		return nil
+	}
+	return s.CreatedAt
 }
 
 func (s *Schedule) GetExtraProperties() map[string]interface{} {
@@ -167,24 +275,22 @@ func (s *Schedule) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = Schedule(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (s *Schedule) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
@@ -206,7 +312,63 @@ type Task struct {
 	CreatedAt *CreatedAt `json:"created_at,omitempty" url:"created_at,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (t *Task) GetId() *Id {
+	if t == nil {
+		return nil
+	}
+	return t.Id
+}
+
+func (t *Task) GetName() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Name
+}
+
+func (t *Task) GetQueue() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Queue
+}
+
+func (t *Task) GetStatus() *TaskStatus {
+	if t == nil {
+		return nil
+	}
+	return t.Status
+}
+
+func (t *Task) GetRequest() *Request {
+	if t == nil {
+		return nil
+	}
+	return t.Request
+}
+
+func (t *Task) GetScheduledFor() *string {
+	if t == nil {
+		return nil
+	}
+	return t.ScheduledFor
+}
+
+func (t *Task) GetDelay() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Delay
+}
+
+func (t *Task) GetCreatedAt() *CreatedAt {
+	if t == nil {
+		return nil
+	}
+	return t.CreatedAt
 }
 
 func (t *Task) GetExtraProperties() map[string]interface{} {
@@ -220,24 +382,22 @@ func (t *Task) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Task(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
-	t._rawJSON = json.RawMessage(data)
+	t.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (t *Task) String() string {
-	if len(t._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
@@ -259,7 +419,63 @@ type TaskNew struct {
 	CreatedAt *CreatedAt `json:"created_at,omitempty" url:"created_at,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (t *TaskNew) GetId() *Id {
+	if t == nil {
+		return nil
+	}
+	return t.Id
+}
+
+func (t *TaskNew) GetName() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Name
+}
+
+func (t *TaskNew) GetQueue() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Queue
+}
+
+func (t *TaskNew) GetStatus() *TaskStatus {
+	if t == nil {
+		return nil
+	}
+	return t.Status
+}
+
+func (t *TaskNew) GetRequest() *Request {
+	if t == nil {
+		return nil
+	}
+	return t.Request
+}
+
+func (t *TaskNew) GetScheduledFor() *string {
+	if t == nil {
+		return nil
+	}
+	return t.ScheduledFor
+}
+
+func (t *TaskNew) GetDelay() *string {
+	if t == nil {
+		return nil
+	}
+	return t.Delay
+}
+
+func (t *TaskNew) GetCreatedAt() *CreatedAt {
+	if t == nil {
+		return nil
+	}
+	return t.CreatedAt
 }
 
 func (t *TaskNew) GetExtraProperties() map[string]interface{} {
@@ -273,24 +489,22 @@ func (t *TaskNew) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = TaskNew(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
-	t._rawJSON = json.RawMessage(data)
+	t.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (t *TaskNew) String() string {
-	if len(t._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

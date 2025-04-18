@@ -1,4 +1,4 @@
-name: test-definitions
+name: Validate Test Definitions
 
 on:
   push:
@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -37,17 +37,17 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 'stable'
+          go-version: "stable"
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Fern check
         env:
           FORCE_COLOR: "2"
         run: |
           pnpm --filter @fern-api/cli dist:cli:dev
-          cli_path="$(pwd)/packages/cli/cli/dist/dev/bundle.cjs" 
+          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs" 
           cd test-definitions
           FERN_NO_VERSION_REDIRECTION=true node $cli_path check
           cd ../test-definitions-openapi

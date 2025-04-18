@@ -53,10 +53,7 @@ class UserClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.create_user(
-            username="string",
-            email="string",
-            age=1,
-            weight=1.1,
+            username="username",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -116,11 +113,7 @@ class UserClient:
         client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_user(
-            username="string",
-            age=1,
-            weight=1.1,
-        )
+        client.user.get_user()
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -191,10 +184,7 @@ class AsyncUserClient:
 
         async def main() -> None:
             await client.user.create_user(
-                username="string",
-                email="string",
-                age=1,
-                weight=1.1,
+                username="username",
             )
 
 
@@ -262,11 +252,7 @@ class AsyncUserClient:
 
 
         async def main() -> None:
-            await client.user.get_user(
-                username="string",
-                age=1,
-                weight=1.1,
-            )
+            await client.user.get_user()
 
 
         asyncio.run(main())

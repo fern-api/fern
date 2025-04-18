@@ -10,5 +10,5 @@ export const UserId: core.serialization.Schema<serializers.UserId.Raw, SeedVersi
     core.serialization.string();
 
 export declare namespace UserId {
-    type Raw = string;
+    export type Raw = string;
 }

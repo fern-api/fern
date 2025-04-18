@@ -20,7 +20,7 @@ module SeedMultiUrlEnvironmentNoDefaultClient
     # @return [String]
     # @example
     #  multi_url_environment_no_default = SeedMultiUrlEnvironmentNoDefaultClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  multi_url_environment_no_default.s_3.get_presigned_url(s_3_key: "string")
+    #  multi_url_environment_no_default.s_3.get_presigned_url(s_3_key: "s3Key")
     def get_presigned_url(s_3_key:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -55,7 +55,7 @@ module SeedMultiUrlEnvironmentNoDefaultClient
     # @return [String]
     # @example
     #  multi_url_environment_no_default = SeedMultiUrlEnvironmentNoDefaultClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  multi_url_environment_no_default.s_3.get_presigned_url(s_3_key: "string")
+    #  multi_url_environment_no_default.s_3.get_presigned_url(s_3_key: "s3Key")
     def get_presigned_url(s_3_key:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

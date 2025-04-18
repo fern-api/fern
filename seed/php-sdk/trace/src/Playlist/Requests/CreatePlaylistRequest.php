@@ -2,10 +2,11 @@
 
 namespace Seed\Playlist\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use DateTime;
 use Seed\Playlist\Types\PlaylistCreateRequest;
 
-class CreatePlaylistRequest
+class CreatePlaylistRequest extends JsonSerializableType
 {
     /**
      * @var DateTime $datetime
@@ -13,27 +14,27 @@ class CreatePlaylistRequest
     public DateTime $datetime;
 
     /**
-     * @var PlaylistCreateRequest $body
-     */
-    public PlaylistCreateRequest $body;
-
-    /**
      * @var ?DateTime $optionalDatetime
      */
     public ?DateTime $optionalDatetime;
 
     /**
-     * @param DateTime $datetime
-     * @param PlaylistCreateRequest $body
-     * @param ?DateTime $optionalDatetime
+     * @var PlaylistCreateRequest $body
+     */
+    public PlaylistCreateRequest $body;
+
+    /**
+     * @param array{
+     *   datetime: DateTime,
+     *   body: PlaylistCreateRequest,
+     *   optionalDatetime?: ?DateTime,
+     * } $values
      */
     public function __construct(
-        DateTime $datetime,
-        PlaylistCreateRequest $body,
-        ?DateTime $optionalDatetime = null,
+        array $values,
     ) {
-        $this->datetime = $datetime;
-        $this->body = $body;
-        $this->optionalDatetime = $optionalDatetime;
+        $this->datetime = $values['datetime'];
+        $this->optionalDatetime = $values['optionalDatetime'] ?? null;
+        $this->body = $values['body'];
     }
 }

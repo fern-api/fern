@@ -10,30 +10,30 @@ export type TypeReference =
     | FernIr.TypeReference.Primitive
     | FernIr.TypeReference.Unknown;
 
-export declare namespace TypeReference {
-    interface Container extends _Utils {
+export namespace TypeReference {
+    export interface Container extends _Utils {
         type: "container";
         container: FernIr.ContainerType;
     }
 
-    interface Named extends FernIr.NamedType, _Utils {
+    export interface Named extends FernIr.NamedType, _Utils {
         type: "named";
     }
 
-    interface Primitive extends _Utils {
+    export interface Primitive extends _Utils {
         type: "primitive";
         primitive: FernIr.PrimitiveType;
     }
 
-    interface Unknown extends _Utils {
+    export interface Unknown extends _Utils {
         type: "unknown";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.TypeReference._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         container: (value: FernIr.ContainerType) => _Result;
         named: (value: FernIr.NamedType) => _Result;
         primitive: (value: FernIr.PrimitiveType) => _Result;
@@ -49,7 +49,7 @@ export const TypeReference = {
             type: "container",
             _visit: function <_Result>(
                 this: FernIr.TypeReference.Container,
-                visitor: FernIr.TypeReference._Visitor<_Result>
+                visitor: FernIr.TypeReference._Visitor<_Result>,
             ) {
                 return FernIr.TypeReference._visit(this, visitor);
             },
@@ -62,7 +62,7 @@ export const TypeReference = {
             type: "named",
             _visit: function <_Result>(
                 this: FernIr.TypeReference.Named,
-                visitor: FernIr.TypeReference._Visitor<_Result>
+                visitor: FernIr.TypeReference._Visitor<_Result>,
             ) {
                 return FernIr.TypeReference._visit(this, visitor);
             },
@@ -75,7 +75,7 @@ export const TypeReference = {
             type: "primitive",
             _visit: function <_Result>(
                 this: FernIr.TypeReference.Primitive,
-                visitor: FernIr.TypeReference._Visitor<_Result>
+                visitor: FernIr.TypeReference._Visitor<_Result>,
             ) {
                 return FernIr.TypeReference._visit(this, visitor);
             },
@@ -87,7 +87,7 @@ export const TypeReference = {
             type: "unknown",
             _visit: function <_Result>(
                 this: FernIr.TypeReference.Unknown,
-                visitor: FernIr.TypeReference._Visitor<_Result>
+                visitor: FernIr.TypeReference._Visitor<_Result>,
             ) {
                 return FernIr.TypeReference._visit(this, visitor);
             },

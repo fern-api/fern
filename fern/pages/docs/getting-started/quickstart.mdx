@@ -12,16 +12,21 @@ In this guide, we'll show you how to get started with Fern in under 5 minutes.
 <Steps toc={true}>
   ### Initialize your `fern` folder
     
-    All the configuration for your docs lives in the `fern` folder. Inside you'll 
+    All the configurations for your docs live in the `fern` folder. Inside, you'll 
     find a `docs.yml` file that contains all the settings for your documentation.
 
   <AccordionGroup toc={true}>
     <Accordion title='Clone the starter repository'>
-      Get started by cloning the [starter template](https://github.com/fern-api/docs-starter-openapi).
+      Get started by cloning the [starter template](https://github.com/fern-api/docs-starter).
 
-      ```bash
-      git clone git@github.com:fern-api/docs-starter-openapi.git
-      ```
+      <CodeBlocks>
+        ```bash title="SSH"
+        git clone git@github.com:fern-api/docs-starter.git
+        ```
+        ```bash title="HTTPS"
+        git clone https://github.com/fern-api/docs-starter.git
+        ```
+      </CodeBlocks>
 
       Next, please update the template settings to use your organization.
 
@@ -105,12 +110,12 @@ In this guide, we'll show you how to get started with Fern in under 5 minutes.
 
       ```yml
       navigation:
-        - page: "Hello World"
-          path: "pages/hello-world.mdx"
+        - page: Hello World
+          path: docs/pages/hello-world.mdx
         - section: Overview
-          layout:
+          content:
             - page: QuickStart
-              path: pages/hello-world.mdx
+              path: docs/pages/hello-world.mdx
       ```
     </Accordion>
     <Accordion title='Add an API Reference' >
@@ -137,17 +142,17 @@ In this guide, we'll show you how to get started with Fern in under 5 minutes.
       <CodeBlock title="docs.yml">
       ```yml
       colors:
-        accentPrimary:
+        accent-primary:
           dark: "#f0c193"
           light: "#af5f1b"
 
       logo:
-        dark: ./docs/assets/logo-dark-mode.png
-        light: ./docs/assets/logo-light-mode.png
+        dark: docs/assets/logo-dark.svg
+        light: docs/assets/logo-light.svg
         height: 40
         href: https://buildwithfern.com/
 
-      favicon: ./docs/assets/favicon.png
+      favicon: docs/assets/favicon.svg
       ```
       </CodeBlock>
 
@@ -238,3 +243,4 @@ Below are some examples of documentation websites that have been published using
     }
   />
 </CardGroup>
+

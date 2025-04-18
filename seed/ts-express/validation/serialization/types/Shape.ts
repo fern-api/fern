@@ -13,5 +13,5 @@ export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedValidat
 ]);
 
 export declare namespace Shape {
-    type Raw = "SQUARE" | "CIRCLE" | "TRIANGLE";
+    export type Raw = "SQUARE" | "CIRCLE" | "TRIANGLE";
 }

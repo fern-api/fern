@@ -1,7 +1,9 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
 import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
@@ -31,20 +33,32 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         rawGrpcClientReference: string;
         rawClient: RawClient;
         grpcClientInfo: GrpcClientInfo | undefined;
-    }): csharp.Method {
-        if (grpcClientInfo != null) {
-            return this.grpc.generate({
+    }): csharp.Method[] {
+        if (this.isGrpcEndpoint(grpcClientInfo, endpoint)) {
+            return [
+                this.grpc.generate({
+                    serviceId,
+                    endpoint,
+                    rawGrpcClientReference,
+                    grpcClientInfo
+                })
+            ];
+        } else {
+            return this.http.generate({
                 serviceId,
                 endpoint,
-                rawGrpcClientReference,
-                grpcClientInfo
+                rawClientReference,
+                rawClient
             });
         }
-        return this.http.generate({
-            serviceId,
-            endpoint,
-            rawClientReference,
-            rawClient
-        });
+    }
+
+    private isGrpcEndpoint(
+        grpcClientInfo: GrpcClientInfo | undefined,
+        endpoint: HttpEndpoint
+    ): grpcClientInfo is GrpcClientInfo {
+        // If the service is a grpc service, grpcClientInfo will not be null or undefined,
+        // so any endpoint will be generated as a grpc endpoint, unless the transport is overridden by setting type to http
+        return grpcClientInfo != null && endpoint.transport?.type !== "http";
     }
 }

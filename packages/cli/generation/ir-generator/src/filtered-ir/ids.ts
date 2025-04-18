@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-api/ir-sdk";
+import { FernFilepath, WebSocketChannelId } from "@fern-api/ir-sdk";
 
 export type AudienceId = string;
 export type EnvironmentId = string;
@@ -41,7 +41,7 @@ export interface InlinedRequestHeadersNode {
     parametersByAudience: Record<AudienceId, Set<string>>;
 }
 
-export interface InlinedWebhookPayloadProperiesNode {
+export interface InlinedWebhookPayloadPropertiesNode {
     webhookId: WebhookId;
     /* If audience not present, keep all properties */
     propertiesByAudience: Record<AudienceId, Set<string>>;
@@ -55,12 +55,19 @@ export interface ErrorNode {
 
 export interface EndpointNode {
     endpointId: EndpointId;
+    serviceId: ServiceId;
     referencedErrors: Set<ErrorId>;
     referencedTypes: Set<TypeId>;
     referencedSubpackages: Set<FernFilepath>;
 }
 export interface WebhookNode {
     webhookId: WebhookId;
+    referencedTypes: Set<TypeId>;
+    referencedSubpackages: Set<FernFilepath>;
+}
+
+export interface ChannelNode {
+    channelId: WebSocketChannelId;
     referencedTypes: Set<TypeId>;
     referencedSubpackages: Set<FernFilepath>;
 }

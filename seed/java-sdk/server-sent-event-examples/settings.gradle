@@ -1,0 +1,3 @@
+rootProject.name = 'server-sent-event-examples'
+
+include 'sample-app'

@@ -1,9 +1,11 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { kebabCase, last } from "lodash-es";
+
+import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { DocsWorkspace } from "@fern-api/workspace-loader";
+
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle";
 
@@ -12,11 +14,13 @@ dayjs.extend(utc);
 const DEFAULT_CHANGELOG_TITLE = "Changelog";
 
 interface ConvertOptions {
-    parentSlug: FernNavigation.SlugGenerator;
+    parentSlug: FernNavigation.V1.SlugGenerator;
     title?: string;
     icon?: string;
     hidden?: boolean;
     slug?: string;
+    viewers?: APIV1Write.RoleId[];
+    orphaned?: boolean;
     // skipUrlSlug?: boolean;
 }
 
@@ -26,34 +30,31 @@ const RESERVED_OVERVIEW_PAGE_NAMES = ["summary", "index", "overview"];
 export class ChangelogNodeConverter {
     public constructor(
         private markdownToFullSlug: Map<AbsoluteFilePath, string>,
+        private markdownToNoIndex: Map<AbsoluteFilePath, boolean>,
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
         private idgen: NodeIdGenerator
     ) {}
 
-    public convert(opts: ConvertOptions): FernNavigation.ChangelogNode | undefined {
-        if (this.changelogFiles == null || this.changelogFiles.length === 0) {
-            return undefined;
-        }
-
+    public toChangelogNode(opts: ConvertOptions): FernNavigation.V1.ChangelogNode {
         const title = opts.title ?? DEFAULT_CHANGELOG_TITLE;
 
-        this.idgen = this.idgen.append("changelog");
         const unsortedChangelogItems: {
             date: Date;
             pageId: FernNavigation.PageId;
             absoluteFilepath: AbsoluteFilePath;
         }[] = [];
+
         let overviewPagePath: AbsoluteFilePath | undefined = undefined;
-        for (const absoluteFilepath of this.changelogFiles) {
+        for (const absoluteFilepath of this.changelogFiles ?? []) {
             const filename = last(absoluteFilepath.split("/"));
             if (filename == null) {
                 continue;
             }
             const changelogDate = extractDatetimeFromChangelogTitle(filename);
             if (changelogDate == null) {
-                const nameWihoutExtension = filename.split(".")[0]?.toLowerCase();
-                if (nameWihoutExtension != null && RESERVED_OVERVIEW_PAGE_NAMES.includes(nameWihoutExtension)) {
+                const nameWithoutExtension = filename.split(".")[0]?.toLowerCase();
+                if (nameWithoutExtension != null && RESERVED_OVERVIEW_PAGE_NAMES.includes(nameWithoutExtension)) {
                     overviewPagePath = absoluteFilepath;
                 }
 
@@ -73,16 +74,19 @@ export class ChangelogNodeConverter {
             urlSlug: opts.slug ?? kebabCase(title)
         });
 
+        const noindex = overviewPagePath != null ? this.markdownToNoIndex.get(overviewPagePath) : undefined;
+
         // sort changelog items by date, in descending order
-        const changelogItems = unsortedChangelogItems.map((item): FernNavigation.ChangelogEntryNode => {
+        const changelogItems = unsortedChangelogItems.map((item): FernNavigation.V1.ChangelogEntryNode => {
             const date = dayjs.utc(item.date);
             return {
-                id: this.idgen.append(date.format("YYYY-M-D")).get(),
+                id: this.idgen.get(item.pageId),
                 type: "changelogEntry",
                 title: date.format("MMMM D, YYYY"),
                 slug: slug
                     .apply({
                         fullSlug: this.markdownToFullSlug.get(item.absoluteFilepath)?.split("/"),
+                        // TODO: the url slug should be the markdown filename name, minus the extension
                         urlSlug: date.format("YYYY/M/D")
                     })
                     .get(),
@@ -90,32 +94,47 @@ export class ChangelogNodeConverter {
                 hidden: undefined,
                 date: item.date.toISOString(),
                 pageId: item.pageId,
-                noindex: undefined
+                noindex: this.markdownToNoIndex.get(item.absoluteFilepath),
+                authed: undefined,
+                viewers: undefined,
+                orphaned: undefined,
+                featureFlags: undefined
             };
         });
 
         const entries = orderBy(changelogItems, (entry) => entry.date, "desc");
-        const changelogYears = this.groupByYear(entries, slug);
+        const overviewPageId =
+            overviewPagePath != null ? FernNavigation.PageId(this.toRelativeFilepath(overviewPagePath)) : undefined;
+        const id = this.idgen.get(overviewPageId ?? "changelog");
+        const changelogYears = this.groupByYear(id, entries, slug);
 
         return {
-            id: this.idgen.get(),
+            id,
             type: "changelog",
             title,
             slug: slug.get(),
             icon: opts.icon,
             hidden: opts.hidden,
             children: changelogYears,
-            overviewPageId:
-                overviewPagePath != null ? FernNavigation.PageId(this.toRelativeFilepath(overviewPagePath)) : undefined,
-            noindex: undefined
+            overviewPageId,
+            noindex,
+            authed: undefined,
+            viewers: opts.viewers,
+            orphaned: opts.orphaned,
+            featureFlags: undefined
         };
     }
 
+    public orUndefined(): ChangelogNodeConverter | undefined {
+        return this.changelogFiles != null && this.changelogFiles.length > 0 ? this : undefined;
+    }
+
     private groupByYear(
-        entries: FernNavigation.ChangelogEntryNode[],
-        parentSlug: FernNavigation.SlugGenerator
-    ): FernNavigation.ChangelogYearNode[] {
-        const years = new Map<number, FernNavigation.ChangelogEntryNode[]>();
+        prefix: string,
+        entries: FernNavigation.V1.ChangelogEntryNode[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.ChangelogYearNode[] {
+        const years = new Map<number, FernNavigation.V1.ChangelogEntryNode[]>();
         for (const entry of entries) {
             const year = dayjs.utc(entry.date).year();
             const yearEntries = years.get(year) ?? [];
@@ -125,15 +144,20 @@ export class ChangelogNodeConverter {
         return orderBy(
             Array.from(years.entries()).map(([year, entries]) => {
                 const slug = parentSlug.append(year.toString()).get();
+                const id = this.idgen.get(`${prefix}/year/${year}`);
                 return {
-                    id: this.idgen.append(year.toString()).get(),
+                    id,
                     type: "changelogYear" as const,
                     title: year.toString(),
                     year,
                     slug,
                     icon: undefined,
                     hidden: undefined,
-                    children: this.groupByMonth(entries, parentSlug)
+                    children: this.groupByMonth(id, entries, parentSlug),
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
                 };
             }),
             "year",
@@ -142,10 +166,11 @@ export class ChangelogNodeConverter {
     }
 
     private groupByMonth(
-        entries: FernNavigation.ChangelogEntryNode[],
-        parentSlug: FernNavigation.SlugGenerator
-    ): FernNavigation.ChangelogMonthNode[] {
-        const months = new Map<number, FernNavigation.ChangelogEntryNode[]>();
+        prefix: string,
+        entries: FernNavigation.V1.ChangelogEntryNode[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.ChangelogMonthNode[] {
+        const months = new Map<number, FernNavigation.V1.ChangelogEntryNode[]>();
         for (const entry of entries) {
             const month = dayjs.utc(entry.date).month() + 1;
             const monthEntries = months.get(month) ?? [];
@@ -156,14 +181,18 @@ export class ChangelogNodeConverter {
             Array.from(months.entries()).map(([month, entries]) => {
                 const date = dayjs(new Date(0, month - 1));
                 return {
-                    id: this.idgen.append(date.format("YYYY-M")).get(),
+                    id: this.idgen.get(`${prefix}/month/${month}`),
                     type: "changelogMonth" as const,
                     title: date.format("MMMM YYYY"),
                     month,
                     slug: parentSlug.append(month.toString()).get(),
                     icon: undefined,
                     hidden: undefined,
-                    children: entries
+                    children: entries,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
                 };
             }),
             "month",
@@ -177,7 +206,7 @@ export class ChangelogNodeConverter {
         if (filepath == null) {
             return undefined;
         }
-        return relative(this.docsWorkspace.absoluteFilepath, filepath);
+        return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 }
 

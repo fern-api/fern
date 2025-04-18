@@ -14,7 +14,7 @@ export const ImportingType: core.serialization.ObjectSchema<
 });
 
 export declare namespace ImportingType {
-    interface Raw {
+    export interface Raw {
         imported: serializers.Imported.Raw;
     }
 }

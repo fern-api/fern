@@ -1,23 +1,20 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedTrace;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetExecutionSessionTest : BaseMockServerTest
 {
-    [Test]
-    public async Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
-              "sessionId": "string",
-              "executionSessionUrl": "string",
+              "sessionId": "sessionId",
+              "executionSessionUrl": "executionSessionUrl",
               "language": "JAVA",
               "status": "CREATING_CONTAINER"
             }
@@ -25,7 +22,7 @@ public class GetExecutionSessionTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/sessions/string").UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/sessions/sessionId").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -34,10 +31,11 @@ public class GetExecutionSessionTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Submission.GetExecutionSessionAsync("string", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Submission.GetExecutionSessionAsync("sessionId");
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<ExecutionSessionResponse?>(mockResponse))
+                .UsingDefaults()
+        );
     }
 }

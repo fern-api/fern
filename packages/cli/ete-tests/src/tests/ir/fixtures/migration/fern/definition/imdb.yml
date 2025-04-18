@@ -36,14 +36,16 @@ types:
     examples:
       - value:
           director: $director.Director.GeorgeExample
+  EmptyObject:
+    properties: {}
   Person:
     union:
       actor: ActorId
       director: director.Director
-      producer: {}
+      producer: EmptyObject
       cinematographer:
         docs: i am docs
-        type: {}
+        type: EmptyObject
     examples:
       - name: PersonExample1
         docs: this is a person example

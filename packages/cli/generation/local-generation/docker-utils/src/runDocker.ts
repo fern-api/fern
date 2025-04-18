@@ -1,10 +1,12 @@
-import Docker from "dockerode";
 import { writeFile } from "fs/promises";
-import { Writable } from "stream";
 import tmp from "tmp-promise";
+
+import { Logger } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 
 export declare namespace runDocker {
     export interface Args {
+        logger: Logger;
         imageName: string;
         args?: string[];
         binds?: string[];
@@ -18,20 +20,19 @@ export declare namespace runDocker {
 }
 
 export async function runDocker({
+    logger,
     imageName,
-    args,
-    binds,
+    args = [],
+    binds = [],
     writeLogsToFile = true,
     removeAfterCompletion = false
 }: runDocker.Args): Promise<void> {
-    const docker = new Docker();
-    const tryRun = () => tryRunDocker({ docker, imageName, args, binds, removeAfterCompletion, writeLogsToFile });
+    const tryRun = () => tryRunDocker({ logger, imageName, args, binds, removeAfterCompletion, writeLogsToFile });
     try {
         await tryRun();
     } catch (e) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        if ((e as any)?.statusCode === 404) {
-            await pullImage(docker, imageName);
+        if (e instanceof Error && e.message.includes("No such image")) {
+            await pullImage(imageName);
             await tryRun();
         } else {
             throw e;
@@ -39,68 +40,55 @@ export async function runDocker({
     }
 }
 
-// may throw a 404 if the image hasn't been downloaded
 async function tryRunDocker({
-    docker,
+    logger,
     imageName,
     args,
     binds,
     removeAfterCompletion,
     writeLogsToFile
 }: {
-    docker: Docker;
+    logger: Logger;
     imageName: string;
-    args?: string[];
-    binds?: string[];
+    args: string[];
+    binds: string[];
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
 }): Promise<void> {
-    let logs = "";
-    const [status, container] = await docker.run(
+    const dockerArgs = [
+        "run",
+        "--user",
+        "root",
+        ...binds.flatMap((bind) => ["-v", bind]),
+        removeAfterCompletion ? "--rm" : "",
         imageName,
-        args != null ? args : [],
-        new Writable({
-            write(_chunk, _encding, callback) {
-                logs += _chunk.toString();
-                setImmediate(callback);
-            }
-        }),
-        {
-            HostConfig: {
-                Binds: binds
-            },
-            User: "root"
-        }
-    );
+        ...args
+    ].filter(Boolean);
+    // This filters out any falsy values (empty strings, null, undefined) from the dockerArgs array
+    // In this case, it removes empty strings that may be present when removeAfterCompletion is false
 
-    if (removeAfterCompletion) {
-        await container.remove();
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, "docker", dockerArgs, {
+        reject: false,
+        all: true,
+        doNotPipeOutput: true
+    });
+
+    const logs = stdout + stderr;
+
+    if (writeLogsToFile) {
+        const tmpFile = await tmp.file();
+        await writeFile(tmpFile.path, logs);
+        logger.info(`Generator logs here: ${tmpFile.path}`);
     }
 
-    if (status.Error != null) {
-        throw status.Error;
-    }
-
-    if (status.StatusCode !== 0) {
-        if (writeLogsToFile) {
-            const tmpFile = await tmp.file();
-            await writeFile(tmpFile.path, logs);
-            throw new Error(`Docker exited with a non-zero exit code. Logs here: ${tmpFile.path}`);
-        } else {
-            throw new Error("Docker exited with a non-zero exit code.");
-        }
+    if (exitCode !== 0) {
+        throw new Error(`Docker exited with code ${exitCode}.\n${stdout}\n${stderr}`);
     }
 }
 
-async function pullImage(docker: Docker, imageName: string): Promise<void> {
-    const pullStream = await docker.pull(imageName);
-    await new Promise<void>((resolve, reject) => {
-        docker.modem.followProgress(pullStream, (error) => {
-            if (error != null) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
+async function pullImage(imageName: string): Promise<void> {
+    await loggingExeca(undefined, "docker", ["pull", imageName], {
+        all: true,
+        doNotPipeOutput: true
     });
 }

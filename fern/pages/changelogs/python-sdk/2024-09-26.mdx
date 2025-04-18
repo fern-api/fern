@@ -1,0 +1,5 @@
+## 4.2.7-rc2
+**`(fix):`** Pydantic utilities now correctly handles cases where you have a Pydantic model, with a list of pydantic models as a field, where those models have literals.
+Effectively, `deep_union_pydantic_objects` now handles lists of objects and merges them appropriately.
+
+

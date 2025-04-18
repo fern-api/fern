@@ -1,5 +1,7 @@
-import { assertNever } from "@fern-api/core-utils";
 import { CodeBlockWriter, WriterFunction, WriterFunctionOrValue } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
 import { getPropertyKey } from "../codegen-utils/getPropertyKey";
 
 const NEWLINE_REGEX = /^/gm;

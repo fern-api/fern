@@ -11,7 +11,7 @@ export function register(
     services: {
         _root: RootService;
         service: ServiceService;
-    }
+    },
 ): void {
     (expressApp as any).use("/", services._root.toRouter());
     (expressApp as any).use("/", services.service.toRouter());

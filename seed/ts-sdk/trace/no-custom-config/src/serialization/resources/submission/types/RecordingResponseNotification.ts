@@ -21,7 +21,7 @@ export const RecordingResponseNotification: core.serialization.ObjectSchema<
 });
 
 export declare namespace RecordingResponseNotification {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
         testCaseId?: string | null;
         lineNumber: number;

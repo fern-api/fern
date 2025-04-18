@@ -1,10 +1,12 @@
+import path from "path";
+
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import path from "path";
+
 import { PublishCommand } from "../../config/api";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 import { runCommands, subVersion } from "../../utils/publishUtilities";
-import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities";
+import { VersionFilePair, getNewCliVersion } from "../../utils/versionUtilities";
 
 export async function publishCli({
     version,
@@ -22,6 +24,9 @@ export async function publishCli({
     if (typeof version !== "string") {
         // We were given two version files, so we need to compare them to find if any new
         // versions have been added since the last publish.
+        context.logger.info(
+            `Checking for new version between ${version.previousChangelogPath} (previous) and ${version.latestChangelogPath} (latest)`
+        );
         const maybeNewVersion = await getNewCliVersion({
             versionFilePair: version,
             context
@@ -53,8 +58,8 @@ export async function publishCli({
     // Instance of PublishCommand configuration, leverage these commands outright
     const unparsedCommands = publishConfig.command;
     const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands];
-    const versionSubsitution = publishConfig.versionSubstitution;
-    const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubsitution));
+    const versionSubstitution = publishConfig.versionSubstitution;
+    const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubstitution));
 
     let workingDirectory = cliWorkspace.absolutePathToWorkspace;
     if (publishConfig.workingDirectory) {

@@ -226,7 +226,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+            "path": "/path/{operand}/{operandOrColor}",
             "method": "POST",
             "identifierOverride": "endpoint_path-param.send"
         },
@@ -299,25 +299,6 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
-                                        },
-                                        "templateString": "$FERN_INPUT",
-                                        "templateInput": {
-                                            "location": "PATH",
-                                            "path": "maybeOperand",
-                                            "type": "payload"
-                                        },
-                                        "type": "enum"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "members": [
                                             {
@@ -365,63 +346,6 @@
                                         "templateInput": {
                                             "location": "PATH",
                                             "path": "operandOrColor",
-                                            "type": "payload"
-                                        },
-                                        "type": "union_v2"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "$FERN_INPUT",
-                                        "members": [
-                                            {
-                                                "template": {
-                                                    "imports": [],
-                                                    "isOptional": true,
-                                                    "values": {
-                                                        "red": "\"red\"",
-                                                        "blue": "\"blue\""
-                                                    },
-                                                    "templateString": "$FERN_INPUT",
-                                                    "templateInput": {
-                                                        "location": "RELATIVE",
-                                                        "type": "payload"
-                                                    },
-                                                    "type": "enum"
-                                                },
-                                                "type": {
-                                                    "value": "type_:Color",
-                                                    "type": "id"
-                                                }
-                                            },
-                                            {
-                                                "template": {
-                                                    "imports": [],
-                                                    "isOptional": true,
-                                                    "values": {
-                                                        ">": "\">\"",
-                                                        "=": "\"=\"",
-                                                        "less_than": "\"less_than\""
-                                                    },
-                                                    "templateString": "$FERN_INPUT",
-                                                    "templateInput": {
-                                                        "location": "RELATIVE",
-                                                        "type": "payload"
-                                                    },
-                                                    "type": "enum"
-                                                },
-                                                "type": {
-                                                    "value": "type_:Operand",
-                                                    "type": "id"
-                                                }
-                                            }
-                                        ],
-                                        "templateInput": {
-                                            "location": "PATH",
-                                            "path": "maybeOperandOrColor",
                                             "type": "payload"
                                         },
                                         "type": "union_v2"

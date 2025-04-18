@@ -12,7 +12,7 @@ export const WithCursor: core.serialization.ObjectSchema<serializers.WithCursor.
     });
 
 export declare namespace WithCursor {
-    interface Raw {
+    export interface Raw {
         cursor?: string | null;
     }
 }

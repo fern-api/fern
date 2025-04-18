@@ -13,7 +13,7 @@ export const ExampleDatetime: core.serialization.ObjectSchema<serializers.Exampl
     });
 
 export declare namespace ExampleDatetime {
-    interface Raw {
+    export interface Raw {
         datetime: string;
         raw?: string | null;
     }

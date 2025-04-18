@@ -2,32 +2,41 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class NextPage extends SerializableType
+class NextPage extends JsonSerializableType
 {
     /**
      * @var int $page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public int $page;
 
     /**
      * @var string $startingAfter
      */
-    #[JsonProperty("starting_after")]
+    #[JsonProperty('starting_after')]
     public string $startingAfter;
 
     /**
-     * @param int $page
-     * @param string $startingAfter
+     * @param array{
+     *   page: int,
+     *   startingAfter: string,
+     * } $values
      */
     public function __construct(
-        int $page,
-        string $startingAfter,
+        array $values,
     ) {
-        $this->page = $page;
-        $this->startingAfter = $startingAfter;
+        $this->page = $values['page'];
+        $this->startingAfter = $values['startingAfter'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

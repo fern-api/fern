@@ -6,8 +6,8 @@ import * as SeedTrace from "../../../index";
 
 export type PlaylistIdNotFoundErrorBody = SeedTrace.PlaylistIdNotFoundErrorBody.PlaylistId;
 
-export declare namespace PlaylistIdNotFoundErrorBody {
-    interface PlaylistId {
+export namespace PlaylistIdNotFoundErrorBody {
+    export interface PlaylistId {
         type: "playlistId";
         value: SeedTrace.PlaylistId;
     }

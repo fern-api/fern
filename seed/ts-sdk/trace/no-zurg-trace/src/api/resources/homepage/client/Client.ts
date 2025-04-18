@@ -9,14 +9,16 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Homepage {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,6 +27,8 @@ export declare namespace Homepage {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -37,11 +41,21 @@ export class Homepage {
      * @example
      *     await client.homepage.getHomepageProblems()
      */
-    public async getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<SeedTrace.ProblemId[]> {
+    public getHomepageProblems(
+        requestOptions?: Homepage.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.ProblemId[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
+    }
+
+    private async __getHomepageProblems(
+        requestOptions?: Homepage.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.ProblemId[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/homepage-problems",
             ),
             method: "GET",
             headers: {
@@ -56,6 +70,7 @@ export class Homepage {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -64,13 +79,14 @@ export class Homepage {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.ProblemId[];
+            return { data: _response.body as SeedTrace.ProblemId[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -79,12 +95,14 @@ export class Homepage {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /homepage-problems.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -94,16 +112,25 @@ export class Homepage {
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.homepage.setHomepageProblems(["string"])
+     *     await client.homepage.setHomepageProblems(["string", "string"])
      */
-    public async setHomepageProblems(
+    public setHomepageProblems(
         request: SeedTrace.ProblemId[],
-        requestOptions?: Homepage.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Homepage.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
+    }
+
+    private async __setHomepageProblems(
+        request: SeedTrace.ProblemId[],
+        requestOptions?: Homepage.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/homepage-problems",
             ),
             method: "POST",
             headers: {
@@ -118,6 +145,7 @@ export class Homepage {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -127,13 +155,14 @@ export class Homepage {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -142,12 +171,14 @@ export class Homepage {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling POST /homepage-problems.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

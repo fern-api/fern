@@ -179,6 +179,12 @@ await client.path.send("123");
 
 ```typescript
 await client.query.send({
+    optionalPrompt: "You are a helpful assistant",
+    aliasPrompt: "You are a helpful assistant",
+    aliasOptionalPrompt: "You are a helpful assistant",
+    optionalStream: false,
+    aliasStream: false,
+    aliasOptionalStream: false,
     query: "What is the weather today",
 });
 ```
@@ -235,6 +241,15 @@ await client.reference.send({
     stream: false,
     context: "You're super wise",
     query: "What is the weather today",
+    containerObject: {
+        nestedObjects: [
+            {
+                literal1: "literal1",
+                literal2: "literal2",
+                strProp: "strProp",
+            },
+        ],
+    },
 });
 ```
 

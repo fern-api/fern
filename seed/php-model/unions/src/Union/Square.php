@@ -2,23 +2,33 @@
 
 namespace Seed\Union;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Square extends SerializableType
+class Square extends JsonSerializableType
 {
     /**
      * @var float $length
      */
-    #[JsonProperty("length")]
+    #[JsonProperty('length')]
     public float $length;
 
     /**
-     * @param float $length
+     * @param array{
+     *   length: float,
+     * } $values
      */
     public function __construct(
-        float $length,
+        array $values,
     ) {
-        $this->length = $length;
+        $this->length = $values['length'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

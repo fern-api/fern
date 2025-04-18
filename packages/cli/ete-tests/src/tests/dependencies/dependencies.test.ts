@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import stripAnsi from "strip-ansi";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 import { generateIrAsString } from "../ir/generateIrAsString";
 

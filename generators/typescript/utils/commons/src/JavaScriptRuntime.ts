@@ -1,4 +1,4 @@
-import { assertNever, Values } from "@fern-api/core-utils";
+import { Values, assertNever } from "@fern-api/core-utils";
 
 export const JavaScriptRuntime = {
     NODE: "node",

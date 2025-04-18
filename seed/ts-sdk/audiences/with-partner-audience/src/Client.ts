@@ -6,24 +6,28 @@ import * as core from "./core";
 import { FolderD } from "./api/resources/folderD/client/Client";
 
 export declare namespace SeedAudiencesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedAudiencesClient {
-    constructor(protected readonly _options: SeedAudiencesClient.Options) {}
-
     protected _folderD: FolderD | undefined;
+
+    constructor(protected readonly _options: SeedAudiencesClient.Options) {}
 
     public get folderD(): FolderD {
         return (this._folderD ??= new FolderD(this._options));

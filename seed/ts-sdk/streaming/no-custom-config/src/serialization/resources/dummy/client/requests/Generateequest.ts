@@ -12,7 +12,7 @@ export const Generateequest: core.serialization.Schema<serializers.Generateeques
     });
 
 export declare namespace Generateequest {
-    interface Raw {
+    export interface Raw {
         num_events: number;
     }
 }

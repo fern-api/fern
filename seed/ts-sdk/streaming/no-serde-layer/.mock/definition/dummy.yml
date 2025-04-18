@@ -1,0 +1,41 @@
+types:
+  StreamResponse:
+    properties:
+      id: string
+      name: optional<string>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    generate-stream:
+      path: /generate-stream
+      method: POST
+      request:
+        name: GenerateStreamRequest
+        body:
+          properties:
+            stream: literal<true>
+            num_events: integer
+      response-stream:
+        type: StreamResponse
+    
+    generate:
+      path: /generate
+      method: POST
+      request:
+        name: Generateequest
+        body:
+          properties:
+            stream: literal<false>
+            num_events: integer
+      response: StreamResponse
+      examples:
+        - name: Default 
+          request:
+            stream: false
+            num_events: 5
+          response: 
+            body: 
+              id: id
+              name: name

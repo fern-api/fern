@@ -1,12 +1,10 @@
 using SeedVariables.Core;
 
-#nullable enable
-
 namespace SeedVariables;
 
 public partial class SeedVariablesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedVariablesClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedVariablesClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 }

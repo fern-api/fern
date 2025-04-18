@@ -10,16 +10,16 @@ import * as FernIr from "../../../index";
  */
 export type ApiVersionScheme = FernIr.ApiVersionScheme.Header;
 
-export declare namespace ApiVersionScheme {
-    interface Header extends FernIr.HeaderApiVersionScheme, _Utils {
+export namespace ApiVersionScheme {
+    export interface Header extends FernIr.HeaderApiVersionScheme, _Utils {
         type: "header";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ApiVersionScheme._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         header: (value: FernIr.HeaderApiVersionScheme) => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -32,7 +32,7 @@ export const ApiVersionScheme = {
             type: "header",
             _visit: function <_Result>(
                 this: FernIr.ApiVersionScheme.Header,
-                visitor: FernIr.ApiVersionScheme._Visitor<_Result>
+                visitor: FernIr.ApiVersionScheme._Visitor<_Result>,
             ) {
                 return FernIr.ApiVersionScheme._visit(this, visitor);
             },

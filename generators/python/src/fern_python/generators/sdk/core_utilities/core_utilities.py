@@ -23,7 +23,10 @@ class CoreUtilities:
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
     def __init__(
-        self, has_paginated_endpoints: bool, project_module_path: AST.ModulePath, custom_config: SDKCustomConfig
+        self,
+        has_paginated_endpoints: bool,
+        project_module_path: AST.ModulePath,
+        custom_config: SDKCustomConfig,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -35,6 +38,8 @@ class CoreUtilities:
         self._version = custom_config.pydantic_config.version
         self._project_module_path = project_module_path
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
+        self._should_generate_websocket_clients = custom_config.should_generate_websocket_clients
+        self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -44,7 +49,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
-            exports={"serialize_datetime"},
+            exports={"serialize_datetime"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -53,7 +58,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="api_error"),
             ),
-            exports={"ApiError"},
+            exports={"ApiError"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -62,7 +67,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="jsonable_encoder"),
             ),
-            exports={"jsonable_encoder"},
+            exports={"jsonable_encoder"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -71,7 +76,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="remove_none_from_dict"),
             ),
-            exports={"remove_none_from_dict"},
+            exports={"remove_none_from_dict"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -80,8 +85,9 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="request_options"),
             ),
-            exports={"RequestOptions"},
+            exports={"RequestOptions"} if not self._exclude_types_from_init_exports else set(),
         )
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="file.py",
@@ -89,7 +95,16 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="file"),
             ),
-            exports={"File", "convert_file_dict_to_httpx_tuples", "with_content_type"},
+            exports={
+                "File",
+                "convert_file_dict_to_httpx_tuples",
+                "with_content_type",
+            }
+            if not self._exclude_types_from_init_exports
+            else {
+                "File",
+                "with_content_type",
+            },
         )
         self._copy_file_to_project(
             project=project,
@@ -98,15 +113,38 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
-            exports={"HttpClient", "AsyncHttpClient"},
+            exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
+        )
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="http_response.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="http_response"),
+            ),
+            exports={"HttpResponse", "AsyncHttpResponse"} if not self._exclude_types_from_init_exports else set(),
+        )
+
+        is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
+        utilities_path = (
+            "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py"
+            if is_v1_on_v2 and self._use_pydantic_field_aliases
+            else (
+                "with_pydantic_v1_on_v2/pydantic_utilities.py"
+                if is_v1_on_v2
+                else (
+                    "with_pydantic_aliases/pydantic_utilities.py"
+                    if self._use_pydantic_field_aliases
+                    else "pydantic_utilities.py"
+                )
+            )
         )
 
         self._copy_file_to_project(
             project=project,
             # Multi-plex between different versions of the file, depending on if we're using Pydantic aliases or not
-            relative_filepath_on_disk="with_pydantic_aliases/pydantic_utilities.py"
-            if self._use_pydantic_field_aliases
-            else "pydantic_utilities.py",
+            relative_filepath_on_disk=utilities_path,
             filepath_in_project=Filepath(
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
@@ -119,7 +157,9 @@ class CoreUtilities:
                 "universal_field_validator",
                 "update_forward_refs",
                 "UniversalRootModel",
-            },
+            }
+            if not self._exclude_types_from_init_exports
+            else set(),
         )
         project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
@@ -130,7 +170,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="query_encoder"),
             ),
-            exports={"encode_query"},
+            exports={"encode_query"} if not self._exclude_types_from_init_exports else set(),
         )
 
         self._copy_file_to_project(
@@ -140,7 +180,12 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="serialization"),
             ),
-            exports={"FieldMetadata", "convert_and_respect_annotation_metadata"},
+            exports={
+                "FieldMetadata",
+                "convert_and_respect_annotation_metadata",
+            }
+            if not self._exclude_types_from_init_exports
+            else set(),
         )
 
         if self._has_paginated_endpoints:
@@ -151,7 +196,7 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="pagination"),
                 ),
-                exports={"SyncPager", "AsyncPager"},
+                exports={"SyncPager", "AsyncPager"} if not self._exclude_types_from_init_exports else set(),
             )
 
         if self._allow_skipping_validation:
@@ -162,13 +207,33 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="unchecked_base_model"),
                 ),
-                exports={"UncheckedBaseModel", "UnionMetadata", "construct_type"},
+                exports={
+                    "UncheckedBaseModel",
+                    "UnionMetadata",
+                    "construct_type",
+                }
+                if not self._exclude_types_from_init_exports
+                else set(),
+            )
+
+        if self._should_generate_websocket_clients:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="events.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="events"),
+                ),
+                exports={"EventType", "EventEmitterMixin"} if not self._exclude_types_from_init_exports else set(),
             )
 
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         if self._version == PydanticVersionCompatibility.V1:
             project.add_dependency(PYDANTIC_V1_DEPENDENCY)
         elif self._version == PydanticVersionCompatibility.V2:
+            project.add_dependency(PYDANTIC_V2_DEPENDENCY)
+        elif self._version == PydanticVersionCompatibility.V1_ON_V2:
+            # We're using v2 but with v1 compatibility layer
             project.add_dependency(PYDANTIC_V2_DEPENDENCY)
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)
@@ -279,7 +344,7 @@ class CoreUtilities:
                 kwargs=[
                     ("object_", object_),
                     ("annotation", AST.Expression(annotation)),
-                    ("direction", AST.Expression(expression=f'"write"')),
+                    ("direction", AST.Expression(expression='"write"')),
                 ],
             )
         )
@@ -574,6 +639,22 @@ class CoreUtilities:
                     module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
                 ),
             )
+        )
+
+    def get_event_emitter_mixin(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "events"), named_import="EventEmitterMixin"
+            ),
+        )
+
+    def get_event_type(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "events"), named_import="EventType"
+            ),
         )
 
     def universal_root_validator(self, pre: bool = False) -> AST.FunctionInvocation:

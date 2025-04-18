@@ -2,24 +2,35 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Commons\Types\DebugVariableValue;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Scope extends SerializableType
+class Scope extends JsonSerializableType
 {
     /**
-     * @var array<string, mixed> $variables
+     * @var array<string, DebugVariableValue> $variables
      */
-    #[JsonProperty("variables"), ArrayType(["string" => "mixed"])]
+    #[JsonProperty('variables'), ArrayType(['string' => DebugVariableValue::class])]
     public array $variables;
 
     /**
-     * @param array<string, mixed> $variables
+     * @param array{
+     *   variables: array<string, DebugVariableValue>,
+     * } $values
      */
     public function __construct(
-        array $variables,
+        array $values,
     ) {
-        $this->variables = $variables;
+        $this->variables = $values['variables'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

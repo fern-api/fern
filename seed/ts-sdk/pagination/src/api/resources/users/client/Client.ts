@@ -4,23 +4,27 @@
 
 import * as core from "../../../../core";
 import * as SeedPagination from "../../../index";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Users {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,83 +40,193 @@ export class Users {
      *         page: 1,
      *         perPage: 1,
      *         order: "asc",
-     *         startingAfter: "string"
+     *         startingAfter: "starting_after"
      *     })
      */
     public async listWithCursorPagination(
         request: SeedPagination.ListUsersCursorPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
-        const list = async (
-            request: SeedPagination.ListUsersCursorPaginationRequest
-        ): Promise<SeedPagination.ListUsersPaginationResponse> => {
-            const { page, perPage, order, startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
-            if (page != null) {
-                _queryParams["page"] = page.toString();
-            }
-            if (perPage != null) {
-                _queryParams["per_page"] = perPage.toString();
-            }
-            if (order != null) {
-                _queryParams["order"] = order;
-            }
-            if (startingAfter != null) {
-                _queryParams["starting_after"] = startingAfter;
-            }
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "GET",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                queryParameters: _queryParams,
-                requestType: "json",
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersCursorPaginationRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                const { page, perPage, order, startingAfter } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (page != null) {
+                    _queryParams["page"] = page.toString();
+                }
+                if (perPage != null) {
+                    _queryParams["per_page"] = perPage.toString();
+                }
+                if (order != null) {
+                    _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
+                }
+                if (startingAfter != null) {
+                    _queryParams["starting_after"] = startingAfter;
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => response?.page?.next?.startingAfter != null,
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "startingAfter", response?.page?.next?.startingAfter));
+            },
+        });
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersMixedTypeCursorPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithMixedTypeCursorPagination({
+     *         cursor: "cursor"
+     *     })
+     */
+    public async listWithMixedTypeCursorPagination(
+        request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.Page<SeedPagination.User>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersMixedTypePaginationResponse>> => {
+                const { cursor } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (cursor != null) {
+                    _queryParams["cursor"] = cursor;
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                });
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersMixedTypePaginationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Pageable<SeedPagination.ListUsersMixedTypePaginationResponse, SeedPagination.User>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) => response?.next != null,
+            getItems: (response) => response?.data ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.next));
             },
         });
     }
@@ -124,68 +238,84 @@ export class Users {
      * @example
      *     await client.users.listWithBodyCursorPagination({
      *         pagination: {
-     *             cursor: "string"
+     *             cursor: "cursor"
      *         }
      *     })
      */
     public async listWithBodyCursorPagination(
         request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
-        const list = async (
-            request: SeedPagination.ListUsersBodyCursorPaginationRequest
-        ): Promise<SeedPagination.ListUsersPaginationResponse> => {
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "POST",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                requestType: "json",
-                body: serializers.ListUsersBodyCursorPaginationRequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                }),
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersBodyCursorPaginationRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.ListUsersBodyCursorPaginationRequest.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "strip",
+                    }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => response?.page?.next?.startingAfter != null,
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
@@ -203,80 +333,204 @@ export class Users {
      *         page: 1,
      *         perPage: 1,
      *         order: "asc",
-     *         startingAfter: "string"
+     *         startingAfter: "starting_after"
      *     })
      */
     public async listWithOffsetPagination(
         request: SeedPagination.ListUsersOffsetPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
-        const list = async (
-            request: SeedPagination.ListUsersOffsetPaginationRequest
-        ): Promise<SeedPagination.ListUsersPaginationResponse> => {
-            const { page, perPage, order, startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
-            if (page != null) {
-                _queryParams["page"] = page.toString();
-            }
-            if (perPage != null) {
-                _queryParams["per_page"] = perPage.toString();
-            }
-            if (order != null) {
-                _queryParams["order"] = order;
-            }
-            if (startingAfter != null) {
-                _queryParams["starting_after"] = startingAfter;
-            }
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "GET",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                queryParameters: _queryParams,
-                requestType: "json",
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersOffsetPaginationRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                const { page, perPage, order, startingAfter } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (page != null) {
+                    _queryParams["page"] = page.toString();
+                }
+                if (perPage != null) {
+                    _queryParams["per_page"] = perPage.toString();
+                }
+                if (order != null) {
+                    _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
+                }
+                if (startingAfter != null) {
+                    _queryParams["starting_after"] = startingAfter;
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
-        let _offset = request?.page != null ? request?.page : 1;
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        let _offset = request?.page != null ? request?.page : 0;
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) => (response?.data ?? []).length > 0,
+            getItems: (response) => response?.data ?? [],
+            loadPage: (_response) => {
+                _offset += 1;
+                return list(core.setObjectProperty(request, "page", _offset));
+            },
+        });
+    }
+
+    /**
+     * @param {SeedPagination.ListUsersDoubleOffsetPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithDoubleOffsetPagination({
+     *         page: 1.1,
+     *         perPage: 1.1,
+     *         order: "asc",
+     *         startingAfter: "starting_after"
+     *     })
+     */
+    public async listWithDoubleOffsetPagination(
+        request: SeedPagination.ListUsersDoubleOffsetPaginationRequest = {},
+        requestOptions?: Users.RequestOptions,
+    ): Promise<core.Page<SeedPagination.User>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersDoubleOffsetPaginationRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                const { page, perPage, order, startingAfter } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (page != null) {
+                    _queryParams["page"] = page.toString();
+                }
+                if (perPage != null) {
+                    _queryParams["per_page"] = perPage.toString();
+                }
+                if (order != null) {
+                    _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
+                }
+                if (startingAfter != null) {
+                    _queryParams["starting_after"] = startingAfter;
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                });
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        let _offset = request?.page != null ? request?.page : 1;
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
@@ -299,63 +553,79 @@ export class Users {
      */
     public async listWithBodyOffsetPagination(
         request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
-        const list = async (
-            request: SeedPagination.ListUsersBodyOffsetPaginationRequest
-        ): Promise<SeedPagination.ListUsersPaginationResponse> => {
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "POST",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                requestType: "json",
-                body: serializers.ListUsersBodyOffsetPaginationRequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                }),
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "POST",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    requestType: "json",
+                    body: serializers.ListUsersBodyOffsetPaginationRequest.jsonOrThrow(request, {
+                        unrecognizedObjectKeys: "strip",
+                    }),
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
@@ -378,72 +648,88 @@ export class Users {
      */
     public async listWithOffsetStepPagination(
         request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
-        const list = async (
-            request: SeedPagination.ListUsersOffsetStepPaginationRequest
-        ): Promise<SeedPagination.ListUsersPaginationResponse> => {
-            const { page, limit, order } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
-            if (page != null) {
-                _queryParams["page"] = page.toString();
-            }
-            if (limit != null) {
-                _queryParams["limit"] = limit.toString();
-            }
-            if (order != null) {
-                _queryParams["order"] = order;
-            }
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "GET",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                queryParameters: _queryParams,
-                requestType: "json",
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersOffsetStepPaginationRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                const { page, limit, order } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (page != null) {
+                    _queryParams["page"] = page.toString();
+                }
+                if (limit != null) {
+                    _queryParams["limit"] = limit.toString();
+                }
+                if (order != null) {
+                    _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
         let _offset = request?.page != null ? request?.page : 1;
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
@@ -466,72 +752,88 @@ export class Users {
      */
     public async listWithOffsetPaginationHasNextPage(
         request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
-        const list = async (
-            request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest
-        ): Promise<SeedPagination.ListUsersPaginationResponse> => {
-            const { page, limit, order } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
-            if (page != null) {
-                _queryParams["page"] = page.toString();
-            }
-            if (limit != null) {
-                _queryParams["limit"] = limit.toString();
-            }
-            if (order != null) {
-                _queryParams["order"] = order;
-            }
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "GET",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                queryParameters: _queryParams,
-                requestType: "json",
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                const { page, limit, order } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (page != null) {
+                    _queryParams["page"] = page.toString();
+                }
+                if (limit != null) {
+                    _queryParams["limit"] = limit.toString();
+                }
+                if (order != null) {
+                    _queryParams["order"] = serializers.Order.jsonOrThrow(order, { unrecognizedObjectKeys: "strip" });
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
         let _offset = request?.page != null ? request?.page : 1;
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => response?.hasNextPage ?? (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
@@ -552,65 +854,81 @@ export class Users {
      */
     public async listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
-        const list = async (
-            request: SeedPagination.ListUsersExtendedRequest
-        ): Promise<SeedPagination.ListUsersExtendedResponse> => {
-            const { cursor } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
-            if (cursor != null) {
-                _queryParams["cursor"] = cursor;
-            }
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "GET",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                queryParameters: _queryParams,
-                requestType: "json",
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.ListUsersExtendedResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersExtendedRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedResponse>> => {
+                const { cursor } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (cursor != null) {
+                    _queryParams["cursor"] = cursor;
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersExtendedResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.ListUsersExtendedResponse, SeedPagination.User>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => response?.next != null,
             getItems: (response) => response?.data?.users ?? [],
             loadPage: (response) => {
@@ -630,65 +948,81 @@ export class Users {
      */
     public async listWithExtendedResultsAndOptionalData(
         request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<SeedPagination.User>> {
-        const list = async (
-            request: SeedPagination.ListUsersExtendedRequestForOptionalData
-        ): Promise<SeedPagination.ListUsersExtendedOptionalListResponse> => {
-            const { cursor } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
-            if (cursor != null) {
-                _queryParams["cursor"] = cursor;
-            }
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "GET",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                queryParameters: _queryParams,
-                requestType: "json",
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.ListUsersExtendedOptionalListResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersExtendedRequestForOptionalData,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedOptionalListResponse>> => {
+                const { cursor } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (cursor != null) {
+                    _queryParams["cursor"] = cursor;
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListUsersExtendedOptionalListResponse.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.ListUsersExtendedOptionalListResponse, SeedPagination.User>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => response?.next != null,
             getItems: (response) => response?.data?.users ?? [],
             loadPage: (response) => {
@@ -703,68 +1037,86 @@ export class Users {
      *
      * @example
      *     await client.users.listUsernames({
-     *         startingAfter: "string"
+     *         startingAfter: "starting_after"
      *     })
      */
     public async listUsernames(
         request: SeedPagination.ListUsernamesRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<string>> {
-        const list = async (request: SeedPagination.ListUsernamesRequest): Promise<SeedPagination.UsernameCursor> => {
-            const { startingAfter } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
-            if (startingAfter != null) {
-                _queryParams["starting_after"] = startingAfter;
-            }
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "GET",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                queryParameters: _queryParams,
-                requestType: "json",
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.UsernameCursor.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsernamesRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> => {
+                const { startingAfter } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (startingAfter != null) {
+                    _queryParams["starting_after"] = startingAfter;
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.UsernameCursor.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.UsernameCursor, string>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => response?.cursor?.after != null,
             getItems: (response) => response?.cursor?.data ?? [],
             loadPage: (response) => {
@@ -784,66 +1136,82 @@ export class Users {
      */
     public async listWithGlobalConfig(
         request: SeedPagination.ListWithGlobalConfigRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<core.Page<string>> {
-        const list = async (
-            request: SeedPagination.ListWithGlobalConfigRequest
-        ): Promise<SeedPagination.UsernameContainer> => {
-            const { offset } = request;
-            const _queryParams: Record<string, string | string[] | object | object[]> = {};
-            if (offset != null) {
-                _queryParams["offset"] = offset.toString();
-            }
-            const _response = await core.fetcher({
-                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
-                method: "GET",
-                headers: {
-                    Authorization: await this._getAuthorizationHeader(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/pagination",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/pagination/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                contentType: "application/json",
-                queryParameters: _queryParams,
-                requestType: "json",
-                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                maxRetries: requestOptions?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-            });
-            if (_response.ok) {
-                return serializers.UsernameContainer.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListWithGlobalConfigRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.UsernameContainer>> => {
+                const { offset } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (offset != null) {
+                    _queryParams["offset"] = offset.toString();
+                }
+                const _response = await core.fetcher({
+                    url: urlJoin(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: {
+                        Authorization: await this._getAuthorizationHeader(),
+                        "X-Fern-Language": "JavaScript",
+                        "X-Fern-SDK-Name": "@fern/pagination",
+                        "X-Fern-SDK-Version": "0.0.1",
+                        "User-Agent": "@fern/pagination/0.0.1",
+                        "X-Fern-Runtime": core.RUNTIME.type,
+                        "X-Fern-Runtime-Version": core.RUNTIME.version,
+                        ...requestOptions?.headers,
+                    },
+                    contentType: "application/json",
+                    queryParameters: _queryParams,
+                    requestType: "json",
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
                 });
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case "non-json":
+                if (_response.ok) {
+                    return {
+                        data: serializers.UsernameContainer.parseOrThrow(_response.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
                         statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
-                case "timeout":
-                    throw new errors.SeedPaginationTimeoutError();
-                case "unknown":
-                    throw new errors.SeedPaginationError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        };
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+                    case "unknown":
+                        throw new errors.SeedPaginationError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
         let _offset = request?.offset != null ? request?.offset : 1;
+        const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Pageable<SeedPagination.UsernameContainer, string>({
-            response: await list(request),
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.results ?? []).length > 0,
             getItems: (response) => response?.results ?? [],
             loadPage: (_response) => {

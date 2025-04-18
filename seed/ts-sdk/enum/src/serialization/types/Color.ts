@@ -12,5 +12,5 @@ export const Color: core.serialization.Schema<serializers.Color.Raw, SeedEnum.Co
 ]);
 
 export declare namespace Color {
-    type Raw = "red" | "blue";
+    export type Raw = "red" | "blue";
 }

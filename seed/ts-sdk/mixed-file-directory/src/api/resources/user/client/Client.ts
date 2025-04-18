@@ -10,22 +10,32 @@ import * as errors from "../../../../errors/index";
 import { Events } from "../resources/events/client/Client";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class User {
+    protected _events: Events | undefined;
+
     constructor(protected readonly _options: User.Options) {}
+
+    public get events(): Events {
+        return (this._events ??= new Events(this._options));
+    }
 
     /**
      * List all users.
@@ -38,18 +48,29 @@ export class User {
      *         limit: 1
      *     })
      */
-    public async list(
+    public list(
         request: SeedMixedFileDirectory.ListUsersRequest = {},
-        requestOptions?: User.RequestOptions
-    ): Promise<SeedMixedFileDirectory.User[]> {
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<SeedMixedFileDirectory.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: SeedMixedFileDirectory.ListUsersRequest = {},
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.User[]>> {
         const { limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/users/"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users/",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -58,6 +79,7 @@ export class User {
                 "User-Agent": "@fern/mixed-file-directory/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -67,18 +89,22 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.user.list.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.user.list.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMixedFileDirectoryError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -87,19 +113,15 @@ export class User {
                 throw new errors.SeedMixedFileDirectoryError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMixedFileDirectoryTimeoutError();
+                throw new errors.SeedMixedFileDirectoryTimeoutError("Timeout exceeded when calling GET /users/.");
             case "unknown":
                 throw new errors.SeedMixedFileDirectoryError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected _events: Events | undefined;
-
-    public get events(): Events {
-        return (this._events ??= new Events(this._options));
     }
 }

@@ -1,12 +1,10 @@
 using SeedNoEnvironment.Core;
 
-#nullable enable
-
 namespace SeedNoEnvironment;
 
 public partial class SeedNoEnvironmentClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedNoEnvironmentClient(string? token = null, ClientOptions? clientOptions = null)
     {
@@ -32,5 +30,5 @@ public partial class SeedNoEnvironmentClient
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; init; }
+    public DummyClient Dummy { get; }
 }

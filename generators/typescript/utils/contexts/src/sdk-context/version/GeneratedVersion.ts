@@ -1,4 +1,5 @@
 import { HttpHeader } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";
 

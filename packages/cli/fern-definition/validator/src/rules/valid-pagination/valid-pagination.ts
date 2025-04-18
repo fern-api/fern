@@ -1,8 +1,10 @@
-import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
+
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateCursorPagination } from "./validateCursorPagination";
+import { validateCustomPagination } from "./validateCustomPagination";
 import { validateOffsetPagination } from "./validateOffsetPagination";
 
 export const ValidPaginationRule: Rule = {
@@ -35,19 +37,35 @@ export const ValidPaginationRule: Rule = {
                             file,
                             cursorPagination: endpointPagination
                         });
+                    } else if (isRawOffsetPaginationSchema(endpointPagination)) {
+                        return validateOffsetPagination({
+                            endpointId,
+                            endpoint,
+                            typeResolver,
+                            file,
+                            offsetPagination: endpointPagination
+                        });
+                    } else if (isRawCustomPaginationSchema(endpointPagination)) {
+                        return validateCustomPagination({
+                            endpointId,
+                            endpoint,
+                            typeResolver,
+                            file,
+                            customPagination: endpointPagination
+                        });
                     }
-                    return validateOffsetPagination({
-                        endpointId,
-                        endpoint,
-                        typeResolver,
-                        file,
-                        offsetPagination: endpointPagination
-                    });
+                    throw new Error("Invalid pagination schema");
                 }
             }
         };
     }
 };
+
+function isRawOffsetPaginationSchema(
+    rawPaginationSchema: RawSchemas.PaginationSchema
+): rawPaginationSchema is RawSchemas.OffsetPaginationSchema {
+    return (rawPaginationSchema as RawSchemas.OffsetPaginationSchema).offset != null;
+}
 
 function isRawCursorPaginationSchema(
     rawPaginationSchema: RawSchemas.PaginationSchema
@@ -57,4 +75,10 @@ function isRawCursorPaginationSchema(
         (rawPaginationSchema as RawSchemas.CursorPaginationSchema).next_cursor != null &&
         (rawPaginationSchema as RawSchemas.CursorPaginationSchema).results != null
     );
+}
+
+function isRawCustomPaginationSchema(
+    rawPaginationSchema: RawSchemas.PaginationSchema
+): rawPaginationSchema is RawSchemas.CustomPaginationSchema {
+    return "type" in rawPaginationSchema && rawPaginationSchema.type === "custom";
 }

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "page": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

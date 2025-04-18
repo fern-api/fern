@@ -25,7 +25,7 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	Username        string
-	Password        string
+	AccessToken     string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -48,8 +48,8 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	if r.Username != "" && r.Password != "" {
-		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+": "+r.Password)))
+	if r.Username != "" && r.AccessToken != "" {
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+": "+r.AccessToken)))
 	}
 	return header
 }
@@ -59,6 +59,7 @@ func (r *RequestOptions) cloneHeader() http.Header {
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/basic-auth-environment-variables/fern")
 	headers.Set("X-Fern-SDK-Version", "0.0.1")
+	headers.Set("User-Agent", "github.com/basic-auth-environment-variables/fern/0.0.1")
 	return headers
 }
 
@@ -118,11 +119,11 @@ func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 
 // BasicAuthOption implements the RequestOption interface.
 type BasicAuthOption struct {
-	Username string
-	Password string
+	Username    string
+	AccessToken string
 }
 
 func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Username = b.Username
-	opts.Password = b.Password
+	opts.AccessToken = b.AccessToken
 }

@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "success",
+        "error"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "success"
+        },
+        "value": {
+          "$ref": "#/definitions/commons.ProblemId"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "error"
+        },
+        "value": {
+          "$ref": "#/definitions/problem.CreateProblemError"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  ],
+  "definitions": {
+    "commons.ProblemId": {
+      "type": "string"
+    },
+    "problem.CreateProblemError": {
+      "type": "object",
+      "properties": {
+        "_type": {
+          "type": "string",
+          "enum": [
+            "generic"
+          ]
+        }
+      },
+      "required": [
+        "_type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "_type": {
+              "const": "generic"
+            },
+            "message": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "stacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "_type",
+            "message",
+            "type",
+            "stacktrace"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,334 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_errors:UnauthorizedRequestErrorBody": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "UnauthorizedRequestErrorBody",
+                    "camelCase": {
+                        "unsafeName": "unauthorizedRequestErrorBody",
+                        "safeName": "unauthorizedRequestErrorBody"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "unauthorized_request_error_body",
+                        "safeName": "unauthorized_request_error_body"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNAUTHORIZED_REQUEST_ERROR_BODY",
+                        "safeName": "UNAUTHORIZED_REQUEST_ERROR_BODY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnauthorizedRequestErrorBody",
+                        "safeName": "UnauthorizedRequestErrorBody"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "errors",
+                            "camelCase": {
+                                "unsafeName": "errors",
+                                "safeName": "errors"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "errors",
+                                "safeName": "errors"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERRORS",
+                                "safeName": "ERRORS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Errors",
+                                "safeName": "Errors"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "errors",
+                        "camelCase": {
+                            "unsafeName": "errors",
+                            "safeName": "errors"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "errors",
+                            "safeName": "errors"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ERRORS",
+                            "safeName": "ERRORS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Errors",
+                            "safeName": "Errors"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE",
+                                "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Message",
+                                "safeName": "Message"
+                            }
+                        },
+                        "wireValue": "message"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_custom-auth.getWithCustomAuth": {
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "CustomAuthScheme",
+                            "camelCase": {
+                                "unsafeName": "customAuthScheme",
+                                "safeName": "customAuthScheme"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "custom_auth_scheme",
+                                "safeName": "custom_auth_scheme"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CUSTOM_AUTH_SCHEME",
+                                "safeName": "CUSTOM_AUTH_SCHEME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CustomAuthScheme",
+                                "safeName": "CustomAuthScheme"
+                            }
+                        },
+                        "wireValue": "X-API-KEY"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithCustomAuth",
+                    "camelCase": {
+                        "unsafeName": "getWithCustomAuth",
+                        "safeName": "getWithCustomAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_custom_auth",
+                        "safeName": "get_with_custom_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_CUSTOM_AUTH",
+                        "safeName": "GET_WITH_CUSTOM_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithCustomAuth",
+                        "safeName": "GetWithCustomAuth"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "custom-auth",
+                            "camelCase": {
+                                "unsafeName": "customAuth",
+                                "safeName": "customAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "custom_auth",
+                                "safeName": "custom_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CUSTOM_AUTH",
+                                "safeName": "CUSTOM_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CustomAuth",
+                                "safeName": "CustomAuth"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "custom-auth",
+                        "camelCase": {
+                            "unsafeName": "customAuth",
+                            "safeName": "customAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "custom_auth",
+                            "safeName": "custom_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CUSTOM_AUTH",
+                            "safeName": "CUSTOM_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CustomAuth",
+                            "safeName": "CustomAuth"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/custom-auth"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_custom-auth.postWithCustomAuth": {
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "CustomAuthScheme",
+                            "camelCase": {
+                                "unsafeName": "customAuthScheme",
+                                "safeName": "customAuthScheme"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "custom_auth_scheme",
+                                "safeName": "custom_auth_scheme"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CUSTOM_AUTH_SCHEME",
+                                "safeName": "CUSTOM_AUTH_SCHEME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CustomAuthScheme",
+                                "safeName": "CustomAuthScheme"
+                            }
+                        },
+                        "wireValue": "X-API-KEY"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "postWithCustomAuth",
+                    "camelCase": {
+                        "unsafeName": "postWithCustomAuth",
+                        "safeName": "postWithCustomAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_with_custom_auth",
+                        "safeName": "post_with_custom_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_WITH_CUSTOM_AUTH",
+                        "safeName": "POST_WITH_CUSTOM_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostWithCustomAuth",
+                        "safeName": "PostWithCustomAuth"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "custom-auth",
+                            "camelCase": {
+                                "unsafeName": "customAuth",
+                                "safeName": "customAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "custom_auth",
+                                "safeName": "custom_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CUSTOM_AUTH",
+                                "safeName": "CUSTOM_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CustomAuth",
+                                "safeName": "CustomAuth"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "custom-auth",
+                        "camelCase": {
+                            "unsafeName": "customAuth",
+                            "safeName": "customAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "custom_auth",
+                            "safeName": "custom_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CUSTOM_AUTH",
+                            "safeName": "CUSTOM_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CustomAuth",
+                            "safeName": "CustomAuth"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/custom-auth"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "unknown"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
+}

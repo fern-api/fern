@@ -1,0 +1,97 @@
+name: Cached Seed Generation
+description: Run seed generation with caching for a specific generator.
+
+inputs:
+  generator-name:
+    description: Generator to use (e.g., go-sdk, ruby-sdk)
+    required: true
+  generator-path:
+    description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
+    required: true
+  validate-git-diff:
+    description: Whether to validate that no git-tracked files were changed
+    required: false
+    default: 'true'
+  skip-scripts:
+    description: Whether to skip running scripts during seed generation
+    required: false
+    default: 'false'
+  allow-unexpected-failures:
+    description: Whether to allow unexpected failures during seed generation
+    required: false
+    default: 'false'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate input hash
+      id: hash
+      shell: bash
+      run: |
+        HASH=$(./scripts/hash.sh \
+          packages/seed \
+          test-definitions \
+          packages/ir-sdk/fern/apis \
+          packages/cli/generation/ir-generator \
+          ${{ inputs.generator-path }} \
+          seed/${{ inputs.generator-name }}/seed.yml \
+          --exclude versions.yml)
+        echo "hash=${HASH}" >> $GITHUB_OUTPUT
+
+    - name: Check cache
+      id: cache
+      uses: actions/cache/restore@v4
+      with:
+        path: seed/${{ inputs.generator-name }}
+        key: seed-${{ inputs.generator-name }}-${{ steps.hash.outputs.hash }}
+
+    - name: Install
+      if: steps.cache.outputs.cache-hit != 'true'
+      uses: ./.github/actions/install
+      
+    - uses: bufbuild/buf-setup-action@v1.34.0
+      if: steps.cache.outputs.cache-hit != 'true'
+      with:
+        github_token: ${{ github.token }}
+
+    - uses: actions/setup-go@v5
+      if: steps.cache.outputs.cache-hit != 'true'
+      with:
+        go-version: "stable"
+
+    - name: Install protoc-gen-openapi
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+    - name: Seed Test
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        FORCE_COLOR: "2"
+      run: |
+        pnpm seed:local test \
+          --generator ${{ inputs.generator-name }} \
+          --parallel 16 \
+          ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
+          ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
+
+    - name: Validate results
+      if: inputs.validate-git-diff == 'true'
+      id: validate
+      shell: bash
+      run: |
+        if git --no-pager diff --exit-code -- ":(exclude)seed/*/.mock/*"; then
+          echo "Results are valid, saving to cache if not already."
+          echo "valid=true" >> $GITHUB_OUTPUT
+        else
+          echo "Changes detected in git-tracked files."
+          exit 1
+        fi
+
+    - name: Save cache
+      if: steps.cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: seed/${{ inputs.generator-name }}
+        key: seed-${{ inputs.generator-name }}-${{ steps.hash.outputs.hash }}

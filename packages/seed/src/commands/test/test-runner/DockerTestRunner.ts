@@ -1,10 +1,12 @@
+import path from "path";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import path from "path";
+
 import { runScript } from "../../../runScript";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
@@ -45,14 +47,15 @@ export class DockerTestRunner extends TestRunner {
         outputMode,
         irVersion,
         publishMetadata,
-        readme
+        readme,
+        shouldGenerateDynamicSnippetTests
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
             reviewers: undefined,
             audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
             generators: [
-                getGeneratorInvocation({
+                await getGeneratorInvocation({
                     absolutePathToOutput: outputDir,
                     docker: this.getParsedDockerName(),
                     language,
@@ -74,7 +77,9 @@ export class DockerTestRunner extends TestRunner {
             keepDocker: keepDocker ?? false,
             context: taskContext,
             irVersionOverride: irVersion,
-            outputVersionOverride: outputVersion
+            outputVersionOverride: outputVersion,
+            shouldGenerateDynamicSnippetTests,
+            skipUnstableDynamicSnippetTests: true
         });
     }
 
@@ -83,13 +88,15 @@ export class DockerTestRunner extends TestRunner {
         fernWorkspace,
         taskContext,
         irVersion,
-        group
+        group,
+        shouldGenerateDynamicSnippetTests
     }: {
         absolutePathToFernDefinition: AbsoluteFilePath;
         fernWorkspace: FernWorkspace;
         taskContext: TaskContext;
         irVersion: string;
         group: generatorsYml.GeneratorGroup;
+        shouldGenerateDynamicSnippetTests: boolean | undefined;
     }): Promise<void> {
         await runLocalGenerationForSeed({
             organization: DUMMY_ORGANIZATION,
@@ -99,7 +106,8 @@ export class DockerTestRunner extends TestRunner {
             keepDocker: true,
             context: taskContext,
             irVersionOverride: irVersion,
-            outputVersionOverride: undefined
+            outputVersionOverride: undefined,
+            shouldGenerateDynamicSnippetTests
         });
     }
 }

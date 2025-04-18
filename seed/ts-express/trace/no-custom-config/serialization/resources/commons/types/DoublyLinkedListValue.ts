@@ -13,12 +13,12 @@ export const DoublyLinkedListValue: core.serialization.ObjectSchema<
     head: core.serialization.lazy(() => serializers.NodeId).optional(),
     nodes: core.serialization.record(
         core.serialization.lazy(() => serializers.NodeId),
-        core.serialization.lazyObject(() => serializers.DoublyLinkedListNodeValue)
+        core.serialization.lazyObject(() => serializers.DoublyLinkedListNodeValue),
     ),
 });
 
 export declare namespace DoublyLinkedListValue {
-    interface Raw {
+    export interface Raw {
         head?: serializers.NodeId.Raw | null;
         nodes: Record<serializers.NodeId.Raw, serializers.DoublyLinkedListNodeValue.Raw>;
     }

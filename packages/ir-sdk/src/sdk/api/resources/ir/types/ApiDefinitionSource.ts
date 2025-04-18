@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type ApiDefinitionSource = FernIr.ApiDefinitionSource.Proto | FernIr.ApiDefinitionSource.Openapi;
 
-export declare namespace ApiDefinitionSource {
-    interface Proto extends FernIr.ProtoSource, _Utils {
+export namespace ApiDefinitionSource {
+    export interface Proto extends FernIr.ProtoSource, _Utils {
         type: "proto";
     }
 
-    interface Openapi extends _Utils {
+    export interface Openapi extends _Utils {
         type: "openapi";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ApiDefinitionSource._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         proto: (value: FernIr.ProtoSource) => _Result;
         openapi: () => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const ApiDefinitionSource = {
             type: "proto",
             _visit: function <_Result>(
                 this: FernIr.ApiDefinitionSource.Proto,
-                visitor: FernIr.ApiDefinitionSource._Visitor<_Result>
+                visitor: FernIr.ApiDefinitionSource._Visitor<_Result>,
             ) {
                 return FernIr.ApiDefinitionSource._visit(this, visitor);
             },
@@ -45,7 +45,7 @@ export const ApiDefinitionSource = {
             type: "openapi",
             _visit: function <_Result>(
                 this: FernIr.ApiDefinitionSource.Openapi,
-                visitor: FernIr.ApiDefinitionSource._Visitor<_Result>
+                visitor: FernIr.ApiDefinitionSource._Visitor<_Result>,
             ) {
                 return FernIr.ApiDefinitionSource._visit(this, visitor);
             },
@@ -54,7 +54,7 @@ export const ApiDefinitionSource = {
 
     _visit: <_Result>(
         value: FernIr.ApiDefinitionSource,
-        visitor: FernIr.ApiDefinitionSource._Visitor<_Result>
+        visitor: FernIr.ApiDefinitionSource._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "proto":

@@ -1,9 +1,3 @@
-import { generatorsYml } from "@fern-api/configuration";
-import { noop } from "@fern-api/core-utils";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { LogLevel } from "@fern-api/logger";
-import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
@@ -13,6 +7,14 @@ import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
+
+import { generatorsYml } from "@fern-api/configuration";
+import { noop } from "@fern-api/core-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
+import { InteractiveTaskContext } from "@fern-api/task-context";
+
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -53,7 +55,7 @@ export class RemoteTaskHandler {
                 maven: (mavenPackage) => `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
                 pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
                 ruby: (rubyGem) => `${rubyGem.name}:${rubyGem.version}`,
-                nuget: (nugetPakcage) => `${nugetPakcage.name} ${nugetPakcage.version}`,
+                nuget: (nugetPackage) => `${nugetPackage.name} ${nugetPackage.version}`,
                 _other: () => "<unknown package>"
             });
         });

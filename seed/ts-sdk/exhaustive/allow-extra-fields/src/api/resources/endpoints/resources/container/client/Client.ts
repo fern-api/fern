@@ -9,18 +9,22 @@ import * as errors from "../../../../../../errors/index";
 import * as SeedExhaustive from "../../../../../index";
 
 export declare namespace Container {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,14 +36,25 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string"])
+     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
-    public async getAndReturnListOfPrimitives(
+    public getAndReturnListOfPrimitives(
         request: string[],
-        requestOptions?: Container.RequestOptions
-    ): Promise<string[]> {
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<string[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfPrimitives(request, requestOptions));
+    }
+
+    private async __getAndReturnListOfPrimitives(
+        request: string[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<string[]>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-primitives"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/list-of-primitives",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -49,6 +64,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -62,18 +78,25 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    },
+                ),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -82,12 +105,16 @@ export class Container {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/list-of-primitives.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -99,14 +126,27 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnListOfObjects([{
      *             string: "string"
+     *         }, {
+     *             string: "string"
      *         }])
      */
-    public async getAndReturnListOfObjects(
+    public getAndReturnListOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: Container.RequestOptions
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
+    }
+
+    private async __getAndReturnListOfObjects(
+        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/list-of-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/list-of-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -116,6 +156,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -129,18 +170,22 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -149,12 +194,16 @@ export class Container {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/list-of-objects.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -166,12 +215,23 @@ export class Container {
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
-    public async getAndReturnSetOfPrimitives(
+    public getAndReturnSetOfPrimitives(
         request: Set<string>,
-        requestOptions?: Container.RequestOptions
-    ): Promise<Set<string>> {
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<Set<string>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
+    }
+
+    private async __getAndReturnSetOfPrimitives(
+        request: Set<string>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<Set<string>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-primitives"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/set-of-primitives",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -181,6 +241,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -194,18 +255,25 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    },
+                ),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -214,12 +282,16 @@ export class Container {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/set-of-primitives.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -233,12 +305,23 @@ export class Container {
      *             string: "string"
      *         }]))
      */
-    public async getAndReturnSetOfObjects(
+    public getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: Container.RequestOptions
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
+    }
+
+    private async __getAndReturnSetOfObjects(
+        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/set-of-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/set-of-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -248,6 +331,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -261,18 +345,22 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -281,12 +369,16 @@ export class Container {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/set-of-objects.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -300,12 +392,23 @@ export class Container {
      *         "string": "string"
      *     })
      */
-    public async getAndReturnMapPrimToPrim(
+    public getAndReturnMapPrimToPrim(
         request: Record<string, string>,
-        requestOptions?: Container.RequestOptions
-    ): Promise<Record<string, string>> {
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<Record<string, string>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapPrimToPrim(request, requestOptions));
+    }
+
+    private async __getAndReturnMapPrimToPrim(
+        request: Record<string, string>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, string>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-prim"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-prim",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -315,6 +418,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -328,18 +432,22 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -348,12 +456,16 @@ export class Container {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/map-prim-to-prim.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -369,12 +481,23 @@ export class Container {
      *         }
      *     })
      */
-    public async getAndReturnMapOfPrimToObject(
+    public getAndReturnMapOfPrimToObject(
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-        requestOptions?: Container.RequestOptions
-    ): Promise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
+    }
+
+    private async __getAndReturnMapOfPrimToObject(
+        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/map-prim-to-object"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-object",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -384,6 +507,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -397,18 +521,25 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    },
+                ),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -417,12 +548,16 @@ export class Container {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/map-prim-to-object.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -436,12 +571,23 @@ export class Container {
      *         string: "string"
      *     })
      */
-    public async getAndReturnOptional(
+    public getAndReturnOptional(
         request?: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: Container.RequestOptions
-    ): Promise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+        requestOptions?: Container.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
+    }
+
+    private async __getAndReturnOptional(
+        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        requestOptions?: Container.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/container/opt-objects"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/opt-objects",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -451,6 +597,7 @@ export class Container {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -467,18 +614,22 @@ export class Container {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -487,12 +638,16 @@ export class Container {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError();
+                throw new errors.SeedExhaustiveTimeoutError(
+                    "Timeout exceeded when calling POST /container/opt-objects.",
+                );
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

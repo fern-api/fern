@@ -1,15 +1,29 @@
 import { serialize } from "next-mdx-remote/serialize";
+import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
 import { z } from "zod";
+
+import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+
 import { Rule } from "../../Rule";
 
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
     create: () => {
         return {
-            markdownPage: async ({ content }) => {
+            markdownPage: async ({ content, absoluteFilepath }) => {
+                let format: "mdx" | "md";
+                try {
+                    format = getMarkdownFormat(absoluteFilepath);
+                } catch (err) {
+                    return [
+                        {
+                            severity: "error",
+                            message: `Markdown file does not have a valid extension: ${String(err)}`
+                        }
+                    ];
+                }
                 const markdownParseResult = await parseMarkdown({ markdown: content });
                 if (markdownParseResult.type === "failure") {
                     const message =
@@ -18,7 +32,7 @@ export const ValidMarkdownRule: Rule = {
                             : "Markdown failed to parse";
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message
                         }
                     ];
@@ -64,6 +78,8 @@ export const FrontmatterSchema = z.object({
 
 async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
     try {
+        parseMarkdownToTree(markdown);
+
         const parsed = await serialize(markdown, {
             scope: {},
             mdxOptions: {

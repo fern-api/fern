@@ -2,11 +2,15 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class TerminatedResponse extends SerializableType
+class TerminatedResponse extends JsonSerializableType
 {
-    public function __construct()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
+        return $this->toJson();
     }
 }

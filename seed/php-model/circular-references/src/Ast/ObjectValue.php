@@ -2,11 +2,15 @@
 
 namespace Seed\Ast;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class ObjectValue extends SerializableType
+class ObjectValue extends JsonSerializableType
 {
-    public function __construct()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
+        return $this->toJson();
     }
 }

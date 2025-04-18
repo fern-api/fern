@@ -1,4 +1,5 @@
 import { ClassReference, Function_ } from "@fern-api/ruby-codegen";
+
 import { EndpointId } from "@fern-fern/ir-sdk/api";
 
 // Note we currently only register the sync endpoint and sync client for the below, for simplicity.

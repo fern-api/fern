@@ -5,7 +5,7 @@ package mixedfiledirectory
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/mixed-file-directory/fern/core"
+	internal "github.com/mixed-file-directory/fern/internal"
 )
 
 type User struct {
@@ -14,6 +14,27 @@ type User struct {
 	Age  int    `json:"age" url:"age"`
 
 	extraProperties map[string]interface{}
+}
+
+func (u *User) GetId() Id {
+	if u == nil {
+		return ""
+	}
+	return u.Id
+}
+
+func (u *User) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *User) GetAge() int {
+	if u == nil {
+		return 0
+	}
+	return u.Age
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -27,18 +48,16 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.extraProperties = extraProperties
-
 	return nil
 }
 
 func (u *User) String() string {
-	if value, err := core.StringifyJSON(u); err == nil {
+	if value, err := internal.StringifyJSON(u); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)

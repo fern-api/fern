@@ -15,7 +15,7 @@ export const VariableTypeAndName: core.serialization.ObjectSchema<
 });
 
 export declare namespace VariableTypeAndName {
-    interface Raw {
+    export interface Raw {
         variableType: serializers.VariableType.Raw;
         name: string;
     }

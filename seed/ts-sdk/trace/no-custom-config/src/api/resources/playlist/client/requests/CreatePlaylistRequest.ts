@@ -10,8 +10,8 @@ import * as SeedTrace from "../../../../index";
  *         datetime: "2024-01-15T09:30:00Z",
  *         optionalDatetime: "2024-01-15T09:30:00Z",
  *         body: {
- *             name: "string",
- *             problems: ["string"]
+ *             name: "name",
+ *             problems: ["problems", "problems"]
  *         }
  *     }
  */

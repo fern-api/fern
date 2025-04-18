@@ -1,9 +1,10 @@
-import { delay } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
 import axios from "axios";
 import boxen from "boxen";
 import open from "open";
 import qs from "qs";
+
+import { delay } from "@fern-api/core-utils";
+import { TaskContext } from "@fern-api/task-context";
 
 interface DeviceCodeResponse {
     device_code: string;

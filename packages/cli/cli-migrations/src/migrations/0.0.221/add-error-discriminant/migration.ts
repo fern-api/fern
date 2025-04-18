@@ -1,10 +1,11 @@
 import { readFile, writeFile } from "fs/promises";
+
 import { Migration } from "../../../types/Migration";
 import { getAllRootApiYamlFiles } from "./getAllRootApiYamlFiles";
 
 export const migration: Migration = {
     name: "add-error-discriminant",
-    summary: "Add error-discriminant to apiy.ml",
+    summary: "Add error-discriminant to api.yml",
     run: async ({ context }) => {
         const yamlFiles = await getAllRootApiYamlFiles(context);
         for (const filepath of yamlFiles) {

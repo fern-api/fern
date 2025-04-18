@@ -2,41 +2,49 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WorkspaceRunDetails extends SerializableType
+class WorkspaceRunDetails extends JsonSerializableType
 {
     /**
-     * @var mixed $exceptionV2
+     * @var ?ExceptionV2 $exceptionV2
      */
-    #[JsonProperty("exceptionV2")]
-    public mixed $exceptionV2;
-
-    /**
-     * @var string $stdout
-     */
-    #[JsonProperty("stdout")]
-    public string $stdout;
+    #[JsonProperty('exceptionV2')]
+    public ?ExceptionV2 $exceptionV2;
 
     /**
      * @var ?ExceptionInfo $exception
      */
-    #[JsonProperty("exception")]
+    #[JsonProperty('exception')]
     public ?ExceptionInfo $exception;
 
     /**
-     * @param mixed $exceptionV2
-     * @param string $stdout
-     * @param ?ExceptionInfo $exception
+     * @var string $stdout
+     */
+    #[JsonProperty('stdout')]
+    public string $stdout;
+
+    /**
+     * @param array{
+     *   stdout: string,
+     *   exceptionV2?: ?ExceptionV2,
+     *   exception?: ?ExceptionInfo,
+     * } $values
      */
     public function __construct(
-        mixed $exceptionV2,
-        string $stdout,
-        ?ExceptionInfo $exception = null,
+        array $values,
     ) {
-        $this->exceptionV2 = $exceptionV2;
-        $this->stdout = $stdout;
-        $this->exception = $exception;
+        $this->exceptionV2 = $values['exceptionV2'] ?? null;
+        $this->exception = $values['exception'] ?? null;
+        $this->stdout = $values['stdout'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

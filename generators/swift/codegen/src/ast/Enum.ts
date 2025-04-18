@@ -1,5 +1,5 @@
-import { AstNode, Writer } from "./core";
 import Swift, { AccessLevel, EnumCase, Type } from "..";
+import { AstNode, Writer } from "./core";
 
 export declare namespace Enum {
     interface Args {

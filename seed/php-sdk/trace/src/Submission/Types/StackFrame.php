@@ -2,42 +2,50 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class StackFrame extends SerializableType
+class StackFrame extends JsonSerializableType
 {
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var int $lineNumber
      */
-    #[JsonProperty("lineNumber")]
+    #[JsonProperty('lineNumber')]
     public int $lineNumber;
 
     /**
      * @var array<Scope> $scopes
      */
-    #[JsonProperty("scopes"), ArrayType([Scope::class])]
+    #[JsonProperty('scopes'), ArrayType([Scope::class])]
     public array $scopes;
 
     /**
-     * @param string $methodName
-     * @param int $lineNumber
-     * @param array<Scope> $scopes
+     * @param array{
+     *   methodName: string,
+     *   lineNumber: int,
+     *   scopes: array<Scope>,
+     * } $values
      */
     public function __construct(
-        string $methodName,
-        int $lineNumber,
-        array $scopes,
+        array $values,
     ) {
-        $this->methodName = $methodName;
-        $this->lineNumber = $lineNumber;
-        $this->scopes = $scopes;
+        $this->methodName = $values['methodName'];
+        $this->lineNumber = $values['lineNumber'];
+        $this->scopes = $values['scopes'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

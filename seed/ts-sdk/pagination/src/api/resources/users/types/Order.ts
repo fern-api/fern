@@ -3,7 +3,6 @@
  */
 
 export type Order = "asc" | "desc";
-
 export const Order = {
     Asc: "asc",
     Desc: "desc",

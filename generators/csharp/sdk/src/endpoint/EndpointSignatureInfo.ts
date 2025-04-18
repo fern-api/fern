@@ -1,4 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import { EndpointRequest } from "./request/EndpointRequest";
 
 export interface EndpointSignatureInfo {

@@ -26,14 +26,14 @@ export const UnionWithLiteral: core.serialization.Schema<
     });
 
 export declare namespace UnionWithLiteral {
-    type Raw = UnionWithLiteral.Fern;
+    export type Raw = UnionWithLiteral.Fern;
 
-    interface Fern extends _Base {
+    export interface Fern extends _Base {
         type: "fern";
         value: "fern";
     }
 
-    interface _Base {
+    export interface _Base {
         base: "base";
     }
 }

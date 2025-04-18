@@ -1,6 +1,8 @@
-import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry, FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
+
+import { FernRegistryClient as FdrClient, FernRegistry } from "@fern-fern/generators-sdk";
+
 import { GeneratorType } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
@@ -25,7 +27,29 @@ export async function registerGenerator({
         displayName: generatorConfig.displayName,
         generatorType: convertGeneratorType(generatorConfig.generatorType),
         generatorLanguage: generatorConfig.language,
-        dockerImage: generatorConfig.image
+        dockerImage: generatorConfig.image,
+        scripts: {
+            preInstallScript: generatorConfig.buildScripts?.preInstallScript
+                ? {
+                      steps: generatorConfig.buildScripts.preInstallScript.commands
+                  }
+                : undefined,
+            installScript: generatorConfig.buildScripts?.installScript
+                ? {
+                      steps: generatorConfig.buildScripts.installScript.commands
+                  }
+                : undefined,
+            compileScript: generatorConfig.buildScripts?.compileScript
+                ? {
+                      steps: generatorConfig.buildScripts.compileScript.commands
+                  }
+                : undefined,
+            testScript: generatorConfig.buildScripts?.testScript
+                ? {
+                      steps: generatorConfig.buildScripts.testScript.commands
+                  }
+                : undefined
+        }
     });
 
     // Register generator versions

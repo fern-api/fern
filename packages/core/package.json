@@ -20,28 +20,28 @@
     "compile": "tsc --build",
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/fdr-cjs-sdk": "0.108.0-dcb0f740c",
-    "@fern-fern/generators-sdk": "0.107.0-00fe26566",
-    "@fern-api/venus-api-sdk": "0.0.38",
+    "@fern-fern/fdr-cjs-sdk": "0.134.3-c661eeca6",
+    "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
+    "@fern-api/venus-api-sdk": "0.10.2",
     "@fern-fern/fdr-test-sdk": "^0.0.5297",
     "@fern-fern/fiddle-sdk": "0.0.584"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/node": "^18.7.18",
-    "depcheck": "^1.4.6",
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
-    "vitest": "^2.0.5",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.7.1",
-    "typescript": "4.6.4"
+    "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "typescript": "5.7.2",
+    "@types/jest": "^29.5.14",
+    "vitest": "^2.1.9"
   }
 }

@@ -4,7 +4,7 @@ import { maybeSkipValidation } from "./maybeSkipValidation";
 
 export function createIdentitySchemaCreator<T>(
     schemaType: SchemaType,
-    validate: (value: unknown, opts?: SchemaOptions) => MaybeValid<T>
+    validate: (value: unknown, opts?: SchemaOptions) => MaybeValid<T>,
 ): () => Schema<T, T> {
     return () => {
         const baseSchema: BaseSchema<T, T> = {

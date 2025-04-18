@@ -14,7 +14,7 @@ export const Request: core.serialization.Schema<
 > = UpdatePlaylistRequest.optional();
 
 export declare namespace Request {
-    type Raw = UpdatePlaylistRequest.Raw | null | undefined;
+    export type Raw = UpdatePlaylistRequest.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<
@@ -23,5 +23,5 @@ export const Response: core.serialization.Schema<
 > = Playlist.optional();
 
 export declare namespace Response {
-    type Raw = Playlist.Raw | null | undefined;
+    export type Raw = Playlist.Raw | null | undefined;
 }

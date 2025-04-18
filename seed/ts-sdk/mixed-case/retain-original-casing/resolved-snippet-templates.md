@@ -3,17 +3,17 @@ import { SeedMixedCaseClient } from "@fern/mixed-case";
 
 const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
 await client.service.getResource("rsc-xyz");
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedMixedCaseClient } from "@fern/mixed-case";
 
 const client = new SeedMixedCaseClient({ environment: "YOUR_BASE_URL" });
-await client.service.getResource("string");
- 
-```                        
+await client.service.getResource("ResourceID");
+
+```
 
 
 ```typescript
@@ -24,8 +24,8 @@ await client.service.listResources({
   page_limit: 10,
   beforeDate: "2023-01-01",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -36,7 +36,7 @@ await client.service.listResources({
   page_limit: 1,
   beforeDate: "2023-01-15",
 });
- 
-```                        
+
+```
 
 

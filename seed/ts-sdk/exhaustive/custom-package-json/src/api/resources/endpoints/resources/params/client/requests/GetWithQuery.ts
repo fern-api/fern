@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         query: "string",
+ *         query: "query",
  *         number: 1
  *     }
  */

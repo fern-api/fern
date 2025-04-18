@@ -2,32 +2,41 @@
 
 namespace Seed\Migration;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Migration extends SerializableType
+class Migration extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @var MigrationStatus $status
+     * @var value-of<MigrationStatus> $status
      */
-    #[JsonProperty("status")]
-    public MigrationStatus $status;
+    #[JsonProperty('status')]
+    public string $status;
 
     /**
-     * @param string $name
-     * @param MigrationStatus $status
+     * @param array{
+     *   name: string,
+     *   status: value-of<MigrationStatus>,
+     * } $values
      */
     public function __construct(
-        string $name,
-        MigrationStatus $status,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->status = $status;
+        $this->name = $values['name'];
+        $this->status = $values['status'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

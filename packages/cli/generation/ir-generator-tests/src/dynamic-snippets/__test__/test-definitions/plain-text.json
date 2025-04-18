@@ -1,0 +1,90 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [],
+    "endpoints": {
+        "endpoint_service.getText": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getText",
+                    "camelCase": {
+                        "unsafeName": "getText",
+                        "safeName": "getText"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_text",
+                        "safeName": "get_text"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_TEXT",
+                        "safeName": "GET_TEXT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetText",
+                        "safeName": "GetText"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/text"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
+}

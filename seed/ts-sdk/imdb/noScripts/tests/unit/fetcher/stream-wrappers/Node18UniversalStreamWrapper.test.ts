@@ -159,7 +159,7 @@ describe("Node18UniversalStreamWrapper", () => {
         expect(data).toEqual({ test: "test" });
     });
 
-    it("should allow use with async iteratable stream", async () => {
+    it("should allow use with async iterable stream", async () => {
         const rawStream = new ReadableStream({
             start(controller) {
                 controller.enqueue(new TextEncoder().encode("test"));

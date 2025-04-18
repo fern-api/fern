@@ -1,20 +1,28 @@
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 import {
     FernWriters,
+    ObjectWriter,
+    Reference,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocs,
-    ObjectWriter,
-    Reference
+    maybeAddDocsStructure
 } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
+    ModuleDeclarationStructure,
     OptionalKind,
     PropertySignatureStructure,
-    ts,
-    VariableDeclarationKind
+    StatementStructures,
+    StructureKind,
+    TypeAliasDeclarationStructure,
+    VariableDeclarationKind,
+    VariableStatementStructure,
+    WriterFunction,
+    ts
 } from "ts-morph";
+
+import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+
 import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 
@@ -36,6 +44,8 @@ export declare namespace GeneratedUnionImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
+        inline: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -64,6 +74,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private retainOriginalCasing: boolean;
     private includeConstBuilders: boolean;
     private noOptionalProperties: boolean;
+    private inline: boolean;
+    private enableInlineTypes: boolean;
 
     constructor({
         typeName,
@@ -78,7 +90,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         baseProperties = [],
         includeSerdeLayer,
         retainOriginalCasing,
-        noOptionalProperties
+        noOptionalProperties,
+        inline,
+        enableInlineTypes
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -93,14 +107,35 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.retainOriginalCasing = retainOriginalCasing;
         this.includeConstBuilders = includeConstBuilders;
         this.noOptionalProperties = noOptionalProperties;
+        this.inline = inline;
+        this.enableInlineTypes = enableInlineTypes;
     }
 
-    public writeToFile(context: Context): void {
-        this.writeTypeAlias(context);
-        this.writeModule(context);
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+        const statements: (string | WriterFunction | StatementStructures)[] = [
+            this.generateTypeAlias(context),
+            this.generateModule(context)
+        ];
+
         if (this.includeConstBuilders) {
-            this.writeConst(context);
+            const consts = this.generateConst(context);
+            if (consts) {
+                statements.push(consts);
+            }
         }
+        return statements;
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return ts.factory.createParenthesizedType(
+            ts.factory.createUnionTypeNode(
+                this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
+                    singleUnionType.generateForInlineUnion(context, this)
+                )
+            )
+        );
     }
 
     public getReferenceTo(context: Context): ts.TypeNode {
@@ -234,8 +269,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
      * TYPE ALIAS *
      **************/
 
-    private writeTypeAlias(context: Context): void {
-        const typeAlias = context.sourceFile.addTypeAlias({
+    private generateTypeAlias(context: Context): TypeAliasDeclarationStructure {
+        const typeAlias: TypeAliasDeclarationStructure = {
+            kind: StructureKind.TypeAlias,
             name: this.typeName,
             type: getWriterForMultiLineUnionType(
                 this.getAllSingleUnionTypesForAlias().map((singleUnionType) => ({
@@ -244,16 +280,23 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 }))
             ),
             isExported: true
-        });
-        if (this.getDocs != null) {
-            maybeAddDocs(typeAlias, this.getDocs(context));
-        }
+        };
+        maybeAddDocsStructure(typeAlias, this.getDocs?.(context));
+        return typeAlias;
     }
 
     public getReferenceToSingleUnionType(
         singleUnionType: ParsedSingleUnionType<Context>,
         context: Context
     ): ts.TypeNode {
+        if (this.enableInlineTypes && this.inline) {
+            return ts.factory.createTypeReferenceNode(
+                ts.factory.createQualifiedName(
+                    ts.factory.createIdentifier(this.typeName),
+                    singleUnionType.getInterfaceName()
+                )
+            );
+        }
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 this.getReferenceToUnion(context).getEntityName(),
@@ -266,25 +309,29 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
      * MODULE *
      **********/
 
-    private writeModule(context: Context): void {
-        const module = context.sourceFile.addModule({
+    private generateModule(context: Context): ModuleDeclarationStructure {
+        const module: ModuleDeclarationStructure = {
+            kind: StructureKind.Module,
             name: this.typeName,
             isExported: true,
-            hasDeclareKeyword: true
-        });
-        module.addInterfaces(this.getSingleUnionTypeInterfaces(context));
+            hasDeclareKeyword: false
+        };
+        const statements = [...this.getSingleUnionTypeInterfaces(context)];
         if (this.includeUtilsOnUnionMembers) {
-            module.addInterface(this.getUtilsInterface(context));
+            statements.push(this.getUtilsInterface(context));
         }
         if (this.includeUtilsOnUnionMembers || this.includeConstBuilders) {
-            module.addInterface(this.getVisitorInterface(context));
+            statements.push(this.getVisitorInterface(context));
         }
         if (this.hasBaseInterface()) {
-            module.addInterface(this.getBaseInterface(context));
+            statements.push(this.getBaseInterface(context));
         }
+        module.statements = statements;
+        return module;
     }
 
-    private getSingleUnionTypeInterfaces(context: Context): OptionalKind<InterfaceDeclarationStructure>[] {
+    private getSingleUnionTypeInterfaces(context: Context): StatementStructures[] {
+        const statements: StatementStructures[] = [];
         const interfaces = this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
             singleUnionType.getInterfaceDeclaration(context, this)
         );
@@ -298,27 +345,38 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             }
         }
 
-        return interfaces.map((interface_) => ({
-            name: interface_.name,
-            extends: interface_.extends.map(getTextOfTsNode),
-            properties: interface_.jsonProperties
-        }));
+        for (const interface_ of interfaces) {
+            statements.push({
+                kind: StructureKind.Interface,
+                name: interface_.name,
+                isExported: true,
+                extends: interface_.extends.map(getTextOfTsNode),
+                properties: interface_.properties
+            });
+            if (interface_.module) {
+                statements.push(interface_.module);
+            }
+        }
+        return statements;
     }
 
-    private getUtilsInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
+    private getUtilsInterface(context: Context): InterfaceDeclarationStructure {
         return {
+            kind: StructureKind.Interface,
             name: GeneratedUnionImpl.UTILS_INTERFACE_NAME,
             properties: [
                 {
                     name: GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME,
                     type: getTextOfTsNode(this.getVisitSignature(context))
                 }
-            ]
+            ],
+            isExported: true
         };
     }
 
-    private getBaseInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
+    private getBaseInterface(context: Context): InterfaceDeclarationStructure {
         return {
+            kind: StructureKind.Interface,
             name: GeneratedUnionImpl.BASE_INTERFACE_NAME,
             properties: this.baseProperties.map((property) => {
                 const type = context.type.getReferenceToType(property.valueType);
@@ -328,7 +386,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                     hasQuestionToken: !this.noOptionalProperties && type.isOptional
                 };
-            })
+            }),
+            isExported: true
         };
     }
 
@@ -359,8 +418,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         );
     }
 
-    private getVisitorInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
+    private getVisitorInterface(context: Context): InterfaceDeclarationStructure {
         return {
+            kind: StructureKind.Interface,
             name: GeneratedUnionImpl.VISITOR_INTERFACE_NAME,
             typeParameters: [
                 {
@@ -372,7 +432,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     name: singleUnionType.getVisitorKey(),
                     type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this))
                 })
-            )
+            ),
+            isExported: true
         };
     }
 
@@ -390,7 +451,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
      * CONST *
      *********/
 
-    private writeConst(context: Context): void {
+    private generateConst(context: Context): VariableStatementStructure | undefined {
         const writer = FernWriters.object.writer({ asConst: true });
 
         this.addBuilderProperties(context, writer);
@@ -400,7 +461,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             return;
         }
 
-        context.sourceFile.addVariableStatement({
+        return {
+            kind: StructureKind.VariableStatement,
             declarationKind: VariableDeclarationKind.Const,
             declarations: [
                 {
@@ -409,7 +471,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 }
             ],
             isExported: true
-        });
+        };
     }
 
     private addBuilderProperties(context: Context, writer: ObjectWriter) {

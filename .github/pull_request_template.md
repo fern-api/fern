@@ -1,6 +1,14 @@
+## Description
+<!-- Provide a clear and concise description of the changes made in this PR -->
 
-<!-- begin-generated-description -->
+## Changes Made
+<!-- List the main changes and updates implemented in this PR -->
+- 
+- 
+- 
 
-<!-- content between these lines will be replaced by a Cohere AI generated description of your changes -->
+## Testing
+<!-- Describe how you tested these changes -->
+- [ ] Unit tests added/updated
+- [ ] Manual testing completed
 
-<!-- end-generated-description -->

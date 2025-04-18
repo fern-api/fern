@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoObjectSinglePropertyKeyRule } from "../no-missing-union-variant-key";
 
 describe("valid-field-names", () => {
@@ -19,7 +20,7 @@ describe("valid-field-names", () => {
                 message: 'Union variant e has no type, so "key" cannot be defined',
                 nodePath: ["types", "MyUnion"],
                 relativeFilepath: RelativeFilePath.of("posts.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 

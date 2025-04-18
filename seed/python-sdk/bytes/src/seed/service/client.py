@@ -2,10 +2,10 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawServiceClient
 from ..core.request_options import RequestOptions
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawServiceClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -13,7 +13,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawServiceClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawServiceClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawServiceClient
+        """
+        return self._raw_client
 
     def upload(
         self,
@@ -32,35 +43,41 @@ class ServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        from seed import SeedBytes
-
-        client = SeedBytes(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.upload()
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "upload-content",
-            method="POST",
-            content=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.upload(request=request, request_options=request_options)
+        return response.data
+
+    def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bytes:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bytes
+        """
+        response = self._raw_client.download(id, request_options=request_options)
+        return response.data
 
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawServiceClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawServiceClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawServiceClient
+        """
+        return self._raw_client
 
     async def upload(
         self,
@@ -79,35 +96,22 @@ class AsyncServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedBytes
-
-        client = AsyncSeedBytes(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.upload()
-
-
-        asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "upload-content",
-            method="POST",
-            content=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.upload(request=request, request_options=request_options)
+        return response.data
+
+    async def download(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bytes:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bytes
+        """
+        response = await self._raw_client.download(id, request_options=request_options)
+        return response.data

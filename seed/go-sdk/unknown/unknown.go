@@ -5,14 +5,23 @@ package unknownasany
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/unknown/fern/core"
+	internal "github.com/unknown/fern/internal"
 )
+
+type MyAlias = interface{}
 
 type MyObject struct {
 	Unknown interface{} `json:"unknown,omitempty" url:"unknown,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (m *MyObject) GetUnknown() interface{} {
+	if m == nil {
+		return nil
+	}
+	return m.Unknown
 }
 
 func (m *MyObject) GetExtraProperties() map[string]interface{} {
@@ -26,24 +35,22 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MyObject(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
 	if err != nil {
 		return err
 	}
 	m.extraProperties = extraProperties
-
-	m._rawJSON = json.RawMessage(data)
+	m.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (m *MyObject) String() string {
-	if len(m._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(m._rawJSON); err == nil {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(m); err == nil {
+	if value, err := internal.StringifyJSON(m); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)

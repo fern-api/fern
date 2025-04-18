@@ -13,7 +13,7 @@ export const ImportingA: core.serialization.ObjectSchema<serializers.ImportingA.
     });
 
 export declare namespace ImportingA {
-    interface Raw {
+    export interface Raw {
         a?: A.Raw | null;
     }
 }

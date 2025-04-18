@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDocs } from "../../commons/types/WithDocs";
+import { WithV2Examples } from "../../examples/types/WithV2Examples";
 
 export const SseStreamChunk: core.serialization.ObjectSchema<serializers.SseStreamChunk.Raw, FernIr.SseStreamChunk> =
     core.serialization
@@ -13,10 +14,11 @@ export const SseStreamChunk: core.serialization.ObjectSchema<serializers.SseStre
             payload: core.serialization.lazy(() => serializers.TypeReference),
             terminator: core.serialization.string().optional(),
         })
-        .extend(WithDocs);
+        .extend(WithDocs)
+        .extend(WithV2Examples);
 
 export declare namespace SseStreamChunk {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
         payload: serializers.TypeReference.Raw;
         terminator?: string | null;
     }

@@ -2,41 +2,49 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SubmissionFileInfo extends SerializableType
+class SubmissionFileInfo extends JsonSerializableType
 {
     /**
      * @var string $directory
      */
-    #[JsonProperty("directory")]
+    #[JsonProperty('directory')]
     public string $directory;
 
     /**
      * @var string $filename
      */
-    #[JsonProperty("filename")]
+    #[JsonProperty('filename')]
     public string $filename;
 
     /**
      * @var string $contents
      */
-    #[JsonProperty("contents")]
+    #[JsonProperty('contents')]
     public string $contents;
 
     /**
-     * @param string $directory
-     * @param string $filename
-     * @param string $contents
+     * @param array{
+     *   directory: string,
+     *   filename: string,
+     *   contents: string,
+     * } $values
      */
     public function __construct(
-        string $directory,
-        string $filename,
-        string $contents,
+        array $values,
     ) {
-        $this->directory = $directory;
-        $this->filename = $filename;
-        $this->contents = $contents;
+        $this->directory = $values['directory'];
+        $this->filename = $values['filename'];
+        $this->contents = $values['contents'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

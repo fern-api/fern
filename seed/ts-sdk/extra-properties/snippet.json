@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExtraPropertiesClient } from \"@fern/extra-properties\";\n\nconst client = new SeedExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"string\"\n});\n"
+                "client": "import { SeedExtraPropertiesClient } from \"@fern/extra-properties\";\n\nconst client = new SeedExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"name\"\n});\n"
             }
         }
     ],

@@ -2,24 +2,34 @@
 
 namespace Seed\V2\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Files extends SerializableType
+class Files extends JsonSerializableType
 {
     /**
      * @var array<FileInfoV2> $files
      */
-    #[JsonProperty("files"), ArrayType([FileInfoV2::class])]
+    #[JsonProperty('files'), ArrayType([FileInfoV2::class])]
     public array $files;
 
     /**
-     * @param array<FileInfoV2> $files
+     * @param array{
+     *   files: array<FileInfoV2>,
+     * } $values
      */
     public function __construct(
-        array $files,
+        array $values,
     ) {
-        $this->files = $files;
+        $this->files = $values['files'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

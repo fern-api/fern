@@ -1,0 +1,6 @@
+## 2.2.2
+**`(fix):`** Inline request parameters now deconflict in naming with the unnamed path parameter arguments.
+
+### What's been fixed
+- Inline request parameters now deconflict in naming with the unnamed path parameter arguments. Previously, when inlining request parameters into the method signature, we would not deconflict naming with the unnamed args preceding them. Now, conflicting unnamed parameters are post-fixed with an "_".
+

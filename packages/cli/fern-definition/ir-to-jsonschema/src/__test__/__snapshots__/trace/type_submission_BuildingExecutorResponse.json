@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "submissionId": {
+      "$ref": "#/definitions/submission.SubmissionId"
+    },
+    "status": {
+      "$ref": "#/definitions/submission.ExecutionSessionStatus"
+    }
+  },
+  "required": [
+    "submissionId",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "submission.ExecutionSessionStatus": {
+      "type": "string",
+      "enum": [
+        "CREATING_CONTAINER",
+        "PROVISIONING_CONTAINER",
+        "PENDING_CONTAINER",
+        "RUNNING_CONTAINER",
+        "LIVE_CONTAINER",
+        "FAILED_TO_LAUNCH"
+      ]
+    }
+  }
+}

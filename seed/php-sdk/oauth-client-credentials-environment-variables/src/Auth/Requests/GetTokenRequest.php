@@ -2,58 +2,57 @@
 
 namespace Seed\Auth\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GetTokenRequest
+class GetTokenRequest extends JsonSerializableType
 {
     /**
      * @var string $clientId
      */
-    #[JsonProperty("client_id")]
+    #[JsonProperty('client_id')]
     public string $clientId;
 
     /**
      * @var string $clientSecret
      */
-    #[JsonProperty("client_secret")]
+    #[JsonProperty('client_secret')]
     public string $clientSecret;
 
     /**
-     * @var string $audience
+     * @var 'https://api.example.com' $audience
      */
-    #[JsonProperty("audience")]
+    #[JsonProperty('audience')]
     public string $audience;
 
     /**
-     * @var string $grantType
+     * @var 'client_credentials' $grantType
      */
-    #[JsonProperty("grant_type")]
+    #[JsonProperty('grant_type')]
     public string $grantType;
 
     /**
      * @var ?string $scope
      */
-    #[JsonProperty("scope")]
+    #[JsonProperty('scope')]
     public ?string $scope;
 
     /**
-     * @param string $clientId
-     * @param string $clientSecret
-     * @param string $audience
-     * @param string $grantType
-     * @param ?string $scope
+     * @param array{
+     *   clientId: string,
+     *   clientSecret: string,
+     *   audience: 'https://api.example.com',
+     *   grantType: 'client_credentials',
+     *   scope?: ?string,
+     * } $values
      */
     public function __construct(
-        string $clientId,
-        string $clientSecret,
-        string $audience,
-        string $grantType,
-        ?string $scope = null,
+        array $values,
     ) {
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
-        $this->audience = $audience;
-        $this->grantType = $grantType;
-        $this->scope = $scope;
+        $this->clientId = $values['clientId'];
+        $this->clientSecret = $values['clientSecret'];
+        $this->audience = $values['audience'];
+        $this->grantType = $values['grantType'];
+        $this->scope = $values['scope'] ?? null;
     }
 }

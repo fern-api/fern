@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "problems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/commons.ProblemId"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "problems"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "commons.ProblemId": {
+      "type": "string"
+    }
+  }
+}

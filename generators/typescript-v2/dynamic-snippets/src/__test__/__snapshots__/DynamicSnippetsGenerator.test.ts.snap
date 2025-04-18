@@ -1,0 +1,497 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snippets > examples > 'GET /metadata (allow-multiple)' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.service.getMetadata({
+        shallow: false,
+        tag: [
+            "development",
+            "public",
+        ],
+        xAPIVersion: "0.0.1",
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > examples > 'GET /metadata (simple)' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.service.getMetadata({
+        shallow: false,
+        tag: [
+            "development",
+        ],
+        xAPIVersion: "0.0.1",
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.service.createBigEntity({
+        castMember: {
+            id: "john.doe",
+            name: "John Doe",
+        },
+        extendedMovie: {
+            cast: [
+                "John Travolta",
+                "Samuel L. Jackson",
+                "Uma Thurman",
+                "Bruce Willis",
+            ],
+            id: "movie-sda231x",
+            title: "Pulp Fiction",
+            from: "Quentin Tarantino",
+            rating: 8.5,
+            type: "movie",
+            tag: "tag-12efs9dv",
+            metadata: {
+                "academyAward": true,
+                "releaseDate": "2023-12-08",
+                "ratings": {
+                    rottenTomatoes: 97,
+                    imdb: 7.6,
+                },
+            },
+            revenue: BigInt("1000000"),
+        },
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > examples > 'POST /movie (invalid request body)' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "title"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets > examples > 'POST /movie (simple)' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.service.createMovie({
+        id: "movie-c06a4ad7",
+        prequel: "movie-cv9b914f",
+        title: "The Boy and the Heron",
+        from: "Hayao Miyazaki",
+        rating: 8,
+        type: "movie",
+        tag: "development",
+        metadata: {
+            "actors": [
+                "Christian Bale",
+                "Florence Pugh",
+                "Willem Dafoe",
+            ],
+            "releaseDate": "2023-12-08",
+            "ratings": {
+                rottenTomatoes: 97,
+                imdb: 7.6,
+            },
+        },
+        revenue: BigInt("1000000"),
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.endpoints.object.getAndReturnWithOptionalField({
+        string: "string",
+        integer: 1,
+        long: BigInt("1000000"),
+        double: 1.1,
+        bool: true,
+        datetime: new Date("2024-01-15T09:30:00Z"),
+        date: "2023-01-15",
+        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        base64: "SGVsbG8gd29ybGQh",
+        list: [
+            "list",
+            "list",
+        ],
+        set: new Set([
+            "set",
+        ]),
+        map: {
+            1: "map",
+        },
+        bigint: BigInt("1000000"),
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  }
+]"
+`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.endpoints.container.getAndReturnListOfObjects([
+        {
+            string: "one",
+        },
+        {
+            string: "two",
+        },
+        {
+            string: "three",
+        },
+    ]);
+}
+main();
+"
+`;
+
+exports[`snippets > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.endpoints.container.getAndReturnListOfPrimitives([
+        "one",
+        "two",
+        "three",
+    ]);
+}
+main();
+"
+`;
+
+exports[`snippets > file-upload > 'POST /' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient();
+    await client.service.post({
+        file: new Blob(["Hello, world!"]),
+        fileList: [
+            new Blob(["First"]),
+            new Blob(["Second"]),
+        ],
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > file-upload > 'POST /just-file' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient();
+    await client.service.justFile({
+        file: new Blob(["Hello, world!"]),
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient();
+    await client.service.justFileWithQueryParams({
+        integer: 42,
+        maybeString: "exists",
+        file: new Blob(["Hello, world!"]),
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.imdb.getMovie("movie_xyz");
+}
+main();
+"
+`;
+
+exports[`snippets > imdb > 'POST /movies/create-movie (simple)' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.imdb.createMovie({
+        title: "The Matrix",
+        rating: 8.2,
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > multi-url-environment > 'Custom environment' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: {
+            ec2: "https://custom.ec2.aws.com",
+            s3: "https://custom.s3.aws.com",
+        },
+        token: "<YOUR_API_KEY>",
+    });
+    await client.s3.getPresignedURL({
+        s3Key: "xyz",
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+  }
+]"
+`;
+
+exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
+"import { AcmeClient, AcmeEnvironment } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: AcmeEnvironment.Production,
+        token: "<YOUR_API_KEY>",
+    });
+    await client.s3.getPresignedURL({
+        s3Key: "xyz",
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
+"import { AcmeClient, AcmeEnvironment } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: AcmeEnvironment.Staging,
+        token: "<YOUR_API_KEY>",
+    });
+    await client.s3.getPresignedURL({
+        s3Key: "xyz",
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;
+
+exports[`snippets > nullable > 'Body properties' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: "https://api.example.com",
+    });
+    await client.nullable.createUser({
+        username: "john.doe",
+        tags: [
+            "admin",
+        ],
+        metadata: {
+            createdAt: new Date("1980-01-01T00:00:00Z"),
+            updatedAt: new Date("1980-01-01T00:00:00Z"),
+            avatar: null,
+            activated: null,
+        },
+        avatar: null,
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > nullable > 'Invalid null value' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
+`;
+
+exports[`snippets > nullable > 'Query parameters' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: "https://api.example.com",
+    });
+    await client.nullable.getUsers({
+        usernames: [
+            "john.doe",
+            "jane.doe",
+        ],
+        tags: [
+            null,
+        ],
+        extra: null,
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `
+"import { AcmeClient, AcmeEnvironment } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: AcmeEnvironment.Production,
+        token: "<YOUR_API_KEY>",
+    });
+    await client.dummy.getDummy();
+}
+main();
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
+"import { AcmeClient, AcmeEnvironment } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: AcmeEnvironment.Staging,
+        token: "<YOUR_API_KEY>",
+    });
+    await client.dummy.getDummy();
+}
+main();
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'custom baseURL' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: "http://localhost:8080",
+        token: "<YOUR_API_KEY>",
+    });
+    await client.dummy.getDummy();
+}
+main();
+"
+`;
+
+exports[`snippets > single-url-environment-default > 'invalid baseURL and environment' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Cannot specify both baseUrl and environment options"
+  }
+]"
+`;
+
+exports[`snippets > single-url-environment-default > 'invalid environment' 1`] = `
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
+`;

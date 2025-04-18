@@ -8,18 +8,26 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-API-Version header */
+        version?: "1.0.0";
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-API-Version header */
+        version?: "1.0.0";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -34,18 +42,28 @@ export class Service {
      * @example
      *     await client.service.getWithBearerToken()
      */
-    public async getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<string> {
+    public getWithBearerToken(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithBearerToken(requestOptions));
+    }
+
+    private async __getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "apiKey"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "apiKey",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-API-Version": requestOptions?.version ?? this._options?.version ?? "1.0.0",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/bearer-token-environment-variable",
                 "X-Fern-SDK-Version": "0.0.1",
                 "User-Agent": "@fern/bearer-token-environment-variable/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -54,18 +72,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.getWithBearerToken.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.service.getWithBearerToken.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedBearerTokenEnvironmentVariableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -74,12 +96,16 @@ export class Service {
                 throw new errors.SeedBearerTokenEnvironmentVariableError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedBearerTokenEnvironmentVariableTimeoutError();
+                throw new errors.SeedBearerTokenEnvironmentVariableTimeoutError(
+                    "Timeout exceeded when calling GET /apiKey.",
+                );
             case "unknown":
                 throw new errors.SeedBearerTokenEnvironmentVariableError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -88,7 +114,8 @@ export class Service {
         const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["COURIER_API_KEY"];
         if (bearer == null) {
             throw new errors.SeedBearerTokenEnvironmentVariableError({
-                message: "Please specify COURIER_API_KEY when instantiating the client.",
+                message:
+                    "Please specify a bearer by either passing it in to the constructor or initializing a COURIER_API_KEY environment variable",
             });
         }
 

@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type Environments = FernIr.Environments.SingleBaseUrl | FernIr.Environments.MultipleBaseUrls;
 
-export declare namespace Environments {
-    interface SingleBaseUrl extends FernIr.SingleBaseUrlEnvironments, _Utils {
+export namespace Environments {
+    export interface SingleBaseUrl extends FernIr.SingleBaseUrlEnvironments, _Utils {
         type: "singleBaseUrl";
     }
 
-    interface MultipleBaseUrls extends FernIr.MultipleBaseUrlsEnvironments, _Utils {
+    export interface MultipleBaseUrls extends FernIr.MultipleBaseUrlsEnvironments, _Utils {
         type: "multipleBaseUrls";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Environments._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         singleBaseUrl: (value: FernIr.SingleBaseUrlEnvironments) => _Result;
         multipleBaseUrls: (value: FernIr.MultipleBaseUrlsEnvironments) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const Environments = {
             type: "singleBaseUrl",
             _visit: function <_Result>(
                 this: FernIr.Environments.SingleBaseUrl,
-                visitor: FernIr.Environments._Visitor<_Result>
+                visitor: FernIr.Environments._Visitor<_Result>,
             ) {
                 return FernIr.Environments._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const Environments = {
             type: "multipleBaseUrls",
             _visit: function <_Result>(
                 this: FernIr.Environments.MultipleBaseUrls,
-                visitor: FernIr.Environments._Visitor<_Result>
+                visitor: FernIr.Environments._Visitor<_Result>,
             ) {
                 return FernIr.Environments._visit(this, visitor);
             },

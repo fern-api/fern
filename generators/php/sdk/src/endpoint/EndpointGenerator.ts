@@ -1,5 +1,7 @@
 import { php } from "@fern-api/php-codegen";
-import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+
+import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
@@ -12,9 +14,18 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         this.http = new HttpEndpointGenerator({ context });
     }
 
-    public generate({ serviceId, endpoint }: { serviceId: ServiceId; endpoint: HttpEndpoint }): php.Method {
+    public generate({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+    }): php.Method[] {
         return this.http.generate({
             serviceId,
+            service,
             endpoint
         });
     }

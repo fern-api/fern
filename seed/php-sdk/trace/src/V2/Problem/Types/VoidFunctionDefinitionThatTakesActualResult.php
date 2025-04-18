@@ -2,36 +2,45 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
 /**
-* The generated signature will include an additional param, actualResult
+ * The generated signature will include an additional param, actualResult
  */
-class VoidFunctionDefinitionThatTakesActualResult extends SerializableType
+class VoidFunctionDefinitionThatTakesActualResult extends JsonSerializableType
 {
     /**
      * @var array<Parameter> $additionalParameters
      */
-    #[JsonProperty("additionalParameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('additionalParameters'), ArrayType([Parameter::class])]
     public array $additionalParameters;
 
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
-    #[JsonProperty("code")]
+    #[JsonProperty('code')]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**
-     * @param array<Parameter> $additionalParameters
-     * @param FunctionImplementationForMultipleLanguages $code
+     * @param array{
+     *   additionalParameters: array<Parameter>,
+     *   code: FunctionImplementationForMultipleLanguages,
+     * } $values
      */
     public function __construct(
-        array $additionalParameters,
-        FunctionImplementationForMultipleLanguages $code,
+        array $values,
     ) {
-        $this->additionalParameters = $additionalParameters;
-        $this->code = $code;
+        $this->additionalParameters = $values['additionalParameters'];
+        $this->code = $values['code'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

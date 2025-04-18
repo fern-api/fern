@@ -1,0 +1,37 @@
+---
+title: Delete Web Agent
+subtitle: Delete a web agent.
+slug: api-v1/post/agents-id-delete
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path
+
+<ParamField path="agent_id" type="string" required>
+  The web agent to delete.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message saying whether the deletion succeeded, or a helpful message describing why it failed.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "status": "success",
+  "message": "Successfully deleted agent 2c565dc7-f41f-43db-a99f-e4c8ba9d7d18"
+}
+```
+</ResponseExample>

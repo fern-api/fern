@@ -1,4 +1,3 @@
-import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { Zurg } from "@fern-typescript/commons";
 import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import {
@@ -7,6 +6,9 @@ import {
     RawSingleUnionType
 } from "@fern-typescript/union-schema-generator";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";
 import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";

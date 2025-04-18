@@ -15,7 +15,7 @@ export const Request: core.serialization.Schema<
 > = UpdatePlaylistRequest.optional();
 
 export declare namespace Request {
-    type Raw = UpdatePlaylistRequest.Raw | null | undefined;
+    export type Raw = UpdatePlaylistRequest.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<
@@ -24,7 +24,7 @@ export const Response: core.serialization.Schema<
 > = Playlist.optional();
 
 export declare namespace Response {
-    type Raw = Playlist.Raw | null | undefined;
+    export type Raw = Playlist.Raw | null | undefined;
 }
 
 export const Error: core.serialization.Schema<
@@ -47,9 +47,9 @@ export const Error: core.serialization.Schema<
     });
 
 export declare namespace Error {
-    type Raw = Error.PlaylistIdNotFoundError;
+    export type Raw = Error.PlaylistIdNotFoundError;
 
-    interface PlaylistIdNotFoundError {
+    export interface PlaylistIdNotFoundError {
         errorName: "PlaylistIdNotFoundError";
         content: PlaylistIdNotFoundErrorBody.Raw;
     }

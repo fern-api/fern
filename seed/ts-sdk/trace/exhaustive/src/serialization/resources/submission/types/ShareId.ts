@@ -14,5 +14,5 @@ export const ShareId: core.serialization.Schema<serializers.ShareId.Raw, SeedTra
     });
 
 export declare namespace ShareId {
-    type Raw = string;
+    export type Raw = string;
 }

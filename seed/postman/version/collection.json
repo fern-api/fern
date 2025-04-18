@@ -37,7 +37,7 @@
                 {
                   "key": "userId",
                   "description": null,
-                  "value": "string"
+                  "value": "userId"
                 }
               ]
             },
@@ -73,7 +73,7 @@
                     {
                       "key": "userId",
                       "description": null,
-                      "value": "string"
+                      "value": "userId"
                     }
                   ]
                 },
@@ -89,7 +89,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"id\": \"string\",\n    \"name\": \"string\"\n}",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

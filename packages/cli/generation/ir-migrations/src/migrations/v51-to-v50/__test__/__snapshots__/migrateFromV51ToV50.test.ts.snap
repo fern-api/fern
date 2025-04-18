@@ -144,7 +144,7 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "049019534d1c70582505cebfb2f3a228b8ed8287",
+                "id": "ba664de9",
                 "name": null,
                 "queryParameters": [
                   {
@@ -191,11 +191,11 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                       "jsonExample": {
                         "users": [
                           {
-                            "name": "Alice",
+                            "name": "name",
                             "type": "goose",
                           },
                           {
-                            "name": "Bob",
+                            "name": "name",
                             "type": "goose",
                           },
                         ],
@@ -294,11 +294,11 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                               "value": {
                                 "jsonExample": [
                                   {
-                                    "name": "Alice",
+                                    "name": "name",
                                     "type": "goose",
                                   },
                                   {
-                                    "name": "Bob",
+                                    "name": "name",
                                     "type": "goose",
                                   },
                                 ],
@@ -307,7 +307,7 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                                     "list": [
                                       {
                                         "jsonExample": {
-                                          "name": "Alice",
+                                          "name": "name",
                                           "type": "goose",
                                         },
                                         "shape": {
@@ -402,11 +402,11 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                                                   "typeId": "type_service:User",
                                                 },
                                                 "value": {
-                                                  "jsonExample": "Alice",
+                                                  "jsonExample": "name",
                                                   "shape": {
                                                     "primitive": {
                                                       "string": {
-                                                        "original": "Alice",
+                                                        "original": "name",
                                                       },
                                                       "type": "string",
                                                     },
@@ -591,7 +591,7 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                                       },
                                       {
                                         "jsonExample": {
-                                          "name": "Bob",
+                                          "name": "name",
                                           "type": "goose",
                                         },
                                         "shape": {
@@ -686,11 +686,11 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                                                   "typeId": "type_service:User",
                                                 },
                                                 "value": {
-                                                  "jsonExample": "Bob",
+                                                  "jsonExample": "name",
                                                   "shape": {
                                                     "primitive": {
                                                       "string": {
-                                                        "original": "Bob",
+                                                        "original": "name",
                                                       },
                                                       "type": "string",
                                                     },
@@ -1185,7 +1185,7 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "1da8c4a6d7c7185e7aecd968fa60506f73aa6a2c0c8d52757c029c556e05be15",
+                "id": "8743b26c",
                 "name": null,
                 "queryParameters": [],
                 "request": null,
@@ -2033,11 +2033,11 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                       },
                     },
                     "value": {
-                      "jsonExample": "string",
+                      "jsonExample": "userId",
                       "shape": {
                         "primitive": {
                           "string": {
-                            "original": "string",
+                            "original": "userId",
                           },
                           "type": "string",
                         },
@@ -2046,7 +2046,7 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "498664c657009fecc132e139481ba776762ad698",
+                "id": "44826f09",
                 "name": null,
                 "queryParameters": [],
                 "request": null,
@@ -2056,7 +2056,7 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                     "type": "body",
                     "value": {
                       "jsonExample": {
-                        "name": "string",
+                        "name": "name",
                         "type": "goose",
                       },
                       "shape": {
@@ -2151,11 +2151,11 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                                 "typeId": "type_service:User",
                               },
                               "value": {
-                                "jsonExample": "string",
+                                "jsonExample": "name",
                                 "shape": {
                                   "primitive": {
                                     "string": {
-                                      "original": "string",
+                                      "original": "name",
                                     },
                                     "type": "string",
                                   },
@@ -2343,7 +2343,7 @@ exports[`migrateFromV51ToV50 > simple 1`] = `
                 "rootPathParameters": [],
                 "serviceHeaders": [],
                 "servicePathParameters": [],
-                "url": "/string",
+                "url": "/userId",
               },
             },
           ],
@@ -2528,7 +2528,7 @@ const user = client.users.get(1234);
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "7e05f42bdc17de2ac7cd32ab17c819ec8af3e5c9ed2b285f42a336d1d65cc907",
+                "id": "7001a26e",
                 "name": null,
                 "queryParameters": [],
                 "request": null,

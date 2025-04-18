@@ -1,0 +1,678 @@
+{
+  "apiVersion": {
+    "header": "my-api-version",
+    "default": "1.0",
+    "values": [
+      "1.0",
+      "latest"
+    ]
+  },
+  "title": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "get_stream",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "user"
+        ],
+        "methodName": "get_stream"
+      },
+      "pathParameters": [
+        {
+          "name": "userId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetStreamRequestUserId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "my-api-key",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetStreamRequestMyApiKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "another_header",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetStreamRequestAnotherHeader",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "x-api-key",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetStreamRequestXApiKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "my-api-version",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetStreamRequestMyApiVersion",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "UserGetStreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userGetStreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "UserGetStreamRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": [
+                "public"
+              ]
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserGetStreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "UserGetStreamResponse",
+          "schema": "StreamUser",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/user/{userId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "value": {
+                  "value": "userId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "my-api-key",
+              "value": {
+                "value": {
+                  "value": "my-api-key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "another_header",
+              "value": {
+                "value": {
+                  "value": "another_header",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-api-key",
+              "value": {
+                "value": {
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my-api-version",
+              "value": {
+                "value": {
+                  "value": "my-api-version",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "id": {
+                    "value": {
+                      "value": "id",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "streamed": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "literal"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "get",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "user"
+        ],
+        "methodName": "get"
+      },
+      "pathParameters": [
+        {
+          "name": "userId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetRequestUserId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "my-api-key",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetRequestMyApiKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "another_header",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetRequestAnotherHeader",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "x-api-key",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetRequestXApiKey",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "my-api-version",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UserGetRequestMyApiVersion",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "UserGetRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userGetRequestStream",
+              "key": "stream",
+              "schema": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "UserGetRequestStream",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": [
+                "public"
+              ]
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UserGetRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "UserGetResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/user/{userId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "value": {
+                  "value": "userId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "my-api-key",
+              "value": {
+                "value": {
+                  "value": "my-api-key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "another_header",
+              "value": {
+                "value": {
+                  "value": "another_header",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-api-key",
+              "value": {
+                "value": {
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my-api-version",
+              "value": {
+                "value": {
+                  "value": "my-api-version",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "request": {
+            "properties": {
+              "stream": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "streamed": {
+                  "value": {
+                    "value": false,
+                    "type": "boolean"
+                  },
+                  "type": "literal"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "generatedName": "userId",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "UserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userStreamed",
+            "key": "streamed",
+            "schema": {
+              "generatedName": "userStreamed",
+              "value": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "UserStreamed",
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "User",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "StreamUser": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "streamUserId",
+            "key": "id",
+            "schema": {
+              "generatedName": "streamUserId",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "StreamUserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "streamUserStreamed",
+            "key": "streamed",
+            "schema": {
+              "generatedName": "streamUserStreamed",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "StreamUserStreamed",
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "StreamUser",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [
+    {
+      "header": "my-api-key",
+      "name": "api-key-alias",
+      "optional": true
+    },
+    {
+      "header": "another_header",
+      "optional": false,
+      "env": "MY_HEADER_ENV"
+    },
+    {
+      "header": "version",
+      "name": "Square-Version",
+      "env": "SQUARE_VERSION",
+      "type": "literal<\"2024-06-04\">",
+      "schema": {
+        "generatedName": "Square-Version",
+        "value": {
+          "value": "2024-06-04",
+          "type": "string"
+        },
+        "type": "literal"
+      }
+    }
+  ],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

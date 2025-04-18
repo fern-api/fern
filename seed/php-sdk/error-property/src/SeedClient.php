@@ -2,27 +2,27 @@
 
 namespace Seed;
 
-use Seed\Errors\ErrorsClient;
 use Seed\PropertyBasedError\PropertyBasedErrorClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
-    /**
-     * @var ErrorsClient $errors
-     */
-    public ErrorsClient $errors;
-
     /**
      * @var PropertyBasedErrorClient $propertyBasedError
      */
     public PropertyBasedErrorClient $propertyBasedError;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -30,7 +30,13 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?array $options = null,
@@ -39,6 +45,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -51,7 +58,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->errors = new ErrorsClient($this->client);
-        $this->propertyBasedError = new PropertyBasedErrorClient($this->client);
+        $this->propertyBasedError = new PropertyBasedErrorClient($this->client, $this->options);
     }
 }

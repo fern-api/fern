@@ -15,7 +15,7 @@ export const GetBasicSolutionFileRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetBasicSolutionFileRequest {
-    interface Raw {
+    export interface Raw {
         methodName: string;
         signature: serializers.v2.v3.NonVoidFunctionSignature.Raw;
     }

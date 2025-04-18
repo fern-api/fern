@@ -17,7 +17,7 @@ export const UndiscriminatedUnionMember: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace UndiscriminatedUnionMember {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         type: serializers.TypeReference.Raw;
     }
 }

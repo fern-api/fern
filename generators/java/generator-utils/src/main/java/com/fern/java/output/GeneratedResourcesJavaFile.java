@@ -37,6 +37,8 @@ public abstract class GeneratedResourcesJavaFile extends GeneratedFile {
 
     public abstract String contents();
 
+    public abstract Optional<Boolean> testFile();
+
     @Override
     public final String filename() {
         return getClassName().simpleName() + ".java";
@@ -63,9 +65,15 @@ public abstract class GeneratedResourcesJavaFile extends GeneratedFile {
                         .resolve(getClassName().simpleName() + ".java");
             }
         } else {
-            filepath = directory.resolve(Path.of("src/main/java/")
-                    .resolve(packageName.replace('.', '/'))
-                    .resolve(getClassName().simpleName() + ".java"));
+            if (testFile().isPresent() && testFile().get()) {
+                filepath = directory.resolve(Path.of("src/test/java/")
+                        .resolve(packageName.replace('.', '/'))
+                        .resolve(getClassName().simpleName() + ".java"));
+            } else {
+                filepath = directory.resolve(Path.of("src/main/java/")
+                        .resolve(packageName.replace('.', '/'))
+                        .resolve(getClassName().simpleName() + ".java"));
+            }
         }
         JavaFileWriter.write(filepath, contentsWithPackageName);
     }

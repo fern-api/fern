@@ -15,7 +15,7 @@ export const StoreTracedWorkspaceRequest: core.serialization.Schema<
 });
 
 export declare namespace StoreTracedWorkspaceRequest {
-    interface Raw {
+    export interface Raw {
         workspaceRunDetails: serializers.WorkspaceRunDetails.Raw;
         traceResponses: serializers.TraceResponse.Raw[];
     }

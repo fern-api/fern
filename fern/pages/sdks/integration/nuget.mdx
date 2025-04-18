@@ -1,8 +1,8 @@
 ---
-title: Integrating NuGet
+title: Publish your C# SDK with NuGet
 ---
 
-To authenticate and integrate NuGet within your C#/.NET SDK, you'll need to [create a NuGet API key](/learn/sdks/package-managers/nuget#creating-a-nuget-api-key) and [add it to your repository](/learn/sdks/package-managers/nuget#adding-api-keys-to-your-github-repository). 
+To make your C#/.NET SDK publicly accessible, publish to [NuGet](https://www.nuget.org/). Once you've followed the steps below to connect your NuGet account to your SDK, Fern will automatically publish the latest version of your SDK.  
 
 ## Creating a NuGet API key
 <Steps>
@@ -43,3 +43,5 @@ You can also use the url `https://github.com/<your-repo>/settings/secrets/action
 ### Add Secret
 Select **New repository secret**. Name your secret (we recommend `NUGET_API_KEY`), add the corresponding API key, and click **Add secret**. 
 </Steps>
+
+Once you regenerate your SDK, a GitHub action will run to publish directly to NuGet!

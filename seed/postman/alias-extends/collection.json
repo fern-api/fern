@@ -41,7 +41,7 @@
         "auth": null,
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"child\": \"string\",\n    \"parent\": \"string\"\n}",
+          "raw": "{\n    \"parent\": \"parent\",\n    \"child\": \"child\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -79,7 +79,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"child\": \"string\",\n    \"parent\": \"string\"\n}",
+              "raw": "{\n    \"parent\": \"parent\",\n    \"child\": \"child\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

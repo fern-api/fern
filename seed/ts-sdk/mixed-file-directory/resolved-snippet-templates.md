@@ -5,10 +5,10 @@ const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
 await client.organization.create({
-  name: "string",
+  name: "name",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -20,8 +20,8 @@ const client = new SeedMixedFileDirectoryClient({
 await client.user.list({
   limit: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -33,8 +33,8 @@ const client = new SeedMixedFileDirectoryClient({
 await client.user.events.listEvents({
   limit: 1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -44,9 +44,9 @@ const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
 await client.user.events.metadata.getMetadata({
-  id: "string",
+  id: "id",
 });
- 
-```                        
+
+```
 
 

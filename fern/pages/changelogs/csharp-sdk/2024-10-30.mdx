@@ -1,0 +1,51 @@
+## 1.8.5
+**`(feat):`** Add forward-compatible enums. Set `experimental-enable-forward-compatible-enums` to `true` in the configuration to generate forward-compatible enums.
+With forward-compatible enums you can create and parse an enum value that is not predefined.
+- Forward compatible enums are not compatible with the previously generated native enums.
+  This is a breaking change for the users of the generated SDK, but only users using switch-case statements are affected.
+- Use the `Value` property to get the string value of the enum. - For each value in the enum,
+  - a public static property is generated, which is an instance of the enum class,
+  - a public static property is generated within the nested `Values` class with the string value of the enum.
+
+Here's a before and after for creating and parsing a resource with a predefined enum value and a custom enum value:
+**Before**:
+```csharp var resource = client.CreateResource(new Resource { Id = "2", EnumProperty = MyEnum.Value2 } ); // The line below does not compile because the enum does not have a `Value3` value. // resource = client.CreateResource(new Resource { Id = "3", EnumProperty = MyEnum.Value3 } ); resource = client.GetResource("3"); switch(resource.EnumProperty) {
+    case MyEnum.Value1:
+        Console.WriteLine("Value1");
+        break;
+    case MyEnum.Value2:
+        Console.WriteLine("Value2");
+        break;
+    default:
+        // this will never be reached until the SDK is updated with the new enum value
+        Console.WriteLine("Unknown");
+        break;
+} if(resource.EnumProperty == MyEnum.Value1) {
+        Console.WriteLine("Value1");
+} else if (resource.EnumProperty == MyEnum.Value2) {
+        Console.WriteLine("Value2");
+} else {
+    // this will never be reached until the SDK is updated with the new enum value
+    Console.WriteLine("Unknown");
+} ```
+No exception is thrown, but the output incorrectly shows `Value1` because .NET falls back to the first value in the enum.
+**After**:
+```csharp var resource = client.CreateResource(new Resource { Id = "2", EnumProperty = MyEnum.Value2 } ); resource = client.CreateResource(new Resource { Id = "3", EnumProperty = MyEnum.Custom("value3") } ); resource = client.GetResource("3"); switch(resource.EnumProperty.Value) {
+    case MyEnum.Values.Value1:
+        Console.WriteLine("Value1");
+        break;
+    case MyEnum.Values.Value2:
+        Console.WriteLine("Value2");
+        break;
+    default:
+        Console.WriteLine(resource.EnumProperty.Value);
+        break;
+} if(resource.EnumProperty == MyEnum.Value1) {
+    Console.WriteLine("Value1");
+} else if (resource.EnumProperty == MyEnum.Value2) {
+    Console.WriteLine("Value2");
+} else {
+    Console.WriteLine(resource.EnumProperty.Value);
+} ```
+The output correctly shows `Value3`.
+

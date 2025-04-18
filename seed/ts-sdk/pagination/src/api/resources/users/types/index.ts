@@ -9,6 +9,7 @@ export * from "./UsernameContainer";
 export * from "./ListUsersExtendedResponse";
 export * from "./ListUsersExtendedOptionalListResponse";
 export * from "./ListUsersPaginationResponse";
+export * from "./ListUsersMixedTypePaginationResponse";
 export * from "./Page";
 export * from "./NextPage";
 export * from "./User";

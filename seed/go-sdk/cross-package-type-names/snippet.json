@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/cross-package-type-names/fern\"\n\tfernclient \"github.com/cross-package-type-names/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Foo.Find(\n\tcontext.TODO(),\n\t\u0026fern.FindRequest{\n\t\tOptionalString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tPublicProperty: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tPrivateProperty: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/cross-package-type-names/fern\"\n\tfernclient \"github.com/cross-package-type-names/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Foo.Find(\n\tcontext.TODO(),\n\t\u0026fern.FindRequest{\n\t\tOptionalString: fern.String(\n\t\t\t\"optionalString\",\n\t\t),\n\t\tPublicProperty: fern.String(\n\t\t\t\"publicProperty\",\n\t\t),\n\t\tPrivateProperty: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
             }
         }
     ]

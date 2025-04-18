@@ -1,0 +1,68 @@
+types:
+  conjure-imports:
+    commons: commons.yml
+  definitions:
+    default-package: com.birch.trace.playlist
+    objects:
+      PlaylistId:
+        alias: string
+      Playlist:
+        fields:
+          playlistId: PlaylistId
+          name: string
+          problems: list<commons.ProblemId>
+          ownerId: commons.UserId
+
+      CreatePlaylistRequest:
+        fields:
+          name: string
+          problems: list<commons.ProblemId>
+
+      UpdatePlaylistRequest:
+        fields:
+          name: string
+          problems: list<commons.ProblemId>
+
+services:
+  PlaylistCrudService:
+    name: CRUD service for playlists
+    package: com.birch.trace.playlist
+    base-path: /playlist
+    endpoints:
+
+      createPlaylist:
+        docs: Create a new playlist
+        http: POST /create
+        auth: header
+        args:
+          request: CreatePlaylistRequest
+        returns: Playlist
+
+      getPlaylists:
+        docs: Returns the user's playlists
+        http: GET /all
+        auth: header
+        returns: list<Playlist>
+
+      getPlaylist:
+        docs: Returns a playlist
+        http: GET /{playlistId}
+        args:
+          playlistId: PlaylistId
+        returns: Playlist
+
+      updatePlaylist:
+        docs: Updates a playlist
+        http: PUT /{playlistId}
+        auth: header
+        args:
+          playlistId: PlaylistId
+          request: UpdatePlaylistRequest
+        returns: Playlist
+
+      deletePlaylist:
+        docs: Deletes a playlist
+        http: DELETE /{playlistId}
+        auth: header
+        args:
+          playlistId: PlaylistId

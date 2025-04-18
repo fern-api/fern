@@ -1,5 +1,7 @@
-import { PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
+
+import { PosthogEvent } from "@fern-api/task-context";
+
 import { PosthogManager } from "./PosthogManager";
 
 export class AccessTokenPosthogManager implements PosthogManager {
@@ -28,7 +30,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
         }
     }
 
-    public flush(): void {
-        this.posthog.flush();
+    public async flush(): Promise<void> {
+        await this.posthog.flush();
     }
 }

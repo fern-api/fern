@@ -11,7 +11,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
   {
     "message": "stream-condition must be specified when both response and response-stream are specified.",
@@ -22,7 +22,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
   {
     "message": "Please specify path to a valid property (e.g. $request.stream)",
@@ -33,7 +33,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
   {
     "message": "Property "$request.stream" does not exist on the request.",
@@ -44,7 +44,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
   {
     "message": "Property "$request.stream" does not exist on the request.",
@@ -55,7 +55,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
   {
     "message": "Property "$request.stream" does not exist on the request.",
@@ -66,7 +66,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
   {
     "message": "Please specify path to a valid property (e.g. $request.stream)",
@@ -77,7 +77,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
   {
     "message": "Please specify path to a valid property (e.g. $request.stream)",
@@ -88,7 +88,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
   {
     "message": "Please specify path to a valid property (e.g. $request.stream)",
@@ -99,7 +99,7 @@ exports[`valid-stream-condition > simple 1`] = `
       "stream-condition",
     ],
     "relativeFilepath": "simple.yml",
-    "severity": "error",
+    "severity": "fatal",
   },
 ]
 `;

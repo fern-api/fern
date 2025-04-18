@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedIdempotencyHeaders.Core;
 
-#nullable enable
-
 namespace SeedIdempotencyHeaders;
 
 public record CreatePaymentRequest
@@ -13,6 +11,7 @@ public record CreatePaymentRequest
     [JsonPropertyName("currency")]
     public required Currency Currency { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

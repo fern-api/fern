@@ -24,14 +24,14 @@ export const CreateProblemResponse: core.serialization.Schema<
     });
 
 export declare namespace CreateProblemResponse {
-    type Raw = CreateProblemResponse.Success | CreateProblemResponse.Error;
+    export type Raw = CreateProblemResponse.Success | CreateProblemResponse.Error;
 
-    interface Success {
+    export interface Success {
         type: "success";
         value: serializers.ProblemId.Raw;
     }
 
-    interface Error {
+    export interface Error {
         type: "error";
         value: serializers.CreateProblemError.Raw;
     }

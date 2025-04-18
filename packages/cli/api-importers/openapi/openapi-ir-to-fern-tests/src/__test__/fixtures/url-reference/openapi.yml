@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: URL Reference API
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      summary: List all pets
+      responses:
+        '200':
+          description: A list of pets
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/OpenAPITools/openapi-petstore/refs/heads/master/src/main/resources/openapi.yaml#/components/schemas/Pet'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

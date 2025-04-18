@@ -21,6 +21,7 @@ Types describe the data model of your API.
 - `map` _e.g., map\<string, integer\>_
 - `optional` _e.g., optional\<string\>_
 - `literal` _e.g., literal\<"Plants"\>_
+- `file` _e.g., [file uploads](/learn/api-definition/fern/endpoints/multipart)_
 - `unknown` _Represents arbitrary JSON._
 
 ## Custom types
@@ -135,7 +136,7 @@ types:
         value: '!='
 ```
 
-### Unions
+### Discriminated Unions
 
 Fern supports tagged unions (a.k.a. discriminated unions). Unions are useful for
 polymorphism. This is similar to the `oneOf` concept in OpenAPI.
@@ -193,7 +194,10 @@ This corresponds to a JSON object like this:
 }
 ```
 
-You can also have a union without a discriminant.
+### Undiscriminated Unions
+
+Undiscriminated unions are similar to discriminated unions, however you don't 
+need to define an explicit discriminant property. 
 
 ```yaml 
 MyUnion:

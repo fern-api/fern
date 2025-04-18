@@ -1,9 +1,17 @@
-name: Publish Dev + Prod CLIs
+name: Publish Fern CLI
 
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "fern/**"
+      - "guides/**"
+      - ".vscode/**"
+      - "docker/seed/**"
+      - "test-definitions/**"
+      - "test-definitions-openapi/**"
+      - "seed/**"
   workflow_dispatch:
     inputs:
       version:
@@ -12,8 +20,8 @@ on:
         type: string
 
 jobs:
-  publish-dev:
-    if: ${{ inputs.version == null }}
+  dev:
+    if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -30,20 +38,24 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Build Seed
+        run: |
+          pnpm seed:build
+
       - name: Print version
         run: |
           git_version="$(./scripts/git-version.sh)"
           echo Publishing version: "${git_version}"
 
-      - name: Add version to dev package.json's
+      - name: Publish Dev CLI
         run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           git_version="$(./scripts/git-version.sh)"
-
-          pnpm seed:local publish cli --ver ${git_version} --dev --log-level debug
+          pnpm seed publish cli --ver ${git_version} --dev --log-level debug
 
   # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:
-    if: ${{ inputs.version == null }}
+    if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     environment: Fern Prod
     runs-on: ubuntu-latest
     steps:
@@ -62,10 +74,10 @@ jobs:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
-          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs" 
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
-  publish:
+  prod:
     needs: [live-test]
     if: ${{ inputs.version == null }}
     runs-on: ubuntu-latest
@@ -80,20 +92,33 @@ jobs:
         with:
           ref: main
           fetch-depth: 2
-          fetch-tags: true
 
       - name: Install
         uses: ./.github/actions/install
+
+      - name: Build Seed
+        run: |
+          pnpm seed:build
 
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           git show HEAD~1:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
-          pnpm seed:local publish cli  --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
-          pnpm seed:local register cli
 
-  publish-manually:
+          previous_commit="$(git rev-parse --short HEAD~1)"
+          echo "Preview of the previous file ${previous_commit}"
+          head tmp_cli_previous_versions.yml
+
+          current_commit="$(git rev-parse --short HEAD)"
+          echo "Preview of the current file ${current_commit}"
+          head packages/cli/cli/versions.yml
+
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          pnpm seed publish cli  --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
+          pnpm seed register cli
+
+  manual:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
     env:
@@ -110,9 +135,14 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Build Seed
+        run: |
+          pnpm seed:build
+
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
-          pnpm seed:local publish cli --ver ${{ inputs.version }} --log-level debug
-          pnpm seed:local register cli
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          pnpm seed publish cli --ver ${{ inputs.version }} --log-level debug
+          pnpm seed register cli

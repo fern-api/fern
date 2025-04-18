@@ -21,7 +21,7 @@ export const SingleUnionType: core.serialization.ObjectSchema<serializers.Single
         .extend(WithDocs);
 
 export declare namespace SingleUnionType {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         discriminantValue: NameAndWireValue.Raw;
         shape: SingleUnionTypeProperties.Raw;
         displayName?: string | null;

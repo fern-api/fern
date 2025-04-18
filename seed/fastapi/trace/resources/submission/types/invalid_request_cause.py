@@ -20,8 +20,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def submission_id_not_found(
-        self,
-        value: resources_submission_types_submission_id_not_found_SubmissionIdNotFound,
+        self, value: resources_submission_types_submission_id_not_found_SubmissionIdNotFound
     ) -> InvalidRequestCause:
         if IS_PYDANTIC_V2:
             return InvalidRequestCause(
@@ -37,8 +36,7 @@ class _Factory:
             )  # type: ignore
 
     def custom_test_cases_unsupported(
-        self,
-        value: resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported,
+        self, value: resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ) -> InvalidRequestCause:
         if IS_PYDANTIC_V2:
             return InvalidRequestCause(
@@ -53,9 +51,7 @@ class _Factory:
                 )
             )  # type: ignore
 
-    def unexpected_language(
-        self, value: UnexpectedLanguageError
-    ) -> InvalidRequestCause:
+    def unexpected_language(self, value: UnexpectedLanguageError) -> InvalidRequestCause:
         if IS_PYDANTIC_V2:
             return InvalidRequestCause(
                 root=_InvalidRequestCause.UnexpectedLanguage(
@@ -119,14 +115,10 @@ class InvalidRequestCause(UniversalRootModel):
     def visit(
         self,
         submission_id_not_found: typing.Callable[
-            [resources_submission_types_submission_id_not_found_SubmissionIdNotFound],
-            T_Result,
+            [resources_submission_types_submission_id_not_found_SubmissionIdNotFound], T_Result
         ],
         custom_test_cases_unsupported: typing.Callable[
-            [
-                resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
-            ],
-            T_Result,
+            [resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported], T_Result
         ],
         unexpected_language: typing.Callable[[UnexpectedLanguageError], T_Result],
     ) -> T_Result:
@@ -145,24 +137,18 @@ class InvalidRequestCause(UniversalRootModel):
             )
         if unioned_value.type == "unexpectedLanguage":
             return unexpected_language(
-                UnexpectedLanguageError(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                UnexpectedLanguageError(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
 
 
 class _InvalidRequestCause:
-    class SubmissionIdNotFound(
-        resources_submission_types_submission_id_not_found_SubmissionIdNotFound
-    ):
+    class SubmissionIdNotFound(resources_submission_types_submission_id_not_found_SubmissionIdNotFound):
         type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
 
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ):
-        type: typing.Literal["customTestCasesUnsupported"] = (
-            "customTestCasesUnsupported"
-        )
+        type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
 
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"

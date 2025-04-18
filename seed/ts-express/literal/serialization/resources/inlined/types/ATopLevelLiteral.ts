@@ -14,7 +14,7 @@ export const ATopLevelLiteral: core.serialization.ObjectSchema<
 });
 
 export declare namespace ATopLevelLiteral {
-    interface Raw {
+    export interface Raw {
         nestedLiteral: serializers.ANestedLiteral.Raw;
     }
 }

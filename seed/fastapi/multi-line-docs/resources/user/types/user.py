@@ -9,19 +9,17 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 class User(UniversalBaseModel):
     """
     A user object. This type is used throughout the following APIs:
-
-    - createUser
-    - getUser
+      - createUser
+      - getUser
     """
 
     id: str
     name: str = pydantic.Field()
     """
     The user's name. This name is unique to each user. A few examples are included below:
-    
-    - Alice
-    - Bob
-    - Charlie
+     - Alice
+     - Bob
+     - Charlie
     """
 
     age: typing.Optional[int] = pydantic.Field(default=None)
@@ -30,9 +28,7 @@ class User(UniversalBaseModel):
     """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

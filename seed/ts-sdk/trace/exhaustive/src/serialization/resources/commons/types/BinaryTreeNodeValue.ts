@@ -18,7 +18,7 @@ export const BinaryTreeNodeValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace BinaryTreeNodeValue {
-    interface Raw {
+    export interface Raw {
         nodeId: NodeId.Raw;
         val: number;
         right?: NodeId.Raw | null;

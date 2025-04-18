@@ -12,7 +12,7 @@ export const Foo: core.serialization.ObjectSchema<serializers.folderC.Foo.Raw, S
     });
 
 export declare namespace Foo {
-    interface Raw {
+    export interface Raw {
         bar_property: string;
     }
 }

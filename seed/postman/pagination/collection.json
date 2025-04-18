@@ -30,6 +30,93 @@
     {
       "_type": "container",
       "description": null,
+      "name": "Conversations",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Search conversations",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/conversations/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "conversations",
+                "search"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"pagination\": {\n        \"per_page\": 1,\n        \"starting_after\": \"starting_after\"\n    },\n    \"query\": {\n        \"field\": \"field\",\n        \"operator\": \"=\",\n        \"value\": \"value\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/conversations/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "conversations",
+                    "search"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"pagination\": {\n        \"per_page\": 1,\n        \"starting_after\": \"starting_after\"\n    },\n    \"query\": {\n        \"field\": \"field\",\n        \"operator\": \"=\",\n        \"value\": \"value\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"conversations\": [\n        {\n            \"foo\": \"foo\"\n        },\n        {\n            \"foo\": \"foo\"\n        }\n    ],\n    \"pages\": {\n        \"next\": {\n            \"per_page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"page\": 1,\n        \"per_page\": 1,\n        \"total_pages\": 1,\n        \"type\": \"pages\"\n    },\n    \"total_count\": 1,\n    \"type\": \"conversation.list\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
       "name": "Users",
       "item": [
         {
@@ -38,7 +125,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/users?page=1&per_page=1&order=asc&starting_after=string",
+              "raw": "{{baseUrl}}/users?page=1&per_page=1&order=asc&starting_after=starting_after",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -64,7 +151,7 @@
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "string"
+                  "value": "starting_after"
                 }
               ],
               "variable": []
@@ -88,7 +175,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/users?page=1&per_page=1&order=asc&starting_after=string",
+                  "raw": "{{baseUrl}}/users?page=1&per_page=1&order=asc&starting_after=starting_after",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -114,7 +201,7 @@
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "string"
+                      "value": "starting_after"
                     }
                   ],
                   "variable": []
@@ -131,7 +218,81 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"string\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"string\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List With Mixed Type Cursor Pagination",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?cursor=cursor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "cursor",
+                  "description": null,
+                  "value": "cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users?cursor=cursor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "description": null,
+                      "value": "cursor"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"next\": \"next\",\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -163,7 +324,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"pagination\": {\n        \"cursor\": \"string\"\n    }\n}",
+              "raw": "{\n    \"pagination\": {\n        \"cursor\": \"cursor\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -200,7 +361,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"pagination\": {\n        \"cursor\": \"string\"\n    }\n}",
+                  "raw": "{\n    \"pagination\": {\n        \"cursor\": \"cursor\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -209,7 +370,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"string\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"string\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -220,7 +381,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/users?page=1&per_page=1&order=asc&starting_after=string",
+              "raw": "{{baseUrl}}/users?page=1&per_page=1&order=asc&starting_after=starting_after",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -246,7 +407,7 @@
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "string"
+                  "value": "starting_after"
                 }
               ],
               "variable": []
@@ -270,7 +431,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/users?page=1&per_page=1&order=asc&starting_after=string",
+                  "raw": "{{baseUrl}}/users?page=1&per_page=1&order=asc&starting_after=starting_after",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -296,7 +457,7 @@
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "string"
+                      "value": "starting_after"
                     }
                   ],
                   "variable": []
@@ -313,7 +474,111 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"string\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"string\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List With Double Offset Pagination",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?page=1.1&per_page=1.1&order=asc&starting_after=starting_after",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "description": "Defaults to first page",
+                  "value": "1.1"
+                },
+                {
+                  "key": "per_page",
+                  "description": "Defaults to per page",
+                  "value": "1.1"
+                },
+                {
+                  "key": "order",
+                  "description": null,
+                  "value": "asc"
+                },
+                {
+                  "key": "starting_after",
+                  "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+                  "value": "starting_after"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users?page=1.1&per_page=1.1&order=asc&starting_after=starting_after",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "description": "Defaults to first page",
+                      "value": "1.1"
+                    },
+                    {
+                      "key": "per_page",
+                      "description": "Defaults to per page",
+                      "value": "1.1"
+                    },
+                    {
+                      "key": "order",
+                      "description": null,
+                      "value": "asc"
+                    },
+                    {
+                      "key": "starting_after",
+                      "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+                      "value": "starting_after"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -391,7 +656,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"string\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"string\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -417,7 +682,7 @@
                 },
                 {
                   "key": "limit",
-                  "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                  "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                   "value": "1"
                 },
                 {
@@ -462,7 +727,7 @@
                     },
                     {
                       "key": "limit",
-                      "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                      "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                       "value": "1"
                     },
                     {
@@ -485,7 +750,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"string\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"string\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -511,7 +776,7 @@
                 },
                 {
                   "key": "limit",
-                  "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                  "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                   "value": "1"
                 },
                 {
@@ -556,7 +821,7 @@
                     },
                     {
                       "key": "limit",
-                      "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+                      "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
                       "value": "1"
                     },
                     {
@@ -579,7 +844,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"string\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"string\",\n            \"id\": 1\n        }\n    ]\n}",
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -653,7 +918,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1,\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"string\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n}",
+              "body": "{\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"total_count\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -727,7 +992,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"total_count\": 1,\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"string\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n}",
+              "body": "{\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"total_count\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -738,7 +1003,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/users?starting_after=string",
+              "raw": "{{baseUrl}}/users?starting_after=starting_after",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -749,7 +1014,7 @@
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "string"
+                  "value": "starting_after"
                 }
               ],
               "variable": []
@@ -773,7 +1038,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/users?starting_after=string",
+                  "raw": "{{baseUrl}}/users?starting_after=starting_after",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -784,7 +1049,7 @@
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "string"
+                      "value": "starting_after"
                     }
                   ],
                   "variable": []
@@ -801,7 +1066,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"cursor\": {\n        \"after\": \"string\",\n        \"data\": [\n            \"string\"\n        ]\n    }\n}",
+              "body": "{\n    \"cursor\": {\n        \"after\": \"after\",\n        \"data\": [\n            \"data\",\n            \"data\"\n        ]\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -875,7 +1140,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"results\": [\n        \"string\"\n    ]\n}",
+              "body": "{\n    \"results\": [\n        \"results\",\n        \"results\"\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]

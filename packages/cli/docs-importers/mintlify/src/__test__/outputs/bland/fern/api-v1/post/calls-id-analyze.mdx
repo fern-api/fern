@@ -1,0 +1,83 @@
+---
+title: Analyze Call with AI
+subtitle: Analyzes a call of calls based using questions and goals.
+slug: api-v1/post/calls-id-analyze
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="call_id" type="string" required>
+  The unique identifier for the call to be analyzed.
+</ParamField>
+
+### Request Body
+
+<ParamField body="goal" type="string" required>
+  This is the overall purpose of the call. Provides context for the analysis to guide how the questions/transcripts are
+  interpreted.
+</ParamField>
+
+<ParamField body="questions" type="array" required>
+  An array of questions to be analyzed for the call. 
+  
+  Each question should be an array with two elements: the question text and the expected answer type (e.g., "string", "boolean").
+
+Fairly flexible in terms of the expected answer type, and unanswerable questions will default to `null`.
+
+Examples:
+
+```json
+"questions": [
+      ["Who answered the call?", "human or voicemail"],
+      ["Positive feedback about the product: ", "string"],
+      ["Negative feedback about the product: ", "string"],
+      ["Customer confirmed they were satisfied", "boolean"]
+  ]
+```
+
+</ParamField>
+
+### Response
+
+<ResponseField type="object" name="status">
+  Will be `success` if the request was successful.
+</ResponseField>
+
+<ResponseField type="string" name="message">
+  Confirms the request was successful, or provides an error message if the request failed.
+</ResponseField>
+
+<ResponseField type="array" name="answers">
+  Contains the analyzed answers for the call in an array.
+</ResponseField>
+
+<ResponseField type="number" name="credits_used">
+  Token-based price for the analysis request.
+
+As a rough estimate, the base cost is `0.003` credits with an additional `0.0015` credits per call in the call.
+
+Longer call transcripts and higher numbers of questions can increase the cost, however the cost scales very effectively with calls vs. individual calls.
+
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "status": "success",
+    "message": "Successfully analyzed call",
+    "answers": [
+        "human",
+        "Customer found the product sturdy and reliable",
+        "A bit heavy",
+        true
+    ]
+}
+```
+</ResponseExample>

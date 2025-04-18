@@ -11,17 +11,17 @@ export const Playlist: core.serialization.ObjectSchema<serializers.Playlist.Raw,
         .object({
             playlistId: core.serialization.property(
                 "playlist_id",
-                core.serialization.lazy(() => serializers.PlaylistId)
+                core.serialization.lazy(() => serializers.PlaylistId),
             ),
             ownerId: core.serialization.property(
                 "owner-id",
-                core.serialization.lazy(() => serializers.UserId)
+                core.serialization.lazy(() => serializers.UserId),
             ),
         })
         .extend(core.serialization.lazyObject(() => serializers.PlaylistCreateRequest));
 
 export declare namespace Playlist {
-    interface Raw extends serializers.PlaylistCreateRequest.Raw {
+    export interface Raw extends serializers.PlaylistCreateRequest.Raw {
         playlist_id: serializers.PlaylistId.Raw;
         "owner-id": serializers.UserId.Raw;
     }

@@ -1,12 +1,13 @@
-import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
-import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import {
-    isRawAliasDefinition,
     RawSchemas,
-    recursivelyVisitRawTypeReference,
-    parseGeneric
+    isRawAliasDefinition,
+    parseGeneric,
+    recursivelyVisitRawTypeReference
 } from "@fern-api/fern-definition-schema";
-import { constructFernFileContext, FernFileContext } from "../FernFileContext";
+import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
+
+import { FernFileContext, constructFernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
 import { ObjectPathItem, ResolvedType } from "./ResolvedType";
@@ -177,6 +178,19 @@ export class TypeResolverImpl implements TypeResolver {
                               },
                               originalTypeReference: TypeReference.container(
                                   ContainerType.optional(itemType.originalTypeReference)
+                              )
+                          }
+                        : undefined,
+                nullable: (itemType) =>
+                    itemType != null
+                        ? {
+                              _type: "container",
+                              container: {
+                                  _type: "nullable",
+                                  itemType
+                              },
+                              originalTypeReference: TypeReference.container(
+                                  ContainerType.nullable(itemType.originalTypeReference)
                               )
                           }
                         : undefined,

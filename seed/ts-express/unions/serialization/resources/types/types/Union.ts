@@ -21,14 +21,14 @@ export const Union: core.serialization.Schema<serializers.Union.Raw, SeedUnions.
     });
 
 export declare namespace Union {
-    type Raw = Union.Foo | Union.Bar;
+    export type Raw = Union.Foo | Union.Bar;
 
-    interface Foo {
+    export interface Foo {
         type: "foo";
         foo: serializers.Foo.Raw;
     }
 
-    interface Bar {
+    export interface Bar {
         type: "bar";
         bar: serializers.Bar.Raw;
     }

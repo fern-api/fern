@@ -2,10 +2,11 @@ irVersion: v39
 displayName: Ruby Model
 image: fernapi/fern-ruby-model
 changelogLocation: ../../generators/ruby/model/versions.yml
+
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/fern-ruby-model dist:cli
-  docker: 
+  docker:
     file: ./generators/ruby/model/Dockerfile
     image: fernapi/fern-ruby-model
     context: .
@@ -14,11 +15,11 @@ test:
     image: fernapi/fern-ruby-model:latest
     command: pnpm --filter @fern-api/fern-ruby-model dockerTagLatest
 language: ruby
-generatorType: model
+generatorType: Model
 defaultOutputMode: local_files
 fixtures: []
 scripts: []
 allowedFailures:
-    # TODO: Add support for recursive undiscriminated unions.
+  # TODO: Add support for recursive undiscriminated unions.
   - grpc
   - circular-references

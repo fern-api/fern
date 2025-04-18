@@ -16,17 +16,9 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def generic(self, value: ExceptionInfo) -> Exception:
         if IS_PYDANTIC_V2:
-            return Exception(
-                root=_Exception.Generic(
-                    **value.dict(exclude_unset=True), type="generic"
-                )
-            )  # type: ignore
+            return Exception(root=_Exception.Generic(**value.dict(exclude_unset=True), type="generic"))  # type: ignore
         else:
-            return Exception(
-                __root__=_Exception.Generic(
-                    **value.dict(exclude_unset=True), type="generic"
-                )
-            )  # type: ignore
+            return Exception(__root__=_Exception.Generic(**value.dict(exclude_unset=True), type="generic"))  # type: ignore
 
     def timeout(self) -> Exception:
         if IS_PYDANTIC_V2:
@@ -52,16 +44,14 @@ class Exception(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[_Exception.Generic, _Exception.Timeout],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Exception.Generic, _Exception.Timeout], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Exception.Generic, _Exception.Timeout]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[_Exception.Generic, _Exception.Timeout],
-            pydantic.Field(discriminator="type"),
+            typing.Union[_Exception.Generic, _Exception.Timeout], pydantic.Field(discriminator="type")
         ]
 
         def get_as_union(self) -> typing.Union[_Exception.Generic, _Exception.Timeout]:
@@ -74,17 +64,11 @@ class Exception(UniversalRootModel):
             return self.__root__.dict(**kwargs)
 
     def visit(
-        self,
-        generic: typing.Callable[[ExceptionInfo], T_Result],
-        timeout: typing.Callable[[], T_Result],
+        self, generic: typing.Callable[[ExceptionInfo], T_Result], timeout: typing.Callable[[], T_Result]
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "generic":
-            return generic(
-                ExceptionInfo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return generic(ExceptionInfo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "timeout":
             return timeout()
 

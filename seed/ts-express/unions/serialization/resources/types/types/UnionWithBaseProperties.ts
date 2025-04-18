@@ -32,23 +32,23 @@ export const UnionWithBaseProperties: core.serialization.Schema<
     });
 
 export declare namespace UnionWithBaseProperties {
-    type Raw = UnionWithBaseProperties.Integer | UnionWithBaseProperties.String | UnionWithBaseProperties.Foo;
+    export type Raw = UnionWithBaseProperties.Integer | UnionWithBaseProperties.String | UnionWithBaseProperties.Foo;
 
-    interface Integer extends _Base {
+    export interface Integer extends _Base {
         type: "integer";
         value: number;
     }
 
-    interface String extends _Base {
+    export interface String extends _Base {
         type: "string";
         value: string;
     }
 
-    interface Foo extends _Base, serializers.Foo.Raw {
+    export interface Foo extends _Base, serializers.Foo.Raw {
         type: "foo";
     }
 
-    interface _Base {
+    export interface _Base {
         id: string;
     }
 }

@@ -1,0 +1,23 @@
+types:
+  User:
+    properties:
+      name: string
+      email: nullable<string>
+      createdAt: optional<string>
+      updatedAt: optional<string>
+      metadata: optional<nullable<unknown>>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    createUser:
+      method: POST
+      path: /users
+      request:
+        name: CreateUserRequest
+        body:
+          properties:
+            name: string
+            email: nullable<string>
+      response: User

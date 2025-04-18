@@ -1,7 +1,9 @@
+import chalk from "chalk";
+
 import { FernToken } from "@fern-api/auth";
 import { Project } from "@fern-api/project-loader";
 import { registerApi } from "@fern-api/register";
-import chalk from "chalk";
+
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function registerWorkspacesV2({
@@ -22,7 +24,14 @@ export async function registerWorkspacesV2({
                     context,
                     token,
                     audiences: { type: "all" },
-                    snippetsConfig: {}
+                    snippetsConfig: {
+                        typescriptSdk: undefined,
+                        pythonSdk: undefined,
+                        javaSdk: undefined,
+                        rubySdk: undefined,
+                        goSdk: undefined,
+                        csharpSdk: undefined
+                    }
                 });
                 context.logger.info(chalk.green("Registered API"));
             });

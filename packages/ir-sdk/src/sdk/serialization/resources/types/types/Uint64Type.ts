@@ -10,5 +10,5 @@ export const Uint64Type: core.serialization.ObjectSchema<serializers.Uint64Type.
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace Uint64Type {
-    interface Raw {}
+    export interface Raw {}
 }

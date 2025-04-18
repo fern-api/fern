@@ -15,7 +15,7 @@ export const Identifier: core.serialization.ObjectSchema<serializers.Identifier.
     });
 
 export declare namespace Identifier {
-    interface Raw {
+    export interface Raw {
         type: Type.Raw;
         value: string;
         label: string;

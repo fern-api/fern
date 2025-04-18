@@ -6,18 +6,21 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const FilePropertySingle: core.serialization.ObjectSchema<
     serializers.FilePropertySingle.Raw,
     FernIr.FilePropertySingle
-> = core.serialization.objectWithoutOptionalProperties({
-    key: NameAndWireValue,
-    isOptional: core.serialization.boolean(),
-    contentType: core.serialization.string().optional(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        key: NameAndWireValue,
+        isOptional: core.serialization.boolean(),
+        contentType: core.serialization.string().optional(),
+    })
+    .extend(WithDocs);
 
 export declare namespace FilePropertySingle {
-    interface Raw {
+    export interface Raw extends WithDocs.Raw {
         key: NameAndWireValue.Raw;
         isOptional: boolean;
         contentType?: string | null;

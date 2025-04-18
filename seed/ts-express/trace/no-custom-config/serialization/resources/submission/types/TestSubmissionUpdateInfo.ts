@@ -28,7 +28,7 @@ export const TestSubmissionUpdateInfo: core.serialization.Schema<
     });
 
 export declare namespace TestSubmissionUpdateInfo {
-    type Raw =
+    export type Raw =
         | TestSubmissionUpdateInfo.Running
         | TestSubmissionUpdateInfo.Stopped
         | TestSubmissionUpdateInfo.Errored
@@ -36,29 +36,29 @@ export declare namespace TestSubmissionUpdateInfo {
         | TestSubmissionUpdateInfo.RecordedTestCase
         | TestSubmissionUpdateInfo.Finished;
 
-    interface Running {
+    export interface Running {
         type: "running";
         value: serializers.RunningSubmissionState.Raw;
     }
 
-    interface Stopped {
+    export interface Stopped {
         type: "stopped";
     }
 
-    interface Errored {
+    export interface Errored {
         type: "errored";
         value: serializers.ErrorInfo.Raw;
     }
 
-    interface GradedTestCase extends serializers.GradedTestCaseUpdate.Raw {
+    export interface GradedTestCase extends serializers.GradedTestCaseUpdate.Raw {
         type: "gradedTestCase";
     }
 
-    interface RecordedTestCase extends serializers.RecordedTestCaseUpdate.Raw {
+    export interface RecordedTestCase extends serializers.RecordedTestCaseUpdate.Raw {
         type: "recordedTestCase";
     }
 
-    interface Finished {
+    export interface Finished {
         type: "finished";
     }
 }

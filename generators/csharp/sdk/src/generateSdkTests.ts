@@ -1,5 +1,7 @@
-import { CSharpFile } from "@fern-api/csharp-codegen";
-import { ExampleEndpointCall, HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { CSharpFile } from "@fern-api/csharp-base";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { BaseMockServerTestGenerator } from "./test-generation/mock-server/BaseMockServerTestGenerator";
 import { MockServerTestGenerator } from "./test-generation/mock-server/MockServerTestGenerator";
@@ -34,8 +36,11 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
             if (useableExamples.length === 0) {
                 continue;
             }
-            const file = new MockServerTestGenerator(context, useableExamples, endpoint, serviceId).generate();
-            files.push(file);
+            const testGenerator = new MockServerTestGenerator(context, useableExamples, endpoint, serviceId);
+            if (!testGenerator.shouldGenerate()) {
+                continue;
+            }
+            files.push(testGenerator.generate());
         }
     }
     if (files.length > 0) {

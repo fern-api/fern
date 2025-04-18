@@ -1,19 +1,23 @@
-import { FernToken } from "@fern-api/auth";
-import { docsYml } from "@fern-api/configuration";
-import { createFdrService } from "@fern-api/core";
-import { MediaType } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
+
+import { FernToken } from "@fern-api/auth";
+import { docsYml } from "@fern-api/configuration";
+import { createFdrService } from "@fern-api/core";
+import { MediaType } from "@fern-api/core-utils";
+import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import { AbsoluteFilePath, RelativeFilePath, convertToFernHostRelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { convertIrToFdrApi } from "@fern-api/register";
+import { TaskContext } from "@fern-api/task-context";
+import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
+
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+
+import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -31,7 +35,8 @@ export async function publishDocs({
     docsWorkspace,
     domain,
     customDomains,
-    fernWorkspaces,
+    apiWorkspaces,
+    ossWorkspaces,
     context,
     preview,
     editThisPage,
@@ -42,11 +47,10 @@ export async function publishDocs({
     docsWorkspace: DocsWorkspace;
     domain: string;
     customDomains: string[];
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
-    // TODO: implement audience support in generateIR
-    audiences: docsYml.RawSchemas.FernDocsConfig.AudiencesConfig | undefined;
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
 }): Promise<void> {
@@ -61,7 +65,8 @@ export async function publishDocs({
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
-        fernWorkspaces,
+        ossWorkspaces,
+        apiWorkspaces,
         context,
         editThisPage,
         async (files) => {
@@ -87,23 +92,26 @@ export async function publishDocs({
                     return;
                 }
                 const imageFilePath = {
-                    filePath: filePath.relativeFilePath,
+                    filePath: CjsFdrSdk.docs.v1.write.FilePath(
+                        convertToFernHostRelativeFilePath(filePath.relativeFilePath)
+                    ),
                     width: image.width,
                     height: image.height,
-                    blurDataUrl: image.blurDataUrl
+                    blurDataUrl: image.blurDataUrl,
+                    alt: undefined
                 };
                 images.push(imageFilePath);
             });
 
             const filepaths = files
                 .filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath))
-                .map(({ relativeFilePath }) => relativeFilePath);
+                .map(({ relativeFilePath }) => convertToFernHostRelativeFilePath(relativeFilePath));
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
-                    orgId: organization,
+                    orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
-                    filepaths,
+                    filepaths: filepaths.map((filePath) => CjsFdrSdk.docs.v1.write.FilePath(filePath)),
                     images,
                     basePath
                 });
@@ -112,13 +120,13 @@ export async function publishDocs({
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
                     await uploadFiles(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath,
+                        docsWorkspace.absoluteFilePath,
                         context,
                         UPLOAD_FILE_BATCH_SIZE
                     );
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath
+                        docsWorkspace.absoluteFilePath
                     );
                 } else {
                     return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
@@ -128,35 +136,35 @@ export async function publishDocs({
                     domain,
                     customDomains,
                     authConfig,
-                    apiId: "",
-                    orgId: organization,
-                    filepaths,
+                    apiId: CjsFdrSdk.ApiId(""),
+                    orgId: CjsFdrSdk.OrgId(organization),
+                    filepaths: filepaths.map((filePath) => CjsFdrSdk.docs.v1.write.FilePath(filePath)),
                     images
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
                     await uploadFiles(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath,
+                        docsWorkspace.absoluteFilePath,
                         context,
                         UPLOAD_FILE_BATCH_SIZE
                     );
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath
+                        docsWorkspace.absoluteFilePath
                     );
                 } else {
                     return startDocsRegisterFailed(startDocsRegisterResponse.error, context);
                 }
             }
         },
-        async ({ ir, snippetsConfig, playgroundConfig }) => {
+        async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
-            context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
             const response = await fdr.api.v1.register.registerApiDefinition({
-                orgId: organization,
-                apiId: ir.apiName.originalName,
-                definition: apiDefinition
+                orgId: CjsFdrSdk.OrgId(organization),
+                apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
+                definition: apiDefinition,
+                definitionV2: undefined
             });
 
             if (response.ok) {
@@ -171,7 +179,48 @@ export async function publishDocs({
                         );
                     }
                     default:
-                        return context.failAndThrow("Failed to register API", response.error);
+                        if (apiName != null) {
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                            );
+                        } else {
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${response.error}`
+                            );
+                        }
+                }
+            }
+        },
+        async ({ api, snippetsConfig, apiName }) => {
+            api.snippetsConfiguration = snippetsConfig;
+            const response = await fdr.api.v1.register.registerApiDefinition({
+                orgId: CjsFdrSdk.OrgId(organization),
+                apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
+                definition: undefined,
+                definitionV2: api
+            });
+
+            if (response.ok) {
+                context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
+                return response.body.apiDefinitionId;
+            } else {
+                switch (response.error.error) {
+                    case "UnauthorizedError":
+                    case "UserNotInOrgError": {
+                        return context.failAndThrow(
+                            "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
+                        );
+                    }
+                    default:
+                        if (apiName != null) {
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                            );
+                        } else {
+                            return context.failAndThrow(
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                            );
+                        }
                 }
             }
         }
@@ -183,10 +232,13 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    context.logger.debug("Calling registerDocs... ", JSON.stringify(docsDefinition, undefined, 4));
-    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, {
-        docsDefinition
-    });
+    context.logger.debug("Publishing docs...");
+    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
+        CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
+        {
+            docsDefinition
+        }
+    );
 
     if (registerDocsResponse.ok) {
         const url = wrapWithHttps(urlToOutput);

@@ -1,0 +1,234 @@
+instances:
+  - url: https://bland-ai.docs.buildwithfern.com
+title: Bland AI
+favicon: logo.png
+logo:
+  light: logo/light.svg
+  dark: logo/dark.svg
+  height: 28
+colors:
+  accent-primary:
+    dark: '#0b0a18'
+    light: '#847AF9'
+  background:
+    dark: '#0A141B'
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
+tabs:
+  api-v1:
+    slug: api-v1
+    display-name: V1 API Reference
+  documentation:
+    display-name: Documentation
+    slug: documentation
+navigation:
+  - tab: api-v1
+    layout:
+      - section: Basic
+        contents:
+          - page: Send Call (Simple)
+            path: api-v1/post/calls-simple.mdx
+          - page: Send Call using Pathways (Simple)
+            path: api-v1/post/calls-simple-pathway.mdx
+      - section: Calls
+        contents:
+          - page: Send Call
+            path: api-v1/post/calls.mdx
+          - page: Analyze Call with AI
+            path: api-v1/post/calls-id-analyze.mdx
+          - page: Stop Active Call
+            path: api-v1/post/calls-id-stop.mdx
+          - page: List Calls
+            path: api-v1/get/calls.mdx
+          - page: Call Details
+            path: api-v1/get/calls-id.mdx
+          - page: Audio Recording
+            path: api-v1/get/calls-id-recording.mdx
+          - page: Get corrected transcripts
+            path: api-v1/get/calls-corrected-transcript.mdx
+      - section: Web Agents
+        contents:
+          - page: Create a Web Agent
+            path: api-v1/post/agents.mdx
+          - page: Update Web Agent Settings
+            path: api-v1/post/agents-id.mdx
+          - page: Authorize a Web Agent Call
+            path: api-v1/post/agents-id-authorize.mdx
+          - page: Delete Web Agent
+            path: api-v1/post/agents-id-delete.mdx
+          - page: List Web Agents
+            path: api-v1/get/agents.mdx
+      - section: Inbound Numbers
+        contents:
+          - page: Purchase Inbound number
+            path: api-v1/post/inbound-purchase.mdx
+          - page: Update Inbound Details
+            path: api-v1/post/inbound-number-update.mdx
+          - page: List Inbound Numbers
+            path: api-v1/get/inbound.mdx
+          - page: Inbound Number Details
+            path: api-v1/get/inbound-number.mdx
+      - section: Outbound Numbers
+        contents:
+          - page: Purchase Outbound number
+            path: api-v1/post/outbound-purchase.mdx
+          - page: List Outbound Numbers
+            path: api-v1/get/outbound.mdx
+      - section: Voices
+        contents:
+          - page: List Voices
+            path: api-v1/get/voices.mdx
+          - page: Voice Details
+            path: api-v1/get/voices-id.mdx
+          - page: Generate Audio Sample
+            path: api-v1/post/voices-id-sample.mdx
+      - section: Custom Tools
+        contents:
+          - page: Create a Custom Tool
+            path: api-v1/post/tools.mdx
+          - page: Update Custom Tool
+            path: api-v1/post/tools-tool-id.mdx
+          - page: List Custom Tools
+            path: api-v1/get/tools.mdx
+          - page: Custom Tool Details
+            path: api-v1/get/tools-tool-id.mdx
+      - section: Custom Twilio Accounts
+        contents:
+          - page: Create Encrypted Key
+            path: api-v1/post/accounts.mdx
+          - page: Delete Encrypted Key
+            path: api-v1/post/accounts-delete.mdx
+          - page: Upload Inbound Phone Numbers
+            path: api-v1/post/inbound-insert.mdx
+          - page: Delete Inbound Phone Number
+            path: api-v1/post/inbound-number-delete.mdx
+      - section: Subaccounts
+        contents:
+          - page: Create Subaccount
+            path: api-v1/post/subaccounts.mdx
+          - page: Transfer Credit to a Subaccount
+            path: api-v1/post/subaccounts-id-transfer.mdx
+          - page: Rotate Subaccount API Key
+            path: api-v1/post/subaccounts-id-rotate.mdx
+          - page: Disable Subaccount
+            path: api-v1/post/subaccounts-id-disable.mdx
+          - page: List Subaccounts
+            path: api-v1/get/subaccounts.mdx
+          - page: List Subaccount Details
+            path: api-v1/get/subaccounts-id.mdx
+      - section: Batches
+        contents:
+          - page: Send a Batch of Calls
+            path: api-v1/post/batches.mdx
+          - page: Analyze Batch with AI
+            path: api-v1/post/batches-id-analyze.mdx
+          - page: Stop Active Batch
+            path: api-v1/post/batches-id-stop.mdx
+          - page: List Batches
+            path: api-v1/get/batches.mdx
+          - page: Batch Details
+            path: api-v1/get/batches-id.mdx
+          - page: Retrieve Batch Analysis
+            path: api-v1/get/batches-id-analysis.mdx
+      - section: SMS
+        contents:
+          - page: A2P Registration
+            path: api-v1/post/sms-submit-reg.mdx
+          - page: Check SMS A2P status
+            path: api-v1/post/sms-check-registration.mdx
+          - page: Update SMS Prompt
+            path: api-v1/post/sms-prompt-update.mdx
+          - page: SMS Conversation Analysis
+            path: api-v1/post/sms-analyze.mdx
+          - page: Get SMS Messages
+            path: api-v1/post/sms-get-messages.mdx
+          - page: Toggle SMS Reply Method
+            path: api-v1/post/sms-toggle-human.mdx
+          - page: Update SMS Webhook
+            path: api-v1/post/sms-webhook-update.mdx
+      - section: Account
+        contents:
+          - page: Account Details
+            path: api-v1/get/me.mdx
+  - tab: documentation
+    layout:
+      - section: Get Started
+        contents:
+          - page: Welcome to Bland AI
+            path: welcome-to-bland.mdx
+          - page: Starter guide
+            path: starter-guide.mdx
+      - section: Bland Enterprise
+        contents:
+          - page: Custom Twilio Integration
+            path: enterprise-features/custom-twilio.mdx
+          - page: Fine-tuning & Custom LLMs
+            path: enterprise-features/custom-llm.mdx
+          - page: Unlimited support
+            path: enterprise-features/unlimited-support.mdx
+          - page: Custom languages & voices
+            path: enterprise-features/custom-tts.mdx
+          - page: Bring your own Twilio
+            path: enterprise-features/bring-your-own-twilio.mdx
+          - page: Enterprise rate limits
+            path: enterprise-features/enterprise-rate-limits.mdx
+      - section: Featured guides
+        contents:
+          - page: Bland & Botpress
+            path: featured-guides/bland-and-botpress.mdx
+      - section: Basic Tutorials
+        contents:
+          - page: Conversational Pathways
+            path: tutorials/pathways.mdx
+          - page: Custom Tools
+            path: tutorials/custom-tools.mdx
+          - page: Send your first phone call
+            path: tutorials/send-first-call.mdx
+          - page: Webhook Signing
+            path: tutorials/webhook-signing.mdx
+          - page: Send 1000 phone calls
+            path: tutorials/send-1000-calls-at-once.mdx
+          - page: Dynamic Data
+            path: tutorials/dynamic-data.mdx
+          - page: Setting max duration
+            path: tutorials/max-duration.mdx
+          - page: Live transfer
+            path: tutorials/live-transfer.mdx
+          - page: Webhooks
+            path: tutorials/webhooks.mdx
+      - section: Primary Endpoints
+        contents:
+          - page: Make a call
+            path: api-reference/endpoint/call.mdx
+          - page: Get transcript
+            path: api-reference/endpoint/logs.mdx
+          - page: Wait on Hold (HoldForMe)
+            path: api-reference/endpoint/hold.mdx
+          - page: End phone call
+            path: api-reference/endpoint/end.mdx
+          - page: Validate Dynamic Data
+            path: api-reference/endpoint/dynamic_validate.mdx
+          - page: Purchase inbound number
+            path: api-reference/endpoint/purchase.mdx
+          - page: Update Inbound Prompt
+            path: api-reference/endpoint/inbound_prompt.mdx
+          - page: Get recording
+            path: api-reference/endpoint/recording.mdx
+      - section: Batch Endpoints
+        contents:
+          - page: Batch Calling
+            path: api-reference/batch-endpoint/batch.mdx
+          - page: Retrieve a Batch
+            path: api-reference/batch-endpoint/batch_get.mdx
+          - page: Retrieve All Batches
+            path: api-reference/batch-endpoint/batches_get.mdx
+          - page: Cancel Batch
+            path: api-reference/batch-endpoint/batch_stop.mdx
+          - page: Cancel All Batch Calls
+            path: api-reference/batch-endpoint/end_batches.mdx
+      - section: Hold Endpoint
+        contents:
+          - page: Wait on Hold (HoldForMe)
+            path: api-reference/hold-endpoint/hold.mdx

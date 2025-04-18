@@ -14,7 +14,7 @@ export const Inlined: core.serialization.Schema<serializers.Inlined.Raw, SeedExt
     .extend(ExampleType);
 
 export declare namespace Inlined {
-    interface Raw extends ExampleType.Raw {
+    export interface Raw extends ExampleType.Raw {
         unique: string;
     }
 }

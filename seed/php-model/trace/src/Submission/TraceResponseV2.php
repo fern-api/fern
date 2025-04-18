@@ -2,77 +2,82 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Commons\DebugVariableValue;
 
-class TraceResponseV2 extends SerializableType
+class TraceResponseV2 extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var int $lineNumber
      */
-    #[JsonProperty("lineNumber")]
+    #[JsonProperty('lineNumber')]
     public int $lineNumber;
 
     /**
      * @var TracedFile $file
      */
-    #[JsonProperty("file")]
+    #[JsonProperty('file')]
     public TracedFile $file;
 
     /**
-     * @var mixed $returnValue
+     * @var ?DebugVariableValue $returnValue
      */
-    #[JsonProperty("returnValue")]
-    public mixed $returnValue;
-
-    /**
-     * @var StackInformation $stack
-     */
-    #[JsonProperty("stack")]
-    public StackInformation $stack;
+    #[JsonProperty('returnValue')]
+    public ?DebugVariableValue $returnValue;
 
     /**
      * @var ?ExpressionLocation $expressionLocation
      */
-    #[JsonProperty("expressionLocation")]
+    #[JsonProperty('expressionLocation')]
     public ?ExpressionLocation $expressionLocation;
+
+    /**
+     * @var StackInformation $stack
+     */
+    #[JsonProperty('stack')]
+    public StackInformation $stack;
 
     /**
      * @var ?string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public ?string $stdout;
 
     /**
-     * @param string $submissionId
-     * @param int $lineNumber
-     * @param TracedFile $file
-     * @param mixed $returnValue
-     * @param StackInformation $stack
-     * @param ?ExpressionLocation $expressionLocation
-     * @param ?string $stdout
+     * @param array{
+     *   submissionId: string,
+     *   lineNumber: int,
+     *   file: TracedFile,
+     *   stack: StackInformation,
+     *   returnValue?: ?DebugVariableValue,
+     *   expressionLocation?: ?ExpressionLocation,
+     *   stdout?: ?string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        int $lineNumber,
-        TracedFile $file,
-        mixed $returnValue,
-        StackInformation $stack,
-        ?ExpressionLocation $expressionLocation = null,
-        ?string $stdout = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->lineNumber = $lineNumber;
-        $this->file = $file;
-        $this->returnValue = $returnValue;
-        $this->stack = $stack;
-        $this->expressionLocation = $expressionLocation;
-        $this->stdout = $stdout;
+        $this->submissionId = $values['submissionId'];
+        $this->lineNumber = $values['lineNumber'];
+        $this->file = $values['file'];
+        $this->returnValue = $values['returnValue'] ?? null;
+        $this->expressionLocation = $values['expressionLocation'] ?? null;
+        $this->stack = $values['stack'];
+        $this->stdout = $values['stdout'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

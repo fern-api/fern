@@ -397,16 +397,16 @@ client.admin.store_traced_test_case(
     submission_id=uuid.UUID(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ),
-    test_case_id="string",
+    test_case_id="testCaseId",
     result=TestCaseResultWithStdout(
         result=TestCaseResult(
             expected_result=VariableValue_IntegerValue(value=1),
             actual_result=ActualResult_Value(
-                value=VariableValue_IntegerValue(value={"key": "value"})
+                value=VariableValue_IntegerValue(value=1)
             ),
             passed=True,
         ),
-        stdout="string",
+        stdout="stdout",
     ),
     trace_responses=[
         TraceResponse(
@@ -422,17 +422,63 @@ client.admin.store_traced_test_case(
             stack=StackInformation(
                 num_stack_frames=1,
                 top_stack_frame=StackFrame(
-                    method_name="string",
+                    method_name="methodName",
                     line_number=1,
                     scopes=[
                         Scope(
-                            variables={"string": {"key": "value"}},
-                        )
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
                     ],
                 ),
             ),
-            stdout="string",
-        )
+            stdout="stdout",
+        ),
+        TraceResponse(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            line_number=1,
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        ),
     ],
 )
 
@@ -528,7 +574,7 @@ client.admin.store_traced_test_case_v_2(
     submission_id=uuid.UUID(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ),
-    test_case_id="string",
+    test_case_id="testCaseId",
     request=[
         TraceResponseV2(
             submission_id=uuid.UUID(
@@ -536,8 +582,8 @@ client.admin.store_traced_test_case_v_2(
             ),
             line_number=1,
             file=TracedFile(
-                filename="string",
-                directory="string",
+                filename="filename",
+                directory="directory",
             ),
             return_value=DebugVariableValue_IntegerValue(value=1),
             expression_location=ExpressionLocation(
@@ -547,17 +593,67 @@ client.admin.store_traced_test_case_v_2(
             stack=StackInformation(
                 num_stack_frames=1,
                 top_stack_frame=StackFrame(
-                    method_name="string",
+                    method_name="methodName",
                     line_number=1,
                     scopes=[
                         Scope(
-                            variables={"string": {"key": "value"}},
-                        )
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
                     ],
                 ),
             ),
-            stdout="string",
-        )
+            stdout="stdout",
+        ),
+        TraceResponseV2(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            line_number=1,
+            file=TracedFile(
+                filename="filename",
+                directory="directory",
+            ),
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        ),
     ],
 )
 
@@ -649,16 +745,16 @@ client.admin.store_traced_workspace(
     ),
     workspace_run_details=WorkspaceRunDetails(
         exception_v_2=ExceptionV2_Generic(
-            exception_type="string",
-            exception_message="string",
-            exception_stacktrace="string",
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
         ),
         exception=ExceptionInfo(
-            exception_type="string",
-            exception_message="string",
-            exception_stacktrace="string",
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
         ),
-        stdout="string",
+        stdout="stdout",
     ),
     trace_responses=[
         TraceResponse(
@@ -674,17 +770,63 @@ client.admin.store_traced_workspace(
             stack=StackInformation(
                 num_stack_frames=1,
                 top_stack_frame=StackFrame(
-                    method_name="string",
+                    method_name="methodName",
                     line_number=1,
                     scopes=[
                         Scope(
-                            variables={"string": {"key": "value"}},
-                        )
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
                     ],
                 ),
             ),
-            stdout="string",
-        )
+            stdout="stdout",
+        ),
+        TraceResponse(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            line_number=1,
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        ),
     ],
 )
 
@@ -779,8 +921,8 @@ client.admin.store_traced_workspace_v_2(
             ),
             line_number=1,
             file=TracedFile(
-                filename="string",
-                directory="string",
+                filename="filename",
+                directory="directory",
             ),
             return_value=DebugVariableValue_IntegerValue(value=1),
             expression_location=ExpressionLocation(
@@ -790,17 +932,67 @@ client.admin.store_traced_workspace_v_2(
             stack=StackInformation(
                 num_stack_frames=1,
                 top_stack_frame=StackFrame(
-                    method_name="string",
+                    method_name="methodName",
                     line_number=1,
                     scopes=[
                         Scope(
-                            variables={"string": {"key": "value"}},
-                        )
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
                     ],
                 ),
             ),
-            stdout="string",
-        )
+            stdout="stdout",
+        ),
+        TraceResponseV2(
+            submission_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+            line_number=1,
+            file=TracedFile(
+                filename="filename",
+                directory="directory",
+            ),
+            return_value=DebugVariableValue_IntegerValue(value=1),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    value=1
+                                )
+                            },
+                        ),
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        ),
     ],
 )
 
@@ -914,7 +1106,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.homepage.set_homepage_problems(
-    request=["string"],
+    request=["string", "string"],
 )
 
 ```
@@ -972,7 +1164,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.migration.get_attempted_migrations(
-    admin_key_header="string",
+    admin_key_header="admin-key-header",
 )
 
 ```
@@ -1053,8 +1245,8 @@ client.playlist.create_playlist(
     optional_datetime=datetime.datetime.fromisoformat(
         "2024-01-15 09:30:00+00:00",
     ),
-    name="string",
-    problems=["string"],
+    name="name",
+    problems=["problems", "problems"],
 )
 
 ```
@@ -1159,10 +1351,10 @@ client = SeedTrace(
 client.playlist.get_playlists(
     service_param=1,
     limit=1,
-    other_field="string",
-    multi_line_docs="string",
-    optional_multiple_field="string",
-    multiple_field="string",
+    other_field="otherField",
+    multi_line_docs="multiLineDocs",
+    optional_multiple_field="optionalMultipleField",
+    multiple_field="multipleField",
 )
 
 ```
@@ -1277,7 +1469,7 @@ client = SeedTrace(
 )
 client.playlist.get_playlist(
     service_param=1,
-    playlist_id="string",
+    playlist_id="playlistId",
 )
 
 ```
@@ -1358,10 +1550,10 @@ client = SeedTrace(
 )
 client.playlist.update_playlist(
     service_param=1,
-    playlist_id="string",
+    playlist_id="playlistId",
     request=UpdatePlaylistRequest(
-        name="string",
-        problems=["string"],
+        name="name",
+        problems=["problems", "problems"],
     ),
 )
 
@@ -1450,7 +1642,7 @@ client = SeedTrace(
 )
 client.playlist.delete_playlist(
     service_param=1,
-    playlist_id="string",
+    playlist_id="playlist_id",
 )
 
 ```
@@ -1543,41 +1735,65 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.problem.create_problem(
-    problem_name="string",
+    problem_name="problemName",
     problem_description=ProblemDescription(
-        boards=[ProblemDescriptionBoard_Html(value="string")],
+        boards=[
+            ProblemDescriptionBoard_Html(value="boards"),
+            ProblemDescriptionBoard_Html(value="boards"),
+        ],
     ),
     files={
         "JAVA": ProblemFiles(
             solution_file=FileInfo(
-                filename="string",
-                contents="string",
+                filename="filename",
+                contents="contents",
             ),
             read_only_files=[
                 FileInfo(
-                    filename="string",
-                    contents="string",
-                )
+                    filename="filename",
+                    contents="contents",
+                ),
+                FileInfo(
+                    filename="filename",
+                    contents="contents",
+                ),
             ],
         )
     },
     input_params=[
         VariableTypeAndName(
             variable_type=VariableType(),
-            name="string",
-        )
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type=VariableType(),
+            name="name",
+        ),
     ],
     output_type=VariableType(),
     testcases=[
         TestCaseWithExpectedResult(
             test_case=TestCase(
-                id="string",
-                params=[VariableValue_IntegerValue(value=1)],
+                id="id",
+                params=[
+                    VariableValue_IntegerValue(value=1),
+                    VariableValue_IntegerValue(value=1),
+                ],
             ),
             expected_result=VariableValue_IntegerValue(value=1),
-        )
+        ),
+        TestCaseWithExpectedResult(
+            test_case=TestCase(
+                id="id",
+                params=[
+                    VariableValue_IntegerValue(value=1),
+                    VariableValue_IntegerValue(value=1),
+                ],
+            ),
+            expected_result=VariableValue_IntegerValue(value=1),
+        ),
     ],
-    method_name="string",
+    method_name="methodName",
 )
 
 ```
@@ -1709,42 +1925,66 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.problem.update_problem(
-    problem_id="string",
-    problem_name="string",
+    problem_id="problemId",
+    problem_name="problemName",
     problem_description=ProblemDescription(
-        boards=[ProblemDescriptionBoard_Html(value="string")],
+        boards=[
+            ProblemDescriptionBoard_Html(value="boards"),
+            ProblemDescriptionBoard_Html(value="boards"),
+        ],
     ),
     files={
         "JAVA": ProblemFiles(
             solution_file=FileInfo(
-                filename="string",
-                contents="string",
+                filename="filename",
+                contents="contents",
             ),
             read_only_files=[
                 FileInfo(
-                    filename="string",
-                    contents="string",
-                )
+                    filename="filename",
+                    contents="contents",
+                ),
+                FileInfo(
+                    filename="filename",
+                    contents="contents",
+                ),
             ],
         )
     },
     input_params=[
         VariableTypeAndName(
             variable_type=VariableType(),
-            name="string",
-        )
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type=VariableType(),
+            name="name",
+        ),
     ],
     output_type=VariableType(),
     testcases=[
         TestCaseWithExpectedResult(
             test_case=TestCase(
-                id="string",
-                params=[VariableValue_IntegerValue(value=1)],
+                id="id",
+                params=[
+                    VariableValue_IntegerValue(value=1),
+                    VariableValue_IntegerValue(value=1),
+                ],
             ),
             expected_result=VariableValue_IntegerValue(value=1),
-        )
+        ),
+        TestCaseWithExpectedResult(
+            test_case=TestCase(
+                id="id",
+                params=[
+                    VariableValue_IntegerValue(value=1),
+                    VariableValue_IntegerValue(value=1),
+                ],
+            ),
+            expected_result=VariableValue_IntegerValue(value=1),
+        ),
     ],
-    method_name="string",
+    method_name="methodName",
 )
 
 ```
@@ -1871,7 +2111,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.problem.delete_problem(
-    problem_id="string",
+    problem_id="problemId",
 )
 
 ```
@@ -1947,11 +2187,15 @@ client.problem.get_default_starter_files(
     input_params=[
         VariableTypeAndName(
             variable_type=VariableType(),
-            name="string",
-        )
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type=VariableType(),
+            name="name",
+        ),
     ],
     output_type=VariableType(),
-    method_name="string",
+    method_name="methodName",
 )
 
 ```
@@ -1992,7 +2236,6 @@ The method name cannot include the following characters:
   - Less Than `<``
   - Equals `=`
   - Period `.`
-
     
 </dd>
 </dl>
@@ -2118,7 +2361,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.submission.get_execution_session(
-    session_id="string",
+    session_id="sessionId",
 )
 
 ```
@@ -2189,7 +2432,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.submission.stop_execution_session(
-    session_id="string",
+    session_id="sessionId",
 )
 
 ```
@@ -2544,7 +2787,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.v_2.problem.get_latest_problem(
-    problem_id="string",
+    problem_id="problemId",
 )
 
 ```
@@ -2615,7 +2858,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.v_2.problem.get_problem_version(
-    problem_id="string",
+    problem_id="problemId",
     problem_version=1,
 )
 
@@ -2818,7 +3061,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.v_2.v_3.problem.get_latest_problem(
-    problem_id="string",
+    problem_id="problemId",
 )
 
 ```
@@ -2889,7 +3132,7 @@ client = SeedTrace(
     token="YOUR_TOKEN",
 )
 client.v_2.v_3.problem.get_problem_version(
-    problem_id="string",
+    problem_id="problemId",
     problem_version=1,
 )
 

@@ -29,13 +29,13 @@ export const PublishingConfig: core.serialization.Schema<serializers.PublishingC
         });
 
 export declare namespace PublishingConfig {
-    type Raw = PublishingConfig.Github | PublishingConfig.Direct;
+    export type Raw = PublishingConfig.Github | PublishingConfig.Direct;
 
-    interface Github extends GithubPublish.Raw {
+    export interface Github extends GithubPublish.Raw {
         type: "github";
     }
 
-    interface Direct extends DirectPublish.Raw {
+    export interface Direct extends DirectPublish.Raw {
         type: "direct";
     }
 }

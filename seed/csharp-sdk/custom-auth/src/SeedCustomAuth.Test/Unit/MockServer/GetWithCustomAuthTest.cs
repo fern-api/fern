@@ -1,10 +1,6 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedCustomAuth.Core;
-
-#nullable enable
 
 namespace SeedCustomAuth.Test.Unit.MockServer;
 
@@ -12,7 +8,7 @@ namespace SeedCustomAuth.Test.Unit.MockServer;
 public class GetWithCustomAuthTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             true
@@ -27,10 +23,7 @@ public class GetWithCustomAuthTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.CustomAuth.GetWithCustomAuthAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.CustomAuth.GetWithCustomAuthAsync();
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

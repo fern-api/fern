@@ -18,7 +18,7 @@ export const WorkspaceRunDetails: core.serialization.ObjectSchema<
 });
 
 export declare namespace WorkspaceRunDetails {
-    interface Raw {
+    export interface Raw {
         exceptionV2?: ExceptionV2.Raw | null;
         exception?: ExceptionInfo.Raw | null;
         stdout: string;

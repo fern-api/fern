@@ -2,8 +2,8 @@
 import { SeedVariablesClient } from "@fern/variables";
 
 const client = new SeedVariablesClient({ environment: "YOUR_BASE_URL" });
-await client.service.post("string");
- 
-```                        
+await client.service.post("endpointParam");
+
+```
 
 

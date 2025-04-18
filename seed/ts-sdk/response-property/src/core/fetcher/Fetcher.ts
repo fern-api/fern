@@ -1,4 +1,6 @@
+import { toJson } from "../json";
 import { APIResponse } from "./APIResponse";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 import { createRequestUrl } from "./createRequestUrl";
 import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
@@ -14,14 +16,14 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, string | undefined>;
-        queryParameters?: Record<string, string | string[] | object | object[]>;
+        queryParameters?: Record<string, string | string[] | object | object[] | null>;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
         requestType?: "json" | "file" | "bytes";
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer";
         duplex?: "half";
     }
 
@@ -64,7 +66,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     }
 
     const url = createRequestUrl(args.url, args.queryParameters);
-    let requestBody: BodyInit | undefined = await getRequestBody({
+    const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
         type: args.requestType === "json" ? "json" : "other",
     });
@@ -82,17 +84,18 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.timeoutMs,
                     args.abortSignal,
                     args.withCredentials,
-                    args.duplex
+                    args.duplex,
                 ),
-            args.maxRetries
+            args.maxRetries,
         );
-        let responseBody = await getResponseBody(response, args.responseType);
+        const responseBody = await getResponseBody(response, args.responseType);
 
         if (response.status >= 200 && response.status < 400) {
             return {
                 ok: true,
                 body: responseBody as R,
                 headers: response.headers,
+                rawResponse: toRawResponse(response),
             };
         } else {
             return {
@@ -102,6 +105,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     statusCode: response.status,
                     body: responseBody,
                 },
+                rawResponse: toRawResponse(response),
             };
         }
     } catch (error) {
@@ -112,6 +116,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     reason: "unknown",
                     errorMessage: "The user aborted a request",
                 },
+                rawResponse: abortRawResponse,
             };
         } else if (error instanceof Error && error.name === "AbortError") {
             return {
@@ -119,6 +124,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "timeout",
                 },
+                rawResponse: abortRawResponse,
             };
         } else if (error instanceof Error) {
             return {
@@ -127,6 +133,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     reason: "unknown",
                     errorMessage: error.message,
                 },
+                rawResponse: unknownRawResponse,
             };
         }
 
@@ -134,8 +141,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             ok: false,
             error: {
                 reason: "unknown",
-                errorMessage: JSON.stringify(error),
+                errorMessage: toJson(error),
             },
+            rawResponse: unknownRawResponse,
         };
     }
 }

@@ -13,7 +13,7 @@ export const SourceConfig: core.serialization.ObjectSchema<serializers.SourceCon
     });
 
 export declare namespace SourceConfig {
-    interface Raw {
+    export interface Raw {
         sources: ApiDefinitionSource.Raw[];
     }
 }

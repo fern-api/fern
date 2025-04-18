@@ -11,7 +11,7 @@ export function register(
     services: {
         ec2: Ec2Service;
         s3: S3Service;
-    }
+    },
 ): void {
     (expressApp as any).use("/ec2", services.ec2.toRouter());
     (expressApp as any).use("/s3", services.s3.toRouter());

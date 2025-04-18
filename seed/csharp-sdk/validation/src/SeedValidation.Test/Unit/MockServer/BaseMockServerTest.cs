@@ -4,8 +4,6 @@ using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;
 
-#nullable enable
-
 namespace SeedValidation.Test.Unit.MockServer;
 
 [SetUpFixture]
@@ -15,7 +13,7 @@ public class BaseMockServerTest
 
     protected static SeedValidationClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = null!;
+    protected static RequestOptions RequestOptions { get; set; } = new();
 
     [OneTimeSetUp]
     public void GlobalSetup()
@@ -26,14 +24,15 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedValidationClient();
-
-        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        Client = new SeedValidationClient(
+            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+        );
     }
 
     [OneTimeTearDown]
     public void GlobalTeardown()
     {
         Server.Stop();
+        Server.Dispose();
     }
 }

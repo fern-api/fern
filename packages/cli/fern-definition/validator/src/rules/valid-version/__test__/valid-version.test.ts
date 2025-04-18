@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidVersionRule } from "../valid-version";
 
 describe("valid-version", () => {
@@ -28,7 +29,7 @@ describe("valid-version", () => {
         const expectedViolations: ValidationViolation[] = [
             {
                 message: 'Default version "1.0" not found in version values',
-                severity: "error",
+                severity: "fatal",
                 nodePath: [],
                 relativeFilepath: RelativeFilePath.of("api.yml")
             }

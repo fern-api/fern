@@ -29,13 +29,13 @@ export const WebhookPayload: core.serialization.Schema<serializers.WebhookPayloa
         });
 
 export declare namespace WebhookPayload {
-    type Raw = WebhookPayload.InlinedPayload | WebhookPayload.Reference;
+    export type Raw = WebhookPayload.InlinedPayload | WebhookPayload.Reference;
 
-    interface InlinedPayload extends InlinedWebhookPayload.Raw {
+    export interface InlinedPayload extends InlinedWebhookPayload.Raw {
         type: "inlinedPayload";
     }
 
-    interface Reference extends WebhookPayloadReference.Raw {
+    export interface Reference extends WebhookPayloadReference.Raw {
         type: "reference";
     }
 }

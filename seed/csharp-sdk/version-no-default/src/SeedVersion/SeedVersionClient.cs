@@ -1,12 +1,10 @@
 using SeedVersion.Core;
 
-#nullable enable
-
 namespace SeedVersion;
 
 public partial class SeedVersionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedVersionClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedVersionClient
         User = new UserClient(_client);
     }
 
-    public UserClient User { get; init; }
+    public UserClient User { get; }
 }

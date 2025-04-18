@@ -10,16 +10,16 @@ import * as SeedTrace from "../../../../index";
  *         workspaceRunDetails: {
  *             exceptionV2: {
  *                 type: "generic",
- *                 exceptionType: "string",
- *                 exceptionMessage: "string",
- *                 exceptionStacktrace: "string"
+ *                 exceptionType: "exceptionType",
+ *                 exceptionMessage: "exceptionMessage",
+ *                 exceptionStacktrace: "exceptionStacktrace"
  *             },
  *             exception: {
- *                 exceptionType: "string",
- *                 exceptionMessage: "string",
- *                 exceptionStacktrace: "string"
+ *                 exceptionType: "exceptionType",
+ *                 exceptionMessage: "exceptionMessage",
+ *                 exceptionStacktrace: "exceptionStacktrace"
  *             },
- *             stdout: "string"
+ *             stdout: "stdout"
  *         },
  *         traceResponses: [{
  *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35,18 +35,60 @@ import * as SeedTrace from "../../../../index";
  *                 stack: {
  *                     numStackFrames: 1,
  *                     topStackFrame: {
- *                         methodName: "string",
+ *                         methodName: "methodName",
  *                         lineNumber: 1,
  *                         scopes: [{
  *                                 variables: {
- *                                     "string": {
- *                                         "key": "value"
+ *                                     "variables": {
+ *                                         type: "integerValue",
+ *                                         value: 1
+ *                                     }
+ *                                 }
+ *                             }, {
+ *                                 variables: {
+ *                                     "variables": {
+ *                                         type: "integerValue",
+ *                                         value: 1
  *                                     }
  *                                 }
  *                             }]
  *                     }
  *                 },
- *                 stdout: "string"
+ *                 stdout: "stdout"
+ *             }, {
+ *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+ *                 lineNumber: 1,
+ *                 returnValue: {
+ *                     type: "integerValue",
+ *                     value: 1
+ *                 },
+ *                 expressionLocation: {
+ *                     start: 1,
+ *                     offset: 1
+ *                 },
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: {
+ *                         methodName: "methodName",
+ *                         lineNumber: 1,
+ *                         scopes: [{
+ *                                 variables: {
+ *                                     "variables": {
+ *                                         type: "integerValue",
+ *                                         value: 1
+ *                                     }
+ *                                 }
+ *                             }, {
+ *                                 variables: {
+ *                                     "variables": {
+ *                                         type: "integerValue",
+ *                                         value: 1
+ *                                     }
+ *                                 }
+ *                             }]
+ *                     }
+ *                 },
+ *                 stdout: "stdout"
  *             }]
  *     }
  */

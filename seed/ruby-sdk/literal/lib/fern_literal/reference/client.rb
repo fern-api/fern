@@ -20,8 +20,11 @@ module SeedLiteralClient
     #   * :prompt (String)
     #   * :query (String)
     #   * :stream (Boolean)
+    #   * :ending (String)
     #   * :context (SeedLiteralClient::Reference::SOME_LITERAL)
     #   * :maybe_context (SeedLiteralClient::Reference::SOME_LITERAL)
+    #   * :container_object (Hash)
+    #     * :nested_objects (Array<SeedLiteralClient::Reference::NestedObjectWithLiterals>)
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -30,7 +33,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, context: "You're super wise", query: "What is the weather today" })
+    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, context: "You're super wise", query: "What is the weather today", container_object: { nested_objects: [{ literal_1: "literal1", literal_2: "literal2", str_prop: "strProp" }] } })
     def send(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -68,8 +71,11 @@ module SeedLiteralClient
     #   * :prompt (String)
     #   * :query (String)
     #   * :stream (Boolean)
+    #   * :ending (String)
     #   * :context (SeedLiteralClient::Reference::SOME_LITERAL)
     #   * :maybe_context (SeedLiteralClient::Reference::SOME_LITERAL)
+    #   * :container_object (Hash)
+    #     * :nested_objects (Array<SeedLiteralClient::Reference::NestedObjectWithLiterals>)
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     # @example
@@ -78,7 +84,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, context: "You're super wise", query: "What is the weather today" })
+    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, context: "You're super wise", query: "What is the weather today", container_object: { nested_objects: [{ literal_1: "literal1", literal_2: "literal2", str_prop: "strProp" }] } })
     def send(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

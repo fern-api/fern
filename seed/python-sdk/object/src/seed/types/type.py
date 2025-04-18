@@ -59,6 +59,12 @@ class Type(UniversalBaseModel):
         twentyone=21,
         twentytwo=22.22,
         twentythree="23",
+        twentyfour=datetime.datetime.fromisoformat(
+            "1994-01-01 01:01:01+00:00",
+        ),
+        twentyfive=datetime.date.fromisoformat(
+            "1994-01-01",
+        ),
     )
     """
 
@@ -85,6 +91,8 @@ class Type(UniversalBaseModel):
     twentyone: int
     twentytwo: float
     twentythree: str
+    twentyfour: typing.Optional[dt.datetime] = None
+    twentyfive: typing.Optional[dt.date] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

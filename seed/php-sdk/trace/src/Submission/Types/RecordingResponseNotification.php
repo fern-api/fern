@@ -2,59 +2,65 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class RecordingResponseNotification extends SerializableType
+class RecordingResponseNotification extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
+
+    /**
+     * @var ?string $testCaseId
+     */
+    #[JsonProperty('testCaseId')]
+    public ?string $testCaseId;
 
     /**
      * @var int $lineNumber
      */
-    #[JsonProperty("lineNumber")]
+    #[JsonProperty('lineNumber')]
     public int $lineNumber;
 
     /**
      * @var LightweightStackframeInformation $lightweightStackInfo
      */
-    #[JsonProperty("lightweightStackInfo")]
+    #[JsonProperty('lightweightStackInfo')]
     public LightweightStackframeInformation $lightweightStackInfo;
-
-    /**
-     * @var ?string $testCaseId
-     */
-    #[JsonProperty("testCaseId")]
-    public ?string $testCaseId;
 
     /**
      * @var ?TracedFile $tracedFile
      */
-    #[JsonProperty("tracedFile")]
+    #[JsonProperty('tracedFile')]
     public ?TracedFile $tracedFile;
 
     /**
-     * @param string $submissionId
-     * @param int $lineNumber
-     * @param LightweightStackframeInformation $lightweightStackInfo
-     * @param ?string $testCaseId
-     * @param ?TracedFile $tracedFile
+     * @param array{
+     *   submissionId: string,
+     *   lineNumber: int,
+     *   lightweightStackInfo: LightweightStackframeInformation,
+     *   testCaseId?: ?string,
+     *   tracedFile?: ?TracedFile,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        int $lineNumber,
-        LightweightStackframeInformation $lightweightStackInfo,
-        ?string $testCaseId = null,
-        ?TracedFile $tracedFile = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->lineNumber = $lineNumber;
-        $this->lightweightStackInfo = $lightweightStackInfo;
-        $this->testCaseId = $testCaseId;
-        $this->tracedFile = $tracedFile;
+        $this->submissionId = $values['submissionId'];
+        $this->testCaseId = $values['testCaseId'] ?? null;
+        $this->lineNumber = $values['lineNumber'];
+        $this->lightweightStackInfo = $values['lightweightStackInfo'];
+        $this->tracedFile = $values['tracedFile'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

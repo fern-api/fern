@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "codeByLanguage": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/v2.v3.problem.FunctionImplementation"
+      }
+    }
+  },
+  "required": [
+    "codeByLanguage"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.v3.problem.FunctionImplementation": {
+      "type": "object",
+      "properties": {
+        "impl": {
+          "type": "string"
+        },
+        "imports": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "impl"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

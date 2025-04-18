@@ -1,5 +1,7 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
+
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { ExportDeclaration } from "./ExportsManager";
 
 export interface ExportedFilePath {

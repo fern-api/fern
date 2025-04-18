@@ -206,3 +206,19 @@ Otherwise, it's assumed that the access token is valid indefinitely.
 
 With this, all of the OAuth logic happens automatically in the generated SDKs. As long as you configure these settings, your
 client will automatically retrieve an access token and refresh it as needed.
+
+When using the docs playground, `token-header` and `token-prefix` can optionally be set to customize the header key name and 
+header value prefix, to match the expected format of the API auth scheme.
+
+For example, the following would produce a header `Fern-Authorization: Fern-Bearer <token>`:
+
+```yaml api.yml {5-6}
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    token-header: Fern-Authorization
+    token-prefix: Fern-Bearer
+    get-token:
+      ...   
+```

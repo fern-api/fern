@@ -3,7 +3,6 @@
  */
 
 export type OutputMode = "github" | "local_files" | "publish";
-
 export const OutputMode = {
     Github: "github",
     LocalFiles: "local_files",

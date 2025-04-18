@@ -19,15 +19,7 @@ package com.fern.java.client.generators;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.commons.TypeId;
-import com.fern.ir.model.http.BytesRequest;
-import com.fern.ir.model.http.FileUploadRequest;
-import com.fern.ir.model.http.FileUploadRequestProperty;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpRequestBody;
-import com.fern.ir.model.http.HttpRequestBodyReference;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.InlinedRequestBody;
-import com.fern.ir.model.http.SdkRequestWrapper;
+import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.ObjectProperty;
@@ -47,6 +39,7 @@ import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
 import com.fern.java.client.GeneratedWrappedRequest.RequestBodyGetter;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;
+import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
@@ -55,6 +48,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class WrappedRequestGenerator extends AbstractFileGenerator {
@@ -62,6 +56,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
     private final HttpEndpoint httpEndpoint;
     private final SdkRequestWrapper sdkRequestWrapper;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final boolean inlinePathParams;
+    private final boolean inlineFileProperties;
 
     public WrappedRequestGenerator(
             SdkRequestWrapper sdkRequestWrapper,
@@ -75,12 +71,37 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         this.httpEndpoint = httpEndpoint;
         this.sdkRequestWrapper = sdkRequestWrapper;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
+        this.inlinePathParams = generatorContext.getCustomConfig().inlinePathParameters()
+                && httpEndpoint.getSdkRequest().isPresent()
+                && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
+                && (httpEndpoint
+                                .getSdkRequest()
+                                .get()
+                                .getShape()
+                                .getWrapper()
+                                .get()
+                                .getIncludePathParameters()
+                                .orElse(false)
+                        || httpEndpoint
+                                .getSdkRequest()
+                                .get()
+                                .getShape()
+                                .getWrapper()
+                                .get()
+                                .getOnlyPathParameters()
+                                .orElse(false));
+        this.inlineFileProperties = generatorContext.getCustomConfig().inlineFileProperties()
+                && httpEndpoint.getRequestBody().isPresent()
+                && httpEndpoint.getRequestBody().get().isFileUpload();
     }
 
     @Override
     public GeneratedWrappedRequest generateFile() {
         List<ObjectProperty> headerObjectProperties = new ArrayList<>();
         List<ObjectProperty> queryParameterObjectProperties = new ArrayList<>();
+        List<ObjectProperty> queryParameterAllowMultipleObjectProperties = new ArrayList<>();
+        List<ObjectProperty> pathParameterObjectProperties = new ArrayList<>();
+        List<ObjectProperty> fileObjectProperties = new ArrayList<>();
         List<DeclaredTypeName> extendedInterfaces = new ArrayList<>();
         httpService.getHeaders().forEach(httpHeader -> {
             headerObjectProperties.add(ObjectProperty.builder()
@@ -97,12 +118,91 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                     .build());
         });
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
-            queryParameterObjectProperties.add(ObjectProperty.builder()
-                    .name(queryParameter.getName())
-                    .valueType(queryParameter.getValueType())
-                    .docs(queryParameter.getDocs())
-                    .build());
+            if (queryParameter.getAllowMultiple()) {
+                queryParameterAllowMultipleObjectProperties.add(ObjectProperty.builder()
+                        .name(queryParameter.getName())
+                        .valueType(queryParameter.getValueType())
+                        .docs(queryParameter.getDocs())
+                        .build());
+            } else {
+                queryParameterObjectProperties.add(ObjectProperty.builder()
+                        .name(queryParameter.getName())
+                        .valueType(queryParameter.getValueType())
+                        .docs(queryParameter.getDocs())
+                        .build());
+            }
         });
+
+        if (inlinePathParams) {
+            httpEndpoint.getPathParameters().stream()
+                    .filter(param -> param.getLocation().equals(PathParameterLocation.ENDPOINT))
+                    .forEach(pathParameter -> {
+                        pathParameterObjectProperties.add(ObjectProperty.builder()
+                                .name(NameAndWireValue.builder()
+                                        .wireValue(pathParameter.getName().getOriginalName())
+                                        .name(pathParameter.getName())
+                                        .build())
+                                .valueType(pathParameter.getValueType())
+                                .docs(pathParameter.getDocs())
+                                .build());
+                    });
+        }
+
+        if (inlineFileProperties) {
+            FileUploadRequest fileUploadRequest =
+                    httpEndpoint.getRequestBody().get().getFileUpload().get();
+            fileUploadRequest.getProperties().stream()
+                    .flatMap(property -> property.getFile().stream())
+                    .forEach(fileProperty -> {
+                        NameAndWireValue name = fileProperty.visit(new FileProperty.Visitor<NameAndWireValue>() {
+                            @Override
+                            public NameAndWireValue visitFile(FilePropertySingle filePropertySingle) {
+                                return filePropertySingle.getKey();
+                            }
+
+                            @Override
+                            public NameAndWireValue visitFileArray(FilePropertyArray filePropertyArray) {
+                                return filePropertyArray.getKey();
+                            }
+
+                            @Override
+                            public NameAndWireValue _visitUnknown(Object o) {
+                                throw new RuntimeException("Received unknown file property type: " + o);
+                            }
+                        });
+                        // NOTE: See ObjectGenerator#enrichedObjectProperties for why we do this.
+                        TypeReference valueType = fileProperty.visit(new FileProperty.Visitor<TypeReference>() {
+                            @Override
+                            public TypeReference visitFile(FilePropertySingle filePropertySingle) {
+                                TypeReference type = TypeReference.unknown();
+                                if (filePropertySingle.getIsOptional()) {
+                                    type = TypeReference.container(ContainerType.optional(type));
+                                }
+                                return type;
+                            }
+
+                            @Override
+                            public TypeReference visitFileArray(FilePropertyArray filePropertyArray) {
+                                TypeReference type =
+                                        TypeReference.container(ContainerType.list(TypeReference.unknown()));
+                                if (filePropertyArray.getIsOptional()) {
+                                    type = TypeReference.container(ContainerType.optional(type));
+                                }
+                                return type;
+                            }
+
+                            @Override
+                            public TypeReference _visitUnknown(Object o) {
+                                throw new RuntimeException("Received unknown file property type: " + o);
+                            }
+                        });
+                        fileObjectProperties.add(ObjectProperty.builder()
+                                .name(name)
+                                .valueType(valueType)
+                                // TODO(ajgateno): Propagate docs
+                                .build());
+                    });
+        }
 
         RequestBodyPropertiesComputer requestBodyPropertiesComputer =
                 new RequestBodyPropertiesComputer(extendedInterfaces);
@@ -113,6 +213,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         ObjectTypeDeclaration objectTypeDeclaration = ObjectTypeDeclaration.builder()
                 .extraProperties(false)
                 .addAllExtends(extendedInterfaces)
+                .addAllProperties(pathParameterObjectProperties)
                 .addAllProperties(headerObjectProperties)
                 .addAllProperties(queryParameterObjectProperties)
                 .addAllProperties(objectProperties)
@@ -126,8 +227,12 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                         .collect(Collectors.toList()),
                 generatorContext,
                 allGeneratedInterfaces,
-                className);
-        GeneratedObject generatedObject = objectGenerator.generateFile();
+                className,
+                Set.of(className.simpleName()),
+                true,
+                fileObjectProperties,
+                queryParameterAllowMultipleObjectProperties);
+        GeneratedObject generatedObject = objectGenerator.generateObject();
         RequestBodyGetterFactory requestBodyGetterFactory =
                 new RequestBodyGetterFactory(objectProperties, generatedObject);
         return GeneratedWrappedRequest.builder()
@@ -136,11 +241,19 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 .requestBodyGetter(httpEndpoint
                         .getRequestBody()
                         .map(httpRequestBody -> httpRequestBody.visit(requestBodyGetterFactory)))
+                .addAllPathParams(pathParameterObjectProperties.stream()
+                        .map(objectProperty ->
+                                generatedObject.objectPropertyGetters().get(objectProperty))
+                        .collect(Collectors.toList()))
                 .addAllHeaderParams(headerObjectProperties.stream()
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
                 .addAllQueryParams(queryParameterObjectProperties.stream()
+                        .map(objectProperty ->
+                                generatedObject.objectPropertyGetters().get(objectProperty))
+                        .collect(Collectors.toList()))
+                .addAllQueryParams(queryParameterAllowMultipleObjectProperties.stream()
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
@@ -188,10 +301,11 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             .fileProperty(irFileUploadProperty.getFile().get())
                             .build());
                 } else if (irFileUploadProperty.isBodyProperty()) {
+                    EnrichedObjectProperty enrichedObjectProperty =
+                            generatedObject.objectPropertyGetters().get(requestBodyProperties.get(jsonPropertyIndex));
                     fileUploadProperties.add(JsonFileUploadProperty.builder()
-                            .objectProperty(generatedObject
-                                    .objectPropertyGetters()
-                                    .get(requestBodyProperties.get(jsonPropertyIndex)))
+                            .objectProperty(enrichedObjectProperty)
+                            .rawProperty(irFileUploadProperty.getBodyProperty().get())
                             .build());
                     ++jsonPropertyIndex;
                 }
@@ -217,7 +331,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public RequestBodyGetter _visitUnknown(Object unknownType) {
-            throw new RuntimeException("Encountered unknown http requeset body: " + unknownType);
+            throw new RuntimeException("Encountered unknown http request body: " + unknownType);
         }
     }
 
@@ -288,7 +402,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public List<ObjectProperty> _visitUnknown(Object unknownType) {
-            throw new RuntimeException("Encountered unknown http requeset body: " + unknownType);
+            throw new RuntimeException("Encountered unknown http request body: " + unknownType);
         }
     }
 }

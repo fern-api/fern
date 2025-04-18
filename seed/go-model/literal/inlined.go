@@ -5,13 +5,77 @@ package literal
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/literal/fern/core"
+	internal "github.com/literal/fern/internal"
 )
+
+type ANestedLiteral struct {
+	myLiteral string
+
+	extraProperties map[string]interface{}
+}
+
+func (a *ANestedLiteral) MyLiteral() string {
+	return a.myLiteral
+}
+
+func (a *ANestedLiteral) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
+	type embed ANestedLiteral
+	var unmarshaler = struct {
+		embed
+		MyLiteral string `json:"myLiteral"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ANestedLiteral(unmarshaler.embed)
+	if unmarshaler.MyLiteral != "How super cool" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "How super cool", unmarshaler.MyLiteral)
+	}
+	a.myLiteral = unmarshaler.MyLiteral
+	extraProperties, err := internal.ExtractExtraProperties(data, *a, "myLiteral")
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	return nil
+}
+
+func (a *ANestedLiteral) MarshalJSON() ([]byte, error) {
+	type embed ANestedLiteral
+	var marshaler = struct {
+		embed
+		MyLiteral string `json:"myLiteral"`
+	}{
+		embed:     embed(*a),
+		MyLiteral: "How super cool",
+	}
+	return json.Marshal(marshaler)
+}
+
+func (a *ANestedLiteral) String() string {
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
 
 type ATopLevelLiteral struct {
 	NestedLiteral *ANestedLiteral `json:"nestedLiteral,omitempty" url:"nestedLiteral,omitempty"`
 
 	extraProperties map[string]interface{}
+}
+
+func (a *ATopLevelLiteral) GetNestedLiteral() *ANestedLiteral {
+	if a == nil {
+		return nil
+	}
+	return a.NestedLiteral
 }
 
 func (a *ATopLevelLiteral) GetExtraProperties() map[string]interface{} {
@@ -25,21 +89,85 @@ func (a *ATopLevelLiteral) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = ATopLevelLiteral(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
 	}
 	a.extraProperties = extraProperties
-
 	return nil
 }
 
 func (a *ATopLevelLiteral) String() string {
-	if value, err := core.StringifyJSON(a); err == nil {
+	if value, err := internal.StringifyJSON(a); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
 }
 
 type SomeAliasedLiteral = string
+
+type UndiscriminatedLiteral struct {
+	String              string
+	EndingStringLiteral string
+
+	typ string
+}
+
+func NewUndiscriminatedLiteralFromString(value string) *UndiscriminatedLiteral {
+	return &UndiscriminatedLiteral{typ: "String", String: value}
+}
+
+func NewUndiscriminatedLiteralWithEndingStringLiteral() *UndiscriminatedLiteral {
+	return &UndiscriminatedLiteral{typ: "EndingStringLiteral", EndingStringLiteral: "$ending"}
+}
+
+func (u *UndiscriminatedLiteral) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UndiscriminatedLiteral) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	var valueEndingStringLiteral string
+	if err := json.Unmarshal(data, &valueEndingStringLiteral); err == nil {
+		u.typ = "EndingStringLiteral"
+		u.EndingStringLiteral = valueEndingStringLiteral
+		if u.EndingStringLiteral != "$ending" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "$ending", valueEndingStringLiteral)
+		}
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UndiscriminatedLiteral) MarshalJSON() ([]byte, error) {
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	if u.typ == "EndingStringLiteral" || u.EndingStringLiteral != "" {
+		return json.Marshal("$ending")
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UndiscriminatedLiteralVisitor interface {
+	VisitString(string) error
+	VisitEndingStringLiteral(string) error
+}
+
+func (u *UndiscriminatedLiteral) Accept(visitor UndiscriminatedLiteralVisitor) error {
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	if u.typ == "EndingStringLiteral" || u.EndingStringLiteral != "" {
+		return visitor.VisitEndingStringLiteral(u.EndingStringLiteral)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}

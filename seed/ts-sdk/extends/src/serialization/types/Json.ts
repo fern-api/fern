@@ -14,7 +14,7 @@ export const Json: core.serialization.ObjectSchema<serializers.Json.Raw, SeedExt
     .extend(Docs);
 
 export declare namespace Json {
-    interface Raw extends Docs.Raw {
+    export interface Raw extends Docs.Raw {
         raw: string;
     }
 }

@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
-#nullable enable
-
 namespace SeedMultiUrlEnvironmentNoDefault;
 
 public partial class S3Client
@@ -16,31 +14,31 @@ public partial class S3Client
         _client = client;
     }
 
-    /// <example>
-    /// <code>
-    /// await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "string" });
-    /// </code>
-    /// </example>
+    /// <example><code>
+    /// await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "s3Key" });
+    /// </code></example>
     public async Task<string> GetPresignedUrlAsync(
         GetPresignedUrlRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.Environment.S3,
-                Method = HttpMethod.Post,
-                Path = "/s3/presigned-url",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.S3,
+                    Method = HttpMethod.Post,
+                    Path = "/s3/presigned-url",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -54,10 +52,13 @@ public partial class S3Client
             }
         }
 
-        throw new SeedMultiUrlEnvironmentNoDefaultApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMultiUrlEnvironmentNoDefaultApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

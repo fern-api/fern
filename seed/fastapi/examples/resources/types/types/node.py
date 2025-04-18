@@ -44,9 +44,7 @@ class Node(UniversalBaseModel):
     trees: typing.Optional[typing.List["Tree"]] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -55,5 +53,4 @@ class Node(UniversalBaseModel):
 
 from .tree import Tree  # noqa: E402
 
-update_forward_refs(Tree, Node=Node)
 update_forward_refs(Node)

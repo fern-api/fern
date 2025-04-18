@@ -19,7 +19,7 @@ module SeedVariablesClient
     # @return [Void]
     # @example
     #  variables = SeedVariablesClient::Client.new(base_url: "https://api.example.com")
-    #  variables.service.post(endpoint_param: "string")
+    #  variables.service.post(endpoint_param: "endpointParam")
     def post(endpoint_param:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -54,7 +54,7 @@ module SeedVariablesClient
     # @return [Void]
     # @example
     #  variables = SeedVariablesClient::Client.new(base_url: "https://api.example.com")
-    #  variables.service.post(endpoint_param: "string")
+    #  variables.service.post(endpoint_param: "endpointParam")
     def post(endpoint_param:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

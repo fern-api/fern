@@ -14,7 +14,7 @@ export const CreateOrganizationRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace CreateOrganizationRequest {
-    interface Raw {
+    export interface Raw {
         name: string;
     }
 }

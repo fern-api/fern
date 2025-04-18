@@ -1,5 +1,7 @@
-import { doesPathExist } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+
+import { doesPathExist } from "@fern-api/fs-utils";
+
 import { FernOrganizationToken, FernToken, FernUserToken } from "../FernToken";
 import { getPathToTokenFile } from "./getPathToTokenFile";
 

@@ -1,4 +1,5 @@
-import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointRequest } from "./EndpointRequest";
 import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest";
@@ -9,6 +10,7 @@ export declare namespace CreateEndpointRequest {
         context: SdkGeneratorContext;
         sdkRequest: SdkRequest;
         endpoint: HttpEndpoint;
+        service: HttpService;
         serviceId: ServiceId;
     }
 }
@@ -17,6 +19,7 @@ export function createEndpointRequest({
     context,
     sdkRequest,
     endpoint,
+    service,
     serviceId
 }: CreateEndpointRequest.Args): EndpointRequest | undefined {
     return sdkRequest.shape._visit<EndpointRequest | undefined>({
@@ -26,6 +29,7 @@ export function createEndpointRequest({
                 serviceId,
                 sdkRequest,
                 wrapper,
+                service,
                 endpoint
             });
         },
@@ -34,7 +38,7 @@ export function createEndpointRequest({
                 context.logger.error("Bytes requests are not supported yet");
                 return undefined;
             }
-            return new ReferencedEndpointRequest(context, sdkRequest, endpoint, value.requestBodyType);
+            return new ReferencedEndpointRequest(context, sdkRequest, service, endpoint, value.requestBodyType);
         },
         _other: () => {
             throw new Error("Internal error; received unexpected request shape");

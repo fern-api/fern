@@ -1,0 +1,6 @@
+## 2.0.1
+**`(fix):`** The python generator now only excludes unset fields that are not required.
+
+### What's been fixed
+- the python generator previously used `exclude_unset` on pydantic models, however this would remove defaulted values. This change updates this to only exclude none fields that were not required.
+

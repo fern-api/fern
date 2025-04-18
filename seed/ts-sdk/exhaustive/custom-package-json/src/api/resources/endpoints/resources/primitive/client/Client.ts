@@ -8,18 +8,22 @@ import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Primitive {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -33,12 +37,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnString("string")
      */
-    public async getAndReturnString(
+    public getAndReturnString(
         request: string,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnString.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnString.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnString(request, requestOptions));
+    }
+
+    private async __getAndReturnString(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnString.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/string"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/string",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -48,6 +63,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -60,19 +76,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnString.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnString.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -83,12 +108,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnInt(1)
      */
-    public async getAndReturnInt(
+    public getAndReturnInt(
         request: number,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnInt.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnInt.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnInt(request, requestOptions));
+    }
+
+    private async __getAndReturnInt(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnInt.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/integer"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/integer",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -98,6 +134,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -110,19 +147,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnInt.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnInt.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -133,12 +179,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnLong(1000000)
      */
-    public async getAndReturnLong(
+    public getAndReturnLong(
         request: number,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnLong.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnLong.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnLong(request, requestOptions));
+    }
+
+    private async __getAndReturnLong(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnLong.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/long"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/long",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -148,6 +205,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -160,19 +218,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnLong.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnLong.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -183,12 +250,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDouble(1.1)
      */
-    public async getAndReturnDouble(
+    public getAndReturnDouble(
         request: number,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnDouble.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnDouble.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnDouble(request, requestOptions));
+    }
+
+    private async __getAndReturnDouble(
+        request: number,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<number, Fiddle.endpoints.primitive.getAndReturnDouble.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/double"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/double",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -198,6 +276,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -210,19 +289,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnDouble.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnDouble.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -233,12 +321,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnBool(true)
      */
-    public async getAndReturnBool(
+    public getAndReturnBool(
         request: boolean,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<boolean, Fiddle.endpoints.primitive.getAndReturnBool.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<boolean, Fiddle.endpoints.primitive.getAndReturnBool.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnBool(request, requestOptions));
+    }
+
+    private async __getAndReturnBool(
+        request: boolean,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<boolean, Fiddle.endpoints.primitive.getAndReturnBool.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/boolean"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/boolean",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -248,6 +347,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -260,19 +360,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnBool.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnBool.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -283,12 +392,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
      */
-    public async getAndReturnDatetime(
+    public getAndReturnDatetime(
         request: Date,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<Date, Fiddle.endpoints.primitive.getAndReturnDatetime.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<Date, Fiddle.endpoints.primitive.getAndReturnDatetime.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnDatetime(request, requestOptions));
+    }
+
+    private async __getAndReturnDatetime(
+        request: Date,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<Date, Fiddle.endpoints.primitive.getAndReturnDatetime.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/datetime"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/datetime",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -298,6 +418,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -310,19 +431,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnDatetime.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnDatetime.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -333,12 +463,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
      */
-    public async getAndReturnDate(
+    public getAndReturnDate(
         request: string,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDate.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDate.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnDate(request, requestOptions));
+    }
+
+    private async __getAndReturnDate(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDate.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/date"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/date",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -348,6 +489,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -360,19 +502,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnDate.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnDate.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -383,12 +534,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
-    public async getAndReturnUuid(
+    public getAndReturnUuid(
         request: string,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnUuid.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnUuid.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnUuid(request, requestOptions));
+    }
+
+    private async __getAndReturnUuid(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnUuid.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/uuid"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/uuid",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -398,6 +560,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -410,19 +573,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnUuid.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnUuid.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -433,12 +605,23 @@ export class Primitive {
      * @example
      *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
      */
-    public async getAndReturnBase64(
+    public getAndReturnBase64(
         request: string,
-        requestOptions?: Primitive.RequestOptions
-    ): Promise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnBase64.Error>> {
+        requestOptions?: Primitive.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnBase64.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnBase64(request, requestOptions));
+    }
+
+    private async __getAndReturnBase64(
+        request: string,
+        requestOptions?: Primitive.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnBase64.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/base64"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/primitive/base64",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -448,6 +631,7 @@ export class Primitive {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -460,19 +644,28 @@ export class Primitive {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.endpoints.primitive.getAndReturnBase64.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.endpoints.primitive.getAndReturnBase64.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

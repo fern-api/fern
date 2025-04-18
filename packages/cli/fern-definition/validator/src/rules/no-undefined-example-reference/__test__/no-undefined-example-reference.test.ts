@@ -1,4 +1,5 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoUndefinedExampleReferenceRule } from "../no-undefined-example-reference";
 
@@ -26,7 +27,7 @@ describe("no-undefined-example-reference", () => {
                     }
                 ],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Example $a.MissingType.Example is not defined.",
@@ -39,7 +40,7 @@ describe("no-undefined-example-reference", () => {
                     }
                 ],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
-                severity: "error"
+                severity: "fatal"
             },
             {
                 message: "Example $other.OtherType.OtherExample2 is not defined.",
@@ -52,7 +53,7 @@ describe("no-undefined-example-reference", () => {
                     }
                 ],
                 relativeFilepath: RelativeFilePath.of("folder/nested.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ]);
     });

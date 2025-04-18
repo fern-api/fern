@@ -27,9 +27,9 @@ module SeedAnyAuthClient
     #    api_key: "YOUR_API_KEY"
     #  )
     #  any_auth.auth.get_token(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    scope: "string"
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    scope: "scope"
     #  )
     def get_token(client_id:, client_secret:, scope: nil, request_options: nil)
       response = @request_client.conn.post do |req|
@@ -81,9 +81,9 @@ module SeedAnyAuthClient
     #    api_key: "YOUR_API_KEY"
     #  )
     #  any_auth.auth.get_token(
-    #    client_id: "string",
-    #    client_secret: "string",
-    #    scope: "string"
+    #    client_id: "client_id",
+    #    client_secret: "client_secret",
+    #    scope: "scope"
     #  )
     def get_token(client_id:, client_secret:, scope: nil, request_options: nil)
       Async do

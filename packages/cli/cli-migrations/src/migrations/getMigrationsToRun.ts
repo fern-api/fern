@@ -1,4 +1,5 @@
 import { isVersionAhead } from "@fern-api/semver-utils";
+
 import { VersionMigrations } from "../types/VersionMigrations";
 import { ALL_MIGRATIONS } from "./all";
 

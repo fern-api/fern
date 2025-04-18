@@ -1,12 +1,10 @@
 using SeedApiWideBasePath.Core;
 
-#nullable enable
-
 namespace SeedApiWideBasePath;
 
 public partial class SeedApiWideBasePathClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedApiWideBasePathClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedApiWideBasePathClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 }

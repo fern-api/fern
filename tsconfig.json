@@ -1,5 +1,5 @@
 {
-  "extends": "./shared/tsconfig.shared.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"

@@ -1,0 +1,90 @@
+{
+  "type": "object",
+  "properties": {
+    "templateId": {
+      "$ref": "#/definitions/v2.v3.problem.TestCaseTemplateId"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescription"
+    },
+    "expectedValueParameterId": {
+      "$ref": "#/definitions/v2.v3.problem.ParameterId"
+    }
+  },
+  "required": [
+    "templateId",
+    "name",
+    "description",
+    "expectedValueParameterId"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.v3.problem.TestCaseTemplateId": {
+      "type": "string"
+    },
+    "v2.v3.problem.ParameterId": {
+      "type": "string"
+    },
+    "v2.v3.problem.TestCaseImplementationDescriptionBoard": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "html",
+            "paramId"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "html"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "paramId"
+            },
+            "value": {
+              "$ref": "#/definitions/v2.v3.problem.ParameterId"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "v2.v3.problem.TestCaseImplementationDescription": {
+      "type": "object",
+      "properties": {
+        "boards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescriptionBoard"
+          }
+        }
+      },
+      "required": [
+        "boards"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

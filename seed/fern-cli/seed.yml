@@ -3,35 +3,24 @@ publishGa:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
   command:
-    - mv package.json package.json.tmp
-    - version_replace="s/0.0.0/$VERSION/"
-    - cat package.json.tmp| sed "${version_replace}" > package.json
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - pnpm install
     - pnpm --filter @fern-api/cli compile
+    - pnpm --filter @fern-api/cli dist:cli:prod $VERSION
     - pnpm --filter @fern-api/cli publish:cli:prod --tag latest
-    - mv package.json.tmp package.json
 publishRc:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
   command:
-    - mv package.json package.json.tmp
-    - version_replace="s/0.0.0/$VERSION/"
-    - cat package.json.tmp| sed "${version_replace}" > package.json
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - pnpm install
     - pnpm --filter @fern-api/cli compile
+    - pnpm --filter @fern-api/cli dist:cli:prod $VERSION
     - pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease
-    - mv package.json.tmp package.json
 publishDev:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
   command:
-    - mv package.json package.json.tmp
-    - version_replace="s/0.0.0/$VERSION/"
-    - cat package.json.tmp| sed "${version_replace}" > package.json
-    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-    - pnpm install
     - pnpm --filter @fern-api/cli compile
+    - pnpm --filter @fern-api/cli dist:cli:dev $VERSION
     - pnpm --filter @fern-api/cli publish:cli:dev --access restricted
-    - mv package.json.tmp package.json

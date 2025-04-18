@@ -6,20 +6,20 @@ import * as FernIr from "../../../index";
 
 export type WebhookPayload = FernIr.WebhookPayload.InlinedPayload | FernIr.WebhookPayload.Reference;
 
-export declare namespace WebhookPayload {
-    interface InlinedPayload extends FernIr.InlinedWebhookPayload, _Utils {
+export namespace WebhookPayload {
+    export interface InlinedPayload extends FernIr.InlinedWebhookPayload, _Utils {
         type: "inlinedPayload";
     }
 
-    interface Reference extends FernIr.WebhookPayloadReference, _Utils {
+    export interface Reference extends FernIr.WebhookPayloadReference, _Utils {
         type: "reference";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.WebhookPayload._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         inlinedPayload: (value: FernIr.InlinedWebhookPayload) => _Result;
         reference: (value: FernIr.WebhookPayloadReference) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -33,7 +33,7 @@ export const WebhookPayload = {
             type: "inlinedPayload",
             _visit: function <_Result>(
                 this: FernIr.WebhookPayload.InlinedPayload,
-                visitor: FernIr.WebhookPayload._Visitor<_Result>
+                visitor: FernIr.WebhookPayload._Visitor<_Result>,
             ) {
                 return FernIr.WebhookPayload._visit(this, visitor);
             },
@@ -46,7 +46,7 @@ export const WebhookPayload = {
             type: "reference",
             _visit: function <_Result>(
                 this: FernIr.WebhookPayload.Reference,
-                visitor: FernIr.WebhookPayload._Visitor<_Result>
+                visitor: FernIr.WebhookPayload._Visitor<_Result>,
             ) {
                 return FernIr.WebhookPayload._visit(this, visitor);
             },

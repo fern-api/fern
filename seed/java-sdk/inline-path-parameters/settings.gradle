@@ -1,0 +1,3 @@
+rootProject.name = 'inline-path-parameters'
+
+include 'sample-app'

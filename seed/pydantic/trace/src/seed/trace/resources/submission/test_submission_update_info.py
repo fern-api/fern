@@ -11,7 +11,6 @@ from ..commons.key_value_pair import KeyValuePair
 from ..commons.map_value import MapValue
 from ..v_2.resources.problem.test_case_id import TestCaseId
 from .test_case_grade import TestCaseGrade
-from ...core.pydantic_utilities import update_forward_refs
 
 
 class TestSubmissionUpdateInfo_Running(UniversalBaseModel):
@@ -80,5 +79,3 @@ TestSubmissionUpdateInfo = typing.Union[
     TestSubmissionUpdateInfo_RecordedTestCase,
     TestSubmissionUpdateInfo_Finished,
 ]
-update_forward_refs(KeyValuePair, TestSubmissionUpdateInfo_GradedTestCase=TestSubmissionUpdateInfo_GradedTestCase)
-update_forward_refs(MapValue, TestSubmissionUpdateInfo_GradedTestCase=TestSubmissionUpdateInfo_GradedTestCase)

@@ -3,8 +3,10 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .complex_.client import ComplexClient
 from .users.client import UsersClient
 from .core.client_wrapper import AsyncClientWrapper
+from .complex_.client import AsyncComplexClient
 from .users.client import AsyncUsersClient
 
 
@@ -46,7 +48,9 @@ class SeedPagination:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             token=token,
@@ -57,6 +61,7 @@ class SeedPagination:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.complex_ = ComplexClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
 
 
@@ -98,7 +103,9 @@ class AsyncSeedPagination:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             token=token,
@@ -109,4 +116,5 @@ class AsyncSeedPagination:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.complex_ = AsyncComplexClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)

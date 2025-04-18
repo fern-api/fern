@@ -1,4 +1,4 @@
-import { ModelContext } from "../model-context/ModelContext";
+import { BaseContext } from "../base-context";
 import { ExpressEndpointTypeSchemasContext } from "./express-endpoint-type-schemas";
 import { ExpressErrorContext } from "./express-error";
 import { ExpressErrorSchemaContext } from "./express-error-schema";
@@ -8,7 +8,7 @@ import { ExpressRegisterContext } from "./express-register";
 import { ExpressServiceContext } from "./express-service";
 import { GenericAPIExpressErrorContext } from "./generic-api-express-error";
 
-export interface ExpressContext extends ModelContext {
+export interface ExpressContext extends BaseContext {
     expressEndpointTypeSchemas: ExpressEndpointTypeSchemasContext;
     expressError: ExpressErrorContext;
     expressErrorSchema: ExpressErrorSchemaContext;

@@ -56,14 +56,20 @@ type Config struct {
 	IncludeLegacyClientOptions   bool
 	Whitelabel                   bool
 	AlwaysSendRequiredProperties bool
+	InlinePathParameters         bool
+	InlineFileProperties         bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
 	Version                      string
 	IrFilepath                   string
 	SnippetFilepath              string
+	ClientName                   string
+	ClientConstructorName        string
 	ImportPath                   string
+	ExportedClientName           string
 	PackageName                  string
+	PackageLayout                string
 	UnionVersion                 string
 	Module                       *generator.ModuleConfig
 	Writer                       *writer.Config
@@ -199,6 +205,8 @@ func newConfig(configFilename string) (*Config, error) {
 
 	return &Config{
 		DryRun:                       config.DryRun,
+		InlinePathParameters:         customConfig.InlinePathParameters,
+		InlineFileProperties:         customConfig.InlineFileProperties,
 		IncludeLegacyClientOptions:   customConfig.IncludeLegacyClientOptions,
 		EnableExplicitNull:           customConfig.EnableExplicitNull,
 		Organization:                 config.Organization,
@@ -209,8 +217,12 @@ func newConfig(configFilename string) (*Config, error) {
 		Version:                      outputVersionFromGeneratorConfig(config),
 		IrFilepath:                   config.IrFilepath,
 		SnippetFilepath:              snippetFilepath,
+		ClientName:                   customConfig.ClientName,
+		ClientConstructorName:        customConfig.ClientConstructorName,
 		ImportPath:                   customConfig.ImportPath,
 		PackageName:                  customConfig.PackageName,
+		ExportedClientName:           customConfig.ExportedClientName,
+		PackageLayout:                customConfig.PackageLayout,
 		UnionVersion:                 customConfig.UnionVersion,
 		Module:                       moduleConfig,
 		Writer:                       writerConfig,
@@ -253,10 +265,16 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 
 type customConfig struct {
 	EnableExplicitNull           bool          `json:"enableExplicitNull,omitempty"`
+	InlinePathParameters         bool          `json:"inlinePathParameters,omitempty"`
+	InlineFileProperties         bool          `json:"inlineFileProperties,omitempty"`
 	IncludeLegacyClientOptions   bool          `json:"includeLegacyClientOptions,omitempty"`
 	AlwaysSendRequiredProperties bool          `json:"alwaysSendRequiredProperties,omitempty"`
+	ClientName                   string        `json:"clientName,omitempty"`
+	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
 	PackageName                  string        `json:"packageName,omitempty"`
+	ExportedClientName           string        `json:"exportedClientName,omitempty"`
+	PackageLayout                string        `json:"packageLayout,omitempty"`
 	UnionVersion                 string        `json:"union,omitempty"`
 	Module                       *moduleConfig `json:"module,omitempty"`
 }

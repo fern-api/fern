@@ -12,14 +12,19 @@ repositories {
 }
 
 dependencies {
-    api 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-    api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
-    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
 }
 
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+tasks.withType(Javadoc) {
+    failOnError false
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
 
 spotless {
     java {
@@ -27,9 +32,28 @@ spotless {
     }
 }
 
+
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+
+group = 'com.fern'
+
+version = '0.0.1'
+
+jar {
+    dependsOn(":generatePomFileForMavenPublication")
+    archiveBaseName = "folders"
+}
+
+sourcesJar {
+    archiveBaseName = "folders"
+}
+
+javadocJar {
+    archiveBaseName = "folders"
 }
 
 test {
@@ -38,6 +62,7 @@ test {
         showStandardStreams = true
     }
 }
+
 publishing {
     publications {
         maven(MavenPublication) {
@@ -46,6 +71,12 @@ publishing {
             version = '0.0.1'
             from components.java
             pom {
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'https://mit-license.org/'
+                    }
+                }
                 scm {
                     connection = 'scm:git:git://github.com/folders/fern.git'
                     developerConnection = 'scm:git:git://github.com/folders/fern.git'

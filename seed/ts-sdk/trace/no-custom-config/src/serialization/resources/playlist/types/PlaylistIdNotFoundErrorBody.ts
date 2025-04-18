@@ -22,9 +22,9 @@ export const PlaylistIdNotFoundErrorBody: core.serialization.Schema<
     });
 
 export declare namespace PlaylistIdNotFoundErrorBody {
-    type Raw = PlaylistIdNotFoundErrorBody.PlaylistId;
+    export type Raw = PlaylistIdNotFoundErrorBody.PlaylistId;
 
-    interface PlaylistId {
+    export interface PlaylistId {
         type: "playlistId";
         value: PlaylistId.Raw;
     }

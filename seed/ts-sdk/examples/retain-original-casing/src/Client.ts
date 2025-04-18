@@ -6,28 +6,49 @@ import * as environments from "./environments";
 import * as core from "./core";
 import * as serializers from "./serialization/index";
 import * as errors from "./errors/index";
+import * as SeedExamples from "./api/index";
 import { File_ } from "./api/resources/file/client/Client";
 import { Health } from "./api/resources/health/client/Client";
 import { Service } from "./api/resources/service/client/Client";
 
 export declare namespace SeedExamplesClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<environments.SeedExamplesEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedExamplesClient {
+    protected _file: File_ | undefined;
+    protected _health: Health | undefined;
+    protected _service: Service | undefined;
+
     constructor(protected readonly _options: SeedExamplesClient.Options) {}
+
+    public get file(): File_ {
+        return (this._file ??= new File_(this._options));
+    }
+
+    public get health(): Health {
+        return (this._health ??= new Health(this._options));
+    }
+
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 
     /**
      * @param {string} request
@@ -36,9 +57,18 @@ export class SeedExamplesClient {
      * @example
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
-    public async echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): Promise<string> {
+    public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__echo(request, requestOptions));
+    }
+
+    private async __echo(
+        request: string,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -48,6 +78,7 @@ export class SeedExamplesClient {
                 "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -57,18 +88,22 @@ export class SeedExamplesClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.echo.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.echo.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -77,32 +112,93 @@ export class SeedExamplesClient {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedExamplesTimeoutError();
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedExamplesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    protected _file: File_ | undefined;
-
-    public get file(): File_ {
-        return (this._file ??= new File_(this._options));
+    /**
+     * @param {SeedExamples.Type} request
+     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.createType("primitive")
+     */
+    public createType(
+        request: SeedExamples.Type,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExamples.Identifier> {
+        return core.HttpResponsePromise.fromPromise(this.__createType(request, requestOptions));
     }
 
-    protected _health: Health | undefined;
+    private async __createType(
+        request: SeedExamples.Type,
+        requestOptions?: SeedExamplesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
+        const _response = await core.fetcher({
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/examples",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/examples/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.Type.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.Identifier.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
 
-    public get health(): Health {
-        return (this._health ??= new Health(this._options));
-    }
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
 
-    protected _service: Service | undefined;
-
-    public get service(): Service {
-        return (this._service ??= new Service(this._options));
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedExamplesError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown":
+                throw new errors.SeedExamplesError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

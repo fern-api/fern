@@ -1,11 +1,13 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { CodeBlock } from "./CodeBlock";
-import { Parameter } from "./Parameter";
 import { Access } from "./Access";
+import { ClassReference } from "./ClassReference";
+import { CodeBlock } from "./CodeBlock";
+import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
-import { Comment } from "./Comment";
+import { Parameter } from "./Parameter";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
+import { orderByAccess } from "./utils/orderByAccess";
 
 export declare namespace Class {
     interface Args {
@@ -19,6 +21,8 @@ export declare namespace Class {
         docs?: string;
         /* The class to inherit from if any */
         parentClassReference?: AstNode;
+        /* The traits that this class uses, if any */
+        traits?: ClassReference[];
     }
 
     interface Constructor {
@@ -37,18 +41,20 @@ export class Class extends AstNode {
     public readonly abstract: boolean;
     public readonly docs: string | undefined;
     public readonly parentClassReference: AstNode | undefined;
+    public readonly traits: ClassReference[];
 
+    public readonly fields: Field[] = [];
+    public readonly methods: Method[] = [];
     private constructor_: Class.Constructor | undefined;
-    private fields: Field[] = [];
-    private methods: Method[] = [];
 
-    constructor({ name, namespace, abstract, docs, parentClassReference }: Class.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference, traits }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.abstract = abstract ?? false;
         this.docs = docs;
         this.parentClassReference = parentClassReference;
+        this.traits = traits ?? [];
     }
 
     public addConstructor(constructor: Class.Constructor): void {
@@ -63,22 +69,45 @@ export class Class extends AstNode {
         this.methods.push(method);
     }
 
+    public addMethods(methods: Method[]): void {
+        this.methods.push(...methods);
+    }
+
+    public addTrait(traitClassReference: ClassReference): void {
+        this.traits.push(traitClassReference);
+    }
+
     public write(writer: Writer): void {
+        // required to fully de-conflict imports
+        writer.addReference(new ClassReference({ name: this.name, namespace: this.namespace }));
         if (this.abstract) {
             writer.write("abstract ");
         }
         this.writeComment(writer);
-        writer.writeLine(`class ${this.name} `);
+        writer.write(`class ${this.name} `);
         if (this.parentClassReference != null) {
             writer.write("extends ");
             this.parentClassReference.write(writer);
         }
+        writer.newLine();
         writer.writeLine("{");
         writer.indent();
+        if (this.traits.length > 0) {
+            writer.write("use ");
+            this.traits.forEach((trait, index) => {
+                if (index > 0) {
+                    writer.write(",");
+                }
+                writer.writeNode(trait);
+            });
+            writer.writeTextStatement("");
+            writer.newLine();
+        }
 
-        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Public) });
-        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Protected) });
-        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Private) });
+        this.writeFields({ writer, fields: orderByAccess(this.fields) });
+        if (this.constructor != null || this.methods.length > 0) {
+            writer.newLine();
+        }
 
         if (this.constructor_ != null) {
             this.writeConstructor({ writer, constructor: this.constructor_ });
@@ -87,9 +116,7 @@ export class Class extends AstNode {
             }
         }
 
-        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Public) });
-        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Protected) });
-        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Private) });
+        this.writeMethods({ writer, methods: orderByAccess(this.methods) });
 
         writer.dedent();
         writer.writeLine("}");
@@ -140,26 +167,24 @@ export class Class extends AstNode {
     }
 
     private writeFields({ writer, fields }: { writer: Writer; fields: Field[] }): void {
-        for (const field of fields) {
-            field.write(writer);
-            writer.writeNewLineIfLastLineNot();
-            writer.newLine();
-        }
+        fields
+            .filter((field) => !field.inherited)
+            .forEach((field, index) => {
+                if (index > 0) {
+                    writer.newLine();
+                }
+                field.write(writer);
+                writer.writeNewLineIfLastLineNot();
+            });
     }
 
     private writeMethods({ writer, methods }: { writer: Writer; methods: Method[] }): void {
-        for (const method of methods) {
+        methods.forEach((method, index) => {
+            if (index > 0) {
+                writer.newLine();
+            }
             method.write(writer);
             writer.writeNewLineIfLastLineNot();
-            writer.newLine();
-        }
-    }
-
-    private getFieldsByAccess(access: Access): Field[] {
-        return this.fields.filter((field) => field.access === access);
-    }
-
-    private getMethodsByAccess(access: Access): Method[] {
-        return this.methods.filter((method) => method.access === access);
+        });
     }
 }

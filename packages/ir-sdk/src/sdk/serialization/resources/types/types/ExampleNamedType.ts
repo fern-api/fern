@@ -16,7 +16,7 @@ export const ExampleNamedType: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleNamedType {
-    interface Raw {
+    export interface Raw {
         typeName: DeclaredTypeName.Raw;
         shape: serializers.ExampleTypeShape.Raw;
     }

@@ -10,14 +10,16 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Playlist {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -26,6 +28,8 @@ export declare namespace Playlist {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -44,18 +48,26 @@ export class Playlist {
      *         datetime: "2024-01-15T09:30:00Z",
      *         optionalDatetime: "2024-01-15T09:30:00Z",
      *         body: {
-     *             name: "string",
-     *             problems: ["string"]
+     *             name: "name",
+     *             problems: ["problems", "problems"]
      *         }
      *     })
      */
-    public async createPlaylist(
+    public createPlaylist(
         serviceParam: number,
         request: SeedTrace.CreatePlaylistRequest,
-        requestOptions?: Playlist.RequestOptions
-    ): Promise<SeedTrace.Playlist> {
+        requestOptions?: Playlist.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.Playlist> {
+        return core.HttpResponsePromise.fromPromise(this.__createPlaylist(serviceParam, request, requestOptions));
+    }
+
+    private async __createPlaylist(
+        serviceParam: number,
+        request: SeedTrace.CreatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const { datetime, optionalDatetime, body: _body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["datetime"] = datetime.toISOString();
         if (optionalDatetime != null) {
             _queryParams["optionalDatetime"] = optionalDatetime.toISOString();
@@ -63,8 +75,10 @@ export class Playlist {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/create`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/create`,
             ),
             method: "POST",
             headers: {
@@ -79,6 +93,7 @@ export class Playlist {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -89,18 +104,22 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Playlist.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Playlist.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -109,12 +128,16 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /v2/playlist/{serviceParam}/create.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -129,19 +152,27 @@ export class Playlist {
      * @example
      *     await client.playlist.getPlaylists(1, {
      *         limit: 1,
-     *         otherField: "string",
-     *         multiLineDocs: "string",
-     *         optionalMultipleField: "string",
-     *         multipleField: "string"
+     *         otherField: "otherField",
+     *         multiLineDocs: "multiLineDocs",
+     *         optionalMultipleField: "optionalMultipleField",
+     *         multipleField: "multipleField"
      *     })
      */
-    public async getPlaylists(
+    public getPlaylists(
         serviceParam: number,
         request: SeedTrace.GetPlaylistsRequest,
-        requestOptions?: Playlist.RequestOptions
-    ): Promise<SeedTrace.Playlist[]> {
+        requestOptions?: Playlist.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.Playlist[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getPlaylists(serviceParam, request, requestOptions));
+    }
+
+    private async __getPlaylists(
+        serviceParam: number,
+        request: SeedTrace.GetPlaylistsRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist[]>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -164,8 +195,10 @@ export class Playlist {
 
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/all`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/all`,
             ),
             method: "GET",
             headers: {
@@ -180,6 +213,7 @@ export class Playlist {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -189,18 +223,22 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -209,12 +247,16 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling GET /v2/playlist/{serviceParam}/all.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -230,19 +272,27 @@ export class Playlist {
      * @throws {@link SeedTrace.UnauthorizedError}
      *
      * @example
-     *     await client.playlist.getPlaylist(1, "string")
+     *     await client.playlist.getPlaylist(1, "playlistId")
      */
-    public async getPlaylist(
+    public getPlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
-        requestOptions?: Playlist.RequestOptions
-    ): Promise<SeedTrace.Playlist> {
+        requestOptions?: Playlist.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.Playlist> {
+        return core.HttpResponsePromise.fromPromise(this.__getPlaylist(serviceParam, playlistId, requestOptions));
+    }
+
+    private async __getPlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    serializers.PlaylistId.jsonOrThrow(playlistId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(serializers.PlaylistId.jsonOrThrow(playlistId))}`,
             ),
             method: "GET",
             headers: {
@@ -257,6 +307,7 @@ export class Playlist {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -265,12 +316,15 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Playlist.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Playlist.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -282,14 +336,16 @@ export class Playlist {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case "UnauthorizedError":
-                    throw new SeedTrace.UnauthorizedError();
+                    throw new SeedTrace.UnauthorizedError(_response.rawResponse);
                 default:
                     throw new errors.SeedTraceError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -299,12 +355,16 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling GET /v2/playlist/{serviceParam}/{playlistId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -320,23 +380,34 @@ export class Playlist {
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      *
      * @example
-     *     await client.playlist.updatePlaylist(1, "string", {
-     *         name: "string",
-     *         problems: ["string"]
+     *     await client.playlist.updatePlaylist(1, "playlistId", {
+     *         name: "name",
+     *         problems: ["problems", "problems"]
      *     })
      */
-    public async updatePlaylist(
+    public updatePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
         request?: SeedTrace.UpdatePlaylistRequest,
-        requestOptions?: Playlist.RequestOptions
-    ): Promise<SeedTrace.Playlist | undefined> {
+        requestOptions?: Playlist.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.Playlist | undefined> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updatePlaylist(serviceParam, playlistId, request, requestOptions),
+        );
+    }
+
+    private async __updatePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        request?: SeedTrace.UpdatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    serializers.PlaylistId.jsonOrThrow(playlistId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(serializers.PlaylistId.jsonOrThrow(playlistId))}`,
             ),
             method: "PUT",
             headers: {
@@ -351,6 +422,7 @@ export class Playlist {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -365,12 +437,15 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -382,12 +457,14 @@ export class Playlist {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedTraceError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -397,12 +474,16 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling PUT /v2/playlist/{serviceParam}/{playlistId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -415,19 +496,27 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.deletePlaylist(1, "string")
+     *     await client.playlist.deletePlaylist(1, "playlist_id")
      */
-    public async deletePlaylist(
+    public deletePlaylist(
         serviceParam: number,
         playlistId: SeedTrace.PlaylistId,
-        requestOptions?: Playlist.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Playlist.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__deletePlaylist(serviceParam, playlistId, requestOptions));
+    }
+
+    private async __deletePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        requestOptions?: Playlist.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    serializers.PlaylistId.jsonOrThrow(playlistId)
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(serializers.PlaylistId.jsonOrThrow(playlistId))}`,
             ),
             method: "DELETE",
             headers: {
@@ -442,6 +531,7 @@ export class Playlist {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -450,13 +540,14 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -465,12 +556,16 @@ export class Playlist {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling DELETE /v2/playlist/{serviceParam}/{playlist_id}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -1,10 +1,6 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-
-#nullable enable
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -12,7 +8,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetWithPathTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             "string"
@@ -20,7 +16,7 @@ public class GetWithPathTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/params/path/string").UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/params/path/param").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -29,10 +25,7 @@ public class GetWithPathTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Params.GetWithPathAsync("string", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Endpoints.Params.GetWithPathAsync("param");
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

@@ -15,7 +15,7 @@ export const Metadata: core.serialization.ObjectSchema<
 });
 
 export declare namespace Metadata {
-    interface Raw {
+    export interface Raw {
         id: string;
         data?: Record<string, string> | null;
     }

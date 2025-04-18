@@ -1,12 +1,10 @@
 using SeedApi.Core;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class SeedApiClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
@@ -32,7 +30,7 @@ public partial class SeedApiClient
         Ast = new AstClient(_client);
     }
 
-    public AClient A { get; init; }
+    public AClient A { get; }
 
-    public AstClient Ast { get; init; }
+    public AstClient Ast { get; }
 }

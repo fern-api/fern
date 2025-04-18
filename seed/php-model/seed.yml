@@ -1,6 +1,14 @@
-irVersion: v53
+irVersion: v55
 displayName: PHP Model
 image: fernapi/fern-php-model
+changelogLocation: ../../generators/php/model/versions.yml
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/php-model dist:cli
+  docker:
+    file: ./generators/php/model/Dockerfile
+    image: fernapi/fern-php-model
+    context: .
 test:
   docker:
     image: fernapi/fern-php-model:latest
@@ -9,10 +17,10 @@ test:
     workingDirectory: generators/php
     buildCommand:
       - pnpm --filter @fern-api/php-model dist:cli
-    runCommand: node model/dist/bundle.cjs
+    runCommand: node model/dist/cli.cjs
 
 language: php
-generatorType: SDK
+generatorType: Model
 defaultOutputMode: github
 fixtures: {}
 scripts:
@@ -22,8 +30,11 @@ scripts:
       - composer build
       - composer analyze
       - composer test
+
 allowedFailures:
-  # enum as map key not allowed in php
+  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
+  - examples
+  # Enums don't support the fromJson method yet.
   - trace
-  # we aren't handling multiple types used in a class with the same name (from different packages)
-  - cross-package-type-names
+  - circular-references
+  - circular-references-advanced

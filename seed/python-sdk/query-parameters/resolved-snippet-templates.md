@@ -10,42 +10,48 @@ client.user.get_username(
 	deadline="2024-01-15T09:30:00Z",
 	bytes="SGVsbG8gd29ybGQh",
 	user=User(
-		name="string",
+		name="name",
 		tags=[
-			"string"
+			"tags",
+			"tags"
 		]
 	),
 	user_list=[
 		User(
-			name="string"
+			name="name"
+		),
+		User(
+			name="name"
 		)
 	],
 	optional_deadline="2024-01-15T09:30:00Z",
 	key_value={
-		"string": "string"
+		"keyValue": "keyValue"
 	},
-	optional_string="string",
+	optional_string="optionalString",
 	nested_user=NestedUser(
-		name="string",
+		name="name",
 		user=User(
-			name="string"
+			name="name"
 		)
 	),
 	optional_user=User(
-		name="string",
+		name="name",
 		tags=[
-			"string"
+			"tags",
+			"tags"
 		]
 	),
 	exclude_user=User(
-		name="string",
+		name="name",
 		tags=[
-			"string"
+			"tags",
+			"tags"
 		]
 	),
-	filter="string"
+	filter="filter"
 )
- 
-```                        
+
+```
 
 

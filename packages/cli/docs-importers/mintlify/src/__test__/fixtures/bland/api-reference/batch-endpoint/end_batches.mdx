@@ -1,0 +1,47 @@
+---
+title: "Cancel All Batch Calls"
+api: "POST https://api.bland.ai/end_batches"
+description: "Terminates every dispatched call in each running batch."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  The status of the request. If anything other than 'success', an error has occurred or all calls have already been
+  completed.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message describing the status of the request.
+</ResponseField>
+
+<ResponseField name="num_calls" type="number">
+  The number of calls that were cancelled.
+</ResponseField>
+
+<ResponseField name="batch_ids" type="array">
+  An array of batch_ids that were cancelled.
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+    "status": "success",
+    "message": "Successfully stopped batch",
+    "num_calls": 9704,
+    "batch_ids": [
+      "5e5b1a3a-2b0a-4b9e-8b9e-e42a-gen-batch",
+      "b4eb1a3a-4b9e-230a-8b9e-acdc-gen-batch"
+      "92ab1a3a-a82e-339b-4b9e-8b9e-gen-batch"
+    ]
+}
+```
+
+</ResponseExample>

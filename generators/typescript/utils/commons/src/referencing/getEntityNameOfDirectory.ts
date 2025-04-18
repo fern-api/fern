@@ -1,4 +1,5 @@
 import { ts } from "ts-morph";
+
 import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
 import { getQualifiedNameOfDirectory } from "./getQualifiedNameOfDirectory";
 

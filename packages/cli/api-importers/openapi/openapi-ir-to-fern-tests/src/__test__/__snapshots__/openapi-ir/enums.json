@@ -1,0 +1,181 @@
+{
+  "title": "Example API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Get Example",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetExampleRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "GetExampleResponse",
+          "schema": "ExampleResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/example",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": "ACTIVE",
+              "type": "enum"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "ExampleResponse": {
+        "value": {
+          "generatedName": "ExampleResponse",
+          "schemas": [
+            {
+              "generatedName": "ExampleResponseZero",
+              "schema": "StatusEnum",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "ExampleResponseOne",
+              "schema": "PriorityEnum",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "ExampleResponseTwo",
+              "schema": "ErrorCodeEnum",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "StatusEnum": {
+        "description": "Status of the resource",
+        "generatedName": "StatusEnum",
+        "values": [
+          {
+            "generatedName": "ACTIVE",
+            "value": "ACTIVE",
+            "casing": {}
+          },
+          {
+            "generatedName": "INACTIVE",
+            "value": "INACTIVE",
+            "casing": {}
+          },
+          {
+            "generatedName": "PENDING",
+            "value": "PENDING",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "PriorityEnum": {
+        "description": "Priority level (1=Low, 2=Medium, 3=High)",
+        "schema": {
+          "type": "int"
+        },
+        "generatedName": "PriorityEnum",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "ErrorCodeEnum": {
+        "description": "Error codes",
+        "generatedName": "ErrorCodeEnum",
+        "values": [
+          {
+            "generatedName": "NOT_FOUND",
+            "value": "NOT_FOUND",
+            "casing": {}
+          },
+          {
+            "generatedName": "UNAUTHORIZED",
+            "value": "UNAUTHORIZED",
+            "casing": {}
+          },
+          {
+            "generatedName": "BAD_REQUEST",
+            "value": "BAD_REQUEST",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

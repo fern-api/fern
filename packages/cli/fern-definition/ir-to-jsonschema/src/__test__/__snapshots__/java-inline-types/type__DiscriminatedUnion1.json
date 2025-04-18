@@ -1,0 +1,102 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "type1",
+        "type2",
+        "ref"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "type1"
+        },
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "$ref": "#/definitions/DiscriminatedUnion1InlineType1InlineType1"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "type",
+        "foo",
+        "bar",
+        "ref"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "type2"
+        },
+        "baz": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "type",
+        "baz",
+        "ref"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "ref"
+        },
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "foo"
+      ]
+    }
+  ],
+  "definitions": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    },
+    "DiscriminatedUnion1InlineType1InlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

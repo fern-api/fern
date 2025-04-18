@@ -2,32 +2,41 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GradedTestCaseUpdate extends SerializableType
+class GradedTestCaseUpdate extends JsonSerializableType
 {
     /**
      * @var string $testCaseId
      */
-    #[JsonProperty("testCaseId")]
+    #[JsonProperty('testCaseId')]
     public string $testCaseId;
 
     /**
-     * @var mixed $grade
+     * @var TestCaseGrade $grade
      */
-    #[JsonProperty("grade")]
-    public mixed $grade;
+    #[JsonProperty('grade')]
+    public TestCaseGrade $grade;
 
     /**
-     * @param string $testCaseId
-     * @param mixed $grade
+     * @param array{
+     *   testCaseId: string,
+     *   grade: TestCaseGrade,
+     * } $values
      */
     public function __construct(
-        string $testCaseId,
-        mixed $grade,
+        array $values,
     ) {
-        $this->testCaseId = $testCaseId;
-        $this->grade = $grade;
+        $this->testCaseId = $values['testCaseId'];
+        $this->grade = $values['grade'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

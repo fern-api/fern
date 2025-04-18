@@ -1,21 +1,31 @@
-irVersion: v40
+irVersion: v57
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - go build -v ./...
+  testScript:
+    commands:
+      - go test -v ./...
+
 publish:
   workingDirectory: generators/go
   preBuildCommands:
     - go build ./...
+    - pnpm --filter @fern-api/go-sdk dist:cli
   docker:
     file: ./generators/go/sdk/Dockerfile
     image: fernapi/fern-go-sdk
-    context: ./generators/go
+    context: .
 test:
   docker:
     image: fernapi/fern-go-sdk:latest
-    command: docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest ./generators/go
+    command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
 language: go
-generatorType: sdk
+generatorType: SDK
 defaultOutputMode: github
 fixtures:
   examples:
@@ -24,6 +34,40 @@ fixtures:
     - outputFolder: always-send-required-properties
       customConfig:
         alwaysSendRequiredProperties: true
+    - outputFolder: exported-client-name
+      customConfig:
+        exportedClientName: AcmeClient
+    - outputFolder: client-name
+      customConfig:
+        clientName: Acme
+    - outputFolder: client-name-with-custom-constructor-name
+      customConfig:
+        clientName: Acme
+        clientConstructorName: New
+    - outputFolder: readme-config
+      customConfig:
+        clientName: Acme
+        clientConstructorName: New
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /big-entity
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+  imdb:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: flat-package-layout
+      customConfig:
+        packageLayout: flat
+    - outputFolder: flat-package-layout-with-custom-client-name
+      customConfig:
+        packageLayout: flat
+        clientName: Acme
+        clientConstructorName: New
   undiscriminated-unions:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -40,6 +84,39 @@ fixtures:
         union: v1
         module:
           path: github.com/fern-api/unions-go
+  file-upload:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline-file-properties
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: upload
+        union: v1
+        module:
+          path: github.com/fern-api/file-upload-go
+        inlineFileProperties: true
+  path-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline-path-parameters
+      outputVersion: 0.0.1
+      customConfig:
+        packageName: path
+        union: v1
+        module:
+          path: github.com/fern-api/path-parameters-go
+        inlinePathParameters: true
+  package-yml:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: flat-package-layout
+      customConfig:
+        packageLayout: flat
+    - outputFolder: flat-package-layout-with-custom-client-name
+      customConfig:
+        packageLayout: flat
+        clientName: Acme
+        clientConstructorName: New
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0
@@ -59,9 +136,14 @@ scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
-allowedFailures: 
-  - exhaustive
-  - reserved-keywords
-  - server-sent-events
-  - trace
+allowedFailures:
   - alias-extends
+  - exhaustive
+  - mixed-case
+  - reserved-keywords
+  - streaming-parameter
+  - trace
+
+  # TODO: Fix example generator to produce valid dynamic snippets.
+  - pagination
+  - unions

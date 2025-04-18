@@ -4,23 +4,42 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "value",
+ *         value: 5
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "date",
+ *         value: "1994-01-01"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "datetime",
+ *         value: "1994-01-01T01:01:01Z"
+ *     }
+ */
 export type UnionWithTime =
     | SeedUnions.UnionWithTime.Value
     | SeedUnions.UnionWithTime.Date_
     | SeedUnions.UnionWithTime.Datetime;
 
-export declare namespace UnionWithTime {
-    interface Value {
+export namespace UnionWithTime {
+    export interface Value {
         type: "value";
         value: number;
     }
 
-    interface Date_ {
+    export interface Date_ {
         type: "date";
         value: string;
     }
 
-    interface Datetime {
+    export interface Datetime {
         type: "datetime";
         value: Date;
     }

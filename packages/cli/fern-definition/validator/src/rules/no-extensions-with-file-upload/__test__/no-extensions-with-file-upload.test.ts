@@ -1,6 +1,7 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoExtensionsWithFileUploadRule } from "../no-extensions-with-file-upload";
 
 describe("no-extensions-with-file-upload", () => {
@@ -19,7 +20,7 @@ describe("no-extensions-with-file-upload", () => {
                 message: "Request body extensions are not supported for file-upload requests.",
                 nodePath: ["service", "endpoints", "extendsAndFile"],
                 relativeFilepath: RelativeFilePath.of("file-upload.yml"),
-                severity: "error"
+                severity: "fatal"
             }
         ];
 

@@ -1,0 +1,39 @@
+<Info>
+  Projects encapsulate abstractions such as Users, Sessions, Memories, and Documents, and various settings. This allows
+  you to keep your data organized by service, environment (such as development or production), or any other criteria
+  that makes sense for your use case.
+</Info>
+
+## Creating a Project
+
+When you sign up for Zep, your first project is automatically created. You'll be asked to configure a few project-specific settings (details below). If you need more projects, you can create them anytime through the [Zep Web App](https://app.getzep.com/projects/create).
+
+<Frame>
+  <img alt="Create a new project" src="/images/create_new_project.png" />
+</Frame>
+
+### Project Essentials
+
+- Unique Project Name: Choose a unique name for your project.
+- Description (Optional): Feel free to add a brief description of your project.
+- Model Selection: Let us know which LLM you'll be using. We count tokens in Zep artifacts like Messages and Summaries to help you stay within your prompt token budget. Knowing your model choice ensures we use the correct tokenizer.
+
+> **You can modify your project settings later from the Dashboard.**
+
+## Message Window
+
+The Message Window, also known as the Memory Window, is a project setting that specifies how many messages are retrieved in a `GetMemory` call.
+
+It's set to a default of `6` messages and, while not adjustable during the initial project setup, can be easily changed later through the dashboard.
+
+## LLM Model Selection and Token Counting
+
+Select the LLM you'll be using for your Assistant. We count tokens in Zep artifacts like Messages and Summaries to help you stay within your prompt token budget.
+
+Knowing your model choice ensures we use the correct tokenizer.
+
+Available options are `GPT 3.5 or 4 family` and `Llama2 and related`.
+
+## API Keys
+
+API keys are specific to each project. You can create multiple keys for a single project.

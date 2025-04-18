@@ -1,10 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using SeedApi;
 using SeedApi.Core;
-
-#nullable enable
 
 namespace SeedApi.Test.Unit.MockServer;
 
@@ -12,18 +9,18 @@ namespace SeedApi.Test.Unit.MockServer;
 public class GetMovieTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
-              "id": "string",
-              "title": "string",
+              "id": "id",
+              "title": "title",
               "rating": 1.1
             }
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/movies/string").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/movies/movieId").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -31,10 +28,10 @@ public class GetMovieTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Imdb.GetMovieAsync("string", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Imdb.GetMovieAsync("movieId");
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Movie>(mockResponse)).UsingDefaults()
+        );
     }
 }

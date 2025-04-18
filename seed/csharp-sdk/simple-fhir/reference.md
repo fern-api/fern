@@ -12,7 +12,7 @@
 <dd>
 
 ```csharp
-await client.GetAccountAsync("string");
+await client.GetAccountAsync("account_id");
 ```
 </dd>
 </dl>

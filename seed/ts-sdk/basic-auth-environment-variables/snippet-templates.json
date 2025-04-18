@@ -54,7 +54,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "password: $FERN_INPUT",
+                                        "templateString": "accessToken: $FERN_INPUT",
                                         "isOptional": false,
                                         "templateInputs": [
                                             {
@@ -141,7 +141,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "password: $FERN_INPUT",
+                                        "templateString": "accessToken: $FERN_INPUT",
                                         "isOptional": false,
                                         "templateInputs": [
                                             {

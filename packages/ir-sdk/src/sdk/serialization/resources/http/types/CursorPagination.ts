@@ -18,7 +18,7 @@ export const CursorPagination: core.serialization.ObjectSchema<
 });
 
 export declare namespace CursorPagination {
-    interface Raw {
+    export interface Raw {
         page: RequestProperty.Raw;
         next: ResponseProperty.Raw;
         results: ResponseProperty.Raw;

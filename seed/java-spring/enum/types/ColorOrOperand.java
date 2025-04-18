@@ -85,7 +85,7 @@ public final class ColorOrOperand {
     }
 
     @java.lang.Override
-    public ColorOrOperand deserialize(JsonParser p, DeserializationContext ctxt) throws
+    public ColorOrOperand deserialize(JsonParser p, DeserializationContext context) throws
         IOException {
       Object value = p.readValueAs(Object.class);
       try {

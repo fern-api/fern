@@ -1,4 +1,10 @@
+import { PackageId, StreamingFetcher, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
+
 import {
+    ContainerType,
     CursorPagination,
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
@@ -7,13 +13,11 @@ import {
     Name,
     NameAndWireValue,
     OffsetPagination,
+    PrimitiveTypeV2,
     ResponseError,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
-import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
-import { ts } from "ts-morph";
+
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
 import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
@@ -22,8 +26,8 @@ import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
     CONTENT_TYPE_RESPONSE_KEY,
-    getSuccessReturnType,
-    READABLE_RESPONSE_KEY
+    READABLE_RESPONSE_KEY,
+    getSuccessReturnType
 } from "./getSuccessReturnType";
 
 export declare namespace GeneratedThrowingEndpointResponse {
@@ -44,7 +48,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
 }
 
 export class GeneratedThrowingEndpointResponse implements GeneratedEndpointResponse {
-    private static RESPONSE_VARIABLE_NAME = "_response";
+    public static readonly RESPONSE_VARIABLE_NAME = "_response";
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
@@ -83,6 +87,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         }
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
+        }
+        if (typeReference.type === "container" && typeReference.container.type === "nullable") {
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.nullable);
         }
         return undefined;
     }
@@ -211,6 +218,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         // initializeOffset uses the offset property if set
         const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context });
+        const pagePropertyDefault = this.getDefaultPaginationValue({ type: offset.page.property.valueType });
         const pagePropertyPath = [
             "request",
             ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context }))
@@ -241,7 +249,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                             pagePropertyAccess,
                             ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                            ts.factory.createNumericLiteral("1")
+                            ts.factory.createNumericLiteral(pagePropertyDefault)
                         )
                     )
                 ],
@@ -370,6 +378,50 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             : name.name.camelCase.safeName;
     }
 
+    private getDefaultPaginationValue({ type }: { type: TypeReference }): string {
+        let defaultValue: string | undefined;
+
+        TypeReference._visit(type, {
+            primitive: (primitiveType) => {
+                const maybeV2Scheme = primitiveType.v2;
+                if (maybeV2Scheme != null) {
+                    defaultValue = PrimitiveTypeV2._visit(maybeV2Scheme, {
+                        integer: (it) => (it.default != null ? String(it.default) : undefined),
+                        double: () => undefined,
+                        string: () => undefined,
+                        boolean: () => undefined,
+                        long: () => undefined,
+                        bigInteger: () => undefined,
+                        uint: () => undefined,
+                        uint64: () => undefined,
+                        date: () => undefined,
+                        dateTime: () => undefined,
+                        uuid: () => undefined,
+                        base64: () => undefined,
+                        float: () => undefined,
+                        _other: () => undefined
+                    });
+                }
+            },
+            container: (containerType) => {
+                defaultValue = ContainerType._visit(containerType, {
+                    literal: () => undefined,
+                    list: () => undefined,
+                    set: () => undefined,
+                    nullable: (nullableType) => this.getDefaultPaginationValue({ type: nullableType }),
+                    optional: (optionalType) => this.getDefaultPaginationValue({ type: optionalType }),
+                    map: () => undefined,
+                    _other: () => undefined
+                });
+            },
+            named: () => undefined,
+            unknown: () => undefined,
+            _other: () => undefined
+        });
+
+        return defaultValue != null ? defaultValue : "1";
+    }
+
     public getResponseVariableName(): string {
         return GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME;
     }
@@ -425,39 +477,58 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     ts.factory.createObjectLiteralExpression(
                         [
                             ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier(READABLE_RESPONSE_KEY),
+                                ts.factory.createIdentifier("data"),
+                                ts.factory.createObjectLiteralExpression(
+                                    [
+                                        ts.factory.createPropertyAssignment(
+                                            ts.factory.createIdentifier(READABLE_RESPONSE_KEY),
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createIdentifier(
+                                                    GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                                ),
+                                                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                                            )
+                                        ),
+                                        ts.factory.createPropertyAssignment(
+                                            ts.factory.createIdentifier(CONTENT_LENGTH_RESPONSE_KEY),
+                                            ts.factory.createConditionalExpression(
+                                                ts.factory.createBinaryExpression(
+                                                    ts.factory.createIdentifier(CONTENT_LENGTH_VARIABLE_NAME),
+                                                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                                    ts.factory.createNull()
+                                                ),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                                ts.factory.createCallExpression(
+                                                    ts.factory.createIdentifier("Number"),
+                                                    undefined,
+                                                    [ts.factory.createIdentifier(CONTENT_LENGTH_VARIABLE_NAME)]
+                                                ),
+                                                ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                                                ts.factory.createIdentifier("undefined")
+                                            )
+                                        ),
+                                        ts.factory.createPropertyAssignment(
+                                            ts.factory.createIdentifier(CONTENT_TYPE_RESPONSE_KEY),
+                                            context.coreUtilities.fetcher.getHeader._invoke({
+                                                referenceToResponseHeaders: this.getReferenceToResponseHeaders(context),
+                                                header: "Content-Type"
+                                            })
+                                        )
+                                    ],
+                                    true
+                                )
+                            ),
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("rawResponse"),
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createIdentifier(
                                         GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
                                     ),
-                                    context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                                    ts.factory.createIdentifier("rawResponse")
                                 )
-                            ),
-                            ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier(CONTENT_LENGTH_RESPONSE_KEY),
-                                ts.factory.createConditionalExpression(
-                                    ts.factory.createBinaryExpression(
-                                        ts.factory.createIdentifier(CONTENT_LENGTH_VARIABLE_NAME),
-                                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                                        ts.factory.createNull()
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                    ts.factory.createCallExpression(ts.factory.createIdentifier("Number"), undefined, [
-                                        ts.factory.createIdentifier(CONTENT_LENGTH_VARIABLE_NAME)
-                                    ]),
-                                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                                    ts.factory.createIdentifier("undefined")
-                                )
-                            ),
-                            ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier(CONTENT_TYPE_RESPONSE_KEY),
-                                context.coreUtilities.fetcher.getHeader._invoke({
-                                    referenceToResponseHeaders: this.getReferenceToResponseHeaders(context),
-                                    header: "Content-Type"
-                                })
                             )
                         ],
-                        true
+                        false
                     )
                 )
             ];
@@ -483,59 +554,117 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             });
             return [
                 ts.factory.createReturnStatement(
-                    context.coreUtilities.streamUtils.Stream._construct({
-                        stream: ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                            undefined,
-                            ts.factory.createIdentifier(
-                                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
-                            )
-                        ),
-                        eventShape,
-                        signal: getAbortSignalExpression({
-                            abortSignalReference: this.clientClass.getReferenceToAbortSignal.bind(this.clientClass)
-                        }),
-                        parse: ts.factory.createArrowFunction(
-                            [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
-                            undefined,
-                            [
-                                ts.factory.createParameterDeclaration(
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                    ts.factory.createObjectLiteralExpression(
+                        [
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("data"),
+                                context.coreUtilities.streamUtils.Stream._construct({
+                                    stream: ts.factory.createPropertyAccessChain(
+                                        ts.factory.createIdentifier(
+                                            GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                        ),
+                                        undefined,
+                                        ts.factory.createIdentifier(
+                                            context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                                        )
+                                    ),
+                                    eventShape,
+                                    signal: getAbortSignalExpression({
+                                        abortSignalReference: this.clientClass.getReferenceToAbortSignal.bind(
+                                            this.clientClass
+                                        )
+                                    }),
+                                    parse: context.includeSerdeLayer
+                                        ? ts.factory.createArrowFunction(
+                                              [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                                              undefined,
+                                              [
+                                                  ts.factory.createParameterDeclaration(
+                                                      undefined,
+                                                      undefined,
+                                                      undefined,
+                                                      GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                                  )
+                                              ],
+                                              undefined,
+                                              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                              ts.factory.createBlock(
+                                                  [
+                                                      ts.factory.createReturnStatement(
+                                                          context.sdkEndpointTypeSchemas
+                                                              .getGeneratedEndpointTypeSchemas(
+                                                                  this.packageId,
+                                                                  this.endpoint.name
+                                                              )
+                                                              .deserializeStreamData({
+                                                                  context,
+                                                                  referenceToRawStreamData: ts.factory.createIdentifier(
+                                                                      GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                                                  )
+                                                              })
+                                                      )
+                                                  ],
+                                                  true
+                                              )
+                                          )
+                                        : ts.factory.createArrowFunction(
+                                              undefined,
+                                              undefined,
+                                              [
+                                                  ts.factory.createParameterDeclaration(
+                                                      undefined,
+                                                      undefined,
+                                                      undefined,
+                                                      GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                                  )
+                                              ],
+                                              undefined,
+                                              ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                              ts.factory.createAsExpression(
+                                                  ts.factory.createIdentifier(
+                                                      GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                                  ),
+                                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                                              )
+                                          )
+                                })
+                            ),
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("rawResponse"),
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier(
+                                        GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                    ),
+                                    ts.factory.createIdentifier("rawResponse")
                                 )
-                            ],
-                            undefined,
-                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                            ts.factory.createBlock(
-                                [
-                                    ts.factory.createReturnStatement(
-                                        context.sdkEndpointTypeSchemas
-                                            .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
-                                            .deserializeStreamData({
-                                                context,
-                                                referenceToRawStreamData: ts.factory.createIdentifier(
-                                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                )
-                                            })
-                                    )
-                                ],
-                                true
                             )
-                        )
-                    })
+                        ],
+                        false
+                    )
                 )
             ];
         }
+        const deserializeToResponse = generatedEndpointTypeSchemas.deserializeResponse(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+            ),
+            context
+        );
         return [
             ts.factory.createReturnStatement(
-                generatedEndpointTypeSchemas.deserializeResponse(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                        context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
-                    ),
-                    context
+                ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("data"), deserializeToResponse),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("rawResponse"),
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                                ts.factory.createIdentifier("rawResponse")
+                            )
+                        )
+                    ],
+                    false
                 )
             )
         ];
@@ -552,6 +681,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
     }
 
+    private getReferenceToRawResponse(context: SdkContext): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            ts.factory.createIdentifier(context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.rawResponse)
+        );
+    }
+
     private getReturnFailedResponse(context: SdkContext): ts.Statement[] {
         return [...this.getThrowsForStatusCodeErrors(context), ...this.getThrowsForNonStatusCodeErrors(context)];
     }
@@ -559,6 +695,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getThrowsForStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
         const referenceToErrorBody = this.getReferenceToErrorBody(context);
+        const referenceToRawResponse = this.getReferenceToRawResponse(context);
 
         const defaultThrow = ts.factory.createThrowStatement(
             context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
@@ -570,7 +707,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 responseBody: ts.factory.createPropertyAccessExpression(
                     referenceToError,
                     context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
-                )
+                ),
+                rawResponse: referenceToRawResponse
             })
         );
 
@@ -607,7 +745,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                                           ? generatedSdkErrorSchema.deserializeBody(context, {
                                                                 referenceToBody: referenceToErrorBody
                                                             })
-                                                          : undefined
+                                                          : undefined,
+                                                  referenceToRawResponse
                                               })
                                           )
                                       ];
@@ -714,6 +853,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
+        const referenceToRawResponse = this.getReferenceToRawResponse(context);
         return [
             ts.factory.createSwitchStatement(
                 ts.factory.createPropertyAccessExpression(
@@ -736,7 +876,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     responseBody: ts.factory.createPropertyAccessExpression(
                                         referenceToError,
                                         context.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
-                                    )
+                                    ),
+                                    rawResponse: referenceToRawResponse
                                 })
                             )
                         ]
@@ -747,7 +888,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         ),
                         [
                             ts.factory.createThrowStatement(
-                                context.timeoutSdkError.getGeneratedTimeoutSdkError().build(context)
+                                context.timeoutSdkError
+                                    .getGeneratedTimeoutSdkError()
+                                    .build(
+                                        context,
+                                        `Timeout exceeded when calling ${this.endpoint.method} ${getFullPathForEndpoint(
+                                            this.endpoint
+                                        )}.`
+                                    )
                             )
                         ]
                     ),
@@ -763,7 +911,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                         context.coreUtilities.fetcher.Fetcher.UnknownError.message
                                     ),
                                     statusCode: undefined,
-                                    responseBody: undefined
+                                    responseBody: undefined,
+                                    rawResponse: referenceToRawResponse
                                 })
                             )
                         ]
@@ -780,7 +929,28 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
         return this.endpoint.response?.body != null
             ? this.getReturnStatementsForOkResponseBody(context)
-            : [ts.factory.createReturnStatement(undefined)];
+            : [
+                  ts.factory.createReturnStatement(
+                      ts.factory.createObjectLiteralExpression(
+                          [
+                              ts.factory.createPropertyAssignment(
+                                  ts.factory.createIdentifier("data"),
+                                  ts.factory.createIdentifier("undefined")
+                              ),
+                              ts.factory.createPropertyAssignment(
+                                  ts.factory.createIdentifier("rawResponse"),
+                                  ts.factory.createPropertyAccessExpression(
+                                      ts.factory.createIdentifier(
+                                          GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                      ),
+                                      ts.factory.createIdentifier("rawResponse")
+                                  )
+                              )
+                          ],
+                          false
+                      )
+                  )
+              ];
     }
 
     private getReferenceToError(context: SdkContext): ts.Expression {

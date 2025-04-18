@@ -4,4 +4,4 @@ export {
     type LocalApiDependency,
     type VersionedDependency
 } from "./DependenciesConfiguration";
-export { loadDependenciesConfiguration } from "./loadDependenciesConfiguration";
+export { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigurationSchema";

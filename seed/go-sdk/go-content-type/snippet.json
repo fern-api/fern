@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/movies/create-movie",
+                "method": "POST",
+                "identifier_override": "endpoint_imdb.createMovie"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-content-type/fern\"\n\tfernclient \"github.com/go-content-type/fern/client\"\n\toption \"github.com/go-content-type/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Imdb.CreateMovie(\n\tcontext.TODO(),\n\t\u0026fern.CreateMovieRequest{\n\t\tTitle:  \"title\",\n\t\tRating: 1.1,\n\t},\n)\n"
+            }
+        }
+    ]
+}

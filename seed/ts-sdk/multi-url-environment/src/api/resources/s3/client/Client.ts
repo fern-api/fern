@@ -10,20 +10,24 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace S3 {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<
             environments.SeedMultiUrlEnvironmentEnvironment | environments.SeedMultiUrlEnvironmentEnvironmentUrls
         >;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -36,20 +40,28 @@ export class S3 {
      *
      * @example
      *     await client.s3.getPresignedUrl({
-     *         s3Key: "string"
+     *         s3Key: "s3Key"
      *     })
      */
-    public async getPresignedUrl(
+    public getPresignedUrl(
         request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
-        requestOptions?: S3.RequestOptions
-    ): Promise<string> {
+        requestOptions?: S3.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getPresignedUrl(request, requestOptions));
+    }
+
+    private async __getPresignedUrl(
+        request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
+        requestOptions?: S3.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedMultiUrlEnvironmentEnvironment.Production
-                ).s3,
-                "/s3/presigned-url"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedMultiUrlEnvironmentEnvironment.Production
+                    ).s3,
+                "/s3/presigned-url",
             ),
             method: "POST",
             headers: {
@@ -60,6 +72,7 @@ export class S3 {
                 "User-Agent": "@fern/multi-url-environment/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -69,18 +82,22 @@ export class S3 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.s3.getPresignedUrl.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.s3.getPresignedUrl.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMultiUrlEnvironmentError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -89,12 +106,16 @@ export class S3 {
                 throw new errors.SeedMultiUrlEnvironmentError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMultiUrlEnvironmentTimeoutError();
+                throw new errors.SeedMultiUrlEnvironmentTimeoutError(
+                    "Timeout exceeded when calling POST /s3/presigned-url.",
+                );
             case "unknown":
                 throw new errors.SeedMultiUrlEnvironmentError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

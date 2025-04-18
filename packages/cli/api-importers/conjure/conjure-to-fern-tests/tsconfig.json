@@ -1,0 +1,11 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    { "path": "../../../../commons/fs-utils" },
+    { "path": "../../../task-context" },
+    { "path": "../../../workspace/loader" },
+  ]
+}

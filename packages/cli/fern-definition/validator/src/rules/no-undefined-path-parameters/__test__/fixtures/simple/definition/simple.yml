@@ -10,6 +10,14 @@ service:
         parameter: string
       method: POST
 
+    inlinedNoErrors:
+      path: /path/{parameter}/to/endpoint
+      request:
+        name: InlinedRequest
+        path-parameters:
+          parameter: string
+      method: POST
+
     missingPathParameters:
       path: /path/{parameter1}/{parameter2}/to/endpoint
       path-parameters:
@@ -26,4 +34,11 @@ service:
       path: /{x}
       path-parameters:
         x: $someVariable
+      method: POST
+    
+    overridenPathParameters:
+      base-path: /{y}
+      path: /override
+      path-parameters:
+        y: string
       method: POST

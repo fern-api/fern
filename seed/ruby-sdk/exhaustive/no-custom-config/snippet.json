@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\"])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\", \"string\"])",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }, { string: \"string\" }])",
                 "type": "ruby"
             }
         },
@@ -84,7 +84,7 @@
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\"])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\", \"string\"])",
                 "type": "ruby"
             }
         },
@@ -95,7 +95,7 @@
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }, { string: \"string\" }])",
                 "type": "ruby"
             }
         },
@@ -156,6 +156,50 @@
         },
         {
             "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.content_type.post_json_patch_content_type(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.content_type.post_json_patch_content_with_charset_type(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.content_type.post_json_patch_content_type(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.content_type.post_json_patch_content_with_charset_type(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/enum",
                 "method": "POST",
                 "identifierOverride": "endpoint_endpoints/enum.getAndReturnEnum"
@@ -183,7 +227,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testGet"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -205,7 +249,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testPut"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"string\", request: { string: \"string\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"id\", request: { string: \"string\" })",
                 "type": "ruby"
             }
         },
@@ -216,7 +260,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"string\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"id\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
                 "type": "ruby"
             }
         },
@@ -227,7 +271,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -238,7 +282,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testGet"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -260,7 +304,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testPut"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"string\", request: { string: \"string\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"id\", request: { string: \"string\" })",
                 "type": "ruby"
             }
         },
@@ -271,7 +315,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"string\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"id\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
                 "type": "ruby"
             }
         },
@@ -282,7 +326,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -293,7 +337,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
                 "type": "ruby"
             }
         },
@@ -315,7 +359,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"string\": { \"string\": \"string\" } } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"map\": { \"map\": \"map\" } } })",
                 "type": "ruby"
             }
         },
@@ -326,7 +370,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } })",
                 "type": "ruby"
             }
         },
@@ -337,7 +381,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } })",
                 "type": "ruby"
             }
         },
@@ -348,7 +392,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } }])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } }, { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } }])",
                 "type": "ruby"
             }
         },
@@ -359,7 +403,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
                 "type": "ruby"
             }
         },
@@ -381,7 +425,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"string\": { \"string\": \"string\" } } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"map\": { \"map\": \"map\" } } })",
                 "type": "ruby"
             }
         },
@@ -392,7 +436,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } })",
                 "type": "ruby"
             }
         },
@@ -403,7 +447,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } })",
                 "type": "ruby"
             }
         },
@@ -414,7 +458,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } }])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } }, { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } }])",
                 "type": "ruby"
             }
         },
@@ -425,7 +469,18 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithPath"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"param\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_inline_path(param: \"param\")",
                 "type": "ruby"
             }
         },
@@ -436,7 +491,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"string\", number: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -447,7 +502,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"string\", numer: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -458,7 +513,18 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"string\", query: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"param\", query: \"query\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_inline_path_and_query(param: \"param\", query: \"query\")",
                 "type": "ruby"
             }
         },
@@ -469,7 +535,18 @@
                 "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"string\", request: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"param\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/params.modifyWithInlinePath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_inline_path(param: \"param\", request: \"string\")",
                 "type": "ruby"
             }
         },
@@ -480,7 +557,18 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithPath"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"param\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_inline_path(param: \"param\")",
                 "type": "ruby"
             }
         },
@@ -491,7 +579,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"string\", number: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -502,7 +590,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"string\", numer: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -513,7 +601,18 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"string\", query: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"param\", query: \"query\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_inline_path_and_query(param: \"param\", query: \"query\")",
                 "type": "ruby"
             }
         },
@@ -524,7 +623,18 @@
                 "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"string\", request: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"param\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/params.modifyWithInlinePath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_inline_path(param: \"param\", request: \"string\")",
                 "type": "ruby"
             }
         },
@@ -723,6 +833,28 @@
             },
             "snippet": {
                 "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_base_64(request: \"SGVsbG8gd29ybGQh\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.put.add(id: \"id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.put.add(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -755,7 +887,7 @@
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\"])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\", \"string\"])",
                 "type": "ruby"
             }
         },
@@ -766,7 +898,7 @@
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }, { string: \"string\" }])",
                 "type": "ruby"
             }
         },
@@ -832,7 +964,7 @@
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\"])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_primitives(request: [\"string\", \"string\"])",
                 "type": "ruby"
             }
         },
@@ -843,7 +975,7 @@
                 "identifierOverride": "endpoint_endpoints/container.getAndReturnListOfObjects"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: \"string\" }, { string: \"string\" }])",
                 "type": "ruby"
             }
         },
@@ -904,6 +1036,50 @@
         },
         {
             "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.content_type.post_json_patch_content_type(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.content_type.post_json_patch_content_with_charset_type(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/bar",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/content-type.postJsonPatchContentType"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.content_type.post_json_patch_content_type(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo/baz",
+                "method": "POST",
+                "identifierOverride": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.content_type.post_json_patch_content_with_charset_type(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/enum",
                 "method": "POST",
                 "identifierOverride": "endpoint_endpoints/enum.getAndReturnEnum"
@@ -931,7 +1107,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testGet"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -953,7 +1129,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testPut"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"string\", request: { string: \"string\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"id\", request: { string: \"string\" })",
                 "type": "ruby"
             }
         },
@@ -964,7 +1140,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"string\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"id\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
                 "type": "ruby"
             }
         },
@@ -975,7 +1151,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -986,7 +1162,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testGet"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_get(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -1008,7 +1184,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testPut"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"string\", request: { string: \"string\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_put(id: \"id\", request: { string: \"string\" })",
                 "type": "ruby"
             }
         },
@@ -1019,7 +1195,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testPatch"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"string\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_patch(id: \"id\", request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
                 "type": "ruby"
             }
         },
@@ -1030,7 +1206,7 @@
                 "identifierOverride": "endpoint_endpoints/http-methods.testDelete"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.http_methods.test_delete(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -1041,7 +1217,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
                 "type": "ruby"
             }
         },
@@ -1063,7 +1239,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"string\": { \"string\": \"string\" } } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"map\": { \"map\": \"map\" } } })",
                 "type": "ruby"
             }
         },
@@ -1074,7 +1250,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } })",
                 "type": "ruby"
             }
         },
@@ -1085,7 +1261,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } })",
                 "type": "ruby"
             }
         },
@@ -1096,7 +1272,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } }])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } }, { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } }])",
                 "type": "ruby"
             }
         },
@@ -1107,7 +1283,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnWithOptionalField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_optional_field(request: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" })",
                 "type": "ruby"
             }
         },
@@ -1129,7 +1305,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"string\": { \"string\": \"string\" } } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_with_map_of_map(request: { map: { \"map\": { \"map\": \"map\" } } })",
                 "type": "ruby"
             }
         },
@@ -1140,7 +1316,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_optional_field(request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } })",
                 "type": "ruby"
             }
         },
@@ -1151,7 +1327,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } })",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field(string: \"string\", request: { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } })",
                 "type": "ruby"
             }
         },
@@ -1162,7 +1338,7 @@
                 "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" } }])",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{ string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } }, { string: \"string\", nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" } }])",
                 "type": "ruby"
             }
         },
@@ -1173,7 +1349,18 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithPath"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"param\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_inline_path(param: \"param\")",
                 "type": "ruby"
             }
         },
@@ -1184,7 +1371,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"string\", number: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -1195,7 +1382,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"string\", numer: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -1206,7 +1393,18 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"string\", query: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"param\", query: \"query\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_inline_path_and_query(param: \"param\", query: \"query\")",
                 "type": "ruby"
             }
         },
@@ -1217,7 +1415,18 @@
                 "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"string\", request: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"param\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/params.modifyWithInlinePath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_inline_path(param: \"param\", request: \"string\")",
                 "type": "ruby"
             }
         },
@@ -1228,7 +1437,18 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithPath"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path(param: \"param\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_inline_path(param: \"param\")",
                 "type": "ruby"
             }
         },
@@ -1239,7 +1459,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"string\", number: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -1250,7 +1470,7 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"string\", numer: 1)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_allow_multiple_query(query: \"query\", number: 1)",
                 "type": "ruby"
             }
         },
@@ -1261,7 +1481,18 @@
                 "identifierOverride": "endpoint_endpoints/params.getWithPathAndQuery"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"string\", query: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_path_and_query(param: \"param\", query: \"query\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifierOverride": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.get_with_inline_path_and_query(param: \"param\", query: \"query\")",
                 "type": "ruby"
             }
         },
@@ -1272,7 +1503,18 @@
                 "identifierOverride": "endpoint_endpoints/params.modifyWithPath"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"string\", request: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_path(param: \"param\", request: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/params.modifyWithInlinePath"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.params.modify_with_inline_path(param: \"param\", request: \"string\")",
                 "type": "ruby"
             }
         },
@@ -1471,6 +1713,28 @@
             },
             "snippet": {
                 "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.primitive.get_and_return_base_64(request: \"SGVsbG8gd29ybGQh\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.put.add(id: \"id\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "PUT",
+                "identifierOverride": "endpoint_endpoints/put.add"
+            },
+            "snippet": {
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.endpoints.put.add(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -1503,7 +1767,7 @@
                 "identifierOverride": "endpoint_inlined-requests.postWithObjectBodyandResponse"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.inlined_requests.post_with_object_bodyand_response(\n  string: \"string\",\n  integer: 1,\n  nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" }\n)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.inlined_requests.post_with_object_bodyand_response(\n  string: \"string\",\n  integer: 1,\n  nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" }\n)",
                 "type": "ruby"
             }
         },
@@ -1514,7 +1778,7 @@
                 "identifierOverride": "endpoint_inlined-requests.postWithObjectBodyandResponse"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.inlined_requests.post_with_object_bodyand_response(\n  string: \"string\",\n  integer: 1,\n  nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"string\"], set: Set[\"string\"], map: { 1: \"string\" }, bigint: \"123456789123456789\" }\n)",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.inlined_requests.post_with_object_bodyand_response(\n  string: \"string\",\n  integer: 1,\n  nested_object: { string: \"string\", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse(\"2024-01-15T09:30:00.000Z\"), date: Date.parse(\"2023-01-15\"), uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", base_64: \"SGVsbG8gd29ybGQh\", list: [\"list\", \"list\"], set: Set[\"set\"], map: { 1: \"map\" }, bigint: \"1000000\" }\n)",
                 "type": "ruby"
             }
         },
@@ -1591,7 +1855,7 @@
                 "identifierOverride": "endpoint_req-with-headers.getWithCustomHeader"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.req_with_headers.get_with_custom_header(x_test_endpoint_header: \"string\", request: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.req_with_headers.get_with_custom_header(x_test_endpoint_header: \"X-TEST-ENDPOINT-HEADER\", request: \"string\")",
                 "type": "ruby"
             }
         },
@@ -1602,7 +1866,7 @@
                 "identifierOverride": "endpoint_req-with-headers.getWithCustomHeader"
             },
             "snippet": {
-                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.req_with_headers.get_with_custom_header(x_test_endpoint_header: \"string\", request: \"string\")",
+                "client": "require \"fern_exhaustive\"\n\nexhaustive = SeedExhaustiveClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexhaustive.req_with_headers.get_with_custom_header(x_test_endpoint_header: \"X-TEST-ENDPOINT-HEADER\", request: \"string\")",
                 "type": "ruby"
             }
         }

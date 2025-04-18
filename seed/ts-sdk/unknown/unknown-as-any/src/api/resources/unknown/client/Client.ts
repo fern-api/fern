@@ -9,17 +9,21 @@ import * as SeedUnknownAsAny from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Unknown {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,9 +39,15 @@ export class Unknown {
      *         "key": "value"
      *     })
      */
-    public async post(request?: any, requestOptions?: Unknown.RequestOptions): Promise<any[]> {
+    public post(request?: any, requestOptions?: Unknown.RequestOptions): core.HttpResponsePromise<any[]> {
+        return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
+    }
+
+    private async __post(request?: any, requestOptions?: Unknown.RequestOptions): Promise<core.WithRawResponse<any[]>> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -46,6 +56,7 @@ export class Unknown {
                 "User-Agent": "@fern/unknown/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -55,18 +66,22 @@ export class Unknown {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.unknown.post.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.unknown.post.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUnknownAsAnyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -75,12 +90,14 @@ export class Unknown {
                 throw new errors.SeedUnknownAsAnyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedUnknownAsAnyTimeoutError();
+                throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedUnknownAsAnyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -90,14 +107,29 @@ export class Unknown {
      * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.unknown.postObject({})
+     *     await client.unknown.postObject({
+     *         unknown: {
+     *             "key": "value"
+     *         }
+     *     })
      */
-    public async postObject(
+    public postObject(
         request: SeedUnknownAsAny.MyObject,
-        requestOptions?: Unknown.RequestOptions
-    ): Promise<any[]> {
+        requestOptions?: Unknown.RequestOptions,
+    ): core.HttpResponsePromise<any[]> {
+        return core.HttpResponsePromise.fromPromise(this.__postObject(request, requestOptions));
+    }
+
+    private async __postObject(
+        request: SeedUnknownAsAny.MyObject,
+        requestOptions?: Unknown.RequestOptions,
+    ): Promise<core.WithRawResponse<any[]>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/with-object"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/with-object",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -106,6 +138,7 @@ export class Unknown {
                 "User-Agent": "@fern/unknown/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -115,18 +148,22 @@ export class Unknown {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.unknown.postObject.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.unknown.postObject.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUnknownAsAnyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -135,12 +172,14 @@ export class Unknown {
                 throw new errors.SeedUnknownAsAnyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedUnknownAsAnyTimeoutError();
+                throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /with-object.");
             case "unknown":
                 throw new errors.SeedUnknownAsAnyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

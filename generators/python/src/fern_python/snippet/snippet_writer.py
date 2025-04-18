@@ -1,12 +1,10 @@
-import json
 from typing import Any, Dict, List, Optional
 
-import fern.ir.resources as ir_types
-
-from fern_python.codegen import AST
-from fern_python.generators.context import PydanticGeneratorContext
-
 from .type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
+from fern_python.codegen import AST
+from fern_python.generators.context.pydantic_generator_context import PydanticGeneratorContext
+
+import fern.ir.resources as ir_types
 
 
 class SnippetWriter:
@@ -205,7 +203,7 @@ class SnippetWriter:
             uint=lambda uint: AST.Expression(str(uint)),
             uint_64=lambda uint_64: AST.Expression(str(uint_64)),
             float_=lambda float_: AST.Expression(str(float_)),
-            base_64=lambda base_64: AST.Expression(str(base_64)),
+            base_64=lambda base_64: AST.Expression(repr(base_64)),
             big_integer=lambda big_integer: AST.Expression(str(big_integer)),
         )
 
@@ -247,6 +245,14 @@ class SnippetWriter:
             )
             if optional.optional is not None
             else None,
+            nullable=lambda nullable: self.get_snippet_for_example_type_reference(
+                example_type_reference=nullable.nullable,
+                use_typeddict_request=use_typeddict_request,
+                as_request=as_request,
+                in_typeddict=in_typeddict,
+            )
+            if nullable.nullable is not None
+            else None,
             map_=lambda map: self._get_snippet_for_map(
                 pairs=map.map_,
                 use_typeddict_request=use_typeddict_request,
@@ -262,7 +268,14 @@ class SnippetWriter:
         self,
         unknown: Any,
     ) -> AST.Expression:
-        return AST.Expression(json.dumps(unknown))
+        if unknown is not None:
+
+            def write_unknown(writer: AST.NodeWriter) -> None:
+                maybe_stringify_unknown = repr(unknown) if type(unknown) is str else unknown
+                writer.write_line(f"{maybe_stringify_unknown}")
+
+            return AST.Expression(AST.CodeWriter(write_unknown))
+        return AST.Expression("None")
 
     def _get_snippet_for_list_or_set(
         self,

@@ -1,5 +1,54 @@
 - changelogEntry:
     - summary: |
+        Upgrade IR version dependency to v55
+      type: chore
+  createdAt: '2025-02-20'
+  irVersion: 55
+  version: 1.5.0
+- changelogEntry:
+    - summary: |
+        Fix inlining unwrapped alias types.
+      type: fix
+  createdAt: '2025-01-17'
+  irVersion: 53
+  version: 1.4.3
+- changelogEntry:
+    - summary: |
+        Omit methods with inlined types from interface definitions.
+      type: fix
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.2
+- changelogEntry:
+    - summary: |
+        Fix union inline type name conflict resolution.
+      type: fix
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.1
+- changelogEntry:
+    - summary: |
+        Support inline types in the Java generator.
+      type: feat
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.0
+- changelogEntry:
+    - summary: |
+        Bump IR version to latest (v53)
+      type: chore
+  createdAt: '2024-12-10'
+  irVersion: 53
+  version: 1.3.0
+- changelogEntry:
+    - summary: |
+        Bump Jackson version to latest (2.17.2)
+      type: chore
+  createdAt: '2024-09-26'
+  irVersion: 46
+  version: 1.2.0
+- changelogEntry:
+    - summary: |
         We no longer enforce non-null constraints for Object type properties in builders.
       type: feat
   createdAt: '2024-09-11'
@@ -18,7 +67,7 @@
       ```
     type: break
   - summary: |
-      Generated builder methods now enforce non-null checks for required fields, ensuring that all required 
+      Generated builder methods now enforce non-null checks for required fields, ensuring that all required
       fields are properly validated during object construction:
         ```java
         @java.lang.Override
@@ -121,7 +170,7 @@
   version: 0.7.1
 
 - changelogEntry:
-  - summary: Intialize this changelog
+  - summary: Initialize this changelog
     type: fix
   createdAt: '2024-02-03'
   version: 0.6.1

@@ -11,7 +11,7 @@ export const Foo: core.serialization.ObjectSchema<serializers.Foo.Raw, SeedUnion
 });
 
 export declare namespace Foo {
-    interface Raw {
+    export interface Raw {
         name: string;
     }
 }

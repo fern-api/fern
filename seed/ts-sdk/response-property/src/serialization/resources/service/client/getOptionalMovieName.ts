@@ -9,5 +9,5 @@ export const Request: core.serialization.Schema<serializers.service.getOptionalM
     core.serialization.string();
 
 export declare namespace Request {
-    type Raw = string;
+    export type Raw = string;
 }

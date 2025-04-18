@@ -13,7 +13,7 @@ export const TracedFile: core.serialization.ObjectSchema<serializers.TracedFile.
     });
 
 export declare namespace TracedFile {
-    interface Raw {
+    export interface Raw {
         filename: string;
         directory: string;
     }

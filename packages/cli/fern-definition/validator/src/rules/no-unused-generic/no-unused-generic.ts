@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import { visitDefinitionFileYamlAst } from "../../ast";
+import { visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
-import { visitRawTypeDeclaration, parseGeneric } from "@fern-api/fern-definition-schema";
+import { visitDefinitionFileYamlAst } from "../../ast";
 
 export const NoUnusedGenericRule: Rule = {
     name: "no-unused-generic",
-    create: async ({ workspace }) => {
+    create: ({ workspace }) => {
         const instantiations = new Set();
 
-        await visitAllDefinitionFiles(workspace, async (_, file) => {
-            await visitDefinitionFileYamlAst(file, {
+        visitAllDefinitionFiles(workspace, (_, file) => {
+            visitDefinitionFileYamlAst(file, {
                 typeDeclaration: (type) => {
                     visitRawTypeDeclaration(type.declaration, {
                         alias: (alias) => {
@@ -46,7 +47,7 @@ export const NoUnusedGenericRule: Rule = {
                         ? []
                         : [
                               {
-                                  severity: "error",
+                                  severity: "fatal",
                                   message: `Generic "${name}" is declared but never used.`
                               }
                           ];

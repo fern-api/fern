@@ -11,32 +11,32 @@ export type Type =
     | FernIr.Type.Union
     | FernIr.Type.UndiscriminatedUnion;
 
-export declare namespace Type {
-    interface Alias extends FernIr.AliasTypeDeclaration, _Utils {
+export namespace Type {
+    export interface Alias extends FernIr.AliasTypeDeclaration, _Utils {
         type: "alias";
     }
 
-    interface Enum extends FernIr.EnumTypeDeclaration, _Utils {
+    export interface Enum extends FernIr.EnumTypeDeclaration, _Utils {
         type: "enum";
     }
 
-    interface Object_ extends FernIr.ObjectTypeDeclaration, _Utils {
+    export interface Object_ extends FernIr.ObjectTypeDeclaration, _Utils {
         type: "object";
     }
 
-    interface Union extends FernIr.UnionTypeDeclaration, _Utils {
+    export interface Union extends FernIr.UnionTypeDeclaration, _Utils {
         type: "union";
     }
 
-    interface UndiscriminatedUnion extends FernIr.UndiscriminatedUnionTypeDeclaration, _Utils {
+    export interface UndiscriminatedUnion extends FernIr.UndiscriminatedUnionTypeDeclaration, _Utils {
         type: "undiscriminatedUnion";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Type._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         alias: (value: FernIr.AliasTypeDeclaration) => _Result;
         enum: (value: FernIr.EnumTypeDeclaration) => _Result;
         object: (value: FernIr.ObjectTypeDeclaration) => _Result;

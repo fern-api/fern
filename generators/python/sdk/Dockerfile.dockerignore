@@ -1,0 +1,9 @@
+*
+!generators/python/pyproject.toml
+!generators/python/poetry.lock
+!generators/python/sdk/features.yml
+!generators/python/core_utilities/sdk
+!generators/python/core_utilities/shared
+!generators/python/tests
+!generators/python/src
+!generators/python-v2/sdk/dist/cli.cjs

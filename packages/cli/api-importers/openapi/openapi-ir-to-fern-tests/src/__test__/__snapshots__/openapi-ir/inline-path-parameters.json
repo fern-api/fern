@@ -1,0 +1,465 @@
+{
+  "title": "Inlined path parameters",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "GetUser",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "user_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetUserRequestUserId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetUserRequest",
+      "errors": {},
+      "servers": [],
+      "description": "Returns the user with the provided user ID.",
+      "authed": false,
+      "method": "GET",
+      "path": "/users/{user_id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "user_id",
+              "value": {
+                "value": {
+                  "value": "user_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "GetOrganizationUser",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "organization_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetOrganizationUserRequestOrganizationId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "user_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetOrganizationUserRequestUserId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "limit",
+          "schema": {
+            "schema": {
+              "type": "int"
+            },
+            "generatedName": "GetOrganizationUserRequestLimit",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetOrganizationUserRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getOrganizationUserResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "getOrganizationUserResponseResults",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "GetOrganizationUserResponseResultsItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "GetOrganizationUserResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetOrganizationUserResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Returns the user with the provided user ID.",
+      "authed": false,
+      "method": "GET",
+      "path": "/organizations/{organization_id}/users/{user_id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "organization_id",
+              "value": {
+                "value": {
+                  "value": "organization_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "user_id",
+              "value": {
+                "value": {
+                  "value": "user_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "results": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "results",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Search an organization",
+      "audiences": [],
+      "operationId": "Search",
+      "tags": [
+        "Organizations"
+      ],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "description": "Bookmark ID",
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "SearchRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "organization_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "",
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "SearchRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "searchRequestAccess",
+              "key": "access",
+              "schema": {
+                "generatedName": "searchRequestAccess",
+                "value": {
+                  "description": "Access level",
+                  "generatedName": "SearchRequestAccess",
+                  "values": [
+                    {
+                      "generatedName": "private",
+                      "value": "private",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "public",
+                      "value": "public",
+                      "casing": {}
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "SearchRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "searchResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "searchResponseResults",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "SearchResponseResultsItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "SearchResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "SearchResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "",
+      "authed": false,
+      "method": "POST",
+      "path": "/organizations/{organization_id}/search",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "organization_id",
+              "value": {
+                "value": {
+                  "value": "organization_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "results": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "results",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

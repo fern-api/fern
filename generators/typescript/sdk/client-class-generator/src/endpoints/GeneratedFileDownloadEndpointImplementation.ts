@@ -1,9 +1,11 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts, visitJavaScriptRuntime } from "@fern-typescript/commons";
-import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
+
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
 import {
@@ -29,11 +31,11 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
 
 export class GeneratedFileDownloadEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint;
+    public response: GeneratedEndpointResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
-    private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private omitUndefined: boolean;
@@ -58,6 +60,9 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+    }
+    public isPaginated(context: SdkContext): boolean {
+        return false;
     }
 
     public getExample(args: {
@@ -88,11 +93,21 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         );
     }
 
-    public getOverloads(): EndpointSignature[] {
+    public maybeLeverageInvocation({
+        invocation,
+        context
+    }: {
+        invocation: ts.Expression;
+        context: SdkContext;
+    }): undefined {
+        return undefined;
+    }
+
+    public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
         return [];
     }
 
-    public getSignature(context: SdkContext): EndpointSignature {
+    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
         return {
             parameters: [
                 ...this.request.getEndpointParameters(context),
@@ -133,27 +148,31 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         return this.request.getBuildRequestStatements(context);
     }
 
-    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
-        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
+    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            omitUndefined: this.omitUndefined
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+            }
         });
+
         if (url != null) {
-            return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+            return context.externalDependencies.urlJoin.invoke([baseUrl, url]);
         } else {
-            return referenceToEnvironment;
+            return baseUrl;
         }
     }
 
     public invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
-            url: this.getReferenceToEnvironment(context),
+            url: this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,

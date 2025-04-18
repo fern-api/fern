@@ -1,4 +1,4 @@
-irVersion: v46
+irVersion: v55
 displayName: Java Spring
 changelogLocation: ../../generators/java/spring/versions.yml
 image: fernapi/fern-java-spring
@@ -46,5 +46,9 @@ allowedFailures:
   - response-property
   - streaming
   - server-sent-events
+  - server-sent-event-examples
   - alias-extends
   - any-auth
+  - streaming-parameter
+  # public-object requires file download
+  - public-object

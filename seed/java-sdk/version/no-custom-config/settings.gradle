@@ -1,0 +1,3 @@
+rootProject.name = 'version'
+
+include 'sample-app'

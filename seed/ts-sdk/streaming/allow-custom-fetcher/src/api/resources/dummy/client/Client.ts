@@ -10,30 +10,45 @@ import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class Dummy {
     constructor(protected readonly _options: Dummy.Options) {}
 
-    public async generateStream(
+    public generateStream(
         request: SeedStreaming.GenerateStreamRequest,
-        requestOptions?: Dummy.RequestOptions
-    ): Promise<core.Stream<SeedStreaming.StreamResponse>> {
+        requestOptions?: Dummy.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<SeedStreaming.StreamResponse>> {
+        return core.HttpResponsePromise.fromPromise(this.__generateStream(request, requestOptions));
+    }
+
+    private async __generateStream(
+        request: SeedStreaming.GenerateStreamRequest,
+        requestOptions?: Dummy.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "generate-stream"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "generate-stream",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -42,6 +57,7 @@ export class Dummy {
                 "User-Agent": "@fern/streaming/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -55,28 +71,32 @@ export class Dummy {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return new core.Stream({
-                stream: _response.body,
-                parse: async (data) => {
-                    return serializers.StreamResponse.parseOrThrow(data, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    });
-                },
-                signal: requestOptions?.abortSignal,
-                eventShape: {
-                    type: "json",
-                    messageTerminator: "\n",
-                },
-            });
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: async (data) => {
+                        return serializers.StreamResponse.parseOrThrow(data, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        });
+                    },
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "json",
+                        messageTerminator: "\n",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedStreamingError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -85,12 +105,14 @@ export class Dummy {
                 throw new errors.SeedStreamingError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedStreamingTimeoutError();
+                throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate-stream.");
             case "unknown":
                 throw new errors.SeedStreamingError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -104,12 +126,23 @@ export class Dummy {
      *         numEvents: 5
      *     })
      */
-    public async generate(
+    public generate(
         request: SeedStreaming.Generateequest,
-        requestOptions?: Dummy.RequestOptions
-    ): Promise<SeedStreaming.StreamResponse> {
+        requestOptions?: Dummy.RequestOptions,
+    ): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__generate(request, requestOptions));
+    }
+
+    private async __generate(
+        request: SeedStreaming.Generateequest,
+        requestOptions?: Dummy.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedStreaming.StreamResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "generate"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "generate",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -118,6 +151,7 @@ export class Dummy {
                 "User-Agent": "@fern/streaming/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -130,18 +164,22 @@ export class Dummy {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.StreamResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.StreamResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedStreamingError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -150,12 +188,14 @@ export class Dummy {
                 throw new errors.SeedStreamingError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedStreamingTimeoutError();
+                throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate.");
             case "unknown":
                 throw new errors.SeedStreamingError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

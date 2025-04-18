@@ -14,7 +14,7 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
     problemDescription: core.serialization.lazyObject(() => serializers.ProblemDescription),
     files: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.ProblemFiles).optional()
+        core.serialization.lazyObject(() => serializers.ProblemFiles).optional(),
     ),
     inputParams: core.serialization.list(core.serialization.lazyObject(() => serializers.VariableTypeAndName)),
     outputType: core.serialization.lazy(() => serializers.VariableType),
@@ -23,7 +23,7 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace CreateProblemRequest {
-    interface Raw {
+    export interface Raw {
         problemName: string;
         problemDescription: serializers.ProblemDescription.Raw;
         files: Record<serializers.Language.Raw, serializers.ProblemFiles.Raw | null | undefined>;

@@ -1,13 +1,22 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorExec } from "@fern-api/generator-commons";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import {
+    JavaScriptRuntime,
+    NpmPackage,
+    PersistedTypescriptProject,
+    ScriptsManager,
+    fixImportsForEsm
+} from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
-import { camelCase, upperFirst } from "lodash-es";
-import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
+
+import { FernGeneratorExec } from "@fern-api/base-generator";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { getNamespaceExport } from "@fern-api/typescript-base";
+
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
+import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
@@ -36,6 +45,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
+            shouldGenerateWebsocketClients: parsed?.shouldGenerateWebsocketClients ?? false,
             includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
@@ -54,12 +64,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
             inlineFileProperties: parsed?.inlineFileProperties ?? false,
+            inlinePathParameters: parsed?.inlinePathParameters ?? false,
+            enableInlineTypes: parsed?.enableInlineTypes ?? false,
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? false,
             generateWireTests: parsed?.generateWireTests ?? false,
             noScripts: parsed?.noScripts ?? false,
-            useBigInt: parsed?.useBigInt ?? false
+            useBigInt: parsed?.useBigInt ?? false,
+            useLegacyExports: parsed?.useLegacyExports ?? true
         };
     }
 
@@ -76,10 +89,12 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         generatorContext: GeneratorContext;
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
-        const namespaceExport =
-            customConfig.namespaceExport ??
-            `${upperFirst(camelCase(config.organization))}${upperFirst(camelCase(config.workspaceName))}`;
-
+        const useLegacyExports = customConfig.useLegacyExports ?? true;
+        const namespaceExport = getNamespaceExport({
+            organization: config.organization,
+            workspaceName: config.workspaceName,
+            namespaceExport: customConfig.namespaceExport
+        });
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
             intermediateRepresentation,
@@ -112,6 +127,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 outputEsm: customConfig.outputEsm,
                 includeCredentialsOnCrossOriginRequests: customConfig.includeCredentialsOnCrossOriginRequests,
                 allowCustomFetcher: customConfig.allowCustomFetcher,
+                shouldGenerateWebsocketClients: customConfig.shouldGenerateWebsocketClients,
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
@@ -130,12 +146,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
+                inlinePathParameters: customConfig.inlinePathParameters ?? false,
                 writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
-                executionEnvironment: this.exectuionEnvironment(config),
+                executionEnvironment: this.executionEnvironment(config),
                 packageJson: customConfig.packageJson,
                 outputJsr: customConfig.publishToJsr ?? false,
                 omitUndefined: customConfig.omitUndefined ?? false,
-                useBigInt: customConfig.useBigInt ?? false
+                useBigInt: customConfig.useBigInt ?? false,
+                enableInlineTypes: customConfig.enableInlineTypes ?? false,
+                useLegacyExports
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -145,7 +164,23 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 
+        await this.postProcess(persistedTypescriptProject, customConfig);
+
+        const scriptsManager = new ScriptsManager();
+        await scriptsManager.copyScripts({
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
+        });
+
         return persistedTypescriptProject;
+    }
+
+    private async postProcess(
+        persistedTypescriptProject: PersistedTypescriptProject,
+        config: SdkCustomConfig
+    ): Promise<void> {
+        if (config.useLegacyExports === false) {
+            await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
+        }
     }
 
     protected isPackagePrivate(customConfig: SdkCustomConfig): boolean {
@@ -164,11 +199,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return customConfig.publishToJsr ?? false;
     }
 
-    protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
+    protected executionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
         return config.environment.type === "local"
             ? "local"
             : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
-            ? "dev"
-            : "prod";
+              ? "dev"
+              : "prod";
     }
 }

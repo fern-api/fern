@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_auth.getToken"
             },
             "snippet": {
-                "client": "require \"fern_any_auth\"\n\nany_auth = SeedAnyAuthClient::Client.new(\n  base_url: \"https://api.example.com\",\n  token: \"YOUR_AUTH_TOKEN\",\n  api_key: \"YOUR_API_KEY\"\n)\nany_auth.auth.get_token(\n  client_id: \"string\",\n  client_secret: \"string\",\n  scope: \"string\"\n)",
+                "client": "require \"fern_any_auth\"\n\nany_auth = SeedAnyAuthClient::Client.new(\n  base_url: \"https://api.example.com\",\n  token: \"YOUR_AUTH_TOKEN\",\n  api_key: \"YOUR_API_KEY\"\n)\nany_auth.auth.get_token(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_auth.getToken"
             },
             "snippet": {
-                "client": "require \"fern_any_auth\"\n\nany_auth = SeedAnyAuthClient::Client.new(\n  base_url: \"https://api.example.com\",\n  token: \"YOUR_AUTH_TOKEN\",\n  api_key: \"YOUR_API_KEY\"\n)\nany_auth.auth.get_token(\n  client_id: \"string\",\n  client_secret: \"string\",\n  scope: \"string\"\n)",
+                "client": "require \"fern_any_auth\"\n\nany_auth = SeedAnyAuthClient::Client.new(\n  base_url: \"https://api.example.com\",\n  token: \"YOUR_AUTH_TOKEN\",\n  api_key: \"YOUR_API_KEY\"\n)\nany_auth.auth.get_token(\n  client_id: \"client_id\",\n  client_secret: \"client_secret\",\n  scope: \"scope\"\n)",
                 "type": "ruby"
             }
         },

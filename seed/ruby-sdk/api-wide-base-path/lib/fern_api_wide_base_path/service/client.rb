@@ -23,9 +23,9 @@ module SeedApiWideBasePathClient
     # @example
     #  api_wide_base_path = SeedApiWideBasePathClient::Client.new(base_url: "https://api.example.com")
     #  api_wide_base_path.service.post(
-    #    path_param: "string",
-    #    service_param: "string",
-    #    resource_param: "string",
+    #    path_param: "pathParam",
+    #    service_param: "serviceParam",
+    #    resource_param: "resourceParam",
     #    endpoint_param: 1
     #  )
     def post(path_param:, service_param:, resource_param:, endpoint_param:, request_options: nil)
@@ -66,9 +66,9 @@ module SeedApiWideBasePathClient
     # @example
     #  api_wide_base_path = SeedApiWideBasePathClient::Client.new(base_url: "https://api.example.com")
     #  api_wide_base_path.service.post(
-    #    path_param: "string",
-    #    service_param: "string",
-    #    resource_param: "string",
+    #    path_param: "pathParam",
+    #    service_param: "serviceParam",
+    #    resource_param: "resourceParam",
     #    endpoint_param: 1
     #  )
     def post(path_param:, service_param:, resource_param:, endpoint_param:, request_options: nil)

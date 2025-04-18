@@ -1,0 +1,6 @@
+## 4.0.0-rc6
+**`(fix):`** Pydantic models now call update forward refs on non-union circular references. This
+prevents runtime errors in certain cases where types self reference itself through
+a union.
+
+

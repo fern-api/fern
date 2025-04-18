@@ -2,25 +2,35 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Language;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class WorkspaceStarterFilesResponse extends SerializableType
+class WorkspaceStarterFilesResponse extends JsonSerializableType
 {
     /**
-     * @var array<Language, WorkspaceFiles> $files
+     * @var array<value-of<Language>, WorkspaceFiles> $files
      */
-    #[JsonProperty("files"), ArrayType([Language::class => WorkspaceFiles::class])]
+    #[JsonProperty('files'), ArrayType(['string' => WorkspaceFiles::class])]
     public array $files;
 
     /**
-     * @param array<Language, WorkspaceFiles> $files
+     * @param array{
+     *   files: array<value-of<Language>, WorkspaceFiles>,
+     * } $values
      */
     public function __construct(
-        array $files,
+        array $values,
     ) {
-        $this->files = $files;
+        $this->files = $values['files'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

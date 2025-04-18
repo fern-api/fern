@@ -15,7 +15,7 @@ export const WorkspaceSubmissionStatusV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace WorkspaceSubmissionStatusV2 {
-    interface Raw {
+    export interface Raw {
         updates: WorkspaceSubmissionUpdate.Raw[];
     }
 }

@@ -2,23 +2,33 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ExistingSubmissionExecuting extends SerializableType
+class ExistingSubmissionExecuting extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
-     * @param string $submissionId
+     * @param array{
+     *   submissionId: string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
+        $this->submissionId = $values['submissionId'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

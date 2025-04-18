@@ -1,0 +1,349 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_unknown:MyAlias": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "MyAlias",
+                    "camelCase": {
+                        "unsafeName": "myAlias",
+                        "safeName": "myAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "my_alias",
+                        "safeName": "my_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MY_ALIAS",
+                        "safeName": "MY_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MyAlias",
+                        "safeName": "MyAlias"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "unknown",
+                        "camelCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNKNOWN",
+                            "safeName": "UNKNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Unknown",
+                            "safeName": "Unknown"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "unknown"
+            }
+        },
+        "type_unknown:MyObject": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "MyObject",
+                    "camelCase": {
+                        "unsafeName": "myObject",
+                        "safeName": "myObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "my_object",
+                        "safeName": "my_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MY_OBJECT",
+                        "safeName": "MY_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MyObject",
+                        "safeName": "MyObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "unknown",
+                        "camelCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNKNOWN",
+                            "safeName": "UNKNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Unknown",
+                            "safeName": "Unknown"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        },
+                        "wireValue": "unknown"
+                    },
+                    "typeReference": {
+                        "type": "unknown"
+                    }
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_unknown.post": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "post",
+                    "camelCase": {
+                        "unsafeName": "post",
+                        "safeName": "post"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post",
+                        "safeName": "post"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST",
+                        "safeName": "POST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Post",
+                        "safeName": "Post"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "unknown",
+                        "camelCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNKNOWN",
+                            "safeName": "UNKNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Unknown",
+                            "safeName": "Unknown"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "unknown"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_unknown.postObject": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "postObject",
+                    "camelCase": {
+                        "unsafeName": "postObject",
+                        "safeName": "postObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_object",
+                        "safeName": "post_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_OBJECT",
+                        "safeName": "POST_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostObject",
+                        "safeName": "PostObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "unknown",
+                        "camelCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNKNOWN",
+                            "safeName": "UNKNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Unknown",
+                            "safeName": "Unknown"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/with-object"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_unknown:MyObject"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
+}

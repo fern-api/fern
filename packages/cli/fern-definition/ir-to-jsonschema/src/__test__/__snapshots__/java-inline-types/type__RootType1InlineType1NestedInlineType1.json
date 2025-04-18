@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string"
+    },
+    "bar": {
+      "type": "string"
+    },
+    "myEnum": {
+      "$ref": "#/definitions/InlineEnum1"
+    },
+    "ref": {
+      "$ref": "#/definitions/ReferenceType"
+    }
+  },
+  "required": [
+    "foo",
+    "bar",
+    "myEnum",
+    "ref"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "InlineEnum1": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    },
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

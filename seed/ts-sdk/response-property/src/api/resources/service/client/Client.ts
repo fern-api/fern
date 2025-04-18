@@ -9,17 +9,21 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -33,12 +37,23 @@ export class Service {
      * @example
      *     await client.service.getMovie("string")
      */
-    public async getMovie(
+    public getMovie(
         request: string,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedResponseProperty.Response> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(request, requestOptions));
+    }
+
+    private async __getMovie(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -47,6 +62,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -56,18 +72,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -76,12 +96,14 @@ export class Service {
                 throw new errors.SeedResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -93,12 +115,23 @@ export class Service {
      * @example
      *     await client.service.getMovieDocs("string")
      */
-    public async getMovieDocs(
+    public getMovieDocs(
         request: string,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedResponseProperty.Response> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovieDocs(request, requestOptions));
+    }
+
+    private async __getMovieDocs(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -107,6 +140,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -116,18 +150,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -136,12 +174,14 @@ export class Service {
                 throw new errors.SeedResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -153,12 +193,23 @@ export class Service {
      * @example
      *     await client.service.getMovieName("string")
      */
-    public async getMovieName(
+    public getMovieName(
         request: string,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedResponseProperty.StringResponse> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovieName(request, requestOptions));
+    }
+
+    private async __getMovieName(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.StringResponse>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -167,6 +218,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -176,18 +228,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.StringResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.StringResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -196,12 +252,14 @@ export class Service {
                 throw new errors.SeedResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -213,12 +271,23 @@ export class Service {
      * @example
      *     await client.service.getMovieMetadata("string")
      */
-    public async getMovieMetadata(
+    public getMovieMetadata(
         request: string,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedResponseProperty.Response> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovieMetadata(request, requestOptions));
+    }
+
+    private async __getMovieMetadata(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -227,6 +296,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -238,18 +308,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -258,12 +332,14 @@ export class Service {
                 throw new errors.SeedResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -275,12 +351,23 @@ export class Service {
      * @example
      *     await client.service.getOptionalMovie("string")
      */
-    public async getOptionalMovie(
+    public getOptionalMovie(
         request: string,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedResponseProperty.Response | undefined> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovie(request, requestOptions));
+    }
+
+    private async __getOptionalMovie(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response | undefined>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -289,6 +376,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -300,18 +388,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.getOptionalMovie.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.service.getOptionalMovie.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -320,12 +412,14 @@ export class Service {
                 throw new errors.SeedResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -337,12 +431,23 @@ export class Service {
      * @example
      *     await client.service.getOptionalMovieDocs("string")
      */
-    public async getOptionalMovieDocs(
+    public getOptionalMovieDocs(
         request: string,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedResponseProperty.OptionalWithDocs | undefined> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieDocs(request, requestOptions));
+    }
+
+    private async __getOptionalMovieDocs(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -351,6 +456,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -362,18 +468,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.OptionalWithDocs.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.OptionalWithDocs.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -382,12 +492,14 @@ export class Service {
                 throw new errors.SeedResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -399,12 +511,23 @@ export class Service {
      * @example
      *     await client.service.getOptionalMovieName("string")
      */
-    public async getOptionalMovieName(
+    public getOptionalMovieName(
         request: string,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedResponseProperty.OptionalStringResponse | undefined> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieName(request, requestOptions));
+    }
+
+    private async __getOptionalMovieName(
+        request: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalStringResponse | undefined>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "movie",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -413,6 +536,7 @@ export class Service {
                 "User-Agent": "@fern/response-property/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -424,18 +548,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.OptionalStringResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.OptionalStringResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -444,12 +572,14 @@ export class Service {
                 throw new errors.SeedResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError();
+                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
                 throw new errors.SeedResponsePropertyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -7,8 +7,8 @@ import * as SeedCrossPackageTypeNames from "../../../../index";
 /**
  * @example
  *     {
- *         optionalString: "string",
- *         publicProperty: "string",
+ *         optionalString: "optionalString",
+ *         publicProperty: "publicProperty",
  *         privateProperty: 1
  *     }
  */

@@ -5,3 +5,4 @@ export {
     SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls,
 } from "./environments";
 export { SeedMultiUrlEnvironmentNoDefaultError, SeedMultiUrlEnvironmentNoDefaultTimeoutError } from "./errors";
+export * as serialization from "./serialization";

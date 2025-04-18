@@ -4,21 +4,27 @@
 
 import * as core from "../../../../core";
 import * as SeedEnum from "../../../index";
+import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace QueryParam {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,26 +41,45 @@ export class QueryParam {
      *         operandOrColor: "red"
      *     })
      */
-    public async send(
+    public send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
-        requestOptions?: QueryParam.RequestOptions
-    ): Promise<void> {
+        requestOptions?: QueryParam.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
+    }
+
+    private async __send(
+        request: SeedEnum.SendEnumAsQueryParamRequest,
+        requestOptions?: QueryParam.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        _queryParams["operand"] = operand;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
         if (maybeOperand != null) {
-            _queryParams["maybeOperand"] = maybeOperand;
+            _queryParams["maybeOperand"] = serializers.Operand.jsonOrThrow(maybeOperand, {
+                unrecognizedObjectKeys: "strip",
+            });
         }
 
-        _queryParams["operandOrColor"] =
-            typeof operandOrColor === "string" ? operandOrColor : JSON.stringify(operandOrColor);
+        _queryParams["operandOrColor"] = (() => {
+            const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, { unrecognizedObjectKeys: "strip" });
+            return typeof mapped === "string" ? mapped : toJson(mapped);
+        })();
         if (maybeOperandOrColor != null) {
-            _queryParams["maybeOperandOrColor"] =
-                typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : JSON.stringify(maybeOperandOrColor);
+            _queryParams["maybeOperandOrColor"] = (() => {
+                const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                    unrecognizedObjectKeys: "strip",
+                });
+                return typeof mapped === "string" ? mapped : toJson(mapped);
+            })();
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "query",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -63,6 +88,7 @@ export class QueryParam {
                 "User-Agent": "@fern/enum/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -72,13 +98,14 @@ export class QueryParam {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -87,12 +114,14 @@ export class QueryParam {
                 throw new errors.SeedEnumError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedEnumTimeoutError();
+                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -109,48 +138,81 @@ export class QueryParam {
      *         maybeOperandOrColor: "red"
      *     })
      */
-    public async sendList(
+    public sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
-        requestOptions?: QueryParam.RequestOptions
-    ): Promise<void> {
+        requestOptions?: QueryParam.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
+    }
+
+    private async __sendList(
+        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        requestOptions?: QueryParam.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(operand)) {
-            _queryParams["operand"] = operand.map((item) => item);
+            _queryParams["operand"] = operand.map((item) =>
+                serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+            );
         } else {
-            _queryParams["operand"] = operand;
+            _queryParams["operand"] = serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip" });
         }
 
         if (maybeOperand != null) {
             if (Array.isArray(maybeOperand)) {
-                _queryParams["maybeOperand"] = maybeOperand.map((item) => item);
+                _queryParams["maybeOperand"] = maybeOperand.map((item) =>
+                    serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+                );
             } else {
-                _queryParams["maybeOperand"] = maybeOperand;
+                _queryParams["maybeOperand"] = serializers.Operand.jsonOrThrow(maybeOperand, {
+                    unrecognizedObjectKeys: "strip",
+                });
             }
         }
 
         if (Array.isArray(operandOrColor)) {
             _queryParams["operandOrColor"] = operandOrColor.map((item) =>
-                typeof item === "string" ? item : JSON.stringify(item)
+                (() => {
+                    const mapped = serializers.ColorOrOperand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" });
+                    return typeof mapped === "string" ? mapped : toJson(mapped);
+                })(),
             );
         } else {
-            _queryParams["operandOrColor"] =
-                typeof operandOrColor === "string" ? operandOrColor : JSON.stringify(operandOrColor);
+            _queryParams["operandOrColor"] = (() => {
+                const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
+                    unrecognizedObjectKeys: "strip",
+                });
+                return typeof mapped === "string" ? mapped : toJson(mapped);
+            })();
         }
 
         if (maybeOperandOrColor != null) {
             if (Array.isArray(maybeOperandOrColor)) {
                 _queryParams["maybeOperandOrColor"] = maybeOperandOrColor.map((item) =>
-                    typeof item === "string" ? item : JSON.stringify(item)
+                    (() => {
+                        const mapped = serializers.ColorOrOperand.jsonOrThrow(item, {
+                            unrecognizedObjectKeys: "strip",
+                        });
+                        return typeof mapped === "string" ? mapped : toJson(mapped);
+                    })(),
                 );
             } else {
-                _queryParams["maybeOperandOrColor"] =
-                    typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : JSON.stringify(maybeOperandOrColor);
+                _queryParams["maybeOperandOrColor"] = (() => {
+                    const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                        unrecognizedObjectKeys: "strip",
+                    });
+                    return typeof mapped === "string" ? mapped : toJson(mapped);
+                })();
             }
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query-list"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "query-list",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -159,6 +221,7 @@ export class QueryParam {
                 "User-Agent": "@fern/enum/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -168,13 +231,14 @@ export class QueryParam {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -183,12 +247,14 @@ export class QueryParam {
                 throw new errors.SeedEnumError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedEnumTimeoutError();
+                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query-list.");
             case "unknown":
                 throw new errors.SeedEnumError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

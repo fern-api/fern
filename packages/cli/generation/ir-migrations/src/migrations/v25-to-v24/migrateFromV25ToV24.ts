@@ -1,4 +1,5 @@
-import { GeneratorName } from "@fern-api/configuration";
+import { GeneratorName } from "@fern-api/configuration-loader";
+
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import {
@@ -38,7 +39,9 @@ export const V25_TO_V24_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V24.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -101,13 +104,13 @@ export const V25_TO_V24_MIGRATION: IrMigration<
             );
             if (textHttpEndpoints.length === 1 && textHttpEndpoints[0] != null) {
                 context.taskContext.logger.warn(
-                    `Therefore, endpoint ${textHttpEndpoints[0].name.originalName} response type will be casted to unkown.`
+                    `Therefore, endpoint ${textHttpEndpoints[0].name.originalName} response type will be casted to unknown.`
                 );
             } else {
                 context.taskContext.logger.warn(
                     `Therefore, endpoints ${textHttpEndpoints
                         .map((endpoint) => endpoint.name.originalName)
-                        .join(", ")} response types will be casted to unkown.`
+                        .join(", ")} response types will be casted to unknown.`
                 );
             }
         }

@@ -1,0 +1,168 @@
+{
+  "title": "Tree API",
+  "description": "API for working with tree data structures",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Get tree",
+      "audiences": [],
+      "operationId": "getTree",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetTreeRequest",
+      "response": {
+        "description": "Successfully retrieved tree",
+        "schema": {
+          "generatedName": "GetTreeResponse",
+          "schema": "TreeNode",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/tree",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "value": {
+                  "value": {
+                    "value": "root",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "TreeNode": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "treeNodeValue",
+            "key": "value",
+            "schema": {
+              "generatedName": "treeNodeValue",
+              "value": {
+                "description": "The value stored in this node",
+                "schema": {
+                  "example": "root",
+                  "type": "string"
+                },
+                "generatedName": "TreeNodeValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "treeNodeLeft",
+            "key": "left",
+            "schema": {
+              "generatedName": "treeNodeLeft",
+              "value": {
+                "description": "Child nodes of this tree node",
+                "generatedName": "TreeNodeLeft",
+                "schema": "TreeNode",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "treeNodeRight",
+            "key": "right",
+            "schema": {
+              "generatedName": "treeNodeRight",
+              "value": {
+                "description": "Child nodes of this tree node",
+                "generatedName": "TreeNodeRight",
+                "schema": "TreeNode",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "TreeNode",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

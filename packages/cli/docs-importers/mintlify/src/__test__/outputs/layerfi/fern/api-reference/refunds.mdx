@@ -1,0 +1,71 @@
+---
+title: Refunds object
+slug: api-reference/refunds
+---
+
+
+A refund represents a transaction that returns value to from a business to a customer. A specific payment can be refunded or a general refund can be applied to an invoice.
+
+### Attributes
+
+<ParamField body="id" required="true" type="string">
+  Unique identifier for the refund.
+</ParamField>
+<ParamField body="external_id" type="string">
+  Unique ID of the refund in your system for linking and idempotency.
+</ParamField>
+<ParamField body="type" required="true" type="string">
+  Resource type. Value will be "Refund".
+</ParamField>
+<ParamField body="completed_at" required="true" type="ISO8601 timestamp">
+  Timestamp when refund posted.
+</ParamField>
+<ParamField body="refunded_amount" required="true" type="integer">
+  Amount of refund received by customer.
+</ParamField>
+<ParamField body="fee" type="integer">
+  Fee, in cents, charged by payment processor for the refund.
+</ParamField>
+<ParamField body="method" required="true" type="enum">
+  Payment method. Possible values are: `CASH`, `CHECK`, `CREDIT_CARD`, `ACH`, `STORE_CREDIT`,
+  `OTHER`
+</ParamField>
+<ParamField body="processor" type="string">
+  Processor used to make the payment, if any.
+  Any processor name can be provided and will be tracked.
+  Supported processors (`STRIPE`, `SHOPIFY`) will have additional asset balance tracking.
+</ParamField>
+<ParamField body="recipient_name" required="true" type="string">
+  Customer name of the recipient of the refund.
+  If invoice, line item, or payment ids are specified, they must match this recipient name.
+</ParamField>
+<ParamField body="invoice_id" type="string">
+  Invoice ID this refund was applied to, if applicable.
+  This field does not need to be specified, but if `invoice_line_item_id` is also specified, it must belong to this invoice.
+</ParamField>
+<ParamField body="invoice_line_item_id" type="string">
+  Invoice line item id specifying an exact product or service which was refunded.
+</ParamField>
+<ParamField body="invoice_payment_id" type="string">
+  Payment ID this refund was applied to, if applicable.
+</ParamField>
+
+<ResponseExample>
+```json Response
+ {
+   "data": {
+       "type": "Refund",
+       "id": "6195c7b0-acd6-4bcb-9417-57fabf5f772c",
+       "refunded_amount": 100,
+       "fee": 11,
+       "completed_at": "2024-03-25T01:46:59.309329Z",
+       "method": "STORE_CREDIT",
+       "processor": null,
+       "invoice_id": "905cbd23-db8a-4c9b-b5ea-05923eb88c23",
+       "invoice_line_item_id": "938cd7e1-0758-4965-96c1-724efd10825b",
+       "recipient_name": "John Doe"
+   },
+   "meta": {}
+ }
+ ```
+</ResponseExample>

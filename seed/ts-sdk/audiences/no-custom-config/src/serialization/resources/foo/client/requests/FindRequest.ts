@@ -15,7 +15,7 @@ export const FindRequest: core.serialization.Schema<
 });
 
 export declare namespace FindRequest {
-    interface Raw {
+    export interface Raw {
         publicProperty?: string | null;
         privateProperty?: number | null;
     }

@@ -15,7 +15,7 @@ export const TestSubmissionUpdate: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestSubmissionUpdate {
-    interface Raw {
+    export interface Raw {
         updateTime: string;
         updateInfo: serializers.TestSubmissionUpdateInfo.Raw;
     }

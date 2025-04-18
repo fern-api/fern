@@ -2,32 +2,41 @@
 
 namespace Seed\Types\Object;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class NestedObjectWithOptionalField extends SerializableType
+class NestedObjectWithOptionalField extends JsonSerializableType
 {
     /**
      * @var ?string $string
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public ?string $string;
 
     /**
      * @var ?ObjectWithOptionalField $nestedObject
      */
-    #[JsonProperty("NestedObject")]
+    #[JsonProperty('NestedObject')]
     public ?ObjectWithOptionalField $nestedObject;
 
     /**
-     * @param ?string $string
-     * @param ?ObjectWithOptionalField $nestedObject
+     * @param array{
+     *   string?: ?string,
+     *   nestedObject?: ?ObjectWithOptionalField,
+     * } $values
      */
     public function __construct(
-        ?string $string = null,
-        ?ObjectWithOptionalField $nestedObject = null,
+        array $values = [],
     ) {
-        $this->string = $string;
-        $this->nestedObject = $nestedObject;
+        $this->string = $values['string'] ?? null;
+        $this->nestedObject = $values['nestedObject'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

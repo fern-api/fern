@@ -1,6 +1,9 @@
-import { php, PhpFile, FileGenerator } from "@fern-api/php-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { php } from "@fern-api/php-codegen";
+
 import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 

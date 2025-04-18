@@ -10,5 +10,5 @@ export const UuidType: core.serialization.ObjectSchema<serializers.UuidType.Raw,
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace UuidType {
-    interface Raw {}
+    export interface Raw {}
 }

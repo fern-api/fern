@@ -1,7 +1,5 @@
 using SeedExhaustive;
 
-#nullable enable
-
 namespace SeedExhaustive.GeneralErrors;
 
 /// <summary>

@@ -23,7 +23,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedObj
     fourteen: core.serialization.unknown(),
     fifteen: core.serialization.list(core.serialization.list(core.serialization.number())),
     sixteen: core.serialization.list(
-        core.serialization.record(core.serialization.string(), core.serialization.number())
+        core.serialization.record(core.serialization.string(), core.serialization.number()),
     ),
     seventeen: core.serialization.list(core.serialization.string().optional()),
     eighteen: core.serialization.stringLiteral("eighteen"),
@@ -32,10 +32,12 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedObj
     twentyone: core.serialization.number(),
     twentytwo: core.serialization.number(),
     twentythree: core.serialization.string(),
+    twentyfour: core.serialization.date().optional(),
+    twentyfive: core.serialization.string().optional(),
 });
 
 export declare namespace Type {
-    interface Raw {
+    export interface Raw {
         one: number;
         two: number;
         three: string;
@@ -59,5 +61,7 @@ export declare namespace Type {
         twentyone: number;
         twentytwo: number;
         twentythree: string;
+        twentyfour?: string | null;
+        twentyfive?: string | null;
     }
 }

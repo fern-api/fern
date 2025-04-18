@@ -17,22 +17,7 @@ package com.fern.java.spring.generators;
 
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.TypeId;
-import com.fern.ir.model.http.BytesRequest;
-import com.fern.ir.model.http.EndpointName;
-import com.fern.ir.model.http.FileDownloadResponse;
-import com.fern.ir.model.http.FileUploadRequest;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpRequestBody;
-import com.fern.ir.model.http.HttpRequestBodyReference;
-import com.fern.ir.model.http.HttpResponse;
-import com.fern.ir.model.http.HttpResponseBody;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.InlinedRequestBody;
-import com.fern.ir.model.http.JsonResponse;
-import com.fern.ir.model.http.JsonResponseBody;
-import com.fern.ir.model.http.JsonResponseBodyWithProperty;
-import com.fern.ir.model.http.StreamingResponse;
-import com.fern.ir.model.http.TextResponse;
+import com.fern.ir.model.http.*;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -107,7 +92,7 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
         return GeneratedSpringServerInterface.builder()
                 .className(className)
                 .javaFile(springServiceJavaFile)
-                .addAllGeenratedRequestBodyFiles(generatedRequestBodyFiles)
+                .addAllGeneratedRequestBodyFiles(generatedRequestBodyFiles)
                 .build();
     }
 
@@ -159,8 +144,19 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 }
 
                 @Override
+                public Void visitBytes(BytesResponse bytesResponse) {
+                    throw new RuntimeException("Bytes responses are not supported in spring server generator");
+                }
+
+                @Override
                 public Void visitStreaming(StreamingResponse streaming) {
                     throw new RuntimeException("Streaming responses are not supported in spring server generator");
+                }
+
+                @Override
+                public Void visitStreamParameter(StreamParameterResponse streamParameterResponse) {
+                    throw new RuntimeException(
+                            "Stream parameter responses are not supported in spring server generator");
                 }
 
                 @Override

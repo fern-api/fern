@@ -1,9 +1,9 @@
-import { Writer } from "./core/Writer";
-import { ClassReference } from "./ClassReference";
 import { Access } from "./Access";
-import { AstNode } from "./core/AstNode";
+import { ClassReference } from "./ClassReference";
 import { Field } from "./Field";
 import { Method } from "./Method";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Interface {
     interface Args {
@@ -17,6 +17,8 @@ export declare namespace Interface {
         partial?: boolean;
         /* Defaults to false */
         isNestedInterface?: boolean;
+        /* Any interfaces the interface inherits */
+        interfaceReferences?: ClassReference[];
     }
 }
 
@@ -27,17 +29,19 @@ export class Interface extends AstNode {
     public readonly partial: boolean;
     public readonly reference: ClassReference;
     public readonly isNestedInterface: boolean;
+    public readonly interfaceReferences: ClassReference[];
 
     private fields: Field[] = [];
     private methods: Method[] = [];
 
-    constructor({ name, namespace, access, partial, isNestedInterface }: Interface.Args) {
+    constructor({ name, namespace, access, partial, isNestedInterface, interfaceReferences }: Interface.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.access = access;
         this.partial = partial ?? false;
         this.isNestedInterface = isNestedInterface ?? false;
+        this.interfaceReferences = interfaceReferences ?? [];
 
         this.reference = new ClassReference({
             name: this.name,
@@ -49,8 +53,16 @@ export class Interface extends AstNode {
         this.fields.push(field);
     }
 
+    public addFields(fields: Field[]): void {
+        fields.forEach((field) => this.fields.push(field));
+    }
+
     public addMethod(method: Method): void {
         this.methods.push(method);
+    }
+
+    public getNamespace(): string {
+        return this.namespace;
     }
 
     public write(writer: Writer): void {
@@ -64,6 +76,17 @@ export class Interface extends AstNode {
         }
         writer.write("interface ");
         writer.writeLine(`${this.name}`);
+
+        if (this.interfaceReferences.length > 0) {
+            writer.write(" : ");
+            this.interfaceReferences.forEach((interfaceReference, index) => {
+                interfaceReference.write(writer);
+                // Don't write a comma after the last interface
+                if (index < this.interfaceReferences.length - 1) {
+                    writer.write(", ");
+                }
+            });
+        }
         writer.writeLine("{");
 
         writer.indent();

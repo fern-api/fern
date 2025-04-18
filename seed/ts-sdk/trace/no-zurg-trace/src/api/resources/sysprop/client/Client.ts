@@ -9,14 +9,16 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Sysprop {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,6 +27,8 @@ export declare namespace Sysprop {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -39,15 +43,27 @@ export class Sysprop {
      * @example
      *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
-    public async setNumWarmInstances(
+    public setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
-        requestOptions?: Sysprop.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Sysprop.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__setNumWarmInstances(language, numWarmInstances, requestOptions),
+        );
+    }
+
+    private async __setNumWarmInstances(
+        language: SeedTrace.Language,
+        numWarmInstances: number,
+        requestOptions?: Sysprop.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${encodeURIComponent(language)}/${encodeURIComponent(numWarmInstances)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/sysprop/num-warm-instances/${encodeURIComponent(language)}/${encodeURIComponent(numWarmInstances)}`,
             ),
             method: "PUT",
             headers: {
@@ -62,6 +78,7 @@ export class Sysprop {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -70,13 +87,14 @@ export class Sysprop {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -85,12 +103,16 @@ export class Sysprop {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling PUT /sysprop/num-warm-instances/{language}/{numWarmInstances}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -101,13 +123,21 @@ export class Sysprop {
      * @example
      *     await client.sysprop.getNumWarmInstances()
      */
-    public async getNumWarmInstances(
-        requestOptions?: Sysprop.RequestOptions
-    ): Promise<Record<SeedTrace.Language, number | undefined>> {
+    public getNumWarmInstances(
+        requestOptions?: Sysprop.RequestOptions,
+    ): core.HttpResponsePromise<Record<SeedTrace.Language, number | undefined>> {
+        return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
+    }
+
+    private async __getNumWarmInstances(
+        requestOptions?: Sysprop.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<SeedTrace.Language, number | undefined>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/sysprop/num-warm-instances"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/sysprop/num-warm-instances",
             ),
             method: "GET",
             headers: {
@@ -122,6 +152,7 @@ export class Sysprop {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -130,13 +161,17 @@ export class Sysprop {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as Record<SeedTrace.Language, number | undefined>;
+            return {
+                data: _response.body as Record<SeedTrace.Language, number | undefined>,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -145,12 +180,16 @@ export class Sysprop {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling GET /sysprop/num-warm-instances.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

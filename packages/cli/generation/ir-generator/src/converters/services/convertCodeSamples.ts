@@ -1,5 +1,6 @@
-import { ExampleCodeSample, SupportedSdkLanguage } from "@fern-api/ir-sdk";
 import { RawSchemas, visitExampleCodeSampleSchema } from "@fern-api/fern-definition-schema";
+import { ExampleCodeSample, SupportedSdkLanguage } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 
 export function convertCodeSample({

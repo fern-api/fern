@@ -1,12 +1,13 @@
-import { DeclaredTypeName } from "@fern-api/ir-sdk";
 import {
     RawSchemas,
-    recursivelyVisitRawTypeReference,
-    visitRawTypeDeclaration,
+    isGeneric,
     isRawObjectDefinition,
     parseGeneric,
-    isGeneric
+    recursivelyVisitRawTypeReference,
+    visitRawTypeDeclaration
 } from "@fern-api/fern-definition-schema";
+import { DeclaredTypeName } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -116,6 +117,7 @@ export function getReferencedTypesFromRawDeclaration({
                 map: ({ keyType, valueType }) => [...keyType, ...valueType],
                 list: (valueType) => valueType,
                 optional: (valueType) => valueType,
+                nullable: (valueType) => valueType,
                 set: (valueType) => valueType,
                 named: (name) => [name],
                 literal: () => [],

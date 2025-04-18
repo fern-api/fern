@@ -14,7 +14,7 @@ export const Response: core.serialization.ObjectSchema<
 });
 
 export declare namespace Response {
-    interface Raw {
+    export interface Raw {
         foo: string;
     }
 }

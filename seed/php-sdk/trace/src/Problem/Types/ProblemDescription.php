@@ -2,24 +2,34 @@
 
 namespace Seed\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class ProblemDescription extends SerializableType
+class ProblemDescription extends JsonSerializableType
 {
     /**
-     * @var array<mixed> $boards
+     * @var array<ProblemDescriptionBoard> $boards
      */
-    #[JsonProperty("boards"), ArrayType(["mixed"])]
+    #[JsonProperty('boards'), ArrayType([ProblemDescriptionBoard::class])]
     public array $boards;
 
     /**
-     * @param array<mixed> $boards
+     * @param array{
+     *   boards: array<ProblemDescriptionBoard>,
+     * } $values
      */
     public function __construct(
-        array $boards,
+        array $values,
     ) {
-        $this->boards = $boards;
+        $this->boards = $values['boards'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

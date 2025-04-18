@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedNurseryApiClient } from \"@fern/reserved-keywords\";\n\nconst client = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.package.test({\n    for: \"string\"\n});\n"
+                "client": "import { SeedNurseryApiClient } from \"@fern/reserved-keywords\";\n\nconst client = new SeedNurseryApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.package.test({\n    for: \"for\"\n});\n"
             }
         }
     ],

@@ -25,11 +25,7 @@ class FileInfo(str, enum.Enum):
     A directory (e.g. foo/).
     """
 
-    def visit(
-        self,
-        regular: typing.Callable[[], T_Result],
-        directory: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    def visit(self, regular: typing.Callable[[], T_Result], directory: typing.Callable[[], T_Result]) -> T_Result:
         if self is FileInfo.REGULAR:
             return regular()
         if self is FileInfo.DIRECTORY:

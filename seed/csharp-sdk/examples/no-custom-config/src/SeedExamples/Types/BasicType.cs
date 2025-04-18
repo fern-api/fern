@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
 
-#nullable enable
-
 namespace SeedExamples;
 
-[JsonConverter(typeof(StringEnumSerializer<BasicType>))]
+[JsonConverter(typeof(EnumSerializer<BasicType>))]
 public enum BasicType
 {
     [EnumMember(Value = "primitive")]

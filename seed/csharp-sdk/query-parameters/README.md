@@ -1,6 +1,6 @@
 # Seed C# Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
 [![nuget shield](https://img.shields.io/nuget/v/SeedQueryParameters)](https://nuget.org/packages/SeedQueryParameters)
 
 The Seed C# library provides convenient access to the Seed API from C#.
@@ -8,7 +8,7 @@ The Seed C# library provides convenient access to the Seed API from C#.
 ## Installation
 
 ```sh
-nuget install SeedQueryParameters
+dotnet add package SeedQueryParameters
 ```
 
 ## Usage
@@ -29,43 +29,48 @@ await client.User.GetUsernameAsync(
         Bytes = "SGVsbG8gd29ybGQh",
         User = new User
         {
-            Name = "string",
-            Tags = new List<string>() { "string" },
+            Name = "name",
+            Tags = new List<string>() { "tags", "tags" },
         },
         UserList = new List<User>()
         {
             new User
             {
-                Name = "string",
-                Tags = new List<string>() { "string" },
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
+            },
+            new User
+            {
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
             },
         },
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        KeyValue = new Dictionary<string, string>() { { "string", "string" } },
-        OptionalString = "string",
+        KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
+        OptionalString = "optionalString",
         NestedUser = new NestedUser
         {
-            Name = "string",
+            Name = "name",
             User = new User
             {
-                Name = "string",
-                Tags = new List<string>() { "string" },
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
             },
         },
         OptionalUser = new User
         {
-            Name = "string",
-            Tags = new List<string>() { "string" },
+            Name = "name",
+            Tags = new List<string>() { "tags", "tags" },
         },
         ExcludeUser =
         [
             new User
             {
-                Name = "string",
-                Tags = new List<string>() { "string" },
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
             },
         ],
-        Filter = ["string"],
+        Filter = ["filter"],
     }
 );
 ```
@@ -91,10 +96,10 @@ try {
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)

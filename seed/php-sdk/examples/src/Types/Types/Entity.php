@@ -2,32 +2,49 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Types\BasicType;
+use Seed\Types\ComplexType;
+use Seed\Core\Json\JsonProperty;
 
-class Entity extends SerializableType
+class Entity extends JsonSerializableType
 {
     /**
-     * @var mixed $type
+     * @var (
+     *    value-of<BasicType>
+     *   |value-of<ComplexType>
+     * ) $type
      */
-    #[JsonProperty("type")]
-    public mixed $type;
+    #[JsonProperty('type')]
+    public string $type;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @param mixed $type
-     * @param string $name
+     * @param array{
+     *   type: (
+     *    value-of<BasicType>
+     *   |value-of<ComplexType>
+     * ),
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        mixed $type,
-        string $name,
+        array $values,
     ) {
-        $this->type = $type;
-        $this->name = $name;
+        $this->type = $values['type'];
+        $this->name = $values['name'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

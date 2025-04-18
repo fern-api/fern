@@ -23,7 +23,9 @@ import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.HttpHeader;
-import com.fern.java.AbstractGeneratorContext;
+import com.fern.ir.model.ir.ApiVersionScheme;
+import com.fern.ir.model.ir.HeaderApiVersionScheme;
+import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -42,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
@@ -54,18 +57,30 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     Modifier.FINAL)
             .build();
 
+    private static final FieldSpec HEADER_SUPPLIERS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(
+                            ClassName.get(Map.class),
+                            ClassName.get(String.class),
+                            ParameterizedTypeName.get(Supplier.class, String.class)),
+                    "headerSuppliers",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
     private final List<HttpHeader> additionalHeaders;
     private final ClassName builderClassName;
+    private final ClientGeneratorContext clientGeneratorContext;
 
-    public RequestOptionsGenerator(AbstractGeneratorContext<?, ?> generatorContext, ClassName className) {
+    public RequestOptionsGenerator(ClientGeneratorContext generatorContext, ClassName className) {
         this(generatorContext, className, Collections.emptyList());
     }
 
     public RequestOptionsGenerator(
-            AbstractGeneratorContext<?, ?> generatorContext, ClassName className, List<HttpHeader> additionalHeaders) {
+            ClientGeneratorContext generatorContext, ClassName className, List<HttpHeader> additionalHeaders) {
         super(className, generatorContext);
         this.builderClassName = className.nestedClass("Builder");
         this.additionalHeaders = additionalHeaders;
+        this.clientGeneratorContext = generatorContext;
     }
 
     @Override
@@ -80,6 +95,18 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                         "$T headers = new $T<>()",
                         ParameterizedTypeName.get(Map.class, String.class, String.class),
                         HashMap.class);
+
+        FieldSpec apiVersionField = FieldSpec.builder(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Optional.class),
+                                clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName()),
+                        "version",
+                        Modifier.PRIVATE,
+                        Modifier.FINAL)
+                .build();
+
+        addApiVersionHeader(getHeadersCodeBlock, apiVersionField);
+
         HeaderHandler headerHandler = new HeaderHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock);
         AuthSchemeHandler authSchemeHandler =
                 new AuthSchemeHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock, headerHandler);
@@ -127,6 +154,8 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 builderTypeSpec,
                 fields);
 
+        addApiVersionField(requestOptionsTypeSpec, builderTypeSpec, apiVersionField.toBuilder(), fields);
+
         FieldSpec timeoutField = timeoutFieldBuilder.build();
         FieldSpec timeUnitField = timeoutTimeUnitFieldBuilder.build();
         builderTypeSpec.addMethod(MethodSpec.methodBuilder(timeoutField.name)
@@ -146,6 +175,28 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return this")
                 .returns(builderClassName)
                 .build());
+
+        addHeaderBuilder(builderTypeSpec);
+        addHeaderSupplierBuilder(builderTypeSpec);
+
+        requestOptionsTypeSpec.addField(HEADERS_FIELD);
+        requestOptionsTypeSpec.addField(HEADER_SUPPLIERS_FIELD);
+
+        builderTypeSpec.addField(HEADERS_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", HashMap.class))
+                .build());
+        builderTypeSpec.addField(HEADER_SUPPLIERS_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", HashMap.class))
+                .build());
+
+        fields.add(new RequestOption(HEADERS_FIELD, HEADERS_FIELD));
+        fields.add(new RequestOption(HEADER_SUPPLIERS_FIELD, HEADER_SUPPLIERS_FIELD));
+
+        getHeadersCodeBlock
+                .addStatement("headers.putAll(this.$L)", HEADERS_FIELD.name)
+                .beginControlFlow("this.$L.forEach((key, supplier) -> ", HEADER_SUPPLIERS_FIELD.name)
+                .addStatement("headers.put(key, supplier.get())")
+                .endControlFlow(")");
 
         String constructorArgs =
                 fields.stream().map(field -> field.builderField.name).collect(Collectors.joining(", "));
@@ -207,6 +258,125 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .addStatement("return $N", field.name)
                 .returns(field.type)
+                .build());
+    }
+
+    private void addApiVersionHeader(CodeBlock.Builder getHeadersCodeBlock, FieldSpec apiVersionField) {
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+
+            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                @Override
+                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                    getHeadersCodeBlock
+                            .beginControlFlow("if (this.$N.isPresent())", apiVersionField)
+                            .addStatement(
+                                    "headers.put($S,$L)",
+                                    headerApiVersionScheme.getHeader().getName().getWireValue(),
+                                    CodeBlock.of("this.$L.get().toString()", apiVersionField.name))
+                            .endControlFlow();
+
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object _o) {
+                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                }
+            });
+        }
+    }
+
+    private void addApiVersionField(
+            TypeSpec.Builder requestOptionsTypeSpec,
+            TypeSpec.Builder builderTypeSpec,
+            FieldSpec.Builder apiVersionField,
+            List<RequestOption> fields) {
+        if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
+            ApiVersionScheme apiVersionScheme =
+                    clientGeneratorContext.getIr().getApiVersion().get();
+
+            apiVersionScheme.visit(new ApiVersionScheme.Visitor<Void>() {
+                @Override
+                public Void visitHeader(HeaderApiVersionScheme headerApiVersionScheme) {
+                    FieldSpec field = apiVersionField.build();
+                    requestOptionsTypeSpec.addField(apiVersionField
+                            .addModifiers(Modifier.FINAL)
+                            .addJavadoc(
+                                    "$L.get().toString() is sent as the $S header, overriding client options "
+                                            + "if present.",
+                                    field.name,
+                                    headerApiVersionScheme.getHeader().getName().getWireValue())
+                            .build());
+                    fields.add(new RequestOption(
+                            apiVersionField
+                                    .initializer(CodeBlock.of("$T.empty()", Optional.class))
+                                    .build(),
+                            field));
+                    FieldSpec builderField = FieldSpec.builder(field.type, field.name, Modifier.PRIVATE)
+                            .initializer(CodeBlock.of("$T.empty()", Optional.class))
+                            .build();
+                    builderTypeSpec.addField(builderField);
+
+                    requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder("getVersion")
+                            .addJavadoc(
+                                    "$L.get().toString() is sent as the $S header, overriding client options "
+                                            + "if present.",
+                                    field.name,
+                                    headerApiVersionScheme.getHeader().getName().getWireValue())
+                            .addModifiers(Modifier.PUBLIC)
+                            .addStatement("return $N", field.name)
+                            .returns(field.type)
+                            .build());
+
+                    builderTypeSpec.addMethod(MethodSpec.methodBuilder(field.name)
+                            .addJavadoc(
+                                    "$L.get().toString() is sent as the $S header, overriding client options "
+                                            + "if present.",
+                                    field.name,
+                                    headerApiVersionScheme.getHeader().getName().getWireValue())
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getApiVersionClassName(),
+                                    field.name)
+                            .addStatement("this.$L = Optional.of($L)", field.name, field.name)
+                            .addStatement("return this")
+                            .returns(builderClassName)
+                            .build());
+
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object _o) {
+                    throw new IllegalArgumentException("Received unknown API versioning schema type in IR.");
+                }
+            });
+        }
+    }
+
+    private void addHeaderBuilder(TypeSpec.Builder builder) {
+        builder.addMethod(MethodSpec.methodBuilder("addHeader")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(String.class, "value")
+                .addStatement("this.$L.put($L, $L)", HEADERS_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build());
+    }
+
+    private void addHeaderSupplierBuilder(TypeSpec.Builder builder) {
+        builder.addMethod(MethodSpec.methodBuilder("addHeader")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(ParameterizedTypeName.get(Supplier.class, String.class), "value")
+                .addStatement("this.$L.put($L, $L)", HEADER_SUPPLIERS_FIELD.name, "key", "value")
+                .addStatement("return this")
                 .build());
     }
 

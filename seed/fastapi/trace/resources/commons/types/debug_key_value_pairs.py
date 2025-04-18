@@ -13,17 +13,13 @@ class DebugKeyValuePairs(UniversalBaseModel):
     value: "DebugVariableValue"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:
             extra = pydantic.Extra.forbid
 
 
-from .debug_map_value import DebugMapValue  # noqa: E402
 from .debug_variable_value import DebugVariableValue  # noqa: E402
 
-update_forward_refs(DebugMapValue, DebugKeyValuePairs=DebugKeyValuePairs)
 update_forward_refs(DebugKeyValuePairs)

@@ -2,41 +2,49 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SinglyLinkedListNodeValue extends SerializableType
+class SinglyLinkedListNodeValue extends JsonSerializableType
 {
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var float $val
      */
-    #[JsonProperty("val")]
+    #[JsonProperty('val')]
     public float $val;
 
     /**
      * @var ?string $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?string $next;
 
     /**
-     * @param string $nodeId
-     * @param float $val
-     * @param ?string $next
+     * @param array{
+     *   nodeId: string,
+     *   val: float,
+     *   next?: ?string,
+     * } $values
      */
     public function __construct(
-        string $nodeId,
-        float $val,
-        ?string $next = null,
+        array $values,
     ) {
-        $this->nodeId = $nodeId;
-        $this->val = $val;
-        $this->next = $next;
+        $this->nodeId = $values['nodeId'];
+        $this->val = $values['val'];
+        $this->next = $values['next'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

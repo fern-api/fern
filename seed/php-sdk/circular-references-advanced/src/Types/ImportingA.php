@@ -2,24 +2,34 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\A\Types\A;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
-class ImportingA extends SerializableType
+class ImportingA extends JsonSerializableType
 {
     /**
      * @var ?A $a
      */
-    #[JsonProperty("a")]
+    #[JsonProperty('a')]
     public ?A $a;
 
     /**
-     * @param ?A $a
+     * @param array{
+     *   a?: ?A,
+     * } $values
      */
     public function __construct(
-        ?A $a = null,
+        array $values = [],
     ) {
-        $this->a = $a;
+        $this->a = $values['a'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

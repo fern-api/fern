@@ -12,7 +12,7 @@ export const RuntimeError: core.serialization.ObjectSchema<serializers.RuntimeEr
     });
 
 export declare namespace RuntimeError {
-    interface Raw {
+    export interface Raw {
         message: string;
     }
 }

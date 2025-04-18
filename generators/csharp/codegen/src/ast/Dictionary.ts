@@ -1,8 +1,9 @@
+import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { UnnamedArgument } from "@fern-api/generator-commons";
+
+import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { Type } from "./Type";
 
 export declare namespace Dictionary {
     interface Args {

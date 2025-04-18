@@ -21,9 +21,9 @@ class UnionWithOptionalTime_Date(UniversalBaseModel):
             smart_union = True
 
 
-class UnionWithOptionalTime_Dateimte(UniversalBaseModel):
+class UnionWithOptionalTime_Datetime(UniversalBaseModel):
     value: typing.Optional[dt.datetime] = None
-    type: typing.Literal["dateimte"] = "dateimte"
+    type: typing.Literal["datetime"] = "datetime"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
@@ -34,4 +34,15 @@ class UnionWithOptionalTime_Dateimte(UniversalBaseModel):
             smart_union = True
 
 
-UnionWithOptionalTime = typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Dateimte]
+"""
+import datetime
+
+from seed.types import UnionWithOptionalTime_Date
+
+UnionWithOptionalTime_Date(
+    value=datetime.date.fromisoformat(
+        "1994-01-01",
+    )
+)
+"""
+UnionWithOptionalTime = typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Datetime]

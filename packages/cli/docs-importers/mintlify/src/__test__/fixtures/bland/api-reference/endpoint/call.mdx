@@ -1,0 +1,270 @@
+---
+title: "Make a call"
+api: "POST https://api.bland.ai/call"
+description: "This endpoint sends an outbound AI phone call."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="phone_number" type="string" required>
+  The phone number to call. Country code required for non-US numbers.
+
+Example: `+12223334444`, `+44770090000`, `+61491550156`.
+
+</ParamField>
+
+<ParamField body="transfer_phone_number" type="string">
+  A phone number that the agent can transfer to under specific conditions, such as when the caller/callee asks to speak to a human.
+
+For best results, specify the exact conditions to transfer under in the `task` parameter. Refer to the action as "transfer", any other phrasing such as "swap" or "switch" can cause unexpected behavior.
+
+Example: `+12223334444`, `+44770090000`, `+61491550156`.
+
+</ParamField>
+
+<ParamField body="from" type="string">
+  Specify a purchased Outbound Number to call from. Country code is required, spaces or parentheses must be excluded.
+
+By default, calls are initiated from a separate pool of numbers owned by Bland.
+
+</ParamField>
+
+<ParamField body="task" type="string" required>
+  Define how the AI should behave. Provide instructions, relevant information, and examples of the ideal conversation flow.
+
+Note: Concise prompts lead to higher performance and adherence to instructions. Overly verbose prompts 'dilute' the context if filled with unnecessary/irrelevant details.
+
+</ParamField>
+
+<ParamField body="reduce_latency" type="boolean" default="true">
+  Reducing latency means that the agent will generate responses more quickly and have less of a delay. This must be set
+  to ```true``` when using Voice Clones.
+</ParamField>
+
+<ParamField body="voice_id" type="number" default="0">
+  When reduce latency is set to `true` (default):
+
+- 0: American male
+- 1: Australian female
+- 2: American female
+
+When reduce latency is set to `false`:
+
+- 0: American female (southern accent)
+- 1: American male
+- 2: British female
+- 3: Indian male
+  </ParamField>
+
+<ParamField body="webhook" type="string">
+  The webhook should be a http / https callback url. We will send the call_id and transcript to this URL after the call
+  completes. This can be useful if you want to have real time notifications when calls finish.
+</ParamField>
+
+<ParamField body="wait_for_greeting" type="boolean" default="false">
+  Should the AI speak first or wait for someone else to talk?
+  
+  Creates more realistic conversations when answered with "Hello?", "This is \{name\} speaking." and so on.
+  
+  - When ```false```: The AI starts speaking shortly after the call is answered. 
+  
+  - When ```true```: The AI will wait for the answerer to speak.
+</ParamField>
+
+<ParamField body="first_sentence" type="string">
+  A phrase that your call will start with instead of a generating one on the fly. This works both with and without
+  `wait_for_greeting`. Can be more than one sentence, but must be less than 200 characters.
+</ParamField>
+
+<ParamField body="record" type="boolean" default="false">
+  To record your phone call, set `record` to true. When your call completes, you can access the recording by requesting
+  the `/call/recording` endpoint.
+</ParamField>
+
+<ResponseField name="voice_settings" type="Voice Settings Object">
+  <Expandable title="properties">
+  <ParamField body="stability" default="0.8" type="float">
+  Note: This is an experimental parameter and may behave unexpectedly.
+
+Adjust the predictability and consistency of the AI agent's voice. Lower values allow larger deviations from the baseline voice, whether default or cloned. Setting this too high however can cause a monotone voice.
+
+Accepts decimal values between `0` and `1` (inclusive).
+
+</ParamField>
+<ParamField body="similarity" default="0.6" type="float">
+  Note: This is an experimental parameter and may behave unexpectedly.
+
+Higher values will make speech differences between the selected voice and others more prominent. Extremely high values can cause voice distortion.
+
+Use lower values to lower the distinctiveness of the voice or eliminate unwanted audio static spikes.
+
+Accepts decimal values between `0` and `1` (inclusive).
+
+</ParamField>
+
+<ParamField body="speed" default="0.85" type="float">
+  Note: This is an experimental parameter and may behave unexpectedly.
+  
+  Note #2: Setting `reduce_latency` to `false` will cause this parameter to be ignored.
+
+How fast your agent talks! This parameter is simply a speech-speed multiplier, and works with fractional values such as `0.5` or large ones like `2`.
+
+Accepts decimal values between `0.1` and `5` (inclusive).
+
+</ParamField>
+
+  </Expandable>
+</ResponseField>
+
+<ParamField body="language" type="string" default="eng">
+  Select a supported language of your choice. Optimizes every part of our API for that language - transcription, speech,
+  and other inner workings. Supported Languages and their codes: - English: ```eng``` - Spanish: ```esp``` - French:
+  ```fre``` - Polish: ```pol```
+</ParamField>
+
+<ParamField body="max_duration" type="float or string" default="30">
+  Set the longest you want the call to possibly go in minutes. After the max_duration minutes have passed, the call will automatically end.
+  
+  Example Values: ```"45", "5.5", 20, 2.8```
+</ParamField>
+<ParamField name="pronunciation_guide" type="array" description="An array of objects where each object specifies a word and its pronunciation. Additional attributes can be added as needed.">
+  <Example>
+    [
+      {
+        "word": "example",
+        "pronunciation": "ex-am-ple",
+        "case_sensitive": "false",
+        "spaced": "false"
+      },
+      {
+        "word": "API",
+        "pronunciation": "A P I",
+        "case_sensitive": "true",
+        "spaced": "true"
+      }
+    ]
+  </Example>
+  <Param name="word" type="string" description="The word to be pronounced." required="true"/>
+  <Param name="pronunciation" type="string" description="The pronunciation of the word." required="true"/>
+  <Param name="case_sensitive" type="boolean" description="Specifies if the word matching should be case sensitive. Default is false." required="false"/>
+  <Param name="spaced" type="boolean" description="Indicates whether the word should be matched as a standalone word. Default is false." required="false"/>
+</ParamField>
+<ParamField body="temperature" type="float" default="0.7">
+  A value between 0 and 1 that controls the randomness of the LLM. 0 will cause more deterministic outputs while 1 will cause more random.
+  
+  Example Values: ```"0.9", "0.3", "0.5"```
+</ParamField>
+
+<ParamField body="amd" type="boolean" default="false">
+  AMD mode helps our AI navigate phone trees and IVR systems. If you know your call will hit an automated system you
+  should switch it on. NOTE: AMD mode causes increased delay for the first response, even if answered by a human. Highly
+  recommended to set to `false` in the majority of cases.
+</ParamField>
+
+<ParamField body="request_data" type="object">
+  When you want your AI to "know" a specific fact - like the caller's
+  name or other relevant context.
+
+The AI agent will be aware of both the key names as well as their corresponding values.
+
+</ParamField>
+
+<ParamField body="dynamic_data" type="array">
+ <Expandable title="properties">
+  A set of external API requests to fetch at the start of the call or repeatedly.
+
+Each request object should contain:
+
+`url`: The URL of the external API to fetch data from.
+
+`response_data`: An array of objects describing how to parse and use the data fetched from the API. Explained in more detail below.
+
+The following are optional:
+
+`method`: Allows `GET` or `POST`. Default: `GET`
+
+`cache`: Whether to fetch the data once at the beginning of the call, or to re-check continuously for data that might change mid-call. Default: `true`
+
+`headers`: An object of headers to send with the request.
+
+`body`: The body of the request.
+
+The following variables can be injected into the dynamic request body:
+
+- `{{from}}` (Ex. `+12223334444`)
+- `{{to}}`
+- `{{short_from}}` (Ex. `2223334444`)
+- `{{short_to}}`
+- `{{call_id}}`
+
+These string values will be replaced in each `dynamic_data[].body` where they're used by system values in each request.
+
+Try out with this example:
+
+```json
+    "dynamic_data": [
+        {
+            "url": "https://api.coindesk.com/v1/bpi/currentprice.json",
+            "response_data": [
+                {
+                    "name": "BTC Price USD",
+                    "data": "bpi.USD.rate",
+                    "context": "Current BTC Price: ${{BTC Price USD}} USD"
+                },
+                {
+                    "name": "BTC Price EUR",
+                    "data": "bpi.EUR.rate",
+                    "context": "In Euros: {{BTC Price USD}} EUR"
+                }
+            ]
+        }
+    ]
+```
+
+<ParamField body="dynamic_data[i].response_data" type="array">
+An array of objects describing how to parse and use the data fetched from the API.
+
+Each object in this array should contain:
+
+- `name`: A label for the fetched data.
+- Example: `"Flight Status"`
+- `data`: The JSON path in the API response to extract the data from.
+- Example: `"user.flights[0].status"`
+- `context`: How this data should be incorporated into the AI's knowledge.
+- Example: `"John's flight is currently {{Flight Status}}"`
+    </ParamField>
+   </Expandable>
+</ParamField>
+
+<ParamField body="interruption_threshold" type="integer" default={50}>
+  When you increase the interruption latency, you force the AI phone agent to listen longer before responding. In practice, increasing the threshold results in less interruptions and more latency.
+
+Try setting the threshold to `500` milliseconds. You'll encounter higher latency, but you'll be interrupted much less frequently.
+
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="call_id" type="string">
+  A unique identifier for the call (present only if status is `success`).
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success",
+  "call_id": "9d404c1b-6a23-4426-953a-a52c392ff8f1"
+}
+```
+
+</ResponseExample>

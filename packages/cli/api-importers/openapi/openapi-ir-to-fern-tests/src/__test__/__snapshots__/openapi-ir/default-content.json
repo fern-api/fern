@@ -1,0 +1,150 @@
+{
+  "title": "Default Content Type",
+  "servers": [
+    {
+      "url": "https://ai.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "GenerateContent",
+      "tags": [
+        "generativelanguage"
+      ],
+      "pathParameters": [
+        {
+          "name": "model",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GenerateContentRequestModel",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GenerateContentRequest",
+      "response": {
+        "description": "Successful operation",
+        "schema": {
+          "generatedName": "GenerateContentResponse",
+          "schema": "GenerateContentResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/generateContent",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "model",
+              "value": {
+                "value": {
+                  "value": "model",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "bar": {
+                  "value": {
+                    "value": "bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "GenerateContentResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "generateContentResponseBar",
+            "key": "bar",
+            "schema": {
+              "generatedName": "generateContentResponseBar",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GenerateContentResponseBar",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "GenerateContentResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

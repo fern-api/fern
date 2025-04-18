@@ -1,6 +1,6 @@
 # Seed Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_grpc)](https://pypi.python.org/pypi/fern_grpc)
 
 The Seed Python library provides convenient access to the Seed API from Python.
@@ -10,6 +10,10 @@ The Seed Python library provides convenient access to the Seed API from Python.
 ```sh
 pip install fern_grpc
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -22,10 +26,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.create_user(
-    username="string",
-    email="string",
-    age=1,
-    weight=1.1,
+    username="username",
 )
 ```
 
@@ -45,10 +46,7 @@ client = AsyncSeedApi(
 
 async def main() -> None:
     await client.user.create_user(
-        username="string",
-        email="string",
-        age=1,
-        weight=1.1,
+        username="username",
     )
 
 
@@ -75,10 +73,10 @@ except ApiError as e:
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
@@ -87,7 +85,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.user.create_user(..., {
+client.user.create_user(..., request_options={
     "max_retries": 1
 })
 ```
@@ -107,7 +105,7 @@ client = SeedApi(
 
 
 # Override timeout for a specific method
-client.user.create_user(..., {
+client.user.create_user(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

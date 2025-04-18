@@ -1,24 +1,24 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using OneOf;
 using SeedExamples.Commons;
 using SeedExamples.Core;
 using SeedExamples.File;
 using SeedExamples.Health;
 
-#nullable enable
-
 namespace SeedExamples;
 
 public partial class SeedExamplesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedExamplesClient(string token, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExamples" },
                 { "X-Fern-SDK-Version", Version.Current },
@@ -41,41 +41,41 @@ public partial class SeedExamplesClient
         Types = new TypesClient(_client);
     }
 
-    public CommonsClient Commons { get; init; }
+    public CommonsClient Commons { get; }
 
-    public FileClient File { get; init; }
+    public FileClient File { get; }
 
-    public HealthClient Health { get; init; }
+    public HealthClient Health { get; }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 
-    public TypesClient Types { get; init; }
+    public TypesClient Types { get; }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> EchoAsync(
         string request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -86,10 +86,58 @@ public partial class SeedExamplesClient
             }
         }
 
-        throw new SeedExamplesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.CreateTypeAsync(BasicType.Primitive);
+    /// </code></example>
+    public async Task<Identifier> CreateTypeAsync(
+        OneOf<BasicType, ComplexType> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<Identifier>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExamplesException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

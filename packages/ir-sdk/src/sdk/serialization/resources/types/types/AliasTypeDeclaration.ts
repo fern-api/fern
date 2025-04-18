@@ -16,7 +16,7 @@ export const AliasTypeDeclaration: core.serialization.ObjectSchema<
 });
 
 export declare namespace AliasTypeDeclaration {
-    interface Raw {
+    export interface Raw {
         aliasOf: serializers.TypeReference.Raw;
         resolvedType: ResolvedTypeReference.Raw;
     }

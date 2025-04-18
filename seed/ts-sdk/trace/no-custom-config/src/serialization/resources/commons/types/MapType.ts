@@ -13,7 +13,7 @@ export const MapType: core.serialization.ObjectSchema<serializers.MapType.Raw, S
     });
 
 export declare namespace MapType {
-    interface Raw {
+    export interface Raw {
         keyType: serializers.VariableType.Raw;
         valueType: serializers.VariableType.Raw;
     }

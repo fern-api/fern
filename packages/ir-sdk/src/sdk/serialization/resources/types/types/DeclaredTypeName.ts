@@ -19,7 +19,7 @@ export const DeclaredTypeName: core.serialization.ObjectSchema<
 });
 
 export declare namespace DeclaredTypeName {
-    interface Raw {
+    export interface Raw {
         typeId: TypeId.Raw;
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;

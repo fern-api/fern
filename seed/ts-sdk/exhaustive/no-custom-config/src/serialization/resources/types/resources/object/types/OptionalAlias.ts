@@ -12,5 +12,5 @@ export const OptionalAlias: core.serialization.Schema<
 > = core.serialization.string().optional();
 
 export declare namespace OptionalAlias {
-    type Raw = string | null | undefined;
+    export type Raw = string | null | undefined;
 }

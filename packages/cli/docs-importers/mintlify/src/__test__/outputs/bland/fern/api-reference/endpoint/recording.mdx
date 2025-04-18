@@ -1,0 +1,50 @@
+---
+title: Get recording
+subtitle: Send a POST request to retrieve the recording of a completed phone call
+slug: api-reference/endpoint/recording
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="call_id" type="string" required>
+  The unique identifier for the call.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  If the status is `success`, the `url` field will be present. Otherwise if the status is `error`, the message will say
+  "Error fetching recording" or "Internal server error".
+</ResponseField>
+
+<ResponseField name="url" type="string">
+  If the status is `success`, the `url` will provide the exact location of the MP3 file storing the call's audio.
+</ResponseField>
+
+<ResponseExample>
+
+```json Success response
+{
+  "status": "success",
+  "url": "URL-TO-FILE.mp3"
+}
+```
+
+```json Error response
+{
+  "status": "error",
+  "message": "Error fetching recording"
+}
+```
+
+</ResponseExample>

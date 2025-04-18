@@ -1,15 +1,15 @@
-import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { TaskContext } from "@fern-api/task-context";
-import {
-    APIWorkspace,
-    FernWorkspace,
-    getOSSWorkspaceSettingsFromGeneratorInvocation,
-    OSSWorkspace
-} from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { TaskContext } from "@fern-api/task-context";
+import {
+    AbstractAPIWorkspace,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/workspace-loader";
+
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
 export async function runLocalGenerationForWorkspace({
@@ -20,7 +20,7 @@ export async function runLocalGenerationForWorkspace({
     context
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
-    workspace: APIWorkspace;
+    workspace: AbstractAPIWorkspace<unknown>;
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
@@ -35,18 +35,10 @@ export async function runLocalGenerationForWorkspace({
                         "Cannot generate because output location is not local-file-system"
                     );
                 } else {
-                    let fernWorkspace: FernWorkspace;
-                    if (workspace instanceof OSSWorkspace) {
-                        fernWorkspace = await workspace.toFernWorkspace(
-                            { context },
-                            getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                        );
-                    } else {
-                        fernWorkspace = await workspace.toFernWorkspace(
-                            {},
-                            getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                        );
-                    }
+                    const fernWorkspace = await workspace.toFernWorkspace(
+                        { context },
+                        getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    );
 
                     await writeFilesToDiskAndRunGenerator({
                         organization: projectConfig.organization,

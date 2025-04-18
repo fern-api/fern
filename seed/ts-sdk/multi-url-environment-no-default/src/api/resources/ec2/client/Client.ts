@@ -10,21 +10,25 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Ec2 {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironment
             | environments.SeedMultiUrlEnvironmentNoDefaultEnvironmentUrls
         >;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -37,15 +41,26 @@ export class Ec2 {
      *
      * @example
      *     await client.ec2.bootInstance({
-     *         size: "string"
+     *         size: "size"
      *     })
      */
-    public async bootInstance(
+    public bootInstance(
         request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
-        requestOptions?: Ec2.RequestOptions
-    ): Promise<void> {
+        requestOptions?: Ec2.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__bootInstance(request, requestOptions));
+    }
+
+    private async __bootInstance(
+        request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
+        requestOptions?: Ec2.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin((await core.Supplier.get(this._options.environment)).ec2, "/ec2/boot"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).ec2,
+                "/ec2/boot",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -55,6 +70,7 @@ export class Ec2 {
                 "User-Agent": "@fern/multi-url-environment-no-default/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -64,13 +80,14 @@ export class Ec2 {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -79,12 +96,16 @@ export class Ec2 {
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError();
+                throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
+                    "Timeout exceeded when calling POST /ec2/boot.",
+                );
             case "unknown":
                 throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -17,7 +17,7 @@ export const ExecutionSessionResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExecutionSessionResponse {
-    interface Raw {
+    export interface Raw {
         sessionId: string;
         executionSessionUrl?: string | null;
         language: serializers.Language.Raw;

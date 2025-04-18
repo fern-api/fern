@@ -2,33 +2,42 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class SinglyLinkedListValue extends SerializableType
+class SinglyLinkedListValue extends JsonSerializableType
 {
-    /**
-     * @var array<string, SinglyLinkedListNodeValue> $nodes
-     */
-    #[JsonProperty("nodes"), ArrayType(["string" => SinglyLinkedListNodeValue::class])]
-    public array $nodes;
-
     /**
      * @var ?string $head
      */
-    #[JsonProperty("head")]
+    #[JsonProperty('head')]
     public ?string $head;
 
     /**
-     * @param array<string, SinglyLinkedListNodeValue> $nodes
-     * @param ?string $head
+     * @var array<string, SinglyLinkedListNodeValue> $nodes
+     */
+    #[JsonProperty('nodes'), ArrayType(['string' => SinglyLinkedListNodeValue::class])]
+    public array $nodes;
+
+    /**
+     * @param array{
+     *   nodes: array<string, SinglyLinkedListNodeValue>,
+     *   head?: ?string,
+     * } $values
      */
     public function __construct(
-        array $nodes,
-        ?string $head = null,
+        array $values,
     ) {
-        $this->nodes = $nodes;
-        $this->head = $head;
+        $this->head = $values['head'] ?? null;
+        $this->nodes = $values['nodes'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

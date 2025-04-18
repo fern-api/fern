@@ -14,7 +14,7 @@ export const StdoutResponse: core.serialization.ObjectSchema<serializers.StdoutR
     });
 
 export declare namespace StdoutResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
         stdout: string;
     }

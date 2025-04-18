@@ -15,7 +15,7 @@ export const ObjectFieldValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace ObjectFieldValue {
-    interface Raw {
+    export interface Raw {
         name: serializers.FieldName.Raw;
         value: serializers.FieldValue.Raw;
     }

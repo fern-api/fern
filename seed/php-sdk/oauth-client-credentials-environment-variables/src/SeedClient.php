@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\Auth\AuthClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
@@ -14,9 +14,15 @@ class SeedClient
     public AuthClient $auth;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -25,7 +31,13 @@ class SeedClient
 
     /**
      * @param string $token The token to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         string $token,
@@ -35,6 +47,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
@@ -50,6 +63,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->auth = new AuthClient($this->client);
+        $this->auth = new AuthClient($this->client, $this->options);
     }
 }

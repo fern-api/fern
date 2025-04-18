@@ -1,4 +1,5 @@
 import { csharp } from "@fern-api/csharp-codegen";
+
 import {
     ExampleContainer,
     ExampleNamedType,
@@ -8,8 +9,10 @@ import {
     ExampleUndiscriminatedUnionType,
     ExampleUnionType
 } from "@fern-fern/ir-sdk/api";
+
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "../object/ObjectGenerator";
+import { UnionGenerator } from "../union/UnionGenerator";
 
 export class ExampleGenerator {
     private context: ModelGeneratorContext;
@@ -68,6 +71,7 @@ export class ExampleGenerator {
         }
         return csharp.InstantiatedPrimitive.null();
     }
+
     private getSnippetForNamed(exampleNamedType: ExampleNamedType, parseDatetimes: boolean): csharp.AstNode {
         return exampleNamedType.shape._visit<csharp.AstNode>({
             alias: (exampleAliasType) =>
@@ -79,7 +83,8 @@ export class ExampleGenerator {
                 }),
             object: (exampleObjectType) =>
                 this.getSnippetForTypeId(exampleNamedType.typeName.typeId, exampleObjectType, parseDatetimes),
-            union: (exampleUnionType) => this.getSnippetForUnion(exampleUnionType, parseDatetimes),
+            union: (exampleUnionType) =>
+                this.getSnippetForUnion(exampleNamedType.typeName.typeId, exampleUnionType, parseDatetimes),
             undiscriminatedUnion: (exampleUndiscriminatedUnionType) =>
                 this.getSnippetForUndiscriminatedUnion(exampleUndiscriminatedUnionType, parseDatetimes),
             _other: () => {
@@ -113,8 +118,22 @@ export class ExampleGenerator {
         });
     }
 
-    private getSnippetForUnion(p: ExampleUnionType, parseDatetimes: boolean): csharp.AstNode {
-        return p.singleUnionType.shape._visit<csharp.AstNode>({
+    private getSnippetForUnion(
+        typeId: string,
+        exampleUnionType: ExampleUnionType,
+        parseDatetimes: boolean
+    ): csharp.AstNode {
+        if (this.context.shouldGenerateDiscriminatedUnions()) {
+            const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
+            if (typeDeclaration.shape.type !== "union") {
+                throw new Error("Unexpected non union in Example Generator");
+            }
+            return new UnionGenerator(this.context, typeDeclaration, typeDeclaration.shape).doGenerateSnippet({
+                exampleUnion: exampleUnionType,
+                parseDatetimes
+            });
+        }
+        return exampleUnionType.singleUnionType.shape._visit<csharp.AstNode>({
             samePropertiesAsObject: (p) => this.getSnippetForTypeId(p.typeId, p.object, parseDatetimes),
             singleProperty: (p) => this.getSnippetForTypeReference({ exampleTypeReference: p, parseDatetimes }),
             // todo: figure out what to put here
@@ -170,6 +189,13 @@ export class ExampleGenerator {
                           exampleTypeReference: p.optional,
                           parseDatetimes
                       }),
+            nullable: (p) =>
+                p.nullable == null
+                    ? csharp.InstantiatedPrimitive.null()
+                    : this.getSnippetForTypeReference({
+                          exampleTypeReference: p.nullable,
+                          parseDatetimes
+                      }),
             map: (p) => {
                 const entries = p.map.map((exampleKeyValuePair) => {
                     return {
@@ -208,7 +234,7 @@ export class ExampleGenerator {
             double: (p) => csharp.InstantiatedPrimitive.double(p),
             boolean: (p) => csharp.InstantiatedPrimitive.boolean(p),
             string: (p) => csharp.InstantiatedPrimitive.string(p.original),
-            datetime: (datetime) => csharp.InstantiatedPrimitive.dateTime(datetime, parseDatetimes),
+            datetime: (example) => csharp.InstantiatedPrimitive.dateTime(example.datetime, parseDatetimes),
             date: (dateString) => csharp.InstantiatedPrimitive.date(dateString),
             uuid: (p) => csharp.InstantiatedPrimitive.uuid(p),
             base64: (p) => csharp.InstantiatedPrimitive.string(p),

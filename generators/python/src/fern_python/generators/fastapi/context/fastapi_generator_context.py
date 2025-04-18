@@ -1,15 +1,14 @@
 from abc import ABC, abstractmethod
 
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorConfig
-
+from ...context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
+from ..core_utilities import CoreUtilities
+from ..declaration_referencers import TypeDeclarationReferencer
 from fern_python.codegen import AST, Filepath
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
-from ...context import PydanticGeneratorContextImpl
-from ..core_utilities import CoreUtilities
-from ..declaration_referencers import TypeDeclarationReferencer
+import fern.ir.resources as ir_types
+from fern.generator_exec import GeneratorConfig
 
 
 class FastApiGeneratorContext(ABC):
@@ -34,52 +33,44 @@ class FastApiGeneratorContext(ABC):
             use_str_enums=use_str_enums,
             skip_formatting=custom_config.skip_formatting,
             union_naming_version=custom_config.pydantic_config.union_naming,
+            use_pydantic_field_aliases=custom_config.pydantic_config.use_pydantic_field_aliases,
+            pydantic_compatibility=custom_config.pydantic_config.version,
         )
-        self.core_utilities = CoreUtilities()
+        self.core_utilities = CoreUtilities(custom_config=custom_config)
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)
 
     @abstractmethod
-    def get_filepath_for_service(self, service_name: ir_types.DeclaredServiceName) -> Filepath:
-        ...
+    def get_filepath_for_service(self, service_name: ir_types.DeclaredServiceName) -> Filepath: ...
 
     @abstractmethod
-    def get_class_name_for_service(self, service_name: ir_types.DeclaredServiceName) -> str:
-        ...
+    def get_class_name_for_service(self, service_name: ir_types.DeclaredServiceName) -> str: ...
 
     @abstractmethod
-    def get_reference_to_service(self, service_name: ir_types.DeclaredServiceName) -> AST.ClassReference:
-        ...
+    def get_reference_to_service(self, service_name: ir_types.DeclaredServiceName) -> AST.ClassReference: ...
 
     @abstractmethod
     def get_filepath_for_inlined_request(
         self, service_name: ir_types.DeclaredServiceName, request: ir_types.InlinedRequestBody
-    ) -> Filepath:
-        ...
+    ) -> Filepath: ...
 
     @abstractmethod
     def get_class_name_for_inlined_request(
         self, service_name: ir_types.DeclaredServiceName, request: ir_types.InlinedRequestBody
-    ) -> str:
-        ...
+    ) -> str: ...
 
     @abstractmethod
     def get_reference_to_inlined_request(
         self, service_name: ir_types.DeclaredServiceName, request: ir_types.InlinedRequestBody
-    ) -> AST.ClassReference:
-        ...
+    ) -> AST.ClassReference: ...
 
     @abstractmethod
-    def get_filepath_for_error(self, error_name: ir_types.DeclaredErrorName) -> Filepath:
-        ...
+    def get_filepath_for_error(self, error_name: ir_types.DeclaredErrorName) -> Filepath: ...
 
     @abstractmethod
-    def get_class_name_for_error(self, error_name: ir_types.DeclaredErrorName) -> str:
-        ...
+    def get_class_name_for_error(self, error_name: ir_types.DeclaredErrorName) -> str: ...
 
     @abstractmethod
-    def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
-        ...
+    def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference: ...
 
     @abstractmethod
-    def has_file_upload_endpoints(self) -> bool:
-        ...
+    def has_file_upload_endpoints(self) -> bool: ...

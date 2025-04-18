@@ -56,6 +56,7 @@ types:
       Organization: Organization
     examples:
       - value:
+          status: ACTIVE
           resource_type: user
           userName: username
           metadata_tags:
@@ -80,6 +81,7 @@ service:
             ResourceID: "rsc-xyz"
           response:
             body:
+              status: ACTIVE
               resource_type: user
               userName: username
               metadata_tags:
@@ -106,6 +108,7 @@ service:
           response:
             body:
               - resource_type: user
+                status: ACTIVE
                 userName: username
                 metadata_tags:
                   - tag1

@@ -6,24 +6,17 @@ import * as core from "../../../../core";
 import { Service } from "../resources/service/client/Client";
 
 export declare namespace FolderD {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
-    }
-
-    interface RequestOptions {
-        /** The maximum time to wait for a response in seconds. */
-        timeoutInSeconds?: number;
-        /** The number of times to retry the request. Defaults to 2. */
-        maxRetries?: number;
-        /** A hook to abort the request. */
-        abortSignal?: AbortSignal;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 }
 
 export class FolderD {
-    constructor(protected readonly _options: FolderD.Options) {}
-
     protected _service: Service | undefined;
+
+    constructor(protected readonly _options: FolderD.Options) {}
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

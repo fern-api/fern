@@ -2,28 +2,37 @@ irVersion: v53
 displayName: TypeScript Express
 changelogLocation: ../../generators/typescript/express/versions.yml
 image: fernapi/fern-typescript-express
+
+buildScripts:
+  installScript:
+    commands:
+      - yarn install
+  compileScript:
+    commands:
+      - yarn build
+
 publish:
   versionSubstitution: "$VERSION"
-  command: 
+  command:
     - pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
     - docker push fernapi/fern-typescript-express:"$VERSION"
 test:
   docker:
     image: fernapi/fern-typescript-express:local
     command: pnpm --filter @fern-typescript/express-generator-cli dockerTagLocal
-  local: 
+  local:
     workingDirectory: generators/typescript
-    buildCommand: 
-      - pnpm --filter @fern-typescript/express-generator-cli compile 
+    buildCommand:
+      - pnpm --filter @fern-typescript/express-generator-cli compile
       - pnpm --filter @fern-typescript/express-generator-cli build
     runCommand: node express/cli/dist/cli.cjs
-    env: 
+    env:
       NODE_ENV: test
 
 language: typescript
 generatorType: Server
 defaultOutputMode: local_files
-defaultCustomConfig: 
+defaultCustomConfig:
   outputSourceFiles: true
 fixtures:
   ts-express-casing:
@@ -44,13 +53,13 @@ fixtures:
     - customConfig:
         outputSourceFiles: false
       outputFolder: output-compiled
-    - customConfig: 
+    - customConfig:
         skipRequestValidation: true
       outputFolder: skip-request-validation
-    - customConfig: 
+    - customConfig:
         skipResponseValidation: true
       outputFolder: skip-response-validation
-    - customConfig: 
+    - customConfig:
         requestValidationStatusCode: 400
       outputFolder: validation-status-code
   exhaustive:
@@ -59,6 +68,9 @@ fixtures:
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+    - customConfig:
+        noOptionalProperties: true
+      outputFolder: no-optional-properties
     - customConfig:
         allowExtraFields: true
       outputFolder: allow-extra-fields
@@ -82,5 +94,4 @@ allowedFailures:
   - streaming
   - streaming-parameter
   - server-sent-events
-
-
+  - server-sent-event-examples

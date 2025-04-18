@@ -81,7 +81,7 @@ def to_jsonable_with_fallback(
 class UniversalBaseModel(pydantic.BaseModel):
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            # Allow fields begining with `model_` to be used in the model
+            # Allow fields beginning with `model_` to be used in the model
             protected_namespaces=(),
         )  # type: ignore # Pydantic v2
 
@@ -143,7 +143,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         Override the default dict method to `exclude_unset` by default. This function patches
         `exclude_unset` to work include fields within non-None default values.
         """
-        # Note: the logic here is multi-plexed given the levers exposed in Pydantic V1 vs V2
+        # Note: the logic here is multiplexed given the levers exposed in Pydantic V1 vs V2
         # Pydantic V1's .dict can be extremely slow, so we do not want to call it twice.
         #
         # We'd ideally do the same for Pydantic V2, but it shells out to a library to serialize models
@@ -167,7 +167,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             )
 
         else:
-            _fields_set = self.__fields_set__
+            _fields_set = self.__fields_set__.copy()
 
             fields = _get_model_fields(self.__class__)
             for name, field in fields.items():
@@ -177,8 +177,13 @@ class UniversalBaseModel(pydantic.BaseModel):
                     # If the default values are non-null act like they've been set
                     # This effectively allows exclude_unset to work like exclude_none where
                     # the latter passes through intentionally set none values.
-                    if default != None:
+                    if default is not None or (
+                        "exclude_unset" in kwargs and not kwargs["exclude_unset"]
+                    ):
                         _fields_set.add(name)
+
+                        if default is not None:
+                            self.__fields_set__.add(name)
 
             kwargs_with_defaults_exclude_unset_include_fields: typing.Any = {
                 "by_alias": True,

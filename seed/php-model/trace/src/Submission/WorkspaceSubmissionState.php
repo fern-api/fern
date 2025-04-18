@@ -2,23 +2,33 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WorkspaceSubmissionState extends SerializableType
+class WorkspaceSubmissionState extends JsonSerializableType
 {
     /**
-     * @var mixed $status
+     * @var WorkspaceSubmissionStatus $status
      */
-    #[JsonProperty("status")]
-    public mixed $status;
+    #[JsonProperty('status')]
+    public WorkspaceSubmissionStatus $status;
 
     /**
-     * @param mixed $status
+     * @param array{
+     *   status: WorkspaceSubmissionStatus,
+     * } $values
      */
     public function __construct(
-        mixed $status,
+        array $values,
     ) {
-        $this->status = $status;
+        $this->status = $values['status'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -165,6 +165,10 @@ export class WebFormData implements CrossPlatformFormData {
         if (fileName == null && isNamedValue(value)) {
             fileName = value.name;
         }
+        if (value instanceof Blob) {
+            this.fd?.append(key, value, fileName);
+            return;
+        }
         this.fd?.append(key, new Blob([value]), fileName);
     }
 

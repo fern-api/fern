@@ -17,7 +17,7 @@ export const ApiAuth: core.serialization.ObjectSchema<serializers.ApiAuth.Raw, F
     .extend(WithDocs);
 
 export declare namespace ApiAuth {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         requirement: AuthSchemesRequirement.Raw;
         schemes: AuthScheme.Raw[];
     }

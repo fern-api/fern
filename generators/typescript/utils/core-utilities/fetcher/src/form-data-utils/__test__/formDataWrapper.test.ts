@@ -42,7 +42,6 @@ describe("CrossPlatformFormData", () => {
 
         it("should append a File with a specified filename", async () => {
             const filename = "testfile.txt";
-            // @ts-expect-error
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value);
@@ -58,7 +57,6 @@ describe("CrossPlatformFormData", () => {
 
         it("should append a File with an explicit filename", async () => {
             const filename = "testfile.txt";
-            // @ts-expect-error
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value, "test.txt");
@@ -104,7 +102,6 @@ describe("CrossPlatformFormData", () => {
 
         it("should append a File with a specified filename", async () => {
             const filename = "testfile.txt";
-            // @ts-expect-error
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value);
@@ -115,7 +112,6 @@ describe("CrossPlatformFormData", () => {
 
         it("should append a File with an explicit filename", async () => {
             const filename = "testfile.txt";
-            // @ts-expect-error
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value, "test.txt");

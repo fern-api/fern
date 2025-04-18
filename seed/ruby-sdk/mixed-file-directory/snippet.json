@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_organization.create"
             },
             "snippet": {
-                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.organization.create(request: { name: \"string\" })",
+                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.organization.create(request: { name: \"name\" })",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_organization.create"
             },
             "snippet": {
-                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.organization.create(request: { name: \"string\" })",
+                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.organization.create(request: { name: \"name\" })",
                 "type": "ruby"
             }
         },
@@ -73,7 +73,7 @@
                 "identifierOverride": "endpoint_user/events/metadata.getMetadata"
             },
             "snippet": {
-                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.events.metadata.get_metadata(id: \"string\")",
+                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.events.metadata.get_metadata(id: \"id\")",
                 "type": "ruby"
             }
         },
@@ -84,7 +84,7 @@
                 "identifierOverride": "endpoint_user/events/metadata.getMetadata"
             },
             "snippet": {
-                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.events.metadata.get_metadata(id: \"string\")",
+                "client": "require \"fern_mixed_file_directory\"\n\nmixed_file_directory = SeedMixedFileDirectoryClient::Client.new(base_url: \"https://api.example.com\")\nmixed_file_directory.user.events.metadata.get_metadata(id: \"id\")",
                 "type": "ruby"
             }
         }

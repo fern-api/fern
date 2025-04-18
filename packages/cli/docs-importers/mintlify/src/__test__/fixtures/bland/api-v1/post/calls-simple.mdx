@@ -1,0 +1,82 @@
+---
+title: "Send Call (Simple)"
+api: "POST https://api.bland.ai/v1/calls"
+description: "Send an AI phone call with a custom objective and actions."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="phone_number" type="string" required>
+  The phone number to call. Country code defaults to `+1` (US) if not specified. 
+  
+  Formatting is flexible, however for the most predictable results use the [E.164](https://www.twilio.com/docs/glossary/what-e164#examples-of-e164-numbers) format.
+
+    <Accordion title="Formatting Examples">
+        Expected/Ideal Format:
+        - "+12223334444"
+        - "+91223334444"
+        - "+61223334444"
+
+        Valid, but not recommended:
+        - "2223334444"
+        - "+1 (222) 333-4444"
+        - "+1 222 333 4444"
+        - "222-333-4444"
+
+        Invalid:
+        - "12223334444"
+        - "552223334444"
+        - "non-numeric characters"
+        - "2223334444 ext. 123"
+    </Accordion>
+
+</ParamField>
+
+<ParamField body="task" type="string" required>
+  Provide instructions, relevant information, and examples of the ideal conversation flow.
+
+    <Accordion title="Best Practices">
+        #### Out-of-the-Box Behaviors (Summarized):
+        - Speech pattern: Direct, concise, casual
+        - Spells out symbols, acronyms, abbreviations, percentages, etc. ($4,000,000 -> "four million dollars")
+        - Asks clarifying questions
+        - Ends call when objective is complete or voicemail is detected
+
+        #### Prompting Tips:
+        - Want to easily test out exactly how your agent will behave?
+            - [Try out Agent Testing!](https://app.bland.ai/home?page=testing)
+        - Aim for less than >2,000 characters where possible.
+        - Simple, direct prompts are the most predictable and reliable.
+        - Frame instructions positively:
+            - `"Do this"` rather than `"Don't do this"`.
+            - Ex. "Keep the conversation casual" rather than "Don't be too formal".
+            - This gives concrete examples of what to do, instead of leaving expected behavior open to interpretation.
+    </Accordion>
+
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="call_id" type="string">
+  A unique identifier for the call (present only if status is `success`).
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success",
+  "call_id": "9d404c1b-6a23-4426-953a-a52c392ff8f1"
+}
+```
+
+</ResponseExample>

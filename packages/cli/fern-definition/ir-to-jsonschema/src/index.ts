@@ -1,0 +1,1 @@
+export { convertIRtoJsonSchema } from "./convertIRtoJsonSchema";

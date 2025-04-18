@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using SeedAliasExtends;
 
-#nullable enable
-
 namespace SeedAliasExtends.Test.Unit.MockServer;
 
 [TestFixture]
@@ -13,8 +11,8 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "child": "string",
-              "parent": "string"
+              "parent": "parent",
+              "child": "child"
             }
             """;
 
@@ -31,8 +29,7 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.ExtendedInlineRequestBodyAsync(
-                    new InlinedChildRequest { Child = "string", Parent = "string" },
-                    RequestOptions
+                    new InlinedChildRequest { Child = "child" }
                 )
         );
     }

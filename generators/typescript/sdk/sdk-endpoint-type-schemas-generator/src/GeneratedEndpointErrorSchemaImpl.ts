@@ -1,9 +1,11 @@
-import { ErrorDiscriminationByPropertyStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { PackageId, Zurg } from "@fern-typescript/commons";
 import { GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { ts } from "ts-morph";
+
+import { ErrorDiscriminationByPropertyStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
 import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorSingleUnionType";
 

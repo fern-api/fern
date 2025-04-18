@@ -1,12 +1,10 @@
 using SeedUndiscriminatedUnions.Core;
 
-#nullable enable
-
 namespace SeedUndiscriminatedUnions;
 
 public partial class SeedUndiscriminatedUnionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedUndiscriminatedUnionsClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedUndiscriminatedUnionsClient
         Union = new UnionClient(_client);
     }
 
-    public UnionClient Union { get; init; }
+    public UnionClient Union { get; }
 }

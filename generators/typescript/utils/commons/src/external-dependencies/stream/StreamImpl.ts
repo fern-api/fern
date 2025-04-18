@@ -1,4 +1,5 @@
 import { ts } from "ts-morph";
+
 import { ExternalDependency } from "../ExternalDependency";
 import { Stream } from "./Stream";
 

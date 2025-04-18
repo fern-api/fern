@@ -1,7 +1,9 @@
-import { docsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
 import { rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { docsYml } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
+
 import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConfiguration } from "./docs-config";
 import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig";
 import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration";
@@ -12,7 +14,7 @@ import { migrateDocsInstances } from "./migrateDocsInstances";
  * fern/  <------ path to fern directory
  *   api/ <------ path to workspace
  *    definition/...
- *    generatiors.yml
+ *    generators.yml
  *    docs.yml
  *
  * This function migrates docs.yml and generators.yml to the new format, and then moves

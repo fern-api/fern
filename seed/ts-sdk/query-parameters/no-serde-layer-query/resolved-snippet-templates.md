@@ -9,37 +9,40 @@ await client.user.getUsername({
   deadline: "2024-01-15T09:30:00Z",
   bytes: "SGVsbG8gd29ybGQh",
   user: {
-    name: "string",
-    tags: ["string"],
+    name: "name",
+    tags: ["tags", "tags"],
   },
   userList: [
     {
-      name: "string",
+      name: "name",
+    },
+    {
+      name: "name",
     },
   ],
   optionalDeadline: "2024-01-15T09:30:00Z",
   keyValue: {
-    string: "string",
+    keyValue: "keyValue",
   },
-  optionalString: "string",
+  optionalString: "optionalString",
   nestedUser: {
-    name: "string",
+    name: "name",
     user: {
-      name: "string",
-      tags: ["string"],
+      name: "name",
+      tags: ["tags", "tags"],
     },
   },
   optionalUser: {
-    name: "string",
-    tags: ["string"],
+    name: "name",
+    tags: ["tags", "tags"],
   },
   excludeUser: {
-    name: "string",
-    tags: ["string"],
+    name: "name",
+    tags: ["tags", "tags"],
   },
-  filter: "string",
+  filter: "filter",
 });
- 
-```                        
+
+```
 
 

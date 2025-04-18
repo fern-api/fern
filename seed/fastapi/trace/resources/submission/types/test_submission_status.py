@@ -18,48 +18,30 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def stopped(self) -> TestSubmissionStatus:
         if IS_PYDANTIC_V2:
-            return TestSubmissionStatus(
-                root=_TestSubmissionStatus.Stopped(type="stopped")
-            )  # type: ignore
+            return TestSubmissionStatus(root=_TestSubmissionStatus.Stopped(type="stopped"))  # type: ignore
         else:
-            return TestSubmissionStatus(
-                __root__=_TestSubmissionStatus.Stopped(type="stopped")
-            )  # type: ignore
+            return TestSubmissionStatus(__root__=_TestSubmissionStatus.Stopped(type="stopped"))  # type: ignore
 
     def errored(self, value: ErrorInfo) -> TestSubmissionStatus:
         if IS_PYDANTIC_V2:
-            return TestSubmissionStatus(
-                root=_TestSubmissionStatus.Errored(type="errored", value=value)
-            )  # type: ignore
+            return TestSubmissionStatus(root=_TestSubmissionStatus.Errored(type="errored", value=value))  # type: ignore
         else:
-            return TestSubmissionStatus(
-                __root__=_TestSubmissionStatus.Errored(type="errored", value=value)
-            )  # type: ignore
+            return TestSubmissionStatus(__root__=_TestSubmissionStatus.Errored(type="errored", value=value))  # type: ignore
 
     def running(self, value: RunningSubmissionState) -> TestSubmissionStatus:
         if IS_PYDANTIC_V2:
-            return TestSubmissionStatus(
-                root=_TestSubmissionStatus.Running(type="running", value=value)
-            )  # type: ignore
+            return TestSubmissionStatus(root=_TestSubmissionStatus.Running(type="running", value=value))  # type: ignore
         else:
-            return TestSubmissionStatus(
-                __root__=_TestSubmissionStatus.Running(type="running", value=value)
-            )  # type: ignore
+            return TestSubmissionStatus(__root__=_TestSubmissionStatus.Running(type="running", value=value))  # type: ignore
 
-    def test_case_id_to_state(
-        self, value: typing.Dict[str, SubmissionStatusForTestCase]
-    ) -> TestSubmissionStatus:
+    def test_case_id_to_state(self, value: typing.Dict[str, SubmissionStatusForTestCase]) -> TestSubmissionStatus:
         if IS_PYDANTIC_V2:
             return TestSubmissionStatus(
-                root=_TestSubmissionStatus.TestCaseIdToState(
-                    type="testCaseIdToState", value=value
-                )
+                root=_TestSubmissionStatus.TestCaseIdToState(type="testCaseIdToState", value=value)
             )  # type: ignore
         else:
             return TestSubmissionStatus(
-                __root__=_TestSubmissionStatus.TestCaseIdToState(
-                    type="testCaseIdToState", value=value
-                )
+                __root__=_TestSubmissionStatus.TestCaseIdToState(type="testCaseIdToState", value=value)
             )  # type: ignore
 
 
@@ -118,9 +100,7 @@ class TestSubmissionStatus(UniversalRootModel):
         stopped: typing.Callable[[], T_Result],
         errored: typing.Callable[[ErrorInfo], T_Result],
         running: typing.Callable[[RunningSubmissionState], T_Result],
-        test_case_id_to_state: typing.Callable[
-            [typing.Dict[str, SubmissionStatusForTestCase]], T_Result
-        ],
+        test_case_id_to_state: typing.Callable[[typing.Dict[str, SubmissionStatusForTestCase]], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "stopped":

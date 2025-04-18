@@ -7,7 +7,6 @@ import typing_extensions
 from ....core.serialization import FieldMetadata
 import datetime as dt
 import uuid
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ObjectWithOptionalField(UniversalBaseModel):
@@ -29,11 +28,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
     map_: typing_extensions.Annotated[typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")] = None
     bigint: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

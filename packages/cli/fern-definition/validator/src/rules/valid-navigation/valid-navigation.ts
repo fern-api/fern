@@ -1,8 +1,10 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { keys } from "@fern-api/core-utils";
-import { dirname, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { getAllDefinitionFiles, getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
 import path from "path";
+
+import { getAllDefinitionFiles, getAllNamedDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
+import { keys } from "@fern-api/core-utils";
+import { RelativeFilePath, dirname, join, relative } from "@fern-api/fs-utils";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ValidNavigationRule: Rule = {
@@ -29,9 +31,9 @@ export const ValidNavigationRule: Rule = {
 
                     if (typeof navigation === "string") {
                         const pathToNavigated = relative(
-                            workspace.definition.absoluteFilepath,
+                            workspace.definition.absoluteFilePath,
                             join(
-                                workspace.definition.absoluteFilepath,
+                                workspace.definition.absoluteFilePath,
                                 dirname(relativeFilepath),
                                 RelativeFilePath.of(navigation)
                             )
@@ -41,7 +43,7 @@ export const ValidNavigationRule: Rule = {
                         } else {
                             return [
                                 {
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: `${navigation} does not exist.`
                                 }
                             ];
@@ -59,17 +61,17 @@ export const ValidNavigationRule: Rule = {
                     for (const actualItem of navigation) {
                         if (actualItem === FERN_PACKAGE_MARKER_FILENAME) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `${FERN_PACKAGE_MARKER_FILENAME} cannot be specified in navigation.`
                             });
                         } else if (!expectedItems.has(actualItem)) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Unexpected item: ${actualItem}`
                             });
                         } else if (seen.has(actualItem)) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `${actualItem} is specified more than once.`
                             });
                         }
@@ -79,7 +81,7 @@ export const ValidNavigationRule: Rule = {
                     for (const expectedItem of expectedItems) {
                         if (!seen.has(expectedItem)) {
                             violations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Missing ${expectedItem}`
                             });
                         }

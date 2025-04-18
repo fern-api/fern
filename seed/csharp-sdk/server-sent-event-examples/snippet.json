@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "Stream completions",
+            "id": {
+                "path": "/stream",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nawait client.Completions.StreamAsync(new StreamCompletionRequest { Query = \"foo\" });\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+types:
+  conjure-imports:
+    commons: commons.yml
+  definitions:
+    default-package: com.birch.trace.sysprop
+    objects:
+services:
+  SysPropCrudService:
+    name: System Property CRUD Service
+    package: com.birch.trace.sysprop
+    base-path: /sysprop
+    endpoints:
+
+      setNumWarmInstances:
+        http: PUT /num-warm-instances/{language}/{numWarmInstances}
+        args:
+          language: commons.Language
+          numWarmInstances: integer
+
+      getNumWarmInstances:
+        http: GET /num-warm-instances
+        returns: map<commons.Language, integer>
+

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { BaseGeneratorInvocationSchema } from "./BaseGeneratorInvocationSchema";
 
 export const DraftGeneratorInvocationSchema = BaseGeneratorInvocationSchema.extend({

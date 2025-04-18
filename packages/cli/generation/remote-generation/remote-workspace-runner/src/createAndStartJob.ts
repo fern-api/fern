@@ -1,14 +1,23 @@
+import axios, { AxiosError } from "axios";
+import FormData from "form-data";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
+import { relative } from "path";
+import { create as createTar } from "tar";
+import tmp from "tmp-promise";
+import urlJoin from "url-join";
+
 import { FernToken } from "@fern-api/auth";
 import {
     DEFINITION_DIRECTORY,
-    fernConfigJson,
     FERN_DIRECTORY,
-    generatorsYml,
     PROJECT_CONFIG_FILENAME,
-    ROOT_API_FILENAME
+    ROOT_API_FILENAME,
+    fernConfigJson,
+    generatorsYml
 } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationToVersionForGenerator
@@ -16,16 +25,9 @@ import {
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
+
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
-import axios, { AxiosError } from "axios";
-import FormData from "form-data";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-import { relative } from "path";
-import tar from "tar";
-import tmp from "tmp-promise";
-import urlJoin from "url-join";
 
 export async function createAndStartJob({
     projectConfig,
@@ -142,7 +144,7 @@ async function createJob({
                 const sources = workspace.getSources();
                 for (const source of sources) {
                     const sourceContents = await readFile(source.absoluteFilePath);
-                    const relativeLocation = relative(workspace.absoluteFilepath, source.absoluteFilePath);
+                    const relativeLocation = relative(workspace.absoluteFilePath, source.absoluteFilePath);
                     const absolutePathToSourceFile = join(
                         absolutePathToTmpFernDirectory,
                         RelativeFilePath.of(relativeLocation)
@@ -150,14 +152,14 @@ async function createJob({
                     // Make sure the directory exists
                     await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
 
-                    await writeFile(absolutePathToSourceFile, sourceContents);
+                    await writeFile(absolutePathToSourceFile, new Uint8Array(sourceContents));
                 }
             } catch (error) {
                 context.logger.debug(`Failed to write source files to disk, continuing: ${error}`);
             }
 
             const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));
-            await tar.create({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
+            await createTar({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
 
             // Upload definition to S3
             context.logger.debug("Getting upload URL for Fern definition.");

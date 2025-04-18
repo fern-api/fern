@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
-
-#nullable enable
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -13,7 +9,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class TestPostTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -33,15 +29,16 @@ public class TestPostTest : BaseMockServerTest
               "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
               "base64": "SGVsbG8gd29ybGQh",
               "list": [
-                "string"
+                "list",
+                "list"
               ],
               "set": [
-                "string"
+                "set"
               ],
               "map": {
-                "1": "string"
+                "1": "map"
               },
-              "bigint": "123456789123456789"
+              "bigint": "1000000"
             }
             """;
 
@@ -61,12 +58,11 @@ public class TestPostTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.HttpMethods.TestPostAsync(
-            new ObjectWithRequiredField { String = "string" },
-            RequestOptions
+            new ObjectWithRequiredField { String = "string" }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<ObjectWithOptionalField>(mockResponse)).UsingDefaults()
+        );
     }
 }

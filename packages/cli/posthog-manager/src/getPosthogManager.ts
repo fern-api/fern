@@ -1,4 +1,5 @@
 import { getAccessToken, getUserToken } from "@fern-api/auth";
+
 import { AccessTokenPosthogManager } from "./AccessTokenPosthogManager";
 import { NoopPosthogManager } from "./NoopPosthogManager";
 import { PosthogManager } from "./PosthogManager";

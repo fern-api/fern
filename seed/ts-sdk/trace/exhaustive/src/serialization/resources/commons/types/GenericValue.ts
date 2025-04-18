@@ -13,7 +13,7 @@ export const GenericValue: core.serialization.ObjectSchema<serializers.GenericVa
     });
 
 export declare namespace GenericValue {
-    interface Raw {
+    export interface Raw {
         stringifiedType?: string | null;
         stringifiedValue: string;
     }

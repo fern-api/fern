@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMixedFileDirectory;
 using SeedMixedFileDirectory.Core;
-
-#nullable enable
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 
@@ -13,22 +9,27 @@ namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 public class CreateTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
-              "name": "string"
+              "name": "name"
             }
             """;
 
         const string mockResponse = """
             {
-              "id": "string",
-              "name": "string",
+              "id": "id",
+              "name": "name",
               "users": [
                 {
-                  "id": "string",
-                  "name": "string",
+                  "id": "id",
+                  "name": "name",
+                  "age": 1
+                },
+                {
+                  "id": "id",
+                  "name": "name",
                   "age": 1
                 }
               ]
@@ -51,12 +52,11 @@ public class CreateTest : BaseMockServerTest
             );
 
         var response = await Client.Organization.CreateAsync(
-            new CreateOrganizationRequest { Name = "string" },
-            RequestOptions
+            new CreateOrganizationRequest { Name = "name" }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Organization>(mockResponse)).UsingDefaults()
+        );
     }
 }

@@ -6,11 +6,11 @@ const client = new SeedApiClient({
   token: "YOUR_TOKEN",
 });
 await client.imdb.createMovie({
-  title: "string",
+  title: "title",
   rating: 1.1,
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -20,20 +20,8 @@ const client = new SeedApiClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-await client.imdb.getMovie("string");
- 
-```                        
+await client.imdb.getMovie("movieId");
 
-
-```typescript
-import { SeedApiClient } from "@fern/imdb";
-
-const client = new SeedApiClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
-});
-await client.imdb.getMovie("string");
- 
-```                        
+```
 
 

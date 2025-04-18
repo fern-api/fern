@@ -1,0 +1,10 @@
+## 4.2.2
+**`(fix):`** The content type of non-file properties is now respected for multipart
+requests. For example, if you have a type called `metadata` that has the
+content type `application/json`, then it will be sent as:
+
+```python
+"metadata": (None, json.dumps(jsonable_encoder(metadata)), "application/json"),
+```
+
+

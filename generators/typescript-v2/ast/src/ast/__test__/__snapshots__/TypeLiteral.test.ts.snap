@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TypeLiteral > arrayOfStringsToString > Should generate an array of strings 1`] = `
+"[
+    "Hello, World!",
+    "Goodbye, World!",
+]"
+`;
+
+exports[`TypeLiteral > emptyArrayToString > Should generate an empty array 1`] = `"[]"`;
+
+exports[`TypeLiteral > falseBooleanToString > Should generate a true boolean 1`] = `"false"`;
+
+exports[`TypeLiteral > longArrayOfStringsToString > Should generate a multiline array of strings 1`] = `
+"[
+    "Hello, World!",
+    "Goodbye, World!",
+    "Hello, World!",
+    "Goodbye, World!",
+    "Hello, World!",
+    "Goodbye, World!",
+    "Hello, World!",
+    "Goodbye, World!",
+]"
+`;
+
+exports[`TypeLiteral > manyLinesMultilineStringToString > Should generate a multiline string with backticks 1`] = `
+"\`Hello,
+World!\`"
+`;
+
+exports[`TypeLiteral > manyLinesMultilineStringWithBackticksToString > Should generate a multiline string with escaped backticks 1`] = `
+"\`\\\`Hello,
+World!\\\`\`"
+`;
+
+exports[`TypeLiteral > numberToString > Should generate a simple number 1`] = `"7"`;
+
+exports[`TypeLiteral > simpleObjectToString > Should generate a simple object 1`] = `
+"let myObj = {
+    name: "John Smith",
+    hometown: "New York, New York",
+}"
+`;
+
+exports[`TypeLiteral > stringToString > Should generate a simple string literal 1`] = `""Hello, World!""`;
+
+exports[`TypeLiteral > stringWithDoubleQuotesToString > Should generate a simple string literal with escaped double quotes 1`] = `""\\"Hello, World!\\"""`;
+
+exports[`TypeLiteral > trueBooleanToString > Should generate a true boolean 1`] = `"true"`;

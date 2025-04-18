@@ -54,8 +54,7 @@ jobs:
 
       - name: Publish to maven
         run: |
-          ./.publish/prepare.sh
-          ./gradlew  publish
+          ./gradlew sonatypeCentralUpload
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

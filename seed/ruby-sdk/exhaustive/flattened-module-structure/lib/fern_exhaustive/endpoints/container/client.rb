@@ -23,7 +23,7 @@ module SeedExhaustiveClient
       # @return [Array<String>]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.container.get_and_return_list_of_primitives(request: ["string"])
+      #  exhaustive.endpoints.container.get_and_return_list_of_primitives(request: ["string", "string"])
       def get_and_return_list_of_primitives(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -48,7 +48,7 @@ module SeedExhaustiveClient
       # @return [Array<SeedExhaustiveClient::Types::Object_::Types::ObjectWithRequiredField>]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: "string" }])
+      #  exhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: "string" }, { string: "string" }])
       def get_and_return_list_of_objects(request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -212,7 +212,7 @@ module SeedExhaustiveClient
       # @return [Array<String>]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.container.get_and_return_list_of_primitives(request: ["string"])
+      #  exhaustive.endpoints.container.get_and_return_list_of_primitives(request: ["string", "string"])
       def get_and_return_list_of_primitives(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
@@ -240,7 +240,7 @@ module SeedExhaustiveClient
       # @return [Array<SeedExhaustiveClient::Types::Object_::Types::ObjectWithRequiredField>]
       # @example
       #  exhaustive = SeedExhaustiveClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  exhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: "string" }])
+      #  exhaustive.endpoints.container.get_and_return_list_of_objects(request: [{ string: "string" }, { string: "string" }])
       def get_and_return_list_of_objects(request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|

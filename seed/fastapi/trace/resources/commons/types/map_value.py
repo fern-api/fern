@@ -12,9 +12,7 @@ class MapValue(UniversalBaseModel):
     key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -23,5 +21,4 @@ class MapValue(UniversalBaseModel):
 
 from .key_value_pair import KeyValuePair  # noqa: E402
 
-update_forward_refs(KeyValuePair, MapValue=MapValue)
 update_forward_refs(MapValue)

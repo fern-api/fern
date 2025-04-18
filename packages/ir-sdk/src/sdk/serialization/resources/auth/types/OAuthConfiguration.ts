@@ -27,9 +27,9 @@ export const OAuthConfiguration: core.serialization.Schema<
     });
 
 export declare namespace OAuthConfiguration {
-    type Raw = OAuthConfiguration.ClientCredentials;
+    export type Raw = OAuthConfiguration.ClientCredentials;
 
-    interface ClientCredentials extends OAuthClientCredentials.Raw {
+    export interface ClientCredentials extends OAuthClientCredentials.Raw {
         type: "clientCredentials";
     }
 }

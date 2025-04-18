@@ -1,0 +1,110 @@
+---
+title: Send your first phone call
+slug: tutorials/send-first-call
+---
+
+
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/sendfirstcall.jpg" />
+
+## Step 1: Setup Your Authorization
+
+Before making a call, you need to authenticate your request. Make sure you have your API key ready.
+
+Sign up on the [developer portal](https://app.bland.ai) to get yours.
+
+## Step 2: Prepare the Call Data
+
+You will need to provide specific details for the call. These include:
+
+- `phone_number`: The number you want to call. Remember to include the country code.
+- `task`: Describe the purpose of the call and how the AI should handle the conversation.
+- `voice_id`: Choose the voice persona (American male, Australian female, etc.) based on your preference.
+- Set parameters like `reduce_latency`, `record`, `amd` (for navigating phone trees), and `wait_for_greeting` according to your call's requirements.
+
+## Step 3: Customize the Call
+
+You can further personalize the call by:
+
+1. Setting a `first_sentence` for the call.
+2. Specifying `dynamic_data` to incorporate external API data.
+3. Adjusting `voice_settings` for stability, similarity, and speed.
+4. Choosing the language with the `language` parameter.
+5. Setting a `max_duration` for the call.
+
+## Step 4: Send the API Request
+
+Use the provided JavaScript or Python code snippet to make the API request.
+
+## Step 5: Handle the Response
+
+After the call, you will receive a response with the `status` and `call_id`. If you set `record` to true, you can retrieve the recording using the `/call/recording` endpoint.
+
+Here's what an example response might look like:
+
+```javascript
+{
+  "status": "success",
+  "call_id": "9d404c1b-6a23-4426-953a-a52c392ff8f1"
+}
+```
+
+## Step 6: Monitor the Call
+
+If you have set up a webhook, you will receive real-time notifications and transcripts once the call completes.
+
+And that's it! You're now ready to make your first AI-powered phone call with Bland AI. Happy calling!
+
+<RequestExample>
+
+```javascript SendCall.js
+// Headers
+const headers = {
+  authorization: "YOUR-API-KEY-HERE",
+};
+
+// Data
+const data = {
+  phone_number: "+11233456789",
+  task: "You are calling Fantastic Airlines on behalf of John Doe. Find out where John's Bags are located.",
+  voice_id: 0,
+  language: "eng",
+  request_data: {
+    calling: "Fantastic Airlines",
+    bag_claim: "69683",
+    airline_code: "UA123",
+  },
+  record: true,
+  reduce_latency: true,
+  amd: true,
+};
+
+// API request
+await axios.post("https://api.bland.ai/v1/calls", data, { headers });
+```
+
+```python SendCall.py
+# Headers
+headers = {
+    'authorization': 'YOUR-API-KEY-HERE'
+}
+
+# Data
+data = {
+    'phone_number': '+11233456789',
+    'task': "You are calling Fantastic Airlines on behalf of John Doe. Find the location of out where John's Bags are located.",
+    'voice_id': 0,
+    'request_data': {
+        'calling': 'Fantastic Airlines',
+        'bag_claim': '69683',
+        'airline_code': 'UA123'
+    },
+    'record': True,
+    'reduce_latency': True,
+    'amd': True
+}
+
+# API request
+response = requests.post('https://api.bland.ai/v1/calls', json=data, headers=headers)
+```
+
+</RequestExample>

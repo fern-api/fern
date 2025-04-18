@@ -4,6 +4,7 @@ require_relative "../../requests"
 require_relative "../types/types/movie"
 require "json"
 require_relative "../types/types/metadata"
+require_relative "../types/types/big_entity"
 require_relative "../types/types/response"
 require "async"
 
@@ -109,12 +110,55 @@ module SeedExamplesClient
       SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
     end
 
+    # @param request [Hash] Request of type SeedExamplesClient::Types::BigEntity, as a Hash
+    #   * :cast_member (Hash)
+    #   * :extended_movie (Hash)
+    #     * :cast (Array<String>)
+    #     * :id (String)
+    #     * :prequel (String)
+    #     * :title (String)
+    #     * :from (String)
+    #     * :rating (Float)
+    #     * :type (String)
+    #     * :tag (String)
+    #     * :book (String)
+    #     * :metadata (Hash{String => Object})
+    #     * :revenue (Long)
+    #   * :entity (Hash)
+    #     * :type (Hash)
+    #     * :name (String)
+    #   * :metadata (Hash)
+    #     * :extra (Hash{String => String})
+    #     * :tags (Set<String>)
+    #   * :common_metadata (Hash)
+    #     * :id (String)
+    #     * :data (Hash{String => String})
+    #     * :json_string (String)
+    #   * :event_info (Hash)
+    #   * :data (Hash)
+    #   * :migration (Hash)
+    #     * :name (String)
+    #     * :status (SeedExamplesClient::Types::MigrationStatus)
+    #   * :exception (Hash)
+    #   * :test (Hash)
+    #   * :node (Hash)
+    #     * :name (String)
+    #     * :nodes (Array<SeedExamplesClient::Types::Node>)
+    #     * :trees (Array<SeedExamplesClient::Types::Tree>)
+    #   * :directory (Hash)
+    #     * :name (String)
+    #     * :files (Array<SeedExamplesClient::Types::File>)
+    #     * :directories (Array<SeedExamplesClient::Types::Directory>)
+    #   * :moment (Hash)
+    #     * :id (String)
+    #     * :date (Date)
+    #     * :datetime (DateTime)
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [SeedExamplesClient::Types::Response]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.service.get_response
-    def get_response(request_options: nil)
+    #  examples.service.create_big_entity(request: { cast_member: { name: "name", id: "id" }, extended_movie: { id: "id", prequel: "prequel", title: "title", from: "from", rating: 1.1, type: "movie", tag: "tag", book: "book", metadata: { "metadata": {"key":"value"} }, revenue: 1000000, cast: ["cast", "cast"] }, entity: { type: PRIMITIVE, name: "name" }, common_metadata: { id: "id", data: { "data": "data" }, json_string: "jsonString" }, migration: { name: "name", status: RUNNING }, node: { name: "name", nodes: [{ name: "name", nodes: [{ name: "name", nodes: , trees:  }, { name: "name", nodes: , trees:  }], trees: [{ nodes:  }, { nodes:  }] }, { name: "name", nodes: [{ name: "name", nodes: , trees:  }, { name: "name", nodes: , trees:  }], trees: [{ nodes:  }, { nodes:  }] }], trees: [{ nodes: [{ name: "name", nodes: , trees:  }, { name: "name", nodes: , trees:  }] }, { nodes: [{ name: "name", nodes: , trees:  }, { name: "name", nodes: , trees:  }] }] }, directory: { name: "name", files: [{ name: "name", contents: "contents" }, { name: "name", contents: "contents" }], directories: [{ name: "name", files: [{ name: "name", contents: "contents" }, { name: "name", contents: "contents" }], directories: [{ name: "name", files: , directories:  }, { name: "name", files: , directories:  }] }, { name: "name", files: [{ name: "name", contents: "contents" }, { name: "name", contents: "contents" }], directories: [{ name: "name", files: , directories:  }, { name: "name", files: , directories:  }] }] }, moment: { id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", date: Date.parse("2023-01-15"), datetime: DateTime.parse("2024-01-15T09:30:00.000Z") } })
+    def create_big_entity(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
@@ -126,10 +170,8 @@ module SeedExamplesClient
         unless request_options.nil? || request_options&.additional_query_parameters.nil?
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
-        unless request_options.nil? || request_options&.additional_body_parameters.nil?
-          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
-        end
-        req.url "#{@request_client.get_url(request_options: request_options)}/response"
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/big-entity"
       end
       SeedExamplesClient::Types::Response.from_json(json_object: response.body)
     end
@@ -247,12 +289,55 @@ module SeedExamplesClient
       end
     end
 
+    # @param request [Hash] Request of type SeedExamplesClient::Types::BigEntity, as a Hash
+    #   * :cast_member (Hash)
+    #   * :extended_movie (Hash)
+    #     * :cast (Array<String>)
+    #     * :id (String)
+    #     * :prequel (String)
+    #     * :title (String)
+    #     * :from (String)
+    #     * :rating (Float)
+    #     * :type (String)
+    #     * :tag (String)
+    #     * :book (String)
+    #     * :metadata (Hash{String => Object})
+    #     * :revenue (Long)
+    #   * :entity (Hash)
+    #     * :type (Hash)
+    #     * :name (String)
+    #   * :metadata (Hash)
+    #     * :extra (Hash{String => String})
+    #     * :tags (Set<String>)
+    #   * :common_metadata (Hash)
+    #     * :id (String)
+    #     * :data (Hash{String => String})
+    #     * :json_string (String)
+    #   * :event_info (Hash)
+    #   * :data (Hash)
+    #   * :migration (Hash)
+    #     * :name (String)
+    #     * :status (SeedExamplesClient::Types::MigrationStatus)
+    #   * :exception (Hash)
+    #   * :test (Hash)
+    #   * :node (Hash)
+    #     * :name (String)
+    #     * :nodes (Array<SeedExamplesClient::Types::Node>)
+    #     * :trees (Array<SeedExamplesClient::Types::Tree>)
+    #   * :directory (Hash)
+    #     * :name (String)
+    #     * :files (Array<SeedExamplesClient::Types::File>)
+    #     * :directories (Array<SeedExamplesClient::Types::Directory>)
+    #   * :moment (Hash)
+    #     * :id (String)
+    #     * :date (Date)
+    #     * :datetime (DateTime)
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [SeedExamplesClient::Types::Response]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.service.get_response
-    def get_response(request_options: nil)
+    #  examples.service.create_big_entity(request: { cast_member: { name: "name", id: "id" }, extended_movie: { id: "id", prequel: "prequel", title: "title", from: "from", rating: 1.1, type: "movie", tag: "tag", book: "book", metadata: { "metadata": {"key":"value"} }, revenue: 1000000, cast: ["cast", "cast"] }, entity: { type: PRIMITIVE, name: "name" }, common_metadata: { id: "id", data: { "data": "data" }, json_string: "jsonString" }, migration: { name: "name", status: RUNNING }, node: { name: "name", nodes: [{ name: "name", nodes: [{ name: "name", nodes: , trees:  }, { name: "name", nodes: , trees:  }], trees: [{ nodes:  }, { nodes:  }] }, { name: "name", nodes: [{ name: "name", nodes: , trees:  }, { name: "name", nodes: , trees:  }], trees: [{ nodes:  }, { nodes:  }] }], trees: [{ nodes: [{ name: "name", nodes: , trees:  }, { name: "name", nodes: , trees:  }] }, { nodes: [{ name: "name", nodes: , trees:  }, { name: "name", nodes: , trees:  }] }] }, directory: { name: "name", files: [{ name: "name", contents: "contents" }, { name: "name", contents: "contents" }], directories: [{ name: "name", files: [{ name: "name", contents: "contents" }, { name: "name", contents: "contents" }], directories: [{ name: "name", files: , directories:  }, { name: "name", files: , directories:  }] }, { name: "name", files: [{ name: "name", contents: "contents" }, { name: "name", contents: "contents" }], directories: [{ name: "name", files: , directories:  }, { name: "name", files: , directories:  }] }] }, moment: { id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", date: Date.parse("2023-01-15"), datetime: DateTime.parse("2024-01-15T09:30:00.000Z") } })
+    def create_big_entity(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -265,10 +350,8 @@ module SeedExamplesClient
           unless request_options.nil? || request_options&.additional_query_parameters.nil?
             req.params = { **(request_options&.additional_query_parameters || {}) }.compact
           end
-          unless request_options.nil? || request_options&.additional_body_parameters.nil?
-            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
-          end
-          req.url "#{@request_client.get_url(request_options: request_options)}/response"
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/big-entity"
         end
         SeedExamplesClient::Types::Response.from_json(json_object: response.body)
       end

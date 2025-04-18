@@ -3,10 +3,6 @@ from __future__ import annotations
 from abc import abstractmethod
 from typing import Callable, List, Optional, TypeVar
 
-from ordered_set import OrderedSet
-
-from fern_python.codegen.dependency_manager import DependencyManager
-
 from . import AST
 from .class_parent import ClassParent
 from .imports_manager import ImportsManager
@@ -14,42 +10,36 @@ from .local_class_reference import LocalClassReference
 from .node_writer_impl import NodeWriterImpl
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import TopLevelStatement
+from fern_python.codegen.dependency_manager import DependencyManager
+from ordered_set import OrderedSet
 
 T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
 
 
 class SourceFile(ClassParent):
     @abstractmethod
-    def add_declaration(self, declaration: AST.Declaration, should_export: bool) -> None:
-        ...
+    def add_declaration(self, declaration: AST.Declaration, should_export: bool) -> None: ...
 
     @abstractmethod
-    def add_expression(self, expr: AST.Expression) -> None:
-        ...
+    def add_expression(self, expr: AST.Expression) -> None: ...
 
     @abstractmethod
-    def add_arbitrary_code(self, code: AST.CodeWriter) -> None:
-        ...
+    def add_arbitrary_code(self, code: AST.CodeWriter) -> None: ...
 
     @abstractmethod
-    def add_footer_expression(self, expression: AST.Expression) -> None:
-        ...
+    def add_footer_expression(self, expression: AST.Expression) -> None: ...
 
     @abstractmethod
-    def to_str(self, include_imports: Optional[bool] = True, should_format_override: Optional[bool] = None) -> str:
-        ...
+    def to_str(self, include_imports: Optional[bool] = True, should_format_override: Optional[bool] = None) -> str: ...
 
     @abstractmethod
-    def write_to_file(self, *, filepath: str) -> None:
-        ...
+    def write_to_file(self, *, filepath: str) -> None: ...
 
     @abstractmethod
-    def get_imports_manager(self) -> ImportsManager:
-        ...
+    def get_imports_manager(self) -> ImportsManager: ...
 
     @abstractmethod
-    def get_dummy_class_declaration(self, declaration: AST.ClassDeclaration) -> LocalClassReference:
-        ...
+    def get_dummy_class_declaration(self, declaration: AST.ClassDeclaration) -> LocalClassReference: ...
 
 
 class SourceFileImpl(SourceFile):
@@ -210,7 +200,7 @@ class SourceFileImpl(SourceFile):
                 tc_ref = AST.TypeHint.type_checking_reference()
                 self._reference_resolver.register_reference(tc_ref)
 
-            # register refrence for resolving later
+            # register reference for resolving later
             self._reference_resolver.register_reference(reference)
 
             # track dependency if this references relies on an external dep

@@ -1,6 +1,7 @@
-import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 
 export function validateExampleEndpointCallParameters<T>({
@@ -38,7 +39,7 @@ export function validateExampleEndpointCallParameters<T>({
             const isOptional =
                 (resolvedType != null &&
                     resolvedType._type === "container" &&
-                    resolvedType.container._type === "optional") ||
+                    (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")) ||
                 resolvedType?._type === "unknown";
 
             if (!isOptional) {
@@ -52,7 +53,7 @@ export function validateExampleEndpointCallParameters<T>({
     for (const requiredKey of requiredParameters) {
         if (examples?.[requiredKey] == null) {
             violations.push({
-                severity: "error",
+                severity: "fatal",
                 message: `Example is missing required ${parameterDisplayName} "${requiredKey}"`
             });
         }
@@ -63,7 +64,7 @@ export function validateExampleEndpointCallParameters<T>({
             const expectedType = allDeclarations[key];
             if (expectedType == null) {
                 violations.push({
-                    severity: "error",
+                    severity: "fatal",
                     message: `Unexpected ${parameterDisplayName} "${key}"`
                 });
             } else {
@@ -80,9 +81,10 @@ export function validateExampleEndpointCallParameters<T>({
                             workspace,
                             typeResolver,
                             exampleResolver,
-                            breadcrumbs
+                            breadcrumbs,
+                            depth: 0
                         }).map((val): RuleViolation => {
-                            return { severity: "error", message: val.message };
+                            return { severity: "fatal", message: val.message };
                         })
                     );
                 }

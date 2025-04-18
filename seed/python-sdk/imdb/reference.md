@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Add a movie to the database
+Add a movie to the database using the movies/* /... path.
 </dd>
 </dl>
 </dd>
@@ -34,7 +34,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 client.imdb.create_movie(
-    title="string",
+    title="title",
     rating=1.1,
 )
 
@@ -100,7 +100,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 client.imdb.get_movie(
-    movie_id="string",
+    movie_id="movieId",
 )
 
 ```

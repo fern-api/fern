@@ -2,52 +2,59 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 use Seed\V2\Problem\ProblemInfoV2;
 
-class TestSubmissionStatusV2 extends SerializableType
+class TestSubmissionStatusV2 extends JsonSerializableType
 {
     /**
      * @var array<TestSubmissionUpdate> $updates
      */
-    #[JsonProperty("updates"), ArrayType([TestSubmissionUpdate::class])]
+    #[JsonProperty('updates'), ArrayType([TestSubmissionUpdate::class])]
     public array $updates;
 
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
      * @var ProblemInfoV2 $problemInfo
      */
-    #[JsonProperty("problemInfo")]
+    #[JsonProperty('problemInfo')]
     public ProblemInfoV2 $problemInfo;
 
     /**
-     * @param array<TestSubmissionUpdate> $updates
-     * @param string $problemId
-     * @param int $problemVersion
-     * @param ProblemInfoV2 $problemInfo
+     * @param array{
+     *   updates: array<TestSubmissionUpdate>,
+     *   problemId: string,
+     *   problemVersion: int,
+     *   problemInfo: ProblemInfoV2,
+     * } $values
      */
     public function __construct(
-        array $updates,
-        string $problemId,
-        int $problemVersion,
-        ProblemInfoV2 $problemInfo,
+        array $values,
     ) {
-        $this->updates = $updates;
-        $this->problemId = $problemId;
-        $this->problemVersion = $problemVersion;
-        $this->problemInfo = $problemInfo;
+        $this->updates = $values['updates'];
+        $this->problemId = $values['problemId'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->problemInfo = $values['problemInfo'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

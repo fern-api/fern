@@ -2,33 +2,42 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class BinaryTreeValue extends SerializableType
+class BinaryTreeValue extends JsonSerializableType
 {
-    /**
-     * @var array<string, BinaryTreeNodeValue> $nodes
-     */
-    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue::class])]
-    public array $nodes;
-
     /**
      * @var ?string $root
      */
-    #[JsonProperty("root")]
+    #[JsonProperty('root')]
     public ?string $root;
 
     /**
-     * @param array<string, BinaryTreeNodeValue> $nodes
-     * @param ?string $root
+     * @var array<string, BinaryTreeNodeValue> $nodes
+     */
+    #[JsonProperty('nodes'), ArrayType(['string' => BinaryTreeNodeValue::class])]
+    public array $nodes;
+
+    /**
+     * @param array{
+     *   nodes: array<string, BinaryTreeNodeValue>,
+     *   root?: ?string,
+     * } $values
      */
     public function __construct(
-        array $nodes,
-        ?string $root = null,
+        array $values,
     ) {
-        $this->nodes = $nodes;
-        $this->root = $root;
+        $this->root = $values['root'] ?? null;
+        $this->nodes = $values['nodes'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

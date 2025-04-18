@@ -1,10 +1,12 @@
-import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fern-api/auth";
+import { FernToken, createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { Values } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { PREVIEW_DIRECTORY } from "../../constants";
+import { checkOutputDirectory } from "./checkOutputDirectory";
 import { generateWorkspace } from "./generateAPIWorkspace";
 
 export const GenerationMode = {
@@ -22,7 +24,8 @@ export async function generateAPIWorkspaces({
     keepDocker,
     useLocalDocker,
     preview,
-    mode
+    mode,
+    force
 }: {
     project: Project;
     cliContext: CliContext;
@@ -33,6 +36,7 @@ export async function generateAPIWorkspaces({
     keepDocker: boolean;
     preview: boolean;
     mode: GenerationMode | undefined;
+    force: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -50,6 +54,19 @@ export async function generateAPIWorkspaces({
             });
         }
         token = currentToken;
+    }
+
+    for (const workspace of project.apiWorkspaces) {
+        for (const generator of workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? []) {
+            const { shouldProceed } = await checkOutputDirectory(
+                generator.absolutePathToLocalOutput,
+                cliContext,
+                force
+            );
+            if (!shouldProceed) {
+                cliContext.failAndThrow("Generation cancelled");
+            }
+        }
     }
 
     await cliContext.instrumentPostHogEvent({
@@ -81,7 +98,7 @@ export async function generateAPIWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const absolutePathToPreview = preview
-                    ? join(workspace.absoluteFilepath, RelativeFilePath.of(PREVIEW_DIRECTORY))
+                    ? join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
                     : undefined;
 
                 if (absolutePathToPreview != null) {

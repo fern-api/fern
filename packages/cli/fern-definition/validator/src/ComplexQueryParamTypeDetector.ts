@@ -1,22 +1,23 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
 import {
-    constructFernFileContext,
-    FernFileContext,
-    getAllPropertiesForObject,
-    ResolvedContainerType,
-    ResolvedType,
-    TypeResolver,
-    TypeResolverImpl
-} from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import {
     DefinitionFileSchema,
+    RawSchemas,
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
-    isRawUndiscriminatedUnionDefinition,
-    RawSchemas
+    isRawUndiscriminatedUnionDefinition
 } from "@fern-api/fern-definition-schema";
+import {
+    FernFileContext,
+    ResolvedContainerType,
+    ResolvedType,
+    TypeResolver,
+    TypeResolverImpl,
+    constructFernFileContext,
+    getAllPropertiesForObject
+} from "@fern-api/ir-generator";
+
 import { RuleRunnerArgs } from "./Rule";
 import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
 
@@ -112,6 +113,7 @@ export class ComplexQueryParamTypeDetector {
                     )
                 );
             case "optional":
+            case "nullable":
             case "list":
             case "set":
                 return this.isResolvedReferenceComplex({
@@ -237,8 +239,7 @@ export class ComplexQueryParamTypeDetector {
     }): boolean {
         switch (type._type) {
             case "literal":
-                // For now, we consider complex objects to be those that define any literals.
-                return true;
+                return false;
             case "map":
                 return (
                     this.isComplex({
@@ -253,6 +254,7 @@ export class ComplexQueryParamTypeDetector {
                     })
                 );
             case "optional":
+            case "nullable":
             case "list":
             case "set":
                 return this.isComplex({

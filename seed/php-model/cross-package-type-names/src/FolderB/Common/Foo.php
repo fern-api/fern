@@ -2,24 +2,33 @@
 
 namespace Seed\FolderB\Common;
 
-use Seed\Core\SerializableType;
-use Seed\FolderC\Common\Foo;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Foo extends SerializableType
+class Foo extends JsonSerializableType
 {
     /**
-     * @var ?Foo $foo
+     * @var ?\Seed\FolderC\Common\Foo $foo
      */
-    #[JsonProperty("foo")]
-    public ?Foo $foo;
+    #[JsonProperty('foo')]
+    public ?\Seed\FolderC\Common\Foo $foo;
 
     /**
-     * @param ?Foo $foo
+     * @param array{
+     *   foo?: ?\Seed\FolderC\Common\Foo,
+     * } $values
      */
     public function __construct(
-        ?Foo $foo = null,
+        array $values = [],
     ) {
-        $this->foo = $foo;
+        $this->foo = $values['foo'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

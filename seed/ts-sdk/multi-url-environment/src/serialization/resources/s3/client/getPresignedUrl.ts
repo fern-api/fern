@@ -9,5 +9,5 @@ export const Response: core.serialization.Schema<serializers.s3.getPresignedUrl.
     core.serialization.string();
 
 export declare namespace Response {
-    type Raw = string;
+    export type Raw = string;
 }

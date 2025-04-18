@@ -5,8 +5,8 @@ description: Add brand-specific styling, user interactions. and components to ma
 ---
 
 <Note>
-Custom CSS & JS are available on the Business plan. 
-Adding Custom Components is available on the Enterprise plan.
+Custom CSS & JS are available on the Basic plan. 
+Adding Custom Components is available on the Pro plan.
 </Note>
 
 ## Custom CSS
@@ -122,7 +122,7 @@ check out the [Global Configuration](/learn/docs/getting-started/global-configur
 
 Customize the behavior of your Docs site by injecting custom JavaScript globally. Add a `custom.js` file and include it in your `fern/` project:
 
-<CodeBlock title="Add the styles.css file">
+<CodeBlock title="Add the custom.js file">
 ```bash {5}
   fern/
   ├─ openapi/
@@ -147,12 +147,16 @@ You can also specify multiple custom JS files stored locally and remote:
 <CodeBlock title="docs.yml">
 ```yaml
 js:
-    - path/to/js/file.js
-    - path: path/to/another/js/file.js
-        strategy: beforeInteractive
-    - url: https://example.com/path/to/js/file.js
+  - path/to/js/file.js
+  - path: path/to/another/js/file.js
+    strategy: beforeInteractive
+  - url: https://example.com/path/to/js/file.js
 ```
 </CodeBlock>
+
+<Note>
+We use `path` for local sources and `url` for remote sources.
+</Note>
 
 ### Strategy
 
@@ -161,8 +165,8 @@ Optionally, specify the strategy for each custom JavaScript file. Choose from `b
 <CodeBlock title="docs.yml">
 ```yaml
 js:
-    - path: path/to/another/js/file.js
-        strategy: beforeInteractive
+  - path: path/to/another/js/file.js
+    strategy: beforeInteractive
 ```
 </CodeBlock>
 
@@ -235,6 +239,7 @@ ReactDOM.render(
 - `ReactDOM.render()` may need to be called multiple times to prevent it from unmounting (this side-effect will be removed in the future).
 - `yarn build` or `npm build` must generate files with deterministic names to be referenced in `docs.yml`. The above example uses a [`vite` config](https://github.com/fern-api/docs-custom-js-example/blob/main/custom-app/vite.config.ts) to accomplish this.
 - For your hosted Docs site, you may need to update your CD steps to include building the react-app.
+- Custom components are not supported in local development. They are supported in preview links.
 
 <Info>
 This approach is subject to change, with notice, as we make improvements to the plugin architecture.

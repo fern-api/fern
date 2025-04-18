@@ -15,5 +15,5 @@ export const TestCaseTemplateId: core.serialization.Schema<
 });
 
 export declare namespace TestCaseTemplateId {
-    type Raw = string;
+    export type Raw = string;
 }

@@ -1,4 +1,5 @@
 import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath, FernIr } from "@fern-api/ir-sdk";
+
 import { ResolvedEndpoint } from "./resolvers/ResolvedEndpoint";
 
 export const IdGenerator = {

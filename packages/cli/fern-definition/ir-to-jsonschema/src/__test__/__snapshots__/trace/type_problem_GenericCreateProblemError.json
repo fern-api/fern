@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "stacktrace": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "message",
+    "type",
+    "stacktrace"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

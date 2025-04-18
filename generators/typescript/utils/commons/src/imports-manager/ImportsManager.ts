@@ -1,4 +1,5 @@
 import { SourceFile } from "ts-morph";
+
 import { ModuleSpecifier } from "../referencing/ModuleSpecifier";
 
 export interface ImportDeclaration {

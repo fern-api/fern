@@ -35,8 +35,8 @@
                 "identifier_override": "endpoint_foo.find"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment\n\nclient = SeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)\nclient.foo.find(\n    optional_string=\"string\",\n    public_property=\"string\",\n    private_property=1,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment\n\nclient = AsyncSeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)\n\n\nasync def main() -> None:\n    await client.foo.find(\n        optional_string=\"string\",\n        public_property=\"string\",\n        private_property=1,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment\n\nclient = SeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)\nclient.foo.find(\n    optional_string=\"optionalString\",\n    public_property=\"publicProperty\",\n    private_property=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment\n\nclient = AsyncSeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)\n\n\nasync def main() -> None:\n    await client.foo.find(\n        optional_string=\"optionalString\",\n        public_property=\"publicProperty\",\n        private_property=1,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

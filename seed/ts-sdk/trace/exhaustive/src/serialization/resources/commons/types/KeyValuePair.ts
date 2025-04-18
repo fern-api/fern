@@ -13,7 +13,7 @@ export const KeyValuePair: core.serialization.ObjectSchema<serializers.KeyValueP
     });
 
 export declare namespace KeyValuePair {
-    interface Raw {
+    export interface Raw {
         key: serializers.VariableValue.Raw;
         value: serializers.VariableValue.Raw;
     }

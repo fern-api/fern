@@ -297,46 +297,6 @@
                   "description": null,
                   "body": "",
                   "_postman_previewlanguage": "json"
-                },
-                {
-                  "name": "Not Found Error",
-                  "status": "Not Found Error",
-                  "code": 404,
-                  "originalRequest": {
-                    "description": null,
-                    "url": {
-                      "raw": "{{baseUrl}}/service",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "service"
-                      ],
-                      "query": [],
-                      "variable": []
-                    },
-                    "header": [
-                      {
-                        "type": "text",
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "method": "POST",
-                    "auth": null,
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n    \"key\": \"value\"\n}",
-                      "options": {
-                        "raw": {
-                          "language": "json"
-                        }
-                      }
-                    }
-                  },
-                  "description": null,
-                  "body": "",
-                  "_postman_previewlanguage": "json"
                 }
               ]
             }

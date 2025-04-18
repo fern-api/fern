@@ -6,10 +6,10 @@ const client = new SeedMultiUrlEnvironmentNoDefaultClient({
   token: "YOUR_TOKEN",
 });
 await client.ec2.bootInstance({
-  size: "string",
+  size: "size",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -20,9 +20,9 @@ const client = new SeedMultiUrlEnvironmentNoDefaultClient({
   token: "YOUR_TOKEN",
 });
 await client.s3.getPresignedUrl({
-  s3Key: "string",
+  s3Key: "s3Key",
 });
- 
-```                        
+
+```
 
 

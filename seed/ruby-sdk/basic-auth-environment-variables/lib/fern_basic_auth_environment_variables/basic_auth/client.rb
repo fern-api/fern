@@ -23,7 +23,7 @@ module SeedBasicAuthEnvironmentVariablesClient
     #  basic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(
     #    base_url: "https://api.example.com",
     #    username: "YOUR_USERNAME",
-    #    password: "YOUR_PASSWORD"
+    #    access_token: "YOUR_PASSWORD"
     #  )
     #  basic_auth_environment_variables.basic_auth.get_with_basic_auth
     def get_with_basic_auth(request_options: nil)
@@ -55,7 +55,7 @@ module SeedBasicAuthEnvironmentVariablesClient
     #  basic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(
     #    base_url: "https://api.example.com",
     #    username: "YOUR_USERNAME",
-    #    password: "YOUR_PASSWORD"
+    #    access_token: "YOUR_PASSWORD"
     #  )
     #  basic_auth_environment_variables.basic_auth.post_with_basic_auth(request: {"key":"value"})
     def post_with_basic_auth(request: nil, request_options: nil)
@@ -95,7 +95,7 @@ module SeedBasicAuthEnvironmentVariablesClient
     #  basic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(
     #    base_url: "https://api.example.com",
     #    username: "YOUR_USERNAME",
-    #    password: "YOUR_PASSWORD"
+    #    access_token: "YOUR_PASSWORD"
     #  )
     #  basic_auth_environment_variables.basic_auth.get_with_basic_auth
     def get_with_basic_auth(request_options: nil)
@@ -130,7 +130,7 @@ module SeedBasicAuthEnvironmentVariablesClient
     #  basic_auth_environment_variables = SeedBasicAuthEnvironmentVariablesClient::Client.new(
     #    base_url: "https://api.example.com",
     #    username: "YOUR_USERNAME",
-    #    password: "YOUR_PASSWORD"
+    #    access_token: "YOUR_PASSWORD"
     #  )
     #  basic_auth_environment_variables.basic_auth.post_with_basic_auth(request: {"key":"value"})
     def post_with_basic_auth(request: nil, request_options: nil)

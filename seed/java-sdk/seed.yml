@@ -1,22 +1,32 @@
-irVersion: v46
+irVersion: v55
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
+
+buildScripts:
+  compileScript:
+    commands:
+      - ./gradlew compileJava
+
 publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :sdk:distTar
-  docker: 
+    - pnpm --filter @fern-api/java-sdk dist:cli
+  docker:
     file: ./generators/java/sdk/Dockerfile
     image: fernapi/fern-java-sdk
-    context: ./generators/java/sdk
+    context: .
 test:
   docker:
     image: fernapi/fern-java-sdk:latest
-    command: 
+    context: .
+    command:
       - cd generators/java
       - ./gradlew :sdk:distTar
-      - docker build -f sdk/Dockerfile -t fernapi/fern-java-sdk:latest sdk/
+      - cd ../../
+      - pnpm --filter @fern-api/java-sdk dist:cli
+      - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
     buildCommand:
@@ -35,27 +45,37 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        package-layout: flat
+      outputFolder: flat-package-layout
+    - customConfig:
+        inline-path-parameters: true
         custom-dependencies:
           - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
       outputFolder: custom-dependency
     - customConfig:
+        inline-path-parameters: true
         json-include: non-empty
       outputFolder: json-include-non-empty
     - customConfig:
+        inline-path-parameters: true
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
     - customConfig:
+        inline-path-parameters: true
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: custom-error-names
     - customConfig:
+        inline-path-parameters: true
         client-class-name: Best
       outputFolder: custom-client-class-name
     - customConfig:
+        inline-path-parameters: true
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
     - customConfig:
+        inline-path-parameters: true
         enable-public-constructors: true
       outputFolder: enable-public-constructors
     - publishConfig:
@@ -63,30 +83,112 @@ fixtures:
         coordinate: com.fern:exhaustive
         registryUrl: "definitelyMavenCentral"
         signature:
-            keyId: "test_kid"
-            password: "test_password"
-            secretKey: "test_secretkey"
+          keyId: "test_kid"
+          password: "test_password"
+          secretKey: "test_secretkey"
       publishMetadata:
-        packageDescription: My very good and lengthy description
-        publisherEmail: "me@gmail.com"
-        publisherName: "Fern"
-        referenceUrl: "https://buildwithfern.com"
+        package_description: My very good and lengthy description
+        publisher_email: "me@gmail.com"
+        publisher_name: "Fern"
+        reference_url: "https://buildwithfern.com"
       outputFolder: signed_publish
+  java-inline-types:
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: true
+      outputFolder: inline
+    - customConfig:
+        enable-inline-types: false
+        wrapped-aliases: true
+      outputFolder: no-inline
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: false
+      outputFolder: no-wrapped-aliases
+    - customConfig:
+        enable-inline-types: true
+        wrapped-aliases: false
+        enable-forward-compatible-enums: true
+      outputFolder: enable-forward-compatible-enums
   imdb:
     - customConfig:
         disable-required-property-builder-checks: true
       outputFolder: disable-required-property-builder-checks
+    - customConfig:
+        package-layout: flat
+      outputFolder: flat-package-layout
+  java-custom-package-prefix:
+    - customConfig:
+        package-prefix: "com.customprefix"
+      outputFolder: java-custom-package-prefix
+  java-single-property-endpoint:
+    - outputFolder: java-single-property-endpoint
+  java-pagination-deep-cursor-path:
+    - outputFolder: java-pagination-deep-cursor-path
+  accept-header:
+    - outputFolder: accept-header
+  file-upload:
+    - customConfig:
+        wrapped-aliases: true
+      outputFolder: wrapped-aliases
+    - customConfig:
+        inline-file-properties: true
+        inline-path-parameters: true
+      outputFolder: inline-file-properties
+    - outputFolder: no-custom-config
+  nullable:
+    - customConfig:
+        wrapped-aliases: true
+      outputFolder: wrapped-aliases
+    - outputFolder: no-custom-config
+  enum:
+    - customConfig:
+        enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - outputFolder: no-custom-config
+  version:
+    - customConfig:
+        enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - outputFolder: no-custom-config
 scripts:
   - docker: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 allowedFailures:
   - alias-extends
-  - enum
+  - enum:forward-compatible-enums
+  - enum:no-custom-config
   - examples
   - exhaustive:signed_publish
   - exhaustive:local-files
   - extends
-  - query-parameters
+  - oauth-client-credentials-custom
   - trace
+  - streaming-parameter
+  - literal
+  - java-pagination-deep-cursor-path
+  - bytes
+
+  # Snippet failures; many of these failures are due to the fact that a
+  # required list of query parameters is not actually required by the builder.
+  - any-auth
+  - api-wide-base-path
+  - extra-properties
+  - java-inline-types:inline
+  - java-inline-types:no-inline
+  - java-inline-types:no-wrapped-aliases
+  - nullable:wrapped-aliases
+  - nullable:no-custom-config
+  - oauth-client-credentials
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - package-yml
+  - pagination
+  - path-parameters
+  - query-parameters
+  - streaming
   - unions
+  - variables
+

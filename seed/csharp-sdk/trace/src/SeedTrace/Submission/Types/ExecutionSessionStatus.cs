@@ -2,11 +2,9 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace;
 
-[JsonConverter(typeof(StringEnumSerializer<ExecutionSessionStatus>))]
+[JsonConverter(typeof(EnumSerializer<ExecutionSessionStatus>))]
 public enum ExecutionSessionStatus
 {
     [EnumMember(Value = "CREATING_CONTAINER")]

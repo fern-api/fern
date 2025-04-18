@@ -15,7 +15,7 @@ export const ExampleServerSideEvent: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleServerSideEvent {
-    interface Raw {
+    export interface Raw {
         event: string;
         data: serializers.ExampleTypeReference.Raw;
     }

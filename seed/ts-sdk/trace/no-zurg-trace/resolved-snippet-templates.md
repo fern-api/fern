@@ -3,8 +3,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.test();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -17,8 +17,8 @@ await client.admin.updateTestSubmissionStatus(
 		{ type : "stopped" }
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -31,8 +31,8 @@ await client.admin.sendTestSubmissionUpdate(
     updateTime: "2024-01-15T09:30:00Z",
   }
 );
- 
-```                        
+
+```
 
 
 ```typescript
@@ -45,8 +45,8 @@ await client.admin.updateWorkspaceSubmissionStatus(
 		{ type : "stopped" }
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -59,63 +59,42 @@ await client.admin.sendWorkspaceSubmissionUpdate(
     updateTime: "2024-01-15T09:30:00Z",
   }
 );
- 
-```                        
 
-
-```typescript
-import { SeedTraceClient } from "@fern/trace";
-
-const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.admin.storeTracedTestCase(
-  "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  "string",
-  {
-    result: {
-      result: {
-        passed: true,
-      },
-      stdout: "string",
-    },
-    traceResponses: [
-      {
-        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        lineNumber: 1,
-        expressionLocation: {
-          start: 1,
-          offset: 1,
-        },
-        stack: {
-          numStackFrames: 1,
-          topStackFrame: {
-            methodName: "string",
-            lineNumber: 1,
-          },
-        },
-        stdout: "string",
-      },
-    ],
-  }
-);
- 
-```                        
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });        
-await client.admin.storeTracedTestCaseV2(
+await client.admin.storeTracedTestCase(
 	"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-	"string",
+	"testCaseId",
 	{
-		[
+		result: {
+			result: {
+				expectedResult: expectedResult: { 
+					type : "integerValue", 
+					value: 1
+				},
+				actualResult: actualResult: { 
+					type : "value", 
+					value: value: { 
+						type : "integerValue", 
+						value: 1
+					}
+				},
+				passed: true
+			},
+			stdout: "stdout"
+		},
+		traceResponses: [
 			{
 				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				lineNumber: 1,
-				file: {
-					filename: "string",
-					directory: "string"
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
 				},
 				expressionLocation: {
 					start: 1,
@@ -124,17 +103,101 @@ await client.admin.storeTracedTestCaseV2(
 				stack: {
 					numStackFrames: 1,
 					topStackFrame: {
-						methodName: "string",
+						methodName: "methodName",
 						lineNumber: 1
 					}
 				},
-				stdout: "string"
+				stdout: "stdout"
+			},
+			{
+				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				lineNumber: 1,
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
+				stack: {
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			}
 		]
 	}
 )
- 
-```                        
+
+```
+
+
+```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });        
+await client.admin.storeTracedTestCaseV2(
+	"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+	"testCaseId",
+	{
+		[
+			{
+				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				lineNumber: 1,
+				file: {
+					filename: "filename",
+					directory: "directory"
+				},
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
+				stack: {
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
+			},
+			{
+				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				lineNumber: 1,
+				file: {
+					filename: "filename",
+					directory: "directory"
+				},
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
+				stack: {
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
+			}
+		]
+	}
+)
+
+```
 
 
 ```typescript
@@ -147,21 +210,25 @@ await client.admin.storeTracedWorkspace(
 		workspaceRunDetails: {
 			exceptionV2: exceptionV2: { 
 				type : "generic", 
-				exceptionType: "string",
-				exceptionMessage: "string",
-				exceptionStacktrace: "string"
+				exceptionType: "exceptionType",
+				exceptionMessage: "exceptionMessage",
+				exceptionStacktrace: "exceptionStacktrace"
 			},
 			exception: {
-				exceptionType: "string",
-				exceptionMessage: "string",
-				exceptionStacktrace: "string"
+				exceptionType: "exceptionType",
+				exceptionMessage: "exceptionMessage",
+				exceptionStacktrace: "exceptionStacktrace"
 			},
-			stdout: "string"
+			stdout: "stdout"
 		},
 		traceResponses: [
 			{
 				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				lineNumber: 1,
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
 				expressionLocation: {
 					start: 1,
 					offset: 1
@@ -169,17 +236,37 @@ await client.admin.storeTracedWorkspace(
 				stack: {
 					numStackFrames: 1,
 					topStackFrame: {
-						methodName: "string",
+						methodName: "methodName",
 						lineNumber: 1
 					}
 				},
-				stdout: "string"
+				stdout: "stdout"
+			},
+			{
+				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				lineNumber: 1,
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
+				stack: {
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			}
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -194,8 +281,12 @@ await client.admin.storeTracedWorkspaceV2(
 				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 				lineNumber: 1,
 				file: {
-					filename: "string",
-					directory: "string"
+					filename: "filename",
+					directory: "directory"
+				},
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
 				},
 				expressionLocation: {
 					start: 1,
@@ -204,17 +295,41 @@ await client.admin.storeTracedWorkspaceV2(
 				stack: {
 					numStackFrames: 1,
 					topStackFrame: {
-						methodName: "string",
+						methodName: "methodName",
 						lineNumber: 1
 					}
 				},
-				stdout: "string"
+				stdout: "stdout"
+			},
+			{
+				submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+				lineNumber: 1,
+				file: {
+					filename: "filename",
+					directory: "directory"
+				},
+				returnValue: returnValue: { 
+					type : "integerValue", 
+					value: 1
+				},
+				expressionLocation: {
+					start: 1,
+					offset: 1
+				},
+				stack: {
+					numStackFrames: 1,
+					topStackFrame: {
+						methodName: "methodName",
+						lineNumber: 1
+					}
+				},
+				stdout: "stdout"
 			}
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -222,8 +337,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.homepage.getHomepageProblems();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -233,23 +348,26 @@ const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.homepage.setHomepageProblems(
 	{
 		[
+			"string",
 			"string"
 		]
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
-const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.migration.getAttemptedMigrations({
-  adminKeyHeader: "string",
-});
- 
-```                        
+const client = new SeedTraceClient({ token: "YOUR_TOKEN" });        
+await client.migration.getAttemptedMigrations(
+	{
+		admin-key-header: "admin-key-header"
+	}
+)
+
+```
 
 
 ```typescript
@@ -259,11 +377,11 @@ const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.createPlaylist(1, {
   datetime: "2024-01-15T09:30:00Z",
   optionalDatetime: "2024-01-15T09:30:00Z",
-  name: "string",
-  problems: ["string"],
+  name: "name",
+  problems: ["problems", "problems"],
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -272,73 +390,43 @@ import { SeedTraceClient } from "@fern/trace";
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.playlist.getPlaylists(1, {
   limit: 1,
-  otherField: "string",
-  multiLineDocs: "string",
-  optionalMultipleField: "string",
-  multipleField: "string",
+  otherField: "otherField",
+  multiLineDocs: "multiLineDocs",
+  optionalMultipleField: "optionalMultipleField",
+  multipleField: "multipleField",
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.playlist.getPlaylist(1, "string");
- 
-```                        
+await client.playlist.getPlaylist(1, "playlistId");
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.playlist.getPlaylist(1, "string");
- 
-```                        
-
-
-```typescript
-import { SeedTraceClient } from "@fern/trace";
-
-const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.playlist.getPlaylist(1, "string");
- 
-```                        
-
-
-```typescript
-import { SeedTraceClient } from "@fern/trace";
-
-const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.playlist.updatePlaylist(1, "string", {
-  name: "string",
-  problems: ["string"],
+await client.playlist.updatePlaylist(1, "playlistId", {
+  name: "name",
+  problems: ["problems", "problems"],
 });
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.playlist.updatePlaylist(1, "string", {
-  name: "string",
-  problems: ["string"],
-});
- 
-```                        
+await client.playlist.deletePlaylist(1, "playlist_id");
 
-
-```typescript
-import { SeedTraceClient } from "@fern/trace";
-
-const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.playlist.deletePlaylist(1, "string");
- 
-```                        
+```
 
 
 ```typescript
@@ -347,39 +435,63 @@ import { SeedTraceClient } from "@fern/trace";
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });        
 await client.problem.createProblem(
 	{
-		problemName: "string",
+		problemName: "problemName",
 		problemDescription: {
 				boards: [
-					
+					{ 
+						type : "html", 
+						value: "boards"
+					},
+					{ 
+						type : "html", 
+						value: "boards"
+					}
 				]
 			},
 		files: {
 				"JAVA": {
 					solutionFile: {
-						filename: "string",
-						contents: "string"
+						filename: "filename",
+						contents: "contents"
 					}
 				}
 			},
 		inputParams: [
 				{
 					variableType: variableType: { type : "integerType" },
-					name: "string"
+					name: "name"
+				},
+				{
+					variableType: variableType: { type : "integerType" },
+					name: "name"
 				}
 			],
 		outputType: outputType: { type : "integerType" },
 		testcases: [
 				{
 					testCase: {
-						id: "string"
+						id: "id"
+					},
+					expectedResult: expectedResult: { 
+						type : "integerValue", 
+						value: 1
+					}
+				},
+				{
+					testCase: {
+						id: "id"
+					},
+					expectedResult: expectedResult: { 
+						type : "integerValue", 
+						value: 1
 					}
 				}
 			],
-		methodName: "string"
+		methodName: "methodName"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -387,50 +499,74 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });        
 await client.problem.updateProblem(
-	"string",
+	"problemId",
 	{
-		problemName: "string",
+		problemName: "problemName",
 		problemDescription: {
 				boards: [
-					
+					{ 
+						type : "html", 
+						value: "boards"
+					},
+					{ 
+						type : "html", 
+						value: "boards"
+					}
 				]
 			},
 		files: {
 				"JAVA": {
 					solutionFile: {
-						filename: "string",
-						contents: "string"
+						filename: "filename",
+						contents: "contents"
 					}
 				}
 			},
 		inputParams: [
 				{
 					variableType: variableType: { type : "integerType" },
-					name: "string"
+					name: "name"
+				},
+				{
+					variableType: variableType: { type : "integerType" },
+					name: "name"
 				}
 			],
 		outputType: outputType: { type : "integerType" },
 		testcases: [
 				{
 					testCase: {
-						id: "string"
+						id: "id"
+					},
+					expectedResult: expectedResult: { 
+						type : "integerValue", 
+						value: 1
+					}
+				},
+				{
+					testCase: {
+						id: "id"
+					},
+					expectedResult: expectedResult: { 
+						type : "integerValue", 
+						value: 1
 					}
 				}
 			],
-		methodName: "string"
+		methodName: "methodName"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.problem.deleteProblem("string");
- 
-```                        
+await client.problem.deleteProblem("problemId");
+
+```
 
 
 ```typescript
@@ -442,15 +578,19 @@ await client.problem.getDefaultStarterFiles(
 		inputParams: [
 			{
 				variableType: variableType: { type : "integerType" },
-				name: "string"
+				name: "name"
+			},
+			{
+				variableType: variableType: { type : "integerType" },
+				name: "name"
 			}
 		],
 		outputType: outputType: { type : "integerType" },
-		methodName: "string"
+		methodName: "methodName"
 	}
 )
- 
-```                        
+
+```
 
 
 ```typescript
@@ -458,26 +598,26 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 undefined;
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.submission.getExecutionSession("string");
- 
-```                        
+await client.submission.getExecutionSession("sessionId");
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.submission.stopExecutionSession("string");
- 
-```                        
+await client.submission.stopExecutionSession("sessionId");
+
+```
 
 
 ```typescript
@@ -485,8 +625,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.submission.getExecutionSessionsState();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -494,8 +634,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.sysprop.setNumWarmInstances(1);
- 
-```                        
+
+```
 
 
 ```typescript
@@ -503,8 +643,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.sysprop.getNumWarmInstances();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -512,8 +652,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.problem.getLightweightProblems();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -521,26 +661,26 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.problem.getProblems();
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.v2.problem.getLatestProblem("string");
- 
-```                        
+await client.v2.problem.getLatestProblem("problemId");
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.v2.problem.getProblemVersion("string", 1);
- 
-```                        
+await client.v2.problem.getProblemVersion("problemId", 1);
+
+```
 
 
 ```typescript
@@ -548,8 +688,8 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.v3.problem.getLightweightProblems();
- 
-```                        
+
+```
 
 
 ```typescript
@@ -557,25 +697,25 @@ import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
 await client.v2.v3.problem.getProblems();
- 
-```                        
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.v2.v3.problem.getLatestProblem("string");
- 
-```                        
+await client.v2.v3.problem.getLatestProblem("problemId");
+
+```
 
 
 ```typescript
 import { SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN" });
-await client.v2.v3.problem.getProblemVersion("string", 1);
- 
-```                        
+await client.v2.v3.problem.getProblemVersion("problemId", 1);
+
+```
 
 

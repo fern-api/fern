@@ -3,64 +3,205 @@ package com.fern.java.generators;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
+import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.constants.Constants;
-import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.SingleUnionType;
-import com.fern.ir.model.types.SingleUnionTypeProperties;
-import com.fern.ir.model.types.SingleUnionTypeProperty;
-import com.fern.ir.model.types.TypeReference;
-import com.fern.ir.model.types.UnionTypeDeclaration;
+import com.fern.ir.model.types.*;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
+import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.union.UnionSubType;
 import com.fern.java.generators.union.UnionTypeSpecGenerator;
-import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.InlineTypeIdResolver;
+import com.fern.java.utils.NamedTypeId;
+import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
-public final class UnionGenerator extends AbstractFileGenerator {
+public final class UnionGenerator extends AbstractTypeGenerator {
+
+    private static final String VALUE_CLASS_NAME = "Value";
+    private static final String VALUE_CLASS_NAME_UNDERSCORE = "Value_";
 
     private final UnionTypeDeclaration unionTypeDeclaration;
+    private final Map<TypeId, TypeDeclaration> overriddenTypeDeclarations;
 
     public UnionGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            UnionTypeDeclaration unionTypeDeclaration) {
-        super(className, generatorContext);
+            UnionTypeDeclaration unionTypeDeclaration,
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass) {
+        super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.unionTypeDeclaration = unionTypeDeclaration;
+        this.overriddenTypeDeclarations =
+                overriddenTypeDeclarations(className, generatorContext, unionTypeDeclaration, reservedTypeNames);
     }
 
     @Override
-    public GeneratedJavaFile generateFile() {
+    public List<TypeDeclaration> getInlineTypeDeclarations() {
+        return new ArrayList<>(
+                overriddenTypeDeclarations(className, generatorContext, unionTypeDeclaration, reservedTypeNames)
+                        .values());
+    }
+
+    @Override
+    protected TypeSpec getTypeSpecWithoutInlineTypes() {
+        PoetTypeNameMapper poetTypeNameMapper;
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            poetTypeNameMapper = overriddenTypeNameMapper(className, generatorContext, overriddenTypeDeclarations);
+        } else {
+            poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
+        }
         List<ModelUnionSubTypes> unionSubTypes = unionTypeDeclaration.getTypes().stream()
-                .map(singleUnionType -> new ModelUnionSubTypes(className, singleUnionType))
+                .map(singleUnionType -> new ModelUnionSubTypes(
+                        className,
+                        singleUnionType,
+                        poetTypeNameMapper,
+                        // We need to take into consideration all ancestor types as well as all sibling types so that
+                        // to prevent naming the visitor "Visitor" if we already have a variant or property called that.
+                        ImmutableSet.<String>builder()
+                                .addAll(reservedTypeNames)
+                                .addAll(
+                                        generatorContext.getCustomConfig().enableInlineTypes()
+                                                ? overriddenTypeDeclarations.values().stream()
+                                                        .map(TypeDeclaration::getName)
+                                                        .map(DeclaredTypeName::getName)
+                                                        .map(Name::getPascalCase)
+                                                        .map(SafeAndUnsafeString::getSafeName)
+                                                        .collect(Collectors.toList())
+                                                : List.of())
+                                .build(),
+                        unionTypeDeclaration))
                 .collect(Collectors.toList());
-        ModelUnionUnknownSubType unknownSubType = new ModelUnionUnknownSubType(className);
+        ModelUnionUnknownSubType unknownSubType =
+                new ModelUnionUnknownSubType(className, poetTypeNameMapper, unionTypeDeclaration);
         ModelUnionTypeSpecGenerator unionTypeSpecGenerator = new ModelUnionTypeSpecGenerator(
                 className,
                 unionSubTypes,
                 unknownSubType,
                 generatorContext.getIr().getConstants());
-        TypeSpec unionTypeSpec = unionTypeSpecGenerator.generateUnionTypeSpec();
-        JavaFile unionFile =
-                JavaFile.builder(className.packageName(), unionTypeSpec).build();
-        return GeneratedJavaFile.builder()
-                .className(className)
-                .javaFile(unionFile)
-                .build();
+        return unionTypeSpecGenerator.generateUnionTypeSpec();
+    }
+
+    private static PoetTypeNameMapper overriddenTypeNameMapper(
+            ClassName className,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            Map<TypeId, TypeDeclaration> overriddenTypeDeclarations) {
+        Map<DeclaredTypeName, ClassName> enclosingMappings = new HashMap<>();
+
+        for (TypeDeclaration override : overriddenTypeDeclarations.values()) {
+            enclosingMappings.put(override.getName(), className);
+        }
+
+        Map<TypeId, TypeDeclaration> declarationsWithOverrides = new HashMap<>(generatorContext.getTypeDeclarations());
+        declarationsWithOverrides.putAll(overriddenTypeDeclarations);
+
+        return new PoetTypeNameMapper(
+                generatorContext.getPoetClassNameFactory(),
+                generatorContext.getCustomConfig(),
+                declarationsWithOverrides,
+                enclosingMappings);
+    }
+
+    private static Map<TypeId, TypeDeclaration> overriddenTypeDeclarations(
+            ClassName className,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            UnionTypeDeclaration unionTypeDeclaration,
+            Set<String> reservedTypeNames) {
+        if (!generatorContext.getCustomConfig().enableInlineTypes()) {
+            return Map.of();
+        }
+
+        Map<TypeId, TypeDeclaration> overriddenTypeDeclarations = new HashMap<>();
+        Set<String> propertyNames = new HashSet<>();
+        Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
+
+        // TODO(ajgateno): Uncommment when the Java generators support base properties
+
+        //        List<ObjectProperty> objectProperties = unionTypeDeclaration.getBaseProperties();
+        //
+        //        for (ObjectProperty objectProperty : objectProperties) {
+        //            propertyNames.add(objectProperty.getName().getName().getPascalCase().getSafeName());
+        //        }
+
+        List<SingleUnionType> variants = unionTypeDeclaration.getTypes();
+
+        for (SingleUnionType variant : variants) {
+            propertyNames.add(
+                    variant.getDiscriminantValue().getName().getPascalCase().getSafeName());
+        }
+
+        List<NamedTypeId> allResolvedIds = new ArrayList<>();
+
+        // TODO(ajgateno): Uncommment when the Java generators support base properties
+
+        //        for (ObjectProperty objectProperty : objectProperties) {
+        //            List<NamedTypeId> resolvedIds = objectProperty
+        //                    .getValueType()
+        //                    .visit(new InlineTypeIdResolver(
+        //                            objectProperty.getName().getName().getPascalCase().getSafeName(),
+        // generatorContext));
+        //            allResolvedIds.addAll(resolvedIds);
+        //        }
+
+        for (SingleUnionType variant : variants) {
+            List<NamedTypeId> resolvedIds =
+                    variant.getShape().visit(new VariantTypeIdGetter(generatorContext, variant));
+            allResolvedIds.addAll(resolvedIds);
+        }
+
+        for (NamedTypeId resolvedId : allResolvedIds) {
+            String name = resolvedId.name();
+            Optional<TypeDeclaration> maybeRawTypeDeclaration =
+                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(resolvedId.typeId()));
+
+            if (maybeRawTypeDeclaration.isEmpty()) {
+                continue;
+            }
+
+            TypeDeclaration rawTypeDeclaration = maybeRawTypeDeclaration.get();
+
+            // Don't override non-inline types
+            if (!rawTypeDeclaration.getInline().orElse(false)) {
+                continue;
+            }
+
+            boolean valid;
+            do {
+                // Prevent something like "Bar_" generated from resolution on a property name called "bar"
+                // colliding with "Bar_" generated from a property name called "bar_"
+                boolean newNameCollides = propertyNames.contains(name) && !name.equals(resolvedId.name());
+                valid = !allReservedTypeNames.contains(name) && !newNameCollides;
+
+                if (!valid) {
+                    name += "_";
+                }
+            } while (!valid);
+
+            allReservedTypeNames.add(name);
+            TypeDeclaration overriddenTypeDeclaration = overrideTypeDeclarationName(rawTypeDeclaration, name);
+            overriddenTypeDeclarations.put(resolvedId.typeId(), overriddenTypeDeclaration);
+        }
+
+        return overriddenTypeDeclarations;
     }
 
     private final class ModelUnionTypeSpecGenerator extends UnionTypeSpecGenerator {
@@ -76,7 +217,21 @@ public final class UnionGenerator extends AbstractFileGenerator {
                     unionSubType,
                     fernConstants,
                     true,
-                    unionTypeDeclaration.getDiscriminant().getWireValue());
+                    unionTypeDeclaration.getDiscriminant().getWireValue(),
+                    // We need to take into consideration all ancestor types as well as all sibling types so that
+                    // to prevent naming the visitor "Visitor" if we already have a variant or property called that.
+                    ImmutableSet.<String>builder()
+                            .addAll(reservedTypeNames)
+                            .addAll(
+                                    generatorContext.getCustomConfig().enableInlineTypes()
+                                            ? overriddenTypeDeclarations.values().stream()
+                                                    .map(TypeDeclaration::getName)
+                                                    .map(DeclaredTypeName::getName)
+                                                    .map(Name::getPascalCase)
+                                                    .map(SafeAndUnsafeString::getSafeName)
+                                                    .collect(Collectors.toList())
+                                            : List.of())
+                            .build());
         }
 
         @Override
@@ -88,7 +243,9 @@ public final class UnionGenerator extends AbstractFileGenerator {
         public TypeSpec build(TypeSpec.Builder unionBuilder) {
             return unionBuilder
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .addMethod(MethodSpec.methodBuilder("getValue")
+                    // Passing an empty string here because we don't want a prefix before "Value"
+                    .addMethod(MethodSpec.methodBuilder(
+                                    "get" + valueClassName("", reservedTypeNames, unionTypeDeclaration))
                             .addAnnotation(JsonValue.class)
                             .addModifiers(Modifier.PRIVATE)
                             .returns(getValueInterfaceClassName())
@@ -98,15 +255,36 @@ public final class UnionGenerator extends AbstractFileGenerator {
         }
     }
 
-    private final class ModelUnionSubTypes extends UnionSubType {
+    private static String valueClassName(
+            String name, Set<String> reservedTypeNames, UnionTypeDeclaration unionTypeDeclaration) {
+        reservedTypeNames = new HashSet<>(reservedTypeNames);
+        reservedTypeNames.addAll(unionTypeDeclaration.getTypes().stream()
+                .map(SingleUnionType::getDiscriminantValue)
+                .map(NameAndWireValue::getName)
+                .map(Name::getPascalCase)
+                .map(SafeAndUnsafeString::getSafeName)
+                .collect(Collectors.toList()));
+        return reservedTypeNames.contains(name + VALUE_CLASS_NAME)
+                ? name + VALUE_CLASS_NAME_UNDERSCORE
+                : name + VALUE_CLASS_NAME;
+    }
+
+    private static final class ModelUnionSubTypes extends UnionSubType {
 
         private final SingleUnionType singleUnionType;
         private final Optional<TypeName> unionSubTypeTypeName;
         private final Optional<FieldSpec> valueFieldSpec;
+        private final Set<String> reservedTypeNames;
 
-        private ModelUnionSubTypes(ClassName unionClassName, SingleUnionType singleUnionType) {
-            super(unionClassName);
+        private ModelUnionSubTypes(
+                ClassName unionClassName,
+                SingleUnionType singleUnionType,
+                PoetTypeNameMapper poetTypeNameMapper,
+                Set<String> reservedTypeNames,
+                UnionTypeDeclaration unionTypeDeclaration) {
+            super(unionClassName, poetTypeNameMapper, unionTypeDeclaration);
             this.singleUnionType = singleUnionType;
+            this.reservedTypeNames = reservedTypeNames;
             this.valueFieldSpec = getValueField();
             this.unionSubTypeTypeName = valueFieldSpec.map(fieldSpec -> fieldSpec.type);
         }
@@ -163,11 +341,14 @@ public final class UnionGenerator extends AbstractFileGenerator {
         @Override
         public ClassName getUnionSubTypeWrapperClass() {
             return getUnionClassName()
-                    .nestedClass(singleUnionType
+                    .nestedClass(valueClassName(
+                            singleUnionType
                                     .getDiscriminantValue()
                                     .getName()
                                     .getPascalCase()
-                                    .getSafeName() + "Value");
+                                    .getSafeName(),
+                            reservedTypeNames,
+                            unionTypeDeclaration));
         }
 
         @Override
@@ -189,10 +370,13 @@ public final class UnionGenerator extends AbstractFileGenerator {
                     constructors.add(MethodSpec.constructorBuilder()
                             .addModifiers(Modifier.PRIVATE)
                             .addParameter(ParameterSpec.builder(
-                                            generatorContext
-                                                    .getPoetTypeNameMapper()
-                                                    .convertToTypeName(
-                                                            true, TypeReference.named(samePropertiesAsObject)),
+                                            poetTypeNameMapper.convertToTypeName(
+                                                    true,
+                                                    TypeReference.named(NamedType.builder()
+                                                            .typeId(samePropertiesAsObject.getTypeId())
+                                                            .fernFilepath(samePropertiesAsObject.getFernFilepath())
+                                                            .name(samePropertiesAsObject.getName())
+                                                            .build())),
                                             "value")
                                     .build())
                             .addStatement("this.$L = $L", "value", "value")
@@ -208,9 +392,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
                             .addModifiers(Modifier.PRIVATE)
                             .addAnnotation(FernJavaAnnotations.jacksonPropertiesCreator())
                             .addParameter(ParameterSpec.builder(
-                                            generatorContext
-                                                    .getPoetTypeNameMapper()
-                                                    .convertToTypeName(true, singleProperty.getType()),
+                                            poetTypeNameMapper.convertToTypeName(true, singleProperty.getType()),
                                             parameterName)
                                     .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                                             .addMember(
@@ -273,9 +455,13 @@ public final class UnionGenerator extends AbstractFileGenerator {
                 @Override
                 public Optional<FieldSpec> visitSamePropertiesAsObject(DeclaredTypeName samePropertiesAsObject) {
                     return Optional.of(FieldSpec.builder(
-                                    generatorContext
-                                            .getPoetTypeNameMapper()
-                                            .convertToTypeName(true, TypeReference.named(samePropertiesAsObject)),
+                                    poetTypeNameMapper.convertToTypeName(
+                                            true,
+                                            TypeReference.named(NamedType.builder()
+                                                    .typeId(samePropertiesAsObject.getTypeId())
+                                                    .fernFilepath(samePropertiesAsObject.getFernFilepath())
+                                                    .name(samePropertiesAsObject.getName())
+                                                    .build())),
                                     "value",
                                     Modifier.PRIVATE)
                             .addAnnotation(JsonUnwrapped.class)
@@ -287,9 +473,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
                     String fieldName =
                             singleProperty.getName().getName().getCamelCase().getSafeName();
                     return Optional.of(FieldSpec.builder(
-                                    generatorContext
-                                            .getPoetTypeNameMapper()
-                                            .convertToTypeName(true, singleProperty.getType()),
+                                    poetTypeNameMapper.convertToTypeName(true, singleProperty.getType()),
                                     fieldName,
                                     Modifier.PRIVATE)
                             .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
@@ -316,8 +500,11 @@ public final class UnionGenerator extends AbstractFileGenerator {
 
     private static final class ModelUnionUnknownSubType extends UnionSubType {
 
-        private ModelUnionUnknownSubType(ClassName unionClassName) {
-            super(unionClassName);
+        private ModelUnionUnknownSubType(
+                ClassName unionClassName,
+                PoetTypeNameMapper poetTypeNameMapper,
+                UnionTypeDeclaration unionTypeDeclaration) {
+            super(unionClassName, poetTypeNameMapper, unionTypeDeclaration);
         }
 
         @Override
@@ -382,6 +569,72 @@ public final class UnionGenerator extends AbstractFileGenerator {
         @Override
         public Optional<MethodSpec> getStaticFactory() {
             return Optional.empty();
+        }
+    }
+
+    private static final class VariantTypeIdGetter implements SingleUnionTypeProperties.Visitor<List<NamedTypeId>> {
+
+        AbstractGeneratorContext<?, ?> generatorContext;
+        SingleUnionType variant;
+
+        public VariantTypeIdGetter(AbstractGeneratorContext<?, ?> generatorContext, SingleUnionType variant) {
+            this.generatorContext = generatorContext;
+            this.variant = variant;
+        }
+
+        @Override
+        public List<NamedTypeId> visitSamePropertiesAsObject(DeclaredTypeName declaredTypeName) {
+            Optional<TypeDeclaration> maybeExisting =
+                    Optional.ofNullable(generatorContext.getTypeDeclarations().get(declaredTypeName.getTypeId()));
+            if (maybeExisting.isEmpty()) {
+                return List.of();
+            }
+
+            TypeDeclaration existing = maybeExisting.get();
+
+            if (!generatorContext.getCustomConfig().wrappedAliases()
+                    && existing.getShape().getAlias().isPresent()) {
+                return existing.getShape()
+                        .getAlias()
+                        .get()
+                        .getResolvedType()
+                        .visit(new InlineTypeIdResolver(
+                                variant.getDiscriminantValue()
+                                        .getName()
+                                        .getPascalCase()
+                                        .getSafeName(),
+                                generatorContext));
+            }
+
+            return List.of(NamedTypeId.builder()
+                    .name(variant.getDiscriminantValue()
+                            .getName()
+                            .getPascalCase()
+                            .getSafeName())
+                    .typeId(maybeExisting.get().getName().getTypeId())
+                    .build());
+        }
+
+        @Override
+        public List<NamedTypeId> visitSingleProperty(SingleUnionTypeProperty singleUnionTypeProperty) {
+            return singleUnionTypeProperty
+                    .getType()
+                    .visit(new InlineTypeIdResolver(
+                            variant.getDiscriminantValue()
+                                    .getName()
+                                    .getPascalCase()
+                                    .getSafeName(),
+                            generatorContext));
+        }
+
+        @Override
+        public List<NamedTypeId> visitNoProperties() {
+            return List.of();
+        }
+
+        @Override
+        public List<NamedTypeId> _visitUnknown(Object o) {
+            return List.of();
         }
     }
 }

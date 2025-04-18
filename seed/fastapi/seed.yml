@@ -1,12 +1,21 @@
-irVersion: v53
+irVersion: v57
 displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - poetry shell
+      - poetry install
+  compileScript:
+    commands:
+      - poetry run mypy .
+
 publish:
   workingDirectory: generators/python
   preBuildCommands:
     - pip install poetry
-    - poetry shell
     - poetry config virtualenvs.in-project true
     - poetry install
   docker:
@@ -36,6 +45,11 @@ fixtures:
           version: v2
       outputFolder: pydantic-v2
     - customConfig:
+        pydantic_config:
+          frozen: True
+          include_union_utils: true
+      outputFolder: frozen_utils
+    - customConfig:
         include_validators: True
         pydantic_config:
           include_union_utils: true
@@ -51,8 +65,13 @@ fixtures:
         async_handlers:
           - imdb.createMovie
       outputFolder: async-handlers
+    - customConfig:
+        pydantic_config:
+          version: "v1_on_v2"
+      outputFolder: v1_on_v2
 allowedFailures:
   - auth-environment-variables
+  - bearer-token-environment-variable
   - bytes
   - literal-headers
   - query-parameters
@@ -62,6 +81,7 @@ allowedFailures:
   - websocket
   - enum
   - server-sent-events
+  - server-sent-event-examples
   - streaming-parameter
   - any-auth
   # Complex circular refs

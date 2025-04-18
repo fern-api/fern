@@ -1,12 +1,10 @@
 using SeedPlainText.Core;
 
-#nullable enable
-
 namespace SeedPlainText;
 
 public partial class SeedPlainTextClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedPlainTextClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedPlainTextClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 }

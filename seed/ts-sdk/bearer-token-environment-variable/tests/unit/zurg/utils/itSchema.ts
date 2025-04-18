@@ -4,7 +4,7 @@ import { Schema, SchemaOptions } from "../../../../src/core/schemas/Schema";
 export function itSchemaIdentity<T>(
     schema: Schema<T, T>,
     value: T,
-    { title = "functions as identity", opts }: { title?: string; opts?: SchemaOptions } = {}
+    { title = "functions as identity", opts }: { title?: string; opts?: SchemaOptions } = {},
 ): void {
     itSchema(title, schema, { raw: value, parsed: value, opts });
 }
@@ -22,7 +22,7 @@ export function itSchema<Raw, Parsed>(
         parsed: Parsed;
         opts?: SchemaOptions;
         only?: boolean;
-    }
+    },
 ): void {
     // eslint-disable-next-line jest/valid-title
     (only ? describe.only : describe)(title, () => {
@@ -42,7 +42,7 @@ export function itParse<Raw, Parsed>(
         raw: Raw;
         parsed: Parsed;
         opts?: SchemaOptions;
-    }
+    },
 ): void {
     // eslint-disable-next-line jest/valid-title
     it(title, () => {
@@ -65,7 +65,7 @@ export function itJson<Raw, Parsed>(
         raw: Raw;
         parsed: Parsed;
         opts?: SchemaOptions;
-    }
+    },
 ): void {
     // eslint-disable-next-line jest/valid-title
     it(title, () => {

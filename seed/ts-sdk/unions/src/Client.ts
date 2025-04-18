@@ -3,27 +3,37 @@
  */
 
 import * as core from "./core";
+import { Bigunion } from "./api/resources/bigunion/client/Client";
 import { Union } from "./api/resources/union/client/Client";
 
 export declare namespace SeedUnionsClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedUnionsClient {
+    protected _bigunion: Bigunion | undefined;
+    protected _union: Union | undefined;
+
     constructor(protected readonly _options: SeedUnionsClient.Options) {}
 
-    protected _union: Union | undefined;
+    public get bigunion(): Bigunion {
+        return (this._bigunion ??= new Bigunion(this._options));
+    }
 
     public get union(): Union {
         return (this._union ??= new Union(this._options));

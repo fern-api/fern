@@ -1,10 +1,6 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-
-#nullable enable
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -12,7 +8,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetAndReturnBase64Test : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             "SGVsbG8gd29ybGQh"
@@ -37,13 +33,7 @@ public class GetAndReturnBase64Test : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.Primitive.GetAndReturnBase64Async(
-            "SGVsbG8gd29ybGQh",
-            RequestOptions
-        );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

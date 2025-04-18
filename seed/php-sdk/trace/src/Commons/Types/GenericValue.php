@@ -2,32 +2,41 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GenericValue extends SerializableType
+class GenericValue extends JsonSerializableType
 {
-    /**
-     * @var string $stringifiedValue
-     */
-    #[JsonProperty("stringifiedValue")]
-    public string $stringifiedValue;
-
     /**
      * @var ?string $stringifiedType
      */
-    #[JsonProperty("stringifiedType")]
+    #[JsonProperty('stringifiedType')]
     public ?string $stringifiedType;
 
     /**
-     * @param string $stringifiedValue
-     * @param ?string $stringifiedType
+     * @var string $stringifiedValue
+     */
+    #[JsonProperty('stringifiedValue')]
+    public string $stringifiedValue;
+
+    /**
+     * @param array{
+     *   stringifiedValue: string,
+     *   stringifiedType?: ?string,
+     * } $values
      */
     public function __construct(
-        string $stringifiedValue,
-        ?string $stringifiedType = null,
+        array $values,
     ) {
-        $this->stringifiedValue = $stringifiedValue;
-        $this->stringifiedType = $stringifiedType;
+        $this->stringifiedType = $values['stringifiedType'] ?? null;
+        $this->stringifiedValue = $values['stringifiedValue'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

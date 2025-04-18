@@ -2,23 +2,33 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TestCaseExpects extends SerializableType
+class TestCaseExpects extends JsonSerializableType
 {
     /**
      * @var ?string $expectedStdout
      */
-    #[JsonProperty("expectedStdout")]
+    #[JsonProperty('expectedStdout')]
     public ?string $expectedStdout;
 
     /**
-     * @param ?string $expectedStdout
+     * @param array{
+     *   expectedStdout?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $expectedStdout = null,
+        array $values = [],
     ) {
-        $this->expectedStdout = $expectedStdout;
+        $this->expectedStdout = $values['expectedStdout'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

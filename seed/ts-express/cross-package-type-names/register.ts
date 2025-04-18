@@ -17,7 +17,7 @@ export function register(
         folderD: {
             service: folderD_ServiceService;
         };
-    }
+    },
 ): void {
     (expressApp as any).use("/", services.folderA.service.toRouter());
     (expressApp as any).use("/", services.folderD.service.toRouter());

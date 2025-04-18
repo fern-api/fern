@@ -17,10 +17,12 @@ types:
       circle: Circle
       square: Square
 
-  Circle: 
+  Circle:
     properties:
       radius: double
+      name: optional<string>
+      surname: optional<string>
 
-  Square: 
+  Square:
     properties:
       length: double

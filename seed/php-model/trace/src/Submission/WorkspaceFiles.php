@@ -2,34 +2,43 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\FileInfo;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class WorkspaceFiles extends SerializableType
+class WorkspaceFiles extends JsonSerializableType
 {
     /**
      * @var FileInfo $mainFile
      */
-    #[JsonProperty("mainFile")]
+    #[JsonProperty('mainFile')]
     public FileInfo $mainFile;
 
     /**
      * @var array<FileInfo> $readOnlyFiles
      */
-    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
+    #[JsonProperty('readOnlyFiles'), ArrayType([FileInfo::class])]
     public array $readOnlyFiles;
 
     /**
-     * @param FileInfo $mainFile
-     * @param array<FileInfo> $readOnlyFiles
+     * @param array{
+     *   mainFile: FileInfo,
+     *   readOnlyFiles: array<FileInfo>,
+     * } $values
      */
     public function __construct(
-        FileInfo $mainFile,
-        array $readOnlyFiles,
+        array $values,
     ) {
-        $this->mainFile = $mainFile;
-        $this->readOnlyFiles = $readOnlyFiles;
+        $this->mainFile = $values['mainFile'];
+        $this->readOnlyFiles = $values['readOnlyFiles'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

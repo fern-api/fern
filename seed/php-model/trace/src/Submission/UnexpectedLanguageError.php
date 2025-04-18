@@ -2,33 +2,42 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Language;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
-class UnexpectedLanguageError extends SerializableType
+class UnexpectedLanguageError extends JsonSerializableType
 {
     /**
-     * @var Language $expectedLanguage
+     * @var value-of<Language> $expectedLanguage
      */
-    #[JsonProperty("expectedLanguage")]
-    public Language $expectedLanguage;
+    #[JsonProperty('expectedLanguage')]
+    public string $expectedLanguage;
 
     /**
-     * @var Language $actualLanguage
+     * @var value-of<Language> $actualLanguage
      */
-    #[JsonProperty("actualLanguage")]
-    public Language $actualLanguage;
+    #[JsonProperty('actualLanguage')]
+    public string $actualLanguage;
 
     /**
-     * @param Language $expectedLanguage
-     * @param Language $actualLanguage
+     * @param array{
+     *   expectedLanguage: value-of<Language>,
+     *   actualLanguage: value-of<Language>,
+     * } $values
      */
     public function __construct(
-        Language $expectedLanguage,
-        Language $actualLanguage,
+        array $values,
     ) {
-        $this->expectedLanguage = $expectedLanguage;
-        $this->actualLanguage = $actualLanguage;
+        $this->expectedLanguage = $values['expectedLanguage'];
+        $this->actualLanguage = $values['actualLanguage'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

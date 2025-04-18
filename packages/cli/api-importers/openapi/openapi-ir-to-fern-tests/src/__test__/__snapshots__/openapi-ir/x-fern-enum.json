@@ -1,0 +1,44 @@
+{
+  "title": "Test extension `x-fern-enum` for enums",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "SpeechModel": {
+        "description": "The speech model to use for the transcription.",
+        "generatedName": "SpeechModel",
+        "values": [
+          {
+            "nameOverride": "Nano",
+            "generatedName": "nano",
+            "value": "nano",
+            "description": "The Nano tier is a lightweight model that is optimized for speed and cost.",
+            "casing": {}
+          }
+        ],
+        "groupName": [
+          "transcripts"
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

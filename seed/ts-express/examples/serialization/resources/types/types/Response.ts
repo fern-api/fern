@@ -13,7 +13,7 @@ export const Response: core.serialization.ObjectSchema<serializers.Response.Raw,
     });
 
 export declare namespace Response {
-    interface Raw {
+    export interface Raw {
         response?: unknown;
         identifiers: serializers.Identifier.Raw[];
     }

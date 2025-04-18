@@ -1,0 +1,225 @@
+{
+  "title": "Example API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Get Example",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetExampleRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "generatedName": "GetExampleResponse",
+          "schema": "ExampleResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/example",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "status": {
+                  "value": "success",
+                  "type": "enum"
+                },
+                "message": {
+                  "value": {
+                    "value": "message",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "custom_fields": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
+                      "value": {
+                        "value": {
+                          "value": "value",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    }
+                  ],
+                  "type": "map"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "ExampleResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "exampleResponseStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "exampleResponseStatus",
+              "value": {
+                "generatedName": "ExampleResponseStatus",
+                "values": [
+                  {
+                    "generatedName": "success",
+                    "value": "success",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "failure",
+                    "value": "failure",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "exampleResponseMessage",
+            "key": "message",
+            "schema": {
+              "generatedName": "exampleResponseMessage",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ExampleResponseMessage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "exampleResponseCustomFields",
+            "key": "custom_fields",
+            "schema": {
+              "generatedName": "exampleResponseCustomFields",
+              "value": {
+                "key": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ExampleResponseCustomFieldsKey",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ExampleResponseCustomFieldsValue",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "ExampleResponseCustomFields",
+                "groupName": [],
+                "type": "map"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ExampleResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GrantTypeEnum": {
+        "generatedName": "GrantTypeEnum",
+        "values": [
+          {
+            "generatedName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
+            "value": "urn:devrev:params:oauth:grant-type:token-issue",
+            "casing": {}
+          },
+          {
+            "generatedName": "UrnIetfParamsOauthGrantTypeTokenExchange",
+            "value": "urn:ietf:params:oauth:grant-type:token-exchange",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -1,14 +1,11 @@
-import * as prettier from "prettier";
-
-export async function formatDocs(docs: string | undefined): Promise<string | undefined> {
-    if (docs != null) {
-        const formattedDocs = prettier.format(docs, {
-            parser: "markdown"
-        });
-        if (formattedDocs.endsWith("\n") || formattedDocs.endsWith("\r")) {
-            return formattedDocs.substring(0, formattedDocs.length - 1);
-        }
-        return formattedDocs;
+export function formatDocs(docs: string | undefined): string | undefined {
+    if (docs == null) {
+        return undefined;
+    }
+    // Replace */ with * / to prevent comment closure.
+    docs = docs.replace(/\*\//g, "* /");
+    if (docs.endsWith("\n") || docs.endsWith("\r")) {
+        return docs.substring(0, docs.length - 1);
     }
     return docs;
 }

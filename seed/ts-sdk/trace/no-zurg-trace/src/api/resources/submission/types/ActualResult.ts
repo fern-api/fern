@@ -9,17 +9,17 @@ export type ActualResult =
     | SeedTrace.ActualResult.Exception
     | SeedTrace.ActualResult.ExceptionV2;
 
-export declare namespace ActualResult {
-    interface Value {
+export namespace ActualResult {
+    export interface Value {
         type: "value";
         value: SeedTrace.VariableValue;
     }
 
-    interface Exception extends SeedTrace.ExceptionInfo {
+    export interface Exception extends SeedTrace.ExceptionInfo {
         type: "exception";
     }
 
-    interface ExceptionV2 {
+    export interface ExceptionV2 {
         type: "exceptionV2";
         value: SeedTrace.ExceptionV2;
     }

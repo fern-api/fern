@@ -23,6 +23,10 @@ Each service defines:
   ```
 </CodeBlock>
 
+<Info>
+  To define a service with an empty base path use the empty string: `base-path: ""`
+</Info>
+
 ## Endpoints
 
 An endpoint includes:
@@ -249,28 +253,6 @@ makes the generated SDKs a bit more idiomatic.
             properties: 
               userName: string
   ```
-</CodeBlock>
-
-## Multipart form uploads
-
-If the request involves uploading a file, use the `file` type
-in your request body.
-
-<CodeBlock title="document.yml">
-```yaml {12}
-service:
-  base-path: /documents
-  auth: false
-  endpoints:
-    uploadDocument:
-      path: /upload
-      method: POST
-      request:
-        name: UploadDocumentRequest
-        body:
-          properties:
-            file: file
-```
 </CodeBlock>
 
 ## Success response

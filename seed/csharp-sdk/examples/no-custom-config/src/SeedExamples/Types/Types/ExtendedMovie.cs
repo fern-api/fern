@@ -1,7 +1,6 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
-
-#nullable enable
 
 namespace SeedExamples;
 
@@ -29,7 +28,7 @@ public record ExtendedMovie
     public required double Rating { get; set; }
 
     [JsonPropertyName("type")]
-    public required string Type { get; set; }
+    public string Type { get; set; } = "movie";
 
     [JsonPropertyName("tag")]
     public required string Tag { get; set; }
@@ -43,6 +42,17 @@ public record ExtendedMovie
     [JsonPropertyName("revenue")]
     public required long Revenue { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

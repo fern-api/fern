@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { JsonResponse } from "./JsonResponse";
 import { FileDownloadResponse } from "./FileDownloadResponse";
 import { TextResponse } from "./TextResponse";
+import { BytesResponse } from "./BytesResponse";
 import { StreamingResponse } from "./StreamingResponse";
 import { StreamParameterResponse } from "./StreamParameterResponse";
 
@@ -19,6 +20,7 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
             }),
             fileDownload: FileDownloadResponse,
             text: TextResponse,
+            bytes: BytesResponse,
             streaming: core.serialization.object({
                 value: StreamingResponse,
             }),
@@ -33,6 +35,8 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
                         return FernIr.HttpResponseBody.fileDownload(value);
                     case "text":
                         return FernIr.HttpResponseBody.text(value);
+                    case "bytes":
+                        return FernIr.HttpResponseBody.bytes(value);
                     case "streaming":
                         return FernIr.HttpResponseBody.streaming(value.value);
                     case "streamParameter":
@@ -45,32 +49,37 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
         });
 
 export declare namespace HttpResponseBody {
-    type Raw =
+    export type Raw =
         | HttpResponseBody.Json
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Text
+        | HttpResponseBody.Bytes
         | HttpResponseBody.Streaming
         | HttpResponseBody.StreamParameter;
 
-    interface Json {
+    export interface Json {
         type: "json";
         value: JsonResponse.Raw;
     }
 
-    interface FileDownload extends FileDownloadResponse.Raw {
+    export interface FileDownload extends FileDownloadResponse.Raw {
         type: "fileDownload";
     }
 
-    interface Text extends TextResponse.Raw {
+    export interface Text extends TextResponse.Raw {
         type: "text";
     }
 
-    interface Streaming {
+    export interface Bytes extends BytesResponse.Raw {
+        type: "bytes";
+    }
+
+    export interface Streaming {
         type: "streaming";
         value: StreamingResponse.Raw;
     }
 
-    interface StreamParameter extends StreamParameterResponse.Raw {
+    export interface StreamParameter extends StreamParameterResponse.Raw {
         type: "streamParameter";
     }
 }

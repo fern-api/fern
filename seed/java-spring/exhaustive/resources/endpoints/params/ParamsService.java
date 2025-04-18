@@ -28,6 +28,13 @@ public interface ParamsService {
       @PathVariable("param") String param);
 
   @GetMapping(
+      value = "/path/{param}",
+      produces = "application/json"
+  )
+  String getWithInlinePath(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
+      @PathVariable("param") String param);
+
+  @GetMapping(
       value = "",
       produces = "application/json"
   )
@@ -40,7 +47,7 @@ public interface ParamsService {
   )
   void getWithAllowMultipleQuery(@RequestHeader("Authorization") BearerAuth auth,
       Principal principal, @RequestParam("query") String query,
-      @RequestParam("numer") Integer numer);
+      @RequestParam("number") Integer number);
 
   @GetMapping(
       value = "/path-query/{param}",
@@ -49,11 +56,27 @@ public interface ParamsService {
   void getWithPathAndQuery(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @PathVariable("param") String param, @RequestParam("query") String query);
 
+  @GetMapping(
+      value = "/path-query/{param}",
+      produces = "application/json"
+  )
+  void getWithInlinePathAndQuery(@RequestHeader("Authorization") BearerAuth auth,
+      Principal principal, @PathVariable("param") String param,
+      @RequestParam("query") String query);
+
   @PutMapping(
       value = "/path/{param}",
       produces = "application/json",
       consumes = "application/json"
   )
   String modifyWithPath(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
+      @PathVariable("param") String param, @RequestBody String body);
+
+  @PutMapping(
+      value = "/path/{param}",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  String modifyWithInlinePath(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @PathVariable("param") String param, @RequestBody String body);
 }

@@ -1,8 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+
 import {
-    getIntermediateRepresentationMigrator,
-    MigratedIntermediateMigration
+    MigratedIntermediateMigration,
+    getIntermediateRepresentationMigrator
 } from "../../IntermediateRepresentationMigrator";
 import { IrMigrationContext } from "../../IrMigrationContext";
 import { IrMigration } from "../../types/IrMigration";

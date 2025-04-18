@@ -17,7 +17,7 @@ fern generate --docs --preview
 fern generate --docs --preview
 
 [docs]: Found 0 errors and 1 warnings. Run fern check --warnings to print out the warnings.
-[docs]: Published docs to https://fern-preview-ce3459d6-8a76-4747-963a-33c71ee13959.docs.buildwithfern.com
+[docs]: Published docs to https://fern-preview-a1da0157-93ca-4b1f-b310-8dd34fb891ca.docs.buildwithfern.com
 ┌─
 │ ✓  docs.example.com
 └─
@@ -25,11 +25,11 @@ fern generate --docs --preview
 
 ## Usage in GitHub Actions  
 
-The following is a GitHub Action workflow that generates a preview URL for every pull request.
+The following is a GitHub Action workflow that generates a preview URL for every pull request. [Be sure to add the `FERN_TOKEN` for your organization to the repository](/learn/cli-api/cli-reference/commands#fern-token). 
 
 <CodeBlock title = ".github/workflows/preview-docs.yml">
 ```yaml
-name: preview-docs
+name: Preview Docs
 
 on:
   pull_request
@@ -62,6 +62,56 @@ jobs:
                   filePath: preview_url.txt
 ```
 </CodeBlock>
+
+<Info title="Allow PR previews to be generated from forks">
+  Fern's PR previews GitHub Action requires a Fern token to run. Depending on your repository's permissions, you may need to use the following workflow to allow PR previews from forks to access this token.
+  
+  <Accordion title="GitHub Actions workflow">
+  ```yaml .github/workflows/preview-docs.yml
+  name: preview-docs
+
+  on:
+    pull_request_target:
+      branches:
+        - main
+
+  jobs:
+    run:
+      runs-on: ubuntu-latest
+      permissions:
+        pull-requests: write  # Only for commenting
+        contents: read        # For checking out code
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Install Fern
+          run: npm install -g fern-api
+
+        - name: Checkout PR
+          if: github.event_name == 'pull_request_target'
+          run: |
+            git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
+            git checkout pr-${{ github.event.pull_request.number }}    
+
+        - name: Generate preview URL
+          id: generate-docs
+          env:
+            FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          run: |
+            OUTPUT=$(fern generate --docs --preview 2>&1) || true
+            echo "$OUTPUT"
+            URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
+            echo "Preview URL: $URL"
+            echo "🌿 Preview your docs: $URL" > preview_url.txt
+
+        - name: Comment URL in PR
+          uses: thollander/actions-comment-pull-request@v2.4.3
+          with:
+            filePath: preview_url.txt
+  ```
+  </Accordion>
+</Info>
 
 ## Link expiration
 

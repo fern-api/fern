@@ -5,7 +5,7 @@ client = SeedNoEnvironment(base_url="https://yourhost.com/path/to/api", token="Y
 client.dummy.get_dummy(
 	
 )
- 
-```                        
+
+```
 
 

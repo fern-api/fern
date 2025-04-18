@@ -146,6 +146,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     throw new RuntimeException("Encountered unknown output mode: " + unknownType);
                 }
             });
+            runV2Generator(generatorExecClient, args);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
@@ -155,6 +156,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             throw new RuntimeException(e);
         }
     }
+
+    public abstract void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args);
 
     public final void runInDownloadFilesMode(
             DefaultGeneratorExecClient generatorExecClient,
@@ -323,10 +326,30 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 .generatorConfig(generatorConfig)
                 .shouldSignPackage(addSignaturePlugin)
                 .addAllDependencies(getBuildGradleDependencies())
+                .addCustomBlocks("tasks.withType(Javadoc) {\n" + "    failOnError false\n"
+                        + "    options.addStringOption('Xdoclint:none', '-quiet')\n"
+                        + "}")
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
+        if (maybeMavenCoordinate.isPresent()) {
+            buildGradle.addCustomBlocks("group = '" + maybeMavenCoordinate.get().getGroup() + "'");
+            buildGradle.addCustomBlocks(
+                    "version = '" + maybeMavenCoordinate.get().getVersion() + "'");
+
+            buildGradle.addCustomBlocks("jar {\n" + "    dependsOn(\":generatePomFileForMavenPublication\")\n"
+                    + "    archiveBaseName = \""
+                    + maybeMavenCoordinate.get().getArtifact() + "\"\n" + "}");
+            buildGradle.addCustomBlocks("sourcesJar {\n" + "    archiveBaseName = \""
+                    + maybeMavenCoordinate.get().getArtifact() + "\"\n" + "}");
+            buildGradle.addCustomBlocks("javadocJar {\n" + "    archiveBaseName = \""
+                    + maybeMavenCoordinate.get().getArtifact() + "\"\n" + "}");
+        }
         if (addSignaturePlugin) {
             buildGradle.addPlugins(GradlePlugin.builder().pluginId("signing").build());
+            buildGradle.addPlugins(GradlePlugin.builder()
+                    .pluginId("cl.franciscosolis.sonatype-central-upload")
+                    .version("1.0.3")
+                    .build());
             buildGradle.addCustomBlocks("signing {\n" + "    sign(publishing.publications)\n" + "}");
             // Generate an empty gradle.properties file
             addGeneratedFile(GeneratedGradleProperties.getGeneratedFile());
@@ -343,11 +366,18 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
 
         addGeneratedFile(buildGradle.build());
+        String settingsGradleContents = "";
+        if (maybeMavenCoordinate.isPresent()) {
+            settingsGradleContents +=
+                    "rootProject.name = '" + maybeMavenCoordinate.get().getArtifact() + "'\n\n";
+        }
+        settingsGradleContents += getSubProjects().stream()
+                .map(project -> "include '" + project + "'")
+                .collect(Collectors.joining("\n"));
+
         addGeneratedFile(RawGeneratedFile.builder()
                 .filename("settings.gradle")
-                .contents(getSubProjects().stream()
-                        .map(project -> "include '" + project + "'")
-                        .collect(Collectors.joining("\n")))
+                .contents(settingsGradleContents)
                 .build());
         addGeneratedFile(GitIgnoreGenerator.getGitignore());
     }

@@ -1,6 +1,6 @@
 # Seed Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_audiences)](https://pypi.python.org/pypi/fern_audiences)
 
 The Seed Python library provides convenient access to the Seed API from Python.
@@ -10,6 +10,10 @@ The Seed Python library provides convenient access to the Seed API from Python.
 ```sh
 pip install fern_audiences
 ```
+
+## Reference
+
+A full reference for this library is available [here](./reference.md).
 
 ## Usage
 
@@ -23,8 +27,8 @@ client = SeedAudiences(
     environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
 client.foo.find(
-    optional_string="string",
-    public_property="string",
+    optional_string="optionalString",
+    public_property="publicProperty",
     private_property=1,
 )
 ```
@@ -46,8 +50,8 @@ client = AsyncSeedAudiences(
 
 async def main() -> None:
     await client.foo.find(
-        optional_string="string",
-        public_property="string",
+        optional_string="optionalString",
+        public_property="publicProperty",
         private_property=1,
     )
 
@@ -75,10 +79,10 @@ except ApiError as e:
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
@@ -87,7 +91,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.foo.find(..., {
+client.foo.find(..., request_options={
     "max_retries": 1
 })
 ```
@@ -107,7 +111,7 @@ client = SeedAudiences(
 
 
 # Override timeout for a specific method
-client.foo.find(..., {
+client.foo.find(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -116,6 +120,7 @@ client.foo.find(..., {
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
+
 ```python
 import httpx
 from seed import SeedAudiences

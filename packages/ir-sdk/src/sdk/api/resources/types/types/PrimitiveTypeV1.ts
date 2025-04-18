@@ -18,7 +18,6 @@ export type PrimitiveTypeV1 =
     | "UUID"
     | "BASE_64"
     | "BIG_INTEGER";
-
 export const PrimitiveTypeV1 = {
     Integer: "INTEGER",
     Long: "LONG",
@@ -67,8 +66,8 @@ export const PrimitiveTypeV1 = {
     },
 } as const;
 
-export declare namespace PrimitiveTypeV1 {
-    interface Visitor<R> {
+export namespace PrimitiveTypeV1 {
+    export interface Visitor<R> {
         integer: () => R;
         long: () => R;
         uint: () => R;

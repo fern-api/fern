@@ -48,6 +48,10 @@ func (s *Scope) Add(ident string) string {
 	if ident == "" {
 		return ""
 	}
+	if !s.isValid(ident) {
+		// Pre-process the identifier to ensure it's valid.
+		ident = newIdent(ident)
+	}
 	if _, ok := s.identifiers[ident]; !ok && !s.Imports.InUse(ident) {
 		return s.add(ident)
 	}

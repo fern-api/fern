@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Decorator > toString > should generate a decorator with a reference 1`] = `
+"@decorator_with_reference
+"
+`;
+
+exports[`Decorator > toString > should generate a decorator with a reference and arguments 1`] = `
+"@complex_decorator('test', value=True)
+"
+`;
+
+exports[`Decorator > toString > should generate a decorator with arguments 1`] = `
+"@parameterized_decorator(arg1, kwarg=42)
+"
+`;
+
+exports[`Decorator > toString > should generate a simple decorator 1`] = `
+"@simple_decorator
+"
+`;

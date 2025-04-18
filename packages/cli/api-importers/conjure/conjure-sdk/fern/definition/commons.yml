@@ -1,0 +1,4 @@
+types: 
+  WithDocs: 
+    properties: 
+      docs: optional<string>

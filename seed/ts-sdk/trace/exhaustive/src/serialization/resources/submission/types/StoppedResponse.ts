@@ -15,7 +15,7 @@ export const StoppedResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace StoppedResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
     }
 }

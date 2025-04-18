@@ -1,0 +1,12 @@
+## 0.39.19
+**`(fix):`** The OpenAPI importer now appropriately generates examples for circular `oneOf` schemas.
+
+### What's been fixed
+- The OpenAPI importer now handles generating examples for referenced `oneOf` schemas. Previously, examples generation would fail.
+- The OpenAPI importer now handles generating examples for circular `oneOf` schemas. Previously, the
+the converter would only default to generating examples for the first `oneOf` schema. If the first variant,
+circularly referenced itself, this would make terminating the example impossible.
+Now, the example generator tries every schema in order, guaranteeing that a termination condition will be
+reached.
+
+

@@ -1,16 +1,19 @@
-import { createLogger, LogLevel, LOG_LEVELS, Logger } from "@fern-api/logger";
+import { confirm, input } from "@inquirer/prompts";
+import chalk from "chalk";
+import { maxBy } from "lodash-es";
+
+import { LOG_LEVELS, LogLevel, createLogger } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
-import chalk from "chalk";
-import { maxBy } from "lodash-es";
+
 import { CliEnvironment } from "./CliEnvironment";
 import { Log } from "./Log";
-import { logErrorMessage } from "./logErrorMessage";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
+import { logErrorMessage } from "./logErrorMessage";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
@@ -98,14 +101,15 @@ export class CliContext {
 
     public async exit(): Promise<never> {
         if (!this._suppressUpgradeMessage) {
-            await this.nudgeUpgradeIfAvaialable();
+            await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
-        (await getPosthogManager()).flush();
+        const posthogManager = await getPosthogManager();
+        await posthogManager.flush();
         this.exitProgram();
     }
 
-    private async nudgeUpgradeIfAvaialable() {
+    private async nudgeUpgradeIfAvailable() {
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
                 this.isUpgradeAvailable(),
@@ -140,7 +144,7 @@ export class CliContext {
     private longestWorkspaceName: string | undefined;
     public registerWorkspaces(workspaces: readonly Workspace[]): void {
         const longestWorkspaceName = maxBy(
-            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : workspace.workspaceName ?? "api")),
+            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api"))),
             (name) => name.length
         );
         if (longestWorkspaceName != null) {
@@ -174,6 +178,7 @@ export class CliContext {
         return context;
     }
 
+    private readonly USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
     private async runTaskWithInit<T>(
         init: TaskContextImpl.Init,
         run: (context: TaskContext) => T | Promise<T>
@@ -183,7 +188,12 @@ export class CliContext {
         try {
             result = await run(context);
         } catch (error) {
-            context.failWithoutThrowing(undefined, error);
+            if ((error as Error).message.includes("globalThis")) {
+                context.logger.error(this.USE_NODE_18_OR_ABOVE_MESSAGE);
+                context.failWithoutThrowing();
+            } else {
+                context.failWithoutThrowing(undefined, error);
+            }
             throw new FernCliError();
         } finally {
             context.finish();
@@ -199,7 +209,7 @@ export class CliContext {
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
-            workspace.type === "docs" ? "docs" : workspace.workspaceName ?? "api"
+            workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api")
         );
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName
@@ -298,6 +308,29 @@ export class CliContext {
             };
         }
         return this._isUpgradeAvailable;
+    }
+
+    /**
+     * Prompts the user for confirmation with a yes/no question
+     * @param message The message to display to the user
+     * @param defaultValue Optional default value (defaults to false)
+     * @returns Promise<boolean> representing the user's choice
+     */
+    public async confirmPrompt(message: string, defaultValue = false): Promise<boolean> {
+        return await confirm({
+            message,
+            default: defaultValue
+        });
+    }
+
+    /**
+     * Prompts the user for text input
+     * @param message The message to display to the user
+     * @param default Optional default value (defaults to undefined)
+     * @returns Promise<string> representing the user's input
+     */
+    public async getInput(config: { message: string; default?: string }): Promise<string> {
+        return await input({ message: config.message, default: config.default });
     }
 }
 

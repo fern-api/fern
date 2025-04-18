@@ -2,134 +2,132 @@
 
 namespace Seed\Types\Object\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use DateTime;
-use Seed\Core\DateType;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\Date;
+use Seed\Core\Types\ArrayType;
 
-class ObjectWithOptionalField extends SerializableType
+class ObjectWithOptionalField extends JsonSerializableType
 {
     /**
      * @var ?string $string This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public ?string $string;
 
     /**
      * @var ?int $integer
      */
-    #[JsonProperty("integer")]
+    #[JsonProperty('integer')]
     public ?int $integer;
 
     /**
      * @var ?int $long
      */
-    #[JsonProperty("long")]
+    #[JsonProperty('long')]
     public ?int $long;
 
     /**
      * @var ?float $double
      */
-    #[JsonProperty("double")]
+    #[JsonProperty('double')]
     public ?float $double;
 
     /**
      * @var ?bool $bool
      */
-    #[JsonProperty("bool")]
+    #[JsonProperty('bool')]
     public ?bool $bool;
 
     /**
      * @var ?DateTime $datetime
      */
-    #[JsonProperty("datetime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime'), Date(Date::TYPE_DATETIME)]
     public ?DateTime $datetime;
 
     /**
      * @var ?DateTime $date
      */
-    #[JsonProperty("date"), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date'), Date(Date::TYPE_DATE)]
     public ?DateTime $date;
 
     /**
      * @var ?string $uuid
      */
-    #[JsonProperty("uuid")]
+    #[JsonProperty('uuid')]
     public ?string $uuid;
 
     /**
      * @var ?string $base64
      */
-    #[JsonProperty("base64")]
+    #[JsonProperty('base64')]
     public ?string $base64;
 
     /**
      * @var ?array<string> $list
      */
-    #[JsonProperty("list"), ArrayType(["string"])]
+    #[JsonProperty('list'), ArrayType(['string'])]
     public ?array $list;
 
     /**
      * @var ?array<string> $set
      */
-    #[JsonProperty("set"), ArrayType(["string"])]
+    #[JsonProperty('set'), ArrayType(['string'])]
     public ?array $set;
 
     /**
      * @var ?array<int, string> $map
      */
-    #[JsonProperty("map"), ArrayType(["integer" => "string"])]
+    #[JsonProperty('map'), ArrayType(['integer' => 'string'])]
     public ?array $map;
 
     /**
      * @var ?string $bigint
      */
-    #[JsonProperty("bigint")]
+    #[JsonProperty('bigint')]
     public ?string $bigint;
 
     /**
-     * @param ?string $string This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
-     * @param ?int $integer
-     * @param ?int $long
-     * @param ?float $double
-     * @param ?bool $bool
-     * @param ?DateTime $datetime
-     * @param ?DateTime $date
-     * @param ?string $uuid
-     * @param ?string $base64
-     * @param ?array<string> $list
-     * @param ?array<string> $set
-     * @param ?array<int, string> $map
-     * @param ?string $bigint
+     * @param array{
+     *   string?: ?string,
+     *   integer?: ?int,
+     *   long?: ?int,
+     *   double?: ?float,
+     *   bool?: ?bool,
+     *   datetime?: ?DateTime,
+     *   date?: ?DateTime,
+     *   uuid?: ?string,
+     *   base64?: ?string,
+     *   list?: ?array<string>,
+     *   set?: ?array<string>,
+     *   map?: ?array<int, string>,
+     *   bigint?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $string = null,
-        ?int $integer = null,
-        ?int $long = null,
-        ?float $double = null,
-        ?bool $bool = null,
-        ?DateTime $datetime = null,
-        ?DateTime $date = null,
-        ?string $uuid = null,
-        ?string $base64 = null,
-        ?array $list = null,
-        ?array $set = null,
-        ?array $map = null,
-        ?string $bigint = null,
+        array $values = [],
     ) {
-        $this->string = $string;
-        $this->integer = $integer;
-        $this->long = $long;
-        $this->double = $double;
-        $this->bool = $bool;
-        $this->datetime = $datetime;
-        $this->date = $date;
-        $this->uuid = $uuid;
-        $this->base64 = $base64;
-        $this->list = $list;
-        $this->set = $set;
-        $this->map = $map;
-        $this->bigint = $bigint;
+        $this->string = $values['string'] ?? null;
+        $this->integer = $values['integer'] ?? null;
+        $this->long = $values['long'] ?? null;
+        $this->double = $values['double'] ?? null;
+        $this->bool = $values['bool'] ?? null;
+        $this->datetime = $values['datetime'] ?? null;
+        $this->date = $values['date'] ?? null;
+        $this->uuid = $values['uuid'] ?? null;
+        $this->base64 = $values['base64'] ?? null;
+        $this->list = $values['list'] ?? null;
+        $this->set = $values['set'] ?? null;
+        $this->map = $values['map'] ?? null;
+        $this->bigint = $values['bigint'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -15,7 +15,7 @@ export const DoublyLinkedListNodeAndListValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace DoublyLinkedListNodeAndListValue {
-    interface Raw {
+    export interface Raw {
         nodeId: serializers.NodeId.Raw;
         fullList: serializers.DoublyLinkedListValue.Raw;
     }

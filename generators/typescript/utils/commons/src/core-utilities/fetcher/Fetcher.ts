@@ -57,14 +57,20 @@ export interface Fetcher {
         ok: string;
 
         SuccessfulResponse: {
-            _build: (body: ts.Expression) => ts.ObjectLiteralExpression;
+            _build: (
+                body: ts.Expression,
+                headers?: ts.Expression,
+                rawResponse?: ts.Expression
+            ) => ts.ObjectLiteralExpression;
             body: string;
             headers: string;
+            rawResponse: string;
         };
 
         FailedResponse: {
-            _build: (error: ts.Expression) => ts.ObjectLiteralExpression;
+            _build: (error: ts.Expression, rawResponse: ts.Expression) => ts.ObjectLiteralExpression;
             error: string;
+            rawResponse: string;
         };
     };
 
@@ -79,6 +85,24 @@ export interface Fetcher {
 
     readonly FetchFunction: {
         _getReferenceToType: () => ts.TypeNode;
+    };
+
+    readonly RawResponse: {
+        readonly RawResponse: {
+            _getReferenceToType: () => ts.TypeNode;
+        };
+        readonly toRawResponse: {
+            _getReferenceToType: () => ts.TypeNode;
+        };
+        readonly WithRawResponse: {
+            _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
+        };
+    };
+
+    readonly HttpResponsePromise: {
+        _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
+        fromPromise: (promise: ts.Expression) => ts.Expression;
+        interceptFunction: (fn: ts.Expression) => ts.Expression;
     };
 }
 

@@ -1,4 +1,5 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration-loader";
+
 import { Rule, RuleViolation } from "../../Rule";
 
 export const TabWithHrefRule: Rule = {
@@ -19,7 +20,7 @@ export const TabWithHrefRule: Rule = {
                         const tabConfig = tabs[tabItem.tab];
                         if (tabConfig == null) {
                             ruleViolations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Tab "${tabItem.tab}" is missing from the tabs configuration.`
                             });
                             continue;
@@ -27,7 +28,7 @@ export const TabWithHrefRule: Rule = {
 
                         if (tabConfig.href != null && tabItem.layout != null) {
                             ruleViolations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Tab "${tabItem.tab}" has both a href and layout. Only one should be used.`
                             });
                             continue;
@@ -35,7 +36,7 @@ export const TabWithHrefRule: Rule = {
 
                         if (tabConfig.href == null && tabItem.layout == null) {
                             ruleViolations.push({
-                                severity: "error",
+                                severity: "fatal",
                                 message: `Tab "${tabItem.tab}" is missing a href or layout.`
                             });
                             continue;

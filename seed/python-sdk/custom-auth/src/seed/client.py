@@ -46,7 +46,9 @@ class SeedCustomAuth:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             custom_auth_scheme=custom_auth_scheme,
@@ -98,7 +100,9 @@ class AsyncSeedCustomAuth:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             custom_auth_scheme=custom_auth_scheme,

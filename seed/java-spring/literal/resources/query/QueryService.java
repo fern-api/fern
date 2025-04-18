@@ -6,10 +6,13 @@ package resources.query;
 
 import java.lang.Boolean;
 import java.lang.String;
+import java.util.Optional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import resources.query.types.AliasToPrompt;
+import resources.query.types.AliasToStream;
 import types.SendResponse;
 
 @RequestMapping(
@@ -22,6 +25,12 @@ public interface QueryService {
   )
   SendResponse send(@RequestHeader("X-API-Version") String version,
       @RequestHeader("X-API-Enable-Audit-Logging") Boolean auditLogging,
-      @RequestParam("prompt") String prompt, @RequestParam("query") String query,
-      @RequestParam("stream") Boolean stream);
+      @RequestParam("prompt") String prompt,
+      @RequestParam("optional_prompt") Optional<String> optionalPrompt,
+      @RequestParam("alias_prompt") AliasToPrompt aliasPrompt,
+      @RequestParam("alias_optional_prompt") Optional<AliasToPrompt> aliasOptionalPrompt,
+      @RequestParam("query") String query, @RequestParam("stream") Boolean stream,
+      @RequestParam("optional_stream") Optional<Boolean> optionalStream,
+      @RequestParam("alias_stream") AliasToStream aliasStream,
+      @RequestParam("alias_optional_stream") Optional<AliasToStream> aliasOptionalStream);
 }

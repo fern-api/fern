@@ -13,7 +13,7 @@ describe("union", () => {
             }),
         }),
         { type: "lion", meows: true },
-        { title: "doesn't transform discriminant when it's a string" }
+        { title: "doesn't transform discriminant when it's a string" },
     );
 
     itSchema(
@@ -25,7 +25,7 @@ describe("union", () => {
         {
             raw: { _type: "lion", meows: true },
             parsed: { type: "lion", meows: true },
-        }
+        },
     );
 
     describe("allowUnrecognizedUnionMembers", () => {
@@ -43,7 +43,7 @@ describe("union", () => {
                 opts: {
                     allowUnrecognizedUnionMembers: true,
                 },
-            }
+            },
         );
     });
 
@@ -76,7 +76,7 @@ describe("union", () => {
                 path: [],
                 message: "Expected object. Received list.",
             },
-        ]
+        ],
     );
 
     itValidate(
@@ -91,7 +91,7 @@ describe("union", () => {
                 path: [],
                 message: 'Missing discriminant ("type")',
             },
-        ]
+        ],
     );
 
     itValidate(
@@ -108,6 +108,6 @@ describe("union", () => {
                 path: ["type"],
                 message: 'Expected enum. Received "bear".',
             },
-        ]
+        ],
     );
 });

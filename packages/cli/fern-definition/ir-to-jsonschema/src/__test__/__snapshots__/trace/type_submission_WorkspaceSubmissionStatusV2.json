@@ -1,0 +1,299 @@
+{
+  "type": "object",
+  "properties": {
+    "updates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/submission.WorkspaceSubmissionUpdate"
+      }
+    }
+  },
+  "required": [
+    "updates"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "submission.RunningSubmissionState": {
+      "type": "string",
+      "enum": [
+        "QUEUEING_SUBMISSION",
+        "KILLING_HISTORICAL_SUBMISSIONS",
+        "WRITING_SUBMISSION_TO_FILE",
+        "COMPILING_SUBMISSION",
+        "RUNNING_SUBMISSION"
+      ]
+    },
+    "submission.ExceptionV2": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "generic",
+            "timeout"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "generic"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "timeout"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.ExceptionInfo": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ],
+      "additionalProperties": false
+    },
+    "submission.ErrorInfo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "compileError",
+            "runtimeError",
+            "internalError"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "compileError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "runtimeError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internalError"
+            },
+            "exceptionInfo": {
+              "$ref": "#/definitions/submission.ExceptionInfo"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionInfo"
+          ]
+        }
+      ]
+    },
+    "submission.WorkspaceSubmissionUpdateInfo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "running",
+            "ran",
+            "stopped",
+            "traced",
+            "tracedV2",
+            "errored",
+            "finished"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "running"
+            },
+            "value": {
+              "$ref": "#/definitions/submission.RunningSubmissionState"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "ran"
+            },
+            "exceptionV2": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionV2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "exception": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionInfo"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "stdout": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "stdout"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "stopped"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "traced"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "tracedV2"
+            },
+            "traceResponsesSize": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type",
+            "traceResponsesSize"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "errored"
+            },
+            "value": {
+              "$ref": "#/definitions/submission.ErrorInfo"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "finished"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.WorkspaceSubmissionUpdate": {
+      "type": "object",
+      "properties": {
+        "updateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updateInfo": {
+          "$ref": "#/definitions/submission.WorkspaceSubmissionUpdateInfo"
+        }
+      },
+      "required": [
+        "updateTime",
+        "updateInfo"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

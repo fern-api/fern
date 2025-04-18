@@ -2,42 +2,50 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Node extends SerializableType
+class Node extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var ?array<Node> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType([Node::class])]
+    #[JsonProperty('nodes'), ArrayType([Node::class])]
     public ?array $nodes;
 
     /**
      * @var ?array<Tree> $trees
      */
-    #[JsonProperty("trees"), ArrayType([Tree::class])]
+    #[JsonProperty('trees'), ArrayType([Tree::class])]
     public ?array $trees;
 
     /**
-     * @param string $name
-     * @param ?array<Node> $nodes
-     * @param ?array<Tree> $trees
+     * @param array{
+     *   name: string,
+     *   nodes?: ?array<Node>,
+     *   trees?: ?array<Tree>,
+     * } $values
      */
     public function __construct(
-        string $name,
-        ?array $nodes = null,
-        ?array $trees = null,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->nodes = $nodes;
-        $this->trees = $trees;
+        $this->name = $values['name'];
+        $this->nodes = $values['nodes'] ?? null;
+        $this->trees = $values['trees'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

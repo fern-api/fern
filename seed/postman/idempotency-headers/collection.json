@@ -129,7 +129,7 @@
                 {
                   "key": "paymentId",
                   "description": null,
-                  "value": "string"
+                  "value": "paymentId"
                 }
               ]
             },
@@ -165,7 +165,7 @@
                     {
                       "key": "paymentId",
                       "description": null,
-                      "value": "string"
+                      "value": "paymentId"
                     }
                   ]
                 },

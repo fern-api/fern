@@ -1,6 +1,7 @@
-import { GeneratorName } from "@fern-api/configuration";
-import { IrVersions } from "../../ir-versions";
+import { GeneratorName } from "@fern-api/configuration-loader";
+
 import { IrMigrationContext } from "../../IrMigrationContext";
+import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
@@ -38,7 +39,9 @@ export const V11_TO_V10_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v11, context): IrVersions.V10.ir.IntermediateRepresentation => {

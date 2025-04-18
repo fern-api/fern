@@ -20,7 +20,7 @@ class ExtendedMovie(Movie):
         tag="tag-12efs9dv",
         cast=["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"],
         metadata={
-            "academyAward": true,
+            "academyAward": True,
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
         },
@@ -31,9 +31,7 @@ class ExtendedMovie(Movie):
     cast: typing.List[str]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

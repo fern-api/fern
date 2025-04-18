@@ -1,0 +1,248 @@
+{
+  "apiVersion": {
+    "header": "X-API-Version",
+    "default": "2.0.0",
+    "values": [
+      "1.0.0",
+      "2.0.0",
+      "Latest"
+    ]
+  },
+  "title": "Test extension `x-fern-version`.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "chatCompletions"
+        ],
+        "methodName": "create"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ChatCompletionsCreateRequest",
+      "request": {
+        "schema": {
+          "generatedName": "ChatCompletionsCreateRequest",
+          "schema": "CreateCompletionRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success!",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "ChatCompletionsCreateResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/completions/chat",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "CreateCompletionRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createCompletionRequestStream",
+            "key": "stream",
+            "schema": {
+              "generatedName": "createCompletionRequestStream",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "CreateCompletionRequestStream",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createCompletionRequestPrompt",
+            "key": "prompt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CreateCompletionRequestPrompt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateCompletionRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Completion": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "completionText",
+            "key": "text",
+            "schema": {
+              "generatedName": "completionText",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CompletionText",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Completion",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CompletionChunk": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "completionChunkText",
+            "key": "text",
+            "schema": {
+              "generatedName": "completionChunkText",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CompletionChunkText",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CompletionChunk",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "api_key": {
+      "type": "bearer"
+    },
+    "custom_header": {
+      "headerName": "X-API-Key",
+      "type": "header"
+    },
+    "access_token": {
+      "type": "bearer"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

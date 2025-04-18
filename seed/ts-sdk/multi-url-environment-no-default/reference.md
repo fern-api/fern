@@ -16,7 +16,7 @@
 
 ```typescript
 await client.ec2.bootInstance({
-    size: "string",
+    size: "size",
 });
 ```
 
@@ -68,7 +68,7 @@ await client.ec2.bootInstance({
 
 ```typescript
 await client.s3.getPresignedUrl({
-    s3Key: "string",
+    s3Key: "s3Key",
 });
 ```
 

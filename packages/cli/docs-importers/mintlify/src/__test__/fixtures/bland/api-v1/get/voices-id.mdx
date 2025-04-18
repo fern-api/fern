@@ -1,0 +1,60 @@
+---
+title: "Voice Details"
+api: "GET https://api.bland.ai/v1/voices/{id}"
+description: "Retrieve detailed information about a specific voice."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="id" type="string" required>
+  The unique identifier for the voice preset.
+
+Place either the voice's `name` or `id` here.
+
+For example, `GET https://api.bland.ai/v1/voices/david` or `GET https://api.bland.ai/v1/voices/ff2c405b-3dba-41e0-9261-bc8ee3f91f46`.
+
+</ParamField>
+
+### Response
+
+<ResponseField type="object" name="voice">
+    Contains detailed information about the specified voice.
+    
+    - `id` - The unique id for that voice.
+    - `name` - Public voice name, and can also be used as a unique identifier.
+    - `description` - The description of the voice.
+    - `public` - Whether or not the voice is publicly available.
+    - `tags` - A list of tags associated with the voice for the language, voice details, and will have `"Bland Curated"` for preferred voices.
+
+    - `average_rating` - The average star ratings for the voice (out of 5 stars).
+    - `total_ratings` - The number of ratings for the voice.
+
+    Note: Ratings are under development and may show incomplete or inaccurate data.
+
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+    "voice": {
+        "id": "2f9fdbc7-4bf2-4792-8a18-21ce3c93978f",
+        "name": "maya",
+        "description": "Young American Female",
+        "public": true,
+        "tags": [
+            "english",
+            "soft",
+            "Bland Curated"
+        ],
+        "total_ratings": 1234,
+        "average_rating": 4
+    }
+}
+```
+</ResponseExample>

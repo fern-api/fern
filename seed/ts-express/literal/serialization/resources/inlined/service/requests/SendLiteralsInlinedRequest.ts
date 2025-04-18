@@ -21,7 +21,7 @@ export const SendLiteralsInlinedRequest: core.serialization.Schema<
 });
 
 export declare namespace SendLiteralsInlinedRequest {
-    interface Raw {
+    export interface Raw {
         prompt: "You are a helpful assistant";
         context?: "You're super wise" | null;
         query: string;

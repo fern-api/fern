@@ -1,8 +1,9 @@
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { PhpFile } from "@fern-api/php-codegen";
-import { FileGenerator } from "@fern-api/php-codegen";
-import { php } from "@fern-api/php-codegen";
-import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { SELF, php } from "@fern-api/php-codegen";
+
+import { Name, ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -20,49 +21,52 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
     }
 
     public doGenerate(): PhpFile {
-        const clazz = php.class_({
+        const clazz = php.dataClass({
             ...this.classReference,
             docs: this.typeDeclaration.docs,
-            parentClassReference: this.context.getSerializableTypeClassReference()
+            parentClassReference: this.context.getJsonSerializableTypeClassReference(),
+            traits: this.objectDeclaration.extends.map((declaredTypeName) =>
+                this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
+            )
         });
-
-        // TODO: handle extended properties
-        const properties: php.Field.Args[] = this.objectDeclaration.properties.map((property) => {
-            const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
-            return {
-                type: convertedType,
-                name: this.context.getPropertyName(property.name.name),
-                access: "public",
-                docs: property.docs,
-                attributes: this.context.phpAttributeMapper.convert({
-                    type: convertedType,
-                    property
-                })
-            };
-        });
-
-        const requiredProperties = properties.filter(({ type }) => type.internalType.type !== "optional");
-        const optionalProperties = properties.filter(({ type }) => type.internalType.type === "optional");
-        const orderedProperties = [...requiredProperties, ...optionalProperties];
-        orderedProperties.forEach((property) => {
-            clazz.addField(php.field(property));
-        });
-
-        const parameters = orderedProperties.map((property) => php.parameter({ ...property, access: undefined }));
-        clazz.addConstructor({
-            parameters,
-            body: php.codeblock((writer) => {
-                orderedProperties.forEach(({ name }) => {
-                    writer.writeTextStatement(`$this->${name} = $${name}`);
-                });
-            })
-        });
-
+        const { includeGetter, includeSetter } = {
+            includeGetter: this.context.shouldGenerateGetterMethods(),
+            includeSetter: this.context.shouldGenerateSetterMethods()
+        };
+        for (const property of this.objectDeclaration.extendedProperties ?? []) {
+            clazz.addField(this.toField({ property, inherited: true }));
+        }
+        for (const property of this.objectDeclaration.properties) {
+            const field = this.toField({ property });
+            if (includeGetter) {
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
+            }
+            if (includeSetter) {
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
+            }
+            clazz.addField(field);
+        }
+        clazz.addMethod(this.context.getToStringMethod());
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),
             directory: this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory,
             customConfig: this.context.customConfig
+        });
+    }
+
+    private toField({ property, inherited }: { property: ObjectProperty; inherited?: boolean }): php.Field {
+        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        return php.field({
+            type: convertedType,
+            name: this.context.getPropertyName(property.name.name),
+            access: this.context.getPropertyAccess(),
+            docs: property.docs,
+            attributes: this.context.phpAttributeMapper.convert({
+                type: convertedType,
+                property
+            }),
+            inherited
         });
     }
 

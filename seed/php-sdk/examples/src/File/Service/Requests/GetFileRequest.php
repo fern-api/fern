@@ -2,7 +2,9 @@
 
 namespace Seed\File\Service\Requests;
 
-class GetFileRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class GetFileRequest extends JsonSerializableType
 {
     /**
      * @var string $xFileApiVersion
@@ -10,11 +12,13 @@ class GetFileRequest
     public string $xFileApiVersion;
 
     /**
-     * @param string $xFileApiVersion
+     * @param array{
+     *   xFileApiVersion: string,
+     * } $values
      */
     public function __construct(
-        string $xFileApiVersion,
+        array $values,
     ) {
-        $this->xFileApiVersion = $xFileApiVersion;
+        $this->xFileApiVersion = $values['xFileApiVersion'];
     }
 }

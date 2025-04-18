@@ -3,13 +3,11 @@ using System.Text.Json;
 using System.Threading;
 using SeedApi.Core;
 
-#nullable enable
-
 namespace SeedApi;
 
 public partial class SeedApiClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
@@ -33,30 +31,33 @@ public partial class SeedApiClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
-    /// await client.GetAccountAsync("string");
-    /// </code>
-    /// </example>
+    /// <example><code>
+    /// await client.GetAccountAsync("account_id");
+    /// </code></example>
     public async Task<Account> GetAccountAsync(
         string accountId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"account/{accountId}",
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "account/{0}",
+                        ValueConvert.ToPathParameterString(accountId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Account>(responseBody)!;
@@ -67,10 +68,13 @@ public partial class SeedApiClient
             }
         }
 
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -15,7 +15,7 @@ export const ProblemDescription: core.serialization.ObjectSchema<
 });
 
 export declare namespace ProblemDescription {
-    interface Raw {
+    export interface Raw {
         boards: ProblemDescriptionBoard.Raw[];
     }
 }

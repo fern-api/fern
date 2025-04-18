@@ -174,9 +174,9 @@ module SeedTraceClient
     #  )
     #  trace.admin.store_traced_test_case(
     #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    #    test_case_id: "string",
-    #    result: { result: { passed: true }, stdout: "string" },
-    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "string", line_number: 1, scopes: [{ variables: { "string": {"key":"value"} } }] } }, stdout: "string" }]
+    #    test_case_id: "testCaseId",
+    #    result: { result: { passed: true }, stdout: "stdout" },
+    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }]
     #  )
     def store_traced_test_case(submission_id:, test_case_id:, result:, trace_responses:, request_options: nil)
       @request_client.conn.post do |req|
@@ -229,8 +229,8 @@ module SeedTraceClient
     #  )
     #  trace.admin.store_traced_test_case_v_2(
     #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    #    test_case_id: "string",
-    #    request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "string", directory: "string" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "string", line_number: 1, scopes: [{ variables: { "string": {"key":"value"} } }] } }, stdout: "string" }]
+    #    test_case_id: "testCaseId",
+    #    request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }]
     #  )
     def store_traced_test_case_v_2(submission_id:, test_case_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
@@ -282,8 +282,8 @@ module SeedTraceClient
     #  )
     #  trace.admin.store_traced_workspace(
     #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    #    workspace_run_details: { exception: { exception_type: "string", exception_message: "string", exception_stacktrace: "string" }, stdout: "string" },
-    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "string", line_number: 1, scopes: [{ variables: { "string": {"key":"value"} } }] } }, stdout: "string" }]
+    #    workspace_run_details: { exception: { exception_type: "exceptionType", exception_message: "exceptionMessage", exception_stacktrace: "exceptionStacktrace" }, stdout: "stdout" },
+    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }]
     #  )
     def store_traced_workspace(submission_id:, workspace_run_details:, trace_responses:, request_options: nil)
       @request_client.conn.post do |req|
@@ -333,7 +333,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.admin.store_traced_workspace_v_2(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "string", directory: "string" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "string", line_number: 1, scopes: [{ variables: { "string": {"key":"value"} } }] } }, stdout: "string" }])
+    #  trace.admin.store_traced_workspace_v_2(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }])
     def store_traced_workspace_v_2(submission_id:, request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -523,9 +523,9 @@ module SeedTraceClient
     #  )
     #  trace.admin.store_traced_test_case(
     #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    #    test_case_id: "string",
-    #    result: { result: { passed: true }, stdout: "string" },
-    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "string", line_number: 1, scopes: [{ variables: { "string": {"key":"value"} } }] } }, stdout: "string" }]
+    #    test_case_id: "testCaseId",
+    #    result: { result: { passed: true }, stdout: "stdout" },
+    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }]
     #  )
     def store_traced_test_case(submission_id:, test_case_id:, result:, trace_responses:, request_options: nil)
       Async do
@@ -580,8 +580,8 @@ module SeedTraceClient
     #  )
     #  trace.admin.store_traced_test_case_v_2(
     #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    #    test_case_id: "string",
-    #    request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "string", directory: "string" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "string", line_number: 1, scopes: [{ variables: { "string": {"key":"value"} } }] } }, stdout: "string" }]
+    #    test_case_id: "testCaseId",
+    #    request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }]
     #  )
     def store_traced_test_case_v_2(submission_id:, test_case_id:, request:, request_options: nil)
       Async do
@@ -635,8 +635,8 @@ module SeedTraceClient
     #  )
     #  trace.admin.store_traced_workspace(
     #    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    #    workspace_run_details: { exception: { exception_type: "string", exception_message: "string", exception_stacktrace: "string" }, stdout: "string" },
-    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "string", line_number: 1, scopes: [{ variables: { "string": {"key":"value"} } }] } }, stdout: "string" }]
+    #    workspace_run_details: { exception: { exception_type: "exceptionType", exception_message: "exceptionMessage", exception_stacktrace: "exceptionStacktrace" }, stdout: "stdout" },
+    #    trace_responses: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }]
     #  )
     def store_traced_workspace(submission_id:, workspace_run_details:, trace_responses:, request_options: nil)
       Async do
@@ -688,7 +688,7 @@ module SeedTraceClient
     #    environment: SeedTraceClient::Environment::PROD,
     #    token: "YOUR_AUTH_TOKEN"
     #  )
-    #  trace.admin.store_traced_workspace_v_2(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "string", directory: "string" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "string", line_number: 1, scopes: [{ variables: { "string": {"key":"value"} } }] } }, stdout: "string" }])
+    #  trace.admin.store_traced_workspace_v_2(submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", request: [{ submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }, { submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", line_number: 1, file: { filename: "filename", directory: "directory" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: "methodName", line_number: 1, scopes: [{ variables: { "variables": undefined } }, { variables: { "variables": undefined } }] } }, stdout: "stdout" }])
     def store_traced_workspace_v_2(submission_id:, request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

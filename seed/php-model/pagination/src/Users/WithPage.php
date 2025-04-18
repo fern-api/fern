@@ -2,23 +2,33 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WithPage extends SerializableType
+class WithPage extends JsonSerializableType
 {
     /**
      * @var ?int $page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public ?int $page;
 
     /**
-     * @param ?int $page
+     * @param array{
+     *   page?: ?int,
+     * } $values
      */
     public function __construct(
-        ?int $page = null,
+        array $values = [],
     ) {
-        $this->page = $page;
+        $this->page = $values['page'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

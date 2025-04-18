@@ -1,8 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
-#nullable enable
-
 namespace SeedTrace;
 
 public record StoreTracedWorkspaceRequest
@@ -13,6 +11,7 @@ public record StoreTracedWorkspaceRequest
     [JsonPropertyName("traceResponses")]
     public IEnumerable<TraceResponse> TraceResponses { get; set; } = new List<TraceResponse>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

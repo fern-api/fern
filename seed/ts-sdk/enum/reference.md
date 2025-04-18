@@ -55,7 +55,7 @@ await client.inlinedRequest.send({
 
 ## PathParam
 
-<details><summary><code>client.pathParam.<a href="/src/api/resources/pathParam/client/Client.ts">send</a>(operand, maybeOperand, operandOrColor, maybeOperandOrColor) -> void</code></summary>
+<details><summary><code>client.pathParam.<a href="/src/api/resources/pathParam/client/Client.ts">send</a>(operand, operandOrColor) -> void</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ await client.inlinedRequest.send({
 <dd>
 
 ```typescript
-await client.pathParam.send(">", "less_than", "red", "red");
+await client.pathParam.send(">", "red");
 ```
 
 </dd>
@@ -92,23 +92,7 @@ await client.pathParam.send(">", "less_than", "red", "red");
 <dl>
 <dd>
 
-**maybeOperand:** `SeedEnum.Operand | undefined`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **operandOrColor:** `SeedEnum.ColorOrOperand`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maybeOperandOrColor:** `SeedEnum.ColorOrOperand | undefined`
 
 </dd>
 </dl>

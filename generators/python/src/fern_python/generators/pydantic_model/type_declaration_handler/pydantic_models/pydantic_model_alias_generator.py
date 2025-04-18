@@ -1,7 +1,8 @@
 from typing import Optional
 
-import fern.ir.resources as ir_types
-
+from ....context.pydantic_generator_context import PydanticGeneratorContext
+from ...custom_config import PydanticModelCustomConfig
+from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenerator
 from fern_python.codegen import AST, SourceFile
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
@@ -11,9 +12,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.type_utiliti
 )
 from fern_python.snippet import SnippetWriter
 
-from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig
-from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenerator
+import fern.ir.resources as ir_types
 
 
 class PydanticModelAliasGenerator(AbstractAliasGenerator):
@@ -84,6 +83,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 map_=lambda _: "from_map",
                 set_=lambda _: "from_set",
                 optional=self._get_builder_name,
+                nullable=self._get_builder_name,
                 literal=lambda _: "from_string",
             ),
             named=lambda type_name: "from_" + type_name.name.snake_case.unsafe_name,
@@ -112,6 +112,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 map_=lambda _: "get_as_map",
                 set_=lambda _: "get_as_set",
                 optional=self._get_getter_name,
+                nullable=self._get_getter_name,
                 literal=lambda _: "get_as_string",
             ),
             named=lambda type_name: "get_as_" + type_name.name.snake_case.unsafe_name,

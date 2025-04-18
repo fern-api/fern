@@ -1,0 +1,171 @@
+---
+title: "Profit and Loss object"
+---
+A Profit and Loss object represents a profit and loss report that has been generated for a [Business](/api-reference/business/business).
+
+Profit and Loss reports are generated for a specific time range and only contain information for categorized transactions that have been journaled to the general ledger.
+
+### Attributes
+
+<ParamField body="business_id" type="string">
+  Id of the Business the profit and loss report was generated for.
+</ParamField>
+<ParamField body="type" type="string">
+  Resource type. Value will be "Profit_And_Loss"
+</ParamField>
+<ParamField body="start_date" type="ISO8601 timestamp">
+  Start date for data included in the report.
+</ParamField>
+<ParamField body="end_date" type="ISO8601 timestamp">
+  End date for data in cluded in the report.
+</ParamField>
+<ParamField body="income" type="Line Item object">
+  A [Line Item](/api-reference/pnl/pnl#lineitem-object) object representing the income line items in the report.
+</ParamField>
+<ParamField body="cost_of_goods_sold" type="Line Item object">
+  A [Line Item](/api-reference/pnl/pnl#lineitem-object) object representing the cost of goods sold line items in the report.
+</ParamField>
+<ParamField body="gross_profit" type="integer">
+  Gross profit in cents. Calculated by subtracting total cost_of_sales line items from total income line items.
+</ParamField>
+<ParamField body="expenses" type="Line Item object">
+  A [Line Item](/api-reference/pnl/pnl#lineitem-object) object representing the expense line items in the report.
+</ParamField>
+<ParamField body="profit_before_taxes" type="integer">
+  Net profit before taxes in cents. Calculated by subtracting total expenses line items from gross_profit.
+</ParamField>
+<ParamField body="taxes" type="Line Item object">
+  A [Line Item](/api-reference/pnl/pnl#lineitem-object) object representing the tax line items in the report.
+</ParamField>
+<ParamField body="net_profit" type="integer">
+  Net profit in cents. Calculated by subtracting total taxes line items from profit_before_taxes
+</ParamField>
+<ParamField body="other_outflows" type="Line Item object">
+  A [Line Item](/api-reference/pnl/pnl#lineitem-object) object representing business outflow transactions that are not part of the profit and loss statement.
+</ParamField>
+<ParamField body="personal_expenses" type="Line Item object">
+  A [Line Item](/api-reference/pnl/pnl#lineitem-object) object representing personal expense transactions that are not part of the profit and loss statement.
+</ParamField>
+<ParamField body="fully_categorized" type="boolean">
+  A boolean representing whether all imported transactions within the report date range have been categorized. If FALSE, there are uncategorized transactions within the selected date range, indicating the provided report data may be incomplete.
+</ParamField>
+
+#### `Line Item` object
+<ParamField body="name" type="enum">
+  Enum name for the line item. Ex. "REVENUE"
+</ParamField>
+<ParamField body="display_name" type="string">
+  Display name for the line item. Ex. "Revenue"
+</ParamField>
+<ParamField body="value" type="integer">
+  The value of the line item in cents.
+</ParamField>
+<ParamField body="child_items" type="array of Line Item objects">
+  An array of [Line Item](/api-reference/pnl/pnl#lineitem-object) objects representing child line items within the report section.
+</ParamField>
+
+<ResponseExample>
+```json Profit and Loss
+{
+  "data":{
+    "type":"Profit_And_Loss",
+    "business_id":"d2f6d97f-3345-4299-9ec2-468738c5d536",
+    "start_date":"2023-01-01T06:00:00Z",
+    "end_date":"2023-12-01T06:00:00Z",
+    "income":{
+      "name":"REVENUE",
+      "display_name":"Revenue",
+      "value":49397,
+      "line_items":[
+        {
+          "name":"SERVICES_REVENUE",
+          "display_name":"Service Revenue",
+          "value":46897,
+          "line_items":null
+        },
+        {
+          "name":"GOODS_REVENUE",
+          "display_name":"Sale of Goods Revenue",
+          "value":0,
+          "line_items":null
+        },
+        {
+          "name":"DISCOUNTS",
+          "display_name":"Discounts & Refunds",
+          "value":2500,
+          "line_items":null
+        }
+      ]
+    },
+    "cost_of_goods_sold":{
+      "name":"COGS",
+      "display_name":"Cost of Goods Sold",
+      "value":8026,
+      "line_items":[
+        {
+          "name":"JOB_SUPPLIES",
+          "display_name":"Job supplies",
+          "value":8026,
+          "line_items":null
+        }
+      ]
+    },
+    "gross_profit":41371,
+    "expenses":{
+      "name":"OPERATING_EXPENSES",
+      "display_name":"Operating Expenses",
+      "value":0,
+      "line_items":[
+        {
+          "name":"INSURANCE",
+          "display_name":"Insurance",
+          "value":0,
+          "line_items":null
+        },
+        {
+          "name":"RENT_EXPENSE",
+          "display_name":"Rent",
+          "value":0,
+          "line_items":null
+        },
+        {
+          "name":"UTILITIES",
+          "display_name":"Utilities",
+          "value":0,
+          "line_items":null
+        },
+        {
+          "name":"EQUIPMENT",
+          "display_name":"Equipment & Tools",
+          "value":0,
+          "line_items":null
+        },
+        {
+          "name":"ADVERTISING",
+          "display_name":"Advertising",
+          "value":0,
+          "line_items":null
+        },
+        {
+          "name":"VEHICLE_EXPENSES",
+          "display_name":"Vehicle Expenses",
+          "value":0,
+          "line_items":null
+        }
+      ]
+    },
+    "profit_before_taxes":41371,
+    "taxes":{
+      "name":"TAXES",
+      "display_name":"Taxes",
+      "value":0,
+      "line_items":null
+    },
+    "net_profit":41371,
+    "other_outflows":null,
+    "personal_expenses":null,
+    "fully_categorized":true
+  }
+}
+```
+</ResponseExample>

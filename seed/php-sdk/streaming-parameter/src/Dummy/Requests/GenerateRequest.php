@@ -2,31 +2,33 @@
 
 namespace Seed\Dummy\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GenerateRequest
+class GenerateRequest extends JsonSerializableType
 {
     /**
      * @var bool $stream
      */
-    #[JsonProperty("stream")]
+    #[JsonProperty('stream')]
     public bool $stream;
 
     /**
      * @var int $numEvents
      */
-    #[JsonProperty("num_events")]
+    #[JsonProperty('num_events')]
     public int $numEvents;
 
     /**
-     * @param bool $stream
-     * @param int $numEvents
+     * @param array{
+     *   stream: bool,
+     *   numEvents: int,
+     * } $values
      */
     public function __construct(
-        bool $stream,
-        int $numEvents,
+        array $values,
     ) {
-        $this->stream = $stream;
-        $this->numEvents = $numEvents;
+        $this->stream = $values['stream'];
+        $this->numEvents = $values['numEvents'];
     }
 }

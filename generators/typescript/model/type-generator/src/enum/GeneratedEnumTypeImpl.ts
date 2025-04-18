@@ -1,12 +1,26 @@
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
 import {
     GetReferenceOpts,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocs
+    maybeAddDocsStructure
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
-import { OptionalKind, PropertySignatureStructure, ts, VariableDeclarationKind } from "ts-morph";
+import {
+    ModuleDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
+    StatementStructures,
+    StructureKind,
+    TypeAliasDeclarationStructure,
+    VariableDeclarationKind,
+    VariableStatementStructure,
+    WriterFunction,
+    WriterFunctionOrValue,
+    ts
+} from "ts-morph";
+
+import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export declare namespace GeneratedEnumTypeImpl {
@@ -34,28 +48,48 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         this.includeEnumUtils = includeEnumUtils;
     }
 
-    public writeToFile(context: Context): void {
-        const type = context.sourceFile.addTypeAlias({
+    private generateEnumType(context: Context): TypeAliasDeclarationStructure {
+        const type: TypeAliasDeclarationStructure = {
+            kind: StructureKind.TypeAlias,
             name: this.typeName,
             isExported: true,
             type: getWriterForMultiLineUnionType(
                 this.shape.values.map((value) => ({
                     docs: value.docs,
-                    node: ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+                    node: ts.factory.createStringLiteral(value.name.wireValue)
                 }))
             )
-        });
+        };
 
-        maybeAddDocs(type, this.getDocs(context));
-
-        this.addConst(context);
-
-        if (this.includeEnumUtils) {
-            this.addModule(context);
-        }
+        maybeAddDocsStructure(type, this.getDocs(context));
+        return type;
     }
 
-    private addConst(context: Context) {
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return ts.factory.createParenthesizedType(
+            ts.factory.createUnionTypeNode(
+                this.shape.values.map((value) =>
+                    ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
+                )
+            )
+        );
+    }
+
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+        const statements: (string | WriterFunction | StatementStructures)[] = [
+            this.generateEnumType(context),
+            this.generateConst(context)
+        ];
+
+        if (this.includeEnumUtils) {
+            statements.push(this.generateModule());
+        }
+        return statements;
+    }
+
+    private generateConst(context: Context): VariableStatementStructure {
         const constProperties = this.shape.values.map((value) =>
             ts.factory.createPropertyAssignment(
                 ts.factory.createIdentifier(this.getEnumValueName(value)),
@@ -160,7 +194,8 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             );
         }
 
-        context.sourceFile.addVariableStatement({
+        return {
+            kind: StructureKind.VariableStatement,
             declarationKind: VariableDeclarationKind.Const,
             isExported: true,
             declarations: [
@@ -174,50 +209,56 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                     )
                 }
             ]
-        });
+        };
     }
 
-    private addModule(context: Context) {
-        const enumModule = context.sourceFile.addModule({
+    public generateModule(): ModuleDeclarationStructure {
+        const enumModule: ModuleDeclarationStructure = {
+            kind: StructureKind.Module,
             name: this.typeName,
             isExported: true,
-            hasDeclareKeyword: true
-        });
-
-        enumModule.addInterface({
-            name: GeneratedEnumTypeImpl.VISITOR_INTERFACE_NAME,
-            typeParameters: [GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER],
-            properties: [
-                ...this.shape.values.map(
-                    (enumValue): OptionalKind<PropertySignatureStructure> => ({
-                        name: this.getEnumValueVisitPropertyName(enumValue),
-                        type: getTextOfTsNode(
-                            ts.factory.createFunctionTypeNode(
-                                undefined,
-                                [],
-                                ts.factory.createTypeReferenceNode(
-                                    GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
-                                    undefined
+            hasDeclareKeyword: false,
+            statements: [
+                {
+                    kind: StructureKind.Interface,
+                    name: GeneratedEnumTypeImpl.VISITOR_INTERFACE_NAME,
+                    typeParameters: [GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER],
+                    properties: [
+                        ...this.shape.values.map(
+                            (enumValue): OptionalKind<PropertySignatureStructure> => ({
+                                name: this.getEnumValueVisitPropertyName(enumValue),
+                                type: getTextOfTsNode(
+                                    ts.factory.createFunctionTypeNode(
+                                        undefined,
+                                        [],
+                                        ts.factory.createTypeReferenceNode(
+                                            GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
+                                            undefined
+                                        )
+                                    )
+                                )
+                            })
+                        ),
+                        {
+                            name: GeneratedEnumTypeImpl.OTHER_VISITOR_METHOD_NAME,
+                            type: getTextOfTsNode(
+                                ts.factory.createFunctionTypeNode(
+                                    undefined,
+                                    [],
+                                    ts.factory.createTypeReferenceNode(
+                                        GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
+                                        undefined
+                                    )
                                 )
                             )
-                        )
-                    })
-                ),
-                {
-                    name: GeneratedEnumTypeImpl.OTHER_VISITOR_METHOD_NAME,
-                    type: getTextOfTsNode(
-                        ts.factory.createFunctionTypeNode(
-                            undefined,
-                            [],
-                            ts.factory.createTypeReferenceNode(
-                                GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
-                                undefined
-                            )
-                        )
-                    )
+                        }
+                    ],
+                    isExported: true
                 }
             ]
-        });
+        };
+
+        return enumModule;
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {

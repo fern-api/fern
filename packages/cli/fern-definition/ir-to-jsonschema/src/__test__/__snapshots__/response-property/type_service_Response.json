@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "docs": {
+      "type": "string"
+    },
+    "data": {
+      "$ref": "#/definitions/service.Movie"
+    }
+  },
+  "required": [
+    "metadata",
+    "docs",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "service.Movie": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

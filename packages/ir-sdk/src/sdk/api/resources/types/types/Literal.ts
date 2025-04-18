@@ -6,22 +6,22 @@ import * as FernIr from "../../../index";
 
 export type Literal = FernIr.Literal.String | FernIr.Literal.Boolean;
 
-export declare namespace Literal {
-    interface String extends _Utils {
+export namespace Literal {
+    export interface String extends _Utils {
         type: "string";
         string: string;
     }
 
-    interface Boolean extends _Utils {
+    export interface Boolean extends _Utils {
         type: "boolean";
         boolean: boolean;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Literal._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         string: (value: string) => _Result;
         boolean: (value: boolean) => _Result;
         _other: (value: { type: string }) => _Result;

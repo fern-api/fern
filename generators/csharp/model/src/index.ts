@@ -1,4 +1,5 @@
 export { generateModels } from "./generateModels";
+export { generateFields, generateField, generateFieldForFileProperty } from "./generateFields";
 export { generateModelTests as generateTests } from "./generateTests";
 export { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
 export { generateVersion } from "./generateVersion";

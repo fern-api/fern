@@ -6,13 +6,13 @@ import * as SeedTrace from "../../../index";
 
 export type Test = SeedTrace.Test.And | SeedTrace.Test.Or;
 
-export declare namespace Test {
-    interface And {
+export namespace Test {
+    export interface And {
         type: "and";
         value: boolean;
     }
 
-    interface Or {
+    export interface Or {
         type: "or";
         value: boolean;
     }

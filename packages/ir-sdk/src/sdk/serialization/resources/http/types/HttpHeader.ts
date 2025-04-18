@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
+import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples";
 import { Declaration } from "../../commons/types/Declaration";
 
 export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.Raw, FernIr.HttpHeader> =
@@ -14,13 +15,15 @@ export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.
             name: NameAndWireValue,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             env: core.serialization.string().optional(),
+            v2Examples: V2SchemaExamples.optional(),
         })
         .extend(Declaration);
 
 export declare namespace HttpHeader {
-    interface Raw extends Declaration.Raw {
+    export interface Raw extends Declaration.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
         env?: string | null;
+        v2Examples?: V2SchemaExamples.Raw | null;
     }
 }

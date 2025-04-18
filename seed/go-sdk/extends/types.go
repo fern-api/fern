@@ -5,7 +5,7 @@ package extends
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/extends/fern/core"
+	internal "github.com/extends/fern/internal"
 )
 
 type Inlined struct {
@@ -18,7 +18,14 @@ type Docs struct {
 	Docs string `json:"docs" url:"docs"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (d *Docs) GetDocs() string {
+	if d == nil {
+		return ""
+	}
+	return d.Docs
 }
 
 func (d *Docs) GetExtraProperties() map[string]interface{} {
@@ -32,24 +39,22 @@ func (d *Docs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = Docs(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
 	if err != nil {
 		return err
 	}
 	d.extraProperties = extraProperties
-
-	d._rawJSON = json.RawMessage(data)
+	d.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (d *Docs) String() string {
-	if len(d._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(d._rawJSON); err == nil {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(d); err == nil {
+	if value, err := internal.StringifyJSON(d); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
@@ -60,7 +65,21 @@ type ExampleType struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (e *ExampleType) GetDocs() string {
+	if e == nil {
+		return ""
+	}
+	return e.Docs
+}
+
+func (e *ExampleType) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
 }
 
 func (e *ExampleType) GetExtraProperties() map[string]interface{} {
@@ -74,24 +93,22 @@ func (e *ExampleType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExampleType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
 	}
 	e.extraProperties = extraProperties
-
-	e._rawJSON = json.RawMessage(data)
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (e *ExampleType) String() string {
-	if len(e._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(e._rawJSON); err == nil {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(e); err == nil {
+	if value, err := internal.StringifyJSON(e); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
@@ -102,7 +119,21 @@ type Json struct {
 	Raw  string `json:"raw" url:"raw"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (j *Json) GetDocs() string {
+	if j == nil {
+		return ""
+	}
+	return j.Docs
+}
+
+func (j *Json) GetRaw() string {
+	if j == nil {
+		return ""
+	}
+	return j.Raw
 }
 
 func (j *Json) GetExtraProperties() map[string]interface{} {
@@ -116,24 +147,22 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*j = Json(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *j)
+	extraProperties, err := internal.ExtractExtraProperties(data, *j)
 	if err != nil {
 		return err
 	}
 	j.extraProperties = extraProperties
-
-	j._rawJSON = json.RawMessage(data)
+	j.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (j *Json) String() string {
-	if len(j._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(j._rawJSON); err == nil {
+	if len(j.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(j); err == nil {
+	if value, err := internal.StringifyJSON(j); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", j)
@@ -145,7 +174,28 @@ type NestedType struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (n *NestedType) GetDocs() string {
+	if n == nil {
+		return ""
+	}
+	return n.Docs
+}
+
+func (n *NestedType) GetRaw() string {
+	if n == nil {
+		return ""
+	}
+	return n.Raw
+}
+
+func (n *NestedType) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
 }
 
 func (n *NestedType) GetExtraProperties() map[string]interface{} {
@@ -159,24 +209,22 @@ func (n *NestedType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedType(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
 	}
 	n.extraProperties = extraProperties
-
-	n._rawJSON = json.RawMessage(data)
+	n.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (n *NestedType) String() string {
-	if len(n._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(n._rawJSON); err == nil {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(n); err == nil {
+	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)

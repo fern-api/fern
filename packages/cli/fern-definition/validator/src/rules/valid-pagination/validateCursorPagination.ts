@@ -1,12 +1,14 @@
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
+
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+
 import { RuleViolation } from "../../Rule";
 import {
     maybeFileFromResolvedType,
     maybePrimitiveType,
-    resolvedTypeHasProperty,
-    resolveResponseType
+    resolveResponseType,
+    resolvedTypeHasProperty
 } from "../../utils/propertyValidatorUtils";
 import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils";
 
@@ -38,7 +40,7 @@ export function validateCursorPagination({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         });
         return violations;

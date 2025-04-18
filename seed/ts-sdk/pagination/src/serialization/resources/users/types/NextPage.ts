@@ -13,7 +13,7 @@ export const NextPage: core.serialization.ObjectSchema<serializers.NextPage.Raw,
     });
 
 export declare namespace NextPage {
-    interface Raw {
+    export interface Raw {
         page: number;
         starting_after: string;
     }

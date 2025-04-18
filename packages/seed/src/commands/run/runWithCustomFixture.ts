@@ -1,23 +1,18 @@
-import { DEFINITION_DIRECTORY } from "@fern-api/configuration";
-import {
-    GeneratorGroup,
-    GeneratorInvocation,
-    GeneratorsConfiguration
-} from "@fern-api/configuration/src/generators-yml";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { LogLevel } from "@fern-api/logger";
-import { TaskContext } from "@fern-api/task-context";
-import {
-    APIWorkspace,
-    FernWorkspace,
-    getOSSWorkspaceSettingsFromGeneratorInvocation,
-    OSSWorkspace
-} from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
-import { group } from "yargs";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
+
+import { DEFINITION_DIRECTORY, GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
+import {
+    AbstractAPIWorkspace,
+    FernWorkspace,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/workspace-loader";
+
 import { Semaphore } from "../../Semaphore";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
+import { workspaceShouldGenerateDynamicSnippetTests } from "../../workspaceShouldGenerateDynamicSnippetTests";
 import { ScriptRunner } from "../test/ScriptRunner";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 import { DockerTestRunner } from "../test/test-runner";
@@ -27,12 +22,14 @@ export async function runWithCustomFixture({
     pathToFixture,
     workspace,
     logLevel,
-    audience
+    audience,
+    skipScripts
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
     logLevel: LogLevel;
     audience: string | undefined;
+    skipScripts: boolean | undefined;
 }): Promise<void> {
     const lock = new Semaphore(1);
     const outputDir = await tmp.dir();
@@ -50,7 +47,7 @@ export async function runWithCustomFixture({
         taskContextFactory,
         skipScripts: true,
         keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace, false)
+        scriptRunner: new ScriptRunner(workspace, skipScripts ?? false, taskContext)
     });
 
     const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
@@ -74,18 +71,10 @@ export async function runWithCustomFixture({
     }
 
     try {
-        let fernWorkspace: FernWorkspace;
-        if (apiWorkspace instanceof OSSWorkspace) {
-            fernWorkspace = await apiWorkspace.toFernWorkspace(
-                { context: taskContext },
-                getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
-            );
-        } else {
-            fernWorkspace = await apiWorkspace.toFernWorkspace(
-                {},
-                getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
-            );
-        }
+        const fernWorkspace: FernWorkspace = await apiWorkspace.toFernWorkspace(
+            { context: taskContext },
+            getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
+        );
 
         await dockerGeneratorRunner.build();
         await dockerGeneratorRunner.runGeneratorFromGroup({
@@ -93,7 +82,8 @@ export async function runWithCustomFixture({
             absolutePathToFernDefinition: join(pathToFixture, RelativeFilePath.of(DEFINITION_DIRECTORY)),
             taskContext,
             irVersion: workspace.workspaceConfig.irVersion,
-            group: generatorGroup.group
+            group: generatorGroup.group,
+            shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(workspace)
         });
         await writeDotMock({
             absolutePathToDotMockDirectory: absolutePathToOutput,
@@ -110,7 +100,7 @@ function getGeneratorGroup({
     image,
     absolutePathToOutput
 }: {
-    apiWorkspace: APIWorkspace;
+    apiWorkspace: AbstractAPIWorkspace<unknown>;
     image: string;
     absolutePathToOutput: AbsoluteFilePath;
 }): { group: GeneratorGroup; invocation: GeneratorInvocation } | undefined {
@@ -124,7 +114,7 @@ function getGeneratorGroup({
                         ...group,
                         generators: [invocation]
                     },
-                    invocation: invocation
+                    invocation
                 };
             }
         }

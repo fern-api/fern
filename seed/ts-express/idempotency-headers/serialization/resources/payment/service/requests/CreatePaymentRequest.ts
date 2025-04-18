@@ -15,7 +15,7 @@ export const CreatePaymentRequest: core.serialization.Schema<
 });
 
 export declare namespace CreatePaymentRequest {
-    interface Raw {
+    export interface Raw {
         amount: number;
         currency: serializers.Currency.Raw;
     }

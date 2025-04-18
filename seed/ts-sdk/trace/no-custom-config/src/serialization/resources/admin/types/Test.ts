@@ -21,14 +21,14 @@ export const Test: core.serialization.Schema<serializers.Test.Raw, SeedTrace.Tes
     });
 
 export declare namespace Test {
-    type Raw = Test.And | Test.Or;
+    export type Raw = Test.And | Test.Or;
 
-    interface And {
+    export interface And {
         type: "and";
         value: boolean;
     }
 
-    interface Or {
+    export interface Or {
         type: "or";
         value: boolean;
     }

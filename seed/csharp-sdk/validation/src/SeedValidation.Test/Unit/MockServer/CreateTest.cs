@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedValidation;
 using SeedValidation.Core;
-
-#nullable enable
 
 namespace SeedValidation.Test.Unit.MockServer;
 
@@ -13,22 +9,22 @@ namespace SeedValidation.Test.Unit.MockServer;
 public class CreateTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
-              "decimal": 1.1,
-              "even": 1,
-              "name": "string",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             }
             """;
 
         const string mockResponse = """
             {
-              "decimal": 1.1,
-              "even": 2,
-              "name": "rules",
+              "decimal": 2.2,
+              "even": 100,
+              "name": "foo",
               "shape": "SQUARE"
             }
             """;
@@ -51,16 +47,15 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.CreateAsync(
             new CreateRequest
             {
-                Decimal = 1.1,
-                Even = 1,
-                Name = "string",
+                Decimal = 2.2,
+                Even = 100,
+                Name = "foo",
                 Shape = Shape.Square,
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Type>(mockResponse)).UsingDefaults()
+        );
     }
 }

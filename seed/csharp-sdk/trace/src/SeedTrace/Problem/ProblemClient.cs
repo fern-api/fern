@@ -1,10 +1,8 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedTrace.Core;
-
-#nullable enable
 
 namespace SeedTrace;
 
@@ -20,69 +18,83 @@ public partial class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.CreateProblemAsync(
     ///     new CreateProblemRequest
     ///     {
-    ///         ProblemName = "string",
-    ///         ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
-    ///         Files = new Dictionary<Language, ProblemFiles>()
+    ///         ProblemName = "problemName",
+    ///         ProblemDescription = new ProblemDescription
+    ///         {
+    ///             Boards = new List&lt;object&gt;() { "boards", "boards" },
+    ///         },
+    ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
     ///             {
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
-    ///                     ReadOnlyFiles = new List<FileInfo>()
+    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
     ///                     {
-    ///                         new FileInfo { Filename = "string", Contents = "string" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
     ///         },
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///         },
     ///         OutputType = "no-properties-union",
-    ///         Testcases = new List<TestCaseWithExpectedResult>()
+    ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
     ///             new TestCaseWithExpectedResult
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
-    ///                     Id = "string",
-    ///                     Params = new List<object>() { 1 },
+    ///                     Id = "id",
+    ///                     Params = new List&lt;object&gt;() { 1, 1 },
+    ///                 },
+    ///                 ExpectedResult = 1,
+    ///             },
+    ///             new TestCaseWithExpectedResult
+    ///             {
+    ///                 TestCase = new TestCase
+    ///                 {
+    ///                     Id = "id",
+    ///                     Params = new List&lt;object&gt;() { 1, 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
     ///         },
-    ///         MethodName = "string",
+    ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<object> CreateProblemAsync(
         CreateProblemRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/problem-crud/create",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/problem-crud/create",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<object>(responseBody)!;
@@ -93,60 +105,75 @@ public partial class ProblemClient
             }
         }
 
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Updates a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.UpdateProblemAsync(
-    ///     "string",
+    ///     "problemId",
     ///     new CreateProblemRequest
     ///     {
-    ///         ProblemName = "string",
-    ///         ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
-    ///         Files = new Dictionary<Language, ProblemFiles>()
+    ///         ProblemName = "problemName",
+    ///         ProblemDescription = new ProblemDescription
+    ///         {
+    ///             Boards = new List&lt;object&gt;() { "boards", "boards" },
+    ///         },
+    ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
     ///             {
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
-    ///                     ReadOnlyFiles = new List<FileInfo>()
+    ///                     SolutionFile = new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
     ///                     {
-    ///                         new FileInfo { Filename = "string", Contents = "string" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
+    ///                         new FileInfo { Filename = "filename", Contents = "contents" },
     ///                     },
     ///                 }
     ///             },
     ///         },
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///         },
     ///         OutputType = "no-properties-union",
-    ///         Testcases = new List<TestCaseWithExpectedResult>()
+    ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
     ///             new TestCaseWithExpectedResult
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
-    ///                     Id = "string",
-    ///                     Params = new List<object>() { 1 },
+    ///                     Id = "id",
+    ///                     Params = new List&lt;object&gt;() { 1, 1 },
+    ///                 },
+    ///                 ExpectedResult = 1,
+    ///             },
+    ///             new TestCaseWithExpectedResult
+    ///             {
+    ///                 TestCase = new TestCase
+    ///                 {
+    ///                     Id = "id",
+    ///                     Params = new List&lt;object&gt;() { 1, 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
     ///         },
-    ///         MethodName = "string",
+    ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request,
@@ -154,20 +181,25 @@ public partial class ProblemClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/problem-crud/update/{problemId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = string.Format(
+                        "/problem-crud/update/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<UpdateProblemResponse>(responseBody)!;
@@ -178,87 +210,96 @@ public partial class ProblemClient
             }
         }
 
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Problem.DeleteProblemAsync("string");
-    /// </code>
-    /// </example>
-    public async Task DeleteProblemAsync(
+    /// <example><code>
+    /// await client.Problem.DeleteProblemAsync("problemId");
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Delete,
-                Path = $"/problem-crud/delete/{problemId}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Delete,
+                    Path = string.Format(
+                        "/problem-crud/delete/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns default starter files for problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.GetDefaultStarterFilesAsync(
     ///     new GetDefaultStarterFilesRequest
     ///     {
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "name" },
     ///         },
     ///         OutputType = "no-properties-union",
-    ///         MethodName = "string",
+    ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/problem-crud/default-starter-files",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/problem-crud/default-starter-files",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
@@ -269,10 +310,13 @@ public partial class ProblemClient
             }
         }
 
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -1,22 +1,27 @@
-import { AbsoluteFilePath, dirname, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import type { Node as EstreeNode } from "estree";
+import { walk } from "estree-walker";
 import grayMatter from "gray-matter";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
-import { visit } from "unist-util-visit";
+import { isAbsolute } from "path";
+import { CONTINUE, SKIP, visit } from "unist-util-visit";
+import { z } from "zod";
+
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+
+import { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals";
+import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element";
+import { parseMarkdownToTree } from "./parseMarkdownToTree";
+import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";
 
 interface AbsolutePathMetadata {
-    absolutePathToMdx: AbsoluteFilePath;
+    absolutePathToMarkdownFile: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
 }
-
-const STR_SEGMENT = "['\"]([^'\"]+)['\"]";
-const STR_REGEX = new RegExp(`^${STR_SEGMENT}$`);
-const SRC_REGEX = new RegExp(`src={?${STR_SEGMENT}(?! \\+)}?`, "g");
-
-const MEDIA_NODE_NAMES = ["img", "video", "audio", "source", "embed"];
 
 /**
  * Parse all images in the markdown. Since mdx filepath is a relative path from the root of the project,
@@ -39,7 +44,7 @@ export function parseImagePaths(
 
     function mapImage(image: string | undefined) {
         const resolvedPath = resolvePath(image, metadata);
-        if (resolvedPath != null) {
+        if (image && resolvedPath != null) {
             filepaths.add(resolvedPath);
             return resolvedPath;
         }
@@ -47,11 +52,9 @@ export function parseImagePaths(
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    replaceFrontmatterImagesforLogo(data, mapImage);
 
-    const tree = fromMarkdown(content, {
-        extensions: [mdx()],
-        mdastExtensions: [mdxFromMarkdown()]
-    });
+    const tree = parseMarkdownToTree(content);
 
     let offset = 0;
 
@@ -62,73 +65,58 @@ export function parseImagePaths(
         const { start, length } = getPosition(content, node.position);
         const original = replacedContent.slice(start + offset, start + offset + length);
         let replaced = original;
+
         if (node.type === "image") {
             const src = trimAnchor(node.url);
             const resolvedPath = resolvePath(src, metadata);
             if (src != null && resolvedPath != null) {
                 filepaths.add(resolvedPath);
-                node.url = resolvedPath;
-                replaced = replaced.replace(src, resolvedPath);
+                replaced = replaced.replaceAll(src, resolvedPath);
             }
         }
 
-        if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
-            if (node.name && MEDIA_NODE_NAMES.includes(node.name)) {
-                const srcAttr = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "src");
-
-                if (srcAttr?.value) {
-                    let srcValue = srcAttr.value;
-                    if (typeof srcValue !== "string") {
-                        const match = srcValue.value.match(STR_REGEX);
-                        if (match?.[1]) {
-                            srcValue = match[1];
-                        }
-                    }
-
-                    const pathToImage = trimAnchor(srcValue);
-                    const resolvedPath = resolvePath(pathToImage, metadata);
-                    if (pathToImage != null && resolvedPath != null) {
+        function walkEstreeForSrc(estree: EstreeNode) {
+            walkEstreeJsxAttributes(estree, {
+                src: (attr) => {
+                    const src = trimAnchor(extractSingleLiteral(attr.value));
+                    const resolvedPath = resolvePath(src, metadata);
+                    if (src && resolvedPath) {
                         filepaths.add(resolvedPath);
-                        node.attributes = node.attributes.map((attr) => {
-                            if (attr.type === "mdxJsxAttribute" && attr.name === "src") {
-                                return { ...attr, value: resolvedPath };
-                            }
-                            return attr;
-                        });
-                        replaced = replaced.replace(pathToImage, resolvedPath);
+                        replaced = replaced.replaceAll(src, resolvedPath);
                     }
+                    return;
                 }
-            } else {
-                node.attributes.forEach((attr) => {
-                    if (attr.type === "mdxJsxAttribute" && attr.value && typeof attr.value !== "string") {
-                        const match = SRC_REGEX.exec(attr.value.value);
-                        if (match?.[1]) {
-                            const pathToImage = trimAnchor(match[1]);
-                            const resolvedPath = resolvePath(pathToImage, metadata);
-                            if (pathToImage != null && resolvedPath != null) {
-                                filepaths.add(resolvedPath);
-                                attr.value.value = resolvedPath;
-                                replaced = replaced.replace(pathToImage, resolvedPath);
-                            }
-                        }
-                    }
-                });
-            }
+            });
         }
 
-        if (node.type === "html" || node.type === "text" || node.type === "mdxTextExpression") {
-            const isInlineCode = /^`[^`]*`$/.test(node.value);
-            if (!isInlineCode) {
-                let match;
-                while ((match = SRC_REGEX.exec(node.value)) != null) {
-                    const pathToImage = trimAnchor(match[1]);
-                    const resolvedPath = resolvePath(pathToImage, metadata);
-                    if (pathToImage != null && resolvedPath != null) {
-                        filepaths.add(resolvedPath);
-                        replaced = replaced.replaceAll(pathToImage, resolvedPath);
-                    }
+        if (isMdxJsxElement(node)) {
+            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "src");
+            const src = trimAnchor(extractAttributeValueLiteral(srcAttr?.value));
+
+            if (srcAttr && src) {
+                const resolvedPath = resolvePath(src, metadata);
+                if (resolvedPath != null) {
+                    filepaths.add(resolvedPath);
+                    replaced = replaced.replaceAll(src, resolvedPath);
                 }
             }
+
+            node.attributes.forEach((attr) => {
+                if (
+                    isMdxJsxAttribute(attr) &&
+                    typeof attr.value !== "string" &&
+                    attr.value != null &&
+                    attr.value.data?.estree
+                ) {
+                    walkEstreeForSrc(attr.value.data.estree);
+                } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
+                    walkEstreeForSrc(attr.data.estree);
+                }
+            });
+        }
+
+        if (isMdxExpression(node) && node.data?.estree) {
+            walkEstreeForSrc(node.data.estree);
         }
 
         if (replaced === original && filepaths.size === 0) {
@@ -138,6 +126,8 @@ export function parseImagePaths(
         replacedContent =
             replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
         offset += replaced.length - length;
+
+        return CONTINUE;
     });
 
     return { filepaths: [...filepaths], markdown: grayMatter.stringify(replacedContent, data) };
@@ -145,20 +135,16 @@ export function parseImagePaths(
 
 function resolvePath(
     pathToImage: string | undefined,
-    { absolutePathToFernFolder, absolutePathToMdx }: AbsolutePathMetadata
+    { absolutePathToFernFolder, absolutePathToMarkdownFile }: AbsolutePathMetadata
 ): AbsoluteFilePath | undefined {
     if (pathToImage == null || isExternalUrl(pathToImage) || isDataUrl(pathToImage)) {
         return undefined;
     }
 
     const filepath = resolve(
-        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMdx),
+        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     );
-
-    // if (doesPathExistSync(filepath)) {
-    //     return filepath;
-    // }
 
     return filepath;
 }
@@ -171,6 +157,36 @@ function isDataUrl(url: string): boolean {
     return url.startsWith("data:");
 }
 
+export type ReplacedHref =
+    | { type: "replace"; slug: string; href: string }
+    | { type: "missing-reference"; path: string; href: string };
+
+export function getReplacedHref({
+    href,
+    metadata,
+    markdownFilesToPathName
+}: {
+    href: string | undefined;
+    metadata: AbsolutePathMetadata;
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>;
+}): ReplacedHref | undefined {
+    if (href == null) {
+        return;
+    }
+    if (href.endsWith(".md") || href.endsWith(".mdx")) {
+        const absoluteFilePath = resolvePath(href, metadata);
+        if (absoluteFilePath != null) {
+            const slug = markdownFilesToPathName[absoluteFilePath];
+            if (slug != null) {
+                return { type: "replace", slug, href };
+            } else {
+                return { type: "missing-reference", path: absoluteFilePath, href };
+            }
+        }
+    }
+    return undefined;
+}
+
 /**
  * This step should run after the images have been uploaded. It replaces the image paths in the markdown with the fileIDs.
  * In the frontend, the fileIDs are then used to securely fetch the images.
@@ -178,36 +194,41 @@ function isDataUrl(url: string): boolean {
 export function replaceImagePathsAndUrls(
     markdown: string,
     fileIdsMap: ReadonlyMap<AbsoluteFilePath, string>,
-    markdownFilesToPathName: ReadonlyMap<AbsoluteFilePath, string>,
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>,
     metadata: AbsolutePathMetadata,
-    context: TaskContext
+    _context: TaskContext
 ): string {
     const { content, data } = grayMatter(markdown, {});
     let replacedContent = content;
 
-    const tree = fromMarkdown(content, {
-        extensions: [mdx()],
-        mdastExtensions: [mdxFromMarkdown()]
-    });
+    const tree = parseMarkdownToTree(content);
 
     let offset = 0;
 
     function mapImage(image: string | undefined) {
-        if (image != null && !isExternalUrl(image) && !isDataUrl(image)) {
-            try {
-                const fileId = fileIdsMap.get(AbsoluteFilePath.of(image));
-                if (fileId != null) {
-                    return `file:${fileId}`;
-                }
-            } catch (e) {
-                // do nothing
-                return;
-            }
+        if (image == null || isExternalUrl(image) || isDataUrl(image)) {
+            return undefined;
         }
-        return;
+
+        // Handle absolute path
+        if (isAbsolute(image)) {
+            const absolutePath = AbsoluteFilePath.of(image);
+            const fileId = fileIdsMap.get(absolutePath);
+            return fileId ? `file:${fileId}` : undefined;
+        }
+
+        // Handle relative path
+        const resolvedPath = resolvePath(image, metadata);
+        if (resolvedPath) {
+            const fileId = fileIdsMap.get(resolvedPath);
+            return fileId ? `file:${fileId}` : undefined;
+        }
+
+        return undefined;
     }
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
+    replaceFrontmatterImagesforLogo(data, mapImage);
 
     visit(tree, (node) => {
         if (node.position == null) {
@@ -225,105 +246,51 @@ export function replaceImagePathsAndUrls(
         }
 
         function replaceHref(href: string | undefined) {
-            if (href == null) {
-                return;
+            const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
+            if (href != null && replacedHref != null && replacedHref.type === "replace") {
+                replaced = replaced.replace(href, replacedHref.slug);
             }
-            if (href.endsWith(".md") || href.endsWith(".mdx")) {
-                const absoluteFilePath = resolvePath(href, metadata);
-                if (absoluteFilePath != null) {
-                    const pathName = markdownFilesToPathName.get(absoluteFilePath);
-                    if (pathName != null) {
-                        replaced = replaced.replace(href, pathName);
-                    } else {
-                        context.logger.error(
-                            `${relative(
-                                metadata.absolutePathToFernFolder,
-                                absoluteFilePath
-                            )} has no slug defined but is referenced by ${relative(
-                                metadata.absolutePathToFernFolder,
-                                metadata.absolutePathToMdx
-                            )}`
-                        );
-                    }
-                }
-            }
+        }
+
+        function walkEstreeForSrcAndHref(estree: EstreeNode) {
+            walkEstreeJsxAttributes(estree, {
+                src: (attr) => replaceSrc(trimAnchor(extractSingleLiteral(attr.value))),
+                href: (attr) => replaceHref(trimAnchor(extractSingleLiteral(attr.value)))
+            });
         }
 
         if (node.type === "image") {
             const src = trimAnchor(node.url);
-            replaceSrc(src);
-        }
-
-        if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
-            if (node.name && MEDIA_NODE_NAMES.includes(node.name)) {
-                const srcAttr = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "src");
-
-                if (srcAttr?.value) {
-                    let srcValue = srcAttr.value;
-                    if (typeof srcValue !== "string") {
-                        const match = srcValue.value.match(STR_REGEX);
-                        if (match?.[1]) {
-                            srcValue = match[1];
-                        }
-                    }
-
-                    const pathToImage = trimAnchor(srcValue);
-                    replaceSrc(pathToImage);
-                }
-            } else {
-                node.attributes.forEach((attr) => {
-                    if (attr.type === "mdxJsxAttribute" && attr.value && typeof attr.value !== "string") {
-                        const match = SRC_REGEX.exec(attr.value.value);
-                        if (match?.[1]) {
-                            const pathToImage = trimAnchor(match[1]);
-                            replaceSrc(pathToImage);
-                        }
-                    }
-                });
-            }
-        }
-
-        if (node.type === "html" || node.type === "text" || node.type === "mdxTextExpression") {
-            const srcRegex = /src={?['"]([^'"]+)['"](?! \+)}?/g;
-
-            let match;
-            while ((match = srcRegex.exec(node.value)) != null) {
-                const pathToImage = trimAnchor(match[1]);
-                replaceSrc(pathToImage);
-            }
+            replaceSrc(trimAnchor(src));
         }
 
         if (node.type === "link") {
             replaceHref(trimAnchor(node.url));
         }
 
-        if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
-            if (node.name === "a") {
-                const hrefAttr = node.attributes.find(
-                    (attr) => attr.type === "mdxJsxAttribute" && attr.name === "href"
-                );
+        if (isMdxJsxElement(node)) {
+            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "src");
+            replaceSrc(trimAnchor(extractAttributeValueLiteral(srcAttr?.value)));
 
-                if (hrefAttr?.value) {
-                    let href = hrefAttr.value;
-                    if (typeof href !== "string") {
-                        const match = href.value.match(STR_REGEX);
-                        if (match?.[1]) {
-                            href = match[1];
-                        }
-                    }
-                    replaceHref(trimAnchor(href));
+            const hrefAttr = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "href");
+            replaceHref(trimAnchor(extractAttributeValueLiteral(hrefAttr?.value)));
+
+            node.attributes.forEach((attr) => {
+                if (
+                    isMdxJsxAttribute(attr) &&
+                    typeof attr.value !== "string" &&
+                    attr.value != null &&
+                    attr.value.data?.estree
+                ) {
+                    walkEstreeForSrcAndHref(attr.value.data.estree);
+                } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
+                    walkEstreeForSrcAndHref(attr.data.estree);
                 }
-            }
+            });
         }
 
-        if (node.type === "html" || node.type === "text" || node.type === "mdxTextExpression") {
-            const hrefRegex = /href={?['"]([^'"]+)['"](?! \+)}?/g;
-
-            let match;
-            while ((match = hrefRegex.exec(node.value)) != null) {
-                const href = trimAnchor(match[1]);
-                replaceHref(href);
-            }
+        if (isMdxExpression(node) && node.data?.estree) {
+            walkEstreeForSrcAndHref(node.data.estree);
         }
 
         if (replaced === original) {
@@ -333,6 +300,8 @@ export function replaceImagePathsAndUrls(
         replacedContent =
             replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
         offset += replaced.length - length;
+
+        return CONTINUE;
     });
 
     return grayMatter.stringify(replacedContent, data);
@@ -365,7 +334,7 @@ function getPosition(
     return { start, length };
 }
 
-function trimAnchor(text: unknown): string | undefined {
+export function trimAnchor(text: unknown): string | undefined {
     if (typeof text !== "string") {
         return undefined;
     }
@@ -384,8 +353,8 @@ function visitFrontmatterImages(
             if (typeof value === "object") {
                 if (value.type === "fileId") {
                     data[key] = {
-                        ...value,
-                        value: mapImage(value.value) ?? value.value
+                        type: "fileId",
+                        value: CjsFdrSdk.FileId(mapImage(value.value) ?? value.value)
                     };
                 }
             } else if (typeof value === "string") {
@@ -393,14 +362,61 @@ function visitFrontmatterImages(
                 data[key] = mappedImage
                     ? {
                           type: "fileId",
-                          value: mappedImage
+                          value: CjsFdrSdk.FileId(mappedImage)
                       }
                     : {
                           type: "url",
-                          value
+                          value: CjsFdrSdk.Url(value)
                       };
             }
             // else do nothing
+        }
+    }
+}
+
+const LogoOverrideFrontmatterSchema = z.union([
+    z.string(),
+    z.object({
+        light: z.string().optional(),
+        dark: z.string().optional()
+    })
+]);
+
+export function convertImageToFileIdOrUrl(
+    value: string,
+    mapImage: (image: string | undefined) => string | undefined
+): CjsFdrSdk.docs.latest.FileIdOrUrl {
+    const mappedImage = mapImage(value);
+    return mappedImage
+        ? {
+              type: "fileId",
+              value: CjsFdrSdk.FileId(mappedImage)
+          }
+        : {
+              type: "url",
+              value: CjsFdrSdk.Url(value)
+          };
+}
+
+function replaceFrontmatterImagesforLogo(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: Record<string, any>,
+    mapImage: (image: string | undefined) => string | undefined
+) {
+    const parsedValue = LogoOverrideFrontmatterSchema.safeParse(data.logo);
+    if (!parsedValue.success) {
+        return;
+    }
+    const parsedFrontmatterLogo = parsedValue.data;
+
+    if (typeof parsedFrontmatterLogo === "string") {
+        data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage);
+    } else {
+        if (parsedFrontmatterLogo.light != null) {
+            data.logo.light = convertImageToFileIdOrUrl(parsedFrontmatterLogo.light, mapImage);
+        }
+        if (parsedFrontmatterLogo.dark != null) {
+            data.logo.dark = convertImageToFileIdOrUrl(parsedFrontmatterLogo.dark, mapImage);
         }
     }
 }

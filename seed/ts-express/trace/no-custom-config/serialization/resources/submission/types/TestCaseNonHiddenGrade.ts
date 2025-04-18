@@ -17,7 +17,7 @@ export const TestCaseNonHiddenGrade: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestCaseNonHiddenGrade {
-    interface Raw {
+    export interface Raw {
         passed: boolean;
         actualResult?: serializers.VariableValue.Raw | null;
         exception?: serializers.ExceptionV2.Raw | null;

@@ -4,20 +4,23 @@
 
 import * as core from "../../../../core";
 import * as SeedLiteral from "../../../index";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Query {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         /** Override the X-API-Version header */
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -28,6 +31,8 @@ export declare namespace Query {
         version?: "02-02-2024";
         /** Override the X-API-Enable-Audit-Logging header */
         auditLogging?: true;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -40,20 +45,73 @@ export class Query {
      *
      * @example
      *     await client.query.send({
+     *         optionalPrompt: "You are a helpful assistant",
+     *         aliasPrompt: "You are a helpful assistant",
+     *         aliasOptionalPrompt: "You are a helpful assistant",
+     *         optionalStream: false,
+     *         aliasStream: false,
+     *         aliasOptionalStream: false,
      *         query: "What is the weather today"
      *     })
      */
-    public async send(
+    public send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
-        requestOptions?: Query.RequestOptions
-    ): Promise<SeedLiteral.SendResponse> {
-        const { prompt, query, stream } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        requestOptions?: Query.RequestOptions,
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
+    }
+
+    private async __send(
+        request: SeedLiteral.SendLiteralsInQueryRequest,
+        requestOptions?: Query.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+        const {
+            prompt,
+            optionalPrompt,
+            aliasPrompt,
+            aliasOptionalPrompt,
+            query,
+            stream,
+            optionalStream,
+            aliasStream,
+            aliasOptionalStream,
+        } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["prompt"] = prompt;
+        if (optionalPrompt != null) {
+            _queryParams["optional_prompt"] = optionalPrompt;
+        }
+
+        _queryParams["alias_prompt"] = serializers.AliasToPrompt.jsonOrThrow(aliasPrompt, {
+            unrecognizedObjectKeys: "strip",
+        });
+        if (aliasOptionalPrompt != null) {
+            _queryParams["alias_optional_prompt"] = serializers.AliasToPrompt.jsonOrThrow(aliasOptionalPrompt, {
+                unrecognizedObjectKeys: "strip",
+            });
+        }
+
         _queryParams["query"] = query;
         _queryParams["stream"] = stream.toString();
+        if (optionalStream != null) {
+            _queryParams["optional_stream"] = optionalStream.toString();
+        }
+
+        _queryParams["alias_stream"] = toJson(
+            serializers.AliasToStream.jsonOrThrow(aliasStream, { unrecognizedObjectKeys: "strip" }),
+        );
+        if (aliasOptionalStream != null) {
+            _queryParams["alias_optional_stream"] = toJson(
+                serializers.AliasToStream.jsonOrThrow(aliasOptionalStream, { unrecognizedObjectKeys: "strip" }),
+            );
+        }
+
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "query"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "query",
+            ),
             method: "POST",
             headers: {
                 "X-API-Version": requestOptions?.version ?? this._options?.version ?? "02-02-2024",
@@ -68,6 +126,7 @@ export class Query {
                 "User-Agent": "@fern/literal/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -77,18 +136,22 @@ export class Query {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SendResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SendResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedLiteralError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -97,12 +160,14 @@ export class Query {
                 throw new errors.SeedLiteralError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedLiteralTimeoutError();
+                throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /query.");
             case "unknown":
                 throw new errors.SeedLiteralError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

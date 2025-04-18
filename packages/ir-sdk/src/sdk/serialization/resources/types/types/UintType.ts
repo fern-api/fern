@@ -10,5 +10,5 @@ export const UintType: core.serialization.ObjectSchema<serializers.UintType.Raw,
     core.serialization.objectWithoutOptionalProperties({});
 
 export declare namespace UintType {
-    interface Raw {}
+    export interface Raw {}
 }

@@ -8,18 +8,22 @@ import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Auth {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,19 +36,37 @@ export class Auth {
      *
      * @example
      *     await client.auth.getToken({
-     *         clientId: "string",
-     *         clientSecret: "string",
-     *         scope: "string"
+     *         clientId: "client_id",
+     *         clientSecret: "client_secret",
+     *         scope: "scope"
      *     })
      */
-    public async getToken(
+    public getToken(
         request: SeedOauthClientCredentials.auth.GetTokenRequest,
-        requestOptions?: Auth.RequestOptions
-    ): Promise<
+        requestOptions?: Auth.RequestOptions,
+    ): core.HttpResponsePromise<
         core.APIResponse<SeedOauthClientCredentials.auth.TokenResponse, SeedOauthClientCredentials.auth.getToken.Error>
     > {
+        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
+    }
+
+    private async __getToken(
+        request: SeedOauthClientCredentials.auth.GetTokenRequest,
+        requestOptions?: Auth.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedOauthClientCredentials.auth.TokenResponse,
+                SeedOauthClientCredentials.auth.getToken.Error
+            >
+        >
+    > {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/token",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -54,6 +76,7 @@ export class Auth {
                 "User-Agent": "@fern/oauth-client-credentials-nested-root/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -68,19 +91,28 @@ export class Auth {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.auth.TokenResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.auth.TokenResponse.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedOauthClientCredentials.auth.getToken.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedOauthClientCredentials.auth.getToken.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

@@ -218,6 +218,14 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                 ]
             }
         },
+        "type_imdb:EmptyObject": {
+            "name": "EmptyObject",
+            "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": []
+            }
+        },
         "type_imdb:Person": {
             "name": "Person",
             "shape": {
@@ -251,7 +259,9 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     {
                         "discriminantValue": "producer",
                         "additionalProperties": {
-                            "extends": [],
+                            "extends": [
+                                "type_imdb:EmptyObject"
+                            ],
                             "properties": []
                         }
                     },
@@ -259,7 +269,9 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         "description": "i am docs",
                         "discriminantValue": "cinematographer",
                         "additionalProperties": {
-                            "extends": [],
+                            "extends": [
+                                "type_imdb:EmptyObject"
+                            ],
                             "properties": []
                         }
                     }
@@ -385,7 +397,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": [
@@ -564,11 +577,13 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                                 ]
                             },
                             "statusCode": 404,
-                            "name": "NotFoundError"
+                            "name": "NotFoundError",
+                            "examples": []
                         },
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": [
@@ -677,10 +692,23 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "path": "/test/rootPathParam/movies/movieId",
+                            "pathParameters": {
+                                "rootPathParam": "rootPathParam",
+                                "movieId": "movieId"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 204,
+                            "codeSamples": []
+                        }
+                    ]
                 },
                 {
                     "auth": false,
@@ -749,7 +777,8 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": []
@@ -764,6 +793,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                 "type_imdb:Movie",
                 "type_imdb:CreateMovieRequest",
                 "type_imdb:DirectorWrapper",
+                "type_imdb:EmptyObject",
                 "type_imdb:Person",
                 "type_imdb:RecursiveType"
             ],
@@ -1017,6 +1047,14 @@ exports[`fdr > {"name":"simple"} 1`] = `
                 ]
             }
         },
+        "type_imdb:EmptyObject": {
+            "name": "EmptyObject",
+            "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": []
+            }
+        },
         "type_imdb:Person": {
             "name": "Person",
             "shape": {
@@ -1050,7 +1088,9 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     {
                         "discriminantValue": "producer",
                         "additionalProperties": {
-                            "extends": [],
+                            "extends": [
+                                "type_imdb:EmptyObject"
+                            ],
                             "properties": []
                         }
                     },
@@ -1058,7 +1098,9 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         "description": "i am docs",
                         "discriminantValue": "cinematographer",
                         "additionalProperties": {
-                            "extends": [],
+                            "extends": [
+                                "type_imdb:EmptyObject"
+                            ],
                             "properties": []
                         }
                     }
@@ -1184,7 +1226,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": [
@@ -1363,11 +1406,13 @@ exports[`fdr > {"name":"simple"} 1`] = `
                                 ]
                             },
                             "statusCode": 404,
-                            "name": "NotFoundError"
+                            "name": "NotFoundError",
+                            "examples": []
                         },
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": [
@@ -1476,10 +1521,23 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "path": "/test/rootPathParam/movies/movieId",
+                            "pathParameters": {
+                                "rootPathParam": "rootPathParam",
+                                "movieId": "movieId"
+                            },
+                            "queryParameters": {},
+                            "headers": {},
+                            "responseStatusCode": 204,
+                            "codeSamples": []
+                        }
+                    ]
                 },
                 {
                     "auth": false,
@@ -1548,7 +1606,8 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "BadRequestError",
+                            "examples": []
                         }
                     ],
                     "examples": []
@@ -1563,6 +1622,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                 "type_imdb:Movie",
                 "type_imdb:CreateMovieRequest",
                 "type_imdb:DirectorWrapper",
+                "type_imdb:EmptyObject",
                 "type_imdb:Person",
                 "type_imdb:RecursiveType"
             ],

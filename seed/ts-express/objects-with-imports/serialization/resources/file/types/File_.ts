@@ -14,7 +14,7 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, SeedO
     });
 
 export declare namespace File_ {
-    interface Raw {
+    export interface Raw {
         name: string;
         contents: string;
         info: serializers.FileInfo.Raw;

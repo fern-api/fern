@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         name: "string"
+ *         name: "name"
  *     }
  */
 export interface CreateUserRequest {

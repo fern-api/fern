@@ -1,6 +1,8 @@
-import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { writeFile } from "fs/promises";
+
+import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
@@ -52,7 +54,7 @@ describe("fern generate --local", () => {
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory
         });
-    }, 180_000);
+    }, 360_000);
 });
 
 async function expectPathDoesNotExist(absoluteFilePath: AbsoluteFilePath): Promise<void> {

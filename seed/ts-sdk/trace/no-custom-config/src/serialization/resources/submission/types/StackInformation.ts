@@ -16,7 +16,7 @@ export const StackInformation: core.serialization.ObjectSchema<
 });
 
 export declare namespace StackInformation {
-    interface Raw {
+    export interface Raw {
         numStackFrames: number;
         topStackFrame?: StackFrame.Raw | null;
     }

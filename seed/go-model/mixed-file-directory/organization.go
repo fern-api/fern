@@ -5,13 +5,20 @@ package mixedfiledirectory
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/mixed-file-directory/fern/core"
+	internal "github.com/mixed-file-directory/fern/internal"
 )
 
 type CreateOrganizationRequest struct {
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]interface{}
+}
+
+func (c *CreateOrganizationRequest) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
 }
 
 func (c *CreateOrganizationRequest) GetExtraProperties() map[string]interface{} {
@@ -25,18 +32,16 @@ func (c *CreateOrganizationRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = CreateOrganizationRequest(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.extraProperties = extraProperties
-
 	return nil
 }
 
 func (c *CreateOrganizationRequest) String() string {
-	if value, err := core.StringifyJSON(c); err == nil {
+	if value, err := internal.StringifyJSON(c); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
@@ -50,6 +55,27 @@ type Organization struct {
 	extraProperties map[string]interface{}
 }
 
+func (o *Organization) GetId() Id {
+	if o == nil {
+		return ""
+	}
+	return o.Id
+}
+
+func (o *Organization) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *Organization) GetUsers() []*User {
+	if o == nil {
+		return nil
+	}
+	return o.Users
+}
+
 func (o *Organization) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
@@ -61,18 +87,16 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = Organization(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
 	}
 	o.extraProperties = extraProperties
-
 	return nil
 }
 
 func (o *Organization) String() string {
-	if value, err := core.StringifyJSON(o); err == nil {
+	if value, err := internal.StringifyJSON(o); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)

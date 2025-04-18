@@ -1,12 +1,10 @@
 using SeedNurseryApi.Core;
 
-#nullable enable
-
 namespace SeedNurseryApi;
 
 public partial class SeedNurseryApiClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedNurseryApiClient(ClientOptions? clientOptions = null)
     {
@@ -31,5 +29,5 @@ public partial class SeedNurseryApiClient
         Package = new PackageClient(_client);
     }
 
-    public PackageClient Package { get; init; }
+    public PackageClient Package { get; }
 }

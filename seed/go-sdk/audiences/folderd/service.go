@@ -5,14 +5,21 @@ package folderd
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/audiences/fern/core"
+	internal "github.com/audiences/fern/internal"
 )
 
 type Response struct {
 	Foo string `json:"foo" url:"foo"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (r *Response) GetFoo() string {
+	if r == nil {
+		return ""
+	}
+	return r.Foo
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
@@ -26,24 +33,22 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Response(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
-	r._rawJSON = json.RawMessage(data)
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (r *Response) String() string {
-	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)

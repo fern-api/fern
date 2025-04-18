@@ -1,41 +1,131 @@
+import {
+    GetReferenceOpts,
+    TypeReferenceNode,
+    generateInlinePropertiesModule,
+    getTextOfTsNode,
+    maybeAddDocsStructure
+} from "@fern-typescript/commons";
+import { BaseContext, GeneratedObjectType } from "@fern-typescript/contexts";
+import {
+    InterfaceDeclarationStructure,
+    ModuleDeclarationStructure,
+    PropertySignatureStructure,
+    StatementStructures,
+    StructureKind,
+    WriterFunction,
+    ts
+} from "ts-morph";
+
 import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { GeneratedObjectType, ModelContext } from "@fern-typescript/contexts";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedObjectTypeImpl<Context extends ModelContext>
+interface Property {
+    name: string;
+    type: ts.TypeNode;
+    hasQuestionToken: boolean;
+    docs: string | undefined;
+    irProperty: ObjectProperty | undefined;
+}
+
+export class GeneratedObjectTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
     public readonly type = "object";
 
-    public writeToFile(context: Context): void {
-        const interfaceNode = context.sourceFile.addInterface({
-            name: this.typeName,
-            properties: [
-                ...this.shape.properties.map((property) => {
-                    const value = context.type.getReferenceToType(property.valueType);
-                    const propertyNode: OptionalKind<PropertySignatureStructure> = {
-                        name: `"${this.getPropertyKeyFromProperty(property)}"`,
-                        type: getTextOfTsNode(
-                            this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined
-                        ),
-                        hasQuestionToken: !this.noOptionalProperties && value.isOptional,
-                        docs: property.docs != null ? [{ description: property.docs }] : undefined
-                    };
-
-                    return propertyNode;
-                })
-            ],
-            isExported: true
-        });
-
-        maybeAddDocs(interfaceNode, this.getDocs(context));
-
-        for (const extension of this.shape.extends) {
-            interfaceNode.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
+    public generateStatements(
+        context: Context
+    ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
+        const statements: (string | WriterFunction | StatementStructures)[] = [this.generateInterface(context)];
+        const iModule = this.generateModule(context);
+        if (iModule) {
+            statements.push(iModule);
         }
+        return statements;
+    }
+
+    public generateForInlineUnion(context: Context): ts.TypeNode {
+        return ts.factory.createTypeLiteralNode(
+            this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs, irProperty }) => {
+                let propertyValue: ts.TypeNode = type;
+                if (irProperty) {
+                    const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType);
+                    propertyValue = hasQuestionToken
+                        ? inlineUnionRef.typeNode
+                        : inlineUnionRef.typeNodeWithoutUndefined;
+                }
+                return ts.factory.createPropertySignature(
+                    undefined,
+                    ts.factory.createIdentifier(name),
+                    hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+                    propertyValue
+                );
+            })
+        );
+    }
+
+    public generateProperties(context: Context): PropertySignatureStructure[] {
+        return this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs }) => {
+            const propertyNode: PropertySignatureStructure = {
+                kind: StructureKind.PropertySignature,
+                name,
+                type: getTextOfTsNode(type),
+                hasQuestionToken,
+                docs: docs != null ? [{ description: docs }] : undefined
+            };
+
+            return propertyNode;
+        });
+    }
+
+    private generatePropertiesInternal(context: Context): Property[] {
+        const props = this.shape.properties.map((property) => {
+            const value = this.getTypeForObjectProperty(context, property);
+            const propertyNode: Property = {
+                name: `"${this.getPropertyKeyFromProperty(property)}"`,
+                type: this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined,
+                hasQuestionToken: !this.noOptionalProperties && value.isOptional,
+                docs: property.docs,
+                irProperty: property
+            };
+            return propertyNode;
+        });
+        if (this.shape.extraProperties) {
+            props.push({
+                name: "[key: string]", // This is the simpler way to add an index signature
+                type: ts.factory.createTypeReferenceNode("any"),
+                hasQuestionToken: false,
+                docs: "Accepts any additional properties",
+                irProperty: undefined
+            });
+        }
+        return props;
+    }
+
+    public generateInterface(context: Context): InterfaceDeclarationStructure {
+        const interfaceNode: InterfaceDeclarationStructure = {
+            kind: StructureKind.Interface,
+            name: this.typeName,
+            properties: [...this.generateProperties(context)],
+            isExported: true
+        };
+
+        maybeAddDocsStructure(interfaceNode, this.getDocs(context));
+        const iExtends = [];
+        for (const extension of this.shape.extends) {
+            iExtends.push(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
+        }
+        interfaceNode.extends = iExtends;
+        return interfaceNode;
+    }
+
+    private getTypeForObjectProperty(context: Context, property: ObjectProperty): TypeReferenceNode {
+        return context.type.getReferenceToInlinePropertyType(
+            property.valueType,
+            this.typeName,
+            property.name.name.pascalCase.safeName
+        );
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
@@ -115,5 +205,21 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
                 return generatedType.getAllPropertiesIncludingExtensions(context);
             })
         ];
+    }
+
+    public generateModule(context: Context): ModuleDeclarationStructure | undefined {
+        if (!this.enableInlineTypes) {
+            return undefined;
+        }
+        return generateInlinePropertiesModule({
+            parentTypeName: this.typeName,
+            properties: this.shape.properties.map((prop) => ({
+                propertyName: prop.name.name.pascalCase.safeName,
+                typeReference: prop.valueType
+            })),
+            generateStatements: (typeName, typeNameOverride) =>
+                context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
+            getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
+        });
     }
 }

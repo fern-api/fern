@@ -1,0 +1,32 @@
+import okhttp3.Response;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public final class <%= httpResponseClassName%><T> {
+
+    private final T body;
+
+    private final Map<String, List<String>> headers;
+
+    public <%= httpResponseClassName%>(T body, Response rawResponse) {
+        this.body = body;
+
+        Map<String, List<String>> headers = new HashMap<>();
+        rawResponse.headers().forEach(header -> {
+            String key = header.component1();
+            String value = header.component2();
+            headers.computeIfAbsent(key, _str -> new ArrayList<>()).add(value);
+        });
+        this.headers = headers;
+    }
+
+    public T body() {
+        return this.body;
+    }
+
+    public Map<String, List<String>> headers() {
+        return headers;
+    }
+}

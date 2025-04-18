@@ -10,5 +10,5 @@ export const MovieId: core.serialization.Schema<serializers.MovieId.Raw, SeedExa
     core.serialization.string();
 
 export declare namespace MovieId {
-    type Raw = string;
+    export type Raw = string;
 }

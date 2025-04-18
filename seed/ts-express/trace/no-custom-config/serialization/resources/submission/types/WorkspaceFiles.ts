@@ -13,7 +13,7 @@ export const WorkspaceFiles: core.serialization.ObjectSchema<serializers.Workspa
     });
 
 export declare namespace WorkspaceFiles {
-    interface Raw {
+    export interface Raw {
         mainFile: serializers.FileInfo.Raw;
         readOnlyFiles: serializers.FileInfo.Raw[];
     }

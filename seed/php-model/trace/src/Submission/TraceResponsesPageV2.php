@@ -2,35 +2,45 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class TraceResponsesPageV2 extends SerializableType
+class TraceResponsesPageV2 extends JsonSerializableType
 {
     /**
-     * @var array<TraceResponseV2> $traceResponses
+     * If present, use this to load subsequent pages.
+     * The offset is the id of the next trace response to load.
+     *
+     * @var ?int $offset
      */
-    #[JsonProperty("traceResponses"), ArrayType([TraceResponseV2::class])]
-    public array $traceResponses;
-
-    /**
-     * @var ?int $offset If present, use this to load subseqent pages.
-    The offset is the id of the next trace response to load.
-     */
-    #[JsonProperty("offset")]
+    #[JsonProperty('offset')]
     public ?int $offset;
 
     /**
-     * @param array<TraceResponseV2> $traceResponses
-     * @param ?int $offset If present, use this to load subseqent pages.
-    The offset is the id of the next trace response to load.
+     * @var array<TraceResponseV2> $traceResponses
+     */
+    #[JsonProperty('traceResponses'), ArrayType([TraceResponseV2::class])]
+    public array $traceResponses;
+
+    /**
+     * @param array{
+     *   traceResponses: array<TraceResponseV2>,
+     *   offset?: ?int,
+     * } $values
      */
     public function __construct(
-        array $traceResponses,
-        ?int $offset = null,
+        array $values,
     ) {
-        $this->traceResponses = $traceResponses;
-        $this->offset = $offset;
+        $this->offset = $values['offset'] ?? null;
+        $this->traceResponses = $values['traceResponses'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

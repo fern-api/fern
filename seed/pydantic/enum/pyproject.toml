@@ -1,3 +1,6 @@
+[project]
+name = "fern_enum"
+
 [tool.poetry]
 name = "fern_enum"
 version = "0.0.1"

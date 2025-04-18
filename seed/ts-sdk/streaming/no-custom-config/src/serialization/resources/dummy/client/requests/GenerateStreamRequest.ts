@@ -14,7 +14,7 @@ export const GenerateStreamRequest: core.serialization.Schema<
 });
 
 export declare namespace GenerateStreamRequest {
-    interface Raw {
+    export interface Raw {
         num_events: number;
     }
 }

@@ -1,6 +1,8 @@
-import { HttpEndpoint, HttpHeader, HttpService } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { HttpEndpoint, HttpHeader, HttpService } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedHeader } from "../../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { RequestParameter } from "../../request-parameter/RequestParameter";
@@ -71,6 +73,8 @@ export function generateHeaders({
         );
     }
 
+    objectToReturn.push(getRequestOptionsHeaders());
+
     return objectToReturn;
 }
 
@@ -118,4 +122,14 @@ function getValueExpressionForIdempotencyHeader({
             { includeNullCheckIfOptional: true }
         );
     }
+}
+
+function getRequestOptionsHeaders(): ts.SpreadAssignment {
+    return ts.factory.createSpreadAssignment(
+        ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier("headers")
+        )
+    );
 }

@@ -1,4 +1,10 @@
+import { PackageId, getSchemaOptions } from "@fern-typescript/commons";
+import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
+
 import { assertNever } from "@fern-api/core-utils";
+
 import {
     ErrorDiscriminationStrategy,
     HttpEndpoint,
@@ -6,10 +12,7 @@ import {
     PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
-import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
-import { ts } from "ts-morph";
+
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
 import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
@@ -115,7 +118,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
 
             if (endpoint.response?.body?.type === "streaming") {
                 if (endpoint.response.body.value.type === "text") {
-                    throw new Error("Non-json responses are not supportd");
+                    throw new Error("Non-json responses are not supported");
                 }
                 switch (endpoint.response.body.value.payload.type) {
                     case "primitive":
@@ -162,12 +165,12 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     }): GeneratedEndpointErrorSchema {
         return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
-            property: (properyDiscriminationStrategy) =>
+            property: (propertyDiscriminationStrategy) =>
                 new GeneratedEndpointErrorSchemaImpl({
                     packageId,
                     endpoint,
                     errorResolver,
-                    discriminationStrategy: properyDiscriminationStrategy
+                    discriminationStrategy: propertyDiscriminationStrategy
                 }),
             statusCode: () => StatusCodeDiscriminatedEndpointErrorSchema,
             _other: () => {
@@ -221,15 +224,19 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         switch (this.endpoint.requestBody.requestBodyType.type) {
             case "unknown":
                 return referenceToParsedRequest;
-            case "named":
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(this.endpoint.requestBody.requestBodyType);
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedRequest, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields,
+                            allowExtraFields:
+                                this.allowExtraFields ??
+                                (typeDeclaration.shape.type === "object" && typeDeclaration.shape.extraProperties),
                             omitUndefined: this.omitUndefined
                         })
                     });
+            }
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {
@@ -253,10 +260,13 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             throw new Error("Cannot deserialize response because it's not defined");
         }
         if (this.endpoint.response.body.type === "streaming") {
-            throw new Error("Cannot deserailize streaming response in deserializeResponse");
+            throw new Error("Cannot deserialize streaming response in deserializeResponse");
         }
         if (this.endpoint.response.body.type === "streamParameter") {
-            throw new Error("Cannot deserailize streaming response in deserializeResponse");
+            throw new Error("Cannot deserialize streaming response in deserializeResponse");
+        }
+        if (this.endpoint.response.body.type === "bytes") {
+            throw new Error("Cannot deserialize bytes response in deserializeResponse");
         }
 
         if (this.endpoint.response.body.type === "fileDownload") {

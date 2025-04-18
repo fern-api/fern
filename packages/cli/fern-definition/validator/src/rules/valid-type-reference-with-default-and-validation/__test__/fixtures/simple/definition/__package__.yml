@@ -116,6 +116,12 @@ service:
                 maxLength: 10
                 pattern: "^[a-z]+$"
                 format: custom
+            email:
+              type: optional<nullable<string>>
+              default: support@acme.com
+              validation:
+                minLength: 3
+                maxLength: 10
             primitive:
               type: Primitive
               default: INTEGER

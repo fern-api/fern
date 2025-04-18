@@ -15,7 +15,7 @@ export const NoComplexQueryParamsRule: Rule = {
                     if (isComplex != null && isComplex) {
                         return [
                             {
-                                severity: "error",
+                                severity: "fatal",
                                 message: `${type} is not a valid type for a query parameter`
                             }
                         ];

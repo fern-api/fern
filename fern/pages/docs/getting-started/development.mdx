@@ -1,12 +1,16 @@
 ---
-title: 'Local Development'
-subtitle: 'Preview changes locally to update your docs'
-description: 'Preview changes locally to update your docs'
+title: "Preview changes locally"
+subtitle: "View and share updates to your documentation"
+description: "View and share updates to your documentation"
 ---
 
-<Info>
-**Prerequisite**: Please install Node.js (version 18 or higher) before proceeding.
-</Info>
+Fern offers two ways to preview changes to your documentation: a [local development environment](#local-development) and [unique preview links](#generate-a-preview-link).
+
+## Local development
+
+Fern allows you to view changes to your documentation in a locally-hosted environment.
+
+<Info>**Prerequisite**: Please install Node.js (version 18 or higher) before proceeding.</Info>
 
 Follow these steps to install and run the Fern CLI:
 
@@ -30,16 +34,13 @@ yarn global add fern-api
 fern docs dev
 ```
 
-A local preview of your documentation will be available at `http://localhost:3000`.
+A local preview of your documentation will be available at `http://localhost:3000`. The functionality is available offline if you have run local development mode online at least once.
 
-<Note>
-Some features (e.g. search) are disabled in the local development environment.
-</Note>
+<Note>Some features (e.g. search) are disabled in the local development environment.</Note>
 
+### Custom ports
 
-## Custom ports
-
-By default, Fern uses port 3000. You can customize the port Fern runs on by using the `--port` flag. For example, to run Fern on port 3002, 
+By default, Fern uses port 3000. You can customize the port Fern runs on by using the `--port` flag. For example, to run Fern on port 3002,
 use this command:
 
 ```bash
@@ -48,3 +49,24 @@ fern docs dev --port 3333
 
 If you attempt to run Fern on a port that's already in use, it will use the next available port:
 
+## Generate a preview link
+
+Fern allows you to generate a shareable preview link displaying the current state of your docs. Each preview link is appended with a UUID and is not indexed. Currently, these links do not expire (this behavior is subject to change in the future).
+
+**Usage**:
+
+```bash
+fern generate --docs --preview
+```
+
+**Example**:
+
+```bash
+fern generate --docs --preview
+
+[docs]: Found 0 errors and 1 warnings. Run fern check --warnings to print out the warnings.
+[docs]: Published docs to https://fern-preview-a1da0157-93ca-4b1f-b310-8dd34fb891ca.docs.buildwithfern.com
+┌─
+│ ✓  docs.example.com
+└─
+```

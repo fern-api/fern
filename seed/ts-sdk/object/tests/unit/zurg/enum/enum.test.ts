@@ -25,6 +25,6 @@ describe("enum", () => {
                 message: "Expected string. Received list.",
                 path: [],
             },
-        ]
+        ],
     );
 });

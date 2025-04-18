@@ -49,10 +49,8 @@ service:
           response:
             body: $types.Metadata.One
 
-    getResponse:
+    createBigEntity:
       method: POST
-      path: /response
+      path: /big-entity
+      request: types.BigEntity
       response: types.Response
-      examples:
-        - response:
-            body: $types.Response.String

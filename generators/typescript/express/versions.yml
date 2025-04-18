@@ -1,4 +1,34 @@
 - changelogEntry:
+  - summary: Upgrade to IRv55.
+    type: internal
+  irVersion: 55
+  version: 0.17.7
+
+- changelogEntry:
+  - summary: Re-release the `0.17.5` version.
+    type: feat
+  irVersion: 53
+  version: 0.17.6
+
+- changelogEntry:
+  - summary: | 
+      Introduces a configuration `noOptionalProperties` which forces consumers to explicitly pass 
+      in `undefined` instead of excluding the key. To turn this setting on, do the following: 
+
+      ```yml generators.yml
+      groups: 
+        server: 
+          generators: 
+            - name: fernapi/fern-typescript-express
+              version: 0.17.5
+              config: 
+                noOptionalProperties: true
+      ```
+    type: feat
+  irVersion: 53
+  version: 0.17.5
+
+- changelogEntry:
   - summary: Update inlined request objects to respect `noSerdeLayer`
     type: fix
   irVersion: 53
@@ -183,7 +213,7 @@
 
 - changelogEntry:
   - summary: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports
-    type: improvement
+    type: feat
   - summary: Shared generator notification and config parsing logic.
     type: internal
   irVersion: 31

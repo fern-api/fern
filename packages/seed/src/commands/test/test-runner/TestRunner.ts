@@ -1,15 +1,18 @@
-import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
-import { FixtureConfigurations, OutputMode } from "../../../config/api";
-import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
+
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { Semaphore } from "../../../Semaphore";
 import { Stopwatch } from "../../../Stopwatch";
+import { FixtureConfigurations, OutputMode } from "../../../config/api";
+import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convertSeedWorkspaceToFernWorkspace";
 import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow";
+import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests";
 import { ScriptRunner } from "../ScriptRunner";
 import { TaskContextFactory } from "../TaskContextFactory";
 
@@ -49,6 +52,7 @@ export declare namespace TestRunner {
         keepDocker: boolean | undefined;
         publishMetadata: unknown;
         readme: generatorsYml.ReadmeSchema | undefined;
+        shouldGenerateDynamicSnippetTests: boolean | undefined;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -104,61 +108,61 @@ export abstract class TestRunner {
      * Runs the generator.
      */
     public async run({ fixture, configuration }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
-        if (this.buildInvocation == null) {
-            this.buildInvocation = this.build();
-        }
-        await this.buildInvocation;
-
-        const metrics: TestRunner.TestCaseMetrics = {};
-
-        const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
-        const absolutePathToAPIDefinition = AbsoluteFilePath.of(
-            path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
-        );
-        const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
-        const outputFolder = configuration?.outputFolder ?? fixture;
-        const outputDir =
-            configuration == null
-                ? join(this.generator.absolutePathToWorkspace, RelativeFilePath.of(fixture))
-                : join(
-                      this.generator.absolutePathToWorkspace,
-                      RelativeFilePath.of(fixture),
-                      RelativeFilePath.of(configuration.outputFolder)
-                  );
-        const language = this.generator.workspaceConfig.language;
-        const outputVersion = configuration?.outputVersion ?? "0.0.1";
-        const customConfig =
-            this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
-                ? {
-                      ...(this.generator.workspaceConfig.defaultCustomConfig ?? {}),
-                      ...((configuration?.customConfig as Record<string, unknown>) ?? {})
-                  }
-                : undefined;
-        const publishConfig = configuration?.publishConfig;
-        const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
-        const irVersion = this.generator.workspaceConfig.irVersion;
-        const publishMetadata = configuration?.publishMetadata ?? undefined;
-        const readme = configuration?.readmeConfig ?? undefined;
-        const fernWorkspace = await (
-            await convertGeneratorWorkspaceToFernWorkspace({
-                absolutePathToAPIDefinition,
-                taskContext,
-                fixture
-            })
-        )?.toFernWorkspace({ context: taskContext });
-        if (fernWorkspace == null) {
-            return {
-                type: "failure",
-                cause: "invalid-fixture",
-                message: `Failed to validate fixture ${fixture}`,
-                id: fixture,
-                outputFolder,
-                metrics
-            };
-        }
-
-        taskContext.logger.debug("Acquiring lock...");
         try {
+            if (this.buildInvocation == null) {
+                this.buildInvocation = this.build();
+            }
+            await this.buildInvocation;
+
+            const metrics: TestRunner.TestCaseMetrics = {};
+
+            const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
+            const absolutePathToAPIDefinition = AbsoluteFilePath.of(
+                path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+            );
+            const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
+            const outputFolder = configuration?.outputFolder ?? fixture;
+            const outputDir =
+                configuration == null
+                    ? join(this.generator.absolutePathToWorkspace, RelativeFilePath.of(fixture))
+                    : join(
+                          this.generator.absolutePathToWorkspace,
+                          RelativeFilePath.of(fixture),
+                          RelativeFilePath.of(configuration.outputFolder)
+                      );
+            const language = this.generator.workspaceConfig.language;
+            const outputVersion = configuration?.outputVersion ?? "0.0.1";
+            const customConfig =
+                this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
+                    ? {
+                          ...(this.generator.workspaceConfig.defaultCustomConfig ?? {}),
+                          ...((configuration?.customConfig as Record<string, unknown>) ?? {})
+                      }
+                    : undefined;
+            const publishConfig = configuration?.publishConfig;
+            const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
+            const irVersion = this.generator.workspaceConfig.irVersion;
+            const publishMetadata = configuration?.publishMetadata ?? undefined;
+            const readme = configuration?.readmeConfig ?? undefined;
+            const fernWorkspace = await (
+                await convertGeneratorWorkspaceToFernWorkspace({
+                    absolutePathToAPIDefinition,
+                    taskContext,
+                    fixture
+                })
+            )?.toFernWorkspace({ context: taskContext });
+            if (fernWorkspace == null) {
+                return {
+                    type: "failure",
+                    cause: "invalid-fixture",
+                    message: `Failed to validate fixture ${fixture}`,
+                    id: fixture,
+                    outputFolder,
+                    metrics
+                };
+            }
+
+            taskContext.logger.debug("Acquiring lock...");
             await this.lock.acquire();
             taskContext.logger.info("Running generator...");
             try {
@@ -167,8 +171,8 @@ export abstract class TestRunner {
                 await this.runGenerator({
                     id,
                     absolutePathToFernDefinition: absolutePathToAPIDefinition,
-                    fernWorkspace,
                     absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
+                    fernWorkspace,
                     irVersion,
                     outputVersion,
                     language,
@@ -182,7 +186,8 @@ export abstract class TestRunner {
                     outputFolder,
                     keepDocker: this.keepDocker,
                     publishMetadata,
-                    readme
+                    readme,
+                    shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator)
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
@@ -194,6 +199,7 @@ export abstract class TestRunner {
                 taskContext.logger.info("Successfully wrote .mock directory...");
             } catch (error) {
                 taskContext.logger.error(`Generation failed: ${(error as Error)?.message ?? "Unknown error"}`);
+                taskContext.logger.error(`${(error as Error)?.stack}`);
                 return {
                     type: "failure",
                     cause: "generation",

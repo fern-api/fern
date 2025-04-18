@@ -1,13 +1,16 @@
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { php } from "@fern-api/php-codegen";
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 /**
  * The Guzzle HTTP client.
  */
 export class GuzzleClient {
-    public static NAMESPACE = "GuzzleHttp";
-    public static CLIENT_CLASS_NAME = "Client";
-    public static CLIENT_INTERFACE_CLASS_NAME = "ClientInterface";
+    public static readonly NAMESPACE = "GuzzleHttp";
+    public static readonly EXCEPTION_NAMESPACE = "GuzzleHttp\\Exception";
+    public static readonly CLIENT_CLASS_NAME = "Client";
+    public static readonly CLIENT_INTERFACE_CLASS_NAME = "ClientInterface";
+    public static readonly REQUEST_EXCEPTION_CLASS_NAME = "RequestException";
 
     private context: SdkGeneratorContext;
 
@@ -26,6 +29,13 @@ export class GuzzleClient {
         return php.classReference({
             name: GuzzleClient.CLIENT_INTERFACE_CLASS_NAME,
             namespace: GuzzleClient.NAMESPACE
+        });
+    }
+
+    public getRequestExceptionClassReference(): php.ClassReference {
+        return php.classReference({
+            name: GuzzleClient.REQUEST_EXCEPTION_CLASS_NAME,
+            namespace: GuzzleClient.EXCEPTION_NAMESPACE
         });
     }
 

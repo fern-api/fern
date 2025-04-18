@@ -2,11 +2,30 @@
 
 namespace Seed\A;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Traits\RootType;
 
-class A extends SerializableType
+class A extends JsonSerializableType
 {
-    public function __construct()
+    use RootType;
+
+
+    /**
+     * @param array{
+     *   s: string,
+     * } $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        $this->s = $values['s'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
+        return $this->toJson();
     }
 }

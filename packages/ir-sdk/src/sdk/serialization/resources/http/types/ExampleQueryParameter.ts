@@ -18,7 +18,7 @@ export const ExampleQueryParameter: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleQueryParameter {
-    interface Raw {
+    export interface Raw {
         name: NameAndWireValue.Raw;
         value: serializers.ExampleTypeReference.Raw;
         shape?: ExampleQueryParameterShape.Raw | null;

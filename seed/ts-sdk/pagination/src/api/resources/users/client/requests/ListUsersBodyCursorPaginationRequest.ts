@@ -8,7 +8,7 @@ import * as SeedPagination from "../../../../index";
  * @example
  *     {
  *         pagination: {
- *             cursor: "string"
+ *             cursor: "cursor"
  *         }
  *     }
  */
@@ -16,7 +16,6 @@ export interface ListUsersBodyCursorPaginationRequest {
     /**
      * The object that contains the cursor used for pagination
      * in order to fetch the next page of results.
-     *
      */
     pagination?: SeedPagination.WithCursor;
 }

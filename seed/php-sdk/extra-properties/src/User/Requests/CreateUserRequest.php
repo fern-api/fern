@@ -2,40 +2,41 @@
 
 namespace Seed\User\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class CreateUserRequest
+class CreateUserRequest extends JsonSerializableType
 {
     /**
-     * @var string $type
+     * @var 'CreateUserRequest' $type
      */
-    #[JsonProperty("_type")]
+    #[JsonProperty('_type')]
     public string $type;
 
     /**
-     * @var string $version
+     * @var 'v1' $version
      */
-    #[JsonProperty("_version")]
+    #[JsonProperty('_version')]
     public string $version;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @param string $type
-     * @param string $version
-     * @param string $name
+     * @param array{
+     *   type: 'CreateUserRequest',
+     *   version: 'v1',
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        string $type,
-        string $version,
-        string $name,
+        array $values,
     ) {
-        $this->type = $type;
-        $this->version = $version;
-        $this->name = $name;
+        $this->type = $values['type'];
+        $this->version = $values['version'];
+        $this->name = $values['name'];
     }
 }

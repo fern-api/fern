@@ -1,0 +1,9 @@
+## 0.42.15
+**`(internal):`** The documentation resolver now appropriately creates a unique identifier for changelog sections. Previously, if you had multiple
+changelogs within the same section, despite their title and slug being different, they would be treated as the same section since the ID
+only took into account the parents' slug, appended the word "changelog" and that was all.
+
+As a result previously all changelogs within the same section would get highlighted when one was selected, now only the selected changelog
+is highlighted.
+
+

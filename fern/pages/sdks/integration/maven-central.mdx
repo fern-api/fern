@@ -1,48 +1,134 @@
 ---
-title: Integrating Maven Central
+title: Publish your Java SDK with Maven
 ---
 
-To authenticate and integrate Maven Central within your Java SDK, you'll need to [create a Maven Central User Token](/learn/sdks/package-managers/maven-central#creating-a-maven-central-user-token) and [add it to your repository](/learn/sdks/package-managers/maven-central#adding-user-tokens-to-your-github-repository). 
-
-## Creating a Maven Central User Token
-<Steps>
-### Log In
-Log into the Nexus Repository Manager web interface where you host your project. This is likely [oss.sonatype.org](https://oss.sonatype.org) or [s01.oss.sonatype.org](https://s01.oss.sonatype.org). 
+To make your Java SDK publicly accessible, publish to [Maven Central](https://central.sonatype.com/). Once you've followed the steps below to connect your Maven account to your SDK, Fern will automatically publish the latest version of your SDK.  
 
 <Info>
-If you don't have an existing Nexus Repository Manager, you can [log in or create a Maven Central account here](https://central.sonatype.org/publish/generate-token/)
+For more information on the differences between the Central Portal and OSSRH, see the [Maven Central documentation](https://central.sonatype.org/faq/what-is-different-between-central-portal-and-legacy-ossrh/).
 </Info>
-### Navigate to User Account
-Click on your username in the top-right corner and select **View Account**. 
-### Generate User Token
-- Click on **Generate User Token**. 
-<Note title='Save your User Token'>
-Be sure to save the generated username and password - they won't be accessible after you leave the page. 
-</Note>
-</Steps>
 
-## Adding User Tokens to your GitHub repository
-<Info>
-Using GitLab? Follow [these steps](/learn/docs/developer-tools/gitlab#add-a-token-to-gitlab). 
-</Info>
+## Publish via the Central Portal (recommended)
 <Steps>
-### Open Repository
-Open your Fern repository in GitHub.
-### Navigate to Actions in Settings
-Click on the **Settings** tab in your repository. Then, under the **Security** section, open **Secrets and variables** > **Actions**. 
+### Log In (or create account) and navigate to your profile
+Log into [https://central.sonatype.com/account](https://central.sonatype.com/account).
+
+### Click on `Generate User Token`
+
+Click on `Generate User Token`.
 
 <Frame>
-<img src="github-secret.png" alt="Adding GitHub Repository Secret" />
+  <img src="maven-user-token.png" alt="Select user token" />
 </Frame>
 
-You can also use the url `https://github.com/<your-repo>/settings/secrets/actions`.
-### Add Secrets
-<Info>
-You'll need to store two repository secrets, one for the username and one for the password. 
+### Confirm generation
+
+You will be asked to confirm the generation of the token. This will invalidate any existing token. Click on `Ok`.
+
+### Add Maven Central credentials to GitHub Secrets
+
+You'll need to store two repository secrets in your **fern configuration repository** (**i.e. not the Java SDK repository**),
+one for the username and one for the password.
 
 <Frame>
-<img src="maven-central.png" alt="Maven Central User Token" />
+  <img src="github-secret.png" alt="Adding GitHub Repository Secret" />
 </Frame>
+
+<Info>
+  For each, select **New repository secret**. Name your secret (we recommend `MAVEN_USERNAME` and `MAVEN_PASSWORD`,
+  respectively), add the corresponding value, and click **Add secret**.
 </Info>
-For each, select **New repository secret**. Name your secret (we recommend `MAVEN_USERNAME` and `MAVEN_PASSWORD`, respectively), add the corresponding value, and click **Add secret**. 
+
+### Sign with GPG
+
+If you don't have gpg installed, you can download the binary from [https://gnupg.org/download/index.html](https://gnupg.org/download/index.html), or install it via package manager.
+
+If you already have a GPG key, you can list your keys:
+
+```sh
+gpg --list-secret-keys --keyid-format LONG
+```
+
+If you don't have a GPG key, you can generate a new one:
+
+```sh
+gpg --gen-key
+```
+
+To export your secret key, run:
+
+```sh
+gpg --export-secret-keys --armor KEY_ID
+```
+
+Be sure to replace `KEY_ID` with the key ID of the key you want to export.
+
+More information is available on [Maven Central's GPG validation page](https://central.sonatype.org/publish/requirements/gpg/).
+
+### Add GPG Signature to GitHub Secrets
+
+You'll need to store repository secrets in your **fern configuration repository**,
+for the GPG key id, secret key, and password.
+
+<Frame>
+  <img src="github-secret.png" alt="Adding GitHub Repository Secret" />
+</Frame>
+
+<Info>
+  For each, select **New repository secret**. Name your secret (we recommend `MAVEN_CENTRAL_SECRET_KEY_KEY_ID`, `MAVEN_CENTRAL_SECRET_KEY`, and `MAVEN_CENTRAL_SECRET_KEY_PASSWORD`, respectively), add the corresponding value, and click **Add secret**.
+</Info>
+
+
 </Steps>
+
+Once you regenerate your SDK, a GitHub action will run to publish directly to Maven!
+
+## Publish via OSSRH (legacy)
+
+<Steps>
+### Log In (or create account)
+Log into [s01.oss.sonatype.org](https://s01.oss.sonatype.org).
+
+### Navigate to your profile
+
+Click on your username in the top-right corner and select **Profile**.
+
+<Frame>
+  <img src="profile.png" alt="Profile selection" />
+</Frame>
+
+### Click on `User Token`
+
+Expand the dropdown and click on `User Token`.
+
+<Frame>
+  <img src="user-token.png" alt="Select user token" />
+</Frame>
+
+### Click on `Access User Token`
+
+There will be a lock icon followed by the text `Access User Token`. Click on `Access User Token`. You may
+need to re-authenticate to see the user token.
+
+<Frame>
+  <img src="username-password.png" alt="View your username and password" />
+</Frame>
+
+### Add GitHub Secrets
+
+You'll need to store two repository secrets in your **fern configuration repository** (**i.e. not the Java SDK repository**),
+one for the username and one for the password.
+
+<Frame>
+  <img src="github-secret.png" alt="Adding GitHub Repository Secret" />
+</Frame>
+
+<Info>
+  For each, select **New repository secret**. Name your secret (we recommend `MAVEN_USERNAME` and `MAVEN_PASSWORD`,
+  respectively), add the corresponding value, and click **Add secret**.
+</Info>
+
+</Steps>
+
+Once you regenerate your SDK, a GitHub action will run to publish directly to Maven!
+

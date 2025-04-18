@@ -1,37 +1,130 @@
 {
-  "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../commons/core-utils" },
-    { "path": "../../commons/fs-utils" },
-    { "path": "../../commons/logging-execa" },
-    { "path": "../../core" },
-    { "path": "../../ir-sdk" },
-    { "path": "../auth" },
-    { "path": "../configuration" },
-    { "path": "../docs-preview" },
-    { "path": "../generation/ir-generator" },
-    { "path": "../generation/ir-migrations" },
-    { "path": "../generation/local-generation/local-workspace-runner" },
-    { "path": "../generation/remote-generation/remote-workspace-runner" },
-    { "path": "../init" },
-    { "path": "../logger" },
-    { "path": "../login" },
-    { "path": "../mock" },
-    { "path": "../openapi-ir-sdk" },
-    { "path": "../openapi-ir-to-fern" },
-    { "path": "../openapi-parser" },
-    { "path": "../posthog-manager" },
-    { "path": "../project-loader" },
-    { "path": "../register" },
-    { "path": "../semver-utils" },
-    { "path": "../task-context" },
-    { "path": "../workspace-loader" },
-    { "path": "../yaml/docs-validator" },
-    { "path": "../fern-definition/formatter" },
-    { "path": "../fern-definition/validator" },
-    { "path": "../cli-migrations" },
-    { "path": "../fern-definition/schema" }
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../../commons/logging-execa"
+    },
+    {
+      "path": "../../core"
+    },
+    {
+      "path": "../../ir-sdk"
+    },
+    {
+      "path": "../auth"
+    },
+    {
+      "path": "../cli-source-resolver"
+    },
+    {
+      "path": "../configuration-loader"
+    },
+    {
+      "path": "../docs-preview"
+    },
+    {
+      "path": "../generation/ir-generator"
+    },
+    {
+      "path": "../generation/ir-migrations"
+    },
+    {
+      "path": "../generation/local-generation/local-workspace-runner"
+    },
+    {
+      "path": "../generation/remote-generation/remote-workspace-runner"
+    },
+    {
+      "path": "../init"
+    },
+    {
+      "path": "../cli-logger"
+    },
+    {
+      "path": "../logger"
+    },
+    {
+      "path": "../login"
+    },
+    {
+      "path": "../mock"
+    },
+    {
+      "path": "../api-importers/openapi/openapi-ir"
+    },
+    {
+      "path": "../api-importers/openapi/openapi-ir-to-fern"
+    },
+    {
+      "path": "../api-importers/openapi/openapi-ir-parser"
+    },
+    {
+      "path": "../posthog-manager"
+    },
+    {
+      "path": "../project-loader"
+    },
+    {
+      "path": "../register"
+    },
+    {
+      "path": "../semver-utils"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../workspace/loader"
+    },
+    {
+      "path": "../workspace/commons"
+    },
+    {
+      "path": "../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../yaml/docs-validator"
+    },
+    {
+      "path": "../yaml/generators-validator"
+    },
+    {
+      "path": "../fern-definition/formatter"
+    },
+    {
+      "path": "../fern-definition/validator"
+    },
+    {
+      "path": "../workspace/oss-validator"
+    },
+    {
+      "path": "../cli-migrations"
+    },
+    {
+      "path": "../fern-definition/schema"
+    },
+    {
+      "path": "../fern-definition/ir-to-jsonschema"
+    },
+    {
+      "path": "../docs-resolver"
+    },
+    {
+      "path": "../../../generators/typescript/utils/commons"
+    }
   ]
 }

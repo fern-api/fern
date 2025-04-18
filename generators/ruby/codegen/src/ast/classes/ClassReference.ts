@@ -1,3 +1,5 @@
+import { format } from "util";
+
 import {
     AliasTypeDeclaration,
     ContainerType,
@@ -16,17 +18,17 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { format } from "util";
+
 import { LocationGenerator } from "../../utils/LocationGenerator";
-import { ConditionalStatement } from "../abstractions/ConditionalStatement";
 import { Argument } from "../Argument";
+import { Import } from "../Import";
+import { Property } from "../Property";
+import { Variable } from "../Variable";
+import { ConditionalStatement } from "../abstractions/ConditionalStatement";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
-import { Property } from "../Property";
-import { Variable } from "../Variable";
 
 enum RubyClass {
     INTEGER = "Integer",
@@ -121,7 +123,7 @@ export class ClassReference extends AstNode {
     }
 }
 
-// Basic or primitve class references for which we don't do much
+// Basic or primitive class references for which we don't do much
 export const OpenStructClassReference = new ClassReference({
     name: RubyClass.OPENSTRUCT,
     import_: new Import({ from: "ostruct", isExternal: true })

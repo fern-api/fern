@@ -82,6 +82,7 @@ public final class PlaylistIdNotFoundErrorBody {
   }
 
   @JsonTypeName("playlistId")
+  @JsonIgnoreProperties("type")
   private static final class PlaylistIdValue implements Value {
     @JsonProperty("value")
     private PlaylistId value;
@@ -119,6 +120,7 @@ public final class PlaylistIdNotFoundErrorBody {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

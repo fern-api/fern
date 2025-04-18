@@ -15,7 +15,7 @@ export const RequestProperty: core.serialization.ObjectSchema<serializers.Reques
     });
 
 export declare namespace RequestProperty {
-    interface Raw {
+    export interface Raw {
         propertyPath?: Name.Raw[] | null;
         property: RequestPropertyValue.Raw;
     }

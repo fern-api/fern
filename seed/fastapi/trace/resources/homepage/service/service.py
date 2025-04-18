@@ -23,16 +23,11 @@ class AbstractHomepageService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_homepage_problems(
-        self, *, x_random_header: typing.Optional[str] = None
-    ) -> typing.Sequence[ProblemId]: ...
+    def get_homepage_problems(self, *, x_random_header: typing.Optional[str] = None) -> typing.Sequence[ProblemId]: ...
 
     @abc.abstractmethod
     def set_homepage_problems(
-        self,
-        *,
-        body: typing.List[ProblemId],
-        x_random_header: typing.Optional[str] = None,
+        self, *, body: typing.List[ProblemId], x_random_header: typing.Optional[str] = None
     ) -> None: ...
 
     """
@@ -49,29 +44,17 @@ class AbstractHomepageService(AbstractFernService):
     def __init_get_homepage_problems(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_homepage_problems)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.get_homepage_problems,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.get_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.get_homepage_problems)
-        def wrapper(
-            *args: typing.Any, **kwargs: typing.Any
-        ) -> typing.Sequence[ProblemId]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Sequence[ProblemId]:
             try:
                 return cls.get_homepage_problems(*args, **kwargs)
             except FernHTTPException as e:
@@ -97,26 +80,16 @@ class AbstractHomepageService(AbstractFernService):
     def __init_set_homepage_problems(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.set_homepage_problems)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(
-                    parameter.replace(
-                        default=fastapi.Header(default=None, alias="X-Random-Header")
-                    )
-                )
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.set_homepage_problems,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.set_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.set_homepage_problems)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> None:

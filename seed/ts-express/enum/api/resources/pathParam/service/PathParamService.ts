@@ -11,9 +11,7 @@ export interface PathParamServiceMethods {
         req: express.Request<
             {
                 operand: serializers.Operand.Raw;
-                maybeOperand?: serializers.Operand.Raw | null;
                 operandOrColor: serializers.ColorOrOperand.Raw;
-                maybeOperandOrColor?: serializers.ColorOrOperand.Raw | null;
             },
             never,
             never,
@@ -24,19 +22,22 @@ export interface PathParamServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class PathParamService {
     private router;
 
-    constructor(private readonly methods: PathParamServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: PathParamServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -46,37 +47,34 @@ export class PathParamService {
     }
 
     public toRouter(): express.Router {
-        this.router.post(
-            "/path/:operand/:maybeOperand/:operandOrColor/:maybeOperandOrColor",
-            async (req, res, next) => {
-                try {
-                    await this.methods.send(
-                        req as any,
-                        {
-                            send: async () => {
-                                res.sendStatus(204);
-                            },
-                            cookie: res.cookie.bind(res),
-                            locals: res.locals,
+        this.router.post("/path/:operand/:operandOrColor", async (req, res, next) => {
+            try {
+                await this.methods.send(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
                         },
-                        next
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedEnumError) {
+                    console.warn(
+                        `Endpoint 'send' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
                     );
-                    next();
-                } catch (error) {
-                    if (error instanceof errors.SeedEnumError) {
-                        console.warn(
-                            `Endpoint 'send' unexpectedly threw ${error.constructor.name}.` +
-                                ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
-                        );
-                        await error.send(res);
-                    } else {
-                        res.status(500).json("Internal Server Error");
-                    }
-                    next(error);
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
                 }
+                next(error);
             }
-        );
+        });
         return this.router;
     }
 }

@@ -2,52 +2,59 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
-class BasicCustomFiles extends SerializableType
+class BasicCustomFiles extends JsonSerializableType
 {
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var NonVoidFunctionSignature $signature
      */
-    #[JsonProperty("signature")]
+    #[JsonProperty('signature')]
     public NonVoidFunctionSignature $signature;
 
     /**
-     * @var array<Language, Files> $additionalFiles
+     * @var array<value-of<Language>, Files> $additionalFiles
      */
-    #[JsonProperty("additionalFiles"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('additionalFiles'), ArrayType(['string' => Files::class])]
     public array $additionalFiles;
 
     /**
      * @var BasicTestCaseTemplate $basicTestCaseTemplate
      */
-    #[JsonProperty("basicTestCaseTemplate")]
+    #[JsonProperty('basicTestCaseTemplate')]
     public BasicTestCaseTemplate $basicTestCaseTemplate;
 
     /**
-     * @param string $methodName
-     * @param NonVoidFunctionSignature $signature
-     * @param array<Language, Files> $additionalFiles
-     * @param BasicTestCaseTemplate $basicTestCaseTemplate
+     * @param array{
+     *   methodName: string,
+     *   signature: NonVoidFunctionSignature,
+     *   additionalFiles: array<value-of<Language>, Files>,
+     *   basicTestCaseTemplate: BasicTestCaseTemplate,
+     * } $values
      */
     public function __construct(
-        string $methodName,
-        NonVoidFunctionSignature $signature,
-        array $additionalFiles,
-        BasicTestCaseTemplate $basicTestCaseTemplate,
+        array $values,
     ) {
-        $this->methodName = $methodName;
-        $this->signature = $signature;
-        $this->additionalFiles = $additionalFiles;
-        $this->basicTestCaseTemplate = $basicTestCaseTemplate;
+        $this->methodName = $values['methodName'];
+        $this->signature = $values['signature'];
+        $this->additionalFiles = $values['additionalFiles'];
+        $this->basicTestCaseTemplate = $values['basicTestCaseTemplate'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

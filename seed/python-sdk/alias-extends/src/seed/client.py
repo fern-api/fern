@@ -3,10 +3,10 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
+from .raw_client import RawSeedAliasExtends
 from .core.request_options import RequestOptions
-from json.decoder import JSONDecodeError
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawSeedAliasExtends
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -47,7 +47,9 @@ class SeedAliasExtends:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -57,6 +59,18 @@ class SeedAliasExtends:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawSeedAliasExtends(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSeedAliasExtends:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSeedAliasExtends
+        """
+        return self._raw_client
 
     def extended_inline_request_body(
         self, *, child: str, parent: str, request_options: typing.Optional[RequestOptions] = None
@@ -83,27 +97,13 @@ class SeedAliasExtends:
             base_url="https://yourhost.com/path/to/api",
         )
         client.extended_inline_request_body(
-            child="string",
-            parent="string",
+            child="child",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "extends/extended-inline-request-body",
-            method="POST",
-            json={
-                "child": child,
-                "parent": parent,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.extended_inline_request_body(
+            child=child, parent=parent, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncSeedAliasExtends:
@@ -141,7 +141,9 @@ class AsyncSeedAliasExtends:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             httpx_client=httpx_client
@@ -151,6 +153,18 @@ class AsyncSeedAliasExtends:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawSeedAliasExtends(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSeedAliasExtends:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSeedAliasExtends
+        """
+        return self._raw_client
 
     async def extended_inline_request_body(
         self, *, child: str, parent: str, request_options: typing.Optional[RequestOptions] = None
@@ -182,27 +196,13 @@ class AsyncSeedAliasExtends:
 
         async def main() -> None:
             await client.extended_inline_request_body(
-                child="string",
-                parent="string",
+                child="child",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "extends/extended-inline-request-body",
-            method="POST",
-            json={
-                "child": child,
-                "parent": parent,
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.extended_inline_request_body(
+            child=child, parent=parent, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

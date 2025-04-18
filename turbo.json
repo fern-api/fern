@@ -1,0 +1,29 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "clean": {
+      "cache": false
+    },
+    "compile": {
+      "dependsOn": ["^compile"],
+      "outputs": ["lib/**"]
+    },
+    "depcheck": {
+      "outputs": []
+    },
+    "lint:eslint": {
+      "outputs": []
+    },
+    "lint:eslint:fix": {
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^compile"],
+      "outputs": []
+    },
+    "test:update": {
+      "dependsOn": ["^compile"],
+      "outputs": []
+    }
+  }
+}

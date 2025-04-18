@@ -1,0 +1,204 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [],
+    "endpoints": {
+        "endpoint_service.post": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "post",
+                    "camelCase": {
+                        "unsafeName": "post",
+                        "safeName": "post"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post",
+                        "safeName": "post"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST",
+                        "safeName": "POST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Post",
+                        "safeName": "Post"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "serviceParam",
+                                "camelCase": {
+                                    "unsafeName": "serviceParam",
+                                    "safeName": "serviceParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service_param",
+                                    "safeName": "service_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE_PARAM",
+                                    "safeName": "SERVICE_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ServiceParam",
+                                    "safeName": "ServiceParam"
+                                }
+                            },
+                            "wireValue": "serviceParam"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "resourceParam",
+                                "camelCase": {
+                                    "unsafeName": "resourceParam",
+                                    "safeName": "resourceParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "resource_param",
+                                    "safeName": "resource_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESOURCE_PARAM",
+                                    "safeName": "RESOURCE_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ResourceParam",
+                                    "safeName": "ResourceParam"
+                                }
+                            },
+                            "wireValue": "resourceParam"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "endpointParam",
+                                "camelCase": {
+                                    "unsafeName": "endpointParam",
+                                    "safeName": "endpointParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "endpoint_param",
+                                    "safeName": "endpoint_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENDPOINT_PARAM",
+                                    "safeName": "ENDPOINT_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "EndpointParam",
+                                    "safeName": "EndpointParam"
+                                }
+                            },
+                            "wireValue": "endpointParam"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    }
+                ],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "pathParam",
+                    "camelCase": {
+                        "unsafeName": "pathParam",
+                        "safeName": "pathParam"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "path_param",
+                        "safeName": "path_param"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PATH_PARAM",
+                        "safeName": "PATH_PARAM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PathParam",
+                        "safeName": "PathParam"
+                    }
+                },
+                "wireValue": "pathParam"
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        }
+    ],
+    "environments": null,
+    "generatorConfig": null
+}

@@ -1,9 +1,13 @@
-import { Name } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
+
 import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
 
 export declare namespace RequestWrapperContextImpl {
@@ -16,6 +20,8 @@ export declare namespace RequestWrapperContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
+        inlinePathParameters: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -28,6 +34,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
+    private inlinePathParameters: boolean;
+    private enableInlineTypes: boolean;
 
     constructor({
         requestWrapperGenerator,
@@ -37,7 +45,9 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         sourceFile,
         includeSerdeLayer,
         retainOriginalCasing,
-        inlineFileProperties
+        inlineFileProperties,
+        inlinePathParameters,
+        enableInlineTypes
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -47,6 +57,32 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
+        this.inlinePathParameters = inlinePathParameters;
+        this.enableInlineTypes = enableInlineTypes;
+    }
+
+    public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
+        if (!this.inlinePathParameters) {
+            return false;
+        }
+        if (sdkRequest == null) {
+            return false;
+        }
+        switch (sdkRequest.shape.type) {
+            case "justRequestBody":
+                return false;
+            case "wrapper":
+                break;
+            default:
+                assertNever(sdkRequest.shape);
+        }
+        if (sdkRequest.shape.onlyPathParameters) {
+            return true;
+        }
+        if (sdkRequest.shape.includePathParameters) {
+            return true;
+        }
+        return false;
     }
 
     public getGeneratedRequestWrapper(packageId: PackageId, endpointName: Name): GeneratedRequestWrapper {
@@ -67,7 +103,9 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             }),
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            inlineFileProperties: this.inlineFileProperties
+            inlineFileProperties: this.inlineFileProperties,
+            enableInlineTypes: this.enableInlineTypes,
+            shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest)
         });
     }
 

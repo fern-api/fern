@@ -31,13 +31,13 @@ export const RequestPropertyValue: core.serialization.Schema<
     });
 
 export declare namespace RequestPropertyValue {
-    type Raw = RequestPropertyValue.Query | RequestPropertyValue.Body;
+    export type Raw = RequestPropertyValue.Query | RequestPropertyValue.Body;
 
-    interface Query extends QueryParameter.Raw {
+    export interface Query extends QueryParameter.Raw {
         type: "query";
     }
 
-    interface Body extends ObjectProperty.Raw {
+    export interface Body extends ObjectProperty.Raw {
         type: "body";
     }
 }

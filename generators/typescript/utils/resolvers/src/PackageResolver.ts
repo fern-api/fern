@@ -1,5 +1,14 @@
-import { HttpService, IntermediateRepresentation, Package, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
+
+import {
+    HttpService,
+    IntermediateRepresentation,
+    Package,
+    Subpackage,
+    SubpackageId,
+    WebSocketChannel,
+    WebSocketChannelId
+} from "@fern-fern/ir-sdk/api";
 
 export class PackageResolver {
     constructor(private readonly intermediateRepresentation: IntermediateRepresentation) {}
@@ -32,6 +41,14 @@ export class PackageResolver {
         return subpackage;
     }
 
+    public resolveWebSocketChannel(channelId: WebSocketChannelId): WebSocketChannel {
+        const channel = this.intermediateRepresentation.websocketChannels?.[channelId];
+        if (channel == null) {
+            throw new Error("Channel does not exist: " + channelId);
+        }
+        return channel;
+    }
+
     public getServiceDeclarationOrThrow(packageId: PackageId): HttpService {
         const service = this.getServiceDeclaration(packageId);
         if (service == null) {
@@ -40,6 +57,14 @@ export class PackageResolver {
             );
         }
         return service;
+    }
+
+    public getChannelDeclaration(packageId: PackageId): WebSocketChannel | undefined {
+        const package_ = this.resolvePackage(packageId);
+        if (package_.websocket == null) {
+            return undefined;
+        }
+        return this.resolveWebSocketChannel(package_.websocket);
     }
 
     public getServiceDeclaration(packageId: PackageId): HttpService | undefined {
@@ -52,5 +77,13 @@ export class PackageResolver {
             throw new Error("Service does not exist: " + package_.service);
         }
         return service;
+    }
+
+    public getWebSocketChannelDeclaration(packageId: PackageId): WebSocketChannel | undefined {
+        const package_ = this.resolvePackage(packageId);
+        if (package_.websocket == null) {
+            return undefined;
+        }
+        return this.resolveWebSocketChannel(package_.websocket);
     }
 }

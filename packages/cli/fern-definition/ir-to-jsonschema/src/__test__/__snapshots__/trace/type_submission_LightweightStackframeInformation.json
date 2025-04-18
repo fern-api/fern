@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "numStackFrames": {
+      "type": "integer"
+    },
+    "topStackFrameMethodName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "numStackFrames",
+    "topStackFrameMethodName"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

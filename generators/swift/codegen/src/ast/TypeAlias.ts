@@ -1,7 +1,7 @@
-import { AstNode, Writer } from "./core";
 import Swift from "..";
 import { AccessLevel } from "./AccessLevel";
 import { Type } from "./Type";
+import { AstNode, Writer } from "./core";
 
 export declare namespace TypeAlias {
     interface Args {

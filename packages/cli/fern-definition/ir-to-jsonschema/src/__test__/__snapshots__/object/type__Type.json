@@ -1,0 +1,193 @@
+{
+  "type": "object",
+  "properties": {
+    "one": {
+      "type": "integer"
+    },
+    "two": {
+      "type": "number"
+    },
+    "three": {
+      "type": "string"
+    },
+    "four": {
+      "type": "boolean"
+    },
+    "five": {
+      "type": "integer"
+    },
+    "six": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "seven": {
+      "type": "string",
+      "format": "date"
+    },
+    "eight": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "nine": {
+      "type": "string",
+      "contentEncoding": "base64"
+    },
+    "ten": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "eleven": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "uniqueItems": true
+    },
+    "twelve": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "thirteen": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fourteen": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    },
+    "fifteen": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "sixteen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer"
+        }
+      }
+    },
+    "seventeen": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "eighteen": {
+      "const": "eighteen"
+    },
+    "nineteen": {
+      "$ref": "#/definitions/Name"
+    },
+    "twenty": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "twentyone": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "twentytwo": {
+      "type": "number"
+    },
+    "twentythree": {
+      "type": "string",
+      "pattern": "^-?[0-9]+$"
+    },
+    "twentyfour": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "twentyfive": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen",
+    "twenty",
+    "twentyone",
+    "twentytwo",
+    "twentythree"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Name": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

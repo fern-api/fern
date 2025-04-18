@@ -1,37 +1,39 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExamples;
-
-#nullable enable
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class ActressTest
 {
-    [Test]
+    [NUnit.Framework.Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "name": "Jennifer Lawrence",
+              "id": "actor_456"
+            }
+            """;
+        var expectedObject = new Actress { Name = "Jennifer Lawrence", Id = "actor_456" };
+        var deserializedObject = JsonUtils.Deserialize<Actress>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+    }
+
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""name"": ""Jennifer Lawrence"",
-          ""id"": ""actor_456""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Actress>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var expectedJson = """
+            {
+              "name": "Jennifer Lawrence",
+              "id": "actor_456"
+            }
+            """;
+        var actualObj = new Actress { Name = "Jennifer Lawrence", Id = "actor_456" };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

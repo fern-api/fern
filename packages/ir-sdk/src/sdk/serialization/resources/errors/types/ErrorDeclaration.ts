@@ -24,7 +24,7 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace ErrorDeclaration {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         name: DeclaredErrorName.Raw;
         discriminantValue: NameAndWireValue.Raw;
         type?: serializers.TypeReference.Raw | null;

@@ -5,14 +5,21 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/client-options-core/fixtures/core"
+	internal "github.com/fern-api/fern-go/internal/testdata/sdk/client-options-core/fixtures/internal"
 )
 
 type WithAuthToken struct {
 	Value string `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (w *WithAuthToken) GetValue() string {
+	if w == nil {
+		return ""
+	}
+	return w.Value
 }
 
 func (w *WithAuthToken) GetExtraProperties() map[string]interface{} {
@@ -26,24 +33,22 @@ func (w *WithAuthToken) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithAuthToken(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
 	if err != nil {
 		return err
 	}
 	w.extraProperties = extraProperties
-
-	w._rawJSON = json.RawMessage(data)
+	w.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (w *WithAuthToken) String() string {
-	if len(w._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(w._rawJSON); err == nil {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(w); err == nil {
+	if value, err := internal.StringifyJSON(w); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", w)

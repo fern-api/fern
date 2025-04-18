@@ -1,4 +1,88 @@
 - changelogEntry:
+    - summary: |
+        Upgrade IR version dependency to v55
+      type: chore
+  createdAt: '2025-02-20'
+  irVersion: 55
+  version: 1.7.0
+- changelogEntry:
+    - summary: |
+        Flat package layout by setting `page-layout: flat`
+      type: feat
+  createdAt: '2025-02-18'
+  irVersion: 53
+  version: 1.6.0
+- changelogEntry:
+    - summary: |
+        Send only request body reference for body-only wrapped request
+      type: fix
+  createdAt: '2025-2-3'
+  irVersion: 53
+  version: 1.5.1
+- changelogEntry:
+    - summary: |
+        Add deep cursor path pagination support.
+      type: feat
+  createdAt: '2025-01-29'
+  irVersion: 53
+  version: 1.5.0
+- changelogEntry:
+    - summary: |
+        Prevent accept header from being removed in wrapped requests
+      type: fix
+  createdAt: '2025-01-21'
+  irVersion: 53
+  version: 1.4.5
+- changelogEntry:
+    - summary: |
+        Add Accept header for json responses
+      type: fix
+  createdAt: '2025-01-21'
+  irVersion: 53
+  version: 1.4.4
+- changelogEntry:
+    - summary: |
+        Fix inlining unwrapped alias types.
+      type: fix
+  createdAt: '2025-01-17'
+  irVersion: 53
+  version: 1.4.3
+- changelogEntry:
+    - summary: |
+        Omit methods with inlined types from interface definitions.
+      type: fix
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.2
+- changelogEntry:
+    - summary: |
+        Fix union inline type name conflict resolution.
+      type: fix
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.1
+- changelogEntry:
+    - summary: |
+        Support inline types in the Java generator.
+      type: feat
+  createdAt: '2025-01-16'
+  irVersion: 53
+  version: 1.4.0
+- changelogEntry:
+    - summary: |
+        Bump IR version to latest (v53)
+      type: chore
+  createdAt: '2024-12-10'
+  irVersion: 53
+  version: 1.3.0
+- changelogEntry:
+    - summary: |
+        Bump Jackson version to latest (2.17.2)
+      type: chore
+  createdAt: '2024-09-26'
+  irVersion: 46
+  version: 1.2.0
+- changelogEntry:
   - summary: |
       We no longer enforce non-null constraints for Object type properties in builders.
     type: feat

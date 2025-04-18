@@ -1,0 +1,261 @@
+---
+title: "Invoice object"
+---
+
+An Invoice represents an invoice that a Business has collected for goods and services provided. Invoices are used to pass information about sales and accounts receivable into Layer.
+
+### Attributes
+
+<ParamField body="id" type="string">
+  Unique identifier for the invoice.
+</ParamField>
+<ParamField body="type" type="string">
+  Resource type. Value will be "Invoice".
+</ParamField>
+<ParamField body="external_id" type="string">
+  Unique ID of the invoice in your system for linking purposes.
+</ParamField>
+<ParamField body="business_id" type="string">
+  Id of the Business that generated the invoice.
+</ParamField>
+<ParamField body="status" type="enum">
+  Status of the invoice. Values can be: `PENDING`, `SENT`, `PARTIALLY_PAID`,
+  `PAID`, `VOIDED`
+</ParamField>
+<ParamField body="sent_at" type="ISO8601 timestamp">
+  When the invoice was sent by the business to the recipient.
+</ParamField>
+<ParamField body="due_at" type="ISO8601 timestamp">
+  When the invoice is due.
+</ParamField>
+<ParamField body="paid_at" type="ISO8601 timestamp">
+  When the invoice was paid.
+</ParamField>
+<ParamField body="voided_at" type="ISO8601 timestamp">
+  When the invoice was voided. Voiding excludes the invoice from accounting.
+</ParamField>
+<ParamField body="invoice_number" type="string">
+  Number for the invoice for display to end-users.
+</ParamField>
+<ParamField body="recipient_name" type="string">
+  String description of the invoice recipient.
+</ParamField>
+<ParamField body="line_items" type="array of InvoiceLineItem objects">
+  Line items making up the invoice.
+  <Expandable title="InvoiceLineItem properties">
+    <ResponseField name="id" type="string">
+      Id of the invoice line item.
+    </ResponseField>
+    <ResponseField name="invoice_id" type="string">
+      Id of the parent invoice
+    </ResponseField>
+    <ResponseField name="description" type="string">
+      Description of the specific line item.
+    </ResponseField>
+    <ResponseField name="product" type="string">
+      Reference to the product being sold.
+    </ResponseField>
+    <ResponseField name="quantity" type="float">
+      Number of units sold.
+    </ResponseField>
+    <ResponseField name="unit_price" type="integer">
+      The amount in cents of each unit.
+    </ResponseField>
+    <ResponseField name="discount_amount" type="integer">
+      Total discount given to this line item, in cents.
+    </ResponseField>
+    <ResponseField name="sales_taxes" type="Array of SalesTax objects">
+      <Expandable title="SalesTax properties">
+        <ResponseField name="tax_account" type="TaxAccount object">
+          <Expandable title="TaxAccount properties">
+            Ledger account associated with this tax.
+            <ResponseField name="type" type="string">
+              Type of tax account object.
+            </ResponseField>
+            <ResponseField name="name" type="string">
+              Name of the tax account, if a name was specified when this line item was created.
+            </ResponseField>
+            <ResponseField name="id" type="string">
+              Id of the tax account if either an account ID was used to create the tax line item or if no tax account was specified.
+            </ResponseField>
+          </Expandable>
+        </ResponseField>
+          <ResponseField name="amount" type="integer">
+            Amount, in cents, of tax owed.
+          </ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="discount_amount" type="integer">
+      Total discount given to this line item, in cents.
+    </ResponseField>
+    <ResponseField name="is_prepayment" type="boolean">
+      Indicates this line item is a prepayment for future services, e.g. package deals, gift cards, etc.
+    </ResponseField>
+  </Expandable>
+</ParamField>
+<ParamField body="subtotal" type="integer">
+  Subtotal of all invoice line items in cents.
+</ParamField>
+<ParamField body="additional_discount" type="integer">
+  Additional discount applied to the whole invoice in addition to individual
+  line items.
+</ParamField>
+<ParamField body="total_discount" type="integer">
+  Sum of all discount amounts across the invoice line items and any additional
+  discounts in cents.
+</ParamField>
+<ResponseField name="additional_sales_taxes" type="Array of SalesTax objects">
+  <Expandable title="SalesTax properties">
+    <ResponseField name="tax_account" type="TaxAccount object">
+      <Expandable title="TaxAccount properties">
+        Ledger account associated with this tax.
+        <ResponseField name="type" type="string">
+          Type of tax account object.
+        </ResponseField>
+        <ResponseField name="name" type="string">
+          Name of the tax account, if a name was specified when this line item was created.
+        </ResponseField>
+        <ResponseField name="id" type="string">
+          Id of the tax account if either an account ID was used to create the tax line item or if no tax account was specified.
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+      <ResponseField name="amount" type="integer">
+        Amount, in cents, of tax owed.
+      </ResponseField>
+  </Expandable>
+</ResponseField>
+<ParamField body="total_tax" type="integer">
+  Sum of all taxes across the invoice line items and any additional taxes in
+  cents.
+</ParamField>
+<ParamField body="tips" type="integer">
+  Tips included by the buyer, in cents.
+</ParamField>
+<ParamField body="total" type="integer">
+  Total amount of the invoice in cents.
+</ParamField>
+<ParamField body="outstanding_balance" type="integer">
+  The remaining balance on the invoice after factoring in all previous invoice
+  payments.
+</ParamField>
+<ParamField body="invoice_payments" type="array of InvoicePayment objects">
+  The payments that have been made towards the balance of the invoice.
+  <Expandable title="InvoicePayment properties">
+    <ResponseField name="id" type="string">
+      Id of the invoice payment.
+    </ResponseField>
+    <ResponseField name="external_id" type="string">
+      External id for the payment within your platform. **Idempotency key.**
+    </ResponseField>
+    <ResponseField name="method" type="enum">
+      Method used to make the payment. Values can be: `CASH`, `CHECK`,
+      `CREDIT_CARD`, `ACH`, `REDEEMED_PREPAYMENT`, `OTHER`
+    </ResponseField>
+    <ResponseField name="fee" type="integer">
+      Fee associated with processing a payment, e.g. credit card processing
+      fees, in cents.
+    </ResponseField>
+    <ResponseField name="at" type="ISO8601 timestamp">
+      When the buyer payment occurred.
+    </ResponseField>
+    <ResponseField name="imported_at" type="ISO8601 timestamp">
+      When the invoice was imported into Layer.
+    </ResponseField>
+    <ResponseField name="processor" type="string">
+      Processor used to make the payment, if any.
+      Any processor name can be provided and will be tracked.
+      Supported processors (`STRIPE`, `SHOPIFY`) will have additional asset balance tracking.
+    </ResponseField>
+    <ResponseField
+      name="allocations"
+      type="array of InvoicePaymentAllocation objects"
+    >
+      <Expandable title="InvoicePaymentAllocation properties">
+        <ResponseField name="invoice_id" type="string">
+          Id of the invoice being paid.
+        </ResponseField>
+        <ResponseField name="payment_id" type="string">
+          Id of the invoice payment.
+        </ResponseField>
+        <ResponseField name="payment_id" type="integer">
+          Amount paid towards this invoice in cents. Cannot exceed the amount of
+          the associated payment.
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ParamField>
+<ParamField body="imported_at" type="ISO8601 timestamp">
+  Time when the invoice was first imported into Layer. **Eligible sort key.**
+</ParamField>
+<ParamField body="updated_at" type="ISO8601 timestamp">
+  Time when the invoice was last updated in Layer. **Eligible sort key.**
+</ParamField>
+
+<ResponseExample>
+```json Response
+{
+  "data": {
+    "type": "Invoice",
+    "id": "6d0c298f-3e4e-4538-9a71-1d5359c22f71",
+    "business_id": "83d8fb80-31ee-4d57-b684-44b4aaa5e01f",
+    "external_id": "019234",
+    "status": "SENT",
+    "sent_at": "2024-04-02T09:02:00Z",
+    "due_at": "2023-04-02T09:02:00Z",
+    "paid_at": null,
+    "voided_at": null,
+    "invoice_number": "1",
+    "recipient_name": "John Doe",
+    "line_items": [
+      {
+        "id": "e6a491dd-9c22-4403-a54f-32d741a7ec67",
+        "invoice_id": "6d0c298f-3e4e-4538-9a71-1d5359c22f71",
+        "account_identifier": null,
+        "description": null,
+        "product": "Cleaner Solution Pro",
+        "unit_price": 1299,
+        "quantity": "2.00",
+        "subtotal": 2598,
+        "discount_amount": 0,
+        "sales_taxes_total": 218,
+        "sales_taxes": [
+          {
+            "tax_account": {
+              "type": "Tax_Name",
+              "name": "CALIFORNIA_VAT"
+            },
+            "amount": 218
+          }
+        ],
+        "total_amount": 2816
+      },
+      {
+        "id": "44f06385-3ef5-4517-8095-eeedaf2054ab",
+        "invoice_id": "6d0c298f-3e4e-4538-9a71-1d5359c22f71",
+        "account_identifier": null,
+        "description": null,
+        "product": "Full drain cleaning service",
+        "unit_price": 25000,
+        "quantity": "1.00",
+        "subtotal": 25000,
+        "discount_amount": 0,
+        "sales_taxes_total": 0,
+        "total_amount": 25000
+      }
+    ],
+    "subtotal": 27598,
+    "additional_discount": 250,
+    "additional_sales_taxes_total": 0,
+    "tips": 0,
+    "total_amount": 27566,
+    "outstanding_balance": 27566,
+    "payment_allocations": [],
+    "imported_at": "2024-04-19T02:23:59.902537Z",
+    "updated_at": null,
+    "transaction_tags": []
+  }
+}
+```
+</ResponseExample>

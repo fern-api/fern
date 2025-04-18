@@ -9,17 +9,21 @@ import * as SeedMultiLineDocs from "../../../index";
 import * as serializers from "../../../../serialization/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,11 +39,19 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getUser("string")
+     *     await client.user.getUser("userId")
      */
-    public async getUser(userId: string, requestOptions?: User.RequestOptions): Promise<void> {
+    public getUser(userId: string, requestOptions?: User.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
+    }
+
+    private async __getUser(userId: string, requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `users/${encodeURIComponent(userId)}`),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `users/${encodeURIComponent(userId)}`,
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -48,6 +60,7 @@ export class User {
                 "User-Agent": "@fern/multi-line-docs/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -56,13 +69,14 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMultiLineDocsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -71,12 +85,14 @@ export class User {
                 throw new errors.SeedMultiLineDocsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMultiLineDocsTimeoutError();
+                throw new errors.SeedMultiLineDocsTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
             case "unknown":
                 throw new errors.SeedMultiLineDocsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -90,16 +106,27 @@ export class User {
      *
      * @example
      *     await client.user.createUser({
-     *         name: "string",
+     *         name: "name",
      *         age: 1
      *     })
      */
-    public async createUser(
+    public createUser(
         request: SeedMultiLineDocs.CreateUserRequest,
-        requestOptions?: User.RequestOptions
-    ): Promise<SeedMultiLineDocs.User> {
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<SeedMultiLineDocs.User> {
+        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
+    }
+
+    private async __createUser(
+        request: SeedMultiLineDocs.CreateUserRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMultiLineDocs.User>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "users"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -108,6 +135,7 @@ export class User {
                 "User-Agent": "@fern/multi-line-docs/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -117,18 +145,22 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMultiLineDocsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -137,12 +169,14 @@ export class User {
                 throw new errors.SeedMultiLineDocsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMultiLineDocsTimeoutError();
+                throw new errors.SeedMultiLineDocsTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":
                 throw new errors.SeedMultiLineDocsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

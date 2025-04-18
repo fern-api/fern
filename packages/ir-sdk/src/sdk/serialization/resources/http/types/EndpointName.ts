@@ -10,5 +10,5 @@ import { Name } from "../../commons/types/Name";
 export const EndpointName: core.serialization.ObjectSchema<serializers.EndpointName.Raw, FernIr.EndpointName> = Name;
 
 export declare namespace EndpointName {
-    type Raw = Name.Raw;
+    export type Raw = Name.Raw;
 }

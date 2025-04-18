@@ -22,7 +22,7 @@ export interface SyspropServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getNumWarmInstances(
         req: express.Request<never, Record<SeedTrace.Language, number | undefined>, never, never>,
@@ -31,19 +31,22 @@ export interface SyspropServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class SyspropService {
     private router;
 
-    constructor(private readonly methods: SyspropServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: SyspropServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -64,7 +67,7 @@ export class SyspropService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -72,7 +75,7 @@ export class SyspropService {
                     console.warn(
                         `Endpoint 'setNumWarmInstances' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -92,7 +95,7 @@ export class SyspropService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -100,7 +103,7 @@ export class SyspropService {
                     console.warn(
                         `Endpoint 'getNumWarmInstances' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {

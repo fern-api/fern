@@ -19,4 +19,10 @@ public interface IDownloadFilesCustomConfig {
 
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
+
+    @Value.Default
+    @JsonProperty("package-layout")
+    default ICustomConfig.PackageLayout packageLayout() {
+        return ICustomConfig.PackageLayout.NESTED;
+    }
 }

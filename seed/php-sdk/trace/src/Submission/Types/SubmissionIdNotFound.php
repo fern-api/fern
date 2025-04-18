@@ -2,23 +2,33 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SubmissionIdNotFound extends SerializableType
+class SubmissionIdNotFound extends JsonSerializableType
 {
     /**
      * @var string $missingSubmissionId
      */
-    #[JsonProperty("missingSubmissionId")]
+    #[JsonProperty('missingSubmissionId')]
     public string $missingSubmissionId;
 
     /**
-     * @param string $missingSubmissionId
+     * @param array{
+     *   missingSubmissionId: string,
+     * } $values
      */
     public function __construct(
-        string $missingSubmissionId,
+        array $values,
     ) {
-        $this->missingSubmissionId = $missingSubmissionId;
+        $this->missingSubmissionId = $values['missingSubmissionId'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

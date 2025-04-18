@@ -1,0 +1,17 @@
+## Audio Streaming in API Explorer
+Added support for streaming audio directly within the API Explorer. This feature enables testing audio endpoints without leaving the documentation. 
+
+Check it out live in ElevenLabs' [API Explorer](https://elevenlabs.io/docs/api-reference/text-to-speech/convert?playground=/docs/api-reference/text-to-speech/convert-as-stream) to let users test text-to-speech endpoints and hear the results instantly.
+
+## Form Data Optimization
+Enhanced handling of URL parameters and form data in edge functions. Documentation playground now handles complex data structures more efficiently.
+
+```typescript
+const formConfig = {
+  encoding: 'application/x-www-form-urlencoded',
+  arrayFormat: 'brackets',
+  allowNullables: true,
+  sanitize: true,
+  maxDepth: 5
+}
+```

@@ -11,5 +11,5 @@ export const Key: core.serialization.Schema<serializers.Key.Raw, SeedUndiscrimin
     core.serialization.undiscriminatedUnion([KeyType, core.serialization.stringLiteral("default")]);
 
 export declare namespace Key {
-    type Raw = KeyType.Raw | "default";
+    export type Raw = KeyType.Raw | "default";
 }

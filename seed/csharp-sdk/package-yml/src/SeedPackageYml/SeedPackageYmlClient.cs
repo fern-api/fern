@@ -3,13 +3,11 @@ using System.Text.Json;
 using System.Threading;
 using SeedPackageYml.Core;
 
-#nullable enable
-
 namespace SeedPackageYml;
 
 public partial class SeedPackageYmlClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedPackageYmlClient(ClientOptions? clientOptions = null)
     {
@@ -34,13 +32,11 @@ public partial class SeedPackageYmlClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> EchoAsync(
         string id,
         EchoRequest request,
@@ -48,20 +44,22 @@ public partial class SeedPackageYmlClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = $"/{id}/",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = string.Format("/{0}/", ValueConvert.ToPathParameterString(id)),
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -72,10 +70,13 @@ public partial class SeedPackageYmlClient
             }
         }
 
-        throw new SeedPackageYmlApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedPackageYmlApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

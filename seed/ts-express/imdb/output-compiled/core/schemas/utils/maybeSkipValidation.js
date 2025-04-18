@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.maybeSkipValidation = void 0;
+exports.maybeSkipValidation = maybeSkipValidation;
 function maybeSkipValidation(schema) {
     return Object.assign(Object.assign({}, schema), { json: transformAndMaybeSkipValidation(schema.json), parse: transformAndMaybeSkipValidation(schema.parse) });
 }
-exports.maybeSkipValidation = maybeSkipValidation;
 function transformAndMaybeSkipValidation(transform) {
     return (value, opts) => {
         const transformed = transform(value, opts);

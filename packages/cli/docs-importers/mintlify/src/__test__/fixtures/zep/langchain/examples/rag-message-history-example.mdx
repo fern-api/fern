@@ -1,0 +1,31 @@
+---
+title: "RAG + Message History example"
+---
+
+<Note>**You can generate a Project API Key in [Zep Dashboard](https://app.getzep.com/projects).**</Note>
+
+<Info>
+    Make sure you have the following environment variables specified when running these examples:
+
+    `ZEP_API_KEY` - API key to your zep project
+
+    `OPENAI_API_KEY` - Open AI api key which the chain will require to generate the answer
+
+</Info>
+
+<Info>
+    **You will need to have a `session_id` in place to invoke the final chain in this example**
+
+    You can create a session by running either [Memory example](https://github.com/getzep/zep-python/blob/main/examples/chat_history/memory_async.py)
+
+    in python sdk repository or [Memory example](https://github.com/getzep/zep-js/blob/main/examples/memory/memory_example.ts) in typescript sdk repository.
+
+</Info>
+
+You can find a complete RAG + Message History examples in the SDK examples
+
+They showcase how to use the `ZepChatMessageHistory` and `ZepVectorStore` classes as part of one chain.
+
+[Python RAG + Message history example](https://github.com/getzep/zep-python/tree/main/examples/langchain-langserve)
+
+[Typescript RAG + Message history example](https://github.com/getzep/zep-js/blob/main/examples/langchain/message_history_vector_store_example.ts)

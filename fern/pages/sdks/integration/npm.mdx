@@ -1,8 +1,8 @@
 ---
-title: Integrating npm
+title: Publish your TypeScript SDK with npm
 ---
 
-To authenticate and integrate npm within your TypeScript/JavaScript SDK, you'll need to [create an npm token](/learn/sdks/package-managers/npm#creating-an-npm-token) and [add it to your repository](/learn/sdks/package-managers/npm#adding-tokens-to-your-github-repository). 
+To make your TypeScript SDK publicly accessible, publish to [npm](https://www.npmjs.com/). Once you've followed the steps below to connect your npm account to your SDK, Fern will automatically publish the latest version of your SDK.  
 
 ## Creating an npm token
 <Steps>
@@ -11,7 +11,10 @@ Log into [npm](https://www.npmjs.com/).
 ### Navigate to Access Tokens
 Click on your profile picture and select **Access Tokens**. 
 ### Generate Token
-Click on **Generate New Token** and select **Classic Token**. Name your token and select **Automation** as the token type. Once finished, click **Generate Token**. 
+Click on **Generate New Token** and select **Classic Token**. Name your token and select **Automation** as the token type. Once finished, click **Generate Token**.
+<Frame>
+<img src="npm-automation-token.png" alt="Creating NPM Automation Token" />
+</Frame>
 <Note title='Save your token'>
 Be sure to save the generated token - it won't be displayed after you leave the page. 
 </Note>
@@ -35,3 +38,5 @@ You can also use the url `https://github.com/<your-repo>/settings/secrets/action
 ### Add Secret
 Select **New repository secret**. Name your secret (we recommend `NPM_TOKEN`), add the corresponding token, and click **Add secret**. 
 </Steps>
+
+Once you regenerate your SDK, a GitHub action will run to publish directly to npm!

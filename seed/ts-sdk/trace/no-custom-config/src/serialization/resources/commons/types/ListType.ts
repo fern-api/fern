@@ -13,7 +13,7 @@ export const ListType: core.serialization.ObjectSchema<serializers.ListType.Raw,
     });
 
 export declare namespace ListType {
-    interface Raw {
+    export interface Raw {
         valueType: serializers.VariableType.Raw;
         isFixedLength?: boolean | null;
     }

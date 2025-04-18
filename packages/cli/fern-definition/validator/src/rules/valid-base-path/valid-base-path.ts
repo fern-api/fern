@@ -31,7 +31,7 @@ function validateBasePath(basePath: string): RuleViolation[] {
 
     if (!basePath.startsWith("/")) {
         violations.push({
-            severity: "error",
+            severity: "fatal",
             message: "base-path must be empty or start with a slash."
         });
     }

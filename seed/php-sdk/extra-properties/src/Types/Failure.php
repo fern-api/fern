@@ -2,23 +2,33 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Failure extends SerializableType
+class Failure extends JsonSerializableType
 {
     /**
-     * @var string $status
+     * @var 'failure' $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public string $status;
 
     /**
-     * @param string $status
+     * @param array{
+     *   status: 'failure',
+     * } $values
      */
     public function __construct(
-        string $status,
+        array $values,
     ) {
-        $this->status = $status;
+        $this->status = $values['status'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -14,13 +14,14 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
+import types.IDocs;
 import types.IExampleType;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Inlined.Builder.class
 )
-public final class Inlined implements IExampleType {
+public final class Inlined implements IExampleType, IDocs {
   private final String name;
 
   private final String docs;

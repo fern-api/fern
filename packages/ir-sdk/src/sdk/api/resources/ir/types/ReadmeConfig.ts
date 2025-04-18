@@ -10,7 +10,7 @@ import * as FernIr from "../../../index";
  */
 export interface ReadmeConfig {
     /**
-     * If specified, this enpdoint should be used in every snippet (if possible).
+     * If specified, this endpoint should be used in every snippet (if possible).
      * Note that some endpoints aren't suitable for every feature (e.g. a non-list
      * endpoint for pagination), so the default is a no-op in those cases.
      */

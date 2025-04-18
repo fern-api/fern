@@ -6,6 +6,7 @@ import {
     StringClassReference,
     TimeClassReference
 } from "@fern-api/ruby-codegen";
+
 import { OAuthConfiguration } from "@fern-fern/ir-sdk/api";
 
 export class AccessToken extends Class_ {

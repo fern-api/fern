@@ -1,0 +1,202 @@
+{
+  "title": "Test spec for `float` types specified as number formats.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "Post",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostRequest",
+          "schema": "Request",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "A simple API response.",
+        "schema": {
+          "generatedName": "PostResponse",
+          "schema": "Response",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/post",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "float"
+                  },
+                  "type": "primitive"
+                },
+                "value": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "float"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Request": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "requestId",
+            "key": "id",
+            "schema": {
+              "generatedName": "requestId",
+              "value": {
+                "schema": {
+                  "type": "float"
+                },
+                "generatedName": "RequestId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A generic request type used throughout the API.\n",
+        "generatedName": "Request",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Response": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "responseId",
+            "key": "id",
+            "schema": {
+              "generatedName": "responseId",
+              "value": {
+                "schema": {
+                  "type": "float"
+                },
+                "generatedName": "ResponseId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "responseValue",
+            "key": "value",
+            "schema": {
+              "generatedName": "responseValue",
+              "value": {
+                "schema": {
+                  "type": "float"
+                },
+                "generatedName": "ResponseValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "A generic response type used throughout the API.\n",
+        "generatedName": "Response",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

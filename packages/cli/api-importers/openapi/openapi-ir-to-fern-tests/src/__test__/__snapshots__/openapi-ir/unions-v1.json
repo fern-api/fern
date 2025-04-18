@@ -1,0 +1,155 @@
+{
+  "title": "Test setting to disable usage of title param",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Shape": {
+        "value": {
+          "generatedName": "Shape",
+          "schemas": [
+            {
+              "generatedName": "ShapeZero",
+              "schema": "Triangle",
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "ShapeOne",
+              "schema": "Square",
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "Triangle": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "triangleType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "triangle",
+                "type": "string"
+              },
+              "generatedName": "TriangleType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "triangleBase",
+            "key": "base",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TriangleBase",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "triangleHeight",
+            "key": "height",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TriangleHeight",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Triangle",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Square": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "squareType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "square",
+                "type": "string"
+              },
+              "generatedName": "SquareType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "squareSideLength",
+            "key": "sideLength",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "SquareSideLength",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Square",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

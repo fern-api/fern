@@ -1,0 +1,72 @@
+---
+title: 'JSON Data'
+---
+
+Layer uses a standardized json structure across all endpoints. There are only 3 possible top level fields.
+
+### Data
+  Contains the requested data from the endpoint and can be either a JSON list or a JSON object. 
+  - Every top level object or item in an array will contain a `type` field indicating the entity type. 
+  - `data` will only be present if the result is successful, in which case there will be a `2**` status code and no `error` field.
+
+```json
+{
+  "data":[
+    {
+      "type":"Business",
+      "id":"08cee9cc-389e-44ea-a42e-ffb12670f515",
+      "external_id":"id-1",
+      "legal_name":"Acme, Inc.",
+      "tin":null,
+      "us_state":"AZ",
+      "entity_type":"LLC",
+      "phone_number":"53924476123",
+      "imported_at":"2023-07-13T17:25:59.292451Z",
+      "updated_at":"2023-07-13T17:25:59.292451Z",
+      "archived_at":null
+    },
+    {
+      "type":"Business",
+      "id":"e348d217-1788-494c-9c1c-d8be13b89aba",
+      "external_id":"id-2",
+      "legal_name":"Acme, Inc.",
+      "tin":null,
+      "us_state":"AZ",
+      "entity_type":"LLC",
+      "phone_number":"69565771257",
+      "imported_at":"2023-07-13T17:25:59.720376Z",
+      "updated_at":"2023-07-13T17:25:59.720376Z",
+      "archived_at":null
+    }
+  ],
+  "meta":{
+    
+  }
+}
+```
+
+### Errors
+  An array of `error` objects. `error` objects will contain the following fields.
+  - `type`: One of a fixed set of categories. Helpful for categorizing & processing errors
+  - `description`: A human readable error description.
+  - `meta`: Optional additional information.
+`errors` will be present only if the request is unsuccessful, in which case there will be a `4**` or `5**` status code and no `data` field.
+
+```json
+{
+  "errors": [
+    {
+      "type": "Plaid",
+      "description": "Plaid credentials must be set before you can add plaid items to businesses. See /v1/configure/plaid"
+    }
+  ]
+}
+
+```
+
+### Meta
+An optional object that may be used to communicate metadata about the request.
+Example use cases include:
+- Idempotency
+- Pagination
+- Rate limits

@@ -4,15 +4,28 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "integer",
+ *         value: 9
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         value: "bar"
+ *     }
+ */
 export type UnionWithPrimitive = SeedUnions.UnionWithPrimitive.Integer | SeedUnions.UnionWithPrimitive.String;
 
-export declare namespace UnionWithPrimitive {
-    interface Integer {
+export namespace UnionWithPrimitive {
+    export interface Integer {
         type: "integer";
         value: number;
     }
 
-    interface String {
+    export interface String {
         type: "string";
         value: string;
     }

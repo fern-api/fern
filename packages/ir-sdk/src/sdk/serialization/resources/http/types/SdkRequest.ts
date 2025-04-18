@@ -17,7 +17,7 @@ export const SdkRequest: core.serialization.ObjectSchema<serializers.SdkRequest.
     });
 
 export declare namespace SdkRequest {
-    interface Raw {
+    export interface Raw {
         streamParameter?: RequestProperty.Raw | null;
         requestParameterName: Name.Raw;
         shape: SdkRequestShape.Raw;

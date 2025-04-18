@@ -9,5 +9,9 @@
         "tabWidth": 2
       }
     }
-  ]
+  ],
+  "importOrder": ["^@fern-api(.*)$", "^@fern-fern(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }

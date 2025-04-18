@@ -16,13 +16,11 @@ class CreateUserRequest(UniversalBaseModel):
     age: typing.Optional[int] = pydantic.Field(default=None)
     """
     The age of the user.
-    This propery is not required.
+    This property is not required.
     """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

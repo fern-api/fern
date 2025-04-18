@@ -1,13 +1,15 @@
-import glob from "glob-promise";
+import { glob } from "glob";
+
 import { AbsoluteFilePath } from "./AbsoluteFilePath";
-import { join } from "./join";
-import { RelativeFilePath } from "./RelativeFilePath";
 
 export async function listFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<AbsoluteFilePath[]> {
+    const alphasort = (a: string, b: string) => a.localeCompare(b, "en");
     return (
         await glob(`**/*.${extensionGlob}`, {
             cwd: root,
             absolute: true
         })
-    ).map(AbsoluteFilePath.of);
+    )
+        .sort(alphasort)
+        .map(AbsoluteFilePath.of);
 }

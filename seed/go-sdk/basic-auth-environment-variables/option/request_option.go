@@ -8,7 +8,7 @@ import (
 	url "net/url"
 )
 
-// RequestOption adapts the behavior of an indivdual request.
+// RequestOption adapts the behavior of an individual request.
 type RequestOption = core.RequestOption
 
 // WithBaseURL sets the base URL, overriding the default
@@ -64,9 +64,9 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 }
 
 // WithBasicAuth sets the 'Authorization: Basic <base64>' request header.
-func WithBasicAuth(username, password string) *core.BasicAuthOption {
+func WithBasicAuth(username, accessToken string) *core.BasicAuthOption {
 	return &core.BasicAuthOption{
-		Username: username,
-		Password: password,
+		Username:    username,
+		AccessToken: accessToken,
 	}
 }

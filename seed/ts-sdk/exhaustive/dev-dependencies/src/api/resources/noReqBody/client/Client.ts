@@ -8,18 +8,22 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 
 export declare namespace NoReqBody {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -32,11 +36,27 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
-    public async getWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
-    ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>> {
+    public getWithNoRequestBody(
+        requestOptions?: NoReqBody.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
+    }
+
+    private async __getWithNoRequestBody(
+        requestOptions?: NoReqBody.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>
+        >
+    > {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-req-body",
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -46,6 +66,7 @@ export class NoReqBody {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -55,19 +76,28 @@ export class NoReqBody {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.noReqBody.getWithNoRequestBody.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.noReqBody.getWithNoRequestBody.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -77,11 +107,21 @@ export class NoReqBody {
      * @example
      *     await client.noReqBody.postWithNoRequestBody()
      */
-    public async postWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions
-    ): Promise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
+    public postWithNoRequestBody(
+        requestOptions?: NoReqBody.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoRequestBody(requestOptions));
+    }
+
+    private async __postWithNoRequestBody(
+        requestOptions?: NoReqBody.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/no-req-body",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -91,6 +131,7 @@ export class NoReqBody {
                 "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -100,19 +141,28 @@ export class NoReqBody {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: Fiddle.noReqBody.postWithNoRequestBody.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: Fiddle.noReqBody.postWithNoRequestBody.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

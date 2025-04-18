@@ -84,24 +84,33 @@ components:
             nullable: true
         eighteen:
           type: string
-          enum:
-            - eighteen
+          const: eighteen
         nineteen:
           $ref: '#/components/schemas/Name'
         twenty:
           type: integer
+          format: int64
           example: 20
         twentyone:
           type: integer
           format: int64
           example: 21
         twentytwo:
-          type: number
-          format: double
+          type: integer
+          format: float
           example: 22.22
         twentythree:
-          type: string
+          type: integer
+          format: bigint
           example: '23'
+        twentyfour:
+          type: string
+          format: date-time
+          nullable: true
+        twentyfive:
+          type: string
+          format: date
+          nullable: true
       required:
         - one
         - two

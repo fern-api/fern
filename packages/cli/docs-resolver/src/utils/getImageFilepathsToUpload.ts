@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 export function collectFilesFromDocsConfig(parsedDocsConfig: docsYml.ParsedDocsConfiguration): Set<AbsoluteFilePath> {

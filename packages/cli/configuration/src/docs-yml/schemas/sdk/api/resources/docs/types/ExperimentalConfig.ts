@@ -14,4 +14,8 @@ export interface ExperimentalConfig {
      * This behavior is unstable and may change in the future.
      */
     disableStreamToggle?: boolean;
+    /** OpenAPI parser rewrite, now deprecated.  */
+    openapiParserV2?: boolean;
+    /** OpenAPI parser in alpha. */
+    openapiParserV3?: boolean;
 }

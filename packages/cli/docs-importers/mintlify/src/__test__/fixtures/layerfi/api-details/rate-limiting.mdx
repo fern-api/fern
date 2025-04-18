@@ -1,0 +1,16 @@
+---
+title: 'Rate Limiting'
+---
+
+Layer uses a single API-wide endpoint cost rate limiting system, where every endpoint contributes a cost towards a total budget. The budget follows a bucket model, where each API call uses tokens from a current bucket which is refilled every 1 second.
+
+Rate limits should never be approached for normal customer read operations, and are only intended to limit heavy data ingestion processes, such as en-masse backfills of data. Nonetheless, we recommend adding retries on all Layer API calls. To assist in retries, the following headers are included in every successful API request:
+- `X-RateLimit-Limit`: a specified bucket capacity.
+- `X-RateLimit-Remaining`: the number of tokens remaining in a bucket.
+- `X-RateLimit-Reset`: a UTC timestamp (in seconds) that specifies the time of refilling a bucket.
+
+Any API calls that are rate limited will receive a response with:
+- Error code `429: Too Many Requests`
+- `Retry-After` header indicating (in seconds) how long to wait before retrying the request.
+
+During normal operations, adding enough retries that requests will retry 1 second later should be sufficient to avoid any rate limiting.

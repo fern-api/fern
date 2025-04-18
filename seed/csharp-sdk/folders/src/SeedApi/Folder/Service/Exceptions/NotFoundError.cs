@@ -1,7 +1,5 @@
 using SeedApi;
 
-#nullable enable
-
 namespace SeedApi.Folder;
 
 /// <summary>

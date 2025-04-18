@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-typescript&utm_content=logo">
-    <img src="/fern/images/logo-primary.png" height="50" align="center" alt="Fern logo" />
+    <img src="/fern/images/logo-primary.svg" height="50" align="center" alt="Fern logo" />
   </a>
 
   <br/>
@@ -30,7 +30,7 @@ Fern handles transforming an API definition -- either an OpenAPI or Fern specifi
 
 Fern is a toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
 
-Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-python&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/docs/intro?utm_source=github&utm_medium=readme&utm_campaign=fern-python&utm_content=documentation) to dive straight in and find out what Fern can do for you!
+Head over to the [official Fern website](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-python&utm_content=homepage) for more information, or head over to our [Documentation](https://www.buildwithfern.com/learn?utm_source=github&utm_medium=readme&utm_campaign=fern-python&utm_content=documentation) to dive straight in and find out what Fern can do for you!
 
 ## Generating Python
 
@@ -44,7 +44,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by 
     path: ../generated/python
 ```
 
-By default, Fern runs the generators in the cloud. To run a generator on your local machine, using the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
+By default, Fern runs the generators in the cloud. To run a generator on your local machine, using the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/learn/cli-reference#running-locally)
 
 ## Configuration
 
@@ -142,12 +142,16 @@ Black is slow so this can potentially speed up code generation quite a bit.
 
 #### ✨ `pydantic_config.version`
 
-**Type:** "v1" or "v2" or "both"
+**Type:** "v1" or "v2" or "both" or "v1_on_v2"
 
 **Default:** "both"
 
 By default, the generator generates pydantic models that are v1 and v2 compatible.
-However you can override them to strictly for v1 or v2.
+However you can override them to:
+- `v1`: strictly use Pydantic v1
+- `v2`: strictly use Pydantic v2
+- `both`: maintain compatibility with both versions
+- `v1_on_v2`: use Pydantic v1 compatibility layer on v2
 
 ```
 config:

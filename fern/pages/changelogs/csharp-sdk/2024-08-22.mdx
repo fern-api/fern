@@ -1,0 +1,21 @@
+## 1.3.0-rc0
+**`(feat):`** Add support for sending the `User-Agent` header.
+
+**`(internal):`** The `RawClient` now supports HTTP headers within the `ClientOptions` and `RequestOptions` types.
+
+**`(feat):`** Add support for the `package-id` configuration, which is used to control the name of the package in NuGet.
+
+**`(feat):`** Add support for mock server tests with `generate-mock-server-tests` configuration option.
+
+**`(internal):`** Omit `null` property values in requests.
+
+**`(fix):`** Fix a bug where request bodies are not sent for wrapped requests that include headers or query params.
+
+**`(fix):`** Fix a bug where enums, dates, and datetimes are sometimes not serialized properly as query parameters and headers.
+
+**`(feat):`** Add support for `read-only-memory-types` configuration.
+
+**`(feat):`** Add the `CancellationToken` parameter as the last parameter to every endpoint method.
+
+**`(feat):`** Add support for gRPC/Protobuf endpoints.
+

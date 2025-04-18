@@ -16,16 +16,18 @@ export const OAuthClientCredentials: core.serialization.ObjectSchema<
     clientIdEnvVar: EnvironmentVariable.optional(),
     clientSecretEnvVar: EnvironmentVariable.optional(),
     tokenPrefix: core.serialization.string().optional(),
+    tokenHeader: core.serialization.string().optional(),
     scopes: core.serialization.list(core.serialization.string()).optional(),
     tokenEndpoint: OAuthTokenEndpoint,
     refreshEndpoint: OAuthRefreshEndpoint.optional(),
 });
 
 export declare namespace OAuthClientCredentials {
-    interface Raw {
+    export interface Raw {
         clientIdEnvVar?: EnvironmentVariable.Raw | null;
         clientSecretEnvVar?: EnvironmentVariable.Raw | null;
         tokenPrefix?: string | null;
+        tokenHeader?: string | null;
         scopes?: string[] | null;
         tokenEndpoint: OAuthTokenEndpoint.Raw;
         refreshEndpoint?: OAuthRefreshEndpoint.Raw | null;

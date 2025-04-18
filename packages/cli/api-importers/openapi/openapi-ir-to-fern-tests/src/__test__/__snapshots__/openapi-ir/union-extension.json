@@ -1,0 +1,264 @@
+{
+  "title": "Test inheritance from undiscrimnated union objects",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "PartyAccount": {
+        "value": {
+          "description": "PartyAccount with excluded currency in response",
+          "generatedName": "PartyAccount",
+          "schemas": [
+            {
+              "generatedName": "PartyAccountZero",
+              "schema": "IbanField",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "PartyAccountOne",
+              "schema": "OtherField",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "IbanField": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "ibanFieldIban",
+            "key": "iban",
+            "schema": {
+              "generatedName": "ibanFieldIban",
+              "value": {
+                "generatedName": "IbanFieldIban",
+                "value": {
+                  "schema": {
+                    "example": "DE2310010010123456788",
+                    "type": "string"
+                  },
+                  "generatedName": "IbanFieldIban",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "IbanField",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "OtherField": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "otherFieldOther",
+            "key": "other",
+            "schema": {
+              "generatedName": "otherFieldOther",
+              "value": {
+                "generatedName": "OtherFieldOther",
+                "schema": "Other",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OtherField",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Other": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "otherIdentification",
+            "key": "identification",
+            "schema": {
+              "generatedName": "otherIdentification",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OtherIdentification",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "otherSchemeNameCone",
+            "key": "schemeNameCone",
+            "schema": {
+              "generatedName": "otherSchemeNameCone",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OtherSchemeNameCone",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Other",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CounterPartyAccount": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "counterPartyAccountCurrency",
+            "key": "currency",
+            "schema": {
+              "generatedName": "counterPartyAccountCurrency",
+              "value": {
+                "schema": {
+                  "example": "EUR",
+                  "type": "string"
+                },
+                "generatedName": "CounterPartyAccountCurrency",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "counterPartyAccountIban",
+            "key": "iban",
+            "schema": {
+              "generatedName": "counterPartyAccountIban",
+              "value": {
+                "generatedName": "CounterPartyAccountIban",
+                "value": {
+                  "schema": {
+                    "example": "DE2310010010123456788",
+                    "type": "string"
+                  },
+                  "generatedName": "CounterPartyAccountIban",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "counterPartyAccountOther",
+            "key": "other",
+            "schema": {
+              "generatedName": "counterPartyAccountOther",
+              "value": {
+                "generatedName": "CounterPartyAccountOther",
+                "schema": "Other",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CounterPartyAccount",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

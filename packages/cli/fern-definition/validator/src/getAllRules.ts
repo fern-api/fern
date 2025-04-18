@@ -1,5 +1,6 @@
 import { Rule } from "./Rule";
-import { CompatibleIrVersionsRule } from "./rules/compatible-ir-versions";
+import { ContentTypeOnlyForMultipartRule } from "./rules/content-type-only-for-multipart";
+import { ExplodedFormDataIsArrayRule } from "./rules/exploded-form-data-is-array";
 import { ImportFileExistsRule } from "./rules/import-file-exists";
 import { MatchingEnvironmentUrlsRule } from "./rules/matching-environment-urls";
 import { NoCircularImportsRule } from "./rules/no-circular-imports";
@@ -37,12 +38,12 @@ import { ValidGenericRule } from "./rules/valid-generic";
 import { ValidNavigationRule } from "./rules/valid-navigation";
 import { ValidOauthRule } from "./rules/valid-oauth";
 import { ValidPaginationRule } from "./rules/valid-pagination";
+import { ValidPathParametersConfigurationRule } from "./rules/valid-path-parameters-configuration";
 import { ValidServiceUrlsRule } from "./rules/valid-service-urls";
 import { ValidStreamConditionRule } from "./rules/valid-stream-condition";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
 import { ValidTypeReferenceWithDefaultAndValidationRule } from "./rules/valid-type-reference-with-default-and-validation";
 import { ValidVersionRule } from "./rules/valid-version";
-import { ContentTypeOnlyForMultipartRule } from "./rules/content-type-only-for-multipart";
 
 export function getAllRules(): Rule[] {
     return [
@@ -88,8 +89,9 @@ export function getAllRules(): Rule[] {
         ValidVersionRule,
         NoUnusedGenericRule,
         ValidGenericRule,
-        CompatibleIrVersionsRule,
-        ContentTypeOnlyForMultipartRule
+        ContentTypeOnlyForMultipartRule,
+        ValidPathParametersConfigurationRule,
+        ExplodedFormDataIsArrayRule
     ];
 }
 

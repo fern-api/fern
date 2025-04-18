@@ -22,14 +22,14 @@ export const ContainerValue: core.serialization.Schema<serializers.ContainerValu
         });
 
 export declare namespace ContainerValue {
-    type Raw = ContainerValue.List | ContainerValue.Optional;
+    export type Raw = ContainerValue.List | ContainerValue.Optional;
 
-    interface List {
+    export interface List {
         type: "list";
         value: serializers.FieldValue.Raw[];
     }
 
-    interface Optional {
+    export interface Optional {
         type: "optional";
         value?: serializers.FieldValue.Raw | null;
     }

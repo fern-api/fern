@@ -1,19 +1,23 @@
 import { FernToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
+
 import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { createAndStartJob } from "./createAndStartJob";
-import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
+
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { createAndStartJob } from "./createAndStartJob";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
+import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -48,24 +52,57 @@ export async function runRemoteGenerationForGenerator({
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
-    const ir = await generateIntermediateRepresentation({
+    /** Sugar to substitute templated env vars in a standard way */
+    const isPreview = absolutePathToPreview != null;
+
+    const substituteEnvVars = <T>(stringOrObject: T) =>
+        replaceEnvVariables(
+            stringOrObject,
+            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            { substituteAsEmpty: isPreview }
+        );
+
+    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
+
+    const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+        apiName: workspace.definition.rootApiFile.contents.name,
+        organization,
+        generatorInvocation: generatorInvocationWithEnvVarSubstitutions
+    });
+
+    const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
-        disableExamples: generatorInvocation.disableExamples,
+        exampleGeneration: {
+            disabled: generatorInvocation.disableExamples,
+            skipAutogenerationIfManualExamplesExist: true
+        },
         audiences,
         readme,
         packageName,
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
-        context: interactiveTaskContext
+        context: interactiveTaskContext,
+        sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
+        dynamicGeneratorConfig
     });
 
     const sources = workspace.getSources();
-    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig: {} });
+    const apiDefinition = convertIrToFdrApi({
+        ir,
+        snippetsConfig: {
+            typescriptSdk: undefined,
+            pythonSdk: undefined,
+            javaSdk: undefined,
+            rubySdk: undefined,
+            goSdk: undefined,
+            csharpSdk: undefined
+        }
+    });
     const response = await fdr.api.v1.register.registerApiDefinition({
-        orgId: organization,
-        apiId: ir.apiName.originalName,
+        orgId: FdrAPI.OrgId(organization),
+        apiId: FdrAPI.ApiId(ir.apiName.originalName),
         definition: apiDefinition,
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });
@@ -79,6 +116,11 @@ export async function runRemoteGenerationForGenerator({
 
     const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
     if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
+        if (!response.ok) {
+            interactiveTaskContext.failAndThrow(
+                `Failed to register API definition: ${JSON.stringify(response.error.content)}`
+            );
+        }
         // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
         // files are required for successful code generation.
         interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
@@ -92,17 +134,6 @@ export async function runRemoteGenerationForGenerator({
         ir.sourceConfig = sourceConfig;
     }
 
-    /** Sugar to substitute templated env vars in a standard way */
-    const isPreview = absolutePathToPreview != null;
-    const substituteEnvVars = <T>(stringOrObject: T) =>
-        replaceEnvVariables(
-            stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
-            { substituteAsEmpty: isPreview }
-        );
-
-    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
-
     const job = await createAndStartJob({
         projectConfig,
         workspace,
@@ -112,6 +143,7 @@ export async function runRemoteGenerationForGenerator({
         version,
         intermediateRepresentation: {
             ...ir,
+            fdrApiDefinitionId,
             publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions })
         },
         shouldLogS3Url,

@@ -8,7 +8,7 @@ import (
 	url "net/url"
 )
 
-// RequestOption adapts the behavior of an indivdual request.
+// RequestOption adapts the behavior of an individual request.
 type RequestOption = core.RequestOption
 
 // WithBaseURL sets the base URL, overriding the default

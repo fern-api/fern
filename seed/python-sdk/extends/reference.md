@@ -18,9 +18,7 @@ client = SeedExtends(
     base_url="https://yourhost.com/path/to/api",
 )
 client.extended_inline_request_body(
-    unique="string",
-    name="string",
-    docs="string",
+    unique="unique",
 )
 
 ```

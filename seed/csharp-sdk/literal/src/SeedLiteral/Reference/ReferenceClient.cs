@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedLiteral.Core;
 
-#nullable enable
-
 namespace SeedLiteral;
 
 public partial class ReferenceClient
@@ -16,8 +14,7 @@ public partial class ReferenceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Reference.SendAsync(
     ///     new SendRequest
     ///     {
@@ -25,30 +22,43 @@ public partial class ReferenceClient
     ///         Stream = false,
     ///         Context = "You're super wise",
     ///         Query = "What is the weather today",
+    ///         ContainerObject = new ContainerObject
+    ///         {
+    ///             NestedObjects = new List&lt;NestedObjectWithLiterals&gt;()
+    ///             {
+    ///                 new NestedObjectWithLiterals
+    ///                 {
+    ///                     Literal1 = "literal1",
+    ///                     Literal2 = "literal2",
+    ///                     StrProp = "strProp",
+    ///                 },
+    ///             },
+    ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "reference",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "reference",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -59,10 +69,13 @@ public partial class ReferenceClient
             }
         }
 
-        throw new SeedLiteralApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedLiteralApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -2,23 +2,33 @@
 
 namespace Seed\LangServer;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class LangServerResponse extends SerializableType
+class LangServerResponse extends JsonSerializableType
 {
     /**
      * @var mixed $response
      */
-    #[JsonProperty("response")]
+    #[JsonProperty('response')]
     public mixed $response;
 
     /**
-     * @param mixed $response
+     * @param array{
+     *   response: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $response,
+        array $values,
     ) {
-        $this->response = $response;
+        $this->response = $values['response'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -7,4 +7,6 @@ import * as FernIr from "../../../index";
 export interface SdkRequestWrapper {
     wrapperName: FernIr.Name;
     bodyKey: FernIr.Name;
+    includePathParameters: boolean | undefined;
+    onlyPathParameters: boolean | undefined;
 }

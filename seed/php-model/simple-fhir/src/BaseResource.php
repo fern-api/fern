@@ -2,42 +2,61 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
+use Seed\Core\Types\Union;
 
-class BaseResource extends SerializableType
+class BaseResource extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
-     * @var array<mixed> $relatedResources
+     * @var array<(
+     *    Account
+     *   |Patient
+     *   |Practitioner
+     *   |Script
+     * )> $relatedResources
      */
-    #[JsonProperty("related_resources"), ArrayType(["mixed"])]
+    #[JsonProperty('related_resources'), ArrayType([new Union(Account::class, Patient::class, Practitioner::class, Script::class)])]
     public array $relatedResources;
 
     /**
      * @var Memo $memo
      */
-    #[JsonProperty("memo")]
+    #[JsonProperty('memo')]
     public Memo $memo;
 
     /**
-     * @param string $id
-     * @param array<mixed> $relatedResources
-     * @param Memo $memo
+     * @param array{
+     *   id: string,
+     *   relatedResources: array<(
+     *    Account
+     *   |Patient
+     *   |Practitioner
+     *   |Script
+     * )>,
+     *   memo: Memo,
+     * } $values
      */
     public function __construct(
-        string $id,
-        array $relatedResources,
-        Memo $memo,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->relatedResources = $relatedResources;
-        $this->memo = $memo;
+        $this->id = $values['id'];
+        $this->relatedResources = $values['relatedResources'];
+        $this->memo = $values['memo'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

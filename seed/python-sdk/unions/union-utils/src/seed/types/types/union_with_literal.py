@@ -4,8 +4,8 @@ from __future__ import annotations
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import UniversalRootModel
-from ...core.pydantic_utilities import UniversalBaseModel
 import pydantic
+from ...core.pydantic_utilities import UniversalBaseModel
 from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
@@ -20,6 +20,14 @@ class _Factory:
 
 
 class UnionWithLiteral(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.types import UnionWithLiteral_Fern
+
+    UnionWithLiteral_Fern()
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
@@ -43,6 +51,14 @@ class UnionWithLiteral(UniversalRootModel):
         unioned_value = self.get_as_union()
         if unioned_value.type == "fern":
             return fern(unioned_value.value)
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 class _UnionWithLiteral:

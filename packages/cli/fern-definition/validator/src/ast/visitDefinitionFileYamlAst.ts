@@ -1,5 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
+
 import { DefinitionFileAstVisitor } from "./DefinitionFileAstVisitor";
 import { visitHttpService } from "./visitors/services/visitHttpService";
 import { createDocsVisitor } from "./visitors/utils/createDocsVisitor";
@@ -8,32 +9,32 @@ import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
 import { visitWebhooks } from "./visitors/visitWebhooks";
 
-export async function visitDefinitionFileYamlAst(
+export function visitDefinitionFileYamlAst(
     contents: DefinitionFileSchema,
     visitor: Partial<DefinitionFileAstVisitor>
-): Promise<void> {
-    await visitObject(contents, {
+): void {
+    visitObject(contents, {
         docs: createDocsVisitor(visitor, []),
-        imports: async (imports) => {
-            await visitImports({ imports, visitor, nodePath: ["imports"] });
+        imports: (imports) => {
+            visitImports({ imports, visitor, nodePath: ["imports"] });
         },
-        types: async (types) => {
-            await visitTypeDeclarations({ typeDeclarations: types, visitor, nodePath: ["types"] });
+        types: (types) => {
+            visitTypeDeclarations({ typeDeclarations: types, visitor, nodePath: ["types"] });
         },
-        service: async (service) => {
+        service: (service) => {
             if (service != null) {
-                await visitHttpService({ service, visitor, nodePath: ["service"] });
+                visitHttpService({ service, visitor, nodePath: ["service"] });
             }
         },
-        webhooks: async (webhooks) => {
+        webhooks: (webhooks) => {
             for (const [webhookId, webhook] of Object.entries(webhooks ?? {})) {
-                await visitWebhooks({ webhook, visitor, nodePathForWebhook: ["webhooks", webhookId] });
+                visitWebhooks({ webhook, visitor, nodePathForWebhook: ["webhooks", webhookId] });
             }
         },
         // TODO(dsinghvi): Implement visitor for channel
         channel: noop,
-        errors: async (errors) => {
-            await visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
+        errors: (errors) => {
+            visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
         }
     });
 }

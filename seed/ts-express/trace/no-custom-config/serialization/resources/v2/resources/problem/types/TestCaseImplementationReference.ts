@@ -22,14 +22,14 @@ export const TestCaseImplementationReference: core.serialization.Schema<
     });
 
 export declare namespace TestCaseImplementationReference {
-    type Raw = TestCaseImplementationReference.TemplateId | TestCaseImplementationReference.Implementation;
+    export type Raw = TestCaseImplementationReference.TemplateId | TestCaseImplementationReference.Implementation;
 
-    interface TemplateId {
+    export interface TemplateId {
         type: "templateId";
         value: serializers.v2.TestCaseTemplateId.Raw;
     }
 
-    interface Implementation extends serializers.v2.TestCaseImplementation.Raw {
+    export interface Implementation extends serializers.v2.TestCaseImplementation.Raw {
         type: "implementation";
     }
 }

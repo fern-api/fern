@@ -17,7 +17,7 @@ export const UserDefinedProtobufType: core.serialization.ObjectSchema<
 });
 
 export declare namespace UserDefinedProtobufType {
-    interface Raw {
+    export interface Raw {
         file: ProtobufFile.Raw;
         name: Name.Raw;
     }

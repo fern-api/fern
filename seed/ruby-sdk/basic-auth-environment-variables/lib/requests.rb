@@ -17,12 +17,12 @@ module SeedBasicAuthEnvironmentVariablesClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
-    # @param password [String]
+    # @param access_token [String]
     # @return [SeedBasicAuthEnvironmentVariablesClient::RequestClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, username: ENV["USERNAME"],
-                   password: ENV["PASSWORD"])
+                   access_token: ENV["PASSWORD"])
       @base_url = base_url
-      @basic_auth_token = "Basic #{Base64.encode64("#{username}:#{password}")}"
+      @basic_auth_token = "Basic #{Base64.encode64("#{username}:#{access_token}")}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -46,7 +46,7 @@ module SeedBasicAuthEnvironmentVariablesClient
       }
       unless @basic_auth_token.nil?
         headers["Authorization"] =
-          ((@basic_auth_token.is_a? Method) ? @basic_auth_token.call : @basic_auth_token)
+          (@basic_auth_token.is_a?(Method) ? @basic_auth_token.call : @basic_auth_token)
       end
       headers
     end
@@ -64,12 +64,12 @@ module SeedBasicAuthEnvironmentVariablesClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
-    # @param password [String]
+    # @param access_token [String]
     # @return [SeedBasicAuthEnvironmentVariablesClient::AsyncRequestClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, username: ENV["USERNAME"],
-                   password: ENV["PASSWORD"])
+                   access_token: ENV["PASSWORD"])
       @base_url = base_url
-      @basic_auth_token = "Basic #{Base64.encode64("#{username}:#{password}")}"
+      @basic_auth_token = "Basic #{Base64.encode64("#{username}:#{access_token}")}"
       @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -94,7 +94,7 @@ module SeedBasicAuthEnvironmentVariablesClient
       }
       unless @basic_auth_token.nil?
         headers["Authorization"] =
-          ((@basic_auth_token.is_a? Method) ? @basic_auth_token.call : @basic_auth_token)
+          (@basic_auth_token.is_a?(Method) ? @basic_auth_token.call : @basic_auth_token)
       end
       headers
     end

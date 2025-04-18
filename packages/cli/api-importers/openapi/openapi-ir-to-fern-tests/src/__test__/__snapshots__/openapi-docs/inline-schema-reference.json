@@ -1,0 +1,176 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getExample": {
+              "auth": false,
+              "display-name": "Get Example",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "message": "message",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/example",
+              "response": {
+                "docs": "Successful response",
+                "status-code": 200,
+                "type": "GetExampleResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "GetExampleResponse": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "NotFound",
+              "Schema1",
+              "Schema2",
+              "GetExampleResponseMessage",
+            ],
+          },
+          "GetExampleResponseMessage": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NotFound": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Schema1": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<integer>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Schema2": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "age": "optional<integer>",
+              "email": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  NotFound:
+    properties:
+      message: optional<string>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  GetExampleResponseMessage:
+    properties:
+      message: optional<string>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  GetExampleResponse:
+    discriminated: false
+    union:
+      - NotFound
+      - Schema1
+      - Schema2
+      - GetExampleResponseMessage
+    source:
+      openapi: ../openapi.yml
+  Schema1:
+    properties:
+      id: optional<integer>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  Schema2:
+    properties:
+      email: optional<string>
+      age: optional<integer>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getExample:
+      path: /example
+      method: GET
+      auth: false
+      source:
+        openapi: ../openapi.yml
+      display-name: Get Example
+      response:
+        docs: Successful response
+        type: GetExampleResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              message: message
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Sample API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Sample API
+",
+  },
+}

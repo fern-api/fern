@@ -4,18 +4,31 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "circle",
+ *         radius: 5
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "square",
+ *         length: 5
+ *     }
+ */
 export type Shape = SeedUnions.Shape.Circle | SeedUnions.Shape.Square;
 
-export declare namespace Shape {
-    interface Circle extends SeedUnions.Circle, _Base {
+export namespace Shape {
+    export interface Circle extends SeedUnions.Circle, _Base {
         type: "circle";
     }
 
-    interface Square extends SeedUnions.Square, _Base {
+    export interface Square extends SeedUnions.Square, _Base {
         type: "square";
     }
 
-    interface _Base {
+    export interface _Base {
         id: string;
     }
 }

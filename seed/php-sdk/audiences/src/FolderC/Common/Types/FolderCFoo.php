@@ -2,23 +2,33 @@
 
 namespace Seed\FolderC\Common\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class FolderCFoo extends SerializableType
+class FolderCFoo extends JsonSerializableType
 {
     /**
      * @var string $barProperty
      */
-    #[JsonProperty("bar_property")]
+    #[JsonProperty('bar_property')]
     public string $barProperty;
 
     /**
-     * @param string $barProperty
+     * @param array{
+     *   barProperty: string,
+     * } $values
      */
     public function __construct(
-        string $barProperty,
+        array $values,
     ) {
-        $this->barProperty = $barProperty;
+        $this->barProperty = $values['barProperty'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

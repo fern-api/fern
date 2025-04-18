@@ -10,5 +10,5 @@ export const SubpackageId: core.serialization.Schema<serializers.SubpackageId.Ra
     core.serialization.string();
 
 export declare namespace SubpackageId {
-    type Raw = string;
+    export type Raw = string;
 }

@@ -1,8 +1,10 @@
-import { isPlainObject } from "@fern-api/core-utils";
-import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { keyBy } from "lodash-es";
-import { constructFernFileContext, FernFileContext } from "../FernFileContext";
+
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
+import { isPlainObject } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+
+import { FernFileContext, constructFernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
@@ -19,7 +21,8 @@ export function validateObjectExample({
     exampleResolver,
     workspace,
     example,
-    breadcrumbs
+    breadcrumbs,
+    depth
 }: {
     // undefined for inline requests
     typeName: string | undefined;
@@ -31,6 +34,7 @@ export function validateObjectExample({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth: number;
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -55,7 +59,7 @@ export function validateObjectExample({
         (property) => !property.isOptional && property.resolvedPropertyType._type !== "unknown"
     );
     for (const requiredProperty of requiredProperties) {
-        // dont error on literal properties
+        // don't error on literal properties
         if (
             requiredProperty.resolvedPropertyType._type === "container" &&
             requiredProperty.resolvedPropertyType.container._type === "literal"
@@ -78,7 +82,9 @@ export function validateObjectExample({
     // check properties on example
     for (const [exampleKey, exampleValue] of Object.entries(example)) {
         const propertyWithPath = allPropertiesByWireKey[exampleKey];
-        if (propertyWithPath == null) {
+        if (rawObject["extra-properties"]) {
+            continue;
+        } else if (propertyWithPath == null) {
             violations.push({
                 message: `Unexpected property "${exampleKey}"`
             });
@@ -100,7 +106,8 @@ export function validateObjectExample({
                     workspace,
                     typeResolver,
                     exampleResolver,
-                    breadcrumbs: [...breadcrumbs, `${exampleKey}`]
+                    breadcrumbs: [...breadcrumbs, `${exampleKey}`],
+                    depth: depth + 1
                 })
             );
         }

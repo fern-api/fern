@@ -1,0 +1,51 @@
+types:
+  PropertyKey:
+    docs: |
+      Represents the name of a property defined in an object.
+    type: string
+
+  FullExample:
+    union:
+      primitive: PrimitiveExample
+      object: FullObjectExample
+      array: list<FullExample>
+      map: list<KeyValuePair>
+      enum: string
+      literal: LiteralExample
+      oneOf: FullOneOfExample
+      unknown: FullExample
+
+  PrimitiveExample:
+    union:
+      int: integer
+      int64: long
+      # TODO: Refactor the following once the uint types are available.
+      uint: integer
+      uint64: long
+      float: double
+      double: double
+      string: string
+      # typed as string to handle invalid datetime strings
+      datetime: string
+      date: string
+      base64: string
+      boolean: boolean
+
+  LiteralExample:
+    union:
+      boolean: boolean
+      string: string
+
+  FullObjectExample:
+    properties:
+      properties: map<PropertyKey, FullExample>
+
+  KeyValuePair:
+    properties:
+      key: PrimitiveExample
+      value: FullExample
+
+  FullOneOfExample:
+    union:
+      discriminated: map<PropertyKey, FullExample>
+      undiscriminated: FullExample

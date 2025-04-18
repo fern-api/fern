@@ -2,41 +2,49 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class RecordedResponseNotification extends SerializableType
+class RecordedResponseNotification extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var int $traceResponsesSize
      */
-    #[JsonProperty("traceResponsesSize")]
+    #[JsonProperty('traceResponsesSize')]
     public int $traceResponsesSize;
 
     /**
      * @var ?string $testCaseId
      */
-    #[JsonProperty("testCaseId")]
+    #[JsonProperty('testCaseId')]
     public ?string $testCaseId;
 
     /**
-     * @param string $submissionId
-     * @param int $traceResponsesSize
-     * @param ?string $testCaseId
+     * @param array{
+     *   submissionId: string,
+     *   traceResponsesSize: int,
+     *   testCaseId?: ?string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        int $traceResponsesSize,
-        ?string $testCaseId = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->traceResponsesSize = $traceResponsesSize;
-        $this->testCaseId = $testCaseId;
+        $this->submissionId = $values['submissionId'];
+        $this->traceResponsesSize = $values['traceResponsesSize'];
+        $this->testCaseId = $values['testCaseId'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -2,8 +2,9 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, Union
 
-import fern.ir.resources as ir_types
-
+from ....context.pydantic_generator_context import PydanticGeneratorContext
+from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
+from ..abc.abstract_type_generator import AbstractTypeGenerator
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract_type_snippet_generator import (
@@ -13,9 +14,7 @@ from fern_python.pydantic_codegen import PydanticField
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 
-from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
-from ..abc.abstract_type_generator import AbstractTypeGenerator
+import fern.ir.resources as ir_types
 
 
 @dataclass(frozen=True)
@@ -200,12 +199,10 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
         self._finish(type_alias_declaration)
 
     @abstractmethod
-    def _generate_union_class_name(self) -> str:
-        ...
+    def _generate_union_class_name(self) -> str: ...
 
     @abstractmethod
-    def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
-        ...
+    def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str: ...
 
     @abstractmethod
     def _generate_single_property_member(
@@ -214,32 +211,26 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
         single_union_type: ir_types.SingleUnionType,
         properties: List[PydanticField],
         fern_aware_properties: List[FernAwarePydanticField],
-    ) -> LocalClassReference:
-        ...
+    ) -> LocalClassReference: ...
 
     @abstractmethod
     def _generate_same_properties_as_object_member(
         self, member_type_id: ir_types.TypeId, class_name: str, properties: List[FernAwarePydanticField]
-    ) -> LocalClassReference:
-        ...
+    ) -> LocalClassReference: ...
 
     @abstractmethod
     def _generate_no_property_member(
         self, class_name: str, discriminant_field: FernAwarePydanticField
-    ) -> LocalClassReference:
-        ...
+    ) -> LocalClassReference: ...
 
     @abstractmethod
-    def _generate_base_class(self) -> None:
-        ...
+    def _generate_base_class(self) -> None: ...
 
     @abstractmethod
-    def _maybe_wrap_type_hint(self, type_hint: AST.TypeHint) -> AST.TypeHint:
-        ...
+    def _maybe_wrap_type_hint(self, type_hint: AST.TypeHint) -> AST.TypeHint: ...
 
     @abstractmethod
-    def _finish(self, type_alias_declaration: AST.TypeAliasDeclaration) -> None:
-        ...
+    def _finish(self, type_alias_declaration: AST.TypeAliasDeclaration) -> None: ...
 
     def _get_type_id(self, tr: ir_types.TypeReference) -> List[Union[ir_types.TypeId, None]]:
         union = tr.get_as_union()
@@ -250,6 +241,7 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                 list_=lambda lt: self._get_type_id(lt),
                 map_=lambda mt: self._get_type_id(mt.key_type) + self._get_type_id(mt.value_type),
                 optional=lambda ot: self._get_type_id(ot),
+                nullable=lambda nt: self._get_type_id(nt),
                 set_=lambda st: self._get_type_id(st),
                 literal=lambda _: [],
             )
@@ -405,8 +397,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         discriminant_field_name: ir_types.NameAndWireValue,
         wire_discriminant_value: ir_types.NameAndWireValue,
         example: Union[ir_types.ExampleObjectTypeWithTypeId, AST.Expression],
-    ) -> AST.Expression:
-        ...
+    ) -> AST.Expression: ...
 
     @abstractmethod
     def _get_snippet_for_union_with_single_property(
@@ -415,8 +406,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         discriminant_field_name: ir_types.NameAndWireValue,
         wire_discriminant_value: ir_types.NameAndWireValue,
         example: Union[ir_types.ExampleTypeReference, AST.Expression],
-    ) -> AST.Expression:
-        ...
+    ) -> AST.Expression: ...
 
     @abstractmethod
     def _get_snippet_for_union_with_no_properties(
@@ -424,8 +414,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         name: ir_types.DeclaredTypeName,
         discriminant_field_name: ir_types.NameAndWireValue,
         wire_discriminant_value: ir_types.NameAndWireValue,
-    ) -> AST.Expression:
-        ...
+    ) -> AST.Expression: ...
 
     def _get_union_class_reference(
         self,
@@ -449,7 +438,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         )
 
 
-# TODO: For V1 naming, we should take into account if the new name introduces a conflcit with an existing class name
+# TODO: For V1 naming, we should take into account if the new name introduces a conflict with an existing class name
 def get_single_union_type_class_name(
     name: ir_types.DeclaredTypeName,
     wire_discriminant_value: ir_types.NameAndWireValue,

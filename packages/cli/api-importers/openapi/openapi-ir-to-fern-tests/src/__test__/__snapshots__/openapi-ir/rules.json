@@ -1,0 +1,281 @@
+{
+  "title": "Sample API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Default and validation rules",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetExampleRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "value": {
+            "generatedName": "GetExampleResponse",
+            "schemas": [
+              {
+                "generatedName": "GetExampleResponseZero",
+                "schema": "Schema",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "getExampleResponseMessageMessage",
+                    "key": "message",
+                    "schema": {
+                      "generatedName": "getExampleResponseMessageMessage",
+                      "value": {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "GetExampleResponseMessageMessage",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "generatedName": "GetExampleResponseMessage",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/example",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "age": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "value": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "String": {
+        "schema": {
+          "default": "fern",
+          "pattern": "^[a-zA-Z0-9]*$",
+          "format": "custom",
+          "minLength": 3,
+          "maxLength": 10,
+          "type": "string"
+        },
+        "generatedName": "String",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "Schema": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "schemaId",
+            "key": "id",
+            "schema": {
+              "generatedName": "schemaId",
+              "value": {
+                "description": "The unique ID of the type.",
+                "schema": {
+                  "default": 50,
+                  "minimum": 10,
+                  "maximum": 100,
+                  "exclusiveMinimum": true,
+                  "exclusiveMaximum": false,
+                  "multipleOf": 10,
+                  "type": "int"
+                },
+                "generatedName": "SchemaId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "schemaAge",
+            "key": "age",
+            "schema": {
+              "generatedName": "schemaAge",
+              "value": {
+                "description": "The age of the type.",
+                "schema": {
+                  "default": 50,
+                  "minimum": -2147483649,
+                  "maximum": 2147483648,
+                  "exclusiveMinimum": true,
+                  "exclusiveMaximum": false,
+                  "multipleOf": 10,
+                  "type": "int"
+                },
+                "generatedName": "SchemaAge",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "schemaName",
+            "key": "name",
+            "schema": {
+              "generatedName": "schemaName",
+              "value": {
+                "description": "The unique name of the type.",
+                "schema": {
+                  "default": "type",
+                  "pattern": "^[a-zA-Z0-9]*$",
+                  "format": "custom",
+                  "minLength": 3,
+                  "maxLength": 10,
+                  "type": "string"
+                },
+                "generatedName": "SchemaName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "schemaValue",
+            "key": "value",
+            "schema": {
+              "generatedName": "schemaValue",
+              "value": {
+                "description": "The value of the type.",
+                "schema": {
+                  "default": 1.1,
+                  "minimum": 1.1,
+                  "maximum": 2.2,
+                  "multipleOf": 1.1,
+                  "type": "double"
+                },
+                "generatedName": "SchemaValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Schema",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

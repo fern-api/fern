@@ -1,0 +1,79 @@
+---
+title: Send Call using Pathways (Simple)
+subtitle: >-
+  Send an AI phone call with your own conversational pathway agent! Links -
+  [Video
+  Tutorial](https://www.loom.com/share/5ce5a84ec97149efad7cf5eff66a93c5?sid=697dc436-53cf-494c-a3e9-a25031df6496)
+  | [Step-by-step web tutorial](https://docs.bland.ai/tutorials/pathways)
+slug: api-v1/post/calls-simple-pathway
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="phone_number" type="string" required>
+  The phone number to call. Country code defaults to `+1` (US) if not specified. 
+  
+  Formatting is flexible, however for the most predictable results use the [E.164](https://www.twilio.com/docs/glossary/what-e164#examples-of-e164-numbers) format.
+
+    <Accordion title="Formatting Examples">
+        Expected/Ideal Format:
+        - "+12223334444"
+        - "+91223334444"
+        - "+61223334444"
+
+        Valid, but not recommended:
+        - "2223334444"
+        - "+1 (222) 333-4444"
+        - "+1 222 333 4444"
+        - "222-333-4444"
+
+        Invalid:
+        - "12223334444"
+        - "552223334444"
+        - "non-numeric characters"
+        - "2223334444 ext. 123"
+    </Accordion>
+
+</ParamField>
+
+<ParamField body="pathway_id" type="string" required>
+  Follows the conversational pathway you created to guide the conversation.
+
+You can access your pathway_id by clicking on the 'Copy ID' button on your pathways [here](https://app.bland.ai/home?page=convo-pathways). If you don't have any pathways, click the 'Create Pathway' button to create one!
+
+  <Accordion title="Conversational Pathway Tutorial">
+    
+    [Video tutorial](https://www.loom.com/share/5ce5a84ec97149efad7cf5eff66a93c5?sid=697dc436-53cf-494c-a3e9-a25031df6496)
+
+    [Step by step Web Tutorial](https://docs.bland.ai/tutorials/pathways)
+
+    </Accordion>
+
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="call_id" type="string">
+  A unique identifier for the call (present only if status is `success`).
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success",
+  "call_id": "9d404c1b-6a23-4426-953a-a52c392ff8f1"
+}
+```
+
+</ResponseExample>

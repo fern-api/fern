@@ -1,5 +1,6 @@
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
@@ -13,7 +14,8 @@ export function validateAliasExample({
     typeResolver,
     exampleResolver,
     workspace,
-    breadcrumbs
+    breadcrumbs,
+    depth
 }: {
     rawAlias: string | RawSchemas.AliasSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -22,6 +24,7 @@ export function validateAliasExample({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth: number;
 }): ExampleViolation[] {
     return validateTypeReferenceExample({
         rawTypeReference: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
@@ -30,6 +33,7 @@ export function validateAliasExample({
         typeResolver,
         exampleResolver,
         workspace,
-        breadcrumbs
+        breadcrumbs,
+        depth: depth + 1
     });
 }

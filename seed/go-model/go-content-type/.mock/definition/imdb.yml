@@ -1,0 +1,18 @@
+types:
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request:
+        body: CreateMovieRequest
+        content-type: application/custom+json
+      response: string

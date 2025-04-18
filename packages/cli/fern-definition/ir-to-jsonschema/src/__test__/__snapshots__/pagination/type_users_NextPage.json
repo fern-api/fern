@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "page": {
+      "type": "integer"
+    },
+    "starting_after": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "page",
+    "starting_after"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

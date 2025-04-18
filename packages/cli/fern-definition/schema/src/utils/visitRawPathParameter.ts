@@ -1,6 +1,6 @@
 import { HttpPathParameterSchema } from "../schemas";
-import { TypeReferenceSchema } from "../schemas/TypeReferenceSchema";
-import { VariableReferenceSchema } from "../schemas/VariableReferenceSchema";
+import { TypeReferenceSchema } from "../schemas";
+import { VariableReferenceSchema } from "../schemas";
 
 export interface PathParameterDeclarationVisitor<R> {
     nonVariable: (pathParameter: TypeReferenceSchema) => R;

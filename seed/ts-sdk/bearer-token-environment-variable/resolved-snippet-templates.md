@@ -6,7 +6,7 @@ const client = new SeedBearerTokenEnvironmentVariableClient({
   apiKey: "YOUR_TOKEN",
 });
 await client.service.getWithBearerToken();
- 
-```                        
+
+```
 
 

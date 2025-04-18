@@ -12,5 +12,5 @@ export const Request: core.serialization.Schema<
 > = core.serialization.list(core.serialization.lazyObject(() => serializers.types.NestedObjectWithRequiredField));
 
 export declare namespace Request {
-    type Raw = serializers.types.NestedObjectWithRequiredField.Raw[];
+    export type Raw = serializers.types.NestedObjectWithRequiredField.Raw[];
 }

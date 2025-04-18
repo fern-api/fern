@@ -17,20 +17,44 @@ import (
 const goLanguageHeader = "Go"
 
 var (
+	//go:embed sdk/core/api_error.go
+	apiErrorFile string
+
 	//go:embed sdk/client/client_test.go.tmpl
 	clientTestFile string
 
-	//go:embed sdk/core/core.go
-	coreFile string
+	//go:embed sdk/internal/caller.go
+	callerFile string
 
-	//go:embed sdk/core/core_test.go
-	coreTestFile string
+	//go:embed sdk/internal/caller_test.go
+	callerTestFile string
 
-	//go:embed sdk/core/extra_properties.go
+	//go:embed sdk/internal/error_decoder.go
+	errorDecoderFile string
+
+	//go:embed sdk/internal/error_decoder_test.go
+	errorDecoderTestFile string
+
+	//go:embed sdk/internal/extra_properties.go
 	extraPropertiesFile string
 
-	//go:embed sdk/core/extra_properties_test.go
+	//go:embed sdk/internal/extra_properties_test.go
 	extraPropertiesTestFile string
+
+	//go:embed sdk/utils/file_param.go
+	fileParamFile string
+
+	//go:embed sdk/core/http.go
+	httpCoreFile string
+
+	//go:embed sdk/internal/http.go
+	httpInternalFile string
+
+	//go:embed sdk/internal/multipart.go
+	multipartFile string
+
+	//go:embed sdk/internal/multipart_test.go
+	multipartTestFile string
 
 	//go:embed sdk/core/optional.go
 	optionalFile string
@@ -41,23 +65,32 @@ var (
 	//go:embed sdk/core/page.go
 	pageFile string
 
-	//go:embed sdk/core/pager.go
+	//go:embed sdk/internal/pager.go
 	pagerFile string
 
-	//go:embed sdk/core/pointer.go
+	//go:embed sdk/internal/pager_test.go
+	pagerTestFile string
+
+	//go:embed sdk/utils/pointer.go
 	pointerFile string
+
+	//go:embed sdk/internal/query.go
+	queryFile string
+
+	//go:embed sdk/internal/query_test.go
+	queryTestFile string
+
+	//go:embed sdk/internal/retrier.go
+	retrierFile string
+
+	//go:embed sdk/internal/retrier_test.go
+	retrierTestFile string
 
 	//go:embed sdk/core/stream.go
 	streamFile string
 
-	//go:embed sdk/core/retrier.go
-	retrierFile string
-
-	//go:embed sdk/core/query.go
-	queryFile string
-
-	//go:embed sdk/core/query_test.go
-	queryTestFile string
+	//go:embed sdk/internal/streamer.go
+	streamerFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -154,7 +187,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				camelCase  = authScheme.Header.Name.Name.CamelCase.SafeName
 				optionName = fmt.Sprintf("With%s", pascalCase)
-				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false, f.packageLayout)
 				typeName   = "*core." + pascalCase + "Option"
 			)
 			f.P("// ", optionName, " sets the ", camelCase, " auth request header.")
@@ -177,7 +210,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
 			camelCase  = header.Name.Name.CamelCase.SafeName
 			optionName = fmt.Sprintf("With%s", pascalCase)
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false, f.packageLayout)
 			typeName   = "*core." + pascalCase + "Option"
 		)
 		f.P("// ", optionName, " sets the ", camelCase, " request header.")
@@ -219,7 +252,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 		)
 	}
 
@@ -248,7 +281,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 	for _, header := range idempotencyHeaders {
 		var (
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		)
 		if err := f.writeOptionStruct(pascalCase, goType, false, true); err != nil {
 			return err
@@ -309,8 +342,8 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(authScheme.Bearer.Token.PascalCase.UnsafeName, " string")
 		}
 		if authScheme.Basic != nil {
-			f.P("Username string")
-			f.P("Password string")
+			f.P(authScheme.Basic.Username.PascalCase.UnsafeName, " string")
+			f.P(authScheme.Basic.Password.PascalCase.UnsafeName, " string")
 		}
 		if authScheme.Header != nil {
 			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
@@ -319,7 +352,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(
 				authScheme.Header.Name.Name.PascalCase.UnsafeName,
 				" ",
-				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 			)
 		}
 	}
@@ -330,7 +363,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 		)
 	}
 	f.P("}")
@@ -378,8 +411,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
-			f.P(`if r.Username != "" && r.Password != "" {`)
-			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.Username + ": " + r.Password)))`)
+			var (
+				username = authScheme.Basic.Username.PascalCase.UnsafeName
+				password = authScheme.Basic.Password.PascalCase.UnsafeName
+			)
+			f.P(`if r.`, username, ` != "" && r.`, password, ` != "" {`)
+			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.`, username, ` + ": " + r.`, password, `)))`)
 			f.P("}")
 		}
 		if header := authScheme.Header; header != nil {
@@ -408,6 +445,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		}
 	}
 	for _, header := range headers {
+		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
 			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ValueType.Container.Literal) + ")"
 			if header.Env != nil {
@@ -415,13 +453,15 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				f.P(`if envValue := os.Getenv("`, *header.Env, `"); envValue != "" {`)
 				f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
 				f.P("}")
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+				f.P(header.Name.Name.CamelCase.SafeName, " = r.", header.Name.Name.PascalCase.UnsafeName)
+				f.P("}")
 				f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
 			} else {
 				f.P(`header.Set("`, header.Name.WireValue, `", `, formatValue, ")")
 			}
 			continue
 		}
-		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		if valueTypeFormat.IsOptional {
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
@@ -466,6 +506,9 @@ func (f *fileWriter) writePlatformHeaders(
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.Language, goLanguageHeader))
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
+		if sdkConfig.PlatformHeaders.UserAgent != nil {
+			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.UserAgent.Header(), sdkConfig.PlatformHeaders.UserAgent.Value))
+		}
 		f.P("return headers")
 		f.P("}")
 	}
@@ -508,18 +551,22 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 			}
 			if authScheme.Basic != nil {
+				var (
+					username = authScheme.Basic.Username.PascalCase.UnsafeName
+					password = authScheme.Basic.Password.PascalCase.UnsafeName
+				)
 				// The basic auth option requires special care because it requires
 				// two parameters.
 				f.P("// BasicAuthOption implements the RequestOption interface.")
 				f.P("type BasicAuthOption struct {")
-				f.P("Username string")
-				f.P("Password string")
+				f.P(username, " string")
+				f.P(password, " string")
 				f.P("}")
 				f.P()
 
 				f.P("func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {")
-				f.P("opts.Username = b.Username")
-				f.P("opts.Password = b.Password")
+				f.P("opts.", username, " = b.", username)
+				f.P("opts.", password, " = b.", password)
 				f.P("}")
 				f.P()
 			}
@@ -530,7 +577,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 				var (
 					pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
-					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 				)
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
@@ -545,7 +592,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 		}
 		var (
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 		)
 		if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 			return err
@@ -606,7 +653,7 @@ func (f *fileWriter) WriteIdempotentRequestOptions(
 	importPath := path.Join(f.baseImportPath, "option")
 
 	// Generate the option.RequestOption type alias.
-	f.P("// IdempotentRequestOption adapts the behavior of an indivdual request.")
+	f.P("// IdempotentRequestOption adapts the behavior of an individual request.")
 	f.P("type IdempotentRequestOption = core.IdempotentRequestOption")
 
 	for _, header := range idempotencyHeaders {
@@ -614,7 +661,7 @@ func (f *fileWriter) WriteIdempotentRequestOptions(
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
 			camelCase  = header.Name.Name.CamelCase.SafeName
 			optionName = fmt.Sprintf("With%s", pascalCase)
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		)
 		f.P("// ", optionName, " sets the ", camelCase, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -646,7 +693,7 @@ func (f *fileWriter) WriteRequestOptions(
 	)
 
 	// Generate the option.RequestOption type alias.
-	f.P("// RequestOption adapts the behavior of an indivdual request.")
+	f.P("// RequestOption adapts the behavior of an individual request.")
 	f.P("type RequestOption = core.RequestOption")
 
 	// Generate the options for setting the base URL and HTTP client.
@@ -752,8 +799,8 @@ func (f *fileWriter) WriteRequestOptions(
 						importPath,
 					),
 					[]ast.Expr{
-						ast.NewBasicLit(`"<YOUR_USERNAME>"`),
-						ast.NewBasicLit(`"<YOUR_PASSWORD>"`),
+						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Username.ScreamingSnakeCase.UnsafeName)),
+						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, authScheme.Basic.Password.ScreamingSnakeCase.UnsafeName)),
 					},
 				)
 				if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
@@ -767,10 +814,10 @@ func (f *fileWriter) WriteRequestOptions(
 				f.WriteDocs(auth.Docs)
 			}
 			typeName := "core.BasicAuthOption"
-			f.P("func WithBasicAuth(username, password string) *", typeName, " {")
+			f.P("func WithBasicAuth(", authScheme.Basic.Username.CamelCase.SafeName, ", ", authScheme.Basic.Password.CamelCase.SafeName, " string) *", typeName, " {")
 			f.P("return &", typeName, "{")
-			f.P("Username: username,")
-			f.P("Password: password,")
+			f.P(fmt.Sprintf("%s: %s,", authScheme.Basic.Username.PascalCase.UnsafeName, authScheme.Basic.Username.CamelCase.SafeName))
+			f.P(fmt.Sprintf("%s: %s,", authScheme.Basic.Password.PascalCase.UnsafeName, authScheme.Basic.Password.CamelCase.SafeName))
 			f.P("}")
 			f.P("}")
 			f.P()
@@ -785,7 +832,7 @@ func (f *fileWriter) WriteRequestOptions(
 				optionName = fmt.Sprintf("With%s", pascalCase)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
-				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 			)
 			if i == 0 {
 				option = ast.NewCallExpr(
@@ -826,7 +873,7 @@ func (f *fileWriter) WriteRequestOptions(
 			optionName = fmt.Sprintf("With%s", pascalCase)
 			field      = header.Name.Name.PascalCase.UnsafeName
 			param      = header.Name.Name.CamelCase.SafeName
-			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		)
 		f.P("// ", optionName, " sets the ", param, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -867,17 +914,19 @@ func (f *fileWriter) WriteClient(
 	irAuth *ir.ApiAuth,
 	irEndpoints []*ir.HttpEndpoint,
 	headers []*ir.HttpHeader,
+	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	subpackages []*ir.Subpackage,
 	environmentsConfig *ir.EnvironmentsConfig,
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	fernFilepath *ir.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+	packageLayout PackageLayout,
+	clientNameOverride string,
+	clientConstructorNameOverride string,
 ) (*GeneratedClient, error) {
-	var (
-		clientName = "Client"
-		receiver   = "c"
-	)
 	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
 	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
 		errorDiscriminationByPropertyStrategy = errorDiscriminationStrategy.Property
@@ -886,31 +935,53 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, idempotencyHeaders, receiver)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties, packageLayout)
 		if err != nil {
 			return nil, err
 		}
 		endpoints = append(endpoints, endpoint)
 	}
 
+	var (
+		clientName            = "Client"
+		clientConstructorName = "NewClient"
+	)
+	if packageLayout == PackageLayoutFlat && fernFilepath.File != nil {
+		clientName = fernFilepath.File.PascalCase.UnsafeName + "Client"
+		clientConstructorName = "New" + clientName
+	}
+	if clientNameOverride != "" {
+		clientName = clientNameOverride
+		clientConstructorName = "New" + clientName
+	}
+	if clientConstructorNameOverride != "" {
+		clientConstructorName = clientConstructorNameOverride
+	}
+
+	receiver := typeNameToReceiver(clientName)
+
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
 	f.P("baseURL string")
-	f.P("caller *core.Caller")
+	f.P("caller *internal.Caller")
 	f.P("header http.Header")
 	f.P()
 	for _, subpackage := range subpackages {
-		var (
-			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
-			clientTypeName = f.scope.AddImport(importPath) + "." + clientName
-		)
-		f.P(subpackage.Name.PascalCase.UnsafeName, " *", clientTypeName)
+		if packageLayout == PackageLayoutFlat {
+			f.P(subpackage.Name.PascalCase.UnsafeName, " *", subpackage.Name.PascalCase.UnsafeName, "Client")
+		} else {
+			var (
+				importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
+				clientTypeName = f.scope.AddImport(importPath) + "." + "Client"
+			)
+			f.P(subpackage.Name.PascalCase.UnsafeName, " *", clientTypeName)
+		}
 	}
 	f.P("}")
 	f.P()
 
 	// Generate the client constructor.
-	f.P("func New", clientName, "(opts ...option.RequestOption) *", clientName, " {")
+	f.P("func ", clientConstructorName, "(opts ...option.RequestOption) *", clientName, " {")
 	f.P("options := core.NewRequestOptions(opts...)")
 	for _, authScheme := range irAuth.Schemes {
 		if authScheme.Bearer != nil && authScheme.Bearer.TokenEnvVar != nil {
@@ -945,19 +1016,23 @@ func (f *fileWriter) WriteClient(
 	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
-	f.P("caller: core.NewCaller(")
-	f.P("&core.CallerParams{")
+	f.P("caller: internal.NewCaller(")
+	f.P("&internal.CallerParams{")
 	f.P("Client: options.HTTPClient,")
 	f.P("MaxAttempts: options.MaxAttempts,")
 	f.P("},")
 	f.P("),")
 	f.P("header: options.ToHeader(),")
 	for _, subpackage := range subpackages {
-		var (
-			importPath        = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
-			clientConstructor = f.scope.AddImport(importPath) + ".NewClient(opts...),"
-		)
-		f.P(subpackage.Name.PascalCase.UnsafeName, ": ", clientConstructor)
+		if packageLayout == PackageLayoutFlat {
+			f.P(subpackage.Name.PascalCase.UnsafeName, ": ", "New", subpackage.Name.PascalCase.UnsafeName, "Client(opts...),")
+		} else {
+			var (
+				importPath        = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
+				clientConstructor = f.scope.AddImport(importPath) + ".NewClient(opts...),"
+			)
+			f.P(subpackage.Name.PascalCase.UnsafeName, ": ", clientConstructor)
+		}
 	}
 	f.P("}")
 	f.P("}")
@@ -972,38 +1047,28 @@ func (f *fileWriter) WriteClient(
 			f.P(signatureParameter.parameter, ",")
 		}
 		f.P(") ", endpoint.ReturnValues, " {")
-		// Compose all the request options.
 		f.P("options := ", endpoint.OptionConstructor)
-		f.P()
-		// Compose the URL, including any query parameters.
-		f.P(fmt.Sprintf("baseURL := %q", endpoint.BaseURL))
-		f.P("if ", fmt.Sprintf("%s.baseURL", receiver), ` != "" {`)
-		f.P("baseURL = ", fmt.Sprintf("%s.baseURL", receiver))
-		f.P("}")
-		f.P(`if options.BaseURL != "" {`)
-		f.P("baseURL = options.BaseURL")
-		f.P("}")
+		f.P("baseURL := internal.ResolveBaseURL(")
+		f.P("options.BaseURL,")
+		f.P(receiver, ".baseURL,")
+		f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+		f.P(")")
 		baseURLVariable := "baseURL"
 		if len(endpoint.PathSuffix) > 0 {
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
 		if len(endpoint.PathParameterNames) > 0 {
-			if len(endpoint.PathParameterNames) == 1 {
-				f.P("endpointURL := core.EncodeURL(", baseURLVariable, ", ", endpoint.PathParameterNames[0], ")")
-			} else {
-				f.P("endpointURL := core.EncodeURL(")
-				f.P(baseURLVariable, ", ")
-				for _, pathParameterName := range endpoint.PathParameterNames {
-					f.P(pathParameterName, ",")
-				}
-				f.P(")")
+			f.P("endpointURL := internal.EncodeURL(")
+			f.P(baseURLVariable, ", ")
+			for _, pathParameterName := range endpoint.PathParameterNames {
+				f.P(pathParameterName, ",")
 			}
+			f.P(")")
 		} else {
 			f.P(fmt.Sprintf("endpointURL := %s", baseURLVariable))
 		}
 		if len(endpoint.QueryParameters) > 0 {
-			f.P()
-			f.P("queryParams, err := core.QueryValues(", endpoint.RequestParameterName, ")")
+			f.P("queryParams, err := internal.QueryValues(", endpoint.RequestParameterName, ")")
 			f.P("if err != nil {")
 			f.P("return ", endpoint.ErrorReturnValues)
 			f.P("}")
@@ -1020,8 +1085,10 @@ func (f *fileWriter) WriteClient(
 		}
 
 		headersParameter := "headers"
-		f.P()
-		f.P(headersParameter, " := core.MergeHeaders(", receiver, ".header.Clone(), options.ToHeader())")
+		f.P(headersParameter, " := internal.MergeHeaders(")
+		f.P(receiver, ".header.Clone(),")
+		f.P("options.ToHeader(),")
+		f.P(")")
 		if len(endpoint.Headers) > 0 {
 			// Add endpoint-specific headers from the request, if any.
 			for _, header := range endpoint.Headers {
@@ -1038,31 +1105,49 @@ func (f *fileWriter) WriteClient(
 				}
 			}
 		}
+		if endpoint.Accept != "" {
+			f.P(fmt.Sprintf(`%s.Set("Accept", %q)`, headersParameter, endpoint.Accept))
+		}
 		if endpoint.ContentType != "" {
 			f.P(fmt.Sprintf(`%s.Set("Content-Type", %q)`, headersParameter, endpoint.ContentType))
 		}
-		f.P()
 
 		// Include the error decoder, if any.
 		if len(endpoint.Errors) > 0 {
-			f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
-			f.P("raw, err := io.ReadAll(body)")
-			f.P("if err != nil {")
-			f.P("return err")
-			f.P("}")
-			f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
-			f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
-			var (
-				switchValue              = "statusCode"
-				discriminantContentField = ""
-			)
-			if errorDiscriminationByPropertyStrategy != nil {
+			if errorDiscriminationByPropertyStrategy == nil {
+				f.P("errorCodes := internal.ErrorCodes{")
+				for _, responseError := range endpoint.Errors {
+					var errorType string
+					errorDeclaration := f.errors[responseError.Error.ErrorId]
+					if packageLayout == PackageLayoutFlat {
+						errorType = errorDeclaration.Name.Name.PascalCase.UnsafeName
+					} else {
+						errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+						errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					}
+					f.P(fmt.Sprintf("%d: func(apiError *core.APIError) error {", errorDeclaration.StatusCode))
+					f.P("return &", errorType, "{")
+					f.P("APIError: apiError,")
+					f.P("}")
+					f.P("},")
+				}
+				f.P("}")
+			} else {
 				var (
-					discriminant = errorDiscriminationByPropertyStrategy.Discriminant
-					content      = errorDiscriminationByPropertyStrategy.ContentProperty
+					switchValue              = "statusCode"
+					discriminantContentField = ""
+					discriminant             = errorDiscriminationByPropertyStrategy.Discriminant
+					content                  = errorDiscriminationByPropertyStrategy.ContentProperty
 				)
 				switchValue = fmt.Sprintf("discriminant.%s", discriminant.Name.PascalCase.UnsafeName)
 				discriminantContentField = fmt.Sprintf("discriminant.%s", content.Name.PascalCase.UnsafeName)
+				f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
+				f.P("raw, err := io.ReadAll(body)")
+				f.P("if err != nil {")
+				f.P("return err")
+				f.P("}")
+				f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
+				f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
 				f.P("var discriminant struct {")
 				f.P(discriminant.Name.PascalCase.UnsafeName, " string `json:\"", discriminant.WireValue, "\"`")
 				f.P(content.Name.PascalCase.UnsafeName, " json.RawMessage `json:\"", content.WireValue, "\"`")
@@ -1070,35 +1155,37 @@ func (f *fileWriter) WriteClient(
 				f.P("if err := decoder.Decode(&discriminant); err != nil {")
 				f.P("return apiError")
 				f.P("}")
-			}
-			f.P("switch ", switchValue, " {")
-			for _, responseError := range endpoint.Errors {
-				var (
-					errorDeclaration = f.errors[responseError.Error.ErrorId]
-					errorImportPath  = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-					errorType        = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
-				)
-				if errorDiscriminationByPropertyStrategy != nil {
-					f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
-				} else {
-					f.P("case ", errorDeclaration.StatusCode, ":")
+				f.P("switch ", switchValue, " {")
+				for _, responseError := range endpoint.Errors {
+					var errorType string
+					errorDeclaration := f.errors[responseError.Error.ErrorId]
+					if packageLayout == PackageLayoutFlat {
+						errorType = errorDeclaration.Name.Name.PascalCase.UnsafeName
+					} else {
+						errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+						errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					}
+					if errorDiscriminationByPropertyStrategy != nil {
+						f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
+					} else {
+						f.P("case ", errorDeclaration.StatusCode, ":")
+					}
+					f.P("value := new(", errorType, ")")
+					f.P("value.APIError = apiError")
+					if discriminantContentField != "" {
+						f.P("if err := json.Unmarshal(", discriminantContentField, ", value); err != nil {")
+					} else {
+						f.P("if err := decoder.Decode(value); err != nil {")
+					}
+					f.P("return apiError")
+					f.P("}")
+					f.P("return value")
 				}
-				f.P("value := new(", errorType, ")")
-				f.P("value.APIError = apiError")
-				if discriminantContentField != "" {
-					f.P("if err := json.Unmarshal(", discriminantContentField, ", value); err != nil {")
-				} else {
-					f.P("if err := decoder.Decode(value); err != nil {")
-				}
+				// Close the switch statement.
+				f.P("}")
 				f.P("return apiError")
 				f.P("}")
-				f.P("return value")
 			}
-			// Close the switch statement.
-			f.P("}")
-			f.P("return apiError")
-			f.P("}")
-			f.P()
 		}
 
 		if endpoint.RequestIsBytes {
@@ -1110,59 +1197,43 @@ func (f *fileWriter) WriteClient(
 			} else {
 				f.P("requestBuffer := bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
 			}
-			f.P()
-		}
-
-		// Prepare a response variable.
-		if endpoint.ResponseType != "" && !endpoint.IsStreaming && endpoint.PaginationInfo == nil {
-			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
 		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
-			f.P("requestBuffer := bytes.NewBuffer(nil)")
-			f.P("writer := multipart.NewWriter(requestBuffer)")
+			f.P("writer := internal.NewMultipartWriter()")
 			for _, fileProperty := range endpoint.FileProperties {
 				filePropertyInfo, err := filePropertyToInfo(fileProperty)
 				if err != nil {
 					return nil, err
 				}
-				var (
-					fileVariable     = filePropertyInfo.Key.Name.CamelCase.SafeName
-					filenameVariable = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "Filename"
-					filenameValue    = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "_filename"
-					partVariable     = filePropertyInfo.Key.Name.CamelCase.UnsafeName + "Part"
-				)
+				fileVariable := getFileVariableName(endpoint, filePropertyInfo, inlineFileProperties)
 				if filePropertyInfo.IsArray {
 					// We don't care whether the file array is optional or not; the range
 					// handles that for us.
-					f.P("for i, f := range ", fileVariable, "{")
-					f.P(filenameVariable, ` := fmt.Sprintf("`, filenameValue, `_%d", i)`)
-					f.P("if named, ok := f.(interface{ Name() string }); ok {")
-					f.P(fmt.Sprintf("%s = named.Name()", filenameVariable))
-					f.P("}")
-					f.P(partVariable, `, err := writer.CreateFormFile("`, filePropertyInfo.Key.WireValue, `", `, filenameVariable, ")")
-					f.P("if err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
-					f.P("if _, err := io.Copy(", partVariable, ", f); err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
+					f.P("for _, f := range ", fileVariable, "{")
+					if filePropertyInfo.ContentType != "" {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f, internal.WithDefaultContentType(\"", filePropertyInfo.ContentType, "\")); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					} else {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					}
 					f.P("}")
 				} else {
 					if filePropertyInfo.IsOptional {
 						f.P("if ", fileVariable, " != nil {")
 					}
-					f.P(fmt.Sprintf("%s := %q", filenameVariable, filenameValue))
-					f.P("if named, ok := ", fileVariable, ".(interface{ Name() string }); ok {")
-					f.P(fmt.Sprintf("%s = named.Name()", filenameVariable))
-					f.P("}")
-					f.P(partVariable, `, err := writer.CreateFormFile("`, filePropertyInfo.Key.WireValue, `", `, filenameVariable, ")")
-					f.P("if err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
-					f.P("if _, err := io.Copy(", partVariable, ", ", fileVariable, "); err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
+					if filePropertyInfo.ContentType != "" {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, ", internal.WithDefaultContentType(\"", filePropertyInfo.ContentType, "\")); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					} else {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, "); err != nil {")
+						f.P("return ", endpoint.ErrorReturnValues)
+						f.P("}")
+					}
 					if filePropertyInfo.IsOptional {
 						f.P("}")
 					}
@@ -1182,11 +1253,16 @@ func (f *fileWriter) WriteClient(
 				// Encapsulate the multipart form WriteField in a closure so that we can easily
 				// wrap it with an optional nil check below.
 				writeField := func() {
-					if !valueTypeFormat.IsPrimitive {
-						// Non-primitive types need to be JSON-serialized (e.g. lists, objects, etc).
-						f.P(`if err := core.WriteMultipartJSON(writer, "`, fileBodyProperty.Name.WireValue, `", `, requestField, "); err != nil {")
+					field := requestField
+					if valueTypeFormat.IsIterable {
+						field = "part"
+					}
+					if valueTypeFormat.IsPrimitive {
+						f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, field, ")); err != nil {")
+					} else if fileBodyProperty.ContentType != nil {
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, `, internal.WithDefaultContentType("`, *fileBodyProperty.ContentType, `")); err != nil {`)
 					} else {
-						f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, "); err != nil {")
 					}
 					f.P("return ", endpoint.ErrorReturnValues)
 					f.P("}")
@@ -1194,31 +1270,53 @@ func (f *fileWriter) WriteClient(
 
 				if valueTypeFormat.IsOptional {
 					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= nil {")
-					writeField()
+				}
+				if valueTypeFormat.IsIterable {
+					f.P("for _, part := range ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, " {")
+				}
+				writeField()
+				if valueTypeFormat.IsIterable {
 					f.P("}")
-				} else {
-					writeField()
+				}
+				if valueTypeFormat.IsOptional {
+					f.P("}")
 				}
 			}
 			f.P("if err := writer.Close(); err != nil {")
 			f.P("return ", endpoint.ErrorReturnValues)
 			f.P("}")
-			f.P(headersParameter, `.Set("Content-Type", writer.FormDataContentType())`)
-			f.P()
+			f.P(headersParameter, `.Set("Content-Type", writer.ContentType())`)
+		}
+
+		f.P()
+
+		// Prepare a response variable.
+		if endpoint.ResponseType != "" && endpoint.StreamingInfo == nil && endpoint.PaginationInfo == nil {
+			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
 		// Issue the request.
-		if endpoint.IsStreaming {
-			f.P("streamer := core.NewStreamer[", endpoint.ResponseType, "](", receiver, ".caller)")
+		if endpoint.StreamingInfo != nil {
+			streamingInfo := endpoint.StreamingInfo
+			f.P("streamer := internal.NewStreamer[", endpoint.ResponseType, "](", receiver, ".caller)")
 			f.P("return streamer.Stream(")
 			f.P("ctx,")
-			f.P("&core.StreamParams{")
+			f.P("&internal.StreamParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			if streamingInfo.Delimiter != "" {
+				f.P("Delimiter: ", streamingInfo.Delimiter, ",")
+			}
+			if streamingInfo.Prefix != "" {
+				f.P("Prefix:", streamingInfo.Prefix, ",")
+			}
+			if streamingInfo.Terminator != "" {
+				f.P("Terminator:", streamingInfo.Terminator, ",")
+			}
 			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
-			f.P("Headers:", headersParameter, ",")
 			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
@@ -1226,15 +1324,12 @@ func (f *fileWriter) WriteClient(
 			if endpoint.ErrorDecoderParameterName != "" {
 				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
 			}
-			if endpoint.StreamDelimiter != "" {
-				f.P("Delimiter: ", endpoint.StreamDelimiter, ",")
-			}
 			f.P("},")
 			f.P(")")
 			f.P("}")
 			f.P()
 		} else if endpoint.PaginationInfo != nil {
-			f.P("prepareCall := func(pageRequest *core.PageRequest[", endpoint.PaginationInfo.PageGoType, "]) *core.CallParams {")
+			f.P("prepareCall := func(pageRequest *internal.PageRequest[", endpoint.PaginationInfo.PageGoType, "]) *internal.CallParams {")
 			f.P("if pageRequest.Cursor != ", endpoint.PaginationInfo.PageZeroValue, " {")
 			f.P(endpoint.PaginationInfo.SetPageRequestParameter)
 			f.P("}")
@@ -1242,11 +1337,11 @@ func (f *fileWriter) WriteClient(
 			f.P("if len(queryParams) > 0 {")
 			f.P(`nextURL += "?" + queryParams.Encode()`)
 			f.P("}")
-			f.P("return &core.CallParams{")
+			f.P("return &internal.CallParams{")
 			f.P("URL: nextURL, ")
 			f.P("Method:", endpoint.Method, ",")
-			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1268,9 +1363,10 @@ func (f *fileWriter) WriteClient(
 			var pagerConstructor string
 			switch endpoint.PaginationInfo.Type {
 			case "cursor":
-				pagerConstructor = "core.NewCursorPager"
+				pagerConstructor = "internal.NewCursorPager"
 
-				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
+				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
+				f.P("var zeroValue ", endpoint.PaginationInfo.NextCursorGoType)
 				if len(endpoint.PaginationInfo.NextCursor.PropertyPath) > 0 {
 					f.P("var next ", endpoint.PaginationInfo.NextCursorGoType)
 					f.P(endpoint.PaginationInfo.NextCursorNilCheck)
@@ -1290,13 +1386,14 @@ func (f *fileWriter) WriteClient(
 
 				if endpoint.PaginationInfo.NextCursorIsOptional && !endpoint.PaginationInfo.PageIsOptional {
 					f.P("if next == nil {")
-					f.P("return &core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+					f.P("return &internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
 					f.P("Results: results,")
+					f.P("Done: next == zeroValue,")
 					f.P("}")
 					f.P("}")
 				}
 
-				f.P("return &core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+				f.P("return &internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
 				if endpoint.PaginationInfo.PageIsOptional != endpoint.PaginationInfo.NextCursorIsOptional {
 					if endpoint.PaginationInfo.NextCursorIsOptional {
 						f.P("Next: *next,")
@@ -1307,23 +1404,28 @@ func (f *fileWriter) WriteClient(
 					f.P("Next: next,")
 				}
 				f.P("Results: results,")
+				f.P("Done: next == zeroValue,")
 				f.P("}")
 				f.P("}")
 			case "offset":
-				pagerConstructor = "core.NewOffsetPager"
+				pagerConstructor = "internal.NewOffsetPager"
 
-				f.P("next := 1")
+				if endpoint.PaginationInfo.PageIsInteger {
+					f.P("next := 1")
+				} else {
+					f.P("var next ", strings.TrimPrefix(endpoint.PaginationInfo.PageGoType, "*"), " = 1")
+				}
 				if len(endpoint.PaginationInfo.PageNilCheck) > 0 {
 					f.P(endpoint.PaginationInfo.PageNilCheck)
 					if endpoint.PaginationInfo.PageIsOptional {
-						f.P("next = *", endpoint.RequestParameterName, ".", endpoint.PaginationInfo.Page.Name.Name.PascalCase.UnsafeName)
+						f.P("next = *", endpoint.RequestParameterName, ".", endpoint.PaginationInfo.PageName.PascalCase.UnsafeName)
 					} else {
-						f.P("next = ", endpoint.RequestParameterName, ".", endpoint.PaginationInfo.Page.Name.Name.PascalCase.UnsafeName)
+						f.P("next = ", endpoint.RequestParameterName, ".", endpoint.PaginationInfo.PageName.PascalCase.UnsafeName)
 					}
 					f.P("}")
 				}
 
-				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
+				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
 				f.P("next += 1")
 				if len(endpoint.PaginationInfo.Results.PropertyPath) > 0 {
 					f.P("var results ", endpoint.PaginationInfo.ResultsGoType)
@@ -1334,7 +1436,7 @@ func (f *fileWriter) WriteClient(
 					f.P("results := ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
 				}
 
-				f.P("return &core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+				f.P("return &internal.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
 				f.P("Next: ", endpoint.PaginationInfo.PageFirstRequestParameter, ",")
 				f.P("Results: results,")
 				f.P("}")
@@ -1353,11 +1455,11 @@ func (f *fileWriter) WriteClient(
 		} else {
 			f.P("if err := ", receiver, ".caller.Call(")
 			f.P("ctx,")
-			f.P("&core.CallParams{")
+			f.P("&internal.CallParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
-			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1390,14 +1492,69 @@ func (f *fileWriter) WriteClient(
 	)
 }
 
+func getFileVariableName(
+	endpoint *endpoint,
+	filePropertyInfo *filePropertyInfo,
+	inlineFileProperties bool,
+) string {
+	if inlineFileProperties {
+		// The file property is part of the in-lined request type.
+		return endpoint.RequestParameterName + "." + filePropertyInfo.Key.Name.PascalCase.UnsafeName
+	}
+	return filePropertyInfo.Key.Name.CamelCase.SafeName
+}
+
+type streamingInfo struct {
+	Delimiter    string
+	Prefix       string
+	Terminator   string
+	AcceptHeader string
+}
+
+func getStreamingInfo(
+	irEndpoint *ir.HttpEndpoint,
+) (*streamingInfo, error) {
+	if irEndpoint == nil || irEndpoint.Response == nil || irEndpoint.Response.Body == nil || irEndpoint.Response.Body.Streaming == nil {
+		return nil, nil
+	}
+	streamingResponse := irEndpoint.Response.Body.Streaming
+	switch streamingResponse.Type {
+	case "text":
+		return &streamingInfo{}, nil
+	case "json":
+		var terminator string
+		if value := valueOf(streamingResponse.Json.Terminator); value != "" {
+			terminator = fmt.Sprintf("%q", value)
+		}
+		return &streamingInfo{
+			Terminator: terminator,
+		}, nil
+	case "sse":
+		terminator := valueOf(streamingResponse.Sse.Terminator)
+		if terminator != "" {
+			terminator = fmt.Sprintf("%q", terminator)
+		} else {
+			terminator = "internal.DefaultSSETerminator"
+		}
+		return &streamingInfo{
+			Prefix:       "internal.DefaultSSEDataPrefix",
+			Terminator:   terminator,
+			AcceptHeader: "text/event-stream",
+		}, nil
+	default:
+		return nil, fmt.Errorf("stream response type %q is not supported", streamingResponse.Type)
+	}
+}
+
 type paginationInfo struct {
 	Type                      string
-	Page                      *ir.QueryParameter
+	PageName                  *ir.Name
 	PageNilCheck              string
 	PageGoType                string
 	PageZeroValue             string
 	PageFirstRequestParameter string
 	PageIsOptional            bool
+	PageIsInteger             bool
 	SetPageRequestParameter   string
 	Results                   *ir.ResponseProperty
 	ResultsPropertyPath       string
@@ -1424,70 +1581,108 @@ func (f *fileWriter) getPaginationInfo(
 	pagination := irEndpoint.Pagination
 	switch t := pagination.Type; t {
 	case "cursor":
+		if pagination.Cursor.Page.Property.Type == "body" {
+			// TODO: Add support for body property pagination.
+			return nil, nil
+		}
 		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Cursor.Results)
 		if err != nil {
 			return nil, err
 		}
 		var (
-			pageIsOptional       = pagination.Cursor.Page.ValueType.Container != nil && pagination.Cursor.Page.ValueType.Container.Optional != nil
-			nextCursorIsOptional = pagination.Cursor.Next.Property.ValueType.Container != nil && pagination.Cursor.Next.Property.ValueType.Container.Optional != nil
-			valueTypeFormat      = formatForValueType(pagination.Cursor.Page.ValueType, f.types)
+			valueType            = valueTypeFromRequestPropertyValue(pagination.Cursor.Page.Property)
+			nameAndWireValue     = nameAndWireValueFromRequestPropertyValue(pagination.Cursor.Page.Property)
+			pageIsOptional       = getOptionalOrNullableContainer(valueType) != nil
+			nextCursorIsOptional = getOptionalOrNullableContainer(pagination.Cursor.Next.Property.ValueType) != nil
+			valueTypeFormat      = formatForValueType(valueType, f.types)
 			value                = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
-			wireValue            = pagination.Cursor.Page.Name.WireValue
+			wireValue            = nameAndWireValue.WireValue
 		)
 		return &paginationInfo{
 			Type:                      t,
-			Page:                      pagination.Cursor.Page,
-			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, pagination.Cursor.Page.Name.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
-			PageGoType:                typeReferenceToGoType(pagination.Cursor.Page.ValueType, f.types, scope, f.baseImportPath, "", false),
+			PageName:                  nameAndWireValue.Name,
+			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 			PageZeroValue:             valueTypeFormat.ZeroValue,
-			PageFirstRequestParameter: fmt.Sprintf("%s.%s", requestParameterName, pagination.Cursor.Page.Name.Name.PascalCase.UnsafeName),
+			PageFirstRequestParameter: fmt.Sprintf("%s.%s", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName),
 			PageIsOptional:            pageIsOptional,
 			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
 			Results:                   pagination.Cursor.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Cursor.Results.PropertyPath),
 			ResultsNilCheck:           responsePropertyPathToNilCheck("response", pagination.Cursor.Results.PropertyPath),
-			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
-			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
+			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 			NextCursor:                pagination.Cursor.Next,
 			NextCursorPropertyPath:    responsePropertyPathToFullPathString("response", pagination.Cursor.Next.PropertyPath),
 			NextCursorNilCheck:        responsePropertyPathToNilCheck("response", pagination.Cursor.Next.PropertyPath),
-			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 			NextCursorIsOptional:      nextCursorIsOptional,
 		}, nil
 	case "offset":
+		if pagination.Offset.Page.Property.Type == "body" {
+			// TODO: Add support for body property pagination.
+			return nil, nil
+		}
 		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Offset.Results)
 		if err != nil {
 			return nil, err
 		}
 		var (
-			pageIsOptional  = pagination.Offset.Page.ValueType.Container != nil && pagination.Offset.Page.ValueType.Container.Optional != nil
-			valueTypeFormat = formatForValueType(pagination.Offset.Page.ValueType, f.types)
-			value           = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
-			wireValue       = pagination.Offset.Page.Name.WireValue
+			valueType        = valueTypeFromRequestPropertyValue(pagination.Offset.Page.Property)
+			nameAndWireValue = nameAndWireValueFromRequestPropertyValue(pagination.Offset.Page.Property)
+			pageIsOptional   = getOptionalOrNullableContainer(valueType) != nil
+			valueTypeFormat  = formatForValueType(valueType, f.types)
+			value            = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
+			wireValue        = nameAndWireValue.WireValue
 		)
 		pageFirstRequestParameter := "next"
 		if pageIsOptional {
 			pageFirstRequestParameter = "&next"
 		}
+		var pageIsInteger bool
+		primitive := maybePrimitive(valueType)
+		if primitive != nil {
+			pageIsInteger = isPrimitiveInteger(primitive)
+		}
 		return &paginationInfo{
 			Type:                      t,
-			Page:                      pagination.Offset.Page,
-			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, pagination.Offset.Page.Name.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
-			PageGoType:                typeReferenceToGoType(pagination.Offset.Page.ValueType, f.types, scope, f.baseImportPath, "", false),
+			PageName:                  nameAndWireValue.Name,
+			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 			PageZeroValue:             valueTypeFormat.ZeroValue,
 			PageFirstRequestParameter: pageFirstRequestParameter,
 			PageIsOptional:            pageIsOptional,
+			PageIsInteger:             pageIsInteger,
 			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
 			Results:                   pagination.Offset.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Offset.Results.PropertyPath),
 			ResultsNilCheck:           responsePropertyPathToNilCheck("response", pagination.Offset.Results.PropertyPath),
-			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
-			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
+			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false, f.packageLayout),
 		}, nil
 	default:
 		return nil, fmt.Errorf("%s pagination is not supported yet", t)
 	}
+}
+
+func valueTypeFromRequestPropertyValue(requestPropertyValue *ir.RequestPropertyValue) *ir.TypeReference {
+	switch requestPropertyValue.Type {
+	case "query":
+		return requestPropertyValue.Query.ValueType
+	case "body":
+		return requestPropertyValue.Body.ValueType
+	}
+	return nil
+}
+
+func nameAndWireValueFromRequestPropertyValue(requestPropertyValue *ir.RequestPropertyValue) *ir.NameAndWireValue {
+	switch requestPropertyValue.Type {
+	case "query":
+		return requestPropertyValue.Query.Name
+	case "body":
+		return requestPropertyValue.Body.Name
+	}
+	return nil
 }
 
 func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProperty) (*ir.TypeReference, error) {
@@ -1497,8 +1692,9 @@ func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProper
 	property := responseProperty.Property
 	if property != nil && property.ValueType != nil {
 		valueType := property.ValueType
-		if property.ValueType.Container != nil && property.ValueType.Container.Optional != nil {
-			valueType = property.ValueType.Container.Optional
+		optionalOrNullableContainer := getOptionalOrNullableContainer(property.ValueType)
+		if optionalOrNullableContainer != nil {
+			valueType = optionalOrNullableContainer
 		}
 		switch valueType.Type {
 		case "container":
@@ -1559,13 +1755,17 @@ func NewGeneratedClient(
 ) (*GeneratedClient, error) {
 	var generatedEndpoints []*GeneratedEndpoint
 	for _, endpoint := range endpoints {
-		if len(endpoint.Examples) == 0 {
+		var examples []*ir.ExampleEndpointCall
+		for _, example := range endpoint.UserSpecifiedExamples {
+			examples = append(examples, example.Example)
+		}
+		for _, example := range endpoint.AutogeneratedExamples {
+			examples = append(examples, example.Example)
+		}
+		if len(examples) == 0 {
 			continue
 		}
-		example := exampleEndpointCallFromEndpointExample(endpoint.Examples[0])
-		if example == nil {
-			continue
-		}
+		example := examples[0]
 		generatedEndpoints = append(
 			generatedEndpoints,
 			newGeneratedEndpoint(
@@ -1581,26 +1781,6 @@ func NewGeneratedClient(
 		Instantiation: rootClientInstantiation,
 		Endpoints:     generatedEndpoints,
 	}, nil
-}
-
-type exampleEndpointCallVisitor struct {
-	value *ir.ExampleEndpointCall
-}
-
-func (e *exampleEndpointCallVisitor) VisitUserProvided(value *ir.ExampleEndpointCall) error {
-	e.value = value
-	return nil
-}
-
-func (e *exampleEndpointCallVisitor) VisitGenerated(value *ir.ExampleEndpointCall) error {
-	e.value = value
-	return nil
-}
-
-func exampleEndpointCallFromEndpointExample(example *ir.HttpEndpointExample) *ir.ExampleEndpointCall {
-	visitor := new(exampleEndpointCallVisitor)
-	example.Accept(visitor)
-	return visitor.value
 }
 
 func newGeneratedEndpoint(
@@ -1685,7 +1865,7 @@ func newEndpointSnippet(
 			Name: "err",
 		},
 	}
-	if endpoint.Response != nil {
+	if endpoint.Response != nil && endpoint.Response.Body != nil {
 		returnValues = append(
 			[]ast.Expr{
 				&ast.LocalReference{
@@ -1733,6 +1913,7 @@ func getEndpointParameters(
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
 ) []ast.Expr {
+	var fields []*ast.Field
 	parameters := []ast.Expr{
 		&ast.CallExpr{
 			FunctionName: &ast.ImportedReference{
@@ -1741,18 +1922,26 @@ func getEndpointParameters(
 			},
 		},
 	}
-
-	allPathParameters := example.RootPathParameters
-	allPathParameters = append(allPathParameters, example.ServicePathParameters...)
-	allPathParameters = append(allPathParameters, example.EndpointPathParameters...)
-	for _, pathParameter := range allPathParameters {
-		parameters = append(
-			parameters,
-			f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
-		)
+	allPathParameters := getAllExamplePathParameters(example)
+	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
+		for _, pathParameter := range allPathParameters {
+			fields = append(
+				fields,
+				&ast.Field{
+					Key:   pathParameter.Name.PascalCase.UnsafeName,
+					Value: f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
+				},
+			)
+		}
+	} else {
+		for _, pathParameter := range allPathParameters {
+			parameters = append(
+				parameters,
+				f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
+			)
+		}
 	}
 
-	var fields []*ast.Field
 	for _, header := range append(example.ServiceHeaders, example.EndpointHeaders...) {
 		if isHeaderLiteral(endpoint, header.Name.WireValue) {
 			continue
@@ -1767,9 +1956,6 @@ func getEndpointParameters(
 	}
 
 	for _, queryParameter := range example.QueryParameters {
-		if isQueryParameterLiteral(endpoint, queryParameter.Name.WireValue) {
-			continue
-		}
 		exampleValue := f.snippetWriter.GetSnippetForExampleTypeReference(queryParameter.Value)
 		if isQueryParameterAllowMultiple(endpoint, queryParameter.Name.WireValue) {
 			// This query parameter allows multiple elements, so we need to surround the example
@@ -1797,7 +1983,7 @@ func getEndpointParameters(
 		)
 	}
 
-	if !shouldSkipRequestType(endpoint) {
+	if !shouldSkipRequestType(endpoint, f.inlinePathParameters, f.inlineFileProperties) {
 		fields = append(
 			fields,
 			exampleRequestBodyToFields(f, endpoint, example.Request)...,
@@ -1823,6 +2009,13 @@ func getEndpointParameters(
 		)
 	}
 	return parameters
+}
+
+func getAllExamplePathParameters(example *ir.ExampleEndpointCall) []*ir.ExamplePathParameter {
+	allPathParameters := example.RootPathParameters
+	allPathParameters = append(allPathParameters, example.ServicePathParameters...)
+	allPathParameters = append(allPathParameters, example.EndpointPathParameters...)
+	return allPathParameters
 }
 
 func exampleRequestBodyToFields(
@@ -1922,6 +2115,9 @@ func generatedClientInstantiation(
 	baseImportPath string,
 	generatedAuth *GeneratedAuth,
 	generatedEnvironment *GeneratedEnvironment,
+	exportedClientName string,
+	clientConstructorNameOverride string,
+	packageLayout PackageLayout,
 ) *ast.AssignStmt {
 	var parameters []ast.Expr
 	if generatedAuth != nil {
@@ -1930,6 +2126,14 @@ func generatedClientInstantiation(
 	if generatedEnvironment != nil {
 		parameters = append(parameters, generatedEnvironment.Option)
 	}
+	rootImportPath := baseImportPath
+	if packageLayout != PackageLayoutFlat {
+		rootImportPath = packagePathToImportPath(baseImportPath, packagePathForClient(new(ir.FernFilepath)))
+	}
+	constructorName := fmt.Sprintf("New%s", exportedClientName)
+	if clientConstructorNameOverride != "" {
+		constructorName = clientConstructorNameOverride
+	}
 	return &ast.AssignStmt{
 		Left: []ast.Expr{
 			ast.NewLocalReference("client"),
@@ -1937,8 +2141,8 @@ func generatedClientInstantiation(
 		Right: []ast.Expr{
 			ast.NewCallExpr(
 				ast.NewImportedReference(
-					"NewClient",
-					packagePathToImportPath(baseImportPath, packagePathForClient(new(ir.FernFilepath))),
+					constructorName,
+					rootImportPath,
 				),
 				parameters,
 			),
@@ -1947,23 +2151,34 @@ func generatedClientInstantiation(
 }
 
 type filePropertyInfo struct {
-	Key        *ir.NameAndWireValue
-	IsOptional bool
-	IsArray    bool
+	Key         *ir.NameAndWireValue
+	IsOptional  bool
+	IsArray     bool
+	ContentType string
 }
 
 func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error) {
 	switch fileProperty.Type {
 	case "file":
+		var contentType string
+		if fileProperty.File.ContentType != nil {
+			contentType = *fileProperty.File.ContentType
+		}
 		return &filePropertyInfo{
-			Key:        fileProperty.File.Key,
-			IsOptional: fileProperty.File.IsOptional,
+			Key:         fileProperty.File.Key,
+			IsOptional:  fileProperty.File.IsOptional,
+			ContentType: contentType,
 		}, nil
 	case "fileArray":
+		var contentType string
+		if fileProperty.FileArray.ContentType != nil {
+			contentType = *fileProperty.FileArray.ContentType
+		}
 		return &filePropertyInfo{
-			Key:        fileProperty.FileArray.Key,
-			IsOptional: fileProperty.FileArray.IsOptional,
-			IsArray:    true,
+			Key:         fileProperty.FileArray.Key,
+			IsOptional:  fileProperty.FileArray.IsOptional,
+			IsArray:     true,
+			ContentType: contentType,
 		}, nil
 	}
 	return nil, fmt.Errorf("file property %s is not yet supported", fileProperty.Type)
@@ -1996,10 +2211,9 @@ type endpoint struct {
 	OptionConstructor           string
 	PathSuffix                  string
 	Method                      string
-	IsStreaming                 bool
-	StreamDelimiter             string
 	ErrorDecoderParameterName   string
 	Idempotent                  bool
+	Accept                      string
 	ContentType                 string
 	Errors                      ir.ResponseErrors
 	QueryParameters             []*ir.QueryParameter
@@ -2007,7 +2221,8 @@ type endpoint struct {
 	IdempotencyHeaders          []*ir.HttpHeader
 	FilePropertyInfo            *filePropertyInfo
 	FileProperties              []*ir.FileProperty
-	FileBodyProperties          []*ir.InlinedRequestBodyProperty
+	FileBodyProperties          []*ir.FileUploadBodyProperty
+	StreamingInfo               *streamingInfo
 	PaginationInfo              *paginationInfo
 }
 
@@ -2021,8 +2236,12 @@ func (f *fileWriter) endpointFromIR(
 	fernFilepath *ir.FernFilepath,
 	irEndpoint *ir.HttpEndpoint,
 	irEnvironmentsConfig *ir.EnvironmentsConfig,
+	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
+	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
-	receiver string,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+	packageLayout PackageLayout,
 ) (*endpoint, error) {
 	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 
@@ -2031,46 +2250,64 @@ func (f *fileWriter) endpointFromIR(
 
 	// Add path parameters and request body, if any.
 	pathParameterToScopedName := make(map[string]string, len(irEndpoint.AllPathParameters))
-	pathParamters := make(map[string]*ir.PathParameter, len(irEndpoint.AllPathParameters))
+	pathParameters := make(map[string]*ir.PathParameter, len(irEndpoint.AllPathParameters))
 	for _, pathParameter := range irEndpoint.AllPathParameters {
-		pathParamters[pathParameter.Name.OriginalName] = pathParameter
+		pathParameters[pathParameter.Name.OriginalName] = pathParameter
 	}
 
-	var pathParameterNames []string
-	for _, part := range irEndpoint.FullPath.Parts {
-		if part.PathParameter == "" {
-			continue
+	var (
+		pathParameterNames  []string
+		signatureParameters = []*signatureParameter{{parameter: "ctx context.Context"}}
+	)
+	if includePathParametersInWrappedRequest(irEndpoint, inlinePathParameters) {
+		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
+		for _, pathParameter := range irEndpoint.AllPathParameters {
+			pathParameterNames = append(pathParameterNames, fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName))
 		}
-		pathParameter, ok := pathParamters[part.PathParameter]
-		if !ok {
-			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+	} else {
+		for _, part := range irEndpoint.FullPath.Parts {
+			if part.PathParameter == "" {
+				continue
+			}
+			pathParameter, ok := pathParameters[part.PathParameter]
+			if !ok {
+				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+			}
+			if literal := maybeLiteral(pathParameter.ValueType, f.types); literal != nil {
+				value := literalToValue(literal)
+				pathParameterNames = append(pathParameterNames, value)
+				pathParameterToScopedName[part.PathParameter] = value
+				continue
+			}
+			pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
+			pathParameterNames = append(pathParameterNames, pathParameterName)
+			pathParameterToScopedName[part.PathParameter] = pathParameterName
 		}
-		pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
-		pathParameterNames = append(pathParameterNames, pathParameterName)
-		pathParameterToScopedName[part.PathParameter] = pathParameterName
-	}
 
-	// Preserve the order of path parameters specified in the API in the function signature.
-	signatureParameters := []*signatureParameter{{parameter: "ctx context.Context"}}
-	for _, pathParameter := range irEndpoint.AllPathParameters {
-		pathParameterName, ok := pathParameterToScopedName[pathParameter.Name.OriginalName]
-		if !ok {
-			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
+		// Preserve the order of path parameters specified in the API in the function signature.
+		for _, pathParameter := range irEndpoint.AllPathParameters {
+			pathParameterName, ok := pathParameterToScopedName[pathParameter.Name.OriginalName]
+			if !ok {
+				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
+			}
+			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
+			if isLiteralType(pathParameter.ValueType, f.types) {
+				continue
+			}
+			signatureParameters = append(
+				signatureParameters,
+				&signatureParameter{
+					docs:      pathParameter.Docs,
+					parameter: fmt.Sprintf("%s %s", pathParameterName, parameterType),
+				},
+			)
 		}
-		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
-		signatureParameters = append(
-			signatureParameters,
-			&signatureParameter{
-				docs:      pathParameter.Docs,
-				parameter: fmt.Sprintf("%s %s", pathParameterName, parameterType),
-			},
-		)
 	}
 
 	// Add the file parameter(s) after the path parameters, if any.
 	var (
 		fileProperties     []*ir.FileProperty
-		fileBodyProperties []*ir.InlinedRequestBodyProperty
+		fileBodyProperties []*ir.FileUploadBodyProperty
 		filePropertyInfo   *filePropertyInfo
 	)
 	if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
@@ -2080,18 +2317,21 @@ func (f *fileWriter) endpointFromIR(
 				if err != nil {
 					return nil, err
 				}
-				parameterName := filePropertyInfo.Key.Name.CamelCase.SafeName
-				parameterType := "io.Reader"
-				if filePropertyInfo.IsArray {
-					parameterType = "[]io.Reader"
-				}
-				signatureParameters = append(
-					signatureParameters,
-					&signatureParameter{
-						parameter: fmt.Sprintf("%s %s", parameterName, parameterType),
-					},
-				)
 				fileProperties = append(fileProperties, fileUploadProperty.File)
+
+				if !inlineFileProperties {
+					parameterName := filePropertyInfo.Key.Name.CamelCase.SafeName
+					parameterType := "io.Reader"
+					if filePropertyInfo.IsArray {
+						parameterType = "[]io.Reader"
+					}
+					signatureParameters = append(
+						signatureParameters,
+						&signatureParameter{
+							parameter: fmt.Sprintf("%s %s", parameterName, parameterType),
+						},
+					)
+				}
 			}
 			if fileUploadProperty.BodyProperty != nil {
 				fileBodyProperties = append(fileBodyProperties, fileUploadProperty.BodyProperty)
@@ -2107,20 +2347,19 @@ func (f *fileWriter) endpointFromIR(
 		requestValueName          = ""
 		requestIsBytes            = false
 		requestIsOptional         = false
+		headers                   = []*ir.HttpHeader{}
 	)
+
 	if irEndpoint.SdkRequest != nil {
-		if needsRequestParameter(irEndpoint) {
+		if needsRequestParameter(irEndpoint, inlinePathParameters, inlineFileProperties) {
 			var requestType string
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
 				switch requestBody.Type {
 				case "typeReference":
-					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 				case "bytes":
 					contentType = "application/octet-stream"
-					if irEndpoint.RequestBody.Bytes.ContentType != nil {
-						contentType = *irEndpoint.RequestBody.Bytes.ContentType
-					}
 					requestType = "[]byte"
 					requestValueName = "requestBuffer"
 					requestIsBytes = true
@@ -2132,12 +2371,13 @@ func (f *fileWriter) endpointFromIR(
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
 				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
-				requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				if packageLayout == PackageLayoutFlat {
+					requestType = "*" + irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+				} else {
+					requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				}
 				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
 					contentType = "application/octet-stream"
-					if irEndpoint.RequestBody.Bytes.ContentType != nil {
-						contentType = *irEndpoint.RequestBody.Bytes.ContentType
-					}
 					requestValueName = "requestBuffer"
 					requestIsBytes = true
 					requestIsOptional = irEndpoint.RequestBody.Bytes.IsOptional
@@ -2147,6 +2387,7 @@ func (f *fileWriter) endpointFromIR(
 						irEndpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName,
 					)
 				}
+				headers = append(serviceHeaders, irEndpoint.Headers...)
 			}
 			signatureParameters = append(
 				signatureParameters,
@@ -2162,7 +2403,7 @@ func (f *fileWriter) endpointFromIR(
 		if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
 			// This is a file upload request, so we prepare a buffer for the request body
 			// instead of just using the request specified by the function signature.
-			requestValueName = "requestBuffer"
+			requestValueName = "writer.Buffer()"
 		}
 	}
 
@@ -2178,6 +2419,11 @@ func (f *fileWriter) endpointFromIR(
 		},
 	)
 
+	streamingInfo, err := getStreamingInfo(irEndpoint)
+	if err != nil {
+		return nil, err
+	}
+
 	paginationInfo, err := f.getPaginationInfo(irEndpoint, scope, requestParameterName)
 	if err != nil {
 		return nil, err
@@ -2191,29 +2437,27 @@ func (f *fileWriter) endpointFromIR(
 		signatureReturnValues     string
 		successfulReturnValues    string
 		errorReturnValues         string
-		streamDelimiter           string
-		isStreaming               bool
 	)
 	var responseIsOptionalParameter bool
-	if irEndpoint.Response != nil {
-		switch irEndpoint.Response.Type {
+	if irEndpoint.Response != nil && irEndpoint.Response.Body != nil {
+		switch irEndpoint.Response.Body.Type {
 		case "json":
-			typeReference := typeReferenceFromJsonResponse(irEndpoint.Response.Json)
+			typeReference := typeReferenceFromJsonResponse(irEndpoint.Response.Body.Json)
 			if typeReference == nil {
-				return nil, fmt.Errorf("unsupported json response type: %s", irEndpoint.Response.Json.Type)
+				return nil, fmt.Errorf("unsupported json response type: %s", irEndpoint.Response.Body.Json.Type)
 			}
-			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 			responseInitializerFormat = "var response %s"
-			responseIsOptionalParameter = typeReference.Container != nil && typeReference.Container.Optional != nil
+			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
 			responseParameterName = "&response"
 			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
 			successfulReturnValues = "response, nil"
 			errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(typeReference, f.types))
 
-			if irEndpoint.Response.Json.NestedPropertyAsResponse != nil && irEndpoint.Response.Json.NestedPropertyAsResponse.ResponseProperty != nil {
-				responseProperty := irEndpoint.Response.Json.NestedPropertyAsResponse.ResponseProperty
+			if irEndpoint.Response.Body.Json.NestedPropertyAsResponse != nil && irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty != nil {
+				responseProperty := irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty
 				responsePropertyTypeReference := responseProperty.ValueType
-				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 				signatureReturnValues = fmt.Sprintf("(%s, error)", responsePropertyType)
 				successfulReturnValues = fmt.Sprintf("response.%s, nil", responseProperty.Name.Name.PascalCase.UnsafeName)
 				errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(responsePropertyTypeReference, f.types))
@@ -2240,23 +2484,16 @@ func (f *fileWriter) endpointFromIR(
 			successfulReturnValues = "response.String(), nil"
 			errorReturnValues = `"", err`
 		case "streaming":
-			if irEndpoint.Response.Streaming.Json == nil && irEndpoint.Response.Streaming.Text == nil {
-				return nil, fmt.Errorf("unsupported streaming response type: %s", irEndpoint.Response.Streaming.Type)
-			}
-			if irEndpoint.Response.Streaming.Json != nil && irEndpoint.Response.Streaming.Json.Terminator != nil {
-				streamDelimiter = *irEndpoint.Response.Streaming.Json.Terminator
-			}
-			typeReference, err := typeReferenceFromStreamingResponse(irEndpoint.Response.Streaming)
+			typeReference, err := typeReferenceFromStreamingResponse(irEndpoint.Response.Body.Streaming)
 			if err != nil {
 				return nil, err
 			}
-			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false), "*")
+			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout), "*")
 			responseParameterName = "response"
 			signatureReturnValues = fmt.Sprintf("(*core.Stream[%s], error)", responseType)
 			errorReturnValues = "nil, err"
-			isStreaming = true
 		default:
-			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Type)
+			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
 		}
 	} else {
 		responseParameterName = ""
@@ -2297,9 +2534,12 @@ func (f *fileWriter) endpointFromIR(
 	}
 
 	// An error decoder is required when there are endpoint-specific errors.
-	errorDecoderParameterName := ""
+	var errorDecoderParameterName string
 	if len(irEndpoint.Errors) > 0 {
 		errorDecoderParameterName = "errorDecoder"
+		if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property == nil {
+			errorDecoderParameterName = "internal.NewErrorDecoder(errorCodes)"
+		}
 	}
 
 	var pathParameterDocs []*string
@@ -2312,6 +2552,16 @@ func (f *fileWriter) endpointFromIR(
 	optionConstructor := "core.NewRequestOptions(opts...)"
 	if irEndpoint.Idempotent {
 		optionConstructor = "core.NewIdempotentRequestOptions(opts...)"
+	}
+
+	var accept string
+	if streamingInfo != nil && streamingInfo.AcceptHeader != "" {
+		accept = streamingInfo.AcceptHeader
+	}
+
+	contentTypeOverride := contentTypeFromRequestBody(irEndpoint.RequestBody)
+	if contentTypeOverride != "" {
+		contentType = contentTypeOverride
 	}
 
 	return &endpoint{
@@ -2337,18 +2587,18 @@ func (f *fileWriter) endpointFromIR(
 		BaseURL:                     baseURL,
 		PathSuffix:                  pathSuffix,
 		Method:                      irMethodToMethodEnum(irEndpoint.Method),
-		IsStreaming:                 isStreaming,
-		StreamDelimiter:             streamDelimiter,
 		ErrorDecoderParameterName:   errorDecoderParameterName,
+		Accept:                      accept,
 		ContentType:                 contentType,
 		Idempotent:                  irEndpoint.Idempotent,
 		Errors:                      irEndpoint.Errors,
 		QueryParameters:             irEndpoint.QueryParameters,
-		Headers:                     irEndpoint.Headers,
+		Headers:                     headers,
 		IdempotencyHeaders:          idempotencyHeaders,
 		FilePropertyInfo:            filePropertyInfo,
 		FileProperties:              fileProperties,
 		FileBodyProperties:          fileBodyProperties,
+		StreamingInfo:               streamingInfo,
 		PaginationInfo:              paginationInfo,
 	}, nil
 }
@@ -2376,7 +2626,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("*core.APIError")
 	if errorDeclaration.Type == nil {
 		// This error doesn't have a body, so we only need to include the status code.
-		// We still needto implement the json.Unmarshaler and json.Marshaler though.
+		// We still need to implement the json.Unmarshaler and json.Marshaler though.
 		f.P("}")
 		f.P()
 		f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
@@ -2392,7 +2642,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	}
 	var (
 		importPath = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false)
+		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 	)
 	var literal string
 	if errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Literal != nil {
@@ -2403,7 +2653,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P()
 
 	// Implement the json.Unmarshaler.
-	isOptional := errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Optional != nil
+	isOptional := getOptionalOrNullableContainer(errorDeclaration.Type) != nil
 	f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
 	if isOptional {
 		f.P("if len(data) == 0 {")
@@ -2455,8 +2705,10 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 func (f *fileWriter) WriteRequestType(
 	fernFilepath *ir.FernFilepath,
 	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	includeGenericOptionals bool,
+	inlineFileProperties bool,
 ) error {
 	var (
 		// At this point, we've already verified that the given endpoint's request
@@ -2469,7 +2721,7 @@ func (f *fileWriter) WriteRequestType(
 
 	var literals []*literal
 	f.P("type ", typeName, " struct {")
-	for _, header := range endpoint.Headers {
+	for _, header := range append(serviceHeaders, endpoint.Headers...) {
 		f.WriteDocs(header.Docs)
 		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
 			literals = append(
@@ -2481,11 +2733,18 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
-		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\" url:\"-\"`")
 	}
+	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
+		for _, pathParameter := range endpoint.AllPathParameters {
+			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
+			f.WriteDocs(pathParameter.Docs)
+			f.P(pathParameter.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\" url:\"-\"`")
+		}
+	}
 	for _, queryParam := range endpoint.QueryParameters {
-		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout)
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
@@ -2517,7 +2776,7 @@ func (f *fileWriter) WriteRequestType(
 		}
 		return nil
 	}
-	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals)
+	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals, inlineFileProperties)
 	if err != nil {
 		return err
 	}
@@ -2546,7 +2805,7 @@ func (f *fileWriter) WriteRequestType(
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
 		referenceType = strings.TrimPrefix(
-			typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false, f.packageLayout),
 			"*",
 		)
 		referenceIsPointer = reference.RequestBodyType.Named != nil && isPointer(f.types[reference.RequestBodyType.Named.TypeId])
@@ -2626,7 +2885,7 @@ func (f *fileWriter) WriteRequestType(
 		}
 		f.P("}")
 		if requestBody.extraProperties {
-			f.P("return core.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
+			f.P("return internal.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
 		} else {
 			f.P("return json.Marshal(marshaler)")
 		}
@@ -2834,6 +3093,7 @@ func requestBodyToFieldDeclaration(
 	importPath string,
 	bodyField string,
 	includeGenericOptionals bool,
+	inlineFileProperties bool,
 ) (*requestBody, error) {
 	visitor := &requestBodyVisitor{
 		bodyField:               bodyField,
@@ -2843,6 +3103,7 @@ func requestBodyToFieldDeclaration(
 		types:                   writer.types,
 		writer:                  writer,
 		includeGenericOptionals: includeGenericOptionals,
+		inlineFileProperties:    inlineFileProperties,
 	}
 	if err := body.Accept(visitor); err != nil {
 		return nil, err
@@ -2868,6 +3129,7 @@ type requestBodyVisitor struct {
 
 	// Configurable
 	includeGenericOptionals bool
+	inlineFileProperties    bool
 }
 
 func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
@@ -2896,24 +3158,46 @@ func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReferen
 	r.writer.P(
 		r.bodyField,
 		" ",
-		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false),
+		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false, r.writer.packageLayout),
 		" `json:\"-\" url:\"-\"`",
 	)
 	return nil
 }
 
 func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) error {
-	var bodyProperties []*ir.InlinedRequestBodyProperty
+	var (
+		bodyProperties []*ir.FileUploadBodyProperty
+		fileProperties []*ir.FileProperty
+	)
 	for _, property := range fileUpload.Properties {
 		if bodyProperty := property.BodyProperty; bodyProperty != nil {
 			bodyProperties = append(bodyProperties, bodyProperty)
 		}
+		if r.inlineFileProperties {
+			// File properties are only part of the in-lined request if explicitly
+			// configured.
+			if fileProperty := property.File; fileProperty != nil {
+				fileProperties = append(fileProperties, fileProperty)
+			}
+		}
 	}
-	if len(bodyProperties) == 0 {
+	if len(bodyProperties) == 0 && len(fileProperties) == 0 {
 		// We only want to create a separate request type if the file upload request
-		// has any body properties that aren't the file itself. The file is specified
-		// as a positional parameter.
+		// has any properties. By default, the file parameter is not part of the
+		// in-lined request type.
 		return nil
+	}
+	for _, fileProperty := range fileProperties {
+		filePropertyInfo, err := filePropertyToInfo(fileProperty)
+		if err != nil {
+			return err
+		}
+		parameterName := filePropertyInfo.Key.Name.PascalCase.UnsafeName
+		parameterType := "io.Reader"
+		if filePropertyInfo.IsArray {
+			parameterType = "[]io.Reader"
+		}
+		r.writer.P(parameterName, " ", parameterType, " `json:\"-\" url:\"-\"`")
 	}
 	typeVisitor := &typeVisitor{
 		typeName:       fileUpload.Name.PascalCase.UnsafeName,
@@ -2966,7 +3250,7 @@ func inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody *ir.InlinedReq
 // inlinedRequestBodyPropertiesToObjectTypeDeclaration maps the given inlined request body
 // properties into an object type declaration so that we can reuse the functionality required
 // to write object properties for a generated object.
-func inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties []*ir.InlinedRequestBodyProperty) *ir.ObjectTypeDeclaration {
+func inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties []*ir.FileUploadBodyProperty) *ir.ObjectTypeDeclaration {
 	properties := make([]*ir.ObjectProperty, len(bodyProperties))
 	for i, property := range bodyProperties {
 		properties[i] = &ir.ObjectProperty{
@@ -3005,6 +3289,7 @@ type valueTypeFormat struct {
 	ZeroValue   string
 	IsOptional  bool
 	IsPrimitive bool
+	IsIterable  bool
 }
 
 func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *valueTypeFormat {
@@ -3014,25 +3299,38 @@ func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir
 		isOptional  bool
 		isPrimitive bool
 	)
-	if typeReference.Container != nil && typeReference.Container.Optional != nil {
+	iterableType := maybeIterableType(typeReference, types)
+	if iterableType != nil {
+		value := formatForValueType(iterableType, types)
+		return &valueTypeFormat{
+			Prefix:      value.Prefix,
+			Suffix:      value.Suffix,
+			ZeroValue:   value.ZeroValue,
+			IsOptional:  value.IsOptional,
+			IsPrimitive: value.IsPrimitive,
+			IsIterable:  true,
+		}
+	}
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
 		isOptional = true
-		if needsOptionalDereference(typeReference.Container.Optional, types) {
+		if needsOptionalDereference(optionalOrNullableContainer, types) {
 			prefix = "*"
 		}
 	}
-	if primitive := maybePrimitive(typeReference); primitive != "" {
+	if primitive := maybePrimitive(typeReference); primitive != nil {
 		// Several of the primitive types require special handling for query parameter serialization.
 		if isOptional {
 			prefix = "*"
 		}
-		switch primitive {
-		case ir.PrimitiveTypeDateTime:
+		switch primitive.V1 {
+		case ir.PrimitiveTypeV1DateTime:
 			prefix = ""
 			suffix = ".Format(time.RFC3339)"
-		case ir.PrimitiveTypeDate:
+		case ir.PrimitiveTypeV1Date:
 			prefix = ""
 			suffix = `.Format("2006-01-02")`
-		case ir.PrimitiveTypeBase64:
+		case ir.PrimitiveTypeV1Base64:
 			prefix = "base64.StdEncoding.EncodeToString(" + prefix
 			suffix = ")"
 		}
@@ -3045,6 +3343,45 @@ func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir
 		IsOptional:  isOptional,
 		IsPrimitive: isPrimitive,
 	}
+}
+
+func contentTypeFromRequestBody(
+	requestBody *ir.HttpRequestBody,
+) string {
+	if requestBody == nil {
+		return ""
+	}
+	visitor := new(contentTypeVisitor)
+	if err := requestBody.Accept(visitor); err != nil {
+		return ""
+	}
+	if visitor.contentType == nil {
+		return ""
+	}
+	return *visitor.contentType
+}
+
+type contentTypeVisitor struct {
+	contentType *string
+}
+
+func (c *contentTypeVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
+	c.contentType = inlinedRequestBody.ContentType
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitReference(reference *ir.HttpRequestBodyReference) error {
+	c.contentType = reference.ContentType
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) error {
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitBytes(bytes *ir.BytesRequest) error {
+	c.contentType = bytes.ContentType
+	return nil
 }
 
 func typeReferenceFromJsonResponse(
@@ -3071,17 +3408,26 @@ func typeReferenceFromStreamingResponse(
 	switch streamingResponse.Type {
 	case "json":
 		return streamingResponse.Json.Payload, nil
+	case "sse":
+		return streamingResponse.Sse.Payload, nil
 	case "text":
-		return ir.NewTypeReferenceFromPrimitive(ir.PrimitiveTypeString), nil
+		return ir.NewTypeReferenceFromPrimitive(&ir.PrimitiveType{V1: ir.PrimitiveTypeV1String}), nil
 	}
 	return nil, fmt.Errorf("unsupported streaming response type: %s", streamingResponse.Type)
 }
 
 // needsRequestParameter returns true if the endpoint needs a request parameter in its
 // function signature.
-func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
+func needsRequestParameter(
+	endpoint *ir.HttpEndpoint,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+) bool {
 	if endpoint.SdkRequest == nil {
 		return false
+	}
+	if includePathParametersInWrappedRequest(endpoint, inlinePathParameters) {
+		return true
 	}
 	if len(endpoint.QueryParameters) > 0 {
 		return true
@@ -3090,22 +3436,67 @@ func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
 		return true
 	}
 	if endpoint.RequestBody != nil {
-		return endpoint.RequestBody.FileUpload == nil || fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload)
+		return endpoint.RequestBody.FileUpload == nil ||
+			fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload) ||
+			(inlineFileProperties && fileUploadHasFileProperties(endpoint.RequestBody.FileUpload))
+	}
+	onlyPathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetOnlyPathParameters()
+	if onlyPathParameters != nil && *onlyPathParameters {
+		return false
 	}
 	return true
+}
+
+// includePathParametersInWrappedRequest returns true if the endpoint's request should
+// include path parameters in its wrapped request type.
+func includePathParametersInWrappedRequest(
+	endpoint *ir.HttpEndpoint,
+	inlinePathParameters bool,
+) bool {
+	if endpoint.SdkRequest == nil {
+		return false
+	}
+	includePathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetIncludePathParameters()
+	return len(endpoint.PathParameters) > 0 && inlinePathParameters && includePathParameters != nil && *includePathParameters
 }
 
 // maybePrimitive recurses into the given value type, returning its underlying primitive
 // value, if any. Note that this only recurses through nested optional containers; all
 // other container types are ignored.
-func maybePrimitive(typeReference *ir.TypeReference) ir.PrimitiveType {
-	if typeReference.Primitive != "" {
+func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
+	if typeReference.Primitive != nil {
 		return typeReference.Primitive
 	}
-	if typeReference.Container != nil && typeReference.Container.Optional != nil {
-		return maybePrimitive(typeReference.Container.Optional)
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return maybePrimitive(optionalOrNullableContainer)
 	}
-	return ""
+	return nil
+}
+
+// isPrimitiveInteger returns true if the given primitive type is an integer.
+func isPrimitiveInteger(primitive *ir.PrimitiveType) bool {
+	return primitive.V1 == ir.PrimitiveTypeV1Integer || primitive.V1 == ir.PrimitiveTypeV1Uint || primitive.V1 == ir.PrimitiveTypeV1Uint64 || primitive.V1 == ir.PrimitiveTypeV1Long
+}
+
+// maybeLiteral recurses into the given value type, returning its underlying literal
+// value, if any.
+func maybeLiteral(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *ir.Literal {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return maybeLiteral(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		return nil
+	}
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return maybeLiteral(optionalOrNullableContainer, types)
+	}
+	if typeReference.Container != nil && typeReference.Container.Literal != nil {
+		return typeReference.Container.Literal
+	}
+	return nil
 }
 
 // isLiteralType returns true if the given type reference is a literal.
@@ -3114,10 +3505,23 @@ func isLiteralType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Type
 		typeDeclaration := types[typeReference.Named.TypeId]
 		return typeDeclaration.Shape.Alias != nil && isLiteralType(typeDeclaration.Shape.Alias.AliasOf, types)
 	}
-	if typeReference.Container != nil && typeReference.Container.Optional != nil {
-		return isLiteralType(typeReference.Container.Optional, types)
+	optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+	if optionalOrNullableContainer != nil {
+		return isLiteralType(optionalOrNullableContainer, types)
 	}
 	return typeReference.Container != nil && typeReference.Container.Literal != nil
+}
+
+func getOptionalOrNullableContainer(valueType *ir.TypeReference) *ir.TypeReference {
+	if valueType != nil && valueType.Container != nil {
+		if valueType.Container.Optional != nil {
+			return valueType.Container.Optional
+		}
+		if valueType.Container.Nullable != nil {
+			return valueType.Container.Nullable
+		}
+	}
+	return nil
 }
 
 // isOptionalType returns true if the given type reference is an optional.
@@ -3126,7 +3530,31 @@ func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Typ
 		typeDeclaration := types[typeReference.Named.TypeId]
 		return typeDeclaration.Shape.Alias != nil && isOptionalType(typeDeclaration.Shape.Alias.AliasOf, types)
 	}
-	return typeReference.Container != nil && typeReference.Container.Optional != nil
+	return getOptionalOrNullableContainer(typeReference) != nil
+}
+
+// maybeIterableType returns the given type reference's iterable type, if any.
+func maybeIterableType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *ir.TypeReference {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return maybeIterableType(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		return nil
+	}
+	if typeReference.Container != nil {
+		optionalOrNullableContainer := getOptionalOrNullableContainer(typeReference)
+		if optionalOrNullableContainer != nil {
+			return maybeIterableType(optionalOrNullableContainer, types)
+		}
+		if typeReference.Container.List != nil {
+			return typeReference.Container.List
+		}
+		if typeReference.Container.Set != nil {
+			return typeReference.Container.Set
+		}
+	}
+	return nil
 }
 
 // needsOptionalDereference returns true if the optional type needs to be referenced.

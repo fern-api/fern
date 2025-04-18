@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "string" });
+await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
 ```
 </dd>
 </dl>
@@ -54,7 +54,7 @@ await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "string" });
 <dd>
 
 ```csharp
-await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "string" });
+await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "s3Key" });
 ```
 </dd>
 </dl>

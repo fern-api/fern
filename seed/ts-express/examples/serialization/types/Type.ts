@@ -13,5 +13,5 @@ export const Type: core.serialization.Schema<serializers.Type.Raw, SeedExamples.
     ]);
 
 export declare namespace Type {
-    type Raw = serializers.BasicType.Raw | serializers.ComplexType.Raw;
+    export type Raw = serializers.BasicType.Raw | serializers.ComplexType.Raw;
 }

@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedAudiences.Core;
 
-#nullable enable
-
 namespace SeedAudiences;
 
 public partial class FooClient
@@ -16,18 +14,16 @@ public partial class FooClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Foo.FindAsync(
     ///     new FindRequest
     ///     {
-    ///         OptionalString = "string",
-    ///         PublicProperty = "string",
+    ///         OptionalString = "optionalString",
+    ///         PublicProperty = "publicProperty",
     ///         PrivateProperty = 1,
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ImportingType> FindAsync(
         FindRequest request,
         RequestOptions? options = null,
@@ -39,26 +35,23 @@ public partial class FooClient
         {
             _query["optionalString"] = request.OptionalString;
         }
-        var requestBody = new Dictionary<string, object>()
-        {
-            { "publicProperty", request.PublicProperty },
-            { "privateProperty", request.PrivateProperty },
-        };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "",
-                Body = requestBody,
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "",
+                    Body = request,
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ImportingType>(responseBody)!;
@@ -69,10 +62,13 @@ public partial class FooClient
             }
         }
 
-        throw new SeedAudiencesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedAudiencesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

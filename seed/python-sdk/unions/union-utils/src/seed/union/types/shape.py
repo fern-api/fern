@@ -28,6 +28,16 @@ class _Factory:
 
 
 class Shape(UniversalRootModel):
+    """
+    Examples
+    --------
+    from seed.union import Shape_Circle
+
+    Shape_Circle(
+        radius=5.0,
+    )
+    """
+
     factory: typing.ClassVar[_Factory] = _Factory()
 
     if IS_PYDANTIC_V2:
@@ -61,6 +71,14 @@ class Shape(UniversalRootModel):
             return circle(union_types_circle_Circle(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "square":
             return square(union_types_square_Square(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 class _Shape:

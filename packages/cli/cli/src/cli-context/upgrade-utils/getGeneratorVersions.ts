@@ -1,10 +1,17 @@
-import { generatorsYml } from "@fern-api/configuration";
+import {
+    generatorsYml,
+    getGeneratorNameOrThrow,
+    getLatestGeneratorVersion,
+    loadGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+
 import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
+
 import { CliContext } from "../CliContext";
 
 export interface FernGeneratorUpgradeInfo {
@@ -59,9 +66,9 @@ export async function getLatestGeneratorVersions({
                     versions.versions[group] = {};
                 }
 
-                const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
+                const normalizedGeneratorName = getGeneratorNameOrThrow(generator.name, context);
 
-                const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+                const latestVersion = await getLatestGeneratorVersion({
                     generatorName: normalizedGeneratorName,
                     cliVersion: cliContext.environment.packageVersion,
                     currentGeneratorVersion: generator.version,
@@ -102,8 +109,8 @@ export async function getLatestGeneratorVersions({
                 versions.versions[api]![group] = {};
             }
 
-            const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
-            const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+            const normalizedGeneratorName = getGeneratorNameOrThrow(generator.name, context);
+            const latestVersion = await getLatestGeneratorVersion({
                 generatorName: normalizedGeneratorName,
                 cliVersion: cliContext.environment.packageVersion,
                 currentGeneratorVersion: generator.version,
@@ -134,7 +141,7 @@ async function processGeneratorsYml({
     groupFilter
 }: {
     cliContext: CliContext;
-    apiWorkspaces: (OSSWorkspace | LazyFernWorkspace)[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     perGeneratorAction: (
         api: string | undefined,
         group: string,
@@ -148,8 +155,8 @@ async function processGeneratorsYml({
         apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 // If there are no groups in the configuration, skip this workspace
-                const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
-                    absolutePathToWorkspace: workspace.absoluteFilepath,
+                const generatorsConfiguration = await loadGeneratorsConfiguration({
+                    absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 });
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {

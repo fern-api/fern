@@ -1,0 +1,201 @@
+---
+title: "Call Details"
+api: "GET https://api.bland.ai/v1/calls/{call_id}"
+description: "Retrieve detailed information, metadata and transcripts for a call."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="call_id" type="string" required>
+  The unique identifier of the call for which you want to retrieve detailed information.
+</ParamField>
+
+### Response
+
+<ResponseField name="transcripts" type="array of objects">
+  An array of phrases spoken during the call. Each index includes: - `id` - `created_at` - `text` - `user` (can be
+  `user`, `assistant`, `robot`, or `agent-action`)
+</ResponseField>
+
+<ResponseField name="c_id" type="number">
+  The unique identifier for the call.
+</ResponseField>
+
+<ResponseField name="variables" type="object">
+  Variables created during the call - both system variables as well as generated with `dynamic_data`.
+
+For example, if you used a `dynamic_data` API request to generate a variable called `appointment_time`, you would see it here.
+
+</ResponseField>
+
+<ResponseField name="concatenated_transcript" type="string">
+  A single string containing all of the text from the call. Excludes system messages and auto-generated data.
+</ResponseField>
+
+<ResponseField name="to" type="string">
+  The phone number that received the call.
+</ResponseField>
+
+<ResponseField name="from" type="string">
+  The phone number that made the call.
+</ResponseField>
+
+<ResponseField name="batch_id" type="string">
+  If the call is part of a batch, it's `batch_id` will be here.
+</ResponseField>
+
+<ResponseField name="request_data" type="object">
+  Details about parameters in the original api request.
+</ResponseField>
+
+<ResponseField name="completed" type="boolean">
+  Whether the call has been completed. If it differs from the value of 'queue_status', this will be the most up-to-date
+  status.
+</ResponseField>
+
+<ResponseField name="queue_status" type="string">
+  The status of the call. During extremely high volume periods, calls may be queued for a short period of time before being dispatched.
+
+Progresses through the following stages:
+
+- `new`: An API request has been received.
+- `queued`: Call pararameters have been validated and authentication succeeded.
+- `allocated`: Extremely brief, the call is being dispatched.
+- `started`: The phone call is live and in progress.
+- `complete`: The phone call has ended successfully.
+
+The following statuses show the point that was reached before an error:
+
+- `pre_queue_error`: An error occurred before the call was queued. Invalid parameters generally cause this.
+- `queue_error`: Error occurred while the call was queued. Ex. Valid phone number but to an unserviced area.
+- `call_error`: Error occurred during live call. May be caused by transferring to an invalid phone number or an unforeseen error.
+- `complete_error`: Error occurred after the call was completed. Ex. A post-call webhook failed.
+
+If at any point an error occurs, it will be recorded in the `error_message` field.
+
+</ResponseField>
+
+<ResponseField name="error_message" type="string or null">
+  If an error occurs, this will contain a description of the error. Otherwise, it will be null.
+</ResponseField>
+
+<ResponseField name="answered_by" type="string">
+  If `answered_by_enabled` was set to `true` in the original API request, this field contains one of the following values:
+
+- `human`: The call was answered by a human.
+- `voicemail`: The call was answered by an answering machine or voicemail.
+- `unknown`: There was not enough audio at the start of the call to make a determination.
+- `no-answer`: The call was not answered.
+- `null`: Not enabled, or still processing the result.
+
+        <Accordion title="Notes:">
+
+  - Determinations are based on audio from the first five seconds of the phone call.
+  - `unknown` is most likely a human, especially if there are multiple transcripts.
+  - Optimize calls for accurate results by getting humans to respond in the first five seconds: - Increase `speed` in `voice_settings` - Use with `wait_for_greeting` - Use a short greeting in `first_sentence` such as "Hello?" or "Hi, is this \{\{name\}\}?"
+    </Accordion>
+    </ResponseField>
+
+<ResponseField name="endpoint_url" type="string">
+  The URL that was called to dispatch the phone call.
+</ResponseField>
+
+<ResponseField name="max_duration" type="number">
+  The maximum length of time the call was allowed to last. If the call would exceed this length, it's ended early.
+</ResponseField>
+
+<ResponseField name="corrected_duration" type="number">
+  The total length of time the call was connected. This differs from call_length in that it includes ringing and
+  connection time.
+</ResponseField>
+
+<ResponseField name="call_length" type="number">
+  The length of the call in minutes.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  The timestamp for when the call was dispatched.
+</ResponseField>
+
+<ResponseExample>
+```json Response
+{
+    "status": "completed",
+    "corrected_duration": "71",
+    "end_at": "2023-12-16T00:15:41.000Z",
+    "call_id": "c1234567-89ab-cdef-0123-456789abcdef",
+    "to": "5551234567",
+    "from": "+15551234567",
+    "completed": true,
+    "created_at": "2023-12-16T00:15:26.59585+00:00",
+    "queue_status": "complete",
+    "endpoint_url": "api.bland.ai",
+    "max_duration": 30,
+    "error_message": null,
+    "answered_by": "human",
+    "batch_id": null,
+    "variables": {
+        "appointment_time": "tomorrow at 3pm",
+        "now": "Sun Dec 31 2023 19:15:26 GMT+0000 (Coordinated Universal Time)",
+        "short_from": "5551234567",
+        "short_to": "5551234567",
+        "from": "+15551234567",
+        "to": "+15551234567",
+        "call_id": "c1234567-89ab-cdef-0123-456789abcdef"
+        "city": "San Francisco",
+        "state": "CA",
+        "country": "US",
+        "zip": "94103"
+    },
+    "metadata": {
+      "client_id": 4501203,
+      "customer_inquiry": 302
+    },
+    "concatenated_transcript": "user : Hey, it's Alex. What's up? \n assistant: Hi! It's Blandie, calling to reschedule your appointment tomorrow. Is now a good time? \n user: Sure! Can we still fit it in this week though? \n assistant: Absolutely! I have a few openings. What time works best for you? \n user: How about tomorrow at 3pm? \n assistant: Perfect! Be on the lookout for a confirmation email with your new appointment time, and have a great day!",
+    "request_data": {
+        "phone_number": "5551234567",
+        "reduce_latency": false,
+        "wait": false,
+        "language": "ENG"
+    },
+    "transcripts": [
+        {
+            "id": 123456,
+            "created_at": "2023-12-16T00:15:32.287493+00:00",
+            "text": "Hey, it's Alex. What's up?",
+            "user": "user",
+            "c_id": "c1234567-89ab-cdef-0123-456789abcdef"
+        },
+        {
+            "id": 123457,
+            "created_at": "2023-12-16T00:15:33.704238+00:00",
+            "text": "Hi! It's Blandie, calling to reschedule your appointment tomorrow. Is now a good time?",
+            "user": "assistant",
+            "c_id": "c1234567-89ab-cdef-0123-456789abcdef"
+        },
+        {
+            "id": 123458,
+            "created_at": "2023-12-16T00:15:38.287493+00:00",
+            "text": "Sure! Can we still fit it in this week though?",
+            "user": "user",
+            "c_id": "c1234567-89ab-cdef-0123-456789abcdef"
+        },
+        //... continued ...
+        {
+            "id": 123458,
+            "created_at": "2023-12-16T00:16:39.802469+00:00",
+            "text": "Ended call: Perfect! Be on the lookout for a confirmation email with your new appointment time, and have a great day!",
+            "user": "agent-action",
+            "c_id": "c1234567-89ab-cdef-0123-456789abcdef"
+        }
+    ],
+    "call_length": 0.111
+}
+```
+</ResponseExample>

@@ -1,10 +1,11 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 
-export async function visitWebhooks({
+export function visitWebhooks({
     webhook,
     visitor,
     nodePathForWebhook
@@ -12,71 +13,71 @@ export async function visitWebhooks({
     webhook: RawSchemas.WebhookSchema;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePathForWebhook: NodePath;
-}): Promise<void> {
+}): void {
     const visitTypeReference = createTypeReferenceVisitor(visitor);
 
-    await visitObject(webhook, {
+    visitObject(webhook, {
         "display-name": noop,
         method: noop,
         examples: noop,
-        headers: async (headers) => {
-            await visitHeaders({
+        headers: (headers) => {
+            visitHeaders({
                 headers,
                 visitor,
                 nodePath: [...nodePathForWebhook, "headers"]
             });
         },
-        payload: async (payload) => {
+        payload: (payload) => {
             const nodePathForPayload = [...nodePathForWebhook, "payload"];
             if (typeof payload === "string") {
-                await visitTypeReference(payload, nodePathForPayload, {
+                visitTypeReference(payload, nodePathForPayload, {
                     location: "requestReference"
                 });
                 return;
             }
 
             if (isRawDiscriminatedUnionDefinition(payload)) {
-                await visitTypeReference(payload.type, [...nodePathForPayload, "type"], {
+                visitTypeReference(payload.type, [...nodePathForPayload, "type"], {
                     location: "requestReference"
                 });
                 return;
             }
 
             const nodePathForInlinedPayload = [...nodePathForPayload];
-            await visitor.typeDeclaration?.(
+            visitor.typeDeclaration?.(
                 { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: payload },
                 nodePathForInlinedPayload
             );
-            await visitObject(payload, {
+            visitObject(payload, {
                 name: noop,
-                extends: async (_extends) => {
+                extends: (_extends) => {
                     if (_extends == null) {
                         return;
                     }
                     const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                     for (const extendedType of extendsList) {
                         const nodePathForExtension = [...nodePathForInlinedPayload, "extends", extendedType];
-                        await visitor.extension?.(extendedType, nodePathForExtension);
-                        await visitTypeReference(extendedType, nodePathForExtension);
+                        visitor.extension?.(extendedType, nodePathForExtension);
+                        visitTypeReference(extendedType, nodePathForExtension);
                     }
                 },
-                properties: async (properties) => {
+                properties: (properties) => {
                     if (properties == null) {
                         return;
                     }
                     for (const [propertyKey, property] of Object.entries(properties)) {
                         const nodePathForProperty = [...nodePathForInlinedPayload, "properties", propertyKey];
                         if (typeof property === "string") {
-                            await visitTypeReference(property, nodePathForProperty, {
+                            visitTypeReference(property, nodePathForProperty, {
                                 location: TypeReferenceLocation.InlinedRequestProperty
                             });
                         } else {
-                            await visitObject(property, {
+                            visitObject(property, {
                                 name: noop,
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
-                                type: async (type) => {
-                                    await visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                type: (type) => {
+                                    visitTypeReference(type, [...nodePathForProperty, "type"], {
                                         _default: property.default,
                                         validation: property.validation,
                                         location: TypeReferenceLocation.InlinedRequestProperty
@@ -85,7 +86,8 @@ export async function visitWebhooks({
                                 audiences: noop,
                                 encoding: noop,
                                 default: noop,
-                                validation: noop
+                                validation: noop,
+                                access: noop
                             });
                         }
                     }
@@ -98,7 +100,7 @@ export async function visitWebhooks({
     });
 }
 
-async function visitHeaders({
+function visitHeaders({
     headers,
     visitor,
     nodePath
@@ -116,16 +118,16 @@ async function visitHeaders({
     for (const [headerKey, header] of Object.entries(headers)) {
         const nodePathForHeader = [...nodePath, headerKey];
 
-        await visitor.header?.({ headerKey, header }, nodePathForHeader);
+        visitor.header?.({ headerKey, header }, nodePathForHeader);
 
         if (typeof header === "string") {
-            await visitTypeReference(header, nodePathForHeader);
+            visitTypeReference(header, nodePathForHeader);
         } else {
-            await visitObject(header, {
+            visitObject(header, {
                 name: noop,
                 availability: noop,
-                type: async (type) => {
-                    await visitTypeReference(type, nodePathForHeader, {
+                type: (type) => {
+                    visitTypeReference(type, nodePathForHeader, {
                         _default: header.default,
                         validation: header.validation
                     });

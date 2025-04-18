@@ -91,7 +91,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"id\": \"string\",\n    \"name\": \"string\"\n}",
+              "body": "{\n    \"metadata\": {\n        \"metadata\": \"metadata\"\n    },\n    \"docs\": \"docs\",\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -169,7 +169,7 @@
                 }
               },
               "description": null,
-              "body": "\"string\"",
+              "body": "{\n    \"metadata\": {\n        \"metadata\": \"metadata\"\n    },\n    \"docs\": \"docs\",\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -247,7 +247,7 @@
                 }
               },
               "description": null,
-              "body": "\"string\"",
+              "body": "{\n    \"data\": \"data\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -325,7 +325,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"string\": \"string\"\n}",
+              "body": "{\n    \"metadata\": {\n        \"metadata\": \"metadata\"\n    },\n    \"docs\": \"docs\",\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -403,7 +403,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"id\": \"string\",\n    \"name\": \"string\"\n}",
+              "body": "{\n    \"metadata\": {\n        \"metadata\": \"metadata\"\n    },\n    \"docs\": \"docs\",\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -481,7 +481,7 @@
                 }
               },
               "description": null,
-              "body": "\"string\"",
+              "body": "{\n    \"docs\": \"docs\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -559,7 +559,7 @@
                 }
               },
               "description": null,
-              "body": "\"string\"",
+              "body": "{\n    \"data\": \"data\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

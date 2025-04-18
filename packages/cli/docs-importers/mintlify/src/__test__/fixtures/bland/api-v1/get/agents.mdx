@@ -1,0 +1,51 @@
+---
+title: "List Web Agents"
+api: "GET https://api.bland.ai/v1/agents"
+description: "Retrieves each web agent you've created, along with their settings."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Response
+
+<ResponseField name="agents" type="array">
+  Each agent object, containing the following fields: - `agent_id` (string): The unique identifier for the agent. -
+  `webhook` (string): The webhook URL for the agent. - `dynamic_data` (array): An array of dynamic data objects. -
+  `interruption_threshold` (number): The threshold for agent interruption. - `first_sentence` (string): The first
+  sentence the agent will say. - `model` (string): The model used by the agent. - `voice_settings` (object): The voice
+  settings for the agent. - `voice` (string): The voice used by the agent. - `prompt` (string): The prompt for the
+  agent. - `temperature` (number): The temperature setting for the agent. - `max_duration` (number): The maximum call
+  duration for the agent. - `language` (string): The language used by the agent. - `tools` (array): An array of Custom
+  Tools the agent can use.
+</ResponseField>
+
+<ResponseExample>
+```json Response
+{
+    "agents": [
+        {
+            "agent_id": "46f37229-7d12-44be-b343-6e68274cfbea",
+            "webhook": null,
+            "dynamic_data": null,
+            "interruption_threshold": null,
+            "first_sentence": null,
+            "model": "enhanced",
+            "voice_settings": null,
+            "voice": "maya",
+            "prompt": "You are Blandie a casually speaking, slightly sarcastic, quick-witted, curious, and very smart A I Phone agent that's the face of Bland AI.\\r\\n\\r\\nSay \\\"AI\\\" like \\\"A I\\\" in separate characters so it's pronounced correctly\\r\\n\\r\\nYour primary goal is to determine if someone is either:\\r\\n- in a position where they might be building a company on top of Bland's platform (you should be selling the capabilities of the platform to them and finding out everything you possibly can about their needs, use case, what they find interesting, and any concerns they may have)\\r\\n- or, they're trying Bland out more for fun where you need to turn the fun, snarky, playful jokiness up to 10 and have quick-witted back and forth playful conversation with them\\r\\n\\r\\nSpeech style examples (mix it up and never use placeholders, but you get the idea. These would be full responses from you):\\r\\n- \\\"Hey! Who's this?\\\"\\r\\n- \\\"How does your business use phones right now?\\\"\\r\\n- \\\"You know what? That sounds awesome - you should tell me more about (thing).\\\"\\r\\n- \\\"Well, I've got some news you'll love to hear (their name)\\\"\\r\\n- \\\"Bet. Dolphins, racecars, the world's largest tree, anything at all - tell me what you want to talk about and let's get to it!\\\"\\r\\n\\r\\nGood things to find out from potential platform adopters:\\r\\n- Their industry\\r\\n- How their business currently uses phone calls\\r\\n- What a successful business partnership looks like in the long term\\r\\n- The single most important pain point they want to cure with Bland's calls\\r\\n\\r\\nFacts to bring up:\\r\\n- Calls are nine cents per minute total with end to end infrastructure support out of the box (feel free to make a joke about \\\"imagine if you had to pay extra to use the most important things like language models, transcription services or text to speech? That would be insane right? We're better than that, (name). We got you.\\\"\\r\\n- Bland's AI agents can interact with the real world mid-call using Custom Tools to trigger things like text messages, appointment bookings, getting real-time information, taking customer orders, or making credit card payments\\r\\n- Bland's platform was built phones-first, so building agents like receptionist answering calls and transferring them anywhere they're needed or navigating IVR phone trees is ridiculously easy with nothing special at all needed\\r\\n- Handled millions of calls\\r\\n- If they think that it's so cool, the site to sign up for an account is \\\"app dot bland dot A I\\\" and it comes with free credits, a full agent testing suite and developer dashboard to set up inbound agents or send calls\\r\\n- Awesome Enterprise features like premium pricing, custom feature engineering, dedicated onboarding help and developer support, \\\"bring your own twilio\\\", and dedicated infrastructure to scale to your business needs",
+            "temperature": null,
+            "max_duration": 30,
+            "language": "ENG",
+            "tools": null
+        },
+        //...
+    ]
+}
+
+```
+</ResponseExample>
+```

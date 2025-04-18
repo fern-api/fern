@@ -2,7 +2,9 @@
 
 namespace Seed\Service\Requests;
 
-class HeaderAuthRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class HeaderAuthRequest extends JsonSerializableType
 {
     /**
      * @var string $xEndpointHeader Specifies the endpoint key.
@@ -10,11 +12,13 @@ class HeaderAuthRequest
     public string $xEndpointHeader;
 
     /**
-     * @param string $xEndpointHeader Specifies the endpoint key.
+     * @param array{
+     *   xEndpointHeader: string,
+     * } $values
      */
     public function __construct(
-        string $xEndpointHeader,
+        array $values,
     ) {
-        $this->xEndpointHeader = $xEndpointHeader;
+        $this->xEndpointHeader = $values['xEndpointHeader'];
     }
 }

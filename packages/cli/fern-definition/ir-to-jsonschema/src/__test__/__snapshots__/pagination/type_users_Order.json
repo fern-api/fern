@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "asc",
+    "desc"
+  ],
+  "definitions": {}
+}

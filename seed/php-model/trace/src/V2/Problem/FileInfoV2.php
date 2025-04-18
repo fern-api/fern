@@ -2,50 +2,57 @@
 
 namespace Seed\V2\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class FileInfoV2 extends SerializableType
+class FileInfoV2 extends JsonSerializableType
 {
     /**
      * @var string $filename
      */
-    #[JsonProperty("filename")]
+    #[JsonProperty('filename')]
     public string $filename;
 
     /**
      * @var string $directory
      */
-    #[JsonProperty("directory")]
+    #[JsonProperty('directory')]
     public string $directory;
 
     /**
      * @var string $contents
      */
-    #[JsonProperty("contents")]
+    #[JsonProperty('contents')]
     public string $contents;
 
     /**
      * @var bool $editable
      */
-    #[JsonProperty("editable")]
+    #[JsonProperty('editable')]
     public bool $editable;
 
     /**
-     * @param string $filename
-     * @param string $directory
-     * @param string $contents
-     * @param bool $editable
+     * @param array{
+     *   filename: string,
+     *   directory: string,
+     *   contents: string,
+     *   editable: bool,
+     * } $values
      */
     public function __construct(
-        string $filename,
-        string $directory,
-        string $contents,
-        bool $editable,
+        array $values,
     ) {
-        $this->filename = $filename;
-        $this->directory = $directory;
-        $this->contents = $contents;
-        $this->editable = $editable;
+        $this->filename = $values['filename'];
+        $this->directory = $values['directory'];
+        $this->contents = $values['contents'];
+        $this->editable = $values['editable'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

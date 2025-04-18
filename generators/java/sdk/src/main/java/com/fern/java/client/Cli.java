@@ -8,33 +8,49 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
+import com.fern.java.JavaV2Adapter;
+import com.fern.java.JavaV2Arguments;
+import com.fern.java.client.generators.AbstractRootClientGenerator;
+import com.fern.java.client.generators.AbstractSubpackageClientGenerator;
 import com.fern.java.client.generators.ApiErrorGenerator;
+import com.fern.java.client.generators.AsyncRootClientGenerator;
+import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.ErrorGenerator;
+import com.fern.java.client.generators.FileStreamGenerator;
+import com.fern.java.client.generators.HttpResponseGenerator;
+import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
-import com.fern.java.client.generators.RootClientGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
-import com.fern.java.client.generators.SubpackageClientGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
+import com.fern.java.client.generators.SyncRootClientGenerator;
+import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
+import com.fern.java.generators.EnumGenerator;
+import com.fern.java.generators.NullableGenerator;
+import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
+import com.fern.java.generators.QueryStringMapperGenerator;
 import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
+import com.fern.java.generators.WrappedAliasGenerator;
+import com.fern.java.generators.tests.QueryStringMapperTestGenerator;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -49,6 +65,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,13 +105,19 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
     }
 
     @Override
+    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
+        JavaV2Adapter.run(defaultGeneratorExecClient, new JavaV2Arguments(args[0]));
+    }
+
+    @Override
     public void runInDownloadFilesModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             JavaSdkDownloadFilesCustomConfig customConfig) {
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
-                customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList));
+                customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
+                customConfig.packageLayout());
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
@@ -117,8 +140,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             IntermediateRepresentation ir,
             JavaSdkCustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
-        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
-                AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
+        List<String> packagePrefixTokens = customConfig
+                .packagePrefix()
+                .map(List::of)
+                .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
+                        ir, generatorConfig.getOrganization()));
+        ClientPoetClassNameFactory clientPoetClassNameFactory =
+                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
@@ -150,8 +178,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             IntermediateRepresentation ir,
             JavaSdkCustomConfig customConfig,
             GeneratorPublishConfig publishOutputMode) {
-        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
-                AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
+        List<String> packagePrefixTokens = customConfig
+                .packagePrefix()
+                .map(List::of)
+                .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
+                        ir, generatorConfig.getOrganization()));
+        ClientPoetClassNameFactory clientPoetClassNameFactory =
+                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
@@ -169,9 +202,35 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
 
+        NullableGenerator nullableGenerator = new NullableGenerator(context);
+        this.addGeneratedFile(nullableGenerator.generateFile());
+
+        NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
+        this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
+
+        if (context.getCustomConfig().wrappedAliases()) {
+            WrappedAliasGenerator wrappedAliasGenerator = new WrappedAliasGenerator(context);
+            this.addGeneratedFile(wrappedAliasGenerator.generateFile());
+        }
+
         EnvironmentGenerator environmentGenerator = new EnvironmentGenerator(context);
         GeneratedEnvironmentsClass generatedEnvironmentsClass = environmentGenerator.generateFile();
         this.addGeneratedFile(generatedEnvironmentsClass);
+
+        ir.getApiVersion()
+                .flatMap(apiVersion -> apiVersion.getHeader().map(HeaderApiVersionScheme::getValue))
+                .ifPresent(irDeclaration -> {
+                    EnumGenerator apiVersionsGenerator = new EnumGenerator(
+                            context.getPoetClassNameFactory().getApiVersionClassName(),
+                            context,
+                            irDeclaration,
+                            Set.of(context.getPoetClassNameFactory()
+                                    .getApiVersionClassName()
+                                    .simpleName()),
+                            true);
+                    GeneratedJavaFile generatedApiVersions = apiVersionsGenerator.generateFile();
+                    this.addGeneratedFile(generatedApiVersions);
+                });
 
         RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(
                 context, context.getPoetClassNameFactory().getRequestOptionsClassName());
@@ -198,6 +257,12 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 new ResponseBodyInputStreamGenerator(context);
         this.addGeneratedFile(responseBodyInputStreamGenerator.generateFile());
 
+        InputStreamRequestBodyGenerator inputStreamRequestBodyGenerator = new InputStreamRequestBodyGenerator(context);
+        this.addGeneratedFile(inputStreamRequestBodyGenerator.generateFile());
+
+        FileStreamGenerator fileStreamGenerator = new FileStreamGenerator(context);
+        this.addGeneratedFile(fileStreamGenerator.generateFile());
+
         ResponseBodyReaderGenerator responseBodyReaderGenerator = new ResponseBodyReaderGenerator(context);
         this.addGeneratedFile(responseBodyReaderGenerator.generateFile());
 
@@ -212,9 +277,17 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         StreamGenerator streamGenerator = new StreamGenerator(context);
         this.addGeneratedFile(streamGenerator.generateFile());
 
+        QueryStringMapperGenerator queryStringMapperGenerator = new QueryStringMapperGenerator(context);
+        this.addGeneratedFile(queryStringMapperGenerator.generateFile());
+        QueryStringMapperTestGenerator queryStringMapperTestGenerator = new QueryStringMapperTestGenerator(context);
+        this.addGeneratedFile(queryStringMapperTestGenerator.generateFile());
+
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
+
+        HttpResponseGenerator httpResponseGenerator = new HttpResponseGenerator(context);
+        this.addGeneratedFile(httpResponseGenerator.generateFile());
 
         BaseErrorGenerator baseErrorGenerator = new BaseErrorGenerator(context);
         GeneratedJavaFile generatedBaseErrorFile = baseErrorGenerator.generateFile();
@@ -266,7 +339,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             if (!subpackage.getHasEndpointsInTree()) {
                 return;
             }
-            SubpackageClientGenerator httpServiceClientGenerator = new SubpackageClientGenerator(
+            AbstractSubpackageClientGenerator syncServiceClientGenerator = new SyncSubpackageClientGenerator(
                     subpackage,
                     context,
                     objectMapper,
@@ -277,13 +350,30 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     generatedRequestOptions,
                     generatedTypes.getInterfaces(),
                     generatedErrors);
-            GeneratedClient generatedClient = httpServiceClientGenerator.generateFile();
-            this.addGeneratedFile(generatedClient);
-            generatedClient.wrappedRequests().forEach(this::addGeneratedFile);
+            GeneratedClient syncGeneratedClient = syncServiceClientGenerator.generateFile();
+            this.addGeneratedFile(syncGeneratedClient);
+            syncGeneratedClient.rawClient().ifPresent(this::addGeneratedFile);
+            syncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
+
+            AbstractSubpackageClientGenerator asyncServiceClientGenerator = new AsyncSubpackageClientGenerator(
+                    subpackage,
+                    context,
+                    objectMapper,
+                    context,
+                    generatedClientOptions,
+                    generatedSuppliersFile,
+                    generatedEnvironmentsClass,
+                    generatedRequestOptions,
+                    generatedTypes.getInterfaces(),
+                    generatedErrors);
+            GeneratedClient asyncGeneratedClient = asyncServiceClientGenerator.generateFile();
+            this.addGeneratedFile(asyncGeneratedClient);
+            asyncGeneratedClient.rawClient().ifPresent(this::addGeneratedFile);
+            asyncGeneratedClient.wrappedRequests().forEach(this::addGeneratedFile);
         });
 
-        // root client
-        RootClientGenerator rootClientGenerator = new RootClientGenerator(
+        // root clients
+        AbstractRootClientGenerator syncRootClientGenerator = new SyncRootClientGenerator(
                 context,
                 objectMapper,
                 context,
@@ -294,17 +384,35 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedTypes.getInterfaces(),
                 generatedOAuthTokenSupplier,
                 generatedErrors);
-        GeneratedRootClient generatedRootClient = rootClientGenerator.generateFile();
-        this.addGeneratedFile(generatedRootClient);
-        this.addGeneratedFile(generatedRootClient.builderClass());
-        generatedRootClient.wrappedRequests().forEach(this::addGeneratedFile);
+        GeneratedRootClient generatedSyncRootClient = syncRootClientGenerator.generateFile();
+        this.addGeneratedFile(generatedSyncRootClient);
+        this.addGeneratedFile(generatedSyncRootClient.builderClass());
+        generatedSyncRootClient.rawClient().ifPresent(this::addGeneratedFile);
+        generatedSyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
+
+        AbstractRootClientGenerator asyncRootClientGenerator = new AsyncRootClientGenerator(
+                context,
+                objectMapper,
+                context,
+                generatedClientOptions,
+                generatedSuppliersFile,
+                generatedEnvironmentsClass,
+                generatedRequestOptions,
+                generatedTypes.getInterfaces(),
+                generatedOAuthTokenSupplier,
+                generatedErrors);
+        GeneratedRootClient generatedAsyncRootClient = asyncRootClientGenerator.generateFile();
+        this.addGeneratedFile(generatedAsyncRootClient);
+        this.addGeneratedFile(generatedAsyncRootClient.builderClass());
+        generatedAsyncRootClient.rawClient().ifPresent(this::addGeneratedFile);
+        generatedAsyncRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 
         context.getCustomConfig().customDependencies().ifPresent(deps -> {
             for (String dep : deps) {
                 dependencies.add(GradleDependency.of(dep));
             }
         });
-        return generatedRootClient;
+        return generatedAsyncRootClient;
     }
 
     @Override

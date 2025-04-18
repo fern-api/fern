@@ -1,9 +1,11 @@
-import { Audiences } from "@fern-api/configuration";
+import { writeFile } from "fs/promises";
+import path from "path";
+
+import { Audiences } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { writeFile } from "fs/promises";
-import path from "path";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace";
 
@@ -30,12 +32,20 @@ export async function generateFdrApiDefinitionForWorkspaces({
                     keywords: undefined,
                     smartCasing: false,
                     disableExamples: false,
-                    readme: undefined
+                    readme: undefined,
+                    disableDynamicExamples: true
                 });
 
                 const apiDefinition = convertIrToFdrApi({
                     ir,
-                    snippetsConfig: {}
+                    snippetsConfig: {
+                        typescriptSdk: undefined,
+                        pythonSdk: undefined,
+                        javaSdk: undefined,
+                        rubySdk: undefined,
+                        goSdk: undefined,
+                        csharpSdk: undefined
+                    }
                 });
 
                 const resolvedOutputFilePath = path.resolve(outputFilepath);

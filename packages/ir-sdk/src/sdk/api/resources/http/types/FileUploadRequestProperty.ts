@@ -8,21 +8,21 @@ export type FileUploadRequestProperty =
     | FernIr.FileUploadRequestProperty.File_
     | FernIr.FileUploadRequestProperty.BodyProperty;
 
-export declare namespace FileUploadRequestProperty {
-    interface File_ extends _Utils {
+export namespace FileUploadRequestProperty {
+    export interface File_ extends _Utils {
         type: "file";
         value: FernIr.FileProperty;
     }
 
-    interface BodyProperty extends FernIr.FileUploadBodyProperty, _Utils {
+    export interface BodyProperty extends FernIr.FileUploadBodyProperty, _Utils {
         type: "bodyProperty";
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.FileUploadRequestProperty._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         file: (value: FernIr.FileProperty) => _Result;
         bodyProperty: (value: FernIr.FileUploadBodyProperty) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -36,7 +36,7 @@ export const FileUploadRequestProperty = {
             type: "file",
             _visit: function <_Result>(
                 this: FernIr.FileUploadRequestProperty.File_,
-                visitor: FernIr.FileUploadRequestProperty._Visitor<_Result>
+                visitor: FernIr.FileUploadRequestProperty._Visitor<_Result>,
             ) {
                 return FernIr.FileUploadRequestProperty._visit(this, visitor);
             },
@@ -49,7 +49,7 @@ export const FileUploadRequestProperty = {
             type: "bodyProperty",
             _visit: function <_Result>(
                 this: FernIr.FileUploadRequestProperty.BodyProperty,
-                visitor: FernIr.FileUploadRequestProperty._Visitor<_Result>
+                visitor: FernIr.FileUploadRequestProperty._Visitor<_Result>,
             ) {
                 return FernIr.FileUploadRequestProperty._visit(this, visitor);
             },
@@ -58,7 +58,7 @@ export const FileUploadRequestProperty = {
 
     _visit: <_Result>(
         value: FernIr.FileUploadRequestProperty,
-        visitor: FernIr.FileUploadRequestProperty._Visitor<_Result>
+        visitor: FernIr.FileUploadRequestProperty._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "file":

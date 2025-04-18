@@ -29,8 +29,7 @@ paths:
                   type: string
                 grant_type:
                   type: string
-                  enum:
-                    - client_credentials
+                  const: client_credentials
               required:
                 - client_id
                 - client_secret

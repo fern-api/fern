@@ -31,7 +31,7 @@ Create a new organization.
 
 ```typescript
 await client.organization.create({
-    name: "string",
+    name: "name",
 });
 ```
 
@@ -232,7 +232,7 @@ Get event metadata.
 
 ```typescript
 await client.user.events.metadata.getMetadata({
-    id: "string",
+    id: "id",
 });
 ```
 

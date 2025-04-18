@@ -1,4 +1,5 @@
 import { GeneratedGenericAPISdkError } from "@fern-typescript/contexts";
+
 import { GeneratedGenericAPISdkErrorImpl } from "./GeneratedGenericAPISdkErrorImpl";
 
 export declare namespace GenericAPISdkErrorGenerator {

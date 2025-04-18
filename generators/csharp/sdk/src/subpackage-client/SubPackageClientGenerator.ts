@@ -1,11 +1,13 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
-import { EndpointGenerator } from "../endpoint/EndpointGenerator";
-import { RawClient } from "../endpoint/http/RawClient";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { RawClient } from "../endpoint/http/RawClient";
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 
 export const CLIENT_MEMBER_NAME = "_client";
 export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
@@ -42,12 +44,12 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         const class_ = csharp.class_({
             ...this.classReference,
             partial: true,
-            access: "public"
+            access: csharp.Access.Public
         });
 
         class_.addField(
             csharp.field({
-                access: "private",
+                access: csharp.Access.Private,
                 name: CLIENT_MEMBER_NAME,
                 type: csharp.Type.reference(this.context.getRawClientClassReference())
             })
@@ -56,14 +58,14 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         if (this.grpcClientInfo != null) {
             class_.addField(
                 csharp.field({
-                    access: "private",
+                    access: csharp.Access.Private,
                     name: GRPC_CLIENT_MEMBER_NAME,
                     type: csharp.Type.reference(this.context.getRawGrpcClientClassReference())
                 })
             );
             class_.addField(
                 csharp.field({
-                    access: "private",
+                    access: csharp.Access.Private,
                     name: this.grpcClientInfo.privatePropertyName,
                     type: csharp.Type.reference(this.grpcClientInfo.classReference)
                 })
@@ -73,7 +75,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         for (const subpackage of this.getSubpackages()) {
             class_.addField(
                 csharp.field({
-                    access: "public",
+                    access: csharp.Access.Public,
                     get: true,
                     name: subpackage.name.pascalCase.safeName,
                     type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
@@ -82,19 +84,9 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         }
 
         class_.addConstructor(this.getConstructorMethod());
-
         if (this.service != null && this.serviceId != null) {
-            for (const endpoint of this.service.endpoints) {
-                const method = this.context.endpointGenerator.generate({
-                    serviceId: this.serviceId,
-                    endpoint,
-                    rawClientReference: CLIENT_MEMBER_NAME,
-                    rawClient: this.rawClient,
-                    rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
-                    grpcClientInfo: this.grpcClientInfo
-                });
-                class_.addMethod(method);
-            }
+            const methods = this.generateEndpoints();
+            class_.addMethods(methods);
         }
 
         return new CSharpFile({
@@ -107,15 +99,37 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         });
     }
 
+    private generateEndpoints(): csharp.Method[] {
+        const service = this.service;
+        if (!service) {
+            throw new Error("Internal error; Service is not defined");
+        }
+        const serviceId = this.serviceId;
+        if (!serviceId) {
+            throw new Error("Internal error; ServiceId is not defined");
+        }
+        return service.endpoints.flatMap((endpoint) => {
+            return this.context.endpointGenerator.generate({
+                serviceId,
+                endpoint,
+                rawClientReference: CLIENT_MEMBER_NAME,
+                rawClient: this.rawClient,
+                rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
+                grpcClientInfo: this.grpcClientInfo
+            });
+        });
+    }
+
     private getConstructorMethod(): csharp.Class.Constructor {
+        const parameters: csharp.Parameter[] = [
+            csharp.parameter({
+                name: "client",
+                type: csharp.Type.reference(this.context.getRawClientClassReference())
+            })
+        ];
         return {
-            access: "internal",
-            parameters: [
-                csharp.parameter({
-                    name: "client",
-                    type: csharp.Type.reference(this.context.getRawClientClassReference())
-                })
-            ],
+            access: csharp.Access.Internal,
+            parameters,
             body: csharp.codeblock((writer) => {
                 writer.writeLine("_client = client;");
 
@@ -131,12 +145,13 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     );
                 }
 
+                const arguments_ = [csharp.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [csharp.codeblock("_client")]
+                            arguments_
                         })
                     );
                 }

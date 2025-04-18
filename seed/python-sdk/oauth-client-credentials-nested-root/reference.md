@@ -21,9 +21,9 @@ client = SeedOauthClientCredentials(
     client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.get_token(
-    client_id="string",
-    client_secret="string",
-    scope="string",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
 )
 
 ```

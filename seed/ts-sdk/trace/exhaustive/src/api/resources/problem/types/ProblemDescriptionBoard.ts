@@ -10,31 +10,31 @@ export type ProblemDescriptionBoard =
     | SeedTrace.ProblemDescriptionBoard.TestCaseId
     | SeedTrace.ProblemDescriptionBoard._Unknown;
 
-export declare namespace ProblemDescriptionBoard {
-    interface Html extends _Utils {
+export namespace ProblemDescriptionBoard {
+    export interface Html extends _Utils {
         type: "html";
         value: string;
     }
 
-    interface Variable extends _Utils {
+    export interface Variable extends _Utils {
         type: "variable";
         value: SeedTrace.VariableValue;
     }
 
-    interface TestCaseId extends _Utils {
+    export interface TestCaseId extends _Utils {
         type: "testCaseId";
         value: string;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         html: (value: string) => _Result;
         variable: (value: SeedTrace.VariableValue) => _Result;
         testCaseId: (value: string) => _Result;
@@ -49,7 +49,7 @@ export const ProblemDescriptionBoard = {
             type: "html",
             _visit: function <_Result>(
                 this: SeedTrace.ProblemDescriptionBoard.Html,
-                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
             ) {
                 return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
             },
@@ -62,7 +62,7 @@ export const ProblemDescriptionBoard = {
             type: "variable",
             _visit: function <_Result>(
                 this: SeedTrace.ProblemDescriptionBoard.Variable,
-                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
             ) {
                 return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
             },
@@ -75,7 +75,7 @@ export const ProblemDescriptionBoard = {
             type: "testCaseId",
             _visit: function <_Result>(
                 this: SeedTrace.ProblemDescriptionBoard.TestCaseId,
-                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
             ) {
                 return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
             },
@@ -87,7 +87,7 @@ export const ProblemDescriptionBoard = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.ProblemDescriptionBoard._Unknown,
-                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+                visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
             ) {
                 return SeedTrace.ProblemDescriptionBoard._visit(this, visitor);
             },
@@ -96,7 +96,7 @@ export const ProblemDescriptionBoard = {
 
     _visit: <_Result>(
         value: SeedTrace.ProblemDescriptionBoard,
-        visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>
+        visitor: SeedTrace.ProblemDescriptionBoard._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "html":

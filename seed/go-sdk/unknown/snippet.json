@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unknown/fern\"\n\tfernclient \"github.com/unknown/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Unknown.PostObject(\n\tcontext.TODO(),\n\t\u0026fern.MyObject{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unknown/fern\"\n\tfernclient \"github.com/unknown/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Unknown.PostObject(\n\tcontext.TODO(),\n\t\u0026fern.MyObject{\n\t\tUnknown: map[string]interface{}{\n\t\t\t\"key\": \"value\",\n\t\t},\n\t},\n)\n"
             }
         }
     ]

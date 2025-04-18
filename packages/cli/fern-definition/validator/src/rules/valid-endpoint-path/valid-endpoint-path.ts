@@ -14,7 +14,7 @@ export const ValidEndpointPathRule: Rule = {
 
                     if (!endpoint.path.startsWith("/")) {
                         violations.push({
-                            severity: "error",
+                            severity: "fatal",
                             message: "Path must start with a slash."
                         });
                     }

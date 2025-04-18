@@ -1,12 +1,8 @@
 using System.Globalization;
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
-
-#nullable enable
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -14,7 +10,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -30,15 +26,16 @@ public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
                 "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 "base64": "SGVsbG8gd29ybGQh",
                 "list": [
-                  "string"
+                  "list",
+                  "list"
                 ],
                 "set": [
-                  "string"
+                  "set"
                 ],
                 "map": {
-                  "1": "string"
+                  "1": "map"
                 },
-                "bigint": "123456789123456789"
+                "bigint": "1000000"
               }
             }
             """;
@@ -57,15 +54,16 @@ public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
                 "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 "base64": "SGVsbG8gd29ybGQh",
                 "list": [
-                  "string"
+                  "list",
+                  "list"
                 ],
                 "set": [
-                  "string"
+                  "set"
                 ],
                 "map": {
-                  "1": "string"
+                  "1": "map"
                 },
-                "bigint": "123456789123456789"
+                "bigint": "1000000"
               }
             }
             """;
@@ -104,17 +102,17 @@ public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
                     Date = new DateOnly(2023, 1, 15),
                     Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     Base64 = "SGVsbG8gd29ybGQh",
-                    List = new List<string>() { "string" },
-                    Set = new HashSet<string>() { "string" },
-                    Map = new Dictionary<int, string>() { { 1, "string" } },
-                    Bigint = "123456789123456789",
+                    List = new List<string>() { "list", "list" },
+                    Set = new HashSet<string>() { "set" },
+                    Map = new Dictionary<int, string>() { { 1, "map" } },
+                    Bigint = "1000000",
                 },
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<NestedObjectWithOptionalField>(mockResponse))
+                .UsingDefaults()
+        );
     }
 }

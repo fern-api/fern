@@ -1,6 +1,9 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import fetch from "node-fetch";
+
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
+
 import { runFernCli } from "../../utils/runFernCli";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
@@ -30,7 +33,7 @@ describe("fern docs dev", () => {
         const responseBody = JSON.parse(responseText) as FdrCjsSdk.docs.v2.read.LoadDocsForUrlResponse;
         expect(typeof responseBody === "object").toEqual(true);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled"]);
+        expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
 
         // const root = FernNavigation.utils.convertLoadDocsForUrlResponse(responseBody);
         // const pageIds = new Set(Object.keys(responseBody.definition.pages));

@@ -12,15 +12,15 @@ class MyObject(UniversalBaseModel):
     --------
     from seed.unknown_as_any.resources.unknown import MyObject
 
-    MyObject()
+    MyObject(
+        unknown={"boolVal": True, "strVal": "string"},
+    )
     """
 
     unknown: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

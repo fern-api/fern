@@ -1,6 +1,8 @@
-import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
+import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
+
 import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace AbstractRawSingleUnionType {
@@ -11,11 +13,11 @@ export declare namespace AbstractRawSingleUnionType {
 }
 
 export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
-    private disciminant: NameAndWireValue;
+    private discriminant: NameAndWireValue;
     private discriminantValueWithAllCasings: NameAndWireValue;
 
     constructor({ discriminant, discriminantValue }: AbstractRawSingleUnionType.Init) {
-        this.disciminant = discriminant;
+        this.discriminant = discriminant;
         this.discriminantValueWithAllCasings = discriminantValue;
     }
 
@@ -29,11 +31,12 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {
-                    name: `"${this.disciminant.wireValue}"`,
+                    name: `"${this.discriminant.wireValue}"`,
                     type: `"${this.discriminantValue}"`
                 },
                 ...this.getNonDiscriminantPropertiesForInterface(context)
-            ]
+            ],
+            isExported: true
         };
     }
 

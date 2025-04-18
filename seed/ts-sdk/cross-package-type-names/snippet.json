@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedCrossPackageTypeNamesClient } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedCrossPackageTypeNamesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
+                "client": "import { SeedCrossPackageTypeNamesClient } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedCrossPackageTypeNamesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo.find({\n    optionalString: \"optionalString\",\n    publicProperty: \"publicProperty\",\n    privateProperty: 1\n});\n"
             }
         }
     ],

@@ -29,13 +29,13 @@ export const FileProperty: core.serialization.Schema<serializers.FileProperty.Ra
         });
 
 export declare namespace FileProperty {
-    type Raw = FileProperty.File | FileProperty.FileArray;
+    export type Raw = FileProperty.File | FileProperty.FileArray;
 
-    interface File extends FilePropertySingle.Raw {
+    export interface File extends FilePropertySingle.Raw {
         type: "file";
     }
 
-    interface FileArray extends FilePropertyArray.Raw {
+    export interface FileArray extends FilePropertyArray.Raw {
         type: "fileArray";
     }
 }

@@ -16,7 +16,7 @@ export const InitializeProblemRequest: core.serialization.ObjectSchema<
 });
 
 export declare namespace InitializeProblemRequest {
-    interface Raw {
+    export interface Raw {
         problemId: ProblemId.Raw;
         problemVersion?: number | null;
     }

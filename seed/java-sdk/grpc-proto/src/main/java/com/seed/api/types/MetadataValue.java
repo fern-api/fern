@@ -86,7 +86,7 @@ public final class MetadataValue {
         }
 
         @java.lang.Override
-        public MetadataValue deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public MetadataValue deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             if (value instanceof Double) {
                 return of((Double) value);

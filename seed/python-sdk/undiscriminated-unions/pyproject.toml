@@ -1,3 +1,6 @@
+[project]
+name = "fern_undiscriminated-unions"
+
 [tool.poetry]
 name = "fern_undiscriminated-unions"
 version = "0.0.1"

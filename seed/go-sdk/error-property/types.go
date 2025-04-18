@@ -5,14 +5,21 @@ package errorproperty
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/error-property/fern/core"
+	internal "github.com/error-property/fern/internal"
 )
 
 type PropertyBasedErrorTestBody struct {
 	Message string `json:"message" url:"message"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (p *PropertyBasedErrorTestBody) GetMessage() string {
+	if p == nil {
+		return ""
+	}
+	return p.Message
 }
 
 func (p *PropertyBasedErrorTestBody) GetExtraProperties() map[string]interface{} {
@@ -26,24 +33,22 @@ func (p *PropertyBasedErrorTestBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = PropertyBasedErrorTestBody(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *p)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
 	if err != nil {
 		return err
 	}
 	p.extraProperties = extraProperties
-
-	p._rawJSON = json.RawMessage(data)
+	p.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (p *PropertyBasedErrorTestBody) String() string {
-	if len(p._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(p._rawJSON); err == nil {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(p); err == nil {
+	if value, err := internal.StringifyJSON(p); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)

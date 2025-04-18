@@ -13,7 +13,7 @@ export const Constants: core.serialization.ObjectSchema<serializers.Constants.Ra
     });
 
 export declare namespace Constants {
-    interface Raw {
+    export interface Raw {
         errorInstanceIdKey: NameAndWireValue.Raw;
     }
 }

@@ -1,0 +1,21 @@
+## 0.7.1
+**`(internal):`** Bump intermediate representation to v31
+
+**`(fix):`** The generated models now support boolean literals and users
+do not have to specify them in the builder.
+For example, for the following object
+```yaml
+Actor:
+  properties:
+    name: string
+    isMale: literal<true>
+```
+the user will not need to specify the literal properties when building
+the object.
+```java
+var actor = Actor.builder()
+  .name("Brad Pitt")
+  .build();
+```
+
+

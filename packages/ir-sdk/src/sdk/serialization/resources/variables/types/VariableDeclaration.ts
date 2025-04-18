@@ -21,7 +21,7 @@ export const VariableDeclaration: core.serialization.ObjectSchema<
     .extend(WithDocs);
 
 export declare namespace VariableDeclaration {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw {
         id: VariableId.Raw;
         name: Name.Raw;
         type: serializers.TypeReference.Raw;

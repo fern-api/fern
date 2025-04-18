@@ -9,14 +9,16 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Problem {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,6 +27,8 @@ export declare namespace Problem {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -39,22 +43,28 @@ export class Problem {
      *
      * @example
      *     await client.problem.createProblem({
-     *         problemName: "string",
+     *         problemName: "problemName",
      *         problemDescription: {
      *             boards: [{
      *                     type: "html",
-     *                     value: "string"
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
      *                 }]
      *         },
      *         files: {
      *             ["JAVA"]: {
      *                 solutionFile: {
-     *                     filename: "string",
-     *                     contents: "string"
+     *                     filename: "filename",
+     *                     contents: "contents"
      *                 },
      *                 readOnlyFiles: [{
-     *                         filename: "string",
-     *                         contents: "string"
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
      *                     }]
      *             }
      *         },
@@ -62,15 +72,38 @@ export class Problem {
      *                 variableType: {
      *                     type: "integerType"
      *                 },
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
      *             }],
      *         outputType: {
      *             type: "integerType"
      *         },
      *         testcases: [{
      *                 testCase: {
-     *                     id: "string",
+     *                     id: "id",
      *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
      *                             type: "integerValue",
      *                             value: 1
      *                         }]
@@ -80,17 +113,26 @@ export class Problem {
      *                     value: 1
      *                 }
      *             }],
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
-    public async createProblem(
+    public createProblem(
         request: SeedTrace.CreateProblemRequest,
-        requestOptions?: Problem.RequestOptions
-    ): Promise<SeedTrace.CreateProblemResponse> {
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.CreateProblemResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createProblem(request, requestOptions));
+    }
+
+    private async __createProblem(
+        request: SeedTrace.CreateProblemRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.CreateProblemResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/create"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/problem-crud/create",
             ),
             method: "POST",
             headers: {
@@ -105,6 +147,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -114,13 +157,14 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.CreateProblemResponse;
+            return { data: _response.body as SeedTrace.CreateProblemResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -129,12 +173,14 @@ export class Problem {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling POST /problem-crud/create.");
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -147,23 +193,29 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.problem.updateProblem("string", {
-     *         problemName: "string",
+     *     await client.problem.updateProblem("problemId", {
+     *         problemName: "problemName",
      *         problemDescription: {
      *             boards: [{
      *                     type: "html",
-     *                     value: "string"
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
      *                 }]
      *         },
      *         files: {
      *             ["JAVA"]: {
      *                 solutionFile: {
-     *                     filename: "string",
-     *                     contents: "string"
+     *                     filename: "filename",
+     *                     contents: "contents"
      *                 },
      *                 readOnlyFiles: [{
-     *                         filename: "string",
-     *                         contents: "string"
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
      *                     }]
      *             }
      *         },
@@ -171,15 +223,38 @@ export class Problem {
      *                 variableType: {
      *                     type: "integerType"
      *                 },
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
      *             }],
      *         outputType: {
      *             type: "integerType"
      *         },
      *         testcases: [{
      *                 testCase: {
-     *                     id: "string",
+     *                     id: "id",
      *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
      *                             type: "integerValue",
      *                             value: 1
      *                         }]
@@ -189,18 +264,28 @@ export class Problem {
      *                     value: 1
      *                 }
      *             }],
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
-    public async updateProblem(
+    public updateProblem(
         problemId: SeedTrace.ProblemId,
         request: SeedTrace.CreateProblemRequest,
-        requestOptions?: Problem.RequestOptions
-    ): Promise<SeedTrace.UpdateProblemResponse> {
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.UpdateProblemResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__updateProblem(problemId, request, requestOptions));
+    }
+
+    private async __updateProblem(
+        problemId: SeedTrace.ProblemId,
+        request: SeedTrace.CreateProblemRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.UpdateProblemResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${encodeURIComponent(problemId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/problem-crud/update/${encodeURIComponent(problemId)}`,
             ),
             method: "POST",
             headers: {
@@ -215,6 +300,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -224,13 +310,14 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.UpdateProblemResponse;
+            return { data: _response.body as SeedTrace.UpdateProblemResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -239,12 +326,16 @@ export class Problem {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /problem-crud/update/{problemId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -256,13 +347,25 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.problem.deleteProblem("string")
+     *     await client.problem.deleteProblem("problemId")
      */
-    public async deleteProblem(problemId: SeedTrace.ProblemId, requestOptions?: Problem.RequestOptions): Promise<void> {
+    public deleteProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteProblem(problemId, requestOptions));
+    }
+
+    private async __deleteProblem(
+        problemId: SeedTrace.ProblemId,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${encodeURIComponent(problemId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/problem-crud/delete/${encodeURIComponent(problemId)}`,
             ),
             method: "DELETE",
             headers: {
@@ -277,6 +380,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -285,13 +389,14 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -300,12 +405,16 @@ export class Problem {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling DELETE /problem-crud/delete/{problemId}.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -322,22 +431,36 @@ export class Problem {
      *                 variableType: {
      *                     type: "integerType"
      *                 },
-     *                 name: "string"
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
      *             }],
      *         outputType: {
      *             type: "integerType"
      *         },
-     *         methodName: "string"
+     *         methodName: "methodName"
      *     })
      */
-    public async getDefaultStarterFiles(
+    public getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,
-        requestOptions?: Problem.RequestOptions
-    ): Promise<SeedTrace.GetDefaultStarterFilesResponse> {
+        requestOptions?: Problem.RequestOptions,
+    ): core.HttpResponsePromise<SeedTrace.GetDefaultStarterFilesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getDefaultStarterFiles(request, requestOptions));
+    }
+
+    private async __getDefaultStarterFiles(
+        request: SeedTrace.GetDefaultStarterFilesRequest,
+        requestOptions?: Problem.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedTrace.GetDefaultStarterFilesResponse>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/default-starter-files"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/problem-crud/default-starter-files",
             ),
             method: "POST",
             headers: {
@@ -352,6 +475,7 @@ export class Problem {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -361,13 +485,17 @@ export class Problem {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedTrace.GetDefaultStarterFilesResponse;
+            return {
+                data: _response.body as SeedTrace.GetDefaultStarterFilesResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -376,12 +504,16 @@ export class Problem {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedTraceTimeoutError();
+                throw new errors.SeedTraceTimeoutError(
+                    "Timeout exceeded when calling POST /problem-crud/default-starter-files.",
+                );
             case "unknown":
                 throw new errors.SeedTraceError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -1,0 +1,6 @@
+## 1.4.5
+**`(chore):`** Improve performance of Pydantic `.dict` calls
+
+### What's changed
+- `.dict` performance is improved, consolidating to a single call to Pydantic's `.dict` instead of 2 in attempts to remove unset optional values.
+

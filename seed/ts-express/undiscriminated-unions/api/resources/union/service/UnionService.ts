@@ -15,7 +15,7 @@ export interface UnionServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getMetadata(
         req: express.Request<never, SeedUndiscriminatedUnions.Metadata, never, never>,
@@ -24,19 +24,40 @@ export interface UnionServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    updateMetadata(
+        req: express.Request<never, boolean, SeedUndiscriminatedUnions.MetadataUnion, never>,
+        res: {
+            send: (responseBody: boolean) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    call(
+        req: express.Request<never, boolean, SeedUndiscriminatedUnions.Request, never>,
+        res: {
+            send: (responseBody: boolean) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class UnionService {
     private router;
 
-    constructor(private readonly methods: UnionServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: UnionServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -56,13 +77,13 @@ export class UnionService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    serializers.MyUnion.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                    serializers.MyUnion.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -70,7 +91,7 @@ export class UnionService {
                         console.warn(
                             `Endpoint 'get' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -81,7 +102,7 @@ export class UnionService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -94,13 +115,13 @@ export class UnionService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                serializers.Metadata.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                serializers.Metadata.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -108,13 +129,99 @@ export class UnionService {
                     console.warn(
                         `Endpoint 'getMetadata' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
                     res.status(500).json("Internal Server Error");
                 }
                 next(error);
+            }
+        });
+        this.router.put("/metadata", async (req, res, next) => {
+            const request = serializers.MetadataUnion.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateMetadata(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.union.updateMetadata.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedUndiscriminatedUnionsError) {
+                        console.warn(
+                            `Endpoint 'updateMetadata' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/call", async (req, res, next) => {
+            const request = serializers.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.call(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.union.call.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedUndiscriminatedUnionsError) {
+                        console.warn(
+                            `Endpoint 'call' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
             }
         });
         return this.router;

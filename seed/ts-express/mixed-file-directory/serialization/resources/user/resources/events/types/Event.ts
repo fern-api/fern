@@ -13,7 +13,7 @@ export const Event: core.serialization.ObjectSchema<serializers.user.Event.Raw, 
     });
 
 export declare namespace Event {
-    interface Raw {
+    export interface Raw {
         id: serializers.Id.Raw;
         name: string;
     }

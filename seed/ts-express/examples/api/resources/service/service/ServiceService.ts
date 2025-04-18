@@ -22,7 +22,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     createMovie(
         req: express.Request<never, SeedExamples.MovieId, SeedExamples.Movie, never>,
@@ -31,7 +31,7 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getMetadata(
         req: express.Request<
@@ -48,28 +48,31 @@ export interface ServiceServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
-    getResponse(
-        req: express.Request<never, SeedExamples.Response, never, never>,
+    createBigEntity(
+        req: express.Request<never, SeedExamples.Response, SeedExamples.BigEntity, never>,
         res: {
             send: (responseBody: SeedExamples.Response) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class ServiceService {
     private router;
 
-    constructor(private readonly methods: ServiceServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: ServiceServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -90,7 +93,7 @@ export class ServiceService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -98,7 +101,7 @@ export class ServiceService {
                     console.warn(
                         `Endpoint 'getMovie' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -117,13 +120,13 @@ export class ServiceService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                    serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -131,7 +134,7 @@ export class ServiceService {
                         console.warn(
                             `Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -142,7 +145,7 @@ export class ServiceService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -155,13 +158,13 @@ export class ServiceService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                serializers.Metadata.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                                serializers.Metadata.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -169,7 +172,7 @@ export class ServiceService {
                     console.warn(
                         `Endpoint 'getMetadata' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -178,34 +181,45 @@ export class ServiceService {
                 next(error);
             }
         });
-        this.router.post("/response", async (req, res, next) => {
-            try {
-                await this.methods.getResponse(
-                    req as any,
-                    {
-                        send: async (responseBody) => {
-                            res.json(
-                                serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+        this.router.post("/big-entity", async (req, res, next) => {
+            const request = serializers.BigEntity.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.createBigEntity(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    },
-                    next
-                );
-                next();
-            } catch (error) {
-                if (error instanceof errors.SeedExamplesError) {
-                    console.warn(
-                        `Endpoint 'getResponse' unexpectedly threw ${error.constructor.name}.` +
-                            ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                        next,
                     );
-                    await error.send(res);
-                } else {
-                    res.status(500).json("Internal Server Error");
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedExamplesError) {
+                        console.warn(
+                            `Endpoint 'createBigEntity' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.",
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
                 }
-                next(error);
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
+                    ),
+                });
+                next(request.errors);
             }
         });
         return this.router;

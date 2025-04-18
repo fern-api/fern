@@ -16,7 +16,7 @@ export const Subpackage: core.serialization.ObjectSchema<serializers.Subpackage.
         .extend(Package);
 
 export declare namespace Subpackage {
-    interface Raw extends Package.Raw {
+    export interface Raw extends Package.Raw {
         name: Name.Raw;
     }
 }

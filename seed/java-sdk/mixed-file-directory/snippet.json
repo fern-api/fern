@@ -1,0 +1,57 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "a6e62662",
+            "id": {
+                "method": "POST",
+                "path": "/organizations/",
+                "identifier_override": "endpoint_organization.create"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.organization().create(\n            CreateOrganizationRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.organization().create(\n            CreateOrganizationRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c41764ca",
+            "id": {
+                "method": "GET",
+                "path": "/users/",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.requests.ListUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().list(\n            ListUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.requests.ListUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().list(\n            ListUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "eaa10238",
+            "id": {
+                "method": "GET",
+                "path": "/users/events/",
+                "identifier_override": "endpoint_user/events.listEvents"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.events.requests.ListUserEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().events().listEvents(\n            ListUserEventsRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.events.requests.ListUserEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().events().listEvents(\n            ListUserEventsRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5e1e74bf",
+            "id": {
+                "method": "GET",
+                "path": "/users/events/metadata/",
+                "identifier_override": "endpoint_user/events/metadata.getMetadata"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.events.metadata.requests.GetEventMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().events().metadata().getMetadata(\n            GetEventMetadataRequest\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.events.metadata.requests.GetEventMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().events().metadata().getMetadata(\n            GetEventMetadataRequest\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -2,23 +2,33 @@
 
 namespace Seed\Errors\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class UnauthorizedRequestErrorBody extends SerializableType
+class UnauthorizedRequestErrorBody extends JsonSerializableType
 {
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**
-     * @param string $message
+     * @param array{
+     *   message: string,
+     * } $values
      */
     public function __construct(
-        string $message,
+        array $values,
     ) {
-        $this->message = $message;
+        $this->message = $values['message'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

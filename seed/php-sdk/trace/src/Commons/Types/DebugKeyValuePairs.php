@@ -2,32 +2,41 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class DebugKeyValuePairs extends SerializableType
+class DebugKeyValuePairs extends JsonSerializableType
 {
     /**
-     * @var mixed $key
+     * @var DebugVariableValue $key
      */
-    #[JsonProperty("key")]
-    public mixed $key;
+    #[JsonProperty('key')]
+    public DebugVariableValue $key;
 
     /**
-     * @var mixed $value
+     * @var DebugVariableValue $value
      */
-    #[JsonProperty("value")]
-    public mixed $value;
+    #[JsonProperty('value')]
+    public DebugVariableValue $value;
 
     /**
-     * @param mixed $key
-     * @param mixed $value
+     * @param array{
+     *   key: DebugVariableValue,
+     *   value: DebugVariableValue,
+     * } $values
      */
     public function __construct(
-        mixed $key,
-        mixed $value,
+        array $values,
     ) {
-        $this->key = $key;
-        $this->value = $value;
+        $this->key = $values['key'];
+        $this->value = $values['value'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

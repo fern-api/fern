@@ -13,16 +13,14 @@ var ErrNoPages = errors.New("no pages remain")
 
 // Page represents a single page of results.
 type Page[T any] struct {
-	Results []T
-
-	// The closure is defined by the Pager.
-	nextPage func(context.Context) (*Page[T], error)
+	Results      []T
+	NextPageFunc func(context.Context) (*Page[T], error)
 }
 
 // GetNextPage fetches the next page, if any. If no pages remain,
 // the ErrNoPages error is returned.
 func (p *Page[T]) GetNextPage(ctx context.Context) (*Page[T], error) {
-	return p.nextPage(ctx)
+	return p.NextPageFunc(ctx)
 }
 
 // Iterator returns an iterator that starts at the current page.

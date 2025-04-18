@@ -1,13 +1,11 @@
 using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
 
-#nullable enable
-
 namespace SeedObjectsWithImports;
 
 public partial class SeedObjectsWithImportsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedObjectsWithImportsClient(ClientOptions? clientOptions = null)
     {
@@ -33,7 +31,7 @@ public partial class SeedObjectsWithImportsClient
         File = new FileClient(_client);
     }
 
-    public CommonsClient Commons { get; init; }
+    public CommonsClient Commons { get; }
 
-    public FileClient File { get; init; }
+    public FileClient File { get; }
 }

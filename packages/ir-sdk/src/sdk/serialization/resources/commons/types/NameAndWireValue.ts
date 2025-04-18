@@ -16,7 +16,7 @@ export const NameAndWireValue: core.serialization.ObjectSchema<
 });
 
 export declare namespace NameAndWireValue {
-    interface Raw {
+    export interface Raw {
         wireValue: string;
         name: Name.Raw;
     }

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { NodePath, isGeneric, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+
 import { Rule, RuleViolation } from "../../Rule";
-import { NodePath, visitRawTypeDeclaration, isGeneric, parseGeneric } from "@fern-api/fern-definition-schema";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { visitDefinitionFileYamlAst } from "../../ast";
 
 type GenericDeclaration = string;
@@ -9,8 +10,8 @@ type PropertyBasedTypeDeclaration = "object" | "discriminatedUnion";
 
 export const ValidGenericRule: Rule = {
     name: "valid-generic",
-    create: async ({ workspace }) => {
-        const genericArgumentCounts = await getGenericArgumentCounts(workspace);
+    create: ({ workspace }) => {
+        const genericArgumentCounts = getGenericArgumentCounts(workspace);
         const propertyBasedErrors: Record<
             PropertyBasedTypeDeclaration,
             {
@@ -50,7 +51,7 @@ export const ValidGenericRule: Rule = {
                                 })
                             ) {
                                 errors.push({
-                                    severity: "error",
+                                    severity: "fatal",
                                     message: "Generics are only supported for object declarations"
                                 });
                             }
@@ -70,7 +71,7 @@ export const ValidGenericRule: Rule = {
                                     genericArgumentCounts[key] !== maybeGeneric.arguments.length
                                 ) {
                                     errors.push({
-                                        severity: "error",
+                                        severity: "fatal",
                                         message: `Generic ${key} expects ${
                                             genericArgumentCounts[key]
                                         } arguments, but received ${
@@ -81,7 +82,7 @@ export const ValidGenericRule: Rule = {
                             } else {
                                 if (alias in genericArgumentCounts) {
                                     errors.push({
-                                        severity: "error",
+                                        severity: "fatal",
                                         message: `Generic ${alias} expects ${genericArgumentCounts[alias]} arguments, but received none`
                                     });
                                 }
@@ -93,7 +94,7 @@ export const ValidGenericRule: Rule = {
                                     const enumValue = typeof value === "string" ? value : value.value;
                                     if (isGeneric(enumValue)) {
                                         errors.push({
-                                            severity: "error",
+                                            severity: "fatal",
                                             message: `Cannot reference generic ${enumValue} from enum`
                                         });
                                     }
@@ -110,7 +111,7 @@ export const ValidGenericRule: Rule = {
                                         });
                                     } else {
                                         errors.push({
-                                            severity: "error",
+                                            severity: "fatal",
                                             message: `Cannot reference generic ${value} from object property ${key}`
                                         });
                                     }
@@ -123,8 +124,8 @@ export const ValidGenericRule: Rule = {
                                     typeof value === "string"
                                         ? value
                                         : typeof value.type === "string"
-                                        ? value.type
-                                        : undefined;
+                                          ? value.type
+                                          : undefined;
 
                                 if (discriminatedUnionValue && isGeneric(discriminatedUnionValue)) {
                                     if (nodePath) {
@@ -134,7 +135,7 @@ export const ValidGenericRule: Rule = {
                                         });
                                     } else {
                                         errors.push({
-                                            severity: "error",
+                                            severity: "fatal",
                                             message: `Cannot reference generic ${value} from union property ${key}`
                                         });
                                     }
@@ -146,7 +147,7 @@ export const ValidGenericRule: Rule = {
                                 const discriminatedUnionValue = typeof value === "string" ? value : value.type;
                                 if (isGeneric(discriminatedUnionValue)) {
                                     errors.push({
-                                        severity: "error",
+                                        severity: "fatal",
                                         message: `Cannot reference generic ${discriminatedUnionValue} from union`
                                     });
                                 }
@@ -171,7 +172,7 @@ export const ValidGenericRule: Rule = {
                                     nodePath.includes(key)
                                 ) {
                                     errors.push({
-                                        severity: "error",
+                                        severity: "fatal",
                                         message: `Cannot reference generic ${typeReference} from ${
                                             propertyBasedTypeDeclaration.toLowerCase().includes("union")
                                                 ? "union"
@@ -189,11 +190,11 @@ export const ValidGenericRule: Rule = {
     }
 };
 
-async function getGenericArgumentCounts(workspace: FernWorkspace): Promise<Record<string, number>> {
+function getGenericArgumentCounts(workspace: FernWorkspace): Record<string, number> {
     const genericArgumentCounts: Record<GenericDeclaration, number> = {};
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
-        await visitDefinitionFileYamlAst(file, {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
+        visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName, declaration }) => {
                 if (!typeName.isInlined) {
                     const maybeGeneric = parseGeneric(typeName.name);

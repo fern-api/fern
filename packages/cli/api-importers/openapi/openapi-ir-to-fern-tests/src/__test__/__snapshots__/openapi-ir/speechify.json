@@ -1,0 +1,3621 @@
+{
+  "title": "Speechify API:",
+  "servers": [
+    {
+      "url": "https://api.sws.speechify.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "ExperimentalStreamCreate",
+      "tags": [
+        "audio"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ExperimentalStreamCreateRequest",
+      "request": {
+        "schema": {
+          "generatedName": "ExperimentalStreamCreateRequest",
+          "schema": "ExperimentalStreamRequest",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "ExperimentalStreamCreateResponse",
+          "schema": "ExperimentalStreamResponse",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "type": "unknown"
+          },
+          "description": "Invalid request params",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "402": {
+          "generatedName": "PaymentRequiredError",
+          "schema": {
+            "generatedName": "PaymentRequiredErrorBody",
+            "type": "unknown"
+          },
+          "description": "Insufficient credits",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "403": {
+          "generatedName": "ForbiddenError",
+          "schema": {
+            "generatedName": "ForbiddenErrorBody",
+            "type": "unknown"
+          },
+          "description": "Request access rejected",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "500": {
+          "generatedName": "InternalServerError",
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "type": "unknown"
+          },
+          "description": "Internal server error",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "description": "Gets the stream speech for the given input",
+      "authed": true,
+      "method": "POST",
+      "path": "/experimental/audio/stream",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "input": {
+                "value": {
+                  "value": "input",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "voice_id": {
+                "value": {
+                  "value": "voice_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "audio_url": {
+                  "value": {
+                    "value": "https://streaming.sws.speechify.com/v1/stream/abc.mp3?exp=2024-07-26T10:54:44.429Z&s=xyz",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "expires": {
+                  "value": {
+                    "value": "2024-07-26T11:18:41.236Z",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "GetSpeech",
+      "tags": [
+        "audio"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetSpeechRequest",
+      "request": {
+        "schema": {
+          "generatedName": "GetSpeechRequest",
+          "schema": "GetSpeechRequest",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "GetSpeechResponse",
+          "schema": "GetSpeechResponse",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "type": "unknown"
+          },
+          "description": "Invalid request params",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "402": {
+          "generatedName": "PaymentRequiredError",
+          "schema": {
+            "generatedName": "PaymentRequiredErrorBody",
+            "type": "unknown"
+          },
+          "description": "Insufficient credits",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "403": {
+          "generatedName": "ForbiddenError",
+          "schema": {
+            "generatedName": "ForbiddenErrorBody",
+            "type": "unknown"
+          },
+          "description": "Request access rejected",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "500": {
+          "generatedName": "InternalServerError",
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "type": "unknown"
+          },
+          "description": "Internal server error",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "description": "Gets the speech data for the given input",
+      "authed": true,
+      "method": "POST",
+      "path": "/v1/audio/speech",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "input": {
+                "value": {
+                  "value": "input",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "voice_id": {
+                "value": {
+                  "value": "voice_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "audio_data": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "audio_format": {
+                  "value": "wav",
+                  "type": "enum"
+                },
+                "billable_characters_count": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "speech_marks": {
+                  "properties": {
+                    "chunks": {
+                      "value": [
+                        {
+                          "properties": {},
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "end": {
+                      "value": {
+                        "value": 1000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "end_time": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "start": {
+                      "value": {
+                        "value": 1000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "start_time": {
+                      "value": {
+                        "value": 1.1,
+                        "type": "double"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": {
+                      "value": {
+                        "value": "type",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "value": {
+                      "value": {
+                        "value": "value",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "GetStream",
+      "tags": [
+        "audio"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "schema": {
+            "generatedName": "GetStreamRequestAccept",
+            "values": [
+              {
+                "generatedName": "AudioMpeg",
+                "value": "audio/mpeg",
+                "casing": {}
+              },
+              {
+                "generatedName": "AudioOgg",
+                "value": "audio/ogg",
+                "casing": {}
+              },
+              {
+                "generatedName": "AudioAac",
+                "value": "audio/aac",
+                "casing": {}
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.json",
+              "type": "openapi"
+            },
+            "type": "enum"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetStreamRequest",
+      "request": {
+        "schema": {
+          "generatedName": "GetStreamRequestBody",
+          "schema": "GetStreamRequest",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "value": {
+            "schema": {
+              "type": "int"
+            },
+            "generatedName": "GetStreamResponseItem",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "generatedName": "GetStreamResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "type": "unknown"
+          },
+          "description": "Invalid request params",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "402": {
+          "generatedName": "PaymentRequiredError",
+          "schema": {
+            "generatedName": "PaymentRequiredErrorBody",
+            "type": "unknown"
+          },
+          "description": "Insufficient credits",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "403": {
+          "generatedName": "ForbiddenError",
+          "schema": {
+            "generatedName": "ForbiddenErrorBody",
+            "type": "unknown"
+          },
+          "description": "Request access rejected",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "500": {
+          "generatedName": "InternalServerError",
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "type": "unknown"
+          },
+          "description": "Internal server error",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "description": "Gets the stream speech for the given input",
+      "authed": true,
+      "method": "POST",
+      "path": "/v1/audio/stream",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "Accept",
+              "value": {
+                "value": "audio/mpeg",
+                "type": "enum"
+              }
+            }
+          ],
+          "request": {
+            "properties": {
+              "input": {
+                "value": {
+                  "value": "input",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "voice_id": {
+                "value": {
+                  "value": "voice_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "CreateAccessToken",
+      "tags": [
+        "auth"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateAccessTokenRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateAccessTokenRequest",
+          "schema": "CreateAccessTokenRequest",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Contains the details of the token which can be used by the user to access the API",
+        "schema": {
+          "generatedName": "CreateAccessTokenResponse",
+          "schema": "AccessToken",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "schema": "OAuthError",
+            "source": {
+              "file": "../openapi.json",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "description": "Contains the details of the error",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "description": "Create a new API token for the logged in user",
+      "authed": true,
+      "method": "POST",
+      "path": "/v1/auth/token",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "grant_type": {
+                "value": {
+                  "value": "client_credentials",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "access_token": {
+                  "value": {
+                    "value": "access_token",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "expires_in": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "scope": {
+                  "value": "audio:speech",
+                  "type": "enum"
+                },
+                "token_type": {
+                  "value": {
+                    "value": "bearer",
+                    "type": "string"
+                  },
+                  "type": "literal"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "ListAPIKeys",
+      "tags": [
+        "apikey"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListApiKeysRequest",
+      "response": {
+        "description": "An array of all API keys for the user for the given request",
+        "schema": {
+          "value": {
+            "generatedName": "ListApiKeysResponseItem",
+            "schema": "APIKey",
+            "source": {
+              "file": "../openapi.json",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListApiKeysResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Fetches all the API keys for the logged in user",
+      "authed": true,
+      "method": "GET",
+      "path": "/v1/token",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "api_key": {
+                      "value": {
+                        "value": "api_key",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "created_at": {
+                      "value": {
+                        "value": 1000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "id": {
+                      "value": {
+                        "value": 1000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "updated_at": {
+                      "value": {
+                        "value": 1000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "user_id": {
+                      "value": {
+                        "value": "user_id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "CreateAPIKey",
+      "tags": [
+        "apikey"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateApiKeyRequest",
+      "response": {
+        "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API",
+        "schema": {
+          "generatedName": "CreateApiKeyResponse",
+          "schema": "APIKey",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Create a new API key for the logged in user",
+      "authed": true,
+      "method": "POST",
+      "path": "/v1/token",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "api_key": {
+                  "value": {
+                    "value": "api_key",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "created_at": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "updated_at": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "user_id": {
+                  "value": {
+                    "value": "user_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "DeleteAPIKey",
+      "tags": [
+        "apikey"
+      ],
+      "pathParameters": [
+        {
+          "description": "The ID of the API key to delete",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteApiKeyRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeleteApiKeyRequest",
+      "errors": {},
+      "servers": [],
+      "description": "Deletes the given API key for the logged in user",
+      "authed": true,
+      "method": "DELETE",
+      "path": "/v1/token/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "UpdateApiKey",
+      "tags": [
+        "apikey"
+      ],
+      "pathParameters": [
+        {
+          "description": "The ID of the key to edit",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "UpdateApiKeyRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UpdateApiKeyRequest",
+      "request": {
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "UpdateApiKeyRequest",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API",
+        "schema": {
+          "generatedName": "UpdateApiKeyResponse",
+          "schema": "APIKey",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Update API key name for the logged in user",
+      "authed": true,
+      "method": "PATCH",
+      "path": "/v1/token/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": {
+              "value": "string",
+              "type": "string"
+            },
+            "type": "primitive"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "api_key": {
+                  "value": {
+                    "value": "api_key",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "created_at": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "updated_at": {
+                  "value": {
+                    "value": 1000000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "user_id": {
+                  "value": {
+                    "value": "user_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "GetVoices",
+      "tags": [
+        "voices"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetVoicesRequest",
+      "response": {
+        "description": "A list of voices",
+        "schema": {
+          "value": {
+            "generatedName": "GetVoicesResponseItem",
+            "schema": "GetVoice",
+            "source": {
+              "file": "../openapi.json",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "GetVoicesResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "type": "unknown"
+          },
+          "description": "No voices found",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "500": {
+          "generatedName": "InternalServerError",
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "type": "unknown"
+          },
+          "description": "Internal server error",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "description": "Gets the list of voices available for the user",
+      "authed": true,
+      "method": "GET",
+      "path": "/v1/voices",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "avatar_image": {
+                      "value": {
+                        "value": "avatar_image",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "display_name": {
+                      "value": {
+                        "value": "display_name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "gender": {
+                      "value": "male",
+                      "type": "enum"
+                    },
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "models": {
+                      "value": [
+                        {
+                          "properties": {},
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "preview_audio": {
+                      "value": {
+                        "value": "preview_audio",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "tags": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "tags",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "type": {
+                      "value": "shared",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "CreateVoice",
+      "tags": [
+        "voices"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateVoiceRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "name",
+            "schema": {
+              "value": {
+                "generatedName": "CreateVoiceRequestName",
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Name of the personal voice",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "type": "json"
+            },
+            "encoding": "form"
+          },
+          {
+            "key": "sample",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "description": "Audio sample file",
+            "exploded": false
+          },
+          {
+            "key": "consent",
+            "schema": {
+              "value": {
+                "generatedName": "CreateVoiceRequestConsent",
+                "schema": {
+                  "type": "string"
+                },
+                "description": "User consent information in JSON format: {\"fullName\": \"\", \"email\": \"\"}\nFor example, {\"fullName\": \"John Doe\", \"email\": \"john@example.com\"}\nThis should include the fullName and email of the consenting individual.",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "type": "json"
+            },
+            "encoding": "form"
+          }
+        ],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "response": {
+        "description": "A created voice",
+        "schema": {
+          "generatedName": "CreateVoiceResponse",
+          "schema": "CreatedVoice",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "type": "unknown"
+          },
+          "description": "Invalid request params",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "402": {
+          "generatedName": "PaymentRequiredError",
+          "schema": {
+            "generatedName": "PaymentRequiredErrorBody",
+            "type": "unknown"
+          },
+          "description": "Current billing plan does not have access to voice cloning",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "500": {
+          "generatedName": "InternalServerError",
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "type": "unknown"
+          },
+          "description": "Internal server error",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "description": "Create a personal (cloned) voice for the user",
+      "authed": true,
+      "method": "POST",
+      "path": "/v1/voices",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "consent": {
+                "value": {
+                  "value": "consent",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "display_name": {
+                  "value": {
+                    "value": "display_name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "models": {
+                  "value": [
+                    {
+                      "properties": {
+                        "languages": {
+                          "value": [
+                            {
+                              "properties": {},
+                              "type": "object"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "name": {
+                          "value": "simba-base",
+                          "type": "enum"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "type": {
+                  "value": "shared",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "DeleteVoice",
+      "tags": [
+        "voices"
+      ],
+      "pathParameters": [
+        {
+          "description": "The ID of the voice to delete",
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteVoiceRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeleteVoiceRequest",
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "type": "unknown"
+          },
+          "description": "Missing or invalid voice ID",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "type": "unknown"
+          },
+          "description": "Voice not found",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        "500": {
+          "generatedName": "InternalServerError",
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "type": "unknown"
+          },
+          "description": "Internal server error",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "description": "Delete a personal (cloned) voice",
+      "authed": true,
+      "method": "DELETE",
+      "path": "/v1/voices/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "APIKey": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "apiKeyApiKey",
+            "key": "api_key",
+            "schema": {
+              "generatedName": "apiKeyApiKey",
+              "value": {
+                "description": "API key",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ApiKeyApiKey",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiKeyCreatedAt",
+            "key": "created_at",
+            "schema": {
+              "generatedName": "apiKeyCreatedAt",
+              "value": {
+                "description": "Creation time of the key",
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "ApiKeyCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiKeyId",
+            "key": "id",
+            "schema": {
+              "generatedName": "apiKeyId",
+              "value": {
+                "description": "ID of the key",
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "ApiKeyId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiKeyName",
+            "key": "name",
+            "schema": {
+              "generatedName": "apiKeyName",
+              "value": {
+                "description": "Name of the key",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ApiKeyName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiKeyUpdatedAt",
+            "key": "updated_at",
+            "schema": {
+              "generatedName": "apiKeyUpdatedAt",
+              "value": {
+                "description": "Last updated time of the key",
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "ApiKeyUpdatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiKeyUserId",
+            "key": "user_id",
+            "schema": {
+              "generatedName": "apiKeyUserId",
+              "value": {
+                "description": "User ID to whom the key belongs",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ApiKeyUserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ApiKey",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AccessToken": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "accessTokenAccessToken",
+            "key": "access_token",
+            "schema": {
+              "generatedName": "accessTokenAccessToken",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AccessTokenAccessToken",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accessTokenExpiresIn",
+            "key": "expires_in",
+            "schema": {
+              "generatedName": "accessTokenExpiresIn",
+              "value": {
+                "description": "Expiration time, in seconds from the issue time",
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "AccessTokenExpiresIn",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accessTokenScope",
+            "key": "scope",
+            "schema": {
+              "generatedName": "accessTokenScope",
+              "value": {
+                "description": "The scope, or a space-delimited list of scopes the token is issued for",
+                "generatedName": "AccessTokenScope",
+                "values": [
+                  {
+                    "generatedName": "AudioSpeech",
+                    "value": "audio:speech",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "AudioStream",
+                    "value": "audio:stream",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "AudioAll",
+                    "value": "audio:all",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VoicesRead",
+                    "value": "voices:read",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VoicesCreate",
+                    "value": "voices:create",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VoicesDelete",
+                    "value": "voices:delete",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VoicesAll",
+                    "value": "voices:all",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "accessTokenTokenType",
+            "key": "token_type",
+            "schema": {
+              "generatedName": "accessTokenTokenType",
+              "value": {
+                "description": "Token type",
+                "value": {
+                  "value": "bearer",
+                  "type": "string"
+                },
+                "generatedName": "AccessTokenTokenType",
+                "groupName": [],
+                "type": "literal"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AccessToken",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CreateAccessTokenRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createAccessTokenRequestGrantType",
+            "key": "grant_type",
+            "schema": {
+              "description": "in: body",
+              "value": {
+                "value": "client_credentials",
+                "type": "string"
+              },
+              "generatedName": "CreateAccessTokenRequestGrantType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createAccessTokenRequestScope",
+            "key": "scope",
+            "schema": {
+              "generatedName": "createAccessTokenRequestScope",
+              "value": {
+                "description": "The scope, or a space-delimited list of scopes the token is requested for\nin: body",
+                "generatedName": "CreateAccessTokenRequestScope",
+                "values": [
+                  {
+                    "generatedName": "AudioSpeech",
+                    "value": "audio:speech",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "AudioStream",
+                    "value": "audio:stream",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "AudioAll",
+                    "value": "audio:all",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VoicesRead",
+                    "value": "voices:read",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VoicesCreate",
+                    "value": "voices:create",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VoicesDelete",
+                    "value": "voices:delete",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "VoicesAll",
+                    "value": "voices:all",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateAccessTokenRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CreateVoiceLanguage": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createVoiceLanguageLocale",
+            "key": "locale",
+            "schema": {
+              "generatedName": "createVoiceLanguageLocale",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreateVoiceLanguageLocale",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createVoiceLanguagePreviewAudio",
+            "key": "preview_audio",
+            "schema": {
+              "generatedName": "createVoiceLanguagePreviewAudio",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreateVoiceLanguagePreviewAudio",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateVoiceLanguage",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CreateVoiceModel": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createVoiceModelLanguages",
+            "key": "languages",
+            "schema": {
+              "generatedName": "createVoiceModelLanguages",
+              "value": {
+                "value": {
+                  "generatedName": "CreateVoiceModelLanguagesItem",
+                  "schema": "CreateVoiceLanguage",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "CreateVoiceModelLanguages",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createVoiceModelName",
+            "key": "name",
+            "schema": {
+              "generatedName": "createVoiceModelName",
+              "value": {
+                "generatedName": "CreateVoiceModelName",
+                "values": [
+                  {
+                    "generatedName": "SimbaBase",
+                    "value": "simba-base",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaEnglish",
+                    "value": "simba-english",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaMultilingual",
+                    "value": "simba-multilingual",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaTurbo",
+                    "value": "simba-turbo",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateVoiceModel",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CreatedVoice": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createdVoiceDisplayName",
+            "key": "display_name",
+            "schema": {
+              "generatedName": "createdVoiceDisplayName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreatedVoiceDisplayName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createdVoiceId",
+            "key": "id",
+            "schema": {
+              "generatedName": "createdVoiceId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreatedVoiceId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createdVoiceModels",
+            "key": "models",
+            "schema": {
+              "generatedName": "createdVoiceModels",
+              "value": {
+                "value": {
+                  "generatedName": "CreatedVoiceModelsItem",
+                  "schema": "CreateVoiceModel",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "CreatedVoiceModels",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createdVoiceType",
+            "key": "type",
+            "schema": {
+              "generatedName": "createdVoiceType",
+              "value": {
+                "generatedName": "CreatedVoiceType",
+                "values": [
+                  {
+                    "generatedName": "shared",
+                    "value": "shared",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "personal",
+                    "value": "personal",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreatedVoice",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ExperimentalStreamRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "experimentalStreamRequestInput",
+            "key": "input",
+            "schema": {
+              "description": "Plain text or SSML to be synthesized to speech.\nRefer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.\nEmotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ExperimentalStreamRequestInput",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "experimentalStreamRequestLanguage",
+            "key": "language",
+            "schema": {
+              "generatedName": "experimentalStreamRequestLanguage",
+              "value": {
+                "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ExperimentalStreamRequestLanguage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "experimentalStreamRequestModel",
+            "key": "model",
+            "schema": {
+              "generatedName": "experimentalStreamRequestModel",
+              "value": {
+                "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
+                "generatedName": "ExperimentalStreamRequestModel",
+                "values": [
+                  {
+                    "generatedName": "SimbaBase",
+                    "value": "simba-base",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaEnglish",
+                    "value": "simba-english",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaMultilingual",
+                    "value": "simba-multilingual",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaTurbo",
+                    "value": "simba-turbo",
+                    "casing": {}
+                  }
+                ],
+                "default": {
+                  "generatedName": "SimbaBase",
+                  "value": "simba-base",
+                  "casing": {}
+                },
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "experimentalStreamRequestVoiceId",
+            "key": "voice_id",
+            "schema": {
+              "description": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ExperimentalStreamRequestVoiceId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "ExperimentalStreamRequest is the wrapper for request parameters to the client",
+        "generatedName": "ExperimentalStreamRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ExperimentalStreamResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "experimentalStreamResponseAudioUrl",
+            "key": "audio_url",
+            "schema": {
+              "generatedName": "experimentalStreamResponseAudioUrl",
+              "value": {
+                "description": "URL to the synthesized audio file. It includes the expiration time and a signature in the query params.\nThe audio file will be available for download until the expiration time.\nFor the URL to work correctly, it must be used verbatim, with all the query parameters.",
+                "schema": {
+                  "example": "https://streaming.sws.speechify.com/v1/stream/abc.mp3?exp=2024-07-26T10:54:44.429Z&s=xyz",
+                  "type": "string"
+                },
+                "generatedName": "ExperimentalStreamResponseAudioUrl",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "experimentalStreamResponseExpires",
+            "key": "expires",
+            "schema": {
+              "generatedName": "experimentalStreamResponseExpires",
+              "value": {
+                "description": "Expiry time of the audio file, in ISO-8601 format.",
+                "schema": {
+                  "example": "2024-07-26T11:18:41.236Z",
+                  "type": "string"
+                },
+                "generatedName": "ExperimentalStreamResponseExpires",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "ExperimentalStreamResponse represents generated audio stream info",
+        "generatedName": "ExperimentalStreamResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetSpeechOptionsRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "getSpeechOptionsRequestLoudnessNormalization",
+            "key": "loudness_normalization",
+            "schema": {
+              "generatedName": "getSpeechOptionsRequestLoudnessNormalization",
+              "value": {
+                "description": "Determines whether to normalize the audio loudness to a standard level.\nWhen enabled, loudness normalization aligns the audio output to the following standards:\nIntegrated loudness: -14 LUFS\nTrue peak: -2 dBTP\nLoudness range: 7 LU\nIf disabled, the audio loudness will match the original loudness of the selected voice, which may vary significantly and be either too quiet or too loud.\nEnabling loudness normalization can increase latency due to additional processing required for audio level adjustments.",
+                "schema": {
+                  "default": true,
+                  "type": "boolean"
+                },
+                "generatedName": "GetSpeechOptionsRequestLoudnessNormalization",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "GetSpeechOptionsRequest is the wrapper for request parameters to the client",
+        "generatedName": "GetSpeechOptionsRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetSpeechRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "getSpeechRequestAudioFormat",
+            "key": "audio_format",
+            "schema": {
+              "generatedName": "getSpeechRequestAudioFormat",
+              "value": {
+                "description": "The format for the output audio. Note, that the current default is \"wav\", but there's no guarantee it will not change in the future. We recommend always passing the specific param you expect.",
+                "generatedName": "GetSpeechRequestAudioFormat",
+                "values": [
+                  {
+                    "generatedName": "wav",
+                    "value": "wav",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "mp3",
+                    "value": "mp3",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "ogg",
+                    "value": "ogg",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "aac",
+                    "value": "aac",
+                    "casing": {}
+                  }
+                ],
+                "default": {
+                  "generatedName": "wav",
+                  "value": "wav",
+                  "casing": {}
+                },
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getSpeechRequestInput",
+            "key": "input",
+            "schema": {
+              "description": "Plain text or SSML to be synthesized to speech.\nRefer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.\nEmotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetSpeechRequestInput",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getSpeechRequestLanguage",
+            "key": "language",
+            "schema": {
+              "generatedName": "getSpeechRequestLanguage",
+              "value": {
+                "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetSpeechRequestLanguage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getSpeechRequestModel",
+            "key": "model",
+            "schema": {
+              "generatedName": "getSpeechRequestModel",
+              "value": {
+                "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
+                "generatedName": "GetSpeechRequestModel",
+                "values": [
+                  {
+                    "generatedName": "SimbaBase",
+                    "value": "simba-base",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaEnglish",
+                    "value": "simba-english",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaMultilingual",
+                    "value": "simba-multilingual",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaTurbo",
+                    "value": "simba-turbo",
+                    "casing": {}
+                  }
+                ],
+                "default": {
+                  "generatedName": "SimbaBase",
+                  "value": "simba-base",
+                  "casing": {}
+                },
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getSpeechRequestOptions",
+            "key": "options",
+            "schema": {
+              "generatedName": "getSpeechRequestOptions",
+              "value": {
+                "generatedName": "GetSpeechRequestOptions",
+                "schema": "GetSpeechOptionsRequest",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "getSpeechRequestVoiceId",
+            "key": "voice_id",
+            "schema": {
+              "description": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetSpeechRequestVoiceId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "GetSpeechRequest is the wrapper for request parameters to the client",
+        "generatedName": "GetSpeechRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetSpeechResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "getSpeechResponseAudioData",
+            "key": "audio_data",
+            "schema": {
+              "generatedName": "getSpeechResponseAudioData",
+              "value": {
+                "description": "Synthesized speech audio, Base64-encoded",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "GetSpeechResponseAudioDataItem",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "GetSpeechResponseAudioData",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getSpeechResponseAudioFormat",
+            "key": "audio_format",
+            "schema": {
+              "generatedName": "getSpeechResponseAudioFormat",
+              "value": {
+                "description": "The format of the audio data",
+                "generatedName": "GetSpeechResponseAudioFormat",
+                "values": [
+                  {
+                    "generatedName": "wav",
+                    "value": "wav",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "mp3",
+                    "value": "mp3",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "ogg",
+                    "value": "ogg",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "aac",
+                    "value": "aac",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getSpeechResponseBillableCharactersCount",
+            "key": "billable_characters_count",
+            "schema": {
+              "generatedName": "getSpeechResponseBillableCharactersCount",
+              "value": {
+                "description": "The number of billable characters processed in the request.",
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "GetSpeechResponseBillableCharactersCount",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getSpeechResponseSpeechMarks",
+            "key": "speech_marks",
+            "schema": {
+              "generatedName": "getSpeechResponseSpeechMarks",
+              "value": {
+                "generatedName": "GetSpeechResponseSpeechMarks",
+                "schema": "SpeechMarks",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "GetSpeechResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetStreamOptionsRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "getStreamOptionsRequestLoudnessNormalization",
+            "key": "loudness_normalization",
+            "schema": {
+              "generatedName": "getStreamOptionsRequestLoudnessNormalization",
+              "value": {
+                "description": "Determines whether to normalize the audio loudness to a standard level.\nWhen enabled, loudness normalization aligns the audio output to the following standards:\nIntegrated loudness: -14 LUFS\nTrue peak: -2 dBTP\nLoudness range: 7 LU\nIf disabled, the audio loudness will match the original loudness of the selected voice, which may vary significantly and be either too quiet or too loud.\nEnabling loudness normalization can increase latency due to additional processing required for audio level adjustments.",
+                "schema": {
+                  "default": true,
+                  "type": "boolean"
+                },
+                "generatedName": "GetStreamOptionsRequestLoudnessNormalization",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "GetStreamOptionsRequest is the wrapper for request parameters to the client",
+        "generatedName": "GetStreamOptionsRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetStreamRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "getStreamRequestInput",
+            "key": "input",
+            "schema": {
+              "description": "Plain text or SSML to be synthesized to speech.\nRefer to https://docs.sws.speechify.com/docs/api-limits for the input size limits.\nEmotion, Pitch and Speed Rate are configured in the ssml input, please refer to the ssml documentation for more information: https://docs.sws.speechify.com/docs/ssml#prosody",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetStreamRequestInput",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getStreamRequestLanguage",
+            "key": "language",
+            "schema": {
+              "generatedName": "getStreamRequestLanguage",
+              "value": {
+                "description": "Language of the input. Follow the format of an ISO 639-1 language code and an ISO 3166-1 region code, separated by a hyphen, e.g. en-US.\nPlease refer to the list of the supported languages and recommendations regarding this parameter: https://docs.sws.speechify.com/docs/language-support.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetStreamRequestLanguage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getStreamRequestModel",
+            "key": "model",
+            "schema": {
+              "generatedName": "getStreamRequestModel",
+              "value": {
+                "description": "Model used for audio synthesis\nsimba-base ModelBase  ModelBase is deprecated. Use simba-english or simba-multilingual instead.  @deprecated\nsimba-english ModelEnglish\nsimba-multilingual ModelMultilingual\nsimba-turbo ModelTurbo",
+                "generatedName": "GetStreamRequestModel",
+                "values": [
+                  {
+                    "generatedName": "SimbaBase",
+                    "value": "simba-base",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaEnglish",
+                    "value": "simba-english",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaMultilingual",
+                    "value": "simba-multilingual",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaTurbo",
+                    "value": "simba-turbo",
+                    "casing": {}
+                  }
+                ],
+                "default": {
+                  "generatedName": "SimbaBase",
+                  "value": "simba-base",
+                  "casing": {}
+                },
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getStreamRequestOptions",
+            "key": "options",
+            "schema": {
+              "generatedName": "getStreamRequestOptions",
+              "value": {
+                "generatedName": "GetStreamRequestOptions",
+                "schema": "GetStreamOptionsRequest",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "getStreamRequestVoiceId",
+            "key": "voice_id",
+            "schema": {
+              "description": "Id of the voice to be used for synthesizing speech. Refer to /v1/voices endpoint for available voices",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetStreamRequestVoiceId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "GetStreamRequest is the wrapper for request parameters to the client",
+        "generatedName": "GetStreamRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetVoice": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "getVoiceAvatarImage",
+            "key": "avatar_image",
+            "schema": {
+              "generatedName": "getVoiceAvatarImage",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetVoiceAvatarImage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoiceDisplayName",
+            "key": "display_name",
+            "schema": {
+              "generatedName": "getVoiceDisplayName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetVoiceDisplayName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoiceGender",
+            "key": "gender",
+            "schema": {
+              "generatedName": "getVoiceGender",
+              "value": {
+                "generatedName": "GetVoiceGender",
+                "values": [
+                  {
+                    "generatedName": "male",
+                    "value": "male",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "female",
+                    "value": "female",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "notSpecified",
+                    "value": "notSpecified",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoiceId",
+            "key": "id",
+            "schema": {
+              "generatedName": "getVoiceId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetVoiceId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoiceModels",
+            "key": "models",
+            "schema": {
+              "generatedName": "getVoiceModels",
+              "value": {
+                "value": {
+                  "generatedName": "GetVoiceModelsItem",
+                  "schema": "GetVoicesModel",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "GetVoiceModels",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoicePreviewAudio",
+            "key": "preview_audio",
+            "schema": {
+              "generatedName": "getVoicePreviewAudio",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetVoicePreviewAudio",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoiceTags",
+            "key": "tags",
+            "schema": {
+              "generatedName": "getVoiceTags",
+              "value": {
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "GetVoiceTagsItem",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "GetVoiceTags",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoiceType",
+            "key": "type",
+            "schema": {
+              "generatedName": "getVoiceType",
+              "value": {
+                "generatedName": "GetVoiceType",
+                "values": [
+                  {
+                    "generatedName": "shared",
+                    "value": "shared",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "personal",
+                    "value": "personal",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "GetVoice",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetVoiceLanguage": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "getVoiceLanguageLocale",
+            "key": "locale",
+            "schema": {
+              "generatedName": "getVoiceLanguageLocale",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetVoiceLanguageLocale",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoiceLanguagePreviewAudio",
+            "key": "preview_audio",
+            "schema": {
+              "generatedName": "getVoiceLanguagePreviewAudio",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetVoiceLanguagePreviewAudio",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "GetVoiceLanguage",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetVoicesModel": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "getVoicesModelLanguages",
+            "key": "languages",
+            "schema": {
+              "generatedName": "getVoicesModelLanguages",
+              "value": {
+                "value": {
+                  "generatedName": "GetVoicesModelLanguagesItem",
+                  "schema": "GetVoiceLanguage",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "GetVoicesModelLanguages",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "getVoicesModelName",
+            "key": "name",
+            "schema": {
+              "generatedName": "getVoicesModelName",
+              "value": {
+                "generatedName": "GetVoicesModelName",
+                "values": [
+                  {
+                    "generatedName": "SimbaBase",
+                    "value": "simba-base",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaEnglish",
+                    "value": "simba-english",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaMultilingual",
+                    "value": "simba-multilingual",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "SimbaTurbo",
+                    "value": "simba-turbo",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "GetVoicesModel",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "NestedChunk": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "nestedChunkEnd",
+            "key": "end",
+            "schema": {
+              "generatedName": "nestedChunkEnd",
+              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "NestedChunkEnd",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "nestedChunkEndTime",
+            "key": "end_time",
+            "schema": {
+              "generatedName": "nestedChunkEndTime",
+              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "NestedChunkEndTime",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "nestedChunkStart",
+            "key": "start",
+            "schema": {
+              "generatedName": "nestedChunkStart",
+              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "NestedChunkStart",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "nestedChunkStartTime",
+            "key": "start_time",
+            "schema": {
+              "generatedName": "nestedChunkStartTime",
+              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "NestedChunkStartTime",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "nestedChunkType",
+            "key": "type",
+            "schema": {
+              "generatedName": "nestedChunkType",
+              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "NestedChunkType",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "nestedChunkValue",
+            "key": "value",
+            "schema": {
+              "generatedName": "nestedChunkValue",
+              "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "NestedChunkValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "It details the type of segment, its start and end points in the text, and its start and end times in the synthesized speech audio.",
+        "generatedName": "NestedChunk",
+        "title": "NestedChunk represents a detailed segment within the synthesized speech.",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "OAuthError": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "oAuthErrorError",
+            "key": "error",
+            "schema": {
+              "generatedName": "oAuthErrorError",
+              "value": {
+                "generatedName": "OAuthErrorError",
+                "values": [
+                  {
+                    "generatedName": "invalid_client",
+                    "value": "invalid_client",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "unauthorized_client",
+                    "value": "unauthorized_client",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "invalid_request",
+                    "value": "invalid_request",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "unsupported_grant_type",
+                    "value": "unsupported_grant_type",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "invalid_scope",
+                    "value": "invalid_scope",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "oAuthErrorErrorDescription",
+            "key": "error_description",
+            "schema": {
+              "generatedName": "oAuthErrorErrorDescription",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OAuthErrorErrorDescription",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OAuthError",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SpeechMarks": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "speechMarksChunks",
+            "key": "chunks",
+            "schema": {
+              "generatedName": "speechMarksChunks",
+              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "value": {
+                "description": "Array of NestedChunk, each providing detailed segment information within the synthesized speech.",
+                "value": {
+                  "generatedName": "SpeechMarksChunksItem",
+                  "schema": "NestedChunk",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "SpeechMarksChunks",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "speechMarksEnd",
+            "key": "end",
+            "schema": {
+              "generatedName": "speechMarksEnd",
+              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "SpeechMarksEnd",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "speechMarksEndTime",
+            "key": "end_time",
+            "schema": {
+              "generatedName": "speechMarksEndTime",
+              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "SpeechMarksEndTime",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "speechMarksStart",
+            "key": "start",
+            "schema": {
+              "generatedName": "speechMarksStart",
+              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "SpeechMarksStart",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "speechMarksStartTime",
+            "key": "start_time",
+            "schema": {
+              "generatedName": "speechMarksStartTime",
+              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "SpeechMarksStartTime",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "speechMarksType",
+            "key": "type",
+            "schema": {
+              "generatedName": "speechMarksType",
+              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SpeechMarksType",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "speechMarksValue",
+            "key": "value",
+            "schema": {
+              "generatedName": "speechMarksValue",
+              "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SpeechMarksValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "It is used to annotate the audio data with metadata about the synthesis process, like word timing or phoneme details.",
+        "generatedName": "SpeechMarks",
+        "title": "SpeechMarks holds the structured data of speech synthesis marks.",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "bearerAuth": {
+      "headerName": "Authorization",
+      "type": "header"
+    },
+    "userAuth": {
+      "headerName": "Authorization",
+      "type": "header"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

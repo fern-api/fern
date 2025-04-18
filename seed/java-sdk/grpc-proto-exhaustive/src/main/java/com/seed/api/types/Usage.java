@@ -20,17 +20,17 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Usage.Builder.class)
 public final class Usage {
-    private final Optional<Integer> units;
+    private final Optional<Long> units;
 
     private final Map<String, Object> additionalProperties;
 
-    private Usage(Optional<Integer> units, Map<String, Object> additionalProperties) {
+    private Usage(Optional<Long> units, Map<String, Object> additionalProperties) {
         this.units = units;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("units")
-    public Optional<Integer> getUnits() {
+    public Optional<Long> getUnits() {
         return units;
     }
 
@@ -65,7 +65,7 @@ public final class Usage {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<Integer> units = Optional.empty();
+        private Optional<Long> units = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -78,12 +78,12 @@ public final class Usage {
         }
 
         @JsonSetter(value = "units", nulls = Nulls.SKIP)
-        public Builder units(Optional<Integer> units) {
+        public Builder units(Optional<Long> units) {
             this.units = units;
             return this;
         }
 
-        public Builder units(Integer units) {
+        public Builder units(Long units) {
             this.units = Optional.ofNullable(units);
             return this;
         }

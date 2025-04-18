@@ -25,19 +25,19 @@ export const UnionWithTime: core.serialization.Schema<serializers.UnionWithTime.
         });
 
 export declare namespace UnionWithTime {
-    type Raw = UnionWithTime.Value | UnionWithTime.Date | UnionWithTime.Datetime;
+    export type Raw = UnionWithTime.Value | UnionWithTime.Date | UnionWithTime.Datetime;
 
-    interface Value {
+    export interface Value {
         type: "value";
         value: number;
     }
 
-    interface Date {
+    export interface Date {
         type: "date";
         value: string;
     }
 
-    interface Datetime {
+    export interface Datetime {
         type: "datetime";
         value: string;
     }

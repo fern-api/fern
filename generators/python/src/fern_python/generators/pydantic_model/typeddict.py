@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from types import TracebackType
 from typing import Dict, List, Optional, Sequence, Type
 
-import fern.ir.resources as ir_types
-
+from ..context.pydantic_generator_context import PydanticGeneratorContext
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.codegen.local_class_reference import LocalClassReference
@@ -15,7 +14,7 @@ from fern_python.external_dependencies.typing_extensions import (
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-from ..context import PydanticGeneratorContext
+import fern.ir.resources as ir_types
 
 TYPING_EXTENSIONS_MODULE = AST.Module.external(
     module_path=("typing_extensions",),
@@ -106,7 +105,7 @@ class FernTypedDict:
 
         return type_id_to_reference
 
-    def _field_type_is_circularly_referened(self, field_types: List[ir_types.TypeId]) -> bool:
+    def _field_type_is_circularly_referenced(self, field_types: List[ir_types.TypeId]) -> bool:
         type_id_to_reference = self._type_id_for_forward_ref()
 
         return (
@@ -144,7 +143,7 @@ class FernTypedDict:
     ) -> None:
         maybe_type_id = self._context.maybe_get_type_ids_for_type_reference(type_reference)
         as_if_type_checking = False
-        if maybe_type_id is not None and self._field_type_is_circularly_referened(maybe_type_id):
+        if maybe_type_id is not None and self._field_type_is_circularly_referenced(maybe_type_id):
             # Mark the class reference as if_typechecking since we have a circular ref that we'll
             # need to string reference and import through `if TYPE_CHECKING`.
             as_if_type_checking = True

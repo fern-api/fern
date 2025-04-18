@@ -445,6 +445,57 @@
                             ],
                             "type": "generic"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "container_object={\n\t\t$FERN_INPUT\n\t}",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "\"nested_objects\": [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                            "templateInputs": [
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "\"str_prop\": $FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "RELATIVE",
+                                                                "path": "strProp",
+                                                                "type": "payload"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                }
+                                            ],
+                                            "inputDelimiter": ",\n\t\t\t\t",
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "containerObject.nestedObjects"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n\t\t",
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -482,6 +533,57 @@
                                         "type": "payload"
                                     }
                                 ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "container_object={\n\t\t$FERN_INPUT\n\t}",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "containerTemplateString": "\"nested_objects\": [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                            "delimiter": ",\n\t\t\t",
+                                            "innerTemplate": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                "templateInputs": [
+                                                    {
+                                                        "type": "template",
+                                                        "value": {
+                                                            "imports": [],
+                                                            "isOptional": true,
+                                                            "templateString": "\"str_prop\": $FERN_INPUT",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "RELATIVE",
+                                                                    "path": "strProp",
+                                                                    "type": "payload"
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        }
+                                                    }
+                                                ],
+                                                "inputDelimiter": ",\n\t\t\t\t",
+                                                "type": "generic"
+                                            },
+                                            "templateInput": {
+                                                "location": "BODY",
+                                                "path": "containerObject.nestedObjects"
+                                            },
+                                            "type": "iterable"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n\t\t",
                                 "type": "generic"
                             }
                         }

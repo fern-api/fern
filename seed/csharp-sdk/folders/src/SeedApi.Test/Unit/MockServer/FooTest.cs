@@ -1,7 +1,5 @@
 using NUnit.Framework;
 
-#nullable enable
-
 namespace SeedApi.Test.Unit.MockServer;
 
 [TestFixture]
@@ -14,6 +12,6 @@ public class FooTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(async () => await Client.Folder.FooAsync(RequestOptions));
+        Assert.DoesNotThrowAsync(async () => await Client.Folder.FooAsync());
     }
 }

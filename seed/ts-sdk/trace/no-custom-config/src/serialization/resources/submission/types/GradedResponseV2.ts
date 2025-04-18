@@ -18,7 +18,7 @@ export const GradedResponseV2: core.serialization.ObjectSchema<
 });
 
 export declare namespace GradedResponseV2 {
-    interface Raw {
+    export interface Raw {
         submissionId: SubmissionId.Raw;
         testCases: Record<TestCaseId.Raw, TestCaseGrade.Raw>;
     }

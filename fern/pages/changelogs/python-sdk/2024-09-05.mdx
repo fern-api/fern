@@ -1,0 +1,17 @@
+## 4.0.0-rc0
+**`(fix):`** Rerelease 3.11.0-rc0 as a major version, with a configuration flag to disable the behavior (`use_pydantic_field_aliases`), defaulted to `true` to preserve existing behavior.
+
+**`(internal):`** The generator now shares "as is" files with Pydantic and FastAPI generators.
+
+### What's been fixed
+- Rerelease 3.11.0-rc0 as a major version, with a configuration flag to disable the behavior (`use_pydantic_field_aliases`), defaulted to `false` to introduce the break on a major version.
+To maintain parity with pre-3.11.0 behavior, update the flag to `true`:
+
+  ```yaml
+  - name: fernapi/fern-python-sdk
+    version: 4.0.0-rc0
+    config:
+      pydantic_config:
+        use_pydantic_field_aliases: true
+  ```
+

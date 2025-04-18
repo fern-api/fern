@@ -1,11 +1,13 @@
-import { assertNever } from "@fern-api/core-utils";
 import {
     ExportedDirectory,
     ExportedFilePath,
+    Reference,
     getDirectReferenceToExport,
-    getReferenceToExportFromRoot,
-    Reference
+    getReferenceToExportFromRoot
 } from "@fern-typescript/commons";
+
+import { assertNever } from "@fern-api/core-utils";
+
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace AbstractDeclarationReferencer {

@@ -5,8 +5,8 @@
 /**
  * @example
  *     {
- *         clientId: "string",
- *         clientSecret: "string"
+ *         clientId: "client_id",
+ *         clientSecret: "client_secret"
  *     }
  */
 export interface GetTokenRequest {

@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Reference > toStringSameReferenceTwice > Should generate a simple snippet using duplicate references 1`] = `
+"import defaultReference, { nonDefaultReference } from "module";
+
+defaultReference;
+defaultReference;
+nonDefaultReference;
+nonDefaultReference;
+localReference;
+localReference;
+"
+`;
+
+exports[`Reference > toStringWithDefaultAndNamed > Should generate a simple reference with multiple default, starred, and named references 1`] = `
+"import ReferenceA1, { ReferenceA2, ReferenceA3 } from "moduleA";
+import ReferenceB1 from "moduleB";
+import { ReferenceC1 } from "moduleC";
+
+ReferenceA1;
+ReferenceA2;
+ReferenceA3;
+ReferenceB1;
+ReferenceC1;
+"
+`;
+
+exports[`Reference > toStringWithDefaultAndStar > Should generate a simple reference with multiple default, starred, and star references 1`] = `
+"import ReferenceA1,  * as alias from "moduleA";
+import ReferenceB1 from "moduleB";
+import * as alias2 from "moduleC";
+
+ReferenceA1;
+alias.ReferenceA2;
+alias.ReferenceA3;
+ReferenceB1;
+alias2.ReferenceC1;
+alias2.ReferenceC2;
+"
+`;
+
+exports[`Reference > toStringWithDefaultImport > Should generate a simple reference with a default-exported reference 1`] = `
+"import defaultReference from "Module";
+
+defaultReference"
+`;
+
+exports[`Reference > toStringWithMultipleNonDefaultImport > Should generate a simple reference with multiple named references 1`] = `
+"import { Reference1, Reference2, Reference3 } from "module";
+
+Reference1;
+Reference2;
+Reference3;
+"
+`;
+
+exports[`Reference > toStringWithSingleNonDefaultImport > Should generate a simple reference with a single named reference 1`] = `
+"import { Reference } from "module";
+
+Reference"
+`;

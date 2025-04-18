@@ -86,7 +86,7 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
         });
 
 export declare namespace ExamplePrimitive {
-    type Raw =
+    export type Raw =
         | ExamplePrimitive.Integer
         | ExamplePrimitive.Long
         | ExamplePrimitive.Uint
@@ -101,66 +101,66 @@ export declare namespace ExamplePrimitive {
         | ExamplePrimitive.Base64
         | ExamplePrimitive.BigInteger;
 
-    interface Integer {
+    export interface Integer {
         type: "integer";
         integer: number;
     }
 
-    interface Long {
+    export interface Long {
         type: "long";
         long: number;
     }
 
-    interface Uint {
+    export interface Uint {
         type: "uint";
         uint: number;
     }
 
-    interface Uint64 {
+    export interface Uint64 {
         type: "uint64";
         uint64: number;
     }
 
-    interface Float {
+    export interface Float {
         type: "float";
         float: number;
     }
 
-    interface Double {
+    export interface Double {
         type: "double";
         double: number;
     }
 
-    interface Boolean {
+    export interface Boolean {
         type: "boolean";
         boolean: boolean;
     }
 
-    interface String {
+    export interface String {
         type: "string";
         string: EscapedString.Raw;
     }
 
-    interface Date {
+    export interface Date {
         type: "date";
         date: string;
     }
 
-    interface Datetime extends ExampleDatetime.Raw {
+    export interface Datetime extends ExampleDatetime.Raw {
         type: "datetime";
     }
 
-    interface Uuid {
+    export interface Uuid {
         type: "uuid";
         uuid: string;
     }
 
-    interface Base64 {
+    export interface Base64 {
         type: "base64";
         base64: string;
     }
 
-    interface BigInteger {
+    export interface BigInteger {
         type: "bigInteger";
         bigInteger: string;
     }

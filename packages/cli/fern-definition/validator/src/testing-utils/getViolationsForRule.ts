@@ -1,11 +1,14 @@
+import stripAnsi from "strip-ansi";
+
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import stripAnsi from "strip-ansi";
+
 import { Rule } from "../Rule";
-import { runRulesOnWorkspace } from "../validateFernWorkspace";
 import { ValidationViolation } from "../ValidationViolation";
+import { runRulesOnWorkspace } from "../validateFernWorkspace";
 
 export declare namespace getViolationsForRule {
     export interface Args {
@@ -21,22 +24,21 @@ export async function getViolationsForRule({
     cliVersion
 }: getViolationsForRule.Args): Promise<ValidationViolation[]> {
     const context = createMockTaskContext();
-    const parseResult = await loadAPIWorkspace({
-        absolutePathToWorkspace,
+
+    const lazyWorkspace = new LazyFernWorkspace({
+        absoluteFilePath: absolutePathToWorkspace,
+        generatorsConfiguration: await loadGeneratorsConfiguration({
+            absolutePathToWorkspace,
+            context
+        }),
         context,
         cliVersion: cliVersion ?? "0.0.0",
         workspaceName: undefined
     });
-    if (!parseResult.didSucceed) {
-        throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
-    }
+    const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context });
 
-    if (parseResult.workspace.type === "oss") {
-        throw new Error("Expected fern workspace, but received openapi");
-    }
-
-    const violations = await runRulesOnWorkspace({
-        workspace: await parseResult.workspace.toFernWorkspace({ context }),
+    const violations = runRulesOnWorkspace({
+        workspace: fernWorkspace,
         logger: CONSOLE_LOGGER,
         rules: [rule]
     });

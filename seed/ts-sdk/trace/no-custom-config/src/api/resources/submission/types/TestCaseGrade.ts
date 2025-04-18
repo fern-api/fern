@@ -6,12 +6,12 @@ import * as SeedTrace from "../../../index";
 
 export type TestCaseGrade = SeedTrace.TestCaseGrade.Hidden | SeedTrace.TestCaseGrade.NonHidden;
 
-export declare namespace TestCaseGrade {
-    interface Hidden extends SeedTrace.TestCaseHiddenGrade {
+export namespace TestCaseGrade {
+    export interface Hidden extends SeedTrace.TestCaseHiddenGrade {
         type: "hidden";
     }
 
-    interface NonHidden extends SeedTrace.TestCaseNonHiddenGrade {
+    export interface NonHidden extends SeedTrace.TestCaseNonHiddenGrade {
         type: "nonHidden";
     }
 }

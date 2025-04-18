@@ -1,7 +1,9 @@
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { Arguments, NamedArgument } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
-import { Arguments, NamedArgument } from "@fern-api/generator-commons";
+
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace RawClient {
     export interface SendRequestArgs {
@@ -18,7 +20,11 @@ export declare namespace RawClient {
         /** The reference to the query values */
         queryBagReference?: string;
         /** The reference to the request body */
-        bodyReference?: string;
+        bodyReference?: php.CodeBlock;
+        /** The reference to the request body class */
+        requestTypeClassReference: php.ClassReference;
+        /** The reference to the options argument */
+        optionsArgument?: php.AstNode;
     }
 }
 
@@ -39,7 +45,7 @@ export class RawClient {
     public getClassReference(): php.ClassReference {
         return php.classReference({
             name: RawClient.CLASS_NAME,
-            namespace: this.context.getCoreNamespace()
+            namespace: this.context.getCoreClientNamespace()
         });
     }
 
@@ -98,7 +104,7 @@ export class RawClient {
         if (args.bodyReference != null) {
             arguments_.push({
                 name: "body",
-                assignment: php.codeblock(args.bodyReference)
+                assignment: args.bodyReference
             });
         }
         return php.codeblock((writer) => {
@@ -108,10 +114,11 @@ export class RawClient {
                     method: RawClient.SEND_REQUEST_METHOD_NAME,
                     arguments_: [
                         php.instantiateClass({
-                            classReference: this.context.getJsonApiRequestClassReference(),
+                            classReference: args.requestTypeClassReference,
                             arguments_,
                             multiline: true
-                        })
+                        }),
+                        args.optionsArgument ?? php.codeblock("[]")
                     ],
                     multiline: true
                 })
@@ -134,7 +141,7 @@ export class RawClient {
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
-            path += `$${reference}${part.tail}`;
+            path += `{${reference}}${part.tail}`;
         }
         return path;
     }

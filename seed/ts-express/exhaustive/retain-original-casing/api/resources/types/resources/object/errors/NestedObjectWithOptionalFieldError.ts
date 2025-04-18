@@ -15,7 +15,7 @@ export class NestedObjectWithOptionalFieldError extends errors.SeedExhaustiveErr
 
     public async send(res: express.Response): Promise<void> {
         res.status(400).json(
-            serializers.types.NestedObjectWithOptionalField.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" })
+            serializers.types.NestedObjectWithOptionalField.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }),
         );
     }
 }

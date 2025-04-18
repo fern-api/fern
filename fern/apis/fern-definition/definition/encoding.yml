@@ -1,0 +1,10 @@
+types: 
+  EncodingSchema: 
+    properties: 
+      proto: optional<ProtobufTypeSchema>
+  
+  ProtobufTypeSchema: 
+    properties: 
+      type: 
+        docs: The name of the Protobuf type (e.g. google.protobuf.Struct).
+        type: string

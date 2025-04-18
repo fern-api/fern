@@ -15,7 +15,7 @@ export const DefaultProvidedFile: core.serialization.ObjectSchema<
 });
 
 export declare namespace DefaultProvidedFile {
-    interface Raw {
+    export interface Raw {
         file: serializers.v2.FileInfoV2.Raw;
         relatedTypes: serializers.VariableType.Raw[];
     }

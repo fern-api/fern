@@ -4,9 +4,7 @@ from __future__ import annotations
 from ...commons.types.variable_value import VariableValue
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from .exception_info import ExceptionInfo
-from .exception_v_2 import (
-    ExceptionV2 as resources_submission_types_exception_v_2_ExceptionV2,
-)
+from .exception_v_2 import ExceptionV2 as resources_submission_types_exception_v_2_ExceptionV2
 from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
@@ -26,29 +24,15 @@ class _Factory:
 
     def exception(self, value: ExceptionInfo) -> ActualResult:
         if IS_PYDANTIC_V2:
-            return ActualResult(
-                root=_ActualResult.Exception(
-                    **value.dict(exclude_unset=True), type="exception"
-                )
-            )  # type: ignore
+            return ActualResult(root=_ActualResult.Exception(**value.dict(exclude_unset=True), type="exception"))  # type: ignore
         else:
-            return ActualResult(
-                __root__=_ActualResult.Exception(
-                    **value.dict(exclude_unset=True), type="exception"
-                )
-            )  # type: ignore
+            return ActualResult(__root__=_ActualResult.Exception(**value.dict(exclude_unset=True), type="exception"))  # type: ignore
 
-    def exception_v_2(
-        self, value: resources_submission_types_exception_v_2_ExceptionV2
-    ) -> ActualResult:
+    def exception_v_2(self, value: resources_submission_types_exception_v_2_ExceptionV2) -> ActualResult:
         if IS_PYDANTIC_V2:
-            return ActualResult(
-                root=_ActualResult.ExceptionV2(type="exceptionV2", value=value)
-            )  # type: ignore
+            return ActualResult(root=_ActualResult.ExceptionV2(type="exceptionV2", value=value))  # type: ignore
         else:
-            return ActualResult(
-                __root__=_ActualResult.ExceptionV2(type="exceptionV2", value=value)
-            )  # type: ignore
+            return ActualResult(__root__=_ActualResult.ExceptionV2(type="exceptionV2", value=value))  # type: ignore
 
 
 class ActualResult(UniversalRootModel):
@@ -56,31 +40,19 @@ class ActualResult(UniversalRootModel):
 
     if IS_PYDANTIC_V2:
         root: typing_extensions.Annotated[
-            typing.Union[
-                _ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2
-            ],
+            typing.Union[_ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2],
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2
-        ]:
+        def get_as_union(self) -> typing.Union[_ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2]:
             return self.root
     else:
         __root__: typing_extensions.Annotated[
-            typing.Union[
-                _ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2
-            ],
+            typing.Union[_ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2],
             pydantic.Field(discriminator="type"),
         ]
 
-        def get_as_union(
-            self,
-        ) -> typing.Union[
-            _ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2
-        ]:
+        def get_as_union(self) -> typing.Union[_ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2]:
             return self.__root__
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -93,19 +65,13 @@ class ActualResult(UniversalRootModel):
         self,
         value: typing.Callable[[VariableValue], T_Result],
         exception: typing.Callable[[ExceptionInfo], T_Result],
-        exception_v_2: typing.Callable[
-            [resources_submission_types_exception_v_2_ExceptionV2], T_Result
-        ],
+        exception_v_2: typing.Callable[[resources_submission_types_exception_v_2_ExceptionV2], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "value":
             return value(unioned_value.value)
         if unioned_value.type == "exception":
-            return exception(
-                ExceptionInfo(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
-            )
+            return exception(ExceptionInfo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "exceptionV2":
             return exception_v_2(unioned_value.value)
 

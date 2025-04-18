@@ -17,7 +17,7 @@ export const StringValidationRules: core.serialization.ObjectSchema<
 });
 
 export declare namespace StringValidationRules {
-    interface Raw {
+    export interface Raw {
         format?: string | null;
         pattern?: string | null;
         minLength?: number | null;

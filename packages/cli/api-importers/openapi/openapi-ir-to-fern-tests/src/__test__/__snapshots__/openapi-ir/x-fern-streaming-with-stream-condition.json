@@ -1,0 +1,534 @@
+{
+  "title": "Vectara REST API v2",
+  "servers": [
+    {
+      "url": "https://api.streamingtest.io"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Start a chat",
+      "audiences": [],
+      "operationId": "createChat_stream",
+      "tags": [
+        "Chats"
+      ],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "chat_stream"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "description": "The API will make a best effort to complete the request in the specified seconds or time out.",
+          "name": "Request-Timeout",
+          "schema": {
+            "generatedName": "ChatStreamRequestRequestTimeout",
+            "value": {
+              "schema": {
+                "minimum": 1,
+                "type": "int"
+              },
+              "generatedName": "ChatStreamRequestRequestTimeout",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
+          "name": "Request-Timeout-Millis",
+          "schema": {
+            "generatedName": "ChatStreamRequestRequestTimeoutMillis",
+            "value": {
+              "schema": {
+                "minimum": 1,
+                "type": "int"
+              },
+              "generatedName": "ChatStreamRequestRequestTimeoutMillis",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "ChatStreamRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "chatStreamRequestQuery",
+              "key": "query",
+              "schema": {
+                "description": "The chat message or question.",
+                "schema": {
+                  "example": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "generatedName": "ChatStreamRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "chatStreamRequestStreamResponse",
+              "key": "stream_response",
+              "schema": {
+                "description": "Indicates whether the response should be streamed or not.",
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "generatedName": "ChatStreamRequestStreamResponse",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ChatStreamRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "ChatStreamResponse",
+          "schema": "ChatStreamedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/chats",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "query": {
+                "value": {
+                  "value": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "stream_response": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "chunk": {
+                    "value": {
+                      "value": "Hello, how can I help you today?",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Start a chat",
+      "audiences": [],
+      "operationId": "createChat",
+      "tags": [
+        "Chats"
+      ],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "chat"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "description": "The API will make a best effort to complete the request in the specified seconds or time out.",
+          "name": "Request-Timeout",
+          "schema": {
+            "generatedName": "ChatRequestRequestTimeout",
+            "value": {
+              "schema": {
+                "minimum": 1,
+                "type": "int"
+              },
+              "generatedName": "ChatRequestRequestTimeout",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
+          "name": "Request-Timeout-Millis",
+          "schema": {
+            "generatedName": "ChatRequestRequestTimeoutMillis",
+            "value": {
+              "schema": {
+                "minimum": 1,
+                "type": "int"
+              },
+              "generatedName": "ChatRequestRequestTimeoutMillis",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "ChatRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "chatRequestQuery",
+              "key": "query",
+              "schema": {
+                "description": "The chat message or question.",
+                "schema": {
+                  "example": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "generatedName": "ChatRequestQuery",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "chatRequestStreamResponse",
+              "key": "stream_response",
+              "schema": {
+                "description": "Indicates whether the response should be streamed or not.",
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "generatedName": "ChatRequestStreamResponse",
+                "groupName": [],
+                "type": "literal"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ChatRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "ChatResponse",
+          "schema": "ChatFullResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/chats",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "query": {
+                "value": {
+                  "value": "How can I use the Vectara platform?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "stream_response": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "chat_id": {
+                  "value": {
+                    "value": "chat_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "turn_id": {
+                  "value": {
+                    "value": "turn_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "answer": {
+                  "value": {
+                    "value": "answer",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "ChatFullResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "chatFullResponseChatId",
+            "key": "chat_id",
+            "schema": {
+              "generatedName": "chatFullResponseChatId",
+              "value": {
+                "description": "If the chat response was stored, the ID of the chat.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ChatFullResponseChatId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "chatFullResponseTurnId",
+            "key": "turn_id",
+            "schema": {
+              "generatedName": "chatFullResponseTurnId",
+              "value": {
+                "description": "If the chat response was stored, the ID of the turn.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ChatFullResponseTurnId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "chatFullResponseAnswer",
+            "key": "answer",
+            "schema": {
+              "generatedName": "chatFullResponseAnswer",
+              "value": {
+                "description": "The message from the chat model for the chat message.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ChatFullResponseAnswer",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Full response to a chat question when the result is not streamed.",
+        "generatedName": "ChatFullResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ChatStreamedResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "chatStreamedResponseChunk",
+            "key": "chunk",
+            "schema": {
+              "generatedName": "chatStreamedResponseChunk",
+              "value": {
+                "description": "The chunk of the response.",
+                "schema": {
+                  "example": "Hello, how can I help you today?",
+                  "type": "string"
+                },
+                "generatedName": "ChatStreamedResponseChunk",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "An individual event when the response is streamed.",
+        "generatedName": "ChatStreamedResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

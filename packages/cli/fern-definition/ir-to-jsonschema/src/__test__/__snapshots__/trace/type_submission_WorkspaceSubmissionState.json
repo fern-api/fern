@@ -1,0 +1,277 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "$ref": "#/definitions/submission.WorkspaceSubmissionStatus"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "submission.ExceptionInfo": {
+      "type": "object",
+      "properties": {
+        "exceptionType": {
+          "type": "string"
+        },
+        "exceptionMessage": {
+          "type": "string"
+        },
+        "exceptionStacktrace": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exceptionType",
+        "exceptionMessage",
+        "exceptionStacktrace"
+      ],
+      "additionalProperties": false
+    },
+    "submission.ErrorInfo": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "compileError",
+            "runtimeError",
+            "internalError"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "compileError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "runtimeError"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internalError"
+            },
+            "exceptionInfo": {
+              "$ref": "#/definitions/submission.ExceptionInfo"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionInfo"
+          ]
+        }
+      ]
+    },
+    "submission.RunningSubmissionState": {
+      "type": "string",
+      "enum": [
+        "QUEUEING_SUBMISSION",
+        "KILLING_HISTORICAL_SUBMISSIONS",
+        "WRITING_SUBMISSION_TO_FILE",
+        "COMPILING_SUBMISSION",
+        "RUNNING_SUBMISSION"
+      ]
+    },
+    "submission.ExceptionV2": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "generic",
+            "timeout"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "generic"
+            },
+            "exceptionType": {
+              "type": "string"
+            },
+            "exceptionMessage": {
+              "type": "string"
+            },
+            "exceptionStacktrace": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "exceptionType",
+            "exceptionMessage",
+            "exceptionStacktrace"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "timeout"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    },
+    "submission.WorkspaceSubmissionStatus": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "stopped",
+            "errored",
+            "running",
+            "ran",
+            "traced"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "stopped"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "errored"
+            },
+            "value": {
+              "$ref": "#/definitions/submission.ErrorInfo"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "running"
+            },
+            "value": {
+              "$ref": "#/definitions/submission.RunningSubmissionState"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "ran"
+            },
+            "exceptionV2": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionV2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "exception": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionInfo"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "stdout": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "stdout"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "traced"
+            },
+            "exceptionV2": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionV2"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "exception": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/submission.ExceptionInfo"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "stdout": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "stdout"
+          ]
+        }
+      ]
+    }
+  }
+}

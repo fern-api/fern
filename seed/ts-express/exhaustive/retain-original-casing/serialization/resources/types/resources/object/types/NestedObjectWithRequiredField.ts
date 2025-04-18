@@ -15,7 +15,7 @@ export const NestedObjectWithRequiredField: core.serialization.ObjectSchema<
 });
 
 export declare namespace NestedObjectWithRequiredField {
-    interface Raw {
+    export interface Raw {
         string: string;
         NestedObject: serializers.types.ObjectWithOptionalField.Raw;
     }

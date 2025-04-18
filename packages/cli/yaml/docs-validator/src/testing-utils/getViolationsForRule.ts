@@ -1,10 +1,13 @@
+import stripAnsi from "strip-ansi";
+
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadProjectFromDirectory } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import stripAnsi from "strip-ansi";
+
 import { Rule } from "../Rule";
-import { runRulesOnDocsWorkspace } from "../validateDocsWorkspace";
 import { ValidationViolation } from "../ValidationViolation";
+import { runRulesOnDocsWorkspace } from "../validateDocsWorkspace";
 
 export declare namespace getViolationsForRule {
     export interface Args {
@@ -35,7 +38,8 @@ export async function getViolationsForRule({
         workspace: project.docsWorkspaces,
         context,
         rules: [rule],
-        loadApiWorkspace: project.loadAPIWorkspace
+        apiWorkspaces: project.apiWorkspaces,
+        ossWorkspaces: await filterOssWorkspaces(project)
     });
 
     return violations.map((violation) => ({

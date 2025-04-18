@@ -1,0 +1,54 @@
+imports:
+  auth: ./auth.yml
+  endpoints: ./endpoints.yml
+
+types:
+  ErrorSeverity:
+    audiences:
+      - dynamic
+    enum:
+      - CRITICAL
+      - WARNING
+
+  Error:
+    audiences:
+      - dynamic
+    properties:
+      severity: ErrorSeverity
+      message: string
+
+  Values:
+    audiences:
+      - dynamic
+    docs: |
+      Snippet values are represented as arbitrary key, value
+      pairs (i.e. JSON objects). The keys are expected to be
+      in the parameter's wire representation. For path parameters,
+      the name will match the parameter name.
+    type: map<string, unknown>
+
+  EndpointSnippetRequest:
+    audiences:
+      - dynamic
+    docs: |
+      The user-facing request type used to generate a dynamic snippet.
+    properties:
+      endpoint: endpoints.EndpointLocation
+      auth: optional<auth.AuthValues>
+      pathParameters: optional<Values>
+      queryParameters: optional<Values>
+      headers: optional<Values>
+      requestBody: optional<unknown>
+
+  EndpointSnippetResponse:
+    audiences:
+      - dynamic
+    docs: |
+      The user-facing response type containing the generated snippet.
+
+      If there are any errors, the snippet will still sometimes represent a
+      partial and/or valid result. This is useful for rendering a snippet alongside
+      error messages the user can use to diagnose and resolve the problem.
+    properties:
+      snippet: string
+      errors: optional<list<Error>>

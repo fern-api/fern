@@ -1,0 +1,115 @@
+instances:
+  - url: https://zep-documentation.docs.buildwithfern.com
+title: Zep Documentation
+favicon: logo/favicon.png
+logo:
+  light: logo/zep-name-logo-gradient.svg
+  dark: logo/zep-name-logo-pink.svg
+  height: 28
+colors:
+  accent-primary:
+    dark: '#D5479D'
+    light: '#D5479D'
+  background: {}
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
+tabs:
+  api-reference:
+    slug: api-reference
+    display-name: API Reference
+  documentation:
+    display-name: Documentation
+    slug: documentation
+navigation:
+  - tab: api-reference
+    layout:
+      - section: document
+        contents: []
+      - section: collection
+        contents: []
+      - section: session
+        contents: []
+      - section: memory
+        contents: []
+      - section: messages
+        contents: []
+      - section: search
+        contents: []
+      - section: user
+        contents: []
+  - tab: documentation
+    layout:
+      - section: Getting Started
+        contents:
+          - page: SDK Installation
+            path: sdks.mdx
+          - page: Introduction
+            path: projects.mdx
+          - page: Introduction
+            path: users.mdx
+      - section: Chat History Memory
+        contents:
+          - page: Overview
+            path: chat-history-memory/overview.mdx
+          - page: Memories
+            path: chat-history-memory/memories.mdx
+          - page: Introduction
+            path: chat-history-memory/sessions.mdx
+          - page: Introduction
+            path: chat-history-memory/messages.mdx
+          - page: Introduction
+            path: chat-history-memory/summaries.mdx
+          - page: Vector Search Over Chat History
+            path: chat-history-memory/search.mdx
+      - section: Dialog Tools
+        contents:
+          - page: Dialog Classification
+            path: dialog-classification.mdx
+          - page: Question Synthesis
+            path: question-synthesis.mdx
+      - section: Working with Search
+        contents:
+          - page: Constructing Search Queries
+            path: working-with-search.mdx
+      - section: Document Collections
+        contents:
+          - page: Document Collections
+            path: document-collections.mdx
+      - section: Ecosystem
+        contents:
+          - section: LangChain
+            contents:
+              - page: Overview
+                path: langchain/overview.mdx
+              - page: ZepChatMessageHistory
+                path: langchain/messagehistory.mdx
+              - page: ZepVectorStore
+                path: langchain/vectorstore.mdx
+              - section: Examples
+                contents:
+                  - page: MessageHistory Example
+                    path: langchain/examples/messagehistory-example.mdx
+                  - page: VectorStore Example
+                    path: langchain/examples/vectorstore-example.mdx
+                  - page: RAG + Message History example
+                    path: langchain/examples/rag-message-history-example.mdx
+          - page: Flowise
+            path: ecosystem/flowise.mdx
+          - page: Chainlit
+            path: ecosystem/chainlit.mdx
+          - page: LlamaIndex
+            path: ecosystem/llamaindex.mdx
+          - page: LangFlow
+            path: ecosystem/langflow.mdx
+          - page: n8n
+            path: ecosystem/n8n.mdx
+      - section: Legal
+        contents:
+          - page: Privacy Policy
+            path: legal/privacy-policy.mdx
+          - page: Terms of Service
+            path: legal/terms-of-service.mdx
+          - page: Website Terms of Use
+            path: legal/website-terms-of-use.mdx

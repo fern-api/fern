@@ -11,13 +11,13 @@ export const BaseResource: core.serialization.ObjectSchema<serializers.BaseResou
         id: core.serialization.string(),
         relatedResources: core.serialization.property(
             "related_resources",
-            core.serialization.list(core.serialization.lazy(() => serializers.ResourceList))
+            core.serialization.list(core.serialization.lazy(() => serializers.ResourceList)),
         ),
         memo: core.serialization.lazyObject(() => serializers.Memo),
     });
 
 export declare namespace BaseResource {
-    interface Raw {
+    export interface Raw {
         id: string;
         related_resources: serializers.ResourceList.Raw[];
         memo: serializers.Memo.Raw;

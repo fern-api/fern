@@ -1,4 +1,5 @@
 import { ts } from "ts-morph";
+
 import { getTextOfTsNode } from "./getTextOfTsNode";
 
 export function getTextOfTsKeyword(keyword: ts.KeywordTypeSyntaxKind): string {

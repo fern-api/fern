@@ -1,3 +1,6 @@
+[project]
+name = "fern_package-yml"
+
 [tool.poetry]
 name = "fern_package-yml"
 version = "0.0.1"

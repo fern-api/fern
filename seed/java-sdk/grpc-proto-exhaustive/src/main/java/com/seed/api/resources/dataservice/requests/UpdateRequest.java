@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 public final class UpdateRequest {
     private final String id;
 
-    private final Optional<List<Double>> values;
+    private final Optional<List<Float>> values;
 
     private final Optional<Metadata> setMetadata;
 
@@ -38,7 +38,7 @@ public final class UpdateRequest {
 
     private UpdateRequest(
             String id,
-            Optional<List<Double>> values,
+            Optional<List<Float>> values,
             Optional<Metadata> setMetadata,
             Optional<String> namespace,
             Optional<IndexedData> indexedData,
@@ -57,7 +57,7 @@ public final class UpdateRequest {
     }
 
     @JsonProperty("values")
-    public Optional<List<Double>> getValues() {
+    public Optional<List<Float>> getValues() {
         return values;
     }
 
@@ -118,9 +118,9 @@ public final class UpdateRequest {
     public interface _FinalStage {
         UpdateRequest build();
 
-        _FinalStage values(Optional<List<Double>> values);
+        _FinalStage values(Optional<List<Float>> values);
 
-        _FinalStage values(List<Double> values);
+        _FinalStage values(List<Float> values);
 
         _FinalStage setMetadata(Optional<Metadata> setMetadata);
 
@@ -145,7 +145,7 @@ public final class UpdateRequest {
 
         private Optional<Metadata> setMetadata = Optional.empty();
 
-        private Optional<List<Double>> values = Optional.empty();
+        private Optional<List<Float>> values = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -209,14 +209,14 @@ public final class UpdateRequest {
         }
 
         @java.lang.Override
-        public _FinalStage values(List<Double> values) {
+        public _FinalStage values(List<Float> values) {
             this.values = Optional.ofNullable(values);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "values", nulls = Nulls.SKIP)
-        public _FinalStage values(Optional<List<Double>> values) {
+        public _FinalStage values(Optional<List<Float>> values) {
             this.values = values;
             return this;
         }

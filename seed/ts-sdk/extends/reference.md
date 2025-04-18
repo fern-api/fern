@@ -14,9 +14,7 @@
 
 ```typescript
 await client.extendedInlineRequestBody({
-    unique: "string",
-    name: "string",
-    docs: "string",
+    unique: "unique",
 });
 ```
 

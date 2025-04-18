@@ -1,6 +1,9 @@
-import { php, PhpFile, FileGenerator } from "@fern-api/php-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { php } from "@fern-api/php-codegen";
+
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -32,6 +35,13 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             ...this.classReference
         });
 
+        class_.addField(
+            php.field({
+                name: `$${this.context.getClientOptionsName()}`,
+                access: "private",
+                type: this.context.getClientOptionsType()
+            })
+        );
         class_.addField(this.context.rawClient.getField());
 
         const subpackages = this.getSubpackages();
@@ -42,11 +52,12 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
 
         if (this.service != null && this.serviceId != null) {
             for (const endpoint of this.service.endpoints) {
-                const method = this.context.endpointGenerator.generate({
+                const methods = this.context.endpointGenerator.generate({
                     serviceId: this.serviceId,
+                    service: this.service,
                     endpoint
                 });
-                class_.addMethod(method);
+                class_.addMethods(methods);
             }
         }
 
@@ -64,17 +75,32 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 php.parameter({
                     name: "$client",
                     type: php.Type.reference(this.context.rawClient.getClassReference())
+                }),
+                php.parameter({
+                    name: this.context.getClientOptionsName(),
+                    type: php.Type.optional(this.context.getClientOptionsType()),
+                    initializer: php.codeblock("null")
                 })
             ],
             body: php.codeblock((writer) => {
                 writer.writeLine(`$this->client = $${this.context.rawClient.getFieldName()};`);
+                writer.writeNodeStatement(
+                    php.codeblock((writer) => {
+                        writer.write(`$this->${this.context.getClientOptionsName()} = `);
+                        writer.writeNode(php.variable(this.context.getClientOptionsName()));
+                        writer.write(" ?? []");
+                    })
+                );
 
                 for (const subpackage of subpackages) {
                     writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
                     writer.writeNodeStatement(
                         php.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)]
+                            arguments_: [
+                                php.codeblock(`$this->${this.context.rawClient.getFieldName()}`),
+                                php.codeblock(`$this->${this.context.getClientOptionsName()}`)
+                            ]
                         })
                     );
                 }
@@ -83,9 +109,11 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
     }
 
     private getSubpackages(): Subpackage[] {
-        return this.subpackage.subpackages.map((subpackageId) => {
-            return this.context.getSubpackageOrThrow(subpackageId);
-        });
+        return this.subpackage.subpackages
+            .map((subpackageId) => {
+                return this.context.getSubpackageOrThrow(subpackageId);
+            })
+            .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
     protected getFilepath(): RelativeFilePath {

@@ -102,9 +102,7 @@ client = SeedEnum(
 )
 client.path_param.send(
     operand=Operand.GREATER_THAN,
-    maybe_operand=Operand.LESS_THAN,
     operand_or_color=Color.RED,
-    maybe_operand_or_color=Color.RED,
 )
 
 ```
@@ -129,23 +127,7 @@ client.path_param.send(
 <dl>
 <dd>
 
-**maybe_operand:** `typing.Optional[Operand]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **operand_or_color:** `ColorOrOperand` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maybe_operand_or_color:** `typing.Optional[ColorOrOperand]` 
     
 </dd>
 </dl>

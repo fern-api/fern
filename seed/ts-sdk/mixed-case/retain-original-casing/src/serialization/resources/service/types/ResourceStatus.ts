@@ -10,5 +10,5 @@ export const ResourceStatus: core.serialization.Schema<serializers.ResourceStatu
     core.serialization.enum_(["ACTIVE", "INACTIVE"]);
 
 export declare namespace ResourceStatus {
-    type Raw = "ACTIVE" | "INACTIVE";
+    export type Raw = "ACTIVE" | "INACTIVE";
 }

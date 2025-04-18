@@ -9,18 +9,22 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Imdb {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -35,17 +39,28 @@ export class Imdb {
      *
      * @example
      *     await client.imdb.createMovie({
-     *         id: "string",
-     *         movieTitle: "string",
+     *         id: "id",
+     *         movieTitle: "movie_title",
      *         movieRating: 1.1
      *     })
      */
-    public async createMovie(
+    public createMovie(
         request: SeedApi.CreateMovieRequest,
-        requestOptions?: Imdb.RequestOptions
-    ): Promise<SeedApi.MovieId> {
+        requestOptions?: Imdb.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.MovieId> {
+        return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
+    }
+
+    private async __createMovie(
+        request: SeedApi.CreateMovieRequest,
+        requestOptions?: Imdb.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.MovieId>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/movies/create-movie"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/movies/create-movie",
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -55,6 +70,7 @@ export class Imdb {
                 "User-Agent": "@fern/ts-express-casing/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -64,18 +80,22 @@ export class Imdb {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.MovieId.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.MovieId.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -84,12 +104,14 @@ export class Imdb {
                 throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError();
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /movies/create-movie.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -101,13 +123,24 @@ export class Imdb {
      * @throws {@link SeedApi.MovieDoesNotExistError}
      *
      * @example
-     *     await client.imdb.getMovie("string")
+     *     await client.imdb.getMovie("movie_id")
      */
-    public async getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<SeedApi.Movie> {
+    public getMovie(
+        movieId: SeedApi.MovieId,
+        requestOptions?: Imdb.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.Movie> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
+    }
+
+    private async __getMovie(
+        movieId: SeedApi.MovieId,
+        requestOptions?: Imdb.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.Movie>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`,
             ),
             method: "GET",
             headers: {
@@ -118,6 +151,7 @@ export class Imdb {
                 "User-Agent": "@fern/ts-express-casing/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -126,12 +160,15 @@ export class Imdb {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Movie.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Movie.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -143,12 +180,14 @@ export class Imdb {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -158,12 +197,14 @@ export class Imdb {
                 throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError();
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /movies/{movie_id}.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

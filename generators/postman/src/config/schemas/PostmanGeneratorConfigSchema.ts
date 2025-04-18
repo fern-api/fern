@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { PublishConfigSchema } from "./PublishConfigSchema";
 
 export const PostmanGeneratorConfigSchema = z.union([

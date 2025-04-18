@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "prompt": {
+      "const": "You are a helpful assistant"
+    },
+    "query": {
+      "type": "string"
+    },
+    "stream": {
+      "const": false
+    },
+    "ending": {
+      "const": "$ending"
+    },
+    "context": {
+      "$ref": "#/definitions/reference.SomeLiteral"
+    },
+    "maybeContext": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/reference.SomeLiteral"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "containerObject": {
+      "$ref": "#/definitions/reference.ContainerObject"
+    }
+  },
+  "required": [
+    "prompt",
+    "query",
+    "stream",
+    "ending",
+    "context",
+    "containerObject"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "reference.SomeLiteral": {
+      "const": "You're super wise"
+    },
+    "reference.NestedObjectWithLiterals": {
+      "type": "object",
+      "properties": {
+        "literal1": {
+          "const": "literal1"
+        },
+        "literal2": {
+          "const": "literal2"
+        },
+        "strProp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "literal1",
+        "literal2",
+        "strProp"
+      ],
+      "additionalProperties": false
+    },
+    "reference.ContainerObject": {
+      "type": "object",
+      "properties": {
+        "nestedObjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/reference.NestedObjectWithLiterals"
+          }
+        }
+      },
+      "required": [
+        "nestedObjects"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

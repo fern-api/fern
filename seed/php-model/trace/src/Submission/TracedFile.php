@@ -2,32 +2,41 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class TracedFile extends SerializableType
+class TracedFile extends JsonSerializableType
 {
     /**
      * @var string $filename
      */
-    #[JsonProperty("filename")]
+    #[JsonProperty('filename')]
     public string $filename;
 
     /**
      * @var string $directory
      */
-    #[JsonProperty("directory")]
+    #[JsonProperty('directory')]
     public string $directory;
 
     /**
-     * @param string $filename
-     * @param string $directory
+     * @param array{
+     *   filename: string,
+     *   directory: string,
+     * } $values
      */
     public function __construct(
-        string $filename,
-        string $directory,
+        array $values,
     ) {
-        $this->filename = $filename;
-        $this->directory = $directory;
+        $this->filename = $values['filename'];
+        $this->directory = $values['directory'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

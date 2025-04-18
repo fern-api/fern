@@ -17,7 +17,7 @@ export const TraceResponse: core.serialization.ObjectSchema<serializers.TraceRes
     });
 
 export declare namespace TraceResponse {
-    interface Raw {
+    export interface Raw {
         submissionId: serializers.SubmissionId.Raw;
         lineNumber: number;
         returnValue?: serializers.DebugVariableValue.Raw | null;

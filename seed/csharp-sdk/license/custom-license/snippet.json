@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedLicense;\n\nvar client = new SeedLicenseClient();\nawait client.GetAsync();\n"
+            }
+        }
+    ]
+}

@@ -122,7 +122,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+                  "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"

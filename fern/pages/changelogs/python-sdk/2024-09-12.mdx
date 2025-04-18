@@ -1,0 +1,7 @@
+## 4.0.0-rc9
+**`(fix):`** All Pydantic V2 warnings have been resolved
+
+### What's been fixed
+- json_encoders have been removed from Pydantic V2, and replaced with a `model_serializer` method.
+- additional model construction functions have been added when not leveraging pydantic field aliases to allow users to construct a model from JSOn without the need for dealiasing the object themselves.
+

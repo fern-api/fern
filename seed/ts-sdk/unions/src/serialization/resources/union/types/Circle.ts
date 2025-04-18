@@ -12,7 +12,7 @@ export const Circle: core.serialization.ObjectSchema<serializers.Circle.Raw, See
     });
 
 export declare namespace Circle {
-    interface Raw {
+    export interface Raw {
         radius: number;
     }
 }

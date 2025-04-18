@@ -90,11 +90,10 @@ exports[`migrateFromV35ToV34 > snapshot 1`] = `
     },
   },
   "serviceTypeReferenceInfo": {
-    "sharedTypes": [
-      "type_service:User",
-    ],
+    "sharedTypes": [],
     "typesReferencedOnlyByService": {
       "service_service": [
+        "type_service:User",
         "type_service:ListUsersResponse",
       ],
     },

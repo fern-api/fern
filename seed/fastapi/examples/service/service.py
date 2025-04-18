@@ -2,6 +2,8 @@
 
 from ..core.abstract_fern_service import AbstractFernService
 import abc
+from ..types.type import Type
+from ..types.identifier import Identifier
 import fastapi
 import inspect
 import typing
@@ -23,6 +25,9 @@ class AbstractRootService(AbstractFernService):
     @abc.abstractmethod
     def echo(self, *, body: str) -> str: ...
 
+    @abc.abstractmethod
+    def create_type(self, *, body: Type) -> Identifier: ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -31,25 +36,20 @@ class AbstractRootService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_echo(router=router)
+        cls.__init_create_type(router=router)
 
     @classmethod
     def __init_echo(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.echo)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(
-            endpoint_function.parameters.items()
-        ):
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             else:
                 new_parameters.append(parameter)
-        setattr(
-            cls.echo,
-            "__signature__",
-            endpoint_function.replace(parameters=new_parameters),
-        )
+        setattr(cls.echo, "__signature__", endpoint_function.replace(parameters=new_parameters))
 
         @functools.wraps(cls.echo)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
@@ -72,4 +72,40 @@ class AbstractRootService(AbstractFernService):
             response_model=str,
             description=AbstractRootService.echo.__doc__,
             **get_route_args(cls.echo, default_tag=""),
+        )(wrapper)
+
+    @classmethod
+    def __init_create_type(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.create_type)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.create_type, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.create_type)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Identifier:
+            try:
+                return cls.create_type(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'create_type' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.create_type.__globals__)
+
+        router.post(
+            path="/",
+            response_model=Identifier,
+            description=AbstractRootService.create_type.__doc__,
+            **get_route_args(cls.create_type, default_tag=""),
         )(wrapper)

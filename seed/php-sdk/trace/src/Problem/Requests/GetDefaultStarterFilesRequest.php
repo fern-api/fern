@@ -2,54 +2,51 @@
 
 namespace Seed\Problem\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Problem\Types\VariableTypeAndName;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
+use Seed\Commons\Types\VariableType;
 
-class GetDefaultStarterFilesRequest
+class GetDefaultStarterFilesRequest extends JsonSerializableType
 {
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
+    #[JsonProperty('inputParams'), ArrayType([VariableTypeAndName::class])]
     public array $inputParams;
 
     /**
-     * @var mixed $outputType
+     * @var VariableType $outputType
      */
-    #[JsonProperty("outputType")]
-    public mixed $outputType;
+    #[JsonProperty('outputType')]
+    public VariableType $outputType;
 
     /**
-     * @var string $methodName The name of the `method` that the student has to complete.
-    The method name cannot include the following characters:
-      - Greater Than `>`
-      - Less Than `<``
-      - Equals `=`
-      - Period `.`
-
+     * The name of the `method` that the student has to complete.
+     * The method name cannot include the following characters:
+     *   - Greater Than `>`
+     *   - Less Than `<``
+     *   - Equals `=`
+     *   - Period `.`
+     *
+     * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
-     * @param array<VariableTypeAndName> $inputParams
-     * @param mixed $outputType
-     * @param string $methodName The name of the `method` that the student has to complete.
-    The method name cannot include the following characters:
-      - Greater Than `>`
-      - Less Than `<``
-      - Equals `=`
-      - Period `.`
-
+     * @param array{
+     *   inputParams: array<VariableTypeAndName>,
+     *   outputType: VariableType,
+     *   methodName: string,
+     * } $values
      */
     public function __construct(
-        array $inputParams,
-        mixed $outputType,
-        string $methodName,
+        array $values,
     ) {
-        $this->inputParams = $inputParams;
-        $this->outputType = $outputType;
-        $this->methodName = $methodName;
+        $this->inputParams = $values['inputParams'];
+        $this->outputType = $values['outputType'];
+        $this->methodName = $values['methodName'];
     }
 }

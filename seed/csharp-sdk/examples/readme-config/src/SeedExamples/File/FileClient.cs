@@ -1,8 +1,6 @@
 using SeedExamples.Core;
 using SeedExamples.File.Notification;
 
-#nullable enable
-
 namespace SeedExamples.File;
 
 public partial class FileClient

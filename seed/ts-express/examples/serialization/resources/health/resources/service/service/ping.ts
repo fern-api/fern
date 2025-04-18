@@ -9,5 +9,5 @@ export const Response: core.serialization.Schema<serializers.health.service.ping
     core.serialization.boolean();
 
 export declare namespace Response {
-    type Raw = boolean;
+    export type Raw = boolean;
 }

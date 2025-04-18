@@ -2,34 +2,36 @@
 
 namespace Seed\Admin\Requests;
 
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Submission\Types\TestCaseResultWithStdout;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 use Seed\Submission\Types\TraceResponse;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
-class StoreTracedTestCaseRequest
+class StoreTracedTestCaseRequest extends JsonSerializableType
 {
     /**
      * @var TestCaseResultWithStdout $result
      */
-    #[JsonProperty("result")]
+    #[JsonProperty('result')]
     public TestCaseResultWithStdout $result;
 
     /**
      * @var array<TraceResponse> $traceResponses
      */
-    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
+    #[JsonProperty('traceResponses'), ArrayType([TraceResponse::class])]
     public array $traceResponses;
 
     /**
-     * @param TestCaseResultWithStdout $result
-     * @param array<TraceResponse> $traceResponses
+     * @param array{
+     *   result: TestCaseResultWithStdout,
+     *   traceResponses: array<TraceResponse>,
+     * } $values
      */
     public function __construct(
-        TestCaseResultWithStdout $result,
-        array $traceResponses,
+        array $values,
     ) {
-        $this->result = $result;
-        $this->traceResponses = $traceResponses;
+        $this->result = $values['result'];
+        $this->traceResponses = $values['traceResponses'];
     }
 }

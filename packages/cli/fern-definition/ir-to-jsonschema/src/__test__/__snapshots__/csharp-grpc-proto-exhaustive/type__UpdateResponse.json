@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "updatedAt": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "indexType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/dataservice.IndexType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "details": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Any"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "indexTypes": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataservice.IndexType"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "dataservice.IndexType": {
+      "type": "string",
+      "enum": [
+        "INDEX_TYPE_INVALID",
+        "INDEX_TYPE_DEFAULT",
+        "INDEX_TYPE_STRICT"
+      ]
+    },
+    "Any": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    }
+  }
+}

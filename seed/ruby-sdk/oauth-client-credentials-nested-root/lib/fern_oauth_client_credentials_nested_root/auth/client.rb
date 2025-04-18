@@ -24,9 +24,9 @@ module SeedOauthClientCredentialsClient
       # @example
       #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
       #  oauth_client_credentials.auth.get_token(
-      #    client_id: "string",
-      #    client_secret: "string",
-      #    scope: "string"
+      #    client_id: "client_id",
+      #    client_secret: "client_secret",
+      #    scope: "scope"
       #  )
       def get_token(client_id:, client_secret:, scope: nil, request_options: nil)
         response = @request_client.conn.post do |req|
@@ -72,9 +72,9 @@ module SeedOauthClientCredentialsClient
       # @example
       #  oauth_client_credentials = SeedOauthClientCredentialsClient::Client.new(base_url: "https://api.example.com")
       #  oauth_client_credentials.auth.get_token(
-      #    client_id: "string",
-      #    client_secret: "string",
-      #    scope: "string"
+      #    client_id: "client_id",
+      #    client_secret: "client_secret",
+      #    scope: "scope"
       #  )
       def get_token(client_id:, client_secret:, scope: nil, request_options: nil)
         Async do

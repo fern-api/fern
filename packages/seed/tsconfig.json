@@ -1,17 +1,46 @@
 {
-  "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../cli/configuration" },
-    { "path": "../cli/generation/local-generation/local-workspace-runner" },
-    { "path": "../cli/logger" },
-    { "path": "../cli/task-context" },
-    { "path": "../cli/workspace-loader" },
-    { "path": "../commons/core-utils" },
-    { "path": "../commons/fs-utils" },
-    { "path": "../commons/logging-execa" },
-    { "path": "../ir-sdk" },
-    { "path": "../cli/login" },
+    {
+      "path": "../cli/configuration"
+    },
+    {
+      "path": "../cli/generation/local-generation/local-workspace-runner"
+    },
+    {
+      "path": "../cli/logger"
+    },
+    {
+      "path": "../cli/login"
+    },
+    {
+      "path": "../cli/task-context"
+    },
+    {
+      "path": "../cli/workspace/loader"
+    },
+    {
+      "path": "../cli/workspace/commons"
+    },
+    {
+      "path": "../commons/core-utils"
+    },
+    {
+      "path": "../commons/fs-utils"
+    },
+    {
+      "path": "../commons/logging-execa"
+    },
+    {
+      "path": "../ir-sdk"
+    }
   ]
 }

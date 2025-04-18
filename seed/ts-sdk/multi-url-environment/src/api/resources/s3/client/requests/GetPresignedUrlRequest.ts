@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         s3Key: "string"
+ *         s3Key: "s3Key"
  *     }
  */
 export interface GetPresignedUrlRequest {

@@ -1,8 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
-import { HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 import { JavaScriptRuntime, visitJavaScriptRuntime } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export function getSuccessReturnType(
     response:

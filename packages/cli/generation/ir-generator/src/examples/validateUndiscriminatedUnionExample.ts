@@ -1,5 +1,6 @@
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
@@ -13,7 +14,8 @@ export function validateUndiscriminatedUnionExample({
     exampleResolver,
     file,
     workspace,
-    breadcrumbs
+    breadcrumbs,
+    depth
 }: {
     rawUnion: RawSchemas.UndiscriminatedUnionSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -22,6 +24,7 @@ export function validateUndiscriminatedUnionExample({
     file: FernFileContext;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth: number;
 }): ExampleViolation[] {
     const violations: ExampleViolation[] = [];
     for (const member of rawUnion.union) {
@@ -32,7 +35,8 @@ export function validateUndiscriminatedUnionExample({
             exampleResolver,
             file,
             workspace,
-            breadcrumbs
+            breadcrumbs,
+            depth: depth + 1
         });
         if (violationsForMember.length === 0) {
             return [];

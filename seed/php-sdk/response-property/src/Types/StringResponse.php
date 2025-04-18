@@ -2,23 +2,33 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class StringResponse extends SerializableType
+class StringResponse extends JsonSerializableType
 {
     /**
      * @var string $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public string $data;
 
     /**
-     * @param string $data
+     * @param array{
+     *   data: string,
+     * } $values
      */
     public function __construct(
-        string $data,
+        array $values,
     ) {
-        $this->data = $data;
+        $this->data = $values['data'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

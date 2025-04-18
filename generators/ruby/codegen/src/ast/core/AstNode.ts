@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { format } from "util";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { Import } from "../Import";
 
 export enum NewLinePlacement {
@@ -91,8 +93,8 @@ export abstract class AstNode {
                         filePath !== undefined
                             ? i.writeRelative(startingTabSpaces, filePath)
                             : pathPrefix !== undefined
-                            ? i.writeAbsolute(startingTabSpaces, pathPrefix)
-                            : i.write({ startingTabSpaces }),
+                              ? i.writeAbsolute(startingTabSpaces, pathPrefix)
+                              : i.write({ startingTabSpaces }),
                     startingTabSpaces
                 })
             );

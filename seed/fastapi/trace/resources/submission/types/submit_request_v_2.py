@@ -13,19 +13,13 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 class SubmitRequestV2(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     language: Language
-    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(
-        alias="submissionFiles"
-    )
+    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
     problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic.Field(
-        alias="problemVersion", default=None
-    )
+    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

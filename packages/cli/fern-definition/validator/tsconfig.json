@@ -1,16 +1,49 @@
 {
-  "extends": "../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../../commons/core-utils" },
-    { "path": "../../../commons/fs-utils" },
-    { "path": "../../../ir-sdk" },
-    { "path": "../../configuration" },
-    { "path": "../../generation/ir-generator" },
-    { "path": "../../logger" },
-    { "path": "../../task-context" },
-    { "path": "../../workspace-loader" },
-    { "path": "../schema" }
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../../commons/fs-utils"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../configuration-loader"
+    },
+    {
+      "path": "../../generation/ir-generator"
+    },
+    {
+      "path": "../../logger"
+    },
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../workspace/commons"
+    },
+    {
+      "path": "../../workspace/lazy-fern-workspace"
+    },
+    {
+      "path": "../schema"
+    },
+    {
+      "path": "../../../commons/casings-generator"
+    },
+    {
+      "path": "../../../commons/ir-utils"
+    }
   ]
 }

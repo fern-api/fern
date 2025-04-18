@@ -16,7 +16,7 @@ export const ExamplePathParameter: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExamplePathParameter {
-    interface Raw {
+    export interface Raw {
         name: Name.Raw;
         value: serializers.ExampleTypeReference.Raw;
     }

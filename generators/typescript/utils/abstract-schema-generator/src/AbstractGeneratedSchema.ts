@@ -1,6 +1,6 @@
-import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { Reference, Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { BaseContext } from "@fern-typescript/contexts";
-import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
+import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph";
 
 export declare namespace AbstractGeneratedSchema {
     export interface Init {

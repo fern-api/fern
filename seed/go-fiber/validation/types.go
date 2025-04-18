@@ -5,7 +5,7 @@ package validation
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/validation/fern/core"
+	internal "github.com/validation/fern/internal"
 )
 
 type CreateRequest struct {
@@ -64,6 +64,34 @@ type Type struct {
 	extraProperties map[string]interface{}
 }
 
+func (t *Type) GetDecimal() float64 {
+	if t == nil {
+		return 0
+	}
+	return t.Decimal
+}
+
+func (t *Type) GetEven() int {
+	if t == nil {
+		return 0
+	}
+	return t.Even
+}
+
+func (t *Type) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
+}
+
+func (t *Type) GetShape() Shape {
+	if t == nil {
+		return ""
+	}
+	return t.Shape
+}
+
 func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
@@ -75,18 +103,16 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Type(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 
 func (t *Type) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

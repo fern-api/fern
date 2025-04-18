@@ -9,17 +9,17 @@ export type SubmissionStatusForTestCase =
     | SeedTrace.SubmissionStatusForTestCase.GradedV2
     | SeedTrace.SubmissionStatusForTestCase.Traced;
 
-export declare namespace SubmissionStatusForTestCase {
-    interface Graded extends SeedTrace.TestCaseResultWithStdout {
+export namespace SubmissionStatusForTestCase {
+    export interface Graded extends SeedTrace.TestCaseResultWithStdout {
         type: "graded";
     }
 
-    interface GradedV2 {
+    export interface GradedV2 {
         type: "gradedV2";
         value: SeedTrace.TestCaseGrade;
     }
 
-    interface Traced extends SeedTrace.TracedTestCase {
+    export interface Traced extends SeedTrace.TracedTestCase {
         type: "traced";
     }
 }

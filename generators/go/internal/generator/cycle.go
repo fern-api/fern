@@ -156,7 +156,7 @@ func invalidComponentsFromGraph(
 		if len(component) == 1 {
 			continue
 		}
-		// Sort for determinisitc results.
+		// Sort for deterministic results.
 		sort.Slice(component, func(i, j int) bool { return component[i].Label() < component[j].Label() })
 		invalidComponents = append(invalidComponents, component)
 	}
@@ -410,17 +410,17 @@ func replaceFilepathForTypeInHttpResponse(
 	typeId fernir.TypeId,
 	fernFilepath *fernir.FernFilepath,
 ) {
-	if httpResponse.Json != nil {
-		if typeReference := typeReferenceFromJsonResponse(httpResponse.Json); typeReference != nil {
+	if httpResponse.Body != nil && httpResponse.Body.Json != nil {
+		if typeReference := typeReferenceFromJsonResponse(httpResponse.Body.Json); typeReference != nil {
 			replaceFilepathForTypeInTypeReference(typeReference, typeId, fernFilepath)
 		}
 	}
-	if httpResponse.Streaming != nil {
-		if httpResponse.Streaming.Json != nil {
-			replaceFilepathForTypeInTypeReference(httpResponse.Streaming.Json.Payload, typeId, fernFilepath)
+	if httpResponse.Body != nil && httpResponse.Body.Streaming != nil {
+		if httpResponse.Body.Streaming.Json != nil {
+			replaceFilepathForTypeInTypeReference(httpResponse.Body.Streaming.Json.Payload, typeId, fernFilepath)
 		}
-		if httpResponse.Streaming.Sse != nil {
-			replaceFilepathForTypeInTypeReference(httpResponse.Streaming.Sse.Payload, typeId, fernFilepath)
+		if httpResponse.Body.Streaming.Sse != nil {
+			replaceFilepathForTypeInTypeReference(httpResponse.Body.Streaming.Sse.Payload, typeId, fernFilepath)
 		}
 	}
 }

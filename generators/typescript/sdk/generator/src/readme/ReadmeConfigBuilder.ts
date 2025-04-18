@@ -1,7 +1,9 @@
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
+
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 export class ReadmeConfigBuilder {
@@ -27,15 +29,15 @@ export class ReadmeConfigBuilder {
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
         for (const feature of featureConfig.features) {
-            const featureSnippets = snippets[feature.id];
-            if (!featureSnippets) {
+            const snippetForFeature = snippets[feature.id];
+            if (snippetForFeature == null) {
                 continue;
             }
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
                 description: feature.description,
-                snippets: featureSnippets,
+                snippets: snippetForFeature,
                 snippetsAreOptional: false
             });
         }
@@ -45,6 +47,7 @@ export class ReadmeConfigBuilder {
             organization: context.config.organization,
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
+            referenceMarkdownPath: "./reference.md",
             features
         };
     }

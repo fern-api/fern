@@ -7,17 +7,17 @@ import * as core from "../../../../../../core";
 
 export type Error = Fiddle.endpoints.container.getAndReturnOptional.Error._Unknown;
 
-export declare namespace Error {
-    interface _Unknown extends _Utils {
+export namespace Error {
+    export interface _Unknown extends _Utils {
         statusCode: void;
         content: core.Fetcher.Error;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: Fiddle.endpoints.container.getAndReturnOptional.Error._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -29,7 +29,7 @@ export const Error = {
             content: fetcherError,
             _visit: function <_Result>(
                 this: Fiddle.endpoints.container.getAndReturnOptional.Error._Unknown,
-                visitor: Fiddle.endpoints.container.getAndReturnOptional.Error._Visitor<_Result>
+                visitor: Fiddle.endpoints.container.getAndReturnOptional.Error._Visitor<_Result>,
             ) {
                 return Fiddle.endpoints.container.getAndReturnOptional.Error._visit(this, visitor);
             },
@@ -38,7 +38,7 @@ export const Error = {
 
     _visit: <_Result>(
         value: Fiddle.endpoints.container.getAndReturnOptional.Error,
-        visitor: Fiddle.endpoints.container.getAndReturnOptional.Error._Visitor<_Result>
+        visitor: Fiddle.endpoints.container.getAndReturnOptional.Error._Visitor<_Result>,
     ): _Result => {
         switch (value.statusCode) {
             default:

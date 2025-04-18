@@ -1,5 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
+
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { Auth } from "./Auth";
@@ -21,7 +23,7 @@ export class AuthImpl extends CoreUtility implements Auth {
         },
         pathInCoreUtilities: [{ nameOnDisk: "auth", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("js-base64", "3.7.2");
+            dependencyManager.addDependency("js-base64", "3.7.7");
         }
     };
 

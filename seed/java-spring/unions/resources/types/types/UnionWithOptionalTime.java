@@ -35,16 +35,16 @@ public final class UnionWithOptionalTime {
     return new UnionWithOptionalTime(new DateValue(value));
   }
 
-  public static UnionWithOptionalTime dateimte(Optional<OffsetDateTime> value) {
-    return new UnionWithOptionalTime(new DateimteValue(value));
+  public static UnionWithOptionalTime datetime(Optional<OffsetDateTime> value) {
+    return new UnionWithOptionalTime(new DatetimeValue(value));
   }
 
   public boolean isDate() {
     return value instanceof DateValue;
   }
 
-  public boolean isDateimte() {
-    return value instanceof DateimteValue;
+  public boolean isDatetime() {
+    return value instanceof DatetimeValue;
   }
 
   public boolean _isUnknown() {
@@ -58,9 +58,9 @@ public final class UnionWithOptionalTime {
     return Optional.empty();
   }
 
-  public Optional<Optional<OffsetDateTime>> getDateimte() {
-    if (isDateimte()) {
-      return Optional.of(((DateimteValue) value).value);
+  public Optional<Optional<OffsetDateTime>> getDatetime() {
+    if (isDatetime()) {
+      return Optional.of(((DatetimeValue) value).value);
     }
     return Optional.empty();
   }
@@ -80,7 +80,7 @@ public final class UnionWithOptionalTime {
   public interface Visitor<T> {
     T visitDate(Optional<String> date);
 
-    T visitDateimte(Optional<OffsetDateTime> dateimte);
+    T visitDatetime(Optional<OffsetDateTime> datetime);
 
     T _visitUnknown(Object unknownType);
   }
@@ -93,7 +93,7 @@ public final class UnionWithOptionalTime {
   )
   @JsonSubTypes({
       @JsonSubTypes.Type(DateValue.class),
-      @JsonSubTypes.Type(DateimteValue.class)
+      @JsonSubTypes.Type(DatetimeValue.class)
   })
   @JsonIgnoreProperties(
       ignoreUnknown = true
@@ -103,6 +103,7 @@ public final class UnionWithOptionalTime {
   }
 
   @JsonTypeName("date")
+  @JsonIgnoreProperties("type")
   private static final class DateValue implements Value {
     @JsonProperty("value")
     private Optional<String> value;
@@ -140,30 +141,31 @@ public final class UnionWithOptionalTime {
     }
   }
 
-  @JsonTypeName("dateimte")
-  private static final class DateimteValue implements Value {
+  @JsonTypeName("datetime")
+  @JsonIgnoreProperties("type")
+  private static final class DatetimeValue implements Value {
     @JsonProperty("value")
     private Optional<OffsetDateTime> value;
 
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
     )
-    private DateimteValue(@JsonProperty("value") Optional<OffsetDateTime> value) {
+    private DatetimeValue(@JsonProperty("value") Optional<OffsetDateTime> value) {
       this.value = value;
     }
 
     @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitDateimte(value);
+      return visitor.visitDatetime(value);
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
-      return other instanceof DateimteValue && equalTo((DateimteValue) other);
+      return other instanceof DatetimeValue && equalTo((DatetimeValue) other);
     }
 
-    private boolean equalTo(DateimteValue other) {
+    private boolean equalTo(DatetimeValue other) {
       return value.equals(other.value);
     }
 
@@ -178,6 +180,7 @@ public final class UnionWithOptionalTime {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

@@ -2,14 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawUnionClient
 from ..core.request_options import RequestOptions
 from .types.shape import Shape
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawUnionClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -17,7 +14,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class UnionClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawUnionClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawUnionClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawUnionClient
+        """
+        return self._raw_client
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Shape:
         """
@@ -40,27 +48,11 @@ class UnionClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.get(
-            id="string",
+            id="id",
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Shape,
-                    parse_obj_as(
-                        type_=Shape,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -85,35 +77,28 @@ class UnionClient:
         )
         client.union.update(
             request=Shape_Circle(
-                id="string",
                 radius=1.1,
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            method="PATCH",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=Shape, direction="write"),
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool,
-                    parse_obj_as(
-                        type_=bool,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.update(request=request, request_options=request_options)
+        return response.data
 
 
 class AsyncUnionClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawUnionClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawUnionClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawUnionClient
+        """
+        return self._raw_client
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Shape:
         """
@@ -141,30 +126,14 @@ class AsyncUnionClient:
 
         async def main() -> None:
             await client.union.get(
-                id="string",
+                id="id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Shape,
-                    parse_obj_as(
-                        type_=Shape,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -194,7 +163,6 @@ class AsyncUnionClient:
         async def main() -> None:
             await client.union.update(
                 request=Shape_Circle(
-                    id="string",
                     radius=1.1,
                 ),
             )
@@ -202,22 +170,5 @@ class AsyncUnionClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="PATCH",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=Shape, direction="write"),
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    bool,
-                    parse_obj_as(
-                        type_=bool,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.update(request=request, request_options=request_options)
+        return response.data

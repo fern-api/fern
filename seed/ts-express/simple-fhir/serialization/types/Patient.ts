@@ -15,7 +15,7 @@ export const Patient: core.serialization.ObjectSchema<serializers.Patient.Raw, S
     .extend(core.serialization.lazyObject(() => serializers.BaseResource));
 
 export declare namespace Patient {
-    interface Raw extends serializers.BaseResource.Raw {
+    export interface Raw extends serializers.BaseResource.Raw {
         resource_type: "Patient";
         name: string;
         scripts: serializers.Script.Raw[];

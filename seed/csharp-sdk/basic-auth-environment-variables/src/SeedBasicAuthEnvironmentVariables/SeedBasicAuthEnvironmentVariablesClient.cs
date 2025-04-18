@@ -1,16 +1,14 @@
 using SeedBasicAuthEnvironmentVariables.Core;
 
-#nullable enable
-
 namespace SeedBasicAuthEnvironmentVariables;
 
 public partial class SeedBasicAuthEnvironmentVariablesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedBasicAuthEnvironmentVariablesClient(
         string? username = null,
-        string? password = null,
+        string? accessToken = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -18,9 +16,9 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
             "USERNAME",
             "Please pass in username or set the environment variable USERNAME."
         );
-        password ??= GetFromEnvironmentOrThrow(
+        accessToken ??= GetFromEnvironmentOrThrow(
             "PASSWORD",
-            "Please pass in password or set the environment variable PASSWORD."
+            "Please pass in accessToken or set the environment variable PASSWORD."
         );
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -44,9 +42,9 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
         Errors = new ErrorsClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; init; }
+    public BasicAuthClient BasicAuth { get; }
 
-    public ErrorsClient Errors { get; init; }
+    public ErrorsClient Errors { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

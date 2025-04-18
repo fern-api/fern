@@ -1,7 +1,8 @@
-import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
+
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 
 async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
     // strip frontmatter from the referenced markdown
@@ -13,14 +14,14 @@ async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
 export async function replaceReferencedMarkdown({
     markdown,
     absolutePathToFernFolder,
-    absolutePathToMdx,
+    absolutePathToMarkdownFile,
     context,
     // allow for custom markdown loader for testing
     markdownLoader = defaultMarkdownLoader
 }: {
     markdown: string;
     absolutePathToFernFolder: AbsoluteFilePath;
-    absolutePathToMdx: AbsoluteFilePath;
+    absolutePathToMarkdownFile: AbsoluteFilePath;
     context: TaskContext;
     markdownLoader?: (filepath: AbsoluteFilePath) => Promise<string>;
 }): Promise<string> {
@@ -40,11 +41,11 @@ export async function replaceReferencedMarkdown({
         const src = match[2];
 
         if (matchString == null || src == null) {
-            throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMdx}`);
+            throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMarkdownFile}`);
         }
 
         const filepath = resolve(
-            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMdx),
+            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
             RelativeFilePath.of(src.replace(/^\//, ""))
         );
 
@@ -56,7 +57,7 @@ export async function replaceReferencedMarkdown({
                 .join("\n");
             newMarkdown = newMarkdown.replace(matchString, replaceString);
         } catch (e) {
-            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMdx}`);
+            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`);
             break;
         }
     }

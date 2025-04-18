@@ -5,7 +5,7 @@ package alias
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/alias/fern/core"
+	internal "github.com/alias/fern/internal"
 )
 
 // Object is an alias for a type.
@@ -19,6 +19,20 @@ type Type struct {
 	extraProperties map[string]interface{}
 }
 
+func (t *Type) GetId() TypeId {
+	if t == nil {
+		return ""
+	}
+	return t.Id
+}
+
+func (t *Type) GetName() string {
+	if t == nil {
+		return ""
+	}
+	return t.Name
+}
+
 func (t *Type) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
 }
@@ -30,18 +44,16 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Type(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
 	if err != nil {
 		return err
 	}
 	t.extraProperties = extraProperties
-
 	return nil
 }
 
 func (t *Type) String() string {
-	if value, err := core.StringifyJSON(t); err == nil {
+	if value, err := internal.StringifyJSON(t); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)

@@ -15,7 +15,7 @@ export const ExampleKeyValuePair: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExampleKeyValuePair {
-    interface Raw {
+    export interface Raw {
         key: serializers.ExampleTypeReference.Raw;
         value: serializers.ExampleTypeReference.Raw;
     }

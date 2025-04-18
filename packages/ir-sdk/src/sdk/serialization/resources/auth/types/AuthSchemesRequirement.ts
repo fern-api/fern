@@ -12,5 +12,5 @@ export const AuthSchemesRequirement: core.serialization.Schema<
 > = core.serialization.enum_(["ALL", "ANY"]);
 
 export declare namespace AuthSchemesRequirement {
-    type Raw = "ALL" | "ANY";
+    export type Raw = "ALL" | "ANY";
 }

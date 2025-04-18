@@ -1,7 +1,9 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressContext } from "@fern-typescript/contexts";
+
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
 
 export declare namespace AbstractGeneratedEndpointTypeSchema {

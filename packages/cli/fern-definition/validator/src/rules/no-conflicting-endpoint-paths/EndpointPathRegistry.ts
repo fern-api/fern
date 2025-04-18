@@ -1,5 +1,6 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { getFullEndpointPath } from "./getFullEndpointPath";
 
 export interface EndpointReference {

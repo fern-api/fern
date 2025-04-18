@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.get("type-kaljhv87");
+await client.get("typeId");
 ```
 
 </dd>

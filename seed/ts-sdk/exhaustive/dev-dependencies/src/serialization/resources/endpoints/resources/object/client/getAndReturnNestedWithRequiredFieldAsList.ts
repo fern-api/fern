@@ -13,5 +13,5 @@ export const Request: core.serialization.Schema<
 > = core.serialization.list(NestedObjectWithRequiredField);
 
 export declare namespace Request {
-    type Raw = NestedObjectWithRequiredField.Raw[];
+    export type Raw = NestedObjectWithRequiredField.Raw[];
 }

@@ -24,7 +24,7 @@ export interface PlaylistServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getPlaylists(
         req: express.Request<
@@ -46,7 +46,7 @@ export interface PlaylistServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getPlaylist(
         req: express.Request<
@@ -63,7 +63,7 @@ export interface PlaylistServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     updatePlaylist(
         req: express.Request<
@@ -80,7 +80,7 @@ export interface PlaylistServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     deletePlaylist(
         req: express.Request<
@@ -97,19 +97,22 @@ export interface PlaylistServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class PlaylistService {
     private router;
 
-    constructor(private readonly methods: PlaylistServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: PlaylistServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -130,7 +133,7 @@ export class PlaylistService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -138,7 +141,7 @@ export class PlaylistService {
                     console.warn(
                         `Endpoint 'createPlaylist' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -158,7 +161,7 @@ export class PlaylistService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -166,7 +169,7 @@ export class PlaylistService {
                     console.warn(
                         `Endpoint 'getPlaylists' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {
@@ -186,7 +189,7 @@ export class PlaylistService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -199,7 +202,7 @@ export class PlaylistService {
                             console.warn(
                                 `Endpoint 'getPlaylist' unexpectedly threw ${error.constructor.name}.` +
                                     ` If this was intentional, please add ${error.constructor.name} to` +
-                                    " the endpoint's errors list in your Fern Definition."
+                                    " the endpoint's errors list in your Fern Definition.",
                             );
                     }
                     await error.send(res);
@@ -220,7 +223,7 @@ export class PlaylistService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -232,7 +235,7 @@ export class PlaylistService {
                             console.warn(
                                 `Endpoint 'updatePlaylist' unexpectedly threw ${error.constructor.name}.` +
                                     ` If this was intentional, please add ${error.constructor.name} to` +
-                                    " the endpoint's errors list in your Fern Definition."
+                                    " the endpoint's errors list in your Fern Definition.",
                             );
                     }
                     await error.send(res);
@@ -253,7 +256,7 @@ export class PlaylistService {
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -261,7 +264,7 @@ export class PlaylistService {
                     console.warn(
                         `Endpoint 'deletePlaylist' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {

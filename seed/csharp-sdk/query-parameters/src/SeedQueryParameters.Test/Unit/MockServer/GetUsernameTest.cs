@@ -1,12 +1,8 @@
 using System.Globalization;
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedQueryParameters;
 using SeedQueryParameters.Core;
-
-#nullable enable
 
 namespace SeedQueryParameters.Test.Unit.MockServer;
 
@@ -14,13 +10,14 @@ namespace SeedQueryParameters.Test.Unit.MockServer;
 public class GetUsernameTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
-              "name": "string",
+              "name": "name",
               "tags": [
-                "string"
+                "tags",
+                "tags"
               ]
             }
             """;
@@ -36,8 +33,8 @@ public class GetUsernameTest : BaseMockServerTest
                     .WithParam("deadline", "2024-01-15T09:30:00.000Z")
                     .WithParam("bytes", "SGVsbG8gd29ybGQh")
                     .WithParam("optionalDeadline", "2024-01-15T09:30:00.000Z")
-                    .WithParam("optionalString", "string")
-                    .WithParam("filter", "string")
+                    .WithParam("optionalString", "optionalString")
+                    .WithParam("filter", "filter")
                     .UsingGet()
             )
             .RespondWith(
@@ -61,15 +58,20 @@ public class GetUsernameTest : BaseMockServerTest
                 Bytes = "SGVsbG8gd29ybGQh",
                 User = new User
                 {
-                    Name = "string",
-                    Tags = new List<string>() { "string" },
+                    Name = "name",
+                    Tags = new List<string>() { "tags", "tags" },
                 },
                 UserList = new List<User>()
                 {
                     new User
                     {
-                        Name = "string",
-                        Tags = new List<string>() { "string" },
+                        Name = "name",
+                        Tags = new List<string>() { "tags", "tags" },
+                    },
+                    new User
+                    {
+                        Name = "name",
+                        Tags = new List<string>() { "tags", "tags" },
                     },
                 },
                 OptionalDeadline = DateTime.Parse(
@@ -77,37 +79,36 @@ public class GetUsernameTest : BaseMockServerTest
                     null,
                     DateTimeStyles.AdjustToUniversal
                 ),
-                KeyValue = new Dictionary<string, string>() { { "string", "string" } },
-                OptionalString = "string",
+                KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
+                OptionalString = "optionalString",
                 NestedUser = new NestedUser
                 {
-                    Name = "string",
+                    Name = "name",
                     User = new User
                     {
-                        Name = "string",
-                        Tags = new List<string>() { "string" },
+                        Name = "name",
+                        Tags = new List<string>() { "tags", "tags" },
                     },
                 },
                 OptionalUser = new User
                 {
-                    Name = "string",
-                    Tags = new List<string>() { "string" },
+                    Name = "name",
+                    Tags = new List<string>() { "tags", "tags" },
                 },
                 ExcludeUser =
                 [
                     new User
                     {
-                        Name = "string",
-                        Tags = new List<string>() { "string" },
+                        Name = "name",
+                        Tags = new List<string>() { "tags", "tags" },
                     },
                 ],
-                Filter = ["string"],
-            },
-            RequestOptions
+                Filter = ["filter"],
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+        );
     }
 }

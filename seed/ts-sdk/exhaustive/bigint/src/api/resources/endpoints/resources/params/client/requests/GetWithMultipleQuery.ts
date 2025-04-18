@@ -5,11 +5,11 @@
 /**
  * @example
  *     {
- *         query: "string",
- *         numer: 1
+ *         query: "query",
+ *         number: 1
  *     }
  */
 export interface GetWithMultipleQuery {
     query: string | string[];
-    numer: number | number[];
+    number: number | number[];
 }

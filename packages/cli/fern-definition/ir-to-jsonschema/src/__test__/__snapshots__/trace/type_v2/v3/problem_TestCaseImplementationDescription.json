@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "boards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/v2.v3.problem.TestCaseImplementationDescriptionBoard"
+      }
+    }
+  },
+  "required": [
+    "boards"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.v3.problem.ParameterId": {
+      "type": "string"
+    },
+    "v2.v3.problem.TestCaseImplementationDescriptionBoard": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "html",
+            "paramId"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "html"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "paramId"
+            },
+            "value": {
+              "$ref": "#/definitions/v2.v3.problem.ParameterId"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ]
+    }
+  }
+}

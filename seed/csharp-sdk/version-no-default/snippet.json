@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_user.getUser"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedVersion;\n\nvar client = new SeedVersionClient();\nawait client.User.GetUserAsync(\"string\");\n"
+                "type": "csharp",
+                "client": "using SeedVersion;\n\nvar client = new SeedVersionClient();\nawait client.User.GetUserAsync(\"userId\");\n"
             }
         }
     ]

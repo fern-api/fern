@@ -5,7 +5,7 @@ package responseproperty
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/response-property/fern/core"
+	internal "github.com/response-property/fern/internal"
 )
 
 type OptionalStringResponse = *StringResponse
@@ -14,7 +14,14 @@ type StringResponse struct {
 	Data string `json:"data" url:"data"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (s *StringResponse) GetData() string {
+	if s == nil {
+		return ""
+	}
+	return s.Data
 }
 
 func (s *StringResponse) GetExtraProperties() map[string]interface{} {
@@ -28,27 +35,125 @@ func (s *StringResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StringResponse(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
 	}
 	s.extraProperties = extraProperties
-
-	s._rawJSON = json.RawMessage(data)
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (s *StringResponse) String() string {
-	if len(s._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(s); err == nil {
+	if value, err := internal.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+type WithMetadata struct {
+	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (w *WithMetadata) GetMetadata() map[string]string {
+	if w == nil {
+		return nil
+	}
+	return w.Metadata
+}
+
+func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithMetadata) String() string {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
+type Movie struct {
+	Id   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (m *Movie) GetId() string {
+	if m == nil {
+		return ""
+	}
+	return m.Id
+}
+
+func (m *Movie) GetName() string {
+	if m == nil {
+		return ""
+	}
+	return m.Name
+}
+
+func (m *Movie) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *Movie) UnmarshalJSON(data []byte) error {
+	type unmarshaler Movie
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Movie(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+	m.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *Movie) String() string {
+	if len(m.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type OptionalWithDocs = *WithDocs
@@ -59,7 +164,28 @@ type Response struct {
 	Data     *Movie            `json:"data,omitempty" url:"data,omitempty"`
 
 	extraProperties map[string]interface{}
-	_rawJSON        json.RawMessage
+	rawJSON         json.RawMessage
+}
+
+func (r *Response) GetMetadata() map[string]string {
+	if r == nil {
+		return nil
+	}
+	return r.Metadata
+}
+
+func (r *Response) GetDocs() string {
+	if r == nil {
+		return ""
+	}
+	return r.Docs
+}
+
+func (r *Response) GetData() *Movie {
+	if r == nil {
+		return nil
+	}
+	return r.Data
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
@@ -73,25 +199,69 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Response(value)
-
-	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.extraProperties = extraProperties
-
-	r._rawJSON = json.RawMessage(data)
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
 func (r *Response) String() string {
-	if len(r._rawJSON) > 0 {
-		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
 		}
 	}
-	if value, err := core.StringifyJSON(r); err == nil {
+	if value, err := internal.StringifyJSON(r); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+type WithDocs struct {
+	Docs string `json:"docs" url:"docs"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (w *WithDocs) GetDocs() string {
+	if w == nil {
+		return ""
+	}
+	return w.Docs
+}
+
+func (w *WithDocs) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithDocs) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithDocs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithDocs(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithDocs) String() string {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }

@@ -1,20 +1,24 @@
-import {
-    fernConfigJson,
-    generatorsYml,
-    GENERATORS_CONFIGURATION_FILENAME,
-    getFernDirectory,
-    PROJECT_CONFIG_FILENAME
-} from "@fern-api/configuration";
-import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs } from "@fern-api/init";
-import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { askToLogin, login } from "@fern-api/login";
-import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
+#!/usr/bin/env node
+import { RUNTIME } from "@fern-typescript/fetcher";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
+
+import {
+    GENERATORS_CONFIGURATION_FILENAME,
+    PROJECT_CONFIG_FILENAME,
+    generatorsYml,
+    getFernDirectory,
+    loadProjectConfig
+} from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
+import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { askToLogin, login } from "@fern-api/login";
+import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
+
+import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
@@ -22,12 +26,15 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
+import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
+import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { generateAPIWorkspaces, GenerationMode } from "./commands/generate/generateAPIWorkspaces";
+import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
+import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
@@ -35,13 +42,16 @@ import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
 import { upgrade } from "./commands/upgrade/upgrade";
+import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
+import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-import { isURL } from "./utils/isUrl";
 
 void runCli();
+
+const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
     const cliContext = new CliContext(process.stdout);
@@ -49,6 +59,14 @@ async function runCli() {
     const exit = async () => {
         await cliContext.exit();
     };
+
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+        const { setGlobalDispatcher, Agent } = await import("undici");
+        setGlobalDispatcher(
+            new Agent({ connect: { timeout: 2147483647 }, bodyTimeout: 0, headersTimeout: 2147483647 })
+        );
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on("SIGINT", async () => {
         cliContext.suppressUpgradeMessage();
@@ -77,7 +95,10 @@ async function runCli() {
                 error
             }
         });
-        if (error instanceof FernCliError) {
+        if ((error as Error)?.message.includes("globalThis")) {
+            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
+            cliContext.failWithoutThrowing();
+        } else if (error instanceof FernCliError) {
             // thrower is responsible for logging, so we generally don't need to log here.
             cliContext.failWithoutThrowing();
         } else if (error instanceof LoggableFernCliError) {
@@ -136,13 +157,14 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addFdrCommand(cli, cliContext);
     addOpenAPIIrCommand(cli, cliContext);
+    addDynamicIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
-    addDocsPreviewCommand(cli, cliContext);
+    addDocsCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -154,6 +176,8 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+    addGenerateJsonschemaCommand(cli, cliContext);
+    addWriteDocsDefinitionCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -174,7 +198,7 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
     const fernDirectory = await getFernDirectory();
     if (fernDirectory != null) {
         const projectConfig = await cliContext.runTask((context) =>
-            fernConfigJson.loadProjectConfig({ directory: fernDirectory, context })
+            loadProjectConfig({ directory: fernDirectory, context })
         );
         if (projectConfig.version === "*") {
             return cliContext.environment.packageVersion;
@@ -182,6 +206,17 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         return projectConfig.version;
     }
     return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
+}
+
+async function getOrganization(cliContext: CliContext): Promise<string | undefined> {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory != null) {
+        const projectConfig = await cliContext.runTask((context) =>
+            loadProjectConfig({ directory: fernDirectory, context })
+        );
+        return projectConfig.organization;
+    }
+    return undefined;
 }
 
 function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -206,16 +241,54 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec"
+                })
+                .option("mintlify", {
+                    type: "string",
+                    description: "Migrate docs from Mintlify provided a path to a mint.json file"
+                })
+                .option("readme", {
+                    type: "string",
+                    description: "Migrate docs from Readme provided a URL to a Readme generated docs site"
                 }),
         async (argv) => {
+            if (argv.organization == null) {
+                const projectConfig = await getOrganization(cliContext);
+                if (projectConfig != null) {
+                    argv.organization = projectConfig;
+                } else {
+                    argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+                }
+            }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            } else if (argv.readme != null && argv.mintlify != null) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --readme and --mintlify. Please choose one."
+                );
+            } else if (argv.readme != null) {
+                await cliContext.runTask(async (context) => {
+                    await initializeWithReadme({
+                        readmeUrl: argv.readme,
+                        organization: argv.organization ?? "fern",
+                        taskContext: context,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
+                    });
+                });
             } else if (argv.docs != null) {
                 await cliContext.runTask(async (context) => {
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         taskContext: context
+                    });
+                });
+            } else if (argv.mintlify != null) {
+                await cliContext.runTask(async (taskContext) => {
+                    await initializeWithMintlify({
+                        pathToMintJson: argv.mintlify,
+                        organization: argv.organization ?? "fern",
+                        taskContext,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });
                 });
             } else {
@@ -360,6 +433,22 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description: "Prevent auto-deletion of the Docker containers."
+                })
+                .option("force", {
+                    boolean: true,
+                    default: false,
+                    description: "Ignore prompts to confirm generation, defaults to false"
+                })
+                .option("broken-links", {
+                    boolean: true,
+                    description: "Log a warning if there are broken links in the docs.",
+                    default: false
+                })
+                .option("strict-broken-links", {
+                    boolean: true,
+                    description:
+                        "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -381,7 +470,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local,
                     preview: argv.preview,
-                    mode: argv.mode
+                    mode: argv.mode,
+                    force: argv.force
                 });
             }
             if (argv.docs != null) {
@@ -402,7 +492,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     ),
                     cliContext,
                     instance: argv.instance,
-                    preview: argv.preview
+                    preview: argv.preview,
+                    brokenLinks: argv.brokenLinks,
+                    strictBrokenLinks: argv.strictBrokenLinks
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -418,7 +510,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
                 preview: argv.preview,
-                mode: argv.mode
+                mode: argv.mode,
+                force: argv.force
             });
         }
     );
@@ -452,6 +545,15 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     default: new Array<string>(),
                     description: "Filter the IR for certain audiences"
+                })
+                .option("smart-casing", {
+                    boolean: true,
+                    description: "Whether to use smart casing"
+                })
+                .option("from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
@@ -466,8 +568,9 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version,
                 keywords: undefined,
-                smartCasing: false,
-                readme: undefined
+                smartCasing: argv.smartCasing ?? false,
+                readme: undefined,
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );
@@ -507,6 +610,63 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
     );
 }
 
+function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "dynamic-ir <path-to-output>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write intermediate representation (IR)",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .option("version", {
+                    string: true,
+                    description: "The version of IR to produce"
+                })
+                .option("language", {
+                    choices: Object.values(generatorsYml.GenerationLanguage),
+                    description: "Generate IR for a particular language"
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: new Array<string>(),
+                    description: "Filter the IR for certain audiences"
+                })
+                .option("smart-casing", {
+                    boolean: true,
+                    description: "Whether to use smart casing"
+                })
+                .option("disable-examples", {
+                    boolean: true,
+                    description: "Whether to suppress examples from being included in the IR"
+                }),
+        async (argv) => {
+            await generateDynamicIrForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
+                    sdkLanguage: argv.language
+                }),
+                irFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext,
+                generationLanguage: argv.language,
+                audiences: { type: "all" },
+                version: argv.version,
+                keywords: undefined,
+                smartCasing: argv.smartCasing ?? false,
+                disableDynamicExamples: argv.disableExamples ?? false
+            });
+        }
+    );
+}
+
 function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "fdr <path-to-output>",
@@ -527,17 +687,32 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     default: new Array<string>(),
                     description: "Filter the FDR API definition for certain audiences"
+                })
+                .option("v2", {
+                    boolean: true,
+                    description: "Use v2 format"
                 }),
         async (argv) => {
-            await generateFdrApiDefinitionForWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false
-                }),
-                outputFilepath: resolve(cwd(), argv.pathToOutput),
-                cliContext,
-                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
-            });
+            if (argv.v2) {
+                await generateOpenApiToFdrApiDefinitionForWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    outputFilepath: resolve(cwd(), argv.pathToOutput),
+                    cliContext
+                });
+            } else {
+                await generateFdrApiDefinitionForWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    outputFilepath: resolve(cwd(), argv.pathToOutput),
+                    cliContext,
+                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
+                });
+            }
         }
     );
 }
@@ -616,6 +791,17 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Log warnings in addition to errors.",
                     default: false
+                })
+                .option("broken-links", {
+                    boolean: true,
+                    description: "Log a warning if there are broken links in the docs.",
+                    default: false
+                })
+                .option("strict-broken-links", {
+                    boolean: true,
+                    description:
+                        "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                    default: false
                 }),
         async (argv) => {
             await validateWorkspaces({
@@ -624,7 +810,9 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     defaultToAllApiWorkspaces: true
                 }),
                 cliContext,
-                logWarnings: argv.warnings
+                logWarnings: argv.warnings,
+                brokenLinks: argv.brokenLinks,
+                errorOnBrokenLinks: argv.strictBrokenLinks
             });
         }
     );
@@ -853,8 +1041,13 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 .option("language", {
                     choices: Object.values(generatorsYml.GenerationLanguage),
                     description: "Write the definition for a particular SDK language"
+                })
+                .option("preserve-schemas", {
+                    string: true,
+                    description: "Preserve potentially unsafe schema Ids in the generated fern definition"
                 }),
         async (argv) => {
+            const preserveSchemaIds = argv.preserveSchemas != null;
             await cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
             });
@@ -862,18 +1055,29 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true,
-                    sdkLanguage: argv.language
+                    sdkLanguage: argv.language,
+                    preserveSchemaIds
                 }),
                 cliContext,
-                sdkLanguage: argv.language
+                sdkLanguage: argv.language,
+                preserveSchemaIds
             });
         }
     );
 }
 
+function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("docs", "Commands for managing your docs", (yargs) => {
+        // Add subcommands directly
+        addDocsPreviewCommand(yargs, cliContext);
+        addDocsBrokenLinksCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "docs dev",
+        "dev",
         "Run a local development server to preview your docs",
         (yargs) =>
             yargs
@@ -885,6 +1089,11 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     string: true,
                     hidden: true,
                     description: "Path of the local docs bundle to use"
+                })
+                .option("broken-links", {
+                    boolean: true,
+                    default: false,
+                    description: "Check for broken links in your docs"
                 }),
         async (argv) => {
             let port: number;
@@ -902,7 +1111,98 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     }),
                 cliContext,
                 port,
-                bundlePath
+                bundlePath,
+                brokenLinks: argv.brokenLinks
+            });
+        }
+    );
+}
+
+function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "broken-links",
+        "Check for broken links in your docs",
+        (yargs) =>
+            yargs.option("strict", { boolean: true, default: false, description: "Fail with non-zero exit status" }),
+        async (argv) => {
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+            await validateDocsBrokenLinks({
+                project,
+                cliContext,
+                errorOnBrokenLinks: argv.strict
+            });
+        }
+    );
+}
+
+function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "jsonschema <path-to-output>",
+        "Generate JSON Schema for a specific type",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write JSON Schema",
+                    demandOption: true
+                })
+                .option("type", {
+                    string: true,
+                    demandOption: true,
+                    description: "The type to generate JSON Schema for (e.g. 'MySchema' or 'mypackage.MySchema')"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern jsonschema",
+                properties: {
+                    output: argv.output
+                }
+            });
+            await generateJsonschemaForWorkspaces({
+                typeLocator: argv.type,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                jsonschemaFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext
+            });
+        }
+    );
+}
+
+function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-docs-definition <output-path>",
+        false, // hide from help message
+        (yargs) =>
+            yargs.positional("output-path", {
+                type: "string",
+                description: "Path to write the docs definition",
+                demandOption: true
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern write-docs-definition",
+                properties: {
+                    outputPath: argv.outputPath
+                }
+            });
+
+            await writeDocsDefinitionForProject({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    defaultToAllApiWorkspaces: true,
+                    commandLineApiWorkspace: undefined
+                }),
+                outputPath: resolve(cwd(), argv.outputPath),
+                cliContext
             });
         }
     );

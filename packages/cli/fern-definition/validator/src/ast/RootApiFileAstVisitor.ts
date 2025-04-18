@@ -1,6 +1,6 @@
-import { RawSchemas, NodePath, RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { NodePath, RawSchemas, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 
-export type RootApiFileAstVisitor<R = void | Promise<void>> = {
+export type RootApiFileAstVisitor<R = void | void> = {
     [K in keyof RootApiFileAstNodeTypes]: RootApiFileAstNodeVisitor<K, R>;
 };
 
@@ -25,7 +25,7 @@ export interface RootApiFileAstNodeTypes {
     variableReference: string;
 }
 
-export type RootApiFileAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes, R = void | Promise<void>> = (
+export type RootApiFileAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes, R = void | void> = (
     node: RootApiFileAstNodeTypes[K],
     nodePath: NodePath
 ) => R;

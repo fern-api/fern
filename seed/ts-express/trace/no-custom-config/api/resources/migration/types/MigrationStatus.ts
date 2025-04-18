@@ -10,7 +10,6 @@ export type MigrationStatus =
      * The migration is failed */
     | "FAILED"
     | "FINISHED";
-
 export const MigrationStatus = {
     Running: "RUNNING",
     Failed: "FAILED",

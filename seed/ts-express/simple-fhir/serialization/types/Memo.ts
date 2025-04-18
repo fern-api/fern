@@ -12,7 +12,7 @@ export const Memo: core.serialization.ObjectSchema<serializers.Memo.Raw, SeedApi
 });
 
 export declare namespace Memo {
-    interface Raw {
+    export interface Raw {
         description: string;
         account?: serializers.Account.Raw | null;
     }

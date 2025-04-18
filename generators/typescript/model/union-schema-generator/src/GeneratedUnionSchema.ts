@@ -1,8 +1,10 @@
-import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { Reference, Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
-import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
+import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph";
+
+import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api";
+
 import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
@@ -65,7 +67,8 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         )
                     )
                 )
-            )
+            ),
+            isExported: true
         });
 
         for (const interfaceStructure of interfaces) {
@@ -85,7 +88,8 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     };
-                })
+                }),
+                isExported: true
             });
         }
     }

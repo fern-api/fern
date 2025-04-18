@@ -1,15 +1,17 @@
+from __future__ import annotations
+
 from typing import Callable, Dict, List, Optional, Set
 
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorConfig
-from ordered_set import OrderedSet
-
+from ...external_dependencies.pydantic import PydanticVersionCompatibility
+from .pydantic_generator_context import PydanticGeneratorContext
+from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
+from ordered_set import OrderedSet
 
-from .pydantic_generator_context import PydanticGeneratorContext
-from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
+import fern.ir.resources as ir_types
+from fern.generator_exec import GeneratorConfig
 
 
 class PydanticGeneratorContextImpl(PydanticGeneratorContext):
@@ -25,6 +27,8 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         use_str_enums: bool,
         skip_formatting: bool,
         union_naming_version: UnionNamingVersions,
+        use_pydantic_field_aliases: bool,
+        pydantic_compatibility: PydanticVersionCompatibility,
         reserved_names: Optional[Set[str]] = None,
     ):
         super().__init__(
@@ -36,6 +40,8 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             use_str_enums=use_str_enums,
             skip_formatting=skip_formatting,
             union_naming_version=union_naming_version,
+            use_pydantic_field_aliases=use_pydantic_field_aliases,
+            pydantic_compatibility=pydantic_compatibility,
         )
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer, context=self
@@ -54,9 +60,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             ):
                 self._non_union_self_referencing_type_ids.add(id)
 
-        self._types_with_non_union_self_referencing_dependencies: Dict[
-            ir_types.TypeId, OrderedSet[ir_types.TypeId]
-        ] = dict()
+        self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
+            dict()
+        )
         for id, type in self.ir.types.items():
             ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
             for referenced_id in ordered_reference_types:
@@ -139,6 +145,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 set_=lambda _: None,
                 # Ignore literal defaults when the wrapping type is optional
                 optional=lambda opt: self.get_initializer_for_type_reference(opt, ignore_literals=True),
+                nullable=lambda nullable: self.get_initializer_for_type_reference(nullable, ignore_literals=True),
                 map_=lambda _: None,
             )
 
@@ -242,6 +249,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 list_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 set_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                nullable=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 map_=lambda map_type: (
                     self.get_referenced_types_of_type_reference(map_type.key_type).union(
                         self.get_referenced_types_of_type_reference(map_type.value_type)
@@ -262,6 +270,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 list_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 set_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                nullable=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 map_=lambda map_type: (
                     self.get_referenced_types_of_type_reference(map_type.key_type).union(
                         self.get_referenced_types_of_type_reference(map_type.value_type)
@@ -283,6 +292,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 map_=lambda mt: (self.maybe_get_type_ids_for_type_reference(mt.key_type) or []).extend(
                     self.maybe_get_type_ids_for_type_reference(mt.value_type) or []
                 ),
+                nullable=lambda nullable_tr: self.maybe_get_type_ids_for_type_reference(nullable_tr),
                 optional=lambda optional_tr: self.maybe_get_type_ids_for_type_reference(optional_tr),
                 set_=lambda set_tr: self.maybe_get_type_ids_for_type_reference(set_tr),
                 literal=lambda _: None,
@@ -310,6 +320,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 set_=lambda _: example_type_reference,
                 optional=lambda optional: self.unwrap_example_type_reference(optional.optional)
                 if optional.optional is not None
+                else example_type_reference,
+                nullable=lambda nullable: self.unwrap_example_type_reference(nullable.nullable)
+                if nullable.nullable is not None
                 else example_type_reference,
                 map_=lambda _: example_type_reference,
                 literal=lambda _: example_type_reference,

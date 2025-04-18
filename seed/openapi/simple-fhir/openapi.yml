@@ -63,8 +63,7 @@ components:
       properties:
         resource_type:
           type: string
-          enum:
-            - Account
+          const: Account
         name:
           type: string
         patient:
@@ -84,8 +83,7 @@ components:
       properties:
         resource_type:
           type: string
-          enum:
-            - Patient
+          const: Patient
         name:
           type: string
         scripts:
@@ -104,8 +102,7 @@ components:
       properties:
         resource_type:
           type: string
-          enum:
-            - Practitioner
+          const: Practitioner
         name:
           type: string
       required:
@@ -119,8 +116,7 @@ components:
       properties:
         resource_type:
           type: string
-          enum:
-            - Script
+          const: Script
         name:
           type: string
       required:

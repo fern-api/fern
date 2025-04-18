@@ -8,7 +8,7 @@ export const OnlyVersionedNavigation: Rule = {
                 if (config.navigation != null && config.versions != null) {
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message:
                                 "Cannot contain both navigation and versions. If you want versioned docs, use versions. Otherwise use navigation."
                         }

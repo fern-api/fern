@@ -27,9 +27,11 @@ import com.fern.java.generators.ObjectGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.spring.SpringGeneratorContext;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
@@ -69,7 +71,11 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
                 extendedInterfaces,
                 generatorContext,
                 allGeneratedInterfaces,
-                className);
-        return objectGenerator.generateFile();
+                className,
+                Set.of(className.simpleName()),
+                true,
+                Collections.emptyList(),
+                Collections.emptyList());
+        return objectGenerator.generateObject();
     }
 }

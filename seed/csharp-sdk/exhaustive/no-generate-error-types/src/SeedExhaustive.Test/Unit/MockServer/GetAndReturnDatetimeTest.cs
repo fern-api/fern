@@ -1,11 +1,7 @@
 using System.Globalization;
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-
-#nullable enable
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -13,7 +9,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetAndReturnDatetimeTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             "2024-01-15T09:30:00.000Z"
@@ -39,12 +35,8 @@ public class GetAndReturnDatetimeTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
-            DateTime.Parse("2024-01-15T09:30:00.000Z", null, DateTimeStyles.AdjustToUniversal),
-            RequestOptions
+            DateTime.Parse("2024-01-15T09:30:00.000Z", null, DateTimeStyles.AdjustToUniversal)
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<DateTime>(mockResponse)));
     }
 }

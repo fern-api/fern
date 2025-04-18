@@ -3,9 +3,8 @@
 namespace Seed;
 
 use Seed\CustomAuth\CustomAuthClient;
-use Seed\Errors\ErrorsClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
@@ -15,14 +14,15 @@ class SeedClient
     public CustomAuthClient $customAuth;
 
     /**
-     * @var ErrorsClient $errors
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
-    public ErrorsClient $errors;
-
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
-     */
-    private ?array $options;
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -31,7 +31,13 @@ class SeedClient
 
     /**
      * @param string $customAuthScheme The customAuthScheme to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         string $customAuthScheme,
@@ -42,6 +48,7 @@ class SeedClient
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
+            'User-Agent' => 'seed/seed/0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -54,7 +61,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->customAuth = new CustomAuthClient($this->client);
-        $this->errors = new ErrorsClient($this->client);
+        $this->customAuth = new CustomAuthClient($this->client, $this->options);
     }
 }

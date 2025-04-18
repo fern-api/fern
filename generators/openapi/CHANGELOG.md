@@ -18,4 +18,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.30] - 2024-01-21
 
-- Chore: Intialize this changelog
+- Chore: Initialize this changelog

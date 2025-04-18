@@ -1,10 +1,11 @@
+import decompress from "decompress";
+import { cp, readFile, readdir, rm, rmdir } from "fs/promises";
+import tmp from "tmp-promise";
+
 import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import decompress from "decompress";
-import { cp, readdir, readFile, rm, rmdir } from "fs/promises";
-import tmp from "tmp-promise";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -89,7 +90,7 @@ export class LocalTaskHandler {
         const absolutePathToFernignore = AbsoluteFilePath.of(
             join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
         );
-        const fernIngnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+        const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
 
         // Copy files from local output to tmp directory
         await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
@@ -112,7 +113,7 @@ export class LocalTaskHandler {
         await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir);
 
         // Undo changes to fernignore paths
-        await this.runGitCommand(["reset", "--", ...fernIngnorePaths], tmpOutputResolutionDir);
+        await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
         await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // Delete local output directory and copy all files from the generated directory

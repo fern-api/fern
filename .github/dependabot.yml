@@ -6,9 +6,52 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/"
+    directories:
+      - "packages/**"
+      - "packages/commons/**"
+      - "packages/cli/**"
+      - "packages/cli/api-importers/**"
+      - "packages/cli/docs-importers/**"
+      - "packages/cli/yaml/**"
+      - "generators/**"
+      - "generators/csharp/**"
+      - "generators/php/**"
+      - "generators/ruby/**"
+      - "generators/swift/**"
+      - "generators/typescript/**"
+      - "generators/typescript/express/**"
+      - "generators/typescript/model/**"
+      - "generators/typescript/sdk/**"
+      - "generators/typescript/utils/**"
     schedule:
       interval: "weekly"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        exclude-patterns:
+          - "eslint*"
+          - "typescript"
+          - "prettier"
+          - "@fern*"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "eslint*"
+          - "typescript"
+          - "prettier"
+          - "@fern*"
+      eslint:
+        patterns:
+          - "eslint*"
+      typescript:
+        patterns:
+          - "typescript*"
+      prettier: 
+        patterns:
+          - "prettier*" 
+      fern: 
+        patterns:
+          - "@fern*"                            
   - package-ecosystem: "gomod"
     directory: "/generators/go"
     schedule:

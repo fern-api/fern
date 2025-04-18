@@ -14,7 +14,7 @@ export const UpdateProblemResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace UpdateProblemResponse {
-    interface Raw {
+    export interface Raw {
         problemVersion: number;
     }
 }

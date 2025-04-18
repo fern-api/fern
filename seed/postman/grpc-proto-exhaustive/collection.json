@@ -122,7 +122,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"columns\": [\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1\n            ]\n        }\n    ]\n}",
+                  "raw": "{\n    \"columns\": [\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        },\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -243,7 +243,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"ids\": [\n        \"ids\",\n        \"ids\"\n    ],\n    \"deleteAll\": true,\n    \"namespace\": \"namespace\",\n    \"filter\": {\n        \"filter\": 1.1\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -364,7 +364,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{}",
+                  "raw": "{\n    \"filter\": {\n        \"filter\": 1.1\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -373,7 +373,7 @@
                 }
               },
               "description": "OK",
-              "body": "{\n    \"namespaces\": {\n        \"key\": {\n            \"count\": 1\n        }\n    },\n    \"dimension\": 1,\n    \"fullness\": 1.1,\n    \"totalCount\": 1\n}",
+              "body": "{\n    \"namespaces\": {\n        \"namespaces\": {\n            \"count\": 1\n        }\n    },\n    \"dimension\": 1,\n    \"fullness\": 1.1,\n    \"totalCount\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -447,7 +447,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/data/fetch?ids=string&namespace=string",
+                  "raw": "{{baseUrl}}/data/fetch?ids=ids&namespace=namespace",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -459,12 +459,12 @@
                     {
                       "key": "ids",
                       "description": null,
-                      "value": "string"
+                      "value": "ids"
                     },
                     {
                       "key": "namespace",
                       "description": null,
-                      "value": "string"
+                      "value": "namespace"
                     }
                   ],
                   "variable": []
@@ -481,7 +481,7 @@
                 "body": null
               },
               "description": "OK",
-              "body": "{\n    \"columns\": {\n        \"key\": {\n            \"id\": \"id\",\n            \"values\": [\n                1.1\n            ],\n            \"metadata\": {\n                \"key\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1\n                ],\n                \"values\": [\n                    1.1\n                ]\n            }\n        }\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "body": "{\n    \"columns\": {\n        \"columns\": {\n            \"id\": \"id\",\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -555,7 +555,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/data/list?prefix=string&limit=1&paginationToken=string&namespace=string",
+                  "raw": "{{baseUrl}}/data/list?prefix=prefix&limit=1&paginationToken=paginationToken&namespace=namespace",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -567,7 +567,7 @@
                     {
                       "key": "prefix",
                       "description": null,
-                      "value": "string"
+                      "value": "prefix"
                     },
                     {
                       "key": "limit",
@@ -577,12 +577,12 @@
                     {
                       "key": "paginationToken",
                       "description": null,
-                      "value": "string"
+                      "value": "paginationToken"
                     },
                     {
                       "key": "namespace",
                       "description": null,
-                      "value": "string"
+                      "value": "namespace"
                     }
                   ],
                   "variable": []
@@ -599,7 +599,7 @@
                 "body": null
               },
               "description": "OK",
-              "body": "{\n    \"columns\": [\n        {\n            \"id\": \"id\"\n        }\n    ],\n    \"pagination\": {\n        \"next\": \"next\"\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "body": "{\n    \"columns\": [\n        {\n            \"id\": \"id\"\n        },\n        {\n            \"id\": \"id\"\n        }\n    ],\n    \"pagination\": {\n        \"next\": \"next\"\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -711,7 +711,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"topK\": 1\n}",
+                  "raw": "{\n    \"namespace\": \"namespace\",\n    \"topK\": 1,\n    \"filter\": {\n        \"filter\": 1.1\n    },\n    \"includeValues\": true,\n    \"includeMetadata\": true,\n    \"queries\": [\n        {\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"topK\": 1,\n            \"namespace\": \"namespace\",\n            \"filter\": {\n                \"filter\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        },\n        {\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"topK\": 1,\n            \"namespace\": \"namespace\",\n            \"filter\": {\n                \"filter\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"column\": [\n        1.1,\n        1.1\n    ],\n    \"id\": \"id\",\n    \"indexedData\": {\n        \"indices\": [\n            1,\n            1\n        ],\n        \"values\": [\n            1.1,\n            1.1\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -720,7 +720,7 @@
                 }
               },
               "description": "OK",
-              "body": "{\n    \"results\": [\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\"\n                }\n            ],\n            \"namespace\": \"namespace\"\n        }\n    ],\n    \"matches\": [\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1\n            ],\n            \"metadata\": {\n                \"key\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1\n                ],\n                \"values\": [\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "body": "{\n    \"results\": [\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                },\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                }\n            ],\n            \"namespace\": \"namespace\"\n        },\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                },\n                {\n                    \"id\": \"id\",\n                    \"score\": 1.1,\n                    \"values\": [\n                        1.1,\n                        1.1\n                    ],\n                    \"metadata\": {},\n                    \"indexedData\": {\n                        \"indices\": [\n                            1,\n                            1\n                        ],\n                        \"values\": [\n                            1.1,\n                            1.1\n                        ]\n                    }\n                }\n            ],\n            \"namespace\": \"namespace\"\n        }\n    ],\n    \"matches\": [\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        },\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1,\n                1.1\n            ],\n            \"metadata\": {\n                \"metadata\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1,\n                    1\n                ],\n                \"values\": [\n                    1.1,\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -832,7 +832,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"id\": \"id\"\n}",
+                  "raw": "{\n    \"id\": \"id\",\n    \"values\": [\n        1.1,\n        1.1\n    ],\n    \"setMetadata\": {\n        \"setMetadata\": 1.1\n    },\n    \"namespace\": \"namespace\",\n    \"indexedData\": {\n        \"indices\": [\n            1,\n            1\n        ],\n        \"values\": [\n            1.1,\n            1.1\n        ]\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"

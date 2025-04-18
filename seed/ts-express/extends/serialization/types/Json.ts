@@ -13,7 +13,7 @@ export const Json: core.serialization.ObjectSchema<serializers.Json.Raw, SeedExt
     .extend(core.serialization.lazyObject(() => serializers.Docs));
 
 export declare namespace Json {
-    interface Raw extends serializers.Docs.Raw {
+    export interface Raw extends serializers.Docs.Raw {
         raw: string;
     }
 }

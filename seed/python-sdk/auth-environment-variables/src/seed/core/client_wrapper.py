@@ -7,21 +7,31 @@ from .http_client import AsyncHttpClient
 
 
 class BaseClientWrapper:
-    def __init__(self, *, x_another_header: str, api_key: str, base_url: str, timeout: typing.Optional[float] = None):
+    def __init__(
+        self,
+        *,
+        x_another_header: str,
+        api_key: str,
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+        x_api_version: typing.Optional[str] = None,
+    ):
         self._x_another_header = x_another_header
         self.api_key = api_key
         self._base_url = base_url
         self._timeout = timeout
+        self._x_api_version = x_api_version
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
+            "User-Agent": "fern_auth-environment-variables/0.0.1",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "fern_auth-environment-variables",
             "X-Fern-SDK-Version": "0.0.1",
         }
         headers["X-Another-Header"] = self._x_another_header
         headers["X-FERN-API-KEY"] = self.api_key
-        headers["X-API-Version"] = "01-01-2000"
+        headers["X-API-Version"] = self._x_api_version if self._x_api_version is not None else "01-01-2000"
         return headers
 
     def get_base_url(self) -> str:
@@ -39,14 +49,21 @@ class SyncClientWrapper(BaseClientWrapper):
         api_key: str,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        x_api_version: typing.Optional[str] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(x_another_header=x_another_header, api_key=api_key, base_url=base_url, timeout=timeout)
+        super().__init__(
+            x_another_header=x_another_header,
+            api_key=api_key,
+            base_url=base_url,
+            timeout=timeout,
+            x_api_version=x_api_version,
+        )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
-            base_headers=self.get_headers(),
-            base_timeout=self.get_timeout(),
-            base_url=self.get_base_url(),
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )
 
 
@@ -58,12 +75,19 @@ class AsyncClientWrapper(BaseClientWrapper):
         api_key: str,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        x_api_version: typing.Optional[str] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(x_another_header=x_another_header, api_key=api_key, base_url=base_url, timeout=timeout)
+        super().__init__(
+            x_another_header=x_another_header,
+            api_key=api_key,
+            base_url=base_url,
+            timeout=timeout,
+            x_api_version=x_api_version,
+        )
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
-            base_headers=self.get_headers(),
-            base_timeout=self.get_timeout(),
-            base_url=self.get_base_url(),
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )

@@ -68,8 +68,8 @@ await client.FolderD.Service.GetDirectThreadAsync();
 await client.Foo.FindAsync(
     new FindRequest
     {
-        OptionalString = "string",
-        PublicProperty = "string",
+        OptionalString = "optionalString",
+        PublicProperty = "publicProperty",
         PrivateProperty = 1,
     }
 );

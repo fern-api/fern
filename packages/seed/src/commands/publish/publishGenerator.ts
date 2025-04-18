@@ -1,9 +1,12 @@
+import path from "path";
+import semver from "semver";
+
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+
 import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
-import path from "path";
-import semver from "semver";
+
 import { PublishDockerConfiguration } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
@@ -60,8 +63,8 @@ export async function publishGenerator({
         const preBuildCommands = Array.isArray(unparsedCommands)
             ? unparsedCommands
             : unparsedCommands
-            ? [unparsedCommands]
-            : [];
+              ? [unparsedCommands]
+              : [];
 
         await runCommands(preBuildCommands, context, workingDirectory);
         await buildAndPushDockerImage(publishConfig.docker, publishVersion, context);
@@ -69,8 +72,8 @@ export async function publishGenerator({
         // Instance of PublishCommand configuration, leverage these commands outright
         const unparsedCommands = publishConfig.command;
         const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands];
-        const versionSubsitution = publishConfig.versionSubstitution;
-        const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubsitution));
+        const versionSubstitution = publishConfig.versionSubstitution;
+        const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubstitution));
         await runCommands(subbedCommands, context, workingDirectory);
     }
 }

@@ -1,9 +1,11 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { MockServer } from "@fern-api/mock";
 import { Project } from "@fern-api/project-loader";
-import { APIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
 import { API_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
@@ -32,7 +34,7 @@ export async function testOutput({
         return cliContext.failAndThrow(`No API specified. Use the --${API_CLI_OPTION} option.`);
     }
 
-    const workspace: APIWorkspace = project.apiWorkspaces[0];
+    const workspace: AbstractAPIWorkspace<unknown> = project.apiWorkspaces[0];
 
     await cliContext.runTaskForWorkspace(workspace, async (context) => {
         const fernWorkspace: FernWorkspace = await workspace.toFernWorkspace({ context });
@@ -43,17 +45,18 @@ export async function testOutput({
             workspace: fernWorkspace
         });
 
-        const ir = await generateIntermediateRepresentation({
+        const ir = generateIntermediateRepresentation({
             workspace: fernWorkspace,
             audiences: { type: "all" },
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false,
-            disableExamples: false,
+            exampleGeneration: { disabled: false },
             readme: undefined,
             version: undefined,
             packageName: undefined,
-            context
+            context,
+            sourceResolver: new SourceResolverImpl(context, fernWorkspace)
         });
 
         const mockServer = new MockServer({

@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "problemId": {
+      "$ref": "#/definitions/commons.ProblemId"
+    },
+    "submissionId": {
+      "$ref": "#/definitions/submission.SubmissionId"
+    }
+  },
+  "required": [
+    "problemId",
+    "submissionId"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "commons.ProblemId": {
+      "type": "string"
+    },
+    "submission.SubmissionId": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

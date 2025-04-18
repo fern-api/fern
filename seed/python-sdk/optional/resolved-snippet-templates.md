@@ -7,7 +7,7 @@ client.optional.send_optional_body(
 		"string": {"key":"value"}
 	}
 )
- 
-```                        
+
+```
 
 

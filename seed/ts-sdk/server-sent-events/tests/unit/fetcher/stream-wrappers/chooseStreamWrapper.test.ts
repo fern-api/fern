@@ -1,8 +1,8 @@
 import { RUNTIME } from "../../../../src/core/runtime";
-import { chooseStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
 import { Node18UniversalStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/Node18UniversalStreamWrapper";
 import { NodePre18StreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper";
 import { UndiciStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper";
+import { chooseStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
 
 describe("chooseStreamWrapper", () => {
     beforeEach(() => {
@@ -21,7 +21,7 @@ describe("chooseStreamWrapper", () => {
     });
 
     it('should return a NodePre18StreamWrapper when RUNTIME.type is "node" and RUNTIME.parsedVersion is not null and RUNTIME.parsedVersion is less than 18', async () => {
-        const stream = await import("stream");
+        const stream = await import("readable-stream");
         const expected = new NodePre18StreamWrapper(new stream.Readable());
 
         RUNTIME.type = "node";

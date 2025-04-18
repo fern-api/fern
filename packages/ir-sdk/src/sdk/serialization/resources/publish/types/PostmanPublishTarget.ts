@@ -16,7 +16,7 @@ export const PostmanPublishTarget: core.serialization.ObjectSchema<
 });
 
 export declare namespace PostmanPublishTarget {
-    interface Raw {
+    export interface Raw {
         apiKey: string;
         workspaceId: string;
         collectionId?: string | null;

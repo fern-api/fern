@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedOauthClientCredentialsDefault;\n\nvar client = new SeedOauthClientCredentialsDefaultClient();\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"string\",\n        ClientSecret = \"string\",\n        GrantType = \"client_credentials\",\n    }\n);\n"
+                "type": "csharp",
+                "client": "using SeedOauthClientCredentialsDefault;\n\nvar client = new SeedOauthClientCredentialsDefaultClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        GrantType = \"client_credentials\",\n    }\n);\n"
             }
         }
     ]

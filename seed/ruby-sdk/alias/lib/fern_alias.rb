@@ -22,7 +22,7 @@ module SeedAliasClient
     # @return [Void]
     # @example
     #  alias_ = SeedAliasClient::Client.new(base_url: "https://api.example.com")
-    #  alias_.get(type_id: "type-kaljhv87")
+    #  alias_.get(type_id: "typeId")
     def get(type_id:, request_options: nil)
       @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -60,7 +60,7 @@ module SeedAliasClient
     # @return [Void]
     # @example
     #  alias_ = SeedAliasClient::Client.new(base_url: "https://api.example.com")
-    #  alias_.get(type_id: "type-kaljhv87")
+    #  alias_.get(type_id: "typeId")
     def get(type_id:, request_options: nil)
       @async_request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

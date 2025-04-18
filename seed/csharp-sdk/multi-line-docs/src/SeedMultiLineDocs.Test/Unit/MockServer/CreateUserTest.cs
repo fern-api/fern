@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMultiLineDocs;
 using SeedMultiLineDocs.Core;
-
-#nullable enable
 
 namespace SeedMultiLineDocs.Test.Unit.MockServer;
 
@@ -13,19 +9,19 @@ namespace SeedMultiLineDocs.Test.Unit.MockServer;
 public class CreateUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
-              "name": "string",
+              "name": "name",
               "age": 1
             }
             """;
 
         const string mockResponse = """
             {
-              "id": "string",
-              "name": "string",
+              "id": "id",
+              "name": "name",
               "age": 1
             }
             """;
@@ -46,12 +42,11 @@ public class CreateUserTest : BaseMockServerTest
             );
 
         var response = await Client.User.CreateUserAsync(
-            new CreateUserRequest { Name = "string", Age = 1 },
-            RequestOptions
+            new CreateUserRequest { Name = "name", Age = 1 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+        );
     }
 }

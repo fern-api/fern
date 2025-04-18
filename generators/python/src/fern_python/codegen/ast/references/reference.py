@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from .module import Module
-from .qualfied_name import QualifiedName
+from .qualified_name import QualifiedName
 
 
 @dataclass(frozen=True)
@@ -21,7 +21,7 @@ class ReferenceImport:
 class Reference:
     qualified_name_excluding_import: QualifiedName
     """
-    the qualfied name of the reference "inside" the import.
+    the qualified name of the reference "inside" the import.
 
     example:
         import typing

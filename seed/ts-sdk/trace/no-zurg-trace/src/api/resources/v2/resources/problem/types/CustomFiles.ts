@@ -6,12 +6,12 @@ import * as SeedTrace from "../../../../../index";
 
 export type CustomFiles = SeedTrace.v2.CustomFiles.Basic | SeedTrace.v2.CustomFiles.Custom;
 
-export declare namespace CustomFiles {
-    interface Basic extends SeedTrace.v2.BasicCustomFiles {
+export namespace CustomFiles {
+    export interface Basic extends SeedTrace.v2.BasicCustomFiles {
         type: "basic";
     }
 
-    interface Custom {
+    export interface Custom {
         type: "custom";
         value: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
     }

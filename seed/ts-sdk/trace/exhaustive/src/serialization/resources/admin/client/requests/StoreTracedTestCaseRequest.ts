@@ -17,7 +17,7 @@ export const StoreTracedTestCaseRequest: core.serialization.Schema<
 });
 
 export declare namespace StoreTracedTestCaseRequest {
-    interface Raw {
+    export interface Raw {
         result: TestCaseResultWithStdout.Raw;
         traceResponses: TraceResponse.Raw[];
     }

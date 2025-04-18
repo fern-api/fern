@@ -14,6 +14,7 @@ paths:
           required: true
           schema:
             type: string
+          example: rsc-xyz
           examples:
             Example1:
               value: rsc-xyz
@@ -27,6 +28,7 @@ paths:
               examples:
                 Example1:
                   value:
+                    status: ACTIVE
                     resource_type: user
                     userName: username
                     metadata_tags:
@@ -46,6 +48,7 @@ paths:
           required: true
           schema:
             type: integer
+          example: 10
           examples:
             One:
               value: 10
@@ -55,6 +58,7 @@ paths:
           schema:
             type: string
             format: date
+          example: '2023-01-01'
           examples:
             One:
               value: '2023-01-01'
@@ -71,6 +75,7 @@ paths:
                 One:
                   value:
                     - resource_type: user
+                      status: ACTIVE
                       userName: username
                       metadata_tags:
                         - tag1

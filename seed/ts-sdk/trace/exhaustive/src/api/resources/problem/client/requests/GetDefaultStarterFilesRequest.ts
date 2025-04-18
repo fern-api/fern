@@ -9,10 +9,13 @@ import * as SeedTrace from "../../../../index";
  *     {
  *         inputParams: [{
  *                 variableType: SeedTrace.VariableType.integerType(),
- *                 name: "string"
+ *                 name: "name"
+ *             }, {
+ *                 variableType: SeedTrace.VariableType.integerType(),
+ *                 name: "name"
  *             }],
  *         outputType: SeedTrace.VariableType.integerType(),
- *         methodName: "string"
+ *         methodName: "methodName"
  *     }
  */
 export interface GetDefaultStarterFilesRequest {
@@ -25,7 +28,6 @@ export interface GetDefaultStarterFilesRequest {
      *   - Less Than `<``
      *   - Equals `=`
      *   - Period `.`
-     *
      */
     methodName: string;
 }

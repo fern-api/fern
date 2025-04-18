@@ -16,7 +16,7 @@ export const TestCaseMetadata: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestCaseMetadata {
-    interface Raw {
+    export interface Raw {
         id: serializers.v2.TestCaseId.Raw;
         name: string;
         hidden: boolean;

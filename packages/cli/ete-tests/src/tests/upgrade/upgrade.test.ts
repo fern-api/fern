@@ -1,7 +1,9 @@
-import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+
+import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 

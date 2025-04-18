@@ -2,32 +2,41 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class CustomTestCasesUnsupported extends SerializableType
+class CustomTestCasesUnsupported extends JsonSerializableType
 {
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
-     * @param string $problemId
-     * @param string $submissionId
+     * @param array{
+     *   problemId: string,
+     *   submissionId: string,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        string $submissionId,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->submissionId = $submissionId;
+        $this->problemId = $values['problemId'];
+        $this->submissionId = $values['submissionId'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

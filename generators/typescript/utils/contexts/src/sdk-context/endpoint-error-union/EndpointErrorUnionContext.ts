@@ -1,5 +1,7 @@
-import { Name } from "@fern-fern/ir-sdk/api";
 import { PackageId, Reference } from "@fern-typescript/commons";
+
+import { Name } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedEndpointErrorUnion } from "./GeneratedEndpointErrorUnion";
 
 export interface EndpointErrorUnionContext {

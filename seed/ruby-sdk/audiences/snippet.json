@@ -95,7 +95,7 @@
                 "identifierOverride": "endpoint_foo.find"
             },
             "snippet": {
-                "client": "require \"fern_audiences\"\n\naudiences = SeedAudiencesClient::Client.new(base_url: \"https://api.example.com\")\naudiences.foo.find(\n  optional_string: \"string\",\n  public_property: \"string\",\n  private_property: 1\n)",
+                "client": "require \"fern_audiences\"\n\naudiences = SeedAudiencesClient::Client.new(base_url: \"https://api.example.com\")\naudiences.foo.find(\n  optional_string: \"optionalString\",\n  public_property: \"publicProperty\",\n  private_property: 1\n)",
                 "type": "ruby"
             }
         },
@@ -106,7 +106,7 @@
                 "identifierOverride": "endpoint_foo.find"
             },
             "snippet": {
-                "client": "require \"fern_audiences\"\n\naudiences = SeedAudiencesClient::Client.new(base_url: \"https://api.example.com\")\naudiences.foo.find(\n  optional_string: \"string\",\n  public_property: \"string\",\n  private_property: 1\n)",
+                "client": "require \"fern_audiences\"\n\naudiences = SeedAudiencesClient::Client.new(base_url: \"https://api.example.com\")\naudiences.foo.find(\n  optional_string: \"optionalString\",\n  public_property: \"publicProperty\",\n  private_property: 1\n)",
                 "type": "ruby"
             }
         }

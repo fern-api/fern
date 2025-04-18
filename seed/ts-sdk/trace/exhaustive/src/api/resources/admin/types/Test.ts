@@ -6,26 +6,26 @@ import * as SeedTrace from "../../../index";
 
 export type Test = SeedTrace.Test.And | SeedTrace.Test.Or | SeedTrace.Test._Unknown;
 
-export declare namespace Test {
-    interface And extends _Utils {
+export namespace Test {
+    export interface And extends _Utils {
         type: "and";
         value: boolean;
     }
 
-    interface Or extends _Utils {
+    export interface Or extends _Utils {
         type: "or";
         value: boolean;
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.Test._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         and: (value: boolean) => _Result;
         or: (value: boolean) => _Result;
         _other: (value: { type: string }) => _Result;

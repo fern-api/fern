@@ -2,33 +2,42 @@
 
 namespace Seed\Commons\Metadata\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Metadata extends SerializableType
+class Metadata extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?array<string, string> $data
      */
-    #[JsonProperty("data"), ArrayType(["string" => "string"])]
+    #[JsonProperty('data'), ArrayType(['string' => 'string'])]
     public ?array $data;
 
     /**
-     * @param string $id
-     * @param ?array<string, string> $data
+     * @param array{
+     *   id: string,
+     *   data?: ?array<string, string>,
+     * } $values
      */
     public function __construct(
-        string $id,
-        ?array $data = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->data = $data;
+        $this->id = $values['id'];
+        $this->data = $values['data'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

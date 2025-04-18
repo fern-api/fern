@@ -12,5 +12,5 @@ export const SomeAliasedLiteral: core.serialization.Schema<
 > = core.serialization.stringLiteral("You're super wise");
 
 export declare namespace SomeAliasedLiteral {
-    type Raw = "You're super wise";
+    export type Raw = "You're super wise";
 }

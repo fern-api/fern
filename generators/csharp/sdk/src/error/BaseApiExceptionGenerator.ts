@@ -1,5 +1,7 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -7,7 +9,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.context.getBaseApiExceptionClassReference(),
-            access: "public",
+            access: csharp.Access.Public,
             parentClassReference: this.context.getBaseExceptionClassReference(),
             primaryConstructor: {
                 parameters: [
@@ -23,7 +25,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
             csharp.field({
                 name: "StatusCode",
                 type: csharp.Type.integer(),
-                access: "public",
+                access: csharp.Access.Public,
                 get: true,
                 initializer: csharp.codeblock("statusCode"),
                 summary: "The error code of the response that triggered the exception."
@@ -33,7 +35,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
             csharp.field({
                 name: "Body",
                 type: csharp.Type.object(),
-                access: "public",
+                access: csharp.Access.Public,
                 get: true,
                 initializer: csharp.codeblock("body"),
                 summary: "The body of the response that triggered the exception."

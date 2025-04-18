@@ -12,7 +12,7 @@ export const MapValue: core.serialization.ObjectSchema<serializers.MapValue.Raw,
     });
 
 export declare namespace MapValue {
-    interface Raw {
+    export interface Raw {
         keyValuePairs: serializers.KeyValuePair.Raw[];
     }
 }

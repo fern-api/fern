@@ -1,0 +1,229 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Snippets > 'any (JSON string)' 1`] = `
+"package example
+
+var value = \`{"one": 1, "two": 2}\`"
+`;
+
+exports[`Snippets > 'any (list)' 1`] = `
+"package example
+
+var value = map[string]interface{}{
+    "organization": "acme",
+    "users": []interface{}{
+        map[string]interface{}{
+            "name": "John Doe",
+            "age": 42,
+            "active": false,
+        },
+        map[string]interface{}{
+            "name": "Jane Doe",
+            "age": 41,
+            "active": true,
+        },
+    },
+}"
+`;
+
+exports[`Snippets > 'any (nested)' 1`] = `
+"package example
+
+var value = map[string]interface{}{
+    "user": map[string]interface{}{
+        "name": "John Doe",
+        "age": 42,
+        "active": false,
+    },
+}"
+`;
+
+exports[`Snippets > 'any (null)' 1`] = `
+"package example
+
+var value = nil"
+`;
+
+exports[`Snippets > 'any (simple)' 1`] = `
+"package example
+
+var value = "Hello, world!""
+`;
+
+exports[`Snippets > 'enum (optional)' 1`] = `
+"package example
+
+import (
+    acme "github.com/acme/acme-go"
+)
+
+var value = acme.StatusDeactivated.Ptr()"
+`;
+
+exports[`Snippets > 'enum (required)' 1`] = `
+"package example
+
+import (
+    acme "github.com/acme/acme-go"
+)
+
+var value = acme.StatusActivated"
+`;
+
+exports[`Snippets > 'map (empty)' 1`] = `
+"package example
+
+var value = map[string]int{}"
+`;
+
+exports[`Snippets > 'map (nested)' 1`] = `
+"package example
+
+import (
+    acme "github.com/acme/acme-go"
+)
+
+var value = map[string]acme.User{
+    "john": acme.User{
+        Name: "John Doe",
+    },
+    "jane": acme.User{
+        Name: "Jane Doe",
+    },
+}"
+`;
+
+exports[`Snippets > 'map (primitives)' 1`] = `
+"package example
+
+var value = map[string]int{
+    "one": 1,
+    "two": 2,
+}"
+`;
+
+exports[`Snippets > 'map (w/ nop)' 1`] = `
+"package example
+
+var value = map[string]int{
+    "one": 1,
+}"
+`;
+
+exports[`Snippets > 'primitive (bytes)' 1`] = `
+"package example
+
+var value = []byte("去是伟大的!")"
+`;
+
+exports[`Snippets > 'primitive (float)' 1`] = `
+"package example
+
+var value = 42.1"
+`;
+
+exports[`Snippets > 'primitive (int)' 1`] = `
+"package example
+
+var value = 42"
+`;
+
+exports[`Snippets > 'slice (w/ nop)' 1`] = `
+"package example
+
+var value = []int{
+    1,
+    2,
+}"
+`;
+
+exports[`Snippets > 'slice' 1`] = `
+"package example
+
+var value = []int{
+    1,
+    2,
+    3,
+}"
+`;
+
+exports[`Snippets > 'struct (empty)' 1`] = `
+"package example
+
+import (
+    acme "github.com/acme/acme-go"
+)
+
+var value = acme.User{}"
+`;
+
+exports[`Snippets > 'struct (nested)' 1`] = `
+"package example
+
+import (
+    acme "github.com/acme/acme-go"
+    billing "github.com/acme/acme-go/billing"
+    uuid "github.com/google/uuid"
+)
+
+var value = acme.User{
+    Name: "John Doe",
+    Address: billing.Address{
+        ID: uuid.MustParse(
+            "123e4567-e89b-12d3-a456-426614174000",
+        ),
+        Street: "123 Main St.",
+        CreatedAt: acme.Time(
+            acme.MustParseDateTime(
+                "1994-01-01T00:00:00Z",
+            ),
+        ),
+    },
+}"
+`;
+
+exports[`Snippets > 'struct (primitives)' 1`] = `
+"package example
+
+import (
+    acme "github.com/acme/acme-go"
+)
+
+var value = acme.User{
+    Name: "John Doe",
+    Age: 42,
+    Active: acme.Bool(
+        true,
+    ),
+}"
+`;
+
+exports[`Snippets > 'struct (w/ nop)' 1`] = `
+"package example
+
+import (
+    acme "github.com/acme/acme-go"
+)
+
+var value = acme.User{
+    Name: "John Doe",
+    Age: 42,
+}"
+`;
+
+exports[`file > import collision 1`] = `
+"package example
+
+import (
+    common "github.com/acme/acme-go/common"
+    _common "github.com/acme/acme-go/nested/common"
+)
+
+type Foo struct {
+    Name common.Identifier
+}
+type Bar struct {
+    Name _common.Identifier
+}
+"
+`;

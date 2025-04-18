@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 import { boolean, number, object, property, string, undiscriminatedUnion } from "../builders";
 
 describe("skipValidation", () => {

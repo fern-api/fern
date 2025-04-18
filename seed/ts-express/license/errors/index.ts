@@ -1,0 +1,1 @@
+export { SeedLicenseError } from "./SeedLicenseError";

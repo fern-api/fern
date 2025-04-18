@@ -1,55 +1,56 @@
-import { cwd, resolve } from "@fern-api/fs-utils";
-import { noop } from "lodash-es";
+#!/usr/bin/env node
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
+import yaml from "yaml";
+import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import yargs from "yargs/yargs";
-import { checkReleaseBlockers } from "./checkReleaseBlockers";
-import { checkRootPackage } from "./checkRootPackage";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
-import { writeFile } from "fs/promises";
-import prettier from "prettier";
-import { zodToJsonSchema } from "zod-to-json-schema";
 
-void yargs(hideBin(process.argv))
-    .scriptName(process.env.CLI_NAME ?? "fern-scripts")
-    .strict()
-    .command(
-        "write-json-schema <filepath>",
-        "Write the Fern API JSON schema to the root of the repo",
-        (yargs) =>
-            yargs.positional("filepath", {
-                type: "string",
-                demandOption: true
-            }),
-        async (argv) => {
-            const filepath = argv.filepath;
-            const jsonSchema = zodToJsonSchema(DefinitionFileSchema, "Fern Definition");
-            const jsonSchemaStr = JSON.stringify(jsonSchema);
-            const config = (await prettier.resolveConfig(filepath)) ?? undefined;
-            const jsonSchemaFormatted = prettier.format(jsonSchemaStr, { ...config, filepath });
-            await writeFile(filepath, jsonSchemaFormatted);
-        }
-    )
-    .command(
-        "check-root-package",
-        "Check (or fix) the package.json of the root package",
-        (argv) =>
-            argv.option("fix", {
-                boolean: true,
-                default: false
-            }),
-        async (argv) => {
-            await checkRootPackage({
-                shouldFix: argv.fix
-            });
-        }
-    )
-    .command("check-cli-release-blockers", "Check that there are no release blockers for CLI", noop, async () => {
-        await checkReleaseBlockers("release-blockers-cli.yml");
-    })
-    .command("check-docs-release-blockers", "Check that there are no release blockers for docs", noop, async () => {
-        await checkReleaseBlockers("release-blockers-docs.yml");
-    })
-    .demandCommand()
-    .showHelpOnFail(true)
-    .parse();
+import { convertChangelogToVersions } from "./convertChangelogToVersionsYml";
+
+async function main() {
+    try {
+        await yargs(hideBin(process.argv))
+            .command(
+                "changelog-to-versions",
+                "Convert changelog entries to version files",
+                (yargs) => {
+                    return yargs
+                        .option("input", {
+                            alias: "i",
+                            type: "string",
+                            description: "Path to input changelog file",
+                            demandOption: true
+                        })
+                        .option("output", {
+                            alias: "o",
+                            type: "string",
+                            description: "Output directory for version files",
+                            demandOption: true
+                        })
+                        .option("generator", {
+                            alias: "g",
+                            type: "string",
+                            description: "Generator name",
+                            demandOption: true
+                        });
+                },
+                async (argv) => {
+                    const versionsYml = await convertChangelogToVersions(argv.input, argv.generator);
+                    const outputPath = path.resolve(argv.output);
+                    await mkdir(outputPath, { recursive: true });
+                    await writeFile(path.join(outputPath, "versions.yml"), yaml.stringify(yaml.parse(versionsYml)));
+                    // eslint-disable-next-line no-console
+                    console.log(`Successfully wrote versions to ${path.join(outputPath, "versions.yml")}`);
+                }
+            )
+            .strict()
+            .help()
+            .parse();
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Error:", error);
+        process.exit(1);
+    }
+}
+
+void main();

@@ -15,7 +15,7 @@ export const DeepEqualityCorrectnessCheck: core.serialization.ObjectSchema<
 });
 
 export declare namespace DeepEqualityCorrectnessCheck {
-    interface Raw {
+    export interface Raw {
         expectedValueParameterId: ParameterId.Raw;
     }
 }

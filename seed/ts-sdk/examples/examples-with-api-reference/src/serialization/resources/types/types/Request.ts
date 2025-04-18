@@ -12,7 +12,7 @@ export const Request: core.serialization.ObjectSchema<serializers.Request.Raw, S
     });
 
 export declare namespace Request {
-    interface Raw {
+    export interface Raw {
         request?: unknown;
     }
 }

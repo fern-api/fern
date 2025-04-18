@@ -17,7 +17,7 @@ export const ListUsersExtendedResponse: core.serialization.ObjectSchema<
     .extend(UserPage);
 
 export declare namespace ListUsersExtendedResponse {
-    interface Raw extends UserPage.Raw {
+    export interface Raw extends UserPage.Raw {
         total_count: number;
     }
 }

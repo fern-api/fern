@@ -25,12 +25,10 @@ paths:
               properties:
                 _type:
                   type: string
-                  enum:
-                    - CreateUserRequest
+                  const: CreateUserRequest
                 _version:
                   type: string
-                  enum:
-                    - v1
+                  const: v1
                 name:
                   type: string
               required:
@@ -45,8 +43,7 @@ components:
       properties:
         status:
           type: string
-          enum:
-            - failure
+          const: failure
       required:
         - status
     User:

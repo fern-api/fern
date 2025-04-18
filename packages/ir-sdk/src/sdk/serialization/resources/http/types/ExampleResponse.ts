@@ -31,14 +31,14 @@ export const ExampleResponse: core.serialization.Schema<serializers.ExampleRespo
         });
 
 export declare namespace ExampleResponse {
-    type Raw = ExampleResponse.Ok | ExampleResponse.Error;
+    export type Raw = ExampleResponse.Ok | ExampleResponse.Error;
 
-    interface Ok {
+    export interface Ok {
         type: "ok";
         value: ExampleEndpointSuccessResponse.Raw;
     }
 
-    interface Error extends ExampleEndpointErrorResponse.Raw {
+    export interface Error extends ExampleEndpointErrorResponse.Raw {
         type: "error";
     }
 }

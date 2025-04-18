@@ -88,6 +88,7 @@ public final class SubmissionTypeState {
     }
 
     @JsonTypeName("test")
+    @JsonIgnoreProperties("type")
     private static final class TestValue implements Value {
         @JsonUnwrapped
         private TestSubmissionState value;
@@ -126,6 +127,7 @@ public final class SubmissionTypeState {
     }
 
     @JsonTypeName("workspace")
+    @JsonIgnoreProperties("type")
     private static final class WorkspaceValue implements Value {
         @JsonUnwrapped
         private WorkspaceSubmissionState value;
@@ -163,6 +165,7 @@ public final class SubmissionTypeState {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

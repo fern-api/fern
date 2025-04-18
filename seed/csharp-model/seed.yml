@@ -1,12 +1,18 @@
-irVersion: v53
+irVersion: v57
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+
 publish:
   preBuildCommands:
     - ./.github/actions/install
     - pnpm --filter @fern-api/fern-csharp-model dist:cli
-  docker: 
+  docker:
     file: ./generators/csharp/model/Dockerfile
     image: fernapi/fern-csharp-model
     context: .
@@ -18,10 +24,10 @@ test:
     workingDirectory: generators/csharp
     buildCommand:
       - pnpm --filter @fern-api/fern-csharp-model dist:cli
-    runCommand: node model/dist/bundle.cjs
+    runCommand: node model/dist/cli.cjs
 
 language: csharp
-generatorType: SDK
+generatorType: Model
 defaultOutputMode: github
 fixtures:
   grpc-proto-exhaustive:
@@ -31,10 +37,18 @@ fixtures:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory
+  enum:
+    - customConfig:
+        experimental-enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - customConfig:
+        experimental-enable-forward-compatible-enums: false
+      outputFolder: plain-enums
 scripts:
-  - docker: bitnami/dotnet-sdk:8
+  - docker: fernapi/csharp-seed
     commands:
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+      - dotnet restore src
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
 allowedFailures:
   - mixed-file-directory
   - objects-with-imports

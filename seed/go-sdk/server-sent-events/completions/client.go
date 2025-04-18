@@ -6,13 +6,14 @@ import (
 	context "context"
 	fern "github.com/server-sent-events/fern"
 	core "github.com/server-sent-events/fern/core"
+	internal "github.com/server-sent-events/fern/internal"
 	option "github.com/server-sent-events/fern/option"
 	http "net/http"
 )
 
 type Client struct {
 	baseURL string
-	caller  *core.Caller
+	caller  *internal.Caller
 	header  http.Header
 }
 
@@ -20,8 +21,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller: core.NewCaller(
-			&core.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -34,32 +35,34 @@ func (c *Client) Stream(
 	ctx context.Context,
 	request *fern.StreamCompletionRequest,
 	opts ...option.RequestOption,
-) error {
+) (*core.Stream[fern.StreamedCompletion], error) {
 	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream"
+	headers := internal.MergeHeaders(
+		c.header.Clone(),
+		options.ToHeader(),
+	)
+	headers.Set("Accept", "text/event-stream")
 
-	baseURL := ""
-	if c.baseURL != "" {
-		baseURL = c.baseURL
-	}
-	if options.BaseURL != "" {
-		baseURL = options.BaseURL
-	}
-	endpointURL := baseURL + "/" + "stream"
-
-	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
-
-	if err := c.caller.Call(
+	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
+	return streamer.Stream(
 		ctx,
-		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     request,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			Prefix:          internal.DefaultSSEDataPrefix,
+			Terminator:      "[[DONE]]",
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
 		},
-	); err != nil {
-		return err
-	}
-	return nil
+	)
 }

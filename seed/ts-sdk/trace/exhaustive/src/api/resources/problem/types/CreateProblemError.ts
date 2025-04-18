@@ -6,20 +6,20 @@ import * as SeedTrace from "../../../index";
 
 export type CreateProblemError = SeedTrace.CreateProblemError.Generic | SeedTrace.CreateProblemError._Unknown;
 
-export declare namespace CreateProblemError {
-    interface Generic extends SeedTrace.GenericCreateProblemError, _Utils {
+export namespace CreateProblemError {
+    export interface Generic extends SeedTrace.GenericCreateProblemError, _Utils {
         errorType: "generic";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         errorType: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.CreateProblemError._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         generic: (value: SeedTrace.GenericCreateProblemError) => _Result;
         _other: (value: { errorType: string }) => _Result;
     }
@@ -32,7 +32,7 @@ export const CreateProblemError = {
             errorType: "generic",
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemError.Generic,
-                visitor: SeedTrace.CreateProblemError._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemError._visit(this, visitor);
             },
@@ -44,7 +44,7 @@ export const CreateProblemError = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.CreateProblemError._Unknown,
-                visitor: SeedTrace.CreateProblemError._Visitor<_Result>
+                visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
             ) {
                 return SeedTrace.CreateProblemError._visit(this, visitor);
             },
@@ -53,7 +53,7 @@ export const CreateProblemError = {
 
     _visit: <_Result>(
         value: SeedTrace.CreateProblemError,
-        visitor: SeedTrace.CreateProblemError._Visitor<_Result>
+        visitor: SeedTrace.CreateProblemError._Visitor<_Result>,
     ): _Result => {
         switch (value.errorType) {
             case "generic":

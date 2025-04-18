@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedIdempotencyHeaders;
 using SeedIdempotencyHeaders.Core;
-
-#nullable enable
 
 namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
 
@@ -13,7 +9,7 @@ namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
 public class CreateTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -42,12 +38,8 @@ public class CreateTest : BaseMockServerTest
             );
 
         var response = await Client.Payment.CreateAsync(
-            new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd },
-            RequestOptions
+            new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

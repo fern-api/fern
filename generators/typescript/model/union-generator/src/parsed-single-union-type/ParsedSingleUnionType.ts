@@ -1,5 +1,6 @@
 import { ModelContext } from "@fern-typescript/contexts";
-import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 
 export interface ParsedSingleUnionType<Context extends ModelContext> {
@@ -13,6 +14,7 @@ export interface ParsedSingleUnionType<Context extends ModelContext> {
         context: Context,
         generatedUnion: GeneratedUnionImpl<Context>
     ): ParsedSingleUnionType.InterfaceDeclaration;
+    generateForInlineUnion(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.TypeNode;
     getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction;
     getBuilderName(): string;
     getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[];
@@ -29,6 +31,7 @@ export declare namespace ParsedSingleUnionType {
     export interface InterfaceDeclaration {
         name: string;
         extends: ts.TypeNode[];
-        jsonProperties: OptionalKind<PropertySignatureStructure>[];
+        properties: OptionalKind<PropertySignatureStructure>[];
+        module: ModuleDeclarationStructure | undefined;
     }
 }

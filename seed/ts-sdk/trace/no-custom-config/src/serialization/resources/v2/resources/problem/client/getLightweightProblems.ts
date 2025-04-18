@@ -13,5 +13,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.list(LightweightProblemInfoV2);
 
 export declare namespace Response {
-    type Raw = LightweightProblemInfoV2.Raw[];
+    export type Raw = LightweightProblemInfoV2.Raw[];
 }

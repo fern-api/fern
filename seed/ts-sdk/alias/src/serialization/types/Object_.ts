@@ -10,5 +10,5 @@ import { Type } from "./Type";
 export const Object_: core.serialization.ObjectSchema<serializers.Object_.Raw, SeedAlias.Object_> = Type;
 
 export declare namespace Object_ {
-    type Raw = Type.Raw;
+    export type Raw = Type.Raw;
 }

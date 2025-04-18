@@ -6,7 +6,7 @@ const client = new SeedSingleUrlEnvironmentNoDefaultClient({
   token: "YOUR_TOKEN",
 });
 await client.dummy.getDummy();
- 
-```                        
+
+```
 
 

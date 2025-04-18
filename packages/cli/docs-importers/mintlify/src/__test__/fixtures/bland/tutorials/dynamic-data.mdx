@@ -1,0 +1,268 @@
+---
+title: "Dynamic Data"
+description: "Interact with the real world by connecting your agent to external APIs."
+---
+
+## Introduction
+
+With Dynamic Data, you can make external API requests at the start and throughout your phone call. This allows you to load data from your database, or from any other API. You can then use that data in your AI responses, or to define circumstantial behavior for each call.
+
+Some examples of what Dynamic Data enables:
+
+- Maintain conversation history between calls
+- Define behavior based on the user's location
+- Handle real-time data like status updates or prices
+
+<Accordion title="Expand to see an example in action">
+
+Here's how to make an [Inbound Agent](/api-v1/post/inbound-number-update) remember past conversations they've had with callers. There's a lot of other useful information we can integrate, like how long ago that call occurred and the call's duration.
+
+`Endpoint: POST https://api.bland.ai/v1/inbound/<<INBOUND NUMBER>>`
+
+```json
+{
+    "prompt": "You're a service agent working on behalf of Bland AI...",
+    "dynamic_data": [
+        {
+            // First, retrieve the previous call's data
+            "url": "https://api.bland.ai/v1/calls",
+            "method": "GET",
+            "headers": {
+                "authorization": <<YOUR API KEY>>
+            },
+            "query": {
+                // These parameters narrow down the search and will make the request faster
+                // as well as easier to understand during later analysis.
+                "from_number": "{{phone_number}}",
+                "from": 1, // Offset by 1 to exclude the current call
+                "limit": 1
+            },
+            "response_data": [
+                {
+                    // These are the variables you're defining
+                    "name": "previous_call_id",
+                    // And the path to the data you want to extract
+                    "data": "$.calls[0].c_id"
+                },
+                {
+                    "name": "previous_call_time",
+                    "data": "$.calls[0].created_at"
+                },
+                {
+                    "name": "previous_call_duration_minutes",
+                    "data": "$.calls[0].call_length"
+                }
+            ]
+        },
+        {
+            // Once we have the previous call's ID, we can retrieve the transcript
+            // Note the variable used in the URL
+            "url": "https://api.bland.ai/v1/calls/{{previous_call_id}}",
+            "method": "GET",
+            "headers": {
+                "authorization": <<YOUR API KEY>>
+            },
+            "response_data": [
+                {
+                    "name": "previous_conversation",
+                    "data": "$.concatenated_transcript",
+                    // The context parameter elaborates on the variable's purpose and use
+                    "context": "Your previous conversation with this person (if it exists): {{previous_conversation}}"
+                }
+            ]
+        },
+        {
+            // Helpful tip for debugging:
+            // You can send the data to a webhook to see what it looks like
+            "url": "https://webhook.site/...",
+            "method": "POST",
+            // Setting cache to false means you'll be able to see the data change in real-time
+            "cache": false,
+            "body": {
+                // And here's the data we're sending
+                "call_id": "{{call_id}}",
+                "prev_call_id": "{{previous_call_id}}",
+                "now": "{{now}}",
+                "previous_call_time": "{{previous_call_time}}",
+                "previous_conversation": "{{previous_conversation}}"
+            }
+            // Additional note:
+            // Since no response_data is defined, latency isn't affected by this request
+        }
+    ]
+}
+```
+
+</Accordion>
+
+We'll cover the following features in this section:
+
+- System variables
+- External API requests
+- Extracting data from responses
+- Variables as parameters
+- Chaining requests
+
+## System Variables
+
+Variables are defined with double curly braces, like `{{variable}}`. System variables are predefined variables that are available in every AI phone call. You can use them to access information about the current call, like the user's phone number or the current time.
+
+Note: Variables are NOT case sensitive, and outer spaces are trimmed automatically.
+
+Base variables:
+
+- `{{phone_number}}` - Always the other party's number
+- `{{country}}` - The country code (ex. US)
+- `{{state}}` - The state or province's abbreviation (ex. CA for California)
+- `{{city}}` - The full city name, capitalized
+- `{{zip}}` - The zip code
+- `{{call_id}}` - The unique ID of the current call
+- `{{now}}`
+- `{{now_utc}}`
+- `{{from}}` - The outbound number in E.164 format
+- `{{to}}` - The inbound number in E.164 format
+- `{{short_from}}` - outbound number with country code removed
+- `{{short_to}}` - inbound number with country code removed
+
+Variables can be used mid-sentence, like this:
+
+```json
+{
+  "task": "... Today is {{now}} ..."
+}
+```
+
+## External API Requests
+
+External API requests are defined in the `dynamic_data` parameter of your call request or inbound agent configuration. The `dynamic_data` parameter is an array of objects, where each object represents an API request.
+
+Here's a simple request that can be used to load public data about the current price of Bitcoin, then store it in a variable called `{{bitcoin_price}}`:
+
+```json
+{
+    "dynamic_data": [
+        {
+            "url": "https://api.coindesk.com/v1/bpi/currentprice.json"
+            "response_data": [
+                {
+                    "name": "bitcoin_price",
+                    "data": "$.bpi.USD.rate",
+                    "context": "Current price of Bitcoin in USD is ${{bitcoin_price}}"
+                }
+            ]
+        }
+    ]
+}
+```
+
+<Accordion title="Additional Parameters">
+  - `timeout` - The maximum number of milliseconds to wait for a response. - Default: `2000` - `method` - The HTTP
+  method to use. - Defaults to `GET`, otherwise `POST` is allowed. - `headers` - An object of headers to send with the
+  request. - `body` - The body of the request. Only used if `method` is `POST`. - `response_data` - An array of objects
+  that define how to extract data from the response. - See the next section for more details. - `cache` - Whether to
+  store the response, or refresh that data before each AI response. - Defaults to `true`.
+</Accordion>
+
+## Extracting Data from Responses
+
+Rather than using the full response, you can extract specific data from the response using the `data` parameter. The `data` parameter follows JSON structuring, using dot notation and array indices. For example, if the response is:
+
+```json
+{
+  "bpi": {
+    "USD": {
+      "code": "USD",
+      "rate": "9,000.00",
+      "description": "United States Dollar",
+      "rate_float": 9000
+    },
+    "GBP": {
+      "code": "GBP",
+      "rate": "6,000.00",
+      "description": "British Pound Sterling",
+      "rate_float": 6000
+    }
+  }
+}
+```
+
+Then `$.bpi.USD.rate` would return `9,000.00`.
+
+More complex filters can be used if they follow the [JSONPath format](https://docs.hevodata.com/sources/engg-analytics/streaming/rest-api/writing-jsonpath-expressions).
+
+## Variables as Parameters
+
+Once defined with `response_data`, variables can be used nearly anywhere.
+
+- In the `task` or `prompt` parameters
+- In the `context` parameter of `response_data`
+- In the `body`, `headers` and/or `query` parameter of each request
+
+Afterwards, in your webhooks and when retrieving call transcripts, the `variables` field will contain all variables that were defined during the call.
+
+By far, the easiest way to test out your `dynamic_data` configuration is via the [/dynamic_data/test](/api-reference/endpoint/dynamic_validate) endpoint. It returns the original configuration, every raw response, and the final variables after parsing is applied.
+
+## Chaining Requests
+
+Each request is executed in order, and variables defined in previous requests can be used in the next request. For example, if you want to retrieve information from your database or ours, then take additional actions with that data then you could do something like the following:
+
+For this example, imagine a delivery service that offers instant checkout for customers that have signed up to be a member. The first request retrieves their member_id from your database like so:
+
+```json
+{
+  "dynamic_data": [
+    {
+      "url": "https://api.restaurant.com/customers",
+      "method": "GET",
+      "headers": {
+        "authorization": "ExtremelySecureCredentials"
+      },
+      "query": {
+        "phone_number": "{{phone_number}}"
+      },
+      "response_data": [
+        {
+          "name": "member_id",
+          "data": "$.customer.member_id"
+        }
+      ]
+    }
+    //...
+  ]
+}
+```
+
+We just created that `{{member_id}}` variable - now we can use it in the next request.
+
+This delivery service also can be called to check on an order status.
+
+Note a difference: The `cache` parameter is set to `false`, so if the order status changes during the call, the agent will immediately know about it and be able to inform the customer.
+
+```json
+{
+  "dynamic_data": [
+    //...
+    {
+      "url": "https://api.restaurant.com/orders",
+      "method": "GET",
+      "cache": false,
+      "headers": {
+        "authorization": "ExtremelySecureCredentials"
+      },
+      "query": {
+        "member_id": "{{member_id}}"
+      },
+      "response_data": [
+        {
+          "name": "order_id",
+          "data": "$.orders[0].id"
+        },
+        {
+          "name": "order_status",
+          "data": "$.orders[0].status"
+        }
+      ]
+    }
+  ]
+}
+```

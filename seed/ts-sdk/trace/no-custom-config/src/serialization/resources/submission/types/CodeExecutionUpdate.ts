@@ -40,7 +40,7 @@ export const CodeExecutionUpdate: core.serialization.Schema<
     });
 
 export declare namespace CodeExecutionUpdate {
-    type Raw =
+    export type Raw =
         | CodeExecutionUpdate.BuildingExecutor
         | CodeExecutionUpdate.Running
         | CodeExecutionUpdate.Errored
@@ -53,47 +53,47 @@ export declare namespace CodeExecutionUpdate {
         | CodeExecutionUpdate.InvalidRequest
         | CodeExecutionUpdate.Finished;
 
-    interface BuildingExecutor extends BuildingExecutorResponse.Raw {
+    export interface BuildingExecutor extends BuildingExecutorResponse.Raw {
         type: "buildingExecutor";
     }
 
-    interface Running extends RunningResponse.Raw {
+    export interface Running extends RunningResponse.Raw {
         type: "running";
     }
 
-    interface Errored extends ErroredResponse.Raw {
+    export interface Errored extends ErroredResponse.Raw {
         type: "errored";
     }
 
-    interface Stopped extends StoppedResponse.Raw {
+    export interface Stopped extends StoppedResponse.Raw {
         type: "stopped";
     }
 
-    interface Graded extends GradedResponse.Raw {
+    export interface Graded extends GradedResponse.Raw {
         type: "graded";
     }
 
-    interface GradedV2 extends GradedResponseV2.Raw {
+    export interface GradedV2 extends GradedResponseV2.Raw {
         type: "gradedV2";
     }
 
-    interface WorkspaceRan extends WorkspaceRanResponse.Raw {
+    export interface WorkspaceRan extends WorkspaceRanResponse.Raw {
         type: "workspaceRan";
     }
 
-    interface Recording extends RecordingResponseNotification.Raw {
+    export interface Recording extends RecordingResponseNotification.Raw {
         type: "recording";
     }
 
-    interface Recorded extends RecordedResponseNotification.Raw {
+    export interface Recorded extends RecordedResponseNotification.Raw {
         type: "recorded";
     }
 
-    interface InvalidRequest extends InvalidRequestResponse.Raw {
+    export interface InvalidRequest extends InvalidRequestResponse.Raw {
         type: "invalidRequest";
     }
 
-    interface Finished extends FinishedResponse.Raw {
+    export interface Finished extends FinishedResponse.Raw {
         type: "finished";
     }
 }

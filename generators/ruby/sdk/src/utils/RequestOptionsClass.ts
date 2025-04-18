@@ -12,6 +12,7 @@ import {
     StringClassReference,
     Variable
 } from "@fern-api/ruby-codegen";
+
 import { HeadersGenerator } from "./HeadersGenerator";
 
 export declare namespace RequestOptions {

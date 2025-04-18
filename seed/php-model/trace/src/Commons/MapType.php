@@ -2,32 +2,41 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class MapType extends SerializableType
+class MapType extends JsonSerializableType
 {
     /**
-     * @var mixed $keyType
+     * @var VariableType $keyType
      */
-    #[JsonProperty("keyType")]
-    public mixed $keyType;
+    #[JsonProperty('keyType')]
+    public VariableType $keyType;
 
     /**
-     * @var mixed $valueType
+     * @var VariableType $valueType
      */
-    #[JsonProperty("valueType")]
-    public mixed $valueType;
+    #[JsonProperty('valueType')]
+    public VariableType $valueType;
 
     /**
-     * @param mixed $keyType
-     * @param mixed $valueType
+     * @param array{
+     *   keyType: VariableType,
+     *   valueType: VariableType,
+     * } $values
      */
     public function __construct(
-        mixed $keyType,
-        mixed $valueType,
+        array $values,
     ) {
-        $this->keyType = $keyType;
-        $this->valueType = $valueType;
+        $this->keyType = $values['keyType'];
+        $this->valueType = $values['valueType'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

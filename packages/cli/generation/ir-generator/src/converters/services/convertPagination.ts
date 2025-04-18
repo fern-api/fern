@@ -1,13 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Pagination } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Pagination } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../../FernFileContext";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { convertCursorPagination } from "./convertCursorPagination";
+import { convertCustomPagination } from "./convertCustomPagination";
 import { convertOffsetPagination } from "./convertOffsetPagination";
 import { getPaginationPropertyComponents } from "./convertPaginationUtils";
 
-export async function convertPagination({
+export function convertPagination({
     propertyResolver,
     file,
     endpointName,
@@ -17,7 +19,7 @@ export async function convertPagination({
     file: FernFileContext;
     endpointName: string;
     endpointSchema: RawSchemas.HttpEndpointSchema;
-}): Promise<Pagination | undefined> {
+}): Pagination | undefined {
     const endpointPagination =
         typeof endpointSchema.pagination === "boolean" ? file.rootApiFile.pagination : endpointSchema.pagination;
     if (!endpointPagination) {
@@ -26,7 +28,7 @@ export async function convertPagination({
     const paginationPropertyComponents = getPaginationPropertyComponents(endpointPagination);
     switch (paginationPropertyComponents.type) {
         case "cursor":
-            return await convertCursorPagination({
+            return convertCursorPagination({
                 propertyResolver,
                 file,
                 endpointName,
@@ -39,6 +41,13 @@ export async function convertPagination({
                 file,
                 endpointName,
                 endpointSchema,
+                paginationPropertyComponents
+            });
+        case "custom":
+            return convertCustomPagination({
+                propertyResolver,
+                file,
+                endpointName,
                 paginationPropertyComponents
             });
         default:

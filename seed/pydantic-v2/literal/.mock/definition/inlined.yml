@@ -1,0 +1,53 @@
+imports:
+  root: __package__.yml
+
+types: 
+  SomeAliasedLiteral:
+    type: literal<"You're super wise">
+
+  ATopLevelLiteral:
+    properties:
+      nestedLiteral: ANestedLiteral
+  
+  ANestedLiteral:
+    properties:
+      myLiteral: literal<"How super cool">
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    send:
+      path: /inlined
+      method: POST
+      request:
+        name: SendLiteralsInlinedRequest
+        body: 
+          properties: 
+            prompt: literal<"You are a helpful assistant">
+            context: optional<literal<"You're super wise">>
+            query: string
+            temperature: optional<double>
+            stream: literal<false>
+            aliasedContext: SomeAliasedLiteral
+            maybeContext: optional<SomeAliasedLiteral>
+            objectWithLiteral: ATopLevelLiteral
+
+      response: root.SendResponse
+      examples: 
+        - request:
+            temperature: 10.1
+            prompt: "You are a helpful assistant"
+            context: "You're super wise"
+            aliasedContext: "You're super wise"
+            maybeContext: "You're super wise"
+            objectWithLiteral:
+              nestedLiteral: 
+                myLiteral: "How super cool"
+            stream: false
+            query: "What is the weather today"
+          response: 
+            body: 
+              message: "The weather is sunny"
+              status: 200
+              success: true

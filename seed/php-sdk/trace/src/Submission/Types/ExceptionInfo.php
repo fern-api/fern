@@ -2,41 +2,49 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ExceptionInfo extends SerializableType
+class ExceptionInfo extends JsonSerializableType
 {
     /**
      * @var string $exceptionType
      */
-    #[JsonProperty("exceptionType")]
+    #[JsonProperty('exceptionType')]
     public string $exceptionType;
 
     /**
      * @var string $exceptionMessage
      */
-    #[JsonProperty("exceptionMessage")]
+    #[JsonProperty('exceptionMessage')]
     public string $exceptionMessage;
 
     /**
      * @var string $exceptionStacktrace
      */
-    #[JsonProperty("exceptionStacktrace")]
+    #[JsonProperty('exceptionStacktrace')]
     public string $exceptionStacktrace;
 
     /**
-     * @param string $exceptionType
-     * @param string $exceptionMessage
-     * @param string $exceptionStacktrace
+     * @param array{
+     *   exceptionType: string,
+     *   exceptionMessage: string,
+     *   exceptionStacktrace: string,
+     * } $values
      */
     public function __construct(
-        string $exceptionType,
-        string $exceptionMessage,
-        string $exceptionStacktrace,
+        array $values,
     ) {
-        $this->exceptionType = $exceptionType;
-        $this->exceptionMessage = $exceptionMessage;
-        $this->exceptionStacktrace = $exceptionStacktrace;
+        $this->exceptionType = $values['exceptionType'];
+        $this->exceptionMessage = $values['exceptionMessage'];
+        $this->exceptionStacktrace = $values['exceptionStacktrace'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

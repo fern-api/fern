@@ -5,8 +5,6 @@ using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;
 
-#nullable enable
-
 namespace SeedExhaustive.Test.Unit.MockServer;
 
 [SetUpFixture]
@@ -16,7 +14,7 @@ public class BaseMockServerTest
 
     protected static SeedExhaustiveClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = null!;
+    protected static RequestOptions RequestOptions { get; set; } = new();
 
     [OneTimeSetUp]
     public void GlobalSetup()
@@ -27,14 +25,16 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedExhaustiveClient("TOKEN");
-
-        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
+        Client = new SeedExhaustiveClient(
+            "TOKEN",
+            clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+        );
     }
 
     [OneTimeTearDown]
     public void GlobalTeardown()
     {
         Server.Stop();
+        Server.Dispose();
     }
 }

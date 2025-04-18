@@ -8,12 +8,4 @@ from .practitioner import Practitioner
 from .resource_list import ResourceList
 from .script import Script
 
-__all__ = [
-    "Account",
-    "BaseResource",
-    "Memo",
-    "Patient",
-    "Practitioner",
-    "ResourceList",
-    "Script",
-]
+__all__ = ["Account", "BaseResource", "Memo", "Patient", "Practitioner", "ResourceList", "Script"]

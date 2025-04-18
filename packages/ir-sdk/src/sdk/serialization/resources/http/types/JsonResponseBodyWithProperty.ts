@@ -7,6 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { ObjectProperty } from "../../types/types/ObjectProperty";
 import { WithDocs } from "../../commons/types/WithDocs";
+import { WithV2Examples } from "../../examples/types/WithV2Examples";
 
 export const JsonResponseBodyWithProperty: core.serialization.ObjectSchema<
     serializers.JsonResponseBodyWithProperty.Raw,
@@ -16,10 +17,11 @@ export const JsonResponseBodyWithProperty: core.serialization.ObjectSchema<
         responseBodyType: core.serialization.lazy(() => serializers.TypeReference),
         responseProperty: ObjectProperty.optional(),
     })
-    .extend(WithDocs);
+    .extend(WithDocs)
+    .extend(WithV2Examples);
 
 export declare namespace JsonResponseBodyWithProperty {
-    interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
         responseBodyType: serializers.TypeReference.Raw;
         responseProperty?: ObjectProperty.Raw | null;
     }

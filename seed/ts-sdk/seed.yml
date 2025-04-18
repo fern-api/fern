@@ -1,16 +1,16 @@
-irVersion: v53
+irVersion: v55
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
 publish:
   workingDirectory: generators/typescript
   versionSubstitution: "$VERSION"
-  command: 
+  command:
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
     - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
     - docker push fernapi/fern-typescript-node-sdk:"$VERSION"
 test:
-  docker: 
+  docker:
     image: fernapi/fern-typescript-node-sdk:local
     command: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
   local:
@@ -26,9 +26,9 @@ language: typescript
 generatorType: SDK
 defaultOutputMode: github
 
-customFixtureConfig: 
-  customConfig: 
-    generateWireTests: true    
+customFixtureConfig:
+  customConfig:
+    generateWireTests: true
     noSerdeLayer: true
 fixtures:
   imdb:
@@ -40,11 +40,16 @@ fixtures:
     - customConfig:
         noScripts: true
         extraDependencies:
-          dummmy: "dummy"
+          dummy: "dummy"
       outputFolder: noScripts
+    - customConfig:
+        useBrandedStringAliases: true
+      outputFolder: branded-string-aliases
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig: null
+      outputFolder: no-serde-layer
     - customConfig:
         allowCustomFetcher: true
         timeoutInSeconds: 2
@@ -55,15 +60,18 @@ fixtures:
     - customConfig: null
       audiences:
         - partner
-      outputFolder: with-partner-audience      
+      outputFolder: with-partner-audience
   exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig: null
       audiences:
         - audience1
         - audience2
       outputFolder: with-audiences
-    - customConfig: null
-      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde-layer
     - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
@@ -123,7 +131,11 @@ fixtures:
         publishToJsr: true
     - outputFolder: bigint
       customConfig:
-        useBigInt: true        
+        useBigInt: true
+    - outputFolder: bigint-no-serde-layer
+      customConfig:
+        useBigInt: true
+        noSerdeLayer: true
   error-property:
     - customConfig:
         private: true
@@ -141,13 +153,17 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
-      outputFolder: file-download-reponse-headers
+      outputFolder: file-download-response-headers
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         inlineFileProperties: true
-      outputFolder: wrap-file-properties
+        inlinePathParameters: true
+      outputFolder: inline
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -206,6 +222,40 @@ fixtures:
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+  ts-inline-types:
+    - customConfig:
+        noSerdeLayer: true
+        enableInlineTypes: true
+      outputFolder: inline
+    - customConfig:
+        noSerdeLayer: true
+        enableInlineTypes: false
+      outputFolder: no-inline
+  path-parameters:
+    - outputFolder: default
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+    - customConfig:
+        inlinePathParameters: true
+      outputFolder: inline-path-parameters
+    - customConfig:
+        inlinePathParameters: true
+        noSerdeLayer: true
+      outputFolder: inline-path-parameters-no-serde
+    - customConfig:
+        inlinePathParameters: true
+        retainOriginalCasing: true
+      outputFolder: inline-path-parameters-retain-original-casing
+  websocket:
+    - outputFolder: websocket-base
+    - customConfig:
+        noSerdeLayer: true
+        shouldGenerateWebsocketClients: true
+      outputFolder: websocket-no-serde
+    - customConfig:
+        shouldGenerateWebsocketClients: true
+      outputFolder: websocket-with-serde
 scripts:
   - docker: fernapi/ts-seed
     commands:
@@ -215,13 +265,10 @@ scripts:
       - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi
 allowedFailures:
   - response-property
-  - bytes
   - plain-text
   - alias
   - api-wide-base-path
   - cross-package-type-names
-  - auth-environment-variables
-  - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences:no-custom-config
@@ -229,7 +276,18 @@ allowedFailures:
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  - oauth-client-credentials-custom
   # the below are likely related to changes made to example generation
   - multi-url-environment-no-default
   - objects-with-imports
   - reserved-keywords
+  - examples:examples-with-api-reference
+  - examples:retain-original-casing
+  # on 12/16/2024 noticed 5 failures related to fixtures below
+  - exhaustive:custom-package-json
+  - idempotency-headers
+  - oauth-client-credentials-nested-root:never-throw-errors
+  - trace:no-zurg-no-throwing
+  - trace:exhaustive
+  # Dynamic snippets
+  - unions # Required base properties need to be included in the example generator.

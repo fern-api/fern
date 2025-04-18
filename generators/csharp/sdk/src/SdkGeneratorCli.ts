@@ -1,14 +1,22 @@
-import { AbstractCsharpGeneratorCli, TestFileGenerator, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
-import {
-    generateModels,
-    generateTests as generateModelTests,
-    generateWellKnownProtobufFiles,
-    generateVersion
-} from "@fern-api/fern-csharp-model";
-import { File, GeneratorNotificationService } from "@fern-api/generator-commons";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { writeFile } from "fs/promises";
+
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-base";
+import { validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
+import {
+    generateTests as generateModelTests,
+    generateModels,
+    generateVersion,
+    generateWellKnownProtobufFiles
+} from "@fern-api/fern-csharp-model";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
+import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
@@ -16,17 +24,17 @@ import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { generateSdkTests } from "./generateSdkTests";
+import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
+import { IdempotentRequestOptionsGenerator } from "./options/IdempotentRequestOptionsGenerator";
+import { IdempotentRequestOptionsInterfaceGenerator } from "./options/IdempotentRequestOptionsInterfaceGenerator";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
+import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
+import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
-import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { buildReference } from "./reference/buildReference";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -83,7 +91,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
-        for (const endpoint of service.endpoints) {
+        service.endpoints.forEach((endpoint) => {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 const wrappedRequestGenerator = new WrappedRequestGenerator({
                     wrapper: endpoint.sdkRequest.shape,
@@ -94,10 +102,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 const wrappedRequest = wrappedRequestGenerator.generate();
                 context.project.addSourceFiles(wrappedRequest);
             }
-        }
+        });
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        await context.snippetGenerator.populateSnippetsCache();
+
         const models = generateModels({ context });
         for (const file of models) {
             context.project.addSourceFiles(file);
@@ -116,7 +126,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             }
         }
 
-        for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
+        Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subClient = new SubPackageClientGenerator({
                 context,
@@ -129,21 +139,44 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             if (subpackage.service != null && service != null) {
                 this.generateRequests(context, service, subpackage.service);
             }
-        }
+        });
 
         const baseOptionsGenerator = new BaseOptionsGenerator(context);
 
         const clientOptions = new ClientOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(clientOptions.generate());
 
+        const requestOptionsInterace = new RequestOptionsInterfaceGenerator(context, baseOptionsGenerator);
+        context.project.addSourceFiles(requestOptionsInterace.generate());
+
         const requestOptions = new RequestOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(requestOptions.generate());
+
+        if (context.hasIdempotencyHeaders()) {
+            const idempotentRequestOptionsInterface = new IdempotentRequestOptionsInterfaceGenerator(
+                context,
+                baseOptionsGenerator
+            );
+            context.project.addSourceFiles(idempotentRequestOptionsInterface.generate());
+
+            const idempotentRequestOptions = new IdempotentRequestOptionsGenerator(context, baseOptionsGenerator);
+            context.project.addSourceFiles(idempotentRequestOptions.generate());
+        }
 
         const baseException = new BaseExceptionGenerator(context);
         context.project.addSourceFiles(baseException.generate());
 
         const baseApiException = new BaseApiExceptionGenerator(context);
         context.project.addSourceFiles(baseApiException.generate());
+
+        const oauth = context.getOauth();
+        if (oauth != null) {
+            const oauthTokenProvider = new OauthTokenProviderGenerator({
+                context,
+                scheme: oauth
+            });
+            context.project.addSourceFiles(oauthTokenProvider.generate());
+        }
 
         if (context.customConfig["generate-error-types"] ?? true) {
             for (const _error of Object.values(context.ir.errors)) {
@@ -191,7 +224,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         context.project.addTestFiles(test);
 
         if (context.config.output.snippetFilepath != null) {
-            const snippets = new SnippetJsonGenerator({ context }).generate();
+            const snippets = await new SnippetJsonGenerator({ context }).generate();
             await writeFile(
                 context.config.output.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)

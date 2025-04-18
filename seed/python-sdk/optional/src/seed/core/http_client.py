@@ -2,7 +2,6 @@
 
 import asyncio
 import email.utils
-import json
 import re
 import time
 import typing
@@ -11,7 +10,6 @@ from contextlib import asynccontextmanager, contextmanager
 from random import random
 
 import httpx
-
 from .file import File, convert_file_dict_to_httpx_tuples
 from .jsonable_encoder import jsonable_encoder
 from .query_encoder import encode_query
@@ -85,8 +83,8 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
 
 
 def _should_retry(response: httpx.Response) -> bool:
-    retriable_400s = [429, 408, 409]
-    return response.status_code >= 500 or response.status_code in retriable_400s
+    retryable_400s = [429, 408, 409]
+    return response.status_code >= 500 or response.status_code in retryable_400s
 
 
 def remove_omit_from_dict(
@@ -152,9 +150,9 @@ class HttpClient:
         self,
         *,
         httpx_client: httpx.Client,
-        base_timeout: typing.Optional[float],
-        base_headers: typing.Dict[str, str],
-        base_url: typing.Optional[str] = None,
+        base_timeout: typing.Callable[[], typing.Optional[float]],
+        base_headers: typing.Callable[[], typing.Dict[str, str]],
+        base_url: typing.Optional[typing.Callable[[], str]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
@@ -162,7 +160,10 @@ class HttpClient:
         self.httpx_client = httpx_client
 
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
-        base_url = self.base_url if maybe_base_url is None else maybe_base_url
+        base_url = maybe_base_url
+        if self.base_url is not None and base_url is None:
+            base_url = self.base_url()
+
         if base_url is None:
             raise ValueError("A base_url is required to make this request, please provide one and try again.")
         return base_url
@@ -180,14 +181,14 @@ class HttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
         timeout = (
             request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self.base_timeout
+            else self.base_timeout()
         )
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
@@ -198,7 +199,7 @@ class HttpClient:
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers,
+                        **self.base_headers(),
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                     }
@@ -224,9 +225,11 @@ class HttpClient:
             json=json_body,
             data=data_body,
             content=content,
-            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict(files))
-            if (files is not None and files is not omit)
-            else None,
+            files=(
+                convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                if (files is not None and files is not omit)
+                else None
+            ),
             timeout=timeout,
         )
 
@@ -264,14 +267,14 @@ class HttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> typing.Iterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
         timeout = (
             request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self.base_timeout
+            else self.base_timeout()
         )
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
@@ -282,7 +285,7 @@ class HttpClient:
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers,
+                        **self.base_headers(),
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
@@ -308,9 +311,11 @@ class HttpClient:
             json=json_body,
             data=data_body,
             content=content,
-            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict(files))
-            if (files is not None and files is not omit)
-            else None,
+            files=(
+                convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                if (files is not None and files is not omit)
+                else None
+            ),
             timeout=timeout,
         ) as stream:
             yield stream
@@ -321,9 +326,9 @@ class AsyncHttpClient:
         self,
         *,
         httpx_client: httpx.AsyncClient,
-        base_timeout: typing.Optional[float],
-        base_headers: typing.Dict[str, str],
-        base_url: typing.Optional[str] = None,
+        base_timeout: typing.Callable[[], typing.Optional[float]],
+        base_headers: typing.Callable[[], typing.Dict[str, str]],
+        base_url: typing.Optional[typing.Callable[[], str]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
@@ -331,7 +336,10 @@ class AsyncHttpClient:
         self.httpx_client = httpx_client
 
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
-        base_url = self.base_url if maybe_base_url is None else maybe_base_url
+        base_url = maybe_base_url
+        if self.base_url is not None and base_url is None:
+            base_url = self.base_url()
+
         if base_url is None:
             raise ValueError("A base_url is required to make this request, please provide one and try again.")
         return base_url
@@ -349,14 +357,14 @@ class AsyncHttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
         timeout = (
             request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self.base_timeout
+            else self.base_timeout()
         )
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
@@ -368,7 +376,7 @@ class AsyncHttpClient:
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers,
+                        **self.base_headers(),
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                     }
@@ -394,7 +402,11 @@ class AsyncHttpClient:
             json=json_body,
             data=data_body,
             content=content,
-            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None,
+            files=(
+                convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                if files is not None
+                else None
+            ),
             timeout=timeout,
         )
 
@@ -431,14 +443,14 @@ class AsyncHttpClient:
         files: typing.Optional[typing.Dict[str, typing.Optional[typing.Union[File, typing.List[File]]]]] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 0,
+        retries: int = 2,
         omit: typing.Optional[typing.Any] = None,
     ) -> typing.AsyncIterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
         timeout = (
             request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self.base_timeout
+            else self.base_timeout()
         )
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
@@ -449,7 +461,7 @@ class AsyncHttpClient:
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers,
+                        **self.base_headers(),
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
@@ -475,7 +487,11 @@ class AsyncHttpClient:
             json=json_body,
             data=data_body,
             content=content,
-            files=convert_file_dict_to_httpx_tuples(remove_none_from_dict(files)) if files is not None else None,
+            files=(
+                convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
+                if files is not None
+                else None
+            ),
             timeout=timeout,
         ) as stream:
             yield stream

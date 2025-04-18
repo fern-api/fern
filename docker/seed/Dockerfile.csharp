@@ -1,0 +1,64 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+
+ENV PATH="$PATH:/root/.dotnet/tools"
+ENV DOTNET_NOLOGO=1
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
+WORKDIR /dotnet-warmup
+
+# Warm up the SDK and runtime
+# Create a temporary project and build it to populate the package cache
+RUN dotnet new console --output cli --no-restore && \
+    dotnet new classlib --output lib --no-restore && \
+    dotnet new nunit --output test --no-restore
+
+# Restore packages for all project types to warm up NuGet cache
+RUN dotnet restore cli && \
+    dotnet restore lib && \
+    dotnet restore test
+
+# Build the temporary projects to warm up the compilation cache
+RUN dotnet build cli --no-restore  && \
+    dotnet build lib --no-restore  && \
+    dotnet build test --no-restore
+
+RUN dotnet run --project cli --no-restore --no-build
+RUN dotnet test test --no-restore --no-build
+
+RUN rm -rf cli lib test
+
+WORKDIR /
+
+# Cache common dependencies
+RUN echo '<Project Sdk="Microsoft.NET.Sdk"> \
+  <PropertyGroup> \
+      <TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks> \
+  </PropertyGroup> \
+  <ItemGroup> \
+      <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" /> \
+      <PackageReference Include="PolySharp" Version="1.15.0" /> \
+      <PackageReference Include="OneOf" Version="3.0.271" /> \
+      <PackageReference Include="OneOf.Extended" Version="3.0.271" /> \
+      <PackageReference Include="System.Text.Json" Version="8.0.5" /> \
+      <PackageReference Include="System.Net.Http" Version="[4.3.4,)" /> \
+      <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" /> \
+      <PackageReference Include="Google.Protobuf" Version="3.27.2" /> \
+      <PackageReference Include="Grpc.Net.Client" Version="2.63.0" /> \
+      <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" /> \
+      <PackageReference Include="Grpc.Tools" Version="2.64.0" /> \
+  </ItemGroup> \
+  <ItemGroup> \
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/> \
+      <PackageReference Include="NUnit" Version="4.2.2"/> \
+      <PackageReference Include="NUnit3TestAdapter" Version="4.6.0"/> \
+      <PackageReference Include="NUnit.Analyzers" Version="4.4.0" /> \
+      <PackageReference Include="coverlet.collector" Version="6.0.2" /> \
+      <PackageReference Include="WireMock.Net" Version="1.6.8" /> \
+      <PackageReference Include="FluentAssertions.Json" Version="6.1.0" /> \
+  </ItemGroup> \
+</Project>' > /dependencies.csproj
+RUN dotnet restore /dependencies.csproj
+RUN rm /dependencies.csproj
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]

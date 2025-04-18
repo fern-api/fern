@@ -1,0 +1,11 @@
+irVersion: v57
+displayName: Pydantic Model
+image: fernapi/fern-pydantic-model-v2
+test:
+  docker:
+    image: fernapi/fern-pydantic-model-v2:latest
+    command: pnpm --filter @fern-api/fern-pydantic-model dockerTagLatest
+
+language: python
+generatorType: Model
+defaultOutputMode: local_files

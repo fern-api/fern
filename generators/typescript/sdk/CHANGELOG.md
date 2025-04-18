@@ -5,29 +5,531 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.51.0] - 2025-04-14
+
+- Feat: Add `rawResponse` property to JavaScript errors. 
+
+  ```ts
+  try {
+    const fooBar = await client.foo.bar("id", options);
+  } catch (e) {
+    if (error instanceof FooError) {
+      console.log(error.rawResponse);
+    } else {
+      // ...
+    }
+  }
+  ```
+
+## [0.50.1] - 2025-04-08
+
+- Feat: Add `"packageManager": "yarn@1.22.22"` to _package.json_.
+
+## [0.50.0] - 2025-04-07
+
+- Feat: All endpoint functions now return an `HttpResponsePromise<T>` instead of a `Promise<T>`.
+  Using `await`, `.then()`, `.catch()`, and `.finally()` on these promises behave the same as before,
+  but you can call `.withRawResponse()` to get a promise that includes the parsed response and the raw response.
+  The raw response let's you retrieve the response headers, status code, etc.
+
+  ```ts
+  const fooBar = await client.foo.bar("id", options);
+  const { data: alsoFooBar, rawResponse } = await client.foo.bar("id", options).withRawResponse();
+  const {
+      headers,
+      status,
+      url,
+      ...
+  } = rawResponse;
+  ```
+
+
+## [0.49.7] - 2025-03-27
+
+- Fix: Significantly improve performance of SDK generation when the `useLegacyExports` config is `false`.
+  For a large spec like Square, the generation went from 10+ minutes to almost 1 minute.
+
+## [0.49.6] - 2025-03-27
+
+- Feat: Support arbitrary websocket headers during connect handshake.
+
+## [0.49.5] - 2025-03-27
+
+- Feat: Improvements to Websocket code generation quality.
+
+## [0.49.4] - 2025-03-19
+
+- Fix: Increase the timeout used in the generated `webpack.test.ts` file.
+
+## [0.49.3] - 2025-03-19
+
+- Fix: Increase the timeout used in the generated `webpack.test.ts` file.
+
+## [0.49.2] - 2025-03-18
+
+- Fix: Fix issue where IdempotentRequestOptions is not generated in the client namespace.
+
+## [0.49.1] - 2025-03-10
+
+- Fix: This PR includes several fixes to the generated `Socket.ts` file when websocket client code generation is enabled.
+
+## [0.49.0] - 2025-03-06
+
+- Feat: This PR enables the Typescript generator to produce Websocket SDK endpoints. This can be enabled by adding the option `shouldGenerateWebsocketClients: true` to the Typescript generator config.
+
+## [0.48.7] - 2025-01-28
+
+- Fix: Form data encoding now correctly handles array and object values by encoding each property value as a separate key-value pair,
+  rather than trying to encode the entire object as a single value. This ensures proper handling of complex data structures in multipart form requests.
+
+## [0.48.6] - 2025-01-28
+
+- Fix: Support form-encoded form data parameters by using `qs` to properly encode array and
+  object values with the `repeat` array format.
+
+## [0.48.5] - 2025-01-28
+
+- Fix: Don't double wrap a blob if a user uploads a blob to a multi-part form.
+  Otherwise file's content-type is lost in Deno.
+
+## [0.48.4] - 2025-01-21
+
+- Fix: When custom config `useBigInt` is `true`, generate examples and snippets with `BigInt("123")`.
+
+## [0.48.3] - 2025-01-16
+
+- Fix: The SDK now supports reading the basic auth username and password values from
+  environment variables.
+
+## [0.48.2] - 2025-01-16
+
+- Fix: This updates the retrier logic to stop retrying on HTTP conflict (409). This was an
+  oversight that we've meant to remove for a while (similar to other Fern SDKs).
+
+## [0.48.1] - 2025-01-16
+
+- Fix: Record types with `null` values are now correctly serialized.
+
+## [0.48.0] - 2025-01-16
+
+- Feat: When `useBigInt` SDK configuration is set to `true`, a customized JSON serializer & deserializer is used that will preserve the precision of `bigint`'s, as opposed to the native `JSON.stringify` and `JSON.parse` function which converts `bigint`'s to `number`'s losing precision.
+
+  When combining `useBigInt` with our serialization layer (`no-serde: false` (default)), both the request and response properties that are marked as `long` and `bigint` in OpenAPI/Fern spec, will consistently be `bigint`'s.
+  However, when disabling the serialization layer (`no-serde: true`), they will be typed as `number | bigint`.
+
+  Here's an overview of what to expect from the generated types when combining `useBigInt` and `noSerde` with the following Fern definition:
+
+  **Fern definition**
+  ```yml
+  types:
+    ObjectWithOptionalField:
+      properties:
+        longProp: long
+        bigIntProp: bigint
+  ```
+
+  **TypeScript output**
+  ```typescript
+  // useBigInt: true
+  // noSerde: false
+  interface ObjectWithLongAndBigInt {
+    longProp: bigint;
+    bigIntProp: bigint;
+  }
+
+  // useBigInt: true
+  // noSerde: true
+  interface ObjectWithLongAndBigInt {
+    longProp: bigint | number;
+    bigIntProp: bigint | number;
+  }
+
+  // useBigInt: false
+  // noSerde: false
+  interface ObjectWithLongAndBigInt {
+    longProp: number;
+    bigIntProp: string;
+  }
+
+  // useBigInt: false
+  // noSerde: true
+  interface ObjectWithLongAndBigInt {
+    longProp: number;
+    bigIntProp: string;
+  }
+  ```
+
+## [0.47.1] - 2025-01-15
+
+- Fix: Resolves an issue where nullable query parameters were not null-safe in their method invocations. The
+  generated code now appropriately guard against `null` values like so:
+
+  ```typescript
+  const _queryParams: Record< ... >;
+  if (value !== undefined) {
+      _queryParams["value"] = value?.toString() ?? null;
+  }
+  ```
+
+## [0.47.0] - 2025-01-14
+
+- Feature: Add support for `nullable` properties. Users can now specify explicit `null` values
+  for types that specify `nullable` properties like so:
+
+  ```typescript
+  await client.users.update({ username: "john.doe", metadata: null });
+  ```
+
+## [0.46.11] - 2025-01-14
+
+- Fix: Don't double check whether an optional string literal alias (see example below) is a string when using serializer to build query string parameters.
+
+  ```yml
+  types:
+    LiteralAliasExample: literal<"MyLiteralValue">
+
+  service:
+    endpoints:
+      foo:
+        path: /bar
+        method: POST
+        request:
+          name: FooBarRequest
+          query-parameters:
+            optional_alias_literal: optional<LiteralAliasExample>
+  ```
+
+  ```ts
+  // before
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = typeof serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) === "string" ? serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }) : JSON.stringify(serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      }));
+  }
+
+  // after
+  if (optionalAliasLiteral != null) {
+      _queryParams["optional_alias_literal"] = serializers.LiteralAliasExample.jsonOrThrow(optionalAliasLiteral, {
+          unrecognizedObjectKeys: "strip",
+      });
+  }
+  ```
+
+## [0.46.10] - 2025-01-14
+
+- Fix: Use serialization layer to convert types to JSON strings when enabled.
+
+## [0.46.9] - 2025-01-13
+
+- Fix: Expose `baseUrl` as a default Client constructor option and construct URL correctly.
+
+## [0.46.8] - 2025-01-13
+
+- Fix: Generate the `version.ts` file correctly
+
+## [0.46.7] - 2025-01-09
+
+- Fix: Simplify runtime detection to reduce the chance of using an unsupported API like `process.`
+  Detect Edge Runtime by Vercel.
+
+## [0.46.6] - 2025-01-09
+
+- Fix: Update `@types/node` to `18+`, required for the generated `Node18UniversalStreamWrapper` test.
+
+## [0.46.5] - 2025-01-09
+
+- Fix: Fix the webpack test to work with .js/.jsx extensions in TypeScript
+- Fix: Only map .js modules in Jest, not .json files.
+
+## [0.46.4] - 2025-01-09
+
+- Fix: Fix packageJson custom configuration & package.json types field.
+
+## [0.46.3] - 2025-01-09
+
+- Fix: Revert to using legacy exports by default.
+
+## [0.46.2] - 2025-01-09
+
+- Fix: Fix Jest to work with files imported using `.js` extension.
+- Fix: Make sure Jest loads Jest configuration regardless of package.json type.
+
+## [0.46.1] - 2025-01-08
+
+- Fix: ESModule output is fixed to be compatible with Node.js ESM loading.
+
+## [0.46.0] - 2025-01-06
+
+- Feat: SDKs are now built and exported in both CommonJS (legacy) and ESModule format.
+
+- Feat: Export `serialization` code from root package export.
+  ```ts
+  import { serialization } from `@packageName`;
+  ```
+
+  The serialization code is also exported as `@packageName/serialization`.
+  ```ts
+  import * as serialization from `@packageName/serialization`;
+  ```
+
+- Feat: `package.json` itself is exported in `package.json` to allow consumers to easily read metadata about the package they are consuming.
+
+## [0.45.2] - 2024-12-31
+
+- Fix: TS generated snippets now respect proper parameter casing when noSerdeLayer is enabled.
+
+## [0.45.1] - 2024-12-27
+
+- Fix: Export everything inside of TypeScript namespaces that used to be ambient.
+
+  For the `enableInlineTypes` feature, some namespaces were no longer declared (ambient), and types and interfaces inside the namespace would no longer be automatically exported without the `export` keyword. This fix exports everything that's inside these namespaces and also declared namespaces for good measure (in case they are not declared in the future).
+
+## [0.45.0] - 2024-12-26
+
+- Feat: Update dependencies of the generated TS SDK and Express generator. TypeScript has been updated to 5.7.2 which is a major version upgrade from 4.6.4.
+
+## [0.44.5] - 2024-12-23
+
+- Fix: Fix a bug where we attempt to parse an empty terminator when receiving streaming JSON responses.
+
+## [0.44.4] - 2024-12-20
+
+- Feat: Use specified defaults for pagination offset parameters during SDK generation.
+
+## [0.44.3] - 2024-12-18
+
+- Fix: Fix a bug where client would send request wrapper instead of the body of the request wrapper, when the request has inline path parameters and a body property.
+
+## [0.44.2] - 2024-12-17
+
+- Fix: Inline path parameters will use their original name when `retainOriginalName` or `noSerdeLayer` is enabled.
+
+## [0.44.1] - 2024-12-16
+
+- Fix: When there is an environment variable set, you do not need to pass in any parameters
+  to the client constructor.
+
+## [0.44.0] - 2024-12-13
+
+- Feature: Inline path parameters into request types by setting `inlinePathParameters` to `true` in the generator config.
+
+  Here's an example of how users would use the same endpoint method without and with `inlinePathParameters` set to `true`.
+
+  Without `inlinePathParameters`:
+
+  ```ts
+  await service.getFoo("pathParamValue", { id: "SOME_ID" });
+  ```
+
+  With `inlinePathParameters`:
+
+  ```ts
+  await service.getFoo({ pathParamName: "pathParamValue", id: "SOME_ID" });
+  ```
+
+## [0.43.1] - 2024-12-11
+
+- Fix: When `noSerdeLayer` is enabled, streaming endpoints were failing to compile because
+  they assumed that the serialization layer existed. This is now fixed.
+
+## [0.43.0] - 2024-12-11
+
+- Feature: Generate inline types for inline schemas by setting `enableInlineTypes` to `true` in the generator config.
+  When enabled, the inline schemas will be generated as nested types in TypeScript.
+  This results in cleaner type names and a more intuitive developer experience.
+
+  Before:
+
+  ```ts
+  // MyRootType.ts
+  import * as MySdk from "...";
+
+  export interface MyRootType {
+    foo: MySdk.MyRootTypeFoo;
+  }
+
+  // MyRootTypeFoo.ts
+  import * as MySdk from "...";
+
+  export interface MyRootTypeFoo {
+    bar: MySdk.MyRootTypeFooBar;
+  }
+
+  // MyRootTypeFooBar.ts
+  import * as MySdk from "...";
+
+  export interface MyRootTypeFooBar {}
+  ```
+
+  After:
+
+  ```ts
+  // MyRootType.ts
+  import * as MySdk from "...";
+
+  export interface MyRootType {
+    foo: MyRootType.Foo;
+  }
+
+  export namespace MyRootType {
+    export interface Foo {
+      bar: Foo.Bar;
+    }
+
+    export namespace Foo {
+      export interface Bar {}
+    }
+  }
+  ```
+
+  Now users can get the deep nested `Bar` type as follows:
+
+  ```ts
+  import { MyRootType } from MySdk;
+
+  const bar: MyRootType.Foo.Bar = {};
+  ```
+
+## [0.42.7] - 2024-12-03
+
+- Feature: Support `additionalProperties` in OpenAPI or `extra-properties` in the Fern Defnition. Now
+  an object that has additionalProperties marked as true will generate the following interface:
+
+  ```ts
+  interface User {
+    propertyOne: string;
+    [key: string]: any;
+  }
+  ```
+
+## [0.42.6] - 2024-11-23
+
+- Fix: Remove the generated `APIPromise` since it is not compatible on certain node versions.
+
+## [0.42.5] - 2024-11-23
+
+- Fix: Remove extraneous import in pagination snippets.
+
+## [0.42.4] - 2024-11-21
+
+- Fix: Improve `GeneratedTimeoutSdkError` error to include endpoint name in message.
+
+## [0.42.3] - 2024-11-22
+
+- Fix: Fixed issue with snippets used for pagination endpoints.
+
+## [0.42.2] - 2024-11-21
+
+- Improvement: Added documentation for pagination in the README. The snippet below will
+  now show up on generated READMEs.
+
+  ```typescript
+  // Iterate through all items
+  const response = await client.users.list();
+  for await (const item of response) {
+    console.log(item);
+  }
+
+  // Or manually paginate
+  let page = await client.users.list();
+  while (page.hasNextPage()) {
+    page = await page.getNextPage();
+  }
+  ```
+
+## [0.42.1] - 2024-11-20
+
+- Feat: Added support for passing additional headers in request options. For example:
+
+  ```ts
+  const response = await client.someEndpoint(..., {
+    headers: {
+      'X-Custom-Header': 'custom value'
+    }
+  });
+  ```
+
+## [0.42.0] - 2024-11-15
+
+- Feat: Added support for `.asRaw()` which allows users to access raw response data including headers. For example:
+
+  ```ts
+  const response = await client.someEndpoint().asRaw();
+  console.log(response.headers["X-My-Header"]);
+  console.log(response.body);
+  ```
+
+## [0.41.2] - 2024-11-18
+
+- Fix: Actually remove `jest-fetch-mock` from package.json.
+
+## [0.41.1] - 2024-11-02
+
+- Fix: Remove dev dependency on `jest-fetch-mock`.
+
+## [0.41.0] - 2024-10-08
+
+- Improvement: Add a variable jitter to the exponential backoff and retry.
+
+## [0.41.0-rc2] - 2024-10-08
+
+- Improvement: Generated READMEs now include improved usage snippets for pagination and streaming endpoints.
+
+## [0.41.0-rc1] - 2024-10-08
+
+- Fix: Fixes a broken unit test introduced in 0.41.0-rc0.
+
+## [0.41.0-rc0] - 2024-10-08
+
+- Feat: The generated SDK now supports bytes (`application/octet-stream`) requests.
+
+## [0.40.8] - 2024-09-28
+
+- Fix: File array uploads now call `request.appendFile` instead of `request.append` which
+  was causing form data to be in a corrupted state.
+
+## [0.40.7] - 2024-09-28
+
+- Fix: The generated README will now have a section that links to the generated
+  SDK Reference (in `reference.md`).
+
+  ```md
+  ## Reference
+
+  A full reference for this library can be found [here](./reference.md).
+  ```
+
+## [0.40.6] - 2024-09-18
+
+- Fix: The TypeScript SDK now supports specifying a custom contentType if one is specified.
+
 ## [0.40.5] - 2024-09-18
 
-- Fix: The snippet templates for file upload are now accurate and also respect the feature 
-  flag `inlineFileProperties`. 
+- Fix: The snippet templates for file upload are now accurate and also respect the feature
+  flag `inlineFileProperties`.
 
 ## [0.40.4] - 2024-09-12
 
-- Fix: Upgrades dependency `stream-json` which improves the performance when reading 
-  large API specs. This version will improve your `fern generate` performance. 
+- Fix: Upgrades dependency `stream-json` which improves the performance when reading
+  large API specs. This version will improve your `fern generate` performance.
 
 ## [0.40.3] - 2024-09-12
 
-- Fix: If the serde layer is enabled, then all the serializers are exported under the 
-  namespace `serializers`. 
+- Fix: If the serde layer is enabled, then all the serializers are exported under the
+  namespace `serializers`.
 
   ```ts
-  import { serializers } from "@plantstore/sdk"; 
+  import { serializers } from "@plantstore/sdk";
 
-  export function main(): void { 
+  export function main(): void {
     // serialize to json
 
     const json = serializers.Plant.toJson({
-      name: "fern",
+      name: "fern"
     });
 
     const parsed = serializers.Plant.parseOrThrow(`{ "name": "fern" }`);
@@ -36,8 +538,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.40.2] - 2024-09-12
 
-- Fix: The generated SDK now handles reading IR JSONs that are larger than 500MB. In order to 
-  to this, the function `streamObjectFromFile` is used instead of `JSON.parse`. 
+- Fix: The generated SDK now handles reading IR JSONs that are larger than 500MB. In order to
+  to this, the function `streamObjectFromFile` is used instead of `JSON.parse`.
 
 ## [0.40.1] - 2024-09-12
 
@@ -372,7 +874,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.27.2] - 2024-07-08
 
-- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatiblity` and
+- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatibility` and
   `Custom Fetcher` under the Advanced section in the generated README.
 
 ## [0.27.1] - 2024-07-08
@@ -404,7 +906,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.26.0-rc3] - 2024-06-30
 
-- Fix: The typesript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
+- Fix: The typescript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
 
 ## [0.26.0-rc2] - 2024-06-27
 
@@ -448,12 +950,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.25.2] - 2024-06-20
 
-- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+- Fix: The generator now removes `fs`, `path`, and `os` dependencies from the browser
   runtime.
 
 ## [0.25.1] - 2024-06-20
 
-- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+- Fix: The generator now removes `fs`, `path`, and `os` dependencies from the browser
   runtime.
 
 ## [0.25.0] - 2024-06-19
@@ -503,7 +1005,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.24.0-rc0] - 2024-06-18
 
 - Feature: Dynamic client instantiation snippets are now generated. Note this only affects
-  enteprise users that are using Fern's Snippets API.
+  enterprise users that are using Fern's Snippets API.
 
 ## [0.23.3] - 2024-06-17
 
@@ -1111,7 +1613,7 @@ seedExamples.file.notification.service.getException(...)
 
 ## [0.11.2] - 2024-02-13
 
-- Fix: ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were eroniously ignored.
+- Fix: ensure SDK generator does not drop additional parameters from requests that perform file upload. Previously, if an endpoint had `file` inputs without additional `body` parameters, query parameters were erroneously ignored.
 
 ## [0.11.1] - 2024-02-13
 
@@ -1133,4 +1635,4 @@ seedExamples.file.notification.service.getException(...)
 
 ## [0.9.7] - 2024-02-11
 
-- Chore: Intialize this changelog
+- Chore: Initialize this changelog

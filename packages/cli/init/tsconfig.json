@@ -1,15 +1,43 @@
 {
-  "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src/**/*"],
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
-    { "path": "../../commons/fs-utils" },
-    { "path": "../../core" },
-    { "path": "../auth" },
-    { "path": "../configuration" },
-    { "path": "../login" },
-    { "path": "../task-context" },
-    { "path": "../fern-definition/formatter" },
-    { "path": "../fern-definition/schema" }
+    {
+      "path": "../../commons/fs-utils"
+    },
+    {
+      "path": "../../core"
+    },
+    {
+      "path": "../auth"
+    },
+    {
+      "path": "../configuration-loader"
+    },
+    {
+      "path": "../login"
+    },
+    {
+      "path": "../task-context"
+    },
+    {
+      "path": "../fern-definition/formatter"
+    },
+    {
+      "path": "../fern-definition/schema"
+    },
+    {
+      "path": "../docs-importers/mintlify"
+    },
+    {
+      "path": "../docs-importers/readme"
+    }
   ]
 }

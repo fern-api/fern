@@ -1,0 +1,389 @@
+{
+  "title": "Query Parameters API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "search",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "filter",
+          "schema": {
+            "generatedName": "SearchRequestFilter",
+            "value": {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "searchRequestFilterName",
+                  "key": "name",
+                  "schema": {
+                    "generatedName": "searchRequestFilterName",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "SearchRequestFilterName",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "searchRequestFilterAge",
+                  "key": "age",
+                  "schema": {
+                    "generatedName": "searchRequestFilterAge",
+                    "value": {
+                      "schema": {
+                        "type": "int"
+                      },
+                      "generatedName": "SearchRequestFilterAge",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "searchRequestFilterLocation",
+                  "key": "location",
+                  "schema": {
+                    "generatedName": "searchRequestFilterLocation",
+                    "value": {
+                      "allOf": [],
+                      "properties": [
+                        {
+                          "conflict": {},
+                          "generatedName": "searchRequestFilterLocationCity",
+                          "key": "city",
+                          "schema": {
+                            "generatedName": "searchRequestFilterLocationCity",
+                            "value": {
+                              "schema": {
+                                "type": "string"
+                              },
+                              "generatedName": "SearchRequestFilterLocationCity",
+                              "groupName": [],
+                              "type": "primitive"
+                            },
+                            "groupName": [],
+                            "type": "optional"
+                          },
+                          "audiences": []
+                        },
+                        {
+                          "conflict": {},
+                          "generatedName": "searchRequestFilterLocationCountry",
+                          "key": "country",
+                          "schema": {
+                            "generatedName": "searchRequestFilterLocationCountry",
+                            "value": {
+                              "schema": {
+                                "type": "string"
+                              },
+                              "generatedName": "SearchRequestFilterLocationCountry",
+                              "groupName": [],
+                              "type": "primitive"
+                            },
+                            "groupName": [],
+                            "type": "optional"
+                          },
+                          "audiences": []
+                        },
+                        {
+                          "conflict": {},
+                          "generatedName": "searchRequestFilterLocationCoordinates",
+                          "key": "coordinates",
+                          "schema": {
+                            "generatedName": "searchRequestFilterLocationCoordinates",
+                            "value": {
+                              "allOf": [],
+                              "properties": [
+                                {
+                                  "conflict": {},
+                                  "generatedName": "searchRequestFilterLocationCoordinatesLatitude",
+                                  "key": "latitude",
+                                  "schema": {
+                                    "generatedName": "searchRequestFilterLocationCoordinatesLatitude",
+                                    "value": {
+                                      "schema": {
+                                        "type": "double"
+                                      },
+                                      "generatedName": "SearchRequestFilterLocationCoordinatesLatitude",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "groupName": [],
+                                    "type": "optional"
+                                  },
+                                  "audiences": []
+                                },
+                                {
+                                  "conflict": {},
+                                  "generatedName": "searchRequestFilterLocationCoordinatesLongitude",
+                                  "key": "longitude",
+                                  "schema": {
+                                    "generatedName": "searchRequestFilterLocationCoordinatesLongitude",
+                                    "value": {
+                                      "schema": {
+                                        "type": "double"
+                                      },
+                                      "generatedName": "SearchRequestFilterLocationCoordinatesLongitude",
+                                      "groupName": [],
+                                      "type": "primitive"
+                                    },
+                                    "groupName": [],
+                                    "type": "optional"
+                                  },
+                                  "audiences": []
+                                }
+                              ],
+                              "allOfPropertyConflicts": [],
+                              "generatedName": "SearchRequestFilterLocationCoordinates",
+                              "groupName": [],
+                              "additionalProperties": false,
+                              "source": {
+                                "file": "../openapi.yml",
+                                "type": "openapi"
+                              },
+                              "type": "object"
+                            },
+                            "groupName": [],
+                            "type": "optional"
+                          },
+                          "audiences": []
+                        }
+                      ],
+                      "allOfPropertyConflicts": [],
+                      "generatedName": "SearchRequestFilterLocation",
+                      "groupName": [],
+                      "additionalProperties": false,
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "object"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "SearchRequestFilter",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "sort",
+          "schema": {
+            "generatedName": "SearchRequestSort",
+            "value": {
+              "generatedName": "SearchRequestSort",
+              "values": [
+                {
+                  "generatedName": "asc",
+                  "value": "asc",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "desc",
+                  "value": "desc",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "limit",
+          "schema": {
+            "generatedName": "SearchRequestLimit",
+            "value": {
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "type": "int"
+              },
+              "generatedName": "SearchRequestLimit",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "tags",
+          "schema": {
+            "generatedName": "SearchRequestTags",
+            "value": {
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SearchRequestTagsItem",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "generatedName": "SearchRequestTags",
+              "groupName": [],
+              "type": "array"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "SearchRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "searchResponseResults",
+              "key": "results",
+              "schema": {
+                "generatedName": "searchResponseResults",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "SearchResponseResultsItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "SearchResponseResults",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "SearchResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/search",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "results": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "results",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

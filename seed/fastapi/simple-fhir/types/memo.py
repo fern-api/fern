@@ -13,9 +13,7 @@ class Memo(UniversalBaseModel):
     account: typing.Optional["Account"] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -23,14 +21,5 @@ class Memo(UniversalBaseModel):
 
 
 from .account import Account  # noqa: E402
-from .base_resource import BaseResource  # noqa: E402
-from .patient import Patient  # noqa: E402
-from .practitioner import Practitioner  # noqa: E402
-from .script import Script  # noqa: E402
 
-update_forward_refs(Account, Memo=Memo)
-update_forward_refs(BaseResource, Memo=Memo)
-update_forward_refs(Patient, Memo=Memo)
-update_forward_refs(Practitioner, Memo=Memo)
-update_forward_refs(Script, Memo=Memo)
 update_forward_refs(Memo)

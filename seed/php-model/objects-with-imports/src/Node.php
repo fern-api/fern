@@ -2,42 +2,50 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Metadata\Metadata;
 
-class Node extends SerializableType
+class Node extends JsonSerializableType
 {
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?string $label
      */
-    #[JsonProperty("label")]
+    #[JsonProperty('label')]
     public ?string $label;
 
     /**
      * @var ?Metadata $metadata
      */
-    #[JsonProperty("metadata")]
+    #[JsonProperty('metadata')]
     public ?Metadata $metadata;
 
     /**
-     * @param string $id
-     * @param ?string $label
-     * @param ?Metadata $metadata
+     * @param array{
+     *   id: string,
+     *   label?: ?string,
+     *   metadata?: ?Metadata,
+     * } $values
      */
     public function __construct(
-        string $id,
-        ?string $label = null,
-        ?Metadata $metadata = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->label = $label;
-        $this->metadata = $metadata;
+        $this->id = $values['id'];
+        $this->label = $values['label'] ?? null;
+        $this->metadata = $values['metadata'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

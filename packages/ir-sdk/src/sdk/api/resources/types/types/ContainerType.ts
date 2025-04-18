@@ -7,42 +7,49 @@ import * as FernIr from "../../../index";
 export type ContainerType =
     | FernIr.ContainerType.List
     | FernIr.ContainerType.Map
+    | FernIr.ContainerType.Nullable
     | FernIr.ContainerType.Optional
     | FernIr.ContainerType.Set
     | FernIr.ContainerType.Literal;
 
-export declare namespace ContainerType {
-    interface List extends _Utils {
+export namespace ContainerType {
+    export interface List extends _Utils {
         type: "list";
         list: FernIr.TypeReference;
     }
 
-    interface Map extends FernIr.MapType, _Utils {
+    export interface Map extends FernIr.MapType, _Utils {
         type: "map";
     }
 
-    interface Optional extends _Utils {
+    export interface Nullable extends _Utils {
+        type: "nullable";
+        nullable: FernIr.TypeReference;
+    }
+
+    export interface Optional extends _Utils {
         type: "optional";
         optional: FernIr.TypeReference;
     }
 
-    interface Set extends _Utils {
+    export interface Set extends _Utils {
         type: "set";
         set: FernIr.TypeReference;
     }
 
-    interface Literal extends _Utils {
+    export interface Literal extends _Utils {
         type: "literal";
         literal: FernIr.Literal;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ContainerType._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         list: (value: FernIr.TypeReference) => _Result;
         map: (value: FernIr.MapType) => _Result;
+        nullable: (value: FernIr.TypeReference) => _Result;
         optional: (value: FernIr.TypeReference) => _Result;
         set: (value: FernIr.TypeReference) => _Result;
         literal: (value: FernIr.Literal) => _Result;
@@ -57,7 +64,7 @@ export const ContainerType = {
             type: "list",
             _visit: function <_Result>(
                 this: FernIr.ContainerType.List,
-                visitor: FernIr.ContainerType._Visitor<_Result>
+                visitor: FernIr.ContainerType._Visitor<_Result>,
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
             },
@@ -70,7 +77,20 @@ export const ContainerType = {
             type: "map",
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Map,
-                visitor: FernIr.ContainerType._Visitor<_Result>
+                visitor: FernIr.ContainerType._Visitor<_Result>,
+            ) {
+                return FernIr.ContainerType._visit(this, visitor);
+            },
+        };
+    },
+
+    nullable: (value: FernIr.TypeReference): FernIr.ContainerType.Nullable => {
+        return {
+            nullable: value,
+            type: "nullable",
+            _visit: function <_Result>(
+                this: FernIr.ContainerType.Nullable,
+                visitor: FernIr.ContainerType._Visitor<_Result>,
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
             },
@@ -83,7 +103,7 @@ export const ContainerType = {
             type: "optional",
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Optional,
-                visitor: FernIr.ContainerType._Visitor<_Result>
+                visitor: FernIr.ContainerType._Visitor<_Result>,
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
             },
@@ -96,7 +116,7 @@ export const ContainerType = {
             type: "set",
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Set,
-                visitor: FernIr.ContainerType._Visitor<_Result>
+                visitor: FernIr.ContainerType._Visitor<_Result>,
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
             },
@@ -109,7 +129,7 @@ export const ContainerType = {
             type: "literal",
             _visit: function <_Result>(
                 this: FernIr.ContainerType.Literal,
-                visitor: FernIr.ContainerType._Visitor<_Result>
+                visitor: FernIr.ContainerType._Visitor<_Result>,
             ) {
                 return FernIr.ContainerType._visit(this, visitor);
             },
@@ -122,6 +142,8 @@ export const ContainerType = {
                 return visitor.list(value.list);
             case "map":
                 return visitor.map(value);
+            case "nullable":
+                return visitor.nullable(value.nullable);
             case "optional":
                 return visitor.optional(value.optional);
             case "set":

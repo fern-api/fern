@@ -1,0 +1,401 @@
+{
+  "title": "OAuth Token API",
+  "description": "A simple API with an OAuth token endpoint accepting JSON input",
+  "servers": [
+    {
+      "url": "https://api.example.com/v1"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Request an access token",
+      "audiences": [],
+      "tags": [
+        "OAuth"
+      ],
+      "sdkName": {
+        "groupName": [
+          "auth"
+        ],
+        "methodName": "get-token"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "AuthGetTokenRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenRequestGrantType",
+              "key": "grant_type",
+              "schema": {
+                "description": "The type of grant to request",
+                "generatedName": "AuthGetTokenRequestGrantType",
+                "values": [
+                  {
+                    "generatedName": "password",
+                    "value": "password",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "refresh_token",
+                    "value": "refresh_token",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "client_credentials",
+                    "value": "client_credentials",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenRequestUsername",
+              "key": "username",
+              "schema": {
+                "generatedName": "authGetTokenRequestUsername",
+                "value": {
+                  "description": "Required for password grant type",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "AuthGetTokenRequestUsername",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenRequestPassword",
+              "key": "password",
+              "schema": {
+                "generatedName": "authGetTokenRequestPassword",
+                "value": {
+                  "description": "Required for password grant type",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "AuthGetTokenRequestPassword",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenRequestRefreshToken",
+              "key": "refresh_token",
+              "schema": {
+                "generatedName": "authGetTokenRequestRefreshToken",
+                "value": {
+                  "description": "Required for refresh_token grant type",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "AuthGetTokenRequestRefreshToken",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenRequestClientId",
+              "key": "client_id",
+              "schema": {
+                "description": "The client identifier",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AuthGetTokenRequestClientId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenRequestClientSecret",
+              "key": "client_secret",
+              "schema": {
+                "description": "The client secret",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AuthGetTokenRequestClientSecret",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "AuthGetTokenRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Successful token response",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenResponseAccessToken",
+              "key": "access_token",
+              "schema": {
+                "generatedName": "authGetTokenResponseAccessToken",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "AuthGetTokenResponseAccessToken",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenResponseTokenType",
+              "key": "token_type",
+              "schema": {
+                "generatedName": "authGetTokenResponseTokenType",
+                "value": {
+                  "schema": {
+                    "example": "Bearer",
+                    "type": "string"
+                  },
+                  "generatedName": "AuthGetTokenResponseTokenType",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenResponseExpiresIn",
+              "key": "expires_in",
+              "schema": {
+                "generatedName": "authGetTokenResponseExpiresIn",
+                "value": {
+                  "description": "Token expiration time in seconds",
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "AuthGetTokenResponseExpiresIn",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "authGetTokenResponseRefreshToken",
+              "key": "refresh_token",
+              "schema": {
+                "generatedName": "authGetTokenResponseRefreshToken",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "AuthGetTokenResponseRefreshToken",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "AuthGetTokenResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "400": {
+          "generatedName": "BadRequestError",
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "type": "unknown"
+          },
+          "description": "Bad request",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        "401": {
+          "generatedName": "UnauthorizedError",
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "type": "unknown"
+          },
+          "description": "Unauthorized",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "description": "Exchange credentials or refresh token for an access token",
+      "authed": false,
+      "method": "POST",
+      "path": "/oauth/token",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "grant_type": {
+                "value": "password",
+                "type": "enum"
+              },
+              "client_id": {
+                "value": {
+                  "value": "client_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "client_secret": {
+                "value": {
+                  "value": "client_secret",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "access_token": {
+                  "value": {
+                    "value": "access_token",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "token_type": {
+                  "value": {
+                    "value": "Bearer",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "expires_in": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "refresh_token": {
+                  "value": {
+                    "value": "refresh_token",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "oauth2": {
+      "type": "oauth"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

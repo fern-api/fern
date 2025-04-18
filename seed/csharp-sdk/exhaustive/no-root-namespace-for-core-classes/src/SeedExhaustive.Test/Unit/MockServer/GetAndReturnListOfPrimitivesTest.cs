@@ -1,10 +1,6 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-
-#nullable enable
 
 namespace SeedExhaustive.Test.Unit.MockServer;
 
@@ -12,16 +8,18 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetAndReturnListOfPrimitivesTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             [
+              "string",
               "string"
             ]
             """;
 
         const string mockResponse = """
             [
+              "string",
               "string"
             ]
             """;
@@ -42,12 +40,11 @@ public class GetAndReturnListOfPrimitivesTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
-            new List<string>() { "string" },
-            RequestOptions
+            new List<string>() { "string", "string" }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse)).UsingDefaults()
+        );
     }
 }

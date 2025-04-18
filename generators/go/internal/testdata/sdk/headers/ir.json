@@ -1,4 +1,6 @@
 {
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
     "apiName": {
         "originalName": "api",
         "camelCase": {
@@ -53,7 +55,10 @@
                         "_type": "optional",
                         "optional": {
                             "_type": "primitive",
-                            "primitive": "BASE_64"
+                            "primitive": {
+                                "v1": "BASE_64",
+                                "v2": null
+                            }
                         }
                     }
                 },
@@ -90,8 +95,16 @@
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -120,8 +133,12 @@
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "UUID"
+                "primitive": {
+                    "v1": "UUID",
+                    "v2": null
+                }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -150,8 +167,12 @@
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "DATE_TIME"
+                "primitive": {
+                    "v1": "DATE_TIME",
+                    "v2": null
+                }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -180,8 +201,12 @@
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "DATE"
+                "primitive": {
+                    "v1": "DATE",
+                    "v2": null
+                }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -210,8 +235,12 @@
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "BASE_64"
+                "primitive": {
+                    "v1": "BASE_64",
+                    "v2": null
+                }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -244,10 +273,18 @@
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "STRING"
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -280,10 +317,14 @@
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "UUID"
+                        "primitive": {
+                            "v1": "UUID",
+                            "v2": null
+                        }
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -316,10 +357,14 @@
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "DATE_TIME"
+                        "primitive": {
+                            "v1": "DATE_TIME",
+                            "v2": null
+                        }
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -352,10 +397,14 @@
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "DATE"
+                        "primitive": {
+                            "v1": "DATE",
+                            "v2": null
+                        }
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -388,10 +437,14 @@
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "BASE_64"
+                        "primitive": {
+                            "v1": "BASE_64",
+                            "v2": null
+                        }
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -428,6 +481,7 @@
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         }
@@ -458,8 +512,16 @@
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
             },
+            "env": null,
             "availability": null,
             "docs": null
         }
@@ -521,6 +583,13 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_user.setName",
@@ -548,6 +617,7 @@
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -589,7 +659,14 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -619,7 +696,14 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -653,8 +737,16 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -683,8 +775,12 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "UUID"
+                                "primitive": {
+                                    "v1": "UUID",
+                                    "v2": null
+                                }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -713,8 +809,12 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "DATE"
+                                "primitive": {
+                                    "v1": "DATE",
+                                    "v2": null
+                                }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -743,8 +843,12 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "DATE_TIME"
+                                "primitive": {
+                                    "v1": "DATE_TIME",
+                                    "v2": null
+                                }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -773,8 +877,12 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "BASE_64"
+                                "primitive": {
+                                    "v1": "BASE_64",
+                                    "v2": null
+                                }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -807,10 +915,18 @@
                                     "_type": "optional",
                                     "optional": {
                                         "_type": "primitive",
-                                        "primitive": "STRING"
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
                                     }
                                 }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -843,10 +959,14 @@
                                     "_type": "optional",
                                     "optional": {
                                         "_type": "primitive",
-                                        "primitive": "UUID"
+                                        "primitive": {
+                                            "v1": "UUID",
+                                            "v2": null
+                                        }
                                     }
                                 }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -879,10 +999,14 @@
                                     "_type": "optional",
                                     "optional": {
                                         "_type": "primitive",
-                                        "primitive": "DATE"
+                                        "primitive": {
+                                            "v1": "DATE",
+                                            "v2": null
+                                        }
                                     }
                                 }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -915,10 +1039,14 @@
                                     "_type": "optional",
                                     "optional": {
                                         "_type": "primitive",
-                                        "primitive": "DATE_TIME"
+                                        "primitive": {
+                                            "v1": "DATE_TIME",
+                                            "v2": null
+                                        }
                                     }
                                 }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -951,10 +1079,14 @@
                                     "_type": "optional",
                                     "optional": {
                                         "_type": "primitive",
-                                        "primitive": "BASE_64"
+                                        "primitive": {
+                                            "v1": "BASE_64",
+                                            "v2": null
+                                        }
                                     }
                                 }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -991,6 +1123,7 @@
                                     }
                                 }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         }
@@ -1056,21 +1189,576 @@
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
-                    "examples": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "url": "/users/string/set-name",
+                                "rootPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointPathParameters": [
+                                    {
+                                        "name": {
+                                            "originalName": "userId",
+                                            "camelCase": {
+                                                "unsafeName": "userId",
+                                                "safeName": "userId"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user_id",
+                                                "safeName": "user_id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER_ID",
+                                                "safeName": "USER_ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "UserId",
+                                                "safeName": "UserId"
+                                            }
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                ],
+                                "serviceHeaders": [],
+                                "endpointHeaders": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointHeader",
+                                                    "safeName": "xEndpointHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_header",
+                                                    "safeName": "x_endpoint_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_HEADER",
+                                                    "safeName": "X_ENDPOINT_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointHeader",
+                                                    "safeName": "XEndpointHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-ID-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointIdHeader",
+                                                    "safeName": "xEndpointIdHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_id_header",
+                                                    "safeName": "x_endpoint_id_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_ID_HEADER",
+                                                    "safeName": "X_ENDPOINT_ID_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointIdHeader",
+                                                    "safeName": "XEndpointIdHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-ID-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "uuid",
+                                                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                }
+                                            },
+                                            "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Date-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointDateHeader",
+                                                    "safeName": "xEndpointDateHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_date_header",
+                                                    "safeName": "x_endpoint_date_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_DATE_HEADER",
+                                                    "safeName": "X_ENDPOINT_DATE_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointDateHeader",
+                                                    "safeName": "XEndpointDateHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Date-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "date",
+                                                    "date": "2023-01-15"
+                                                }
+                                            },
+                                            "jsonExample": "2023-01-15"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Datetime-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointDatetimeHeader",
+                                                    "safeName": "xEndpointDatetimeHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_datetime_header",
+                                                    "safeName": "x_endpoint_datetime_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_DATETIME_HEADER",
+                                                    "safeName": "X_ENDPOINT_DATETIME_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointDatetimeHeader",
+                                                    "safeName": "XEndpointDatetimeHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Datetime-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "datetime",
+                                                    "datetime": "2024-01-15T09:30:00.000Z",
+                                                    "raw": "2024-01-15T09:30:00Z"
+                                                }
+                                            },
+                                            "jsonExample": "2024-01-15T09:30:00Z"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Bytes-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointBytesHeader",
+                                                    "safeName": "xEndpointBytesHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_bytes_header",
+                                                    "safeName": "x_endpoint_bytes_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_BYTES_HEADER",
+                                                    "safeName": "X_ENDPOINT_BYTES_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointBytesHeader",
+                                                    "safeName": "XEndpointBytesHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Bytes-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "SGVsbG8gd29ybGQh"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "SGVsbG8gd29ybGQh"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Optional-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointOptionalHeader",
+                                                    "safeName": "xEndpointOptionalHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_optional_header",
+                                                    "safeName": "x_endpoint_optional_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_OPTIONAL_HEADER",
+                                                    "safeName": "X_ENDPOINT_OPTIONAL_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointOptionalHeader",
+                                                    "safeName": "XEndpointOptionalHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Optional-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "string"
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Optional-ID-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointOptionalIdHeader",
+                                                    "safeName": "xEndpointOptionalIdHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_optional_id_header",
+                                                    "safeName": "x_endpoint_optional_id_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_OPTIONAL_ID_HEADER",
+                                                    "safeName": "X_ENDPOINT_OPTIONAL_ID_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointOptionalIdHeader",
+                                                    "safeName": "XEndpointOptionalIdHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Optional-ID-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "uuid",
+                                                                "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                            }
+                                                        },
+                                                        "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "UUID",
+                                                            "v2": null
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Optional-Date-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointOptionalDateHeader",
+                                                    "safeName": "xEndpointOptionalDateHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_optional_date_header",
+                                                    "safeName": "x_endpoint_optional_date_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_OPTIONAL_DATE_HEADER",
+                                                    "safeName": "X_ENDPOINT_OPTIONAL_DATE_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointOptionalDateHeader",
+                                                    "safeName": "XEndpointOptionalDateHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Optional-Date-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "date",
+                                                                "date": "2023-01-15"
+                                                            }
+                                                        },
+                                                        "jsonExample": "2023-01-15"
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "DATE",
+                                                            "v2": null
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "2023-01-15"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Optional-Datetime-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointOptionalDatetimeHeader",
+                                                    "safeName": "xEndpointOptionalDatetimeHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_optional_datetime_header",
+                                                    "safeName": "x_endpoint_optional_datetime_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_OPTIONAL_DATETIME_HEADER",
+                                                    "safeName": "X_ENDPOINT_OPTIONAL_DATETIME_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointOptionalDatetimeHeader",
+                                                    "safeName": "XEndpointOptionalDatetimeHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Optional-Datetime-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "datetime",
+                                                                "datetime": "2024-01-15T09:30:00.000Z",
+                                                                "raw": "2024-01-15T09:30:00Z"
+                                                            }
+                                                        },
+                                                        "jsonExample": "2024-01-15T09:30:00Z"
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "DATE_TIME",
+                                                            "v2": null
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "2024-01-15T09:30:00Z"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Optional-Bytes-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointOptionalBytesHeader",
+                                                    "safeName": "xEndpointOptionalBytesHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_optional_bytes_header",
+                                                    "safeName": "x_endpoint_optional_bytes_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_OPTIONAL_BYTES_HEADER",
+                                                    "safeName": "X_ENDPOINT_OPTIONAL_BYTES_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointOptionalBytesHeader",
+                                                    "safeName": "XEndpointOptionalBytesHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Optional-Bytes-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "SGVsbG8gd29ybGQh"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "SGVsbG8gd29ybGQh"
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "BASE_64",
+                                                            "v2": null
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "SGVsbG8gd29ybGQh"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Fern-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointFernHeader",
+                                                    "safeName": "xEndpointFernHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_fern_header",
+                                                    "safeName": "x_endpoint_fern_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_FERN_HEADER",
+                                                    "safeName": "X_ENDPOINT_FERN_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointFernHeader",
+                                                    "safeName": "XEndpointFernHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Fern-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "literal",
+                                                    "literal": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "fern"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "fern"
+                                        }
+                                    }
+                                ],
+                                "queryParameters": [],
+                                "request": null,
+                                "name": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "id": "0f93d59ce927ee227c4d3c02b7cb20aa57540d0f",
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -1100,6 +1788,7 @@
                     "idempotent": true,
                     "baseUrl": null,
                     "method": "PUT",
+                    "basePath": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -1141,7 +1830,14 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1171,7 +1867,14 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ENDPOINT",
                             "variable": null,
@@ -1205,8 +1908,16 @@
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         }
@@ -1272,21 +1983,139 @@
                                 "unsafeName": "Request",
                                 "safeName": "Request"
                             }
-                        }
+                        },
+                        "streamParameter": null
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
-                    "examples": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "url": "/users/string/update-name",
+                                "rootPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointPathParameters": [
+                                    {
+                                        "name": {
+                                            "originalName": "userId",
+                                            "camelCase": {
+                                                "unsafeName": "userId",
+                                                "safeName": "userId"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user_id",
+                                                "safeName": "user_id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER_ID",
+                                                "safeName": "USER_ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "UserId",
+                                                "safeName": "UserId"
+                                            }
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                ],
+                                "serviceHeaders": [],
+                                "endpointHeaders": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "X-Endpoint-Header",
+                                                "camelCase": {
+                                                    "unsafeName": "xEndpointHeader",
+                                                    "safeName": "xEndpointHeader"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "x_endpoint_header",
+                                                    "safeName": "x_endpoint_header"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "X_ENDPOINT_HEADER",
+                                                    "safeName": "X_ENDPOINT_HEADER"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "XEndpointHeader",
+                                                    "safeName": "XEndpointHeader"
+                                                }
+                                            },
+                                            "wireValue": "X-Endpoint-Header"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                ],
+                                "queryParameters": [],
+                                "request": null,
+                                "name": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "id": "473f3130de4321c658e97914331d30434086a119",
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1329,6 +2158,10 @@
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {
         "subpackage_user": {
             "name": {
@@ -1399,6 +2232,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -1409,6 +2243,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
@@ -1423,11 +2258,13 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

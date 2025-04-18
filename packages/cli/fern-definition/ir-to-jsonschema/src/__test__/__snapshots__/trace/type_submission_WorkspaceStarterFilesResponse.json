@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/submission.WorkspaceFiles"
+      }
+    }
+  },
+  "required": [
+    "files"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "commons.FileInfo": {
+      "type": "object",
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "filename",
+        "contents"
+      ],
+      "additionalProperties": false
+    },
+    "submission.WorkspaceFiles": {
+      "type": "object",
+      "properties": {
+        "mainFile": {
+          "$ref": "#/definitions/commons.FileInfo"
+        },
+        "readOnlyFiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/commons.FileInfo"
+          }
+        }
+      },
+      "required": [
+        "mainFile",
+        "readOnlyFiles"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

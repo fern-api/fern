@@ -20,74 +20,74 @@ export type DebugVariableValue =
     | SeedTrace.DebugVariableValue.GenericValue
     | SeedTrace.DebugVariableValue._Unknown;
 
-export declare namespace DebugVariableValue {
-    interface IntegerValue extends _Utils {
+export namespace DebugVariableValue {
+    export interface IntegerValue extends _Utils {
         type: "integerValue";
         value: number;
     }
 
-    interface BooleanValue extends _Utils {
+    export interface BooleanValue extends _Utils {
         type: "booleanValue";
         value: boolean;
     }
 
-    interface DoubleValue extends _Utils {
+    export interface DoubleValue extends _Utils {
         type: "doubleValue";
         value: number;
     }
 
-    interface StringValue extends _Utils {
+    export interface StringValue extends _Utils {
         type: "stringValue";
         value: string;
     }
 
-    interface CharValue extends _Utils {
+    export interface CharValue extends _Utils {
         type: "charValue";
         value: string;
     }
 
-    interface MapValue extends SeedTrace.DebugMapValue, _Utils {
+    export interface MapValue extends SeedTrace.DebugMapValue, _Utils {
         type: "mapValue";
     }
 
-    interface ListValue extends _Utils {
+    export interface ListValue extends _Utils {
         type: "listValue";
         value: SeedTrace.DebugVariableValue[];
     }
 
-    interface BinaryTreeNodeValue extends SeedTrace.BinaryTreeNodeAndTreeValue, _Utils {
+    export interface BinaryTreeNodeValue extends SeedTrace.BinaryTreeNodeAndTreeValue, _Utils {
         type: "binaryTreeNodeValue";
     }
 
-    interface SinglyLinkedListNodeValue extends SeedTrace.SinglyLinkedListNodeAndListValue, _Utils {
+    export interface SinglyLinkedListNodeValue extends SeedTrace.SinglyLinkedListNodeAndListValue, _Utils {
         type: "singlyLinkedListNodeValue";
     }
 
-    interface DoublyLinkedListNodeValue extends SeedTrace.DoublyLinkedListNodeAndListValue, _Utils {
+    export interface DoublyLinkedListNodeValue extends SeedTrace.DoublyLinkedListNodeAndListValue, _Utils {
         type: "doublyLinkedListNodeValue";
     }
 
-    interface UndefinedValue extends _Utils {
+    export interface UndefinedValue extends _Utils {
         type: "undefinedValue";
     }
 
-    interface NullValue extends _Utils {
+    export interface NullValue extends _Utils {
         type: "nullValue";
     }
 
-    interface GenericValue extends SeedTrace.GenericValue, _Utils {
+    export interface GenericValue extends SeedTrace.GenericValue, _Utils {
         type: "genericValue";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         type: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: SeedTrace.DebugVariableValue._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         integerValue: (value: number) => _Result;
         booleanValue: (value: boolean) => _Result;
         doubleValue: (value: number) => _Result;
@@ -112,7 +112,7 @@ export const DebugVariableValue = {
             type: "integerValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.IntegerValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -125,7 +125,7 @@ export const DebugVariableValue = {
             type: "booleanValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.BooleanValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -138,7 +138,7 @@ export const DebugVariableValue = {
             type: "doubleValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.DoubleValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -151,7 +151,7 @@ export const DebugVariableValue = {
             type: "stringValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.StringValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -164,7 +164,7 @@ export const DebugVariableValue = {
             type: "charValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.CharValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -177,7 +177,7 @@ export const DebugVariableValue = {
             type: "mapValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.MapValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -190,7 +190,7 @@ export const DebugVariableValue = {
             type: "listValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.ListValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -198,14 +198,14 @@ export const DebugVariableValue = {
     },
 
     binaryTreeNodeValue: (
-        value: SeedTrace.BinaryTreeNodeAndTreeValue
+        value: SeedTrace.BinaryTreeNodeAndTreeValue,
     ): SeedTrace.DebugVariableValue.BinaryTreeNodeValue => {
         return {
             ...value,
             type: "binaryTreeNodeValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.BinaryTreeNodeValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -213,14 +213,14 @@ export const DebugVariableValue = {
     },
 
     singlyLinkedListNodeValue: (
-        value: SeedTrace.SinglyLinkedListNodeAndListValue
+        value: SeedTrace.SinglyLinkedListNodeAndListValue,
     ): SeedTrace.DebugVariableValue.SinglyLinkedListNodeValue => {
         return {
             ...value,
             type: "singlyLinkedListNodeValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.SinglyLinkedListNodeValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -228,14 +228,14 @@ export const DebugVariableValue = {
     },
 
     doublyLinkedListNodeValue: (
-        value: SeedTrace.DoublyLinkedListNodeAndListValue
+        value: SeedTrace.DoublyLinkedListNodeAndListValue,
     ): SeedTrace.DebugVariableValue.DoublyLinkedListNodeValue => {
         return {
             ...value,
             type: "doublyLinkedListNodeValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.DoublyLinkedListNodeValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -247,7 +247,7 @@ export const DebugVariableValue = {
             type: "undefinedValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.UndefinedValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -259,7 +259,7 @@ export const DebugVariableValue = {
             type: "nullValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.NullValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -272,7 +272,7 @@ export const DebugVariableValue = {
             type: "genericValue",
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue.GenericValue,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -284,7 +284,7 @@ export const DebugVariableValue = {
             ...(value as any),
             _visit: function <_Result>(
                 this: SeedTrace.DebugVariableValue._Unknown,
-                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+                visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
             ) {
                 return SeedTrace.DebugVariableValue._visit(this, visitor);
             },
@@ -293,7 +293,7 @@ export const DebugVariableValue = {
 
     _visit: <_Result>(
         value: SeedTrace.DebugVariableValue,
-        visitor: SeedTrace.DebugVariableValue._Visitor<_Result>
+        visitor: SeedTrace.DebugVariableValue._Visitor<_Result>,
     ): _Result => {
         switch (value.type) {
             case "integerValue":

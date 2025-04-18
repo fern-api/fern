@@ -5,6 +5,7 @@ package com.seed.version.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
@@ -18,21 +19,34 @@ public final class ClientOptions {
 
     private final OkHttpClient httpClient;
 
+    private final int timeout;
+
+    /**
+     * version.toString() is sent as the "X-API-Version" header.
+     */
+    private final ApiVersion version;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
-            OkHttpClient httpClient) {
+            OkHttpClient httpClient,
+            int timeout,
+            ApiVersion version) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
         this.headers.putAll(new HashMap<String, String>() {
             {
+                put("User-Agent", "com.fern:version-no-default/0.0.1");
                 put("X-Fern-Language", "JAVA");
             }
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
+        this.timeout = timeout;
+        this.version = version;
+        this.headers.put("X-API-Version", this.version.toString());
     }
 
     public Environment environment() {
@@ -48,6 +62,20 @@ public final class ClientOptions {
             values.putAll(requestOptions.getHeaders());
         }
         return values;
+    }
+
+    /**
+     * version.toString() is sent as the "X-API-Version" header.
+     */
+    public ApiVersion version() {
+        return this.version;
+    }
+
+    public int timeout(RequestOptions requestOptions) {
+        if (requestOptions == null) {
+            return this.timeout;
+        }
+        return requestOptions.getTimeout().orElse(this.timeout);
     }
 
     public OkHttpClient httpClient() {
@@ -78,6 +106,14 @@ public final class ClientOptions {
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
 
+        private int maxRetries = 2;
+
+        private Optional<Integer> timeout = Optional.empty();
+
+        private OkHttpClient httpClient = null;
+
+        private ApiVersion version;
+
         public Builder environment(Environment environment) {
             this.environment = environment;
             return this;
@@ -93,11 +129,66 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * Override the timeout in seconds. Defaults to 60 seconds.
+         */
+        public Builder timeout(int timeout) {
+            this.timeout = Optional.of(timeout);
+            return this;
+        }
+
+        /**
+         * Override the timeout in seconds. Defaults to 60 seconds.
+         */
+        public Builder timeout(Optional<Integer> timeout) {
+            this.timeout = timeout;
+            return this;
+        }
+
+        /**
+         * Override the maximum number of retries. Defaults to 2 retries.
+         */
+        public Builder maxRetries(int maxRetries) {
+            this.maxRetries = maxRetries;
+            return this;
+        }
+
+        public Builder httpClient(OkHttpClient httpClient) {
+            this.httpClient = httpClient;
+            return this;
+        }
+
+        /**
+         * version.toString() is sent as the "X-API-Version" header.
+         */
+        public Builder version(ApiVersion version) {
+            this.version = version;
+            return this;
+        }
+
         public ClientOptions build() {
-            OkHttpClient okhttpClient = new OkHttpClient.Builder()
-                    .addInterceptor(new RetryInterceptor(3))
-                    .build();
-            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient);
+            OkHttpClient.Builder httpClientBuilder =
+                    this.httpClient != null ? this.httpClient.newBuilder() : new OkHttpClient.Builder();
+
+            if (this.httpClient != null) {
+                timeout.ifPresent(timeout -> httpClientBuilder
+                        .callTimeout(timeout, TimeUnit.SECONDS)
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS));
+            } else {
+                httpClientBuilder
+                        .callTimeout(this.timeout.orElse(60), TimeUnit.SECONDS)
+                        .connectTimeout(0, TimeUnit.SECONDS)
+                        .writeTimeout(0, TimeUnit.SECONDS)
+                        .readTimeout(0, TimeUnit.SECONDS)
+                        .addInterceptor(new RetryInterceptor(this.maxRetries));
+            }
+
+            this.httpClient = httpClientBuilder.build();
+            this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
+
+            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout.get(), version);
         }
     }
 }

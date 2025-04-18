@@ -2,32 +2,41 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class StdoutResponse extends SerializableType
+class StdoutResponse extends JsonSerializableType
 {
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**
-     * @param string $submissionId
-     * @param string $stdout
+     * @param array{
+     *   submissionId: string,
+     *   stdout: string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        string $stdout,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->stdout = $stdout;
+        $this->submissionId = $values['submissionId'];
+        $this->stdout = $values['stdout'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

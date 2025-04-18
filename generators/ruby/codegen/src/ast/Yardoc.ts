@@ -1,4 +1,8 @@
 import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
+
+import { ExampleGenerator } from "./ExampleGenerator";
+import { Parameter } from "./Parameter";
+import { Property } from "./Property";
 import {
     ArrayReference,
     ClassReference,
@@ -6,10 +10,7 @@ import {
     DiscriminatedUnionClassReference
 } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
-import { ExampleGenerator } from "./ExampleGenerator";
 import { Function_ } from "./functions/Function_";
-import { Parameter } from "./Parameter";
-import { Property } from "./Property";
 
 export interface YardocDocString {
     readonly name: "docString";
@@ -168,10 +169,10 @@ export class Yardoc extends AstNode {
 
     private getTypeHint(cr: ClassReference): string {
         return this.crf !== undefined
-            ? this.crf.resolvedReferences
+            ? (this.crf.resolvedReferences
                   .get(cr.resolvedTypeId ?? "")
                   ?.map((innerCr) => innerCr.typeHint)
-                  ?.join(", ") ?? cr.typeHint
+                  ?.join(", ") ?? cr.typeHint)
             : cr.typeHint;
     }
 
@@ -190,8 +191,8 @@ export class Yardoc extends AstNode {
                     this.reference.type instanceof Property
                         ? this.reference.type.type.flatMap((prop) => this.getTypeHint(prop)).join(", ")
                         : this.reference.type instanceof ClassReference
-                        ? this.getTypeHint(this.reference.type)
-                        : this.reference.type;
+                          ? this.getTypeHint(this.reference.type)
+                          : this.reference.type;
                 this.addText({ stringContent: typeName, templateString: "# @return [%s] ", startingTabSpaces });
                 this.writeMultilineYardocComment(
                     this.reference.type instanceof Property ? this.reference.type.documentation : []

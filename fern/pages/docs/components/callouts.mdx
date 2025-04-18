@@ -1,8 +1,55 @@
 ---
 title: 'Callouts'
-description: 'A built-in component to show important information to the reader'
-icon: 'circle-exclamation'
+description: 'Highlight important information, warnings, or tips in your documentation.'
 ---
+
+Callouts help highlight important information, warnings, or tips in your documentation. They provide visual emphasis through distinct styling and icons to make key messages stand out to readers.
+
+## Properties
+
+Customize your Callouts using the following properties:
+
+<ParamField path="intent" type="string" required={true}>
+  The type of callout. Available options: `info`, `warning`, `success`, `error`, `note`, `launch`, `tip`, `check`
+</ParamField>
+
+<ParamField path="title" type="string" required={false}>
+  The title of your Callout
+</ParamField>
+
+<ParamField path="icon" type="string | ReactElement" required={false}>
+  The icon of your Callout. Can be:
+  - A [Font Awesome](https://fontawesome.com/icons) icon name
+  - A React element
+  - If not specified, uses a default icon based on the intent:
+    - info: InfoCircle
+    - warning: Bell
+    - success: CheckCircle
+    - error: WarningTriangle
+    - note: Pin
+    - launch: Rocket
+    - tip: Star
+    - check: Check
+</ParamField>
+
+<br />
+
+<Tabs>
+<Tab title="Callout">
+<Tip title="Example Callout" icon="leaf">
+This Callout uses a title and a custom icon. 
+</Tip>
+</Tab>
+<Tab title="Markdown">
+```markdown
+<Tip title="Example Callout" icon="leaf">
+This Callout uses a title and a custom icon. 
+</Tip>
+```
+</Tab>
+</Tabs>
+
+## Callout varieties
 
 ### Note callouts
 
@@ -18,6 +65,14 @@ icon: 'circle-exclamation'
 
 ```jsx
 <Warning>This raises a warning to watch out for</Warning>
+```
+
+### Success callouts
+
+<Success>This indicates a successful operation or positive outcome</Success>
+
+```jsx
+<Success>This indicates a successful operation or positive outcome</Success>
 ```
 
 ### Error callouts

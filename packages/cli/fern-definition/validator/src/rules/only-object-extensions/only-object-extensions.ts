@@ -1,5 +1,6 @@
-import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
 import { isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
+
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -31,7 +32,7 @@ export const OnlyObjectExtensionsRule: Rule = {
 
                     return [
                         {
-                            severity: "error",
+                            severity: "fatal",
                             message: `Objects can only extend other objects, and ${extension} is not an object.`
                         }
                     ];

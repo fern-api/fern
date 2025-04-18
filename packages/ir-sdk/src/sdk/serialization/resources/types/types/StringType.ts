@@ -14,7 +14,7 @@ export const StringType: core.serialization.ObjectSchema<serializers.StringType.
     });
 
 export declare namespace StringType {
-    interface Raw {
+    export interface Raw {
         default?: string | null;
         validation?: StringValidationRules.Raw | null;
     }

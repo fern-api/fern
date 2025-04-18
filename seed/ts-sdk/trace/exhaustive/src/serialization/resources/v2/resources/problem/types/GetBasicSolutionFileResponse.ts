@@ -16,7 +16,7 @@ export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetBasicSolutionFileResponse {
-    interface Raw {
+    export interface Raw {
         solutionFileByLanguage: Record<Language.Raw, FileInfoV2.Raw | null | undefined>;
     }
 }

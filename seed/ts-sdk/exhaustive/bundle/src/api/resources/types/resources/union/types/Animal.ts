@@ -6,24 +6,24 @@ import * as Fiddle from "../../../../../index";
 
 export type Animal = Fiddle.types.Animal.Dog | Fiddle.types.Animal.Cat | Fiddle.types.Animal._Unknown;
 
-export declare namespace Animal {
-    interface Dog extends Fiddle.types.Dog, _Utils {
+export namespace Animal {
+    export interface Dog extends Fiddle.types.Dog, _Utils {
         animal: "dog";
     }
 
-    interface Cat extends Fiddle.types.Cat, _Utils {
+    export interface Cat extends Fiddle.types.Cat, _Utils {
         animal: "cat";
     }
 
-    interface _Unknown extends _Utils {
+    export interface _Unknown extends _Utils {
         animal: void;
     }
 
-    interface _Utils {
+    export interface _Utils {
         _visit: <_Result>(visitor: Fiddle.types.Animal._Visitor<_Result>) => _Result;
     }
 
-    interface _Visitor<_Result> {
+    export interface _Visitor<_Result> {
         dog: (value: Fiddle.types.Dog) => _Result;
         cat: (value: Fiddle.types.Cat) => _Result;
         _other: (value: { animal: string }) => _Result;
@@ -56,7 +56,7 @@ export const Animal = {
             ...(value as any),
             _visit: function <_Result>(
                 this: Fiddle.types.Animal._Unknown,
-                visitor: Fiddle.types.Animal._Visitor<_Result>
+                visitor: Fiddle.types.Animal._Visitor<_Result>,
             ) {
                 return Fiddle.types.Animal._visit(this, visitor);
             },

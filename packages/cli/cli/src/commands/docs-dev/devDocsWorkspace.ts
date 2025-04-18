@@ -1,19 +1,22 @@
 import { runPreviewServer } from "@fern-api/docs-preview";
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
+
 import { CliContext } from "../../cli-context/CliContext";
-import { validateAPIWorkspaceWithoutExiting } from "../validate/validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function previewDocsWorkspace({
     loadProject,
     cliContext,
     port,
-    bundlePath
+    bundlePath,
+    brokenLinks
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
     port: number;
     bundlePath?: string;
+    brokenLinks: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -37,21 +40,26 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return;
                 }
-                await validateDocsWorkspaceWithoutExiting({
-                    workspace: docsWorkspace,
-                    context,
-                    logWarnings: true,
-                    logSummary: false,
-                    loadAPIWorkspace: project.loadAPIWorkspace
-                });
-                for (const apiWorkspace of project.apiWorkspaces) {
-                    await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {
-                        await validateAPIWorkspaceWithoutExiting({
-                            workspace: await apiWorkspace.toFernWorkspace({ context }),
-                            context: apiWorkspaceContext,
-                            logWarnings: false,
-                            logSummary: false
-                        });
+                const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
+                if (docsWorkspace.config.experimental?.openapiParserV3) {
+                    await validateDocsWorkspaceWithoutExiting({
+                        workspace: docsWorkspace,
+                        context,
+                        logWarnings: true,
+                        logSummary: false,
+                        apiWorkspaces: [],
+                        ossWorkspaces: await filterOssWorkspaces(project),
+                        excludeRules
+                    });
+                } else {
+                    await validateDocsWorkspaceWithoutExiting({
+                        workspace: docsWorkspace,
+                        context,
+                        logWarnings: true,
+                        logSummary: false,
+                        apiWorkspaces: project.apiWorkspaces,
+                        ossWorkspaces: await filterOssWorkspaces(project),
+                        excludeRules
                     });
                 }
             },

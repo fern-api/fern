@@ -67,12 +67,7 @@ module.exports = {
                 ignoreRestSiblings: true
             }
         ],
-        "@typescript-eslint/no-namespace": [
-            "error",
-            {
-                allowDeclarations: true
-            }
-        ],
+        "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/explicit-module-boundary-types": [
             "error",
             {
@@ -88,12 +83,14 @@ module.exports = {
             }
         ],
         "jest/unbound-method": ["error"],
+        "jest/valid-describe-callback": "off",
+        "jest/valid-title": "off",
         "object-shorthand": ["error"],
         "@typescript-eslint/no-invalid-void-type": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/prefer-optional-chain": "off",
-        "deprecation/deprecation": "error",
+        "deprecation/deprecation": "warn",
         "import/no-internal-modules": [
             "error",
             {
@@ -101,13 +98,7 @@ module.exports = {
             }
         ],
         "@typescript-eslint/no-base-to-string": "error",
-        eqeqeq: [
-            "error",
-            "always",
-            {
-                null: "never"
-            }
-        ],
+        eqeqeq: "off",
         curly: "error",
         "no-console": "error",
         "react/react-in-jsx-scope": "off",
@@ -119,6 +110,18 @@ module.exports = {
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
-        "eslint-comments/no-unused-disable": "off"
-    }
+        "@typescript-eslint/unified-signatures": "off",
+        // "@typescript-eslint/no-deprecated": "warn",
+        "eslint-comments/no-unused-disable": "off",
+        "jest/expect-expect": "off",
+        "jest/no-conditional-expect": "off"
+    },
+    overrides: [
+        {
+            files: ['**/*.test.ts', '**/*.spec.ts'],
+            rules: {
+                'no-console': 'off'
+            }
+        }
+    ]
 };

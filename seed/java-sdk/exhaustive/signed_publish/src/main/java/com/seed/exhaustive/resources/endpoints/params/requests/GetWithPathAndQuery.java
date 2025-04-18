@@ -14,6 +14,7 @@ import com.seed.exhaustive.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetWithPathAndQuery.Builder.class)
@@ -62,7 +63,7 @@ public final class GetWithPathAndQuery {
     }
 
     public interface QueryStage {
-        _FinalStage query(String query);
+        _FinalStage query(@NotNull String query);
 
         Builder from(GetWithPathAndQuery other);
     }
@@ -88,8 +89,8 @@ public final class GetWithPathAndQuery {
 
         @java.lang.Override
         @JsonSetter("query")
-        public _FinalStage query(String query) {
-            this.query = query;
+        public _FinalStage query(@NotNull String query) {
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 

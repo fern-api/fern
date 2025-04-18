@@ -65,7 +65,11 @@ await client.unknown.post({
 <dd>
 
 ```typescript
-await client.unknown.postObject({});
+await client.unknown.postObject({
+    unknown: {
+        key: "value",
+    },
+});
 ```
 
 </dd>

@@ -4,21 +4,26 @@
 
 import * as core from "../../../../core";
 import * as SeedQueryParameters from "../../../index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace User {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -37,40 +42,50 @@ export class User {
      *         deadline: "2024-01-15T09:30:00Z",
      *         bytes: "SGVsbG8gd29ybGQh",
      *         user: {
-     *             name: "string",
-     *             tags: ["string"]
+     *             name: "name",
+     *             tags: ["tags", "tags"]
      *         },
      *         userList: [{
-     *                 name: "string",
-     *                 tags: ["string"]
+     *                 name: "name",
+     *                 tags: ["tags", "tags"]
+     *             }, {
+     *                 name: "name",
+     *                 tags: ["tags", "tags"]
      *             }],
      *         optionalDeadline: "2024-01-15T09:30:00Z",
      *         keyValue: {
-     *             "string": "string"
+     *             "keyValue": "keyValue"
      *         },
-     *         optionalString: "string",
+     *         optionalString: "optionalString",
      *         nestedUser: {
-     *             name: "string",
+     *             name: "name",
      *             user: {
-     *                 name: "string",
-     *                 tags: ["string"]
+     *                 name: "name",
+     *                 tags: ["tags", "tags"]
      *             }
      *         },
      *         optionalUser: {
-     *             name: "string",
-     *             tags: ["string"]
+     *             name: "name",
+     *             tags: ["tags", "tags"]
      *         },
      *         excludeUser: {
-     *             name: "string",
-     *             tags: ["string"]
+     *             name: "name",
+     *             tags: ["tags", "tags"]
      *         },
-     *         filter: "string"
+     *         filter: "filter"
      *     })
      */
-    public async getUsername(
+    public getUsername(
         request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: User.RequestOptions
-    ): Promise<SeedQueryParameters.User> {
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<SeedQueryParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
+    }
+
+    private async __getUsername(
+        request: SeedQueryParameters.GetUsersRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
         const {
             limit,
             id,
@@ -87,19 +102,19 @@ export class User {
             excludeUser,
             filter,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["limit"] = limit.toString();
         _queryParams["id"] = id;
         _queryParams["date"] = date;
         _queryParams["deadline"] = deadline;
         _queryParams["bytes"] = bytes;
         _queryParams["user"] = user;
-        _queryParams["userList"] = JSON.stringify(userList);
+        _queryParams["userList"] = toJson(userList);
         if (optionalDeadline != null) {
             _queryParams["optionalDeadline"] = optionalDeadline;
         }
 
-        _queryParams["keyValue"] = JSON.stringify(keyValue);
+        _queryParams["keyValue"] = toJson(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
         }
@@ -122,7 +137,11 @@ export class User {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/user"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/user",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -131,6 +150,7 @@ export class User {
                 "User-Agent": "@fern/query-parameters/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -140,13 +160,14 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return _response.body as SeedQueryParameters.User;
+            return { data: _response.body as SeedQueryParameters.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedQueryParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -155,12 +176,14 @@ export class User {
                 throw new errors.SeedQueryParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedQueryParametersTimeoutError();
+                throw new errors.SeedQueryParametersTimeoutError("Timeout exceeded when calling GET /user.");
             case "unknown":
                 throw new errors.SeedQueryParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

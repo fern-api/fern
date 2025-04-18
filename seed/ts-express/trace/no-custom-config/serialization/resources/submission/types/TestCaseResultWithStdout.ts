@@ -15,7 +15,7 @@ export const TestCaseResultWithStdout: core.serialization.ObjectSchema<
 });
 
 export declare namespace TestCaseResultWithStdout {
-    interface Raw {
+    export interface Raw {
         result: serializers.TestCaseResult.Raw;
         stdout: string;
     }

@@ -4,69 +4,68 @@
 
 import * as core from "../../../../core";
 import { Container } from "../resources/container/client/Client";
+import { ContentType } from "../resources/contentType/client/Client";
 import { Enum } from "../resources/enum/client/Client";
 import { HttpMethods } from "../resources/httpMethods/client/Client";
 import { Object_ } from "../resources/object/client/Client";
 import { Params } from "../resources/params/client/Client";
 import { Primitive } from "../resources/primitive/client/Client";
+import { Put } from "../resources/put/client/Client";
 import { Union } from "../resources/union/client/Client";
 
 export declare namespace Endpoints {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
-    }
-
-    interface RequestOptions {
-        /** The maximum time to wait for a response in seconds. */
-        timeoutInSeconds?: number;
-        /** The number of times to retry the request. Defaults to 2. */
-        maxRetries?: number;
-        /** A hook to abort the request. */
-        abortSignal?: AbortSignal;
     }
 }
 
 export class Endpoints {
-    constructor(protected readonly _options: Endpoints.Options) {}
-
     protected _container: Container | undefined;
+    protected _contentType: ContentType | undefined;
+    protected _enum: Enum | undefined;
+    protected _httpMethods: HttpMethods | undefined;
+    protected _object: Object_ | undefined;
+    protected _params: Params | undefined;
+    protected _primitive: Primitive | undefined;
+    protected _put: Put | undefined;
+    protected _union: Union | undefined;
+
+    constructor(protected readonly _options: Endpoints.Options) {}
 
     public get container(): Container {
         return (this._container ??= new Container(this._options));
     }
 
-    protected _enum: Enum | undefined;
+    public get contentType(): ContentType {
+        return (this._contentType ??= new ContentType(this._options));
+    }
 
     public get enum(): Enum {
         return (this._enum ??= new Enum(this._options));
     }
 
-    protected _httpMethods: HttpMethods | undefined;
-
     public get httpMethods(): HttpMethods {
         return (this._httpMethods ??= new HttpMethods(this._options));
     }
-
-    protected _object: Object_ | undefined;
 
     public get object(): Object_ {
         return (this._object ??= new Object_(this._options));
     }
 
-    protected _params: Params | undefined;
-
     public get params(): Params {
         return (this._params ??= new Params(this._options));
     }
-
-    protected _primitive: Primitive | undefined;
 
     public get primitive(): Primitive {
         return (this._primitive ??= new Primitive(this._options));
     }
 
-    protected _union: Union | undefined;
+    public get put(): Put {
+        return (this._put ??= new Put(this._options));
+    }
 
     public get union(): Union {
         return (this._union ??= new Union(this._options));

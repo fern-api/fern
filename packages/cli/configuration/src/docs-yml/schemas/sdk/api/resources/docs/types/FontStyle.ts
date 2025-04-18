@@ -3,7 +3,6 @@
  */
 
 export type FontStyle = "normal" | "italic";
-
 export const FontStyle = {
     Normal: "normal",
     Italic: "italic",

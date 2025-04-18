@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_imdb.createMovie"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = \"string\", Rating = 1.1 });\n"
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = \"title\", Rating = 1.1 });\n"
             }
         },
         {
@@ -21,8 +21,8 @@
                 "identifier_override": "endpoint_imdb.getMovie"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.GetMovieAsync(\"string\");\n"
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Imdb.GetMovieAsync(\"movieId\");\n"
             }
         }
     ]

@@ -1,0 +1,16 @@
+types:
+  definitions:
+    default-package: com.birch.trace.submission
+    objects:
+      LangServerRequest:
+        fields:
+          request: any
+      LangServerResponse:
+        fields:
+          response: any
+
+
+
+
+
+

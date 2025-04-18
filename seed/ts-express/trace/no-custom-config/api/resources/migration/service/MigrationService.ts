@@ -15,19 +15,22 @@ export interface MigrationServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class MigrationService {
     private router;
 
-    constructor(private readonly methods: MigrationServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: MigrationServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -46,13 +49,13 @@ export class MigrationService {
                             res.json(
                                 serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
-                                })
+                                }),
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
                     },
-                    next
+                    next,
                 );
                 next();
             } catch (error) {
@@ -60,7 +63,7 @@ export class MigrationService {
                     console.warn(
                         `Endpoint 'getAttemptedMigrations' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
-                            " the endpoint's errors list in your Fern Definition."
+                            " the endpoint's errors list in your Fern Definition.",
                     );
                     await error.send(res);
                 } else {

@@ -9,17 +9,21 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -33,14 +37,22 @@ export class Service {
      * @example
      *     await client.service.getResource("rsc-xyz")
      */
-    public async getResource(
+    public getResource(
         ResourceID: string,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedMixedCase.Resource> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedMixedCase.Resource> {
+        return core.HttpResponsePromise.fromPromise(this.__getResource(ResourceID, requestOptions));
+    }
+
+    private async __getResource(
+        ResourceID: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `/resource/${encodeURIComponent(ResourceID)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/resource/${encodeURIComponent(ResourceID)}`,
             ),
             method: "GET",
             headers: {
@@ -50,6 +62,7 @@ export class Service {
                 "User-Agent": "@fern/mixed-case/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -58,18 +71,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Resource.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Resource.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMixedCaseError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -78,12 +95,14 @@ export class Service {
                 throw new errors.SeedMixedCaseError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMixedCaseTimeoutError();
+                throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource/{ResourceID}.");
             case "unknown":
                 throw new errors.SeedMixedCaseError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -98,16 +117,27 @@ export class Service {
      *         beforeDate: "2023-01-01"
      *     })
      */
-    public async listResources(
+    public listResources(
         request: SeedMixedCase.ListResourcesRequest,
-        requestOptions?: Service.RequestOptions
-    ): Promise<SeedMixedCase.Resource[]> {
+        requestOptions?: Service.RequestOptions,
+    ): core.HttpResponsePromise<SeedMixedCase.Resource[]> {
+        return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
+    }
+
+    private async __listResources(
+        request: SeedMixedCase.ListResourcesRequest,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedMixedCase.Resource[]>> {
         const { page_limit: pageLimit, beforeDate } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["page_limit"] = pageLimit.toString();
         _queryParams["beforeDate"] = beforeDate;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/resource"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/resource",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -116,6 +146,7 @@ export class Service {
                 "User-Agent": "@fern/mixed-case/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -125,18 +156,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.service.listResources.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.service.listResources.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMixedCaseError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -145,12 +180,14 @@ export class Service {
                 throw new errors.SeedMixedCaseError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedMixedCaseTimeoutError();
+                throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource.");
             case "unknown":
                 throw new errors.SeedMixedCaseError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

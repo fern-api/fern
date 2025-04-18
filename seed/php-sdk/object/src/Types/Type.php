@@ -2,228 +2,232 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use DateTime;
-use Seed\Core\DateType;
-use Seed\Core\ArrayType;
-use Seed\Core\Union;
+use Seed\Core\Types\Date;
+use Seed\Core\Types\ArrayType;
+use Seed\Core\Types\Union;
 
 /**
-* Exercises all of the built-in types.
+ * Exercises all of the built-in types.
  */
-class Type extends SerializableType
+class Type extends JsonSerializableType
 {
     /**
      * @var int $one
      */
-    #[JsonProperty("one")]
+    #[JsonProperty('one')]
     public int $one;
 
     /**
      * @var float $two
      */
-    #[JsonProperty("two")]
+    #[JsonProperty('two')]
     public float $two;
 
     /**
      * @var string $three
      */
-    #[JsonProperty("three")]
+    #[JsonProperty('three')]
     public string $three;
 
     /**
      * @var bool $four
      */
-    #[JsonProperty("four")]
+    #[JsonProperty('four')]
     public bool $four;
 
     /**
      * @var int $five
      */
-    #[JsonProperty("five")]
+    #[JsonProperty('five')]
     public int $five;
 
     /**
      * @var DateTime $six
      */
-    #[JsonProperty("six"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('six'), Date(Date::TYPE_DATETIME)]
     public DateTime $six;
 
     /**
      * @var DateTime $seven
      */
-    #[JsonProperty("seven"), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('seven'), Date(Date::TYPE_DATE)]
     public DateTime $seven;
 
     /**
      * @var string $eight
      */
-    #[JsonProperty("eight")]
+    #[JsonProperty('eight')]
     public string $eight;
 
     /**
      * @var string $nine
      */
-    #[JsonProperty("nine")]
+    #[JsonProperty('nine')]
     public string $nine;
 
     /**
      * @var array<int> $ten
      */
-    #[JsonProperty("ten"), ArrayType(["integer"])]
+    #[JsonProperty('ten'), ArrayType(['integer'])]
     public array $ten;
 
     /**
      * @var array<float> $eleven
      */
-    #[JsonProperty("eleven"), ArrayType(["float"])]
+    #[JsonProperty('eleven'), ArrayType(['float'])]
     public array $eleven;
 
     /**
      * @var array<string, bool> $twelve
      */
-    #[JsonProperty("twelve"), ArrayType(["string" => "bool"])]
+    #[JsonProperty('twelve'), ArrayType(['string' => 'bool'])]
     public array $twelve;
+
+    /**
+     * @var ?int $thirteen
+     */
+    #[JsonProperty('thirteen')]
+    public ?int $thirteen;
 
     /**
      * @var mixed $fourteen
      */
-    #[JsonProperty("fourteen")]
+    #[JsonProperty('fourteen')]
     public mixed $fourteen;
 
     /**
      * @var array<array<int>> $fifteen
      */
-    #[JsonProperty("fifteen"), ArrayType([["integer"]])]
+    #[JsonProperty('fifteen'), ArrayType([['integer']])]
     public array $fifteen;
 
     /**
      * @var array<array<string, int>> $sixteen
      */
-    #[JsonProperty("sixteen"), ArrayType([["string" => "integer"]])]
+    #[JsonProperty('sixteen'), ArrayType([['string' => 'integer']])]
     public array $sixteen;
 
     /**
      * @var array<?string> $seventeen
      */
-    #[JsonProperty("seventeen"), ArrayType([new Union("string", "null")])]
+    #[JsonProperty('seventeen'), ArrayType([new Union('string', 'null')])]
     public array $seventeen;
 
     /**
-     * @var string $eighteen
+     * @var 'eighteen' $eighteen
      */
-    #[JsonProperty("eighteen")]
+    #[JsonProperty('eighteen')]
     public string $eighteen;
 
     /**
      * @var Name $nineteen
      */
-    #[JsonProperty("nineteen")]
+    #[JsonProperty('nineteen')]
     public Name $nineteen;
 
     /**
      * @var int $twenty
      */
-    #[JsonProperty("twenty")]
+    #[JsonProperty('twenty')]
     public int $twenty;
 
     /**
      * @var int $twentyone
      */
-    #[JsonProperty("twentyone")]
+    #[JsonProperty('twentyone')]
     public int $twentyone;
 
     /**
      * @var float $twentytwo
      */
-    #[JsonProperty("twentytwo")]
+    #[JsonProperty('twentytwo')]
     public float $twentytwo;
 
     /**
      * @var string $twentythree
      */
-    #[JsonProperty("twentythree")]
+    #[JsonProperty('twentythree')]
     public string $twentythree;
 
     /**
-     * @var ?int $thirteen
+     * @var ?DateTime $twentyfour
      */
-    #[JsonProperty("thirteen")]
-    public ?int $thirteen;
+    #[JsonProperty('twentyfour'), Date(Date::TYPE_DATETIME)]
+    public ?DateTime $twentyfour;
 
     /**
-     * @param int $one
-     * @param float $two
-     * @param string $three
-     * @param bool $four
-     * @param int $five
-     * @param DateTime $six
-     * @param DateTime $seven
-     * @param string $eight
-     * @param string $nine
-     * @param array<int> $ten
-     * @param array<float> $eleven
-     * @param array<string, bool> $twelve
-     * @param mixed $fourteen
-     * @param array<array<int>> $fifteen
-     * @param array<array<string, int>> $sixteen
-     * @param array<?string> $seventeen
-     * @param string $eighteen
-     * @param Name $nineteen
-     * @param int $twenty
-     * @param int $twentyone
-     * @param float $twentytwo
-     * @param string $twentythree
-     * @param ?int $thirteen
+     * @var ?DateTime $twentyfive
+     */
+    #[JsonProperty('twentyfive'), Date(Date::TYPE_DATE)]
+    public ?DateTime $twentyfive;
+
+    /**
+     * @param array{
+     *   one: int,
+     *   two: float,
+     *   three: string,
+     *   four: bool,
+     *   five: int,
+     *   six: DateTime,
+     *   seven: DateTime,
+     *   eight: string,
+     *   nine: string,
+     *   ten: array<int>,
+     *   eleven: array<float>,
+     *   twelve: array<string, bool>,
+     *   fourteen: mixed,
+     *   fifteen: array<array<int>>,
+     *   sixteen: array<array<string, int>>,
+     *   seventeen: array<?string>,
+     *   eighteen: 'eighteen',
+     *   nineteen: Name,
+     *   twenty: int,
+     *   twentyone: int,
+     *   twentytwo: float,
+     *   twentythree: string,
+     *   thirteen?: ?int,
+     *   twentyfour?: ?DateTime,
+     *   twentyfive?: ?DateTime,
+     * } $values
      */
     public function __construct(
-        int $one,
-        float $two,
-        string $three,
-        bool $four,
-        int $five,
-        DateTime $six,
-        DateTime $seven,
-        string $eight,
-        string $nine,
-        array $ten,
-        array $eleven,
-        array $twelve,
-        mixed $fourteen,
-        array $fifteen,
-        array $sixteen,
-        array $seventeen,
-        string $eighteen,
-        Name $nineteen,
-        int $twenty,
-        int $twentyone,
-        float $twentytwo,
-        string $twentythree,
-        ?int $thirteen = null,
+        array $values,
     ) {
-        $this->one = $one;
-        $this->two = $two;
-        $this->three = $three;
-        $this->four = $four;
-        $this->five = $five;
-        $this->six = $six;
-        $this->seven = $seven;
-        $this->eight = $eight;
-        $this->nine = $nine;
-        $this->ten = $ten;
-        $this->eleven = $eleven;
-        $this->twelve = $twelve;
-        $this->fourteen = $fourteen;
-        $this->fifteen = $fifteen;
-        $this->sixteen = $sixteen;
-        $this->seventeen = $seventeen;
-        $this->eighteen = $eighteen;
-        $this->nineteen = $nineteen;
-        $this->twenty = $twenty;
-        $this->twentyone = $twentyone;
-        $this->twentytwo = $twentytwo;
-        $this->twentythree = $twentythree;
-        $this->thirteen = $thirteen;
+        $this->one = $values['one'];
+        $this->two = $values['two'];
+        $this->three = $values['three'];
+        $this->four = $values['four'];
+        $this->five = $values['five'];
+        $this->six = $values['six'];
+        $this->seven = $values['seven'];
+        $this->eight = $values['eight'];
+        $this->nine = $values['nine'];
+        $this->ten = $values['ten'];
+        $this->eleven = $values['eleven'];
+        $this->twelve = $values['twelve'];
+        $this->thirteen = $values['thirteen'] ?? null;
+        $this->fourteen = $values['fourteen'];
+        $this->fifteen = $values['fifteen'];
+        $this->sixteen = $values['sixteen'];
+        $this->seventeen = $values['seventeen'];
+        $this->eighteen = $values['eighteen'];
+        $this->nineteen = $values['nineteen'];
+        $this->twenty = $values['twenty'];
+        $this->twentyone = $values['twentyone'];
+        $this->twentytwo = $values['twentytwo'];
+        $this->twentythree = $values['twentythree'];
+        $this->twentyfour = $values['twentyfour'] ?? null;
+        $this->twentyfive = $values['twentyfive'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

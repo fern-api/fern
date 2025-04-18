@@ -14,6 +14,7 @@ import com.seed.exhaustive.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Cat.Builder.class)
@@ -70,7 +71,7 @@ public final class Cat {
     }
 
     public interface NameStage {
-        LikesToMeowStage name(String name);
+        LikesToMeowStage name(@NotNull String name);
 
         Builder from(Cat other);
     }
@@ -103,8 +104,8 @@ public final class Cat {
 
         @java.lang.Override
         @JsonSetter("name")
-        public LikesToMeowStage name(String name) {
-            this.name = name;
+        public LikesToMeowStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

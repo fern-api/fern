@@ -7,12 +7,12 @@ const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({
   clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.getTokenWithClientCredentials({
-  clientId: "string",
-  clientSecret: "string",
-  scope: "string",
+  clientId: "client_id",
+  clientSecret: "client_secret",
+  scope: "scope",
 });
- 
-```                        
+
+```
 
 
 ```typescript
@@ -24,12 +24,12 @@ const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({
   clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.refreshToken({
-  clientId: "string",
-  clientSecret: "string",
-  refreshToken: "string",
-  scope: "string",
+  clientId: "client_id",
+  clientSecret: "client_secret",
+  refreshToken: "refresh_token",
+  scope: "scope",
 });
- 
-```                        
+
+```
 
 

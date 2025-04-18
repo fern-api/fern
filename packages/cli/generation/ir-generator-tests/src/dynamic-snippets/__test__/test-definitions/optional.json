@@ -1,0 +1,105 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [],
+    "endpoints": {
+        "endpoint_optional.sendOptionalBody": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "sendOptionalBody",
+                    "camelCase": {
+                        "unsafeName": "sendOptionalBody",
+                        "safeName": "sendOptionalBody"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "send_optional_body",
+                        "safeName": "send_optional_body"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEND_OPTIONAL_BODY",
+                        "safeName": "SEND_OPTIONAL_BODY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SendOptionalBody",
+                        "safeName": "SendOptionalBody"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "optional",
+                            "camelCase": {
+                                "unsafeName": "optional",
+                                "safeName": "optional"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "optional",
+                                "safeName": "optional"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OPTIONAL",
+                                "safeName": "OPTIONAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Optional",
+                                "safeName": "Optional"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "optional",
+                        "camelCase": {
+                            "unsafeName": "optional",
+                            "safeName": "optional"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "optional",
+                            "safeName": "optional"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OPTIONAL",
+                            "safeName": "OPTIONAL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Optional",
+                            "safeName": "Optional"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/send-optional-body"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "optional",
+                        "value": {
+                            "type": "map",
+                            "key": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "value": {
+                                "type": "unknown"
+                            }
+                        }
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
+}

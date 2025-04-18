@@ -1,8 +1,10 @@
-import { AliasTypeDeclaration, ShapeType } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedAliasTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { AliasTypeDeclaration, ShapeType } from "@fern-fern/ir-sdk/api";
+
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
 export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
@@ -48,7 +50,8 @@ export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
     protected override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.shape.aliasOf).typeNode)
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.shape.aliasOf).typeNode),
+            isExported: true
         });
     }
 

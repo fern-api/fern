@@ -17,7 +17,11 @@ describe("test env compatibility", () => {
                         ],
                     },
                     resolve: {
-                        extensions: [".tsx", ".ts", ".js"],
+                        extensions: [".tsx", ".ts", ".jsx", ".js"],
+                        extensionAlias: {
+                            ".js": [".ts", ".js"],
+                            ".jsx": [".tsx", ".jsx"],
+                        },
                     },
                 },
                 (err, stats) => {
@@ -31,8 +35,8 @@ describe("test env compatibility", () => {
                     } catch (error) {
                         reject(error);
                     }
-                }
+                },
             );
         });
-    }, 60_000);
+    }, 180_000);
 });

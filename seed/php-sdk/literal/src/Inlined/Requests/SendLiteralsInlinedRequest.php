@@ -2,86 +2,82 @@
 
 namespace Seed\Inlined\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Inlined\Types\ATopLevelLiteral;
 
-class SendLiteralsInlinedRequest
+class SendLiteralsInlinedRequest extends JsonSerializableType
 {
     /**
-     * @var string $prompt
+     * @var 'You are a helpful assistant' $prompt
      */
-    #[JsonProperty("prompt")]
+    #[JsonProperty('prompt')]
     public string $prompt;
+
+    /**
+     * @var ?"You're super wise" $context
+     */
+    #[JsonProperty('context')]
+    public ?string $context;
 
     /**
      * @var string $query
      */
-    #[JsonProperty("query")]
+    #[JsonProperty('query')]
     public string $query;
-
-    /**
-     * @var bool $stream
-     */
-    #[JsonProperty("stream")]
-    public bool $stream;
-
-    /**
-     * @var string $aliasedContext
-     */
-    #[JsonProperty("aliasedContext")]
-    public string $aliasedContext;
-
-    /**
-     * @var ATopLevelLiteral $objectWithLiteral
-     */
-    #[JsonProperty("objectWithLiteral")]
-    public ATopLevelLiteral $objectWithLiteral;
-
-    /**
-     * @var ?string $context
-     */
-    #[JsonProperty("context")]
-    public ?string $context;
 
     /**
      * @var ?float $temperature
      */
-    #[JsonProperty("temperature")]
+    #[JsonProperty('temperature')]
     public ?float $temperature;
 
     /**
-     * @var ?string $maybeContext
+     * @var false $stream
      */
-    #[JsonProperty("maybeContext")]
+    #[JsonProperty('stream')]
+    public bool $stream;
+
+    /**
+     * @var "You're super wise" $aliasedContext
+     */
+    #[JsonProperty('aliasedContext')]
+    public string $aliasedContext;
+
+    /**
+     * @var ?"You're super wise" $maybeContext
+     */
+    #[JsonProperty('maybeContext')]
     public ?string $maybeContext;
 
     /**
-     * @param string $prompt
-     * @param string $query
-     * @param bool $stream
-     * @param string $aliasedContext
-     * @param ATopLevelLiteral $objectWithLiteral
-     * @param ?string $context
-     * @param ?float $temperature
-     * @param ?string $maybeContext
+     * @var ATopLevelLiteral $objectWithLiteral
+     */
+    #[JsonProperty('objectWithLiteral')]
+    public ATopLevelLiteral $objectWithLiteral;
+
+    /**
+     * @param array{
+     *   prompt: 'You are a helpful assistant',
+     *   query: string,
+     *   stream: false,
+     *   aliasedContext: "You're super wise",
+     *   objectWithLiteral: ATopLevelLiteral,
+     *   context?: ?"You're super wise",
+     *   temperature?: ?float,
+     *   maybeContext?: ?"You're super wise",
+     * } $values
      */
     public function __construct(
-        string $prompt,
-        string $query,
-        bool $stream,
-        string $aliasedContext,
-        ATopLevelLiteral $objectWithLiteral,
-        ?string $context = null,
-        ?float $temperature = null,
-        ?string $maybeContext = null,
+        array $values,
     ) {
-        $this->prompt = $prompt;
-        $this->query = $query;
-        $this->stream = $stream;
-        $this->aliasedContext = $aliasedContext;
-        $this->objectWithLiteral = $objectWithLiteral;
-        $this->context = $context;
-        $this->temperature = $temperature;
-        $this->maybeContext = $maybeContext;
+        $this->prompt = $values['prompt'];
+        $this->context = $values['context'] ?? null;
+        $this->query = $values['query'];
+        $this->temperature = $values['temperature'] ?? null;
+        $this->stream = $values['stream'];
+        $this->aliasedContext = $values['aliasedContext'];
+        $this->maybeContext = $values['maybeContext'] ?? null;
+        $this->objectWithLiteral = $values['objectWithLiteral'];
     }
 }

@@ -2,32 +2,41 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class InvalidRequestResponse extends SerializableType
+class InvalidRequestResponse extends JsonSerializableType
 {
     /**
-     * @var mixed $request
+     * @var SubmissionRequest $request
      */
-    #[JsonProperty("request")]
-    public mixed $request;
+    #[JsonProperty('request')]
+    public SubmissionRequest $request;
 
     /**
-     * @var mixed $cause
+     * @var InvalidRequestCause $cause
      */
-    #[JsonProperty("cause")]
-    public mixed $cause;
+    #[JsonProperty('cause')]
+    public InvalidRequestCause $cause;
 
     /**
-     * @param mixed $request
-     * @param mixed $cause
+     * @param array{
+     *   request: SubmissionRequest,
+     *   cause: InvalidRequestCause,
+     * } $values
      */
     public function __construct(
-        mixed $request,
-        mixed $cause,
+        array $values,
     ) {
-        $this->request = $request;
-        $this->cause = $cause;
+        $this->request = $values['request'];
+        $this->cause = $values['cause'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

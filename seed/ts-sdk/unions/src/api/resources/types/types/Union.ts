@@ -9,13 +9,13 @@ import * as SeedUnions from "../../../index";
  */
 export type Union = SeedUnions.Union.Foo | SeedUnions.Union.Bar;
 
-export declare namespace Union {
-    interface Foo {
+export namespace Union {
+    export interface Foo {
         type: "foo";
         foo: SeedUnions.Foo;
     }
 
-    interface Bar {
+    export interface Bar {
         type: "bar";
         bar: SeedUnions.Bar;
     }

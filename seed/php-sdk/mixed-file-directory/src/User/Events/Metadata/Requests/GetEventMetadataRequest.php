@@ -2,7 +2,9 @@
 
 namespace Seed\User\Events\Metadata\Requests;
 
-class GetEventMetadataRequest
+use Seed\Core\Json\JsonSerializableType;
+
+class GetEventMetadataRequest extends JsonSerializableType
 {
     /**
      * @var string $id
@@ -10,11 +12,13 @@ class GetEventMetadataRequest
     public string $id;
 
     /**
-     * @param string $id
+     * @param array{
+     *   id: string,
+     * } $values
      */
     public function __construct(
-        string $id,
+        array $values,
     ) {
-        $this->id = $id;
+        $this->id = $values['id'];
     }
 }

@@ -53,7 +53,7 @@ await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency
 <dd>
 
 ```csharp
-await client.Payment.DeleteAsync("string");
+await client.Payment.DeleteAsync("paymentId");
 ```
 </dd>
 </dl>

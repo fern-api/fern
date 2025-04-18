@@ -2,39 +2,39 @@
 
 namespace Seed\User\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class CreateUserRequest
+class CreateUserRequest extends JsonSerializableType
 {
     /**
-     * @var string $name The name of the user to create.
-    This name is unique to each user.
-
+     * The name of the user to create.
+     * This name is unique to each user.
+     *
+     * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @var ?int $age The age of the user.
-    This propery is not required.
-
+     * The age of the user.
+     * This property is not required.
+     *
+     * @var ?int $age
      */
-    #[JsonProperty("age")]
+    #[JsonProperty('age')]
     public ?int $age;
 
     /**
-     * @param string $name The name of the user to create.
-    This name is unique to each user.
-
-     * @param ?int $age The age of the user.
-    This propery is not required.
-
+     * @param array{
+     *   name: string,
+     *   age?: ?int,
+     * } $values
      */
     public function __construct(
-        string $name,
-        ?int $age = null,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->age = $age;
+        $this->name = $values['name'];
+        $this->age = $values['age'] ?? null;
     }
 }

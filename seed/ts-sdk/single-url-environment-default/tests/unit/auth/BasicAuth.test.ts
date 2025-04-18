@@ -7,7 +7,7 @@ describe("BasicAuth", () => {
                 BasicAuth.toAuthorizationHeader({
                     username: "username",
                     password: "password",
-                })
+                }),
             ).toBe("Basic dXNlcm5hbWU6cGFzc3dvcmQ=");
         });
     });

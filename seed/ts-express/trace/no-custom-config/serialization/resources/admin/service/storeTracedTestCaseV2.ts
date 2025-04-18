@@ -12,5 +12,5 @@ export const Request: core.serialization.Schema<
 > = core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponseV2));
 
 export declare namespace Request {
-    type Raw = serializers.TraceResponseV2.Raw[];
+    export type Raw = serializers.TraceResponseV2.Raw[];
 }

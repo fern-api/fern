@@ -1,15 +1,17 @@
-import {
-    APIS_DIRECTORY,
-    DEFAULT_API_WORSPACE_FOLDER_NAME,
-    DEFINITION_DIRECTORY,
-    GENERATORS_CONFIGURATION_FILENAME
-} from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import fs from "fs-extra";
 import { mkdir } from "fs/promises";
 import path from "path";
+
+import {
+    APIS_DIRECTORY,
+    DEFAULT_API_WORKSPACE_FOLDER_NAME,
+    DEFINITION_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME
+} from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
 import { createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace";
 
@@ -41,10 +43,13 @@ export async function initializeAPI({
             cliVersion: versionOfCli,
             context
         });
+
+        context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     } else {
         await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context });
+
+        context.logger.info(chalk.green("Created new fern folder"));
     }
-    context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }
 
 async function getDirectoryOfNewAPIWorkspace({
@@ -61,11 +66,11 @@ async function getDirectoryOfNewAPIWorkspace({
             absolutePathToFernDirectory,
             RelativeFilePath.of(APIS_DIRECTORY)
         );
-        let newApiDirectory = join(pathToApisDirectory, RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}`));
+        let newApiDirectory = join(pathToApisDirectory, RelativeFilePath.of(`${DEFAULT_API_WORKSPACE_FOLDER_NAME}`));
         while (await doesPathExist(newApiDirectory)) {
             newApiDirectory = join(
                 pathToApisDirectory,
-                RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}${++attemptCount}`)
+                RelativeFilePath.of(`${DEFAULT_API_WORKSPACE_FOLDER_NAME}${++attemptCount}`)
             );
         }
         return newApiDirectory;

@@ -40,7 +40,7 @@ module SeedExhaustiveClient
     #  exhaustive.inlined_requests.post_with_object_bodyand_response(
     #    string: "string",
     #    integer: 1,
-    #    nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse("2024-01-15T09:30:00.000Z"), date: Date.parse("2023-01-15"), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" }
+    #    nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse("2024-01-15T09:30:00.000Z"), date: Date.parse("2023-01-15"), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["list", "list"], set: Set["set"], map: { 1: "map" }, bigint: "1000000" }
     #  )
     def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
       response = @request_client.conn.post do |req|
@@ -101,7 +101,7 @@ module SeedExhaustiveClient
     #  exhaustive.inlined_requests.post_with_object_bodyand_response(
     #    string: "string",
     #    integer: 1,
-    #    nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse("2024-01-15T09:30:00.000Z"), date: Date.parse("2023-01-15"), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["string"], set: Set["string"], map: { 1: "string" }, bigint: "123456789123456789" }
+    #    nested_object: { string: "string", integer: 1, long: 1000000, double: 1.1, bool: true, datetime: DateTime.parse("2024-01-15T09:30:00.000Z"), date: Date.parse("2023-01-15"), uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", base_64: "SGVsbG8gd29ybGQh", list: ["list", "list"], set: Set["set"], map: { 1: "map" }, bigint: "1000000" }
     #  )
     def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
       Async do

@@ -1,10 +1,12 @@
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressGenerator } from "@fern-typescript/express-generator";
 import { camelCase, upperFirst } from "lodash-es";
+
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+
 import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
 import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomConfigSchema";
 
@@ -12,6 +14,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
     protected parseCustomConfig(customConfig: unknown): ExpressCustomConfig {
         const parsed = customConfig != null ? ExpressCustomConfigSchema.parse(customConfig) : undefined;
         const noSerdeLayer = parsed?.noSerdeLayer ?? false;
+        const enableInlineTypes = false; // hardcode, not supported in Express
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             areImplementationsOptional: parsed?.optionalImplementations ?? false,
@@ -27,7 +30,9 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             allowExtraFields: parsed?.allowExtraFields ?? false,
             skipRequestValidation: parsed?.skipRequestValidation ?? false,
             skipResponseValidation: parsed?.skipResponseValidation ?? false,
-            useBigInt: parsed?.useBigInt ?? false
+            useBigInt: parsed?.useBigInt ?? false,
+            noOptionalProperties: parsed?.noOptionalProperties ?? false,
+            enableInlineTypes
         };
     }
 
@@ -65,7 +70,8 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 skipRequestValidation: customConfig.skipRequestValidation,
                 skipResponseValidation: customConfig.skipResponseValidation,
                 requestValidationStatusCode: customConfig.requestValidationStatusCode,
-                useBigInt: customConfig.useBigInt
+                useBigInt: customConfig.useBigInt,
+                noOptionalProperties: customConfig.noOptionalProperties
             }
         });
 

@@ -1,5 +1,5 @@
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 
 export function resolveResponseType({
     endpoint,

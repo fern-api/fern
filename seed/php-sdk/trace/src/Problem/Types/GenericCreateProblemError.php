@@ -2,41 +2,49 @@
 
 namespace Seed\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GenericCreateProblemError extends SerializableType
+class GenericCreateProblemError extends JsonSerializableType
 {
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**
      * @var string $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public string $type;
 
     /**
      * @var string $stacktrace
      */
-    #[JsonProperty("stacktrace")]
+    #[JsonProperty('stacktrace')]
     public string $stacktrace;
 
     /**
-     * @param string $message
-     * @param string $type
-     * @param string $stacktrace
+     * @param array{
+     *   message: string,
+     *   type: string,
+     *   stacktrace: string,
+     * } $values
      */
     public function __construct(
-        string $message,
-        string $type,
-        string $stacktrace,
+        array $values,
     ) {
-        $this->message = $message;
-        $this->type = $type;
-        $this->stacktrace = $stacktrace;
+        $this->message = $values['message'];
+        $this->type = $values['type'];
+        $this->stacktrace = $values['stacktrace'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

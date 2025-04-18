@@ -1,0 +1,26 @@
+imports:
+  commons: ../commons.yml
+  endpoints: ./endpoints.yml
+  types: ./types.yml
+types:
+  DynamicIntermediateRepresentation:
+    audiences:
+      - dynamic
+    docs: |
+      This represents the IR required to generate dynamic snippets.
+
+      This IR minimizes the space required to generate snippets in a variety
+      of environments (e.g. web, offline, etc).
+    properties:
+      version:
+        docs: |
+          The version of the dynamic IR. This is independent from the version
+          of the primary IR.
+        type: literal<"1.0.0">
+      types: map<commons.TypeId, types.NamedType>
+      endpoints: map<commons.EndpointId, endpoints.Endpoint>
+      headers:
+        docs: |
+          The headers that are required on every request. These headers
+          are typically included in the SDK's client constructor.
+        type: optional<list<types.NamedParameter>>

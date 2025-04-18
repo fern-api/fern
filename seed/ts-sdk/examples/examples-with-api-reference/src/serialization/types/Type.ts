@@ -12,5 +12,5 @@ export const Type: core.serialization.Schema<serializers.Type.Raw, SeedExamples.
     core.serialization.undiscriminatedUnion([BasicType, ComplexType]);
 
 export declare namespace Type {
-    type Raw = BasicType.Raw | ComplexType.Raw;
+    export type Raw = BasicType.Raw | ComplexType.Raw;
 }

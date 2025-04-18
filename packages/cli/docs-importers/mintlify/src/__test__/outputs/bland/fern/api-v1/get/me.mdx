@@ -1,0 +1,40 @@
+---
+title: Account Details
+subtitle: Returns call data for your account.
+slug: api-v1/get/me
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Response
+
+<ResponseField name="billing" type="object">
+  An object containing your billing data. Contains `current_balance` (number of credits), and `refill_to` if you have
+  auto refill enabled.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  The status of your account.
+</ResponseField>
+
+<ResponseField name="total_calls" type="int">
+  The total number of calls you've made.
+</ResponseField>
+
+<ResponseExample>
+```json Response
+{
+    "status": "active",
+    "billing": {
+        "current_balance": 99919.1210000034,
+        "refill_to": null
+    },
+    "total_calls": 9903
+}
+```
+</ResponseExample>

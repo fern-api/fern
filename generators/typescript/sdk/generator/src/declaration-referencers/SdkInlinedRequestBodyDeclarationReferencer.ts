@@ -1,6 +1,9 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
+
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 

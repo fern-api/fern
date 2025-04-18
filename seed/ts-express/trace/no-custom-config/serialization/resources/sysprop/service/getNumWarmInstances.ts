@@ -11,9 +11,9 @@ export const Response: core.serialization.Schema<
     Record<SeedTrace.Language, number | undefined>
 > = core.serialization.record(
     core.serialization.lazy(() => serializers.Language),
-    core.serialization.number().optional()
+    core.serialization.number().optional(),
 );
 
 export declare namespace Response {
-    type Raw = Record<serializers.Language.Raw, number | null | undefined>;
+    export type Raw = Record<serializers.Language.Raw, number | null | undefined>;
 }

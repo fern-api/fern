@@ -15,7 +15,7 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedVal
     });
 
 export declare namespace Type {
-    interface Raw {
+    export interface Raw {
         decimal: number;
         even: number;
         name: string;

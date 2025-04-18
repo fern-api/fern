@@ -7,22 +7,32 @@ import * as errors from "../../../../errors/index";
 import { Service } from "../resources/service/client/Client";
 
 export declare namespace Folder {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class Folder {
+    protected _service: Service | undefined;
+
     constructor(protected readonly _options: Folder.Options) {}
+
+    public get service(): Service {
+        return (this._service ??= new Service(this._options));
+    }
 
     /**
      * @param {Folder.RequestOptions} requestOptions - Request-specific configuration.
@@ -30,9 +40,15 @@ export class Folder {
      * @example
      *     await client.folder.foo()
      */
-    public async foo(requestOptions?: Folder.RequestOptions): Promise<void> {
+    public foo(requestOptions?: Folder.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__foo(requestOptions));
+    }
+
+    private async __foo(requestOptions?: Folder.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -41,6 +57,7 @@ export class Folder {
                 "User-Agent": "@fern/folders/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -49,13 +66,14 @@ export class Folder {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -64,19 +82,15 @@ export class Folder {
                 throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError();
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected _service: Service | undefined;
-
-    public get service(): Service {
-        return (this._service ??= new Service(this._options));
     }
 }

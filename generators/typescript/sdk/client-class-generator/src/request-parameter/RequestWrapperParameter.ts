@@ -1,7 +1,9 @@
-import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+
+import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
+
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
 type DefaultNonBodyKeyName = string & {
@@ -149,6 +151,19 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     public isOptional({ context }: { context: SdkContext }): boolean {
         return this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context);
+    }
+
+    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        const pathParameter = this.endpoint.allPathParameters.find(
+            (pathParam) => pathParam.name.originalName === pathParameterKey
+        );
+        if (pathParameter == null) {
+            throw new Error("Path parameter does not exist: " + pathParameterKey);
+        }
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
+        return ts.factory.createIdentifier(
+            this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfPathParameter(pathParameter))
+        );
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {

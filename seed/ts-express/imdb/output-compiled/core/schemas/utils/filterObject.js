@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filterObject = void 0;
+exports.filterObject = filterObject;
 function filterObject(obj, keysToInclude) {
     const keysToIncludeSet = new Set(keysToInclude);
     return Object.entries(obj).reduce((acc, [key, value]) => {
@@ -11,4 +11,3 @@ function filterObject(obj, keysToInclude) {
         // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
     }, {});
 }
-exports.filterObject = filterObject;

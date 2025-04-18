@@ -1,5 +1,5 @@
-import { AstNode } from "./core/AstNode";
 import { ClassReference } from "./ClassReference";
+import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace Attribute {
@@ -26,13 +26,16 @@ export class Attribute extends AstNode {
         writer.write(`${this.reference.name}`);
         if (this.arguments.length > 0) {
             writer.write("(");
-            for (const argument of this.arguments) {
+            this.arguments.forEach((argument, index) => {
+                if (index > 0) {
+                    writer.write(",");
+                }
                 if (typeof argument === "string") {
                     writer.write(argument);
                 } else {
                     argument.write(writer);
                 }
-            }
+            });
             writer.write(")");
         }
     }

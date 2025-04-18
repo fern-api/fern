@@ -3,10 +3,16 @@
 from .resources import (
     ANestedLiteral,
     ATopLevelLiteral,
+    AliasToPrompt,
+    AliasToStream,
+    ContainerObject,
+    NestedObjectWithLiterals,
     SendRequest,
     SomeAliasedLiteral,
     SomeLiteral,
+    UndiscriminatedLiteral,
     inlined,
+    query,
     reference,
 )
 from .send_response import SendResponse
@@ -14,10 +20,16 @@ from .send_response import SendResponse
 __all__ = [
     "ANestedLiteral",
     "ATopLevelLiteral",
+    "AliasToPrompt",
+    "AliasToStream",
+    "ContainerObject",
+    "NestedObjectWithLiterals",
     "SendRequest",
     "SendResponse",
     "SomeAliasedLiteral",
     "SomeLiteral",
+    "UndiscriminatedLiteral",
     "inlined",
+    "query",
     "reference",
 ]

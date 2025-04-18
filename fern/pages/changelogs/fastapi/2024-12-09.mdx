@@ -1,0 +1,15 @@
+## 1.6.0
+**`(fix):`** The FastAPI generator now supports a new mode for pydantic model generation,
+to use pydantic v1 on v2 versions. 
+
+```yml generators.yml
+generators: 
+  server: 
+    - name: fernapi/fern-fastapi-server
+      version: 1.6.0
+      config: 
+        pydantic: 
+          version: "v1_on_v2"
+````
+
+

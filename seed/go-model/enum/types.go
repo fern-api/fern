@@ -32,24 +32,42 @@ func (c Color) Ptr() *Color {
 type ColorOrOperand struct {
 	Color   Color
 	Operand Operand
+
+	typ string
 }
 
 func NewColorOrOperandFromColor(value Color) *ColorOrOperand {
-	return &ColorOrOperand{Color: value}
+	return &ColorOrOperand{typ: "Color", Color: value}
 }
 
 func NewColorOrOperandFromOperand(value Operand) *ColorOrOperand {
-	return &ColorOrOperand{Operand: value}
+	return &ColorOrOperand{typ: "Operand", Operand: value}
+}
+
+func (c *ColorOrOperand) GetColor() Color {
+	if c == nil {
+		return ""
+	}
+	return c.Color
+}
+
+func (c *ColorOrOperand) GetOperand() Operand {
+	if c == nil {
+		return ""
+	}
+	return c.Operand
 }
 
 func (c *ColorOrOperand) UnmarshalJSON(data []byte) error {
 	var valueColor Color
 	if err := json.Unmarshal(data, &valueColor); err == nil {
+		c.typ = "Color"
 		c.Color = valueColor
 		return nil
 	}
 	var valueOperand Operand
 	if err := json.Unmarshal(data, &valueOperand); err == nil {
+		c.typ = "Operand"
 		c.Operand = valueOperand
 		return nil
 	}
@@ -57,10 +75,10 @@ func (c *ColorOrOperand) UnmarshalJSON(data []byte) error {
 }
 
 func (c ColorOrOperand) MarshalJSON() ([]byte, error) {
-	if c.Color != "" {
+	if c.typ == "Color" || c.Color != "" {
 		return json.Marshal(c.Color)
 	}
-	if c.Operand != "" {
+	if c.typ == "Operand" || c.Operand != "" {
 		return json.Marshal(c.Operand)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
@@ -72,13 +90,35 @@ type ColorOrOperandVisitor interface {
 }
 
 func (c *ColorOrOperand) Accept(visitor ColorOrOperandVisitor) error {
-	if c.Color != "" {
+	if c.typ == "Color" || c.Color != "" {
 		return visitor.VisitColor(c.Color)
 	}
-	if c.Operand != "" {
+	if c.typ == "Operand" || c.Operand != "" {
 		return visitor.VisitOperand(c.Operand)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type EnumWithCustom string
+
+const (
+	EnumWithCustomSafe   EnumWithCustom = "safe"
+	EnumWithCustomCustom EnumWithCustom = "Custom"
+)
+
+func NewEnumWithCustomFromString(s string) (EnumWithCustom, error) {
+	switch s {
+	case "safe":
+		return EnumWithCustomSafe, nil
+	case "Custom":
+		return EnumWithCustomCustom, nil
+	}
+	var t EnumWithCustom
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EnumWithCustom) Ptr() *EnumWithCustom {
+	return &e
 }
 
 // Tests enum name and value can be

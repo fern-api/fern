@@ -227,7 +227,7 @@ will log the issue using `console.warn` and return the data (casted to the expec
 _Note: This only applies when publishing to Github._
 
 You can use `extraDependencies` to specify extra dependencies in the generated package.json. This is useful
-when you utilize [`.fernignore`](https://buildwithfern.com/docs/compiler/fern-generate#fernignore) to
+when you utilize [`.fernignore`](https://buildwithfern.com/learn/sdks/capabilities/custom-code) to
 supplement the generated client with custom code.
 
 ```yaml
@@ -340,7 +340,7 @@ See [outputSourceFiles](#outputSourceFiles) under SDK Configuration
 
 **Default:** `false`
 
-By default, the generated `register()` will require an implementatiion for every
+By default, the generated `register()` will require an implementation for every
 service defined in your Fern Definition.
 
 If `optionalImplementations` is enabled, then `register()` won't require any

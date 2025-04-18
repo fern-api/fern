@@ -1,4 +1,4 @@
-imports: 
+imports:
   root: __package__.yml
 
 types:
@@ -11,7 +11,7 @@ types:
       id: string
       name:
         type: string
-        docs: | 
+        docs: |
           The user's name. This name is unique to each user. A few examples are included below:
            - Alice
            - Bob
@@ -37,7 +37,7 @@ service:
           docs: |
             The ID of the user to retrieve.
             This ID is unique to each user.
-      
+
     createUser:
       docs: |
         Create a new user.
@@ -57,5 +57,5 @@ service:
               type: optional<integer>
               docs: |
                 The age of the user.
-                This propery is not required.
+                This property is not required.
       response: User

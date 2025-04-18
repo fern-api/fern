@@ -1,6 +1,9 @@
-import { createMockTaskContext } from "@fern-api/task-context";
 import { join } from "path";
+
+import { createMockTaskContext } from "@fern-api/task-context";
+
 import { getNewVersion } from "../commands/publish/publishGenerator";
+import { getNewCliVersion } from "../utils/versionUtilities";
 
 describe("Test getNewVersion", () => {
     it("get only version", async () => {
@@ -65,5 +68,16 @@ describe("Test getNewVersion", () => {
             context: createMockTaskContext()
         });
         expect(version).toEqual("0.39.12");
+    });
+
+    it("live test", async () => {
+        const version = await getNewCliVersion({
+            versionFilePair: {
+                latestChangelogPath: join(__dirname, "assets/live-test/new.yml"),
+                previousChangelogPath: join(__dirname, "assets/live-test/old.yml")
+            },
+            context: createMockTaskContext()
+        });
+        expect(version).toEqual("0.43.0");
     });
 });

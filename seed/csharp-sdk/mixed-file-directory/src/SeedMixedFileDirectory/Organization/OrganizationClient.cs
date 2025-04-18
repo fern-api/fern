@@ -3,8 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using SeedMixedFileDirectory.Core;
 
-#nullable enable
-
 namespace SeedMixedFileDirectory;
 
 public partial class OrganizationClient
@@ -19,31 +17,31 @@ public partial class OrganizationClient
     /// <summary>
     /// Create a new organization.
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "string" });
-    /// </code>
-    /// </example>
+    /// <example><code>
+    /// await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "name" });
+    /// </code></example>
     public async Task<Organization> CreateAsync(
         CreateOrganizationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/organizations/",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/organizations/",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Organization>(responseBody)!;
@@ -54,10 +52,13 @@ public partial class OrganizationClient
             }
         }
 
-        throw new SeedMixedFileDirectoryApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMixedFileDirectoryApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

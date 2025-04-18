@@ -10,5 +10,5 @@ export const Filename: core.serialization.Schema<serializers.file.Filename.Raw, 
     core.serialization.string();
 
 export declare namespace Filename {
-    type Raw = string;
+    export type Raw = string;
 }

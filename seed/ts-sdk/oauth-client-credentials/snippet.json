@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    scope: \"string\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getTokenWithClientCredentials({\n    clientId: \"client_id\",\n    clientSecret: \"client_secret\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    refreshToken: \"string\",\n    scope: \"string\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst client = new SeedOauthClientCredentialsClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.refreshToken({\n    clientId: \"client_id\",\n    clientSecret: \"client_secret\",\n    refreshToken: \"refresh_token\",\n    scope: \"scope\"\n});\n"
             }
         }
     ],

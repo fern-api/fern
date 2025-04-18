@@ -14,7 +14,7 @@ export const SendLiteralsInHeadersRequest: core.serialization.Schema<
 });
 
 export declare namespace SendLiteralsInHeadersRequest {
-    interface Raw {
+    export interface Raw {
         query: string;
     }
 }

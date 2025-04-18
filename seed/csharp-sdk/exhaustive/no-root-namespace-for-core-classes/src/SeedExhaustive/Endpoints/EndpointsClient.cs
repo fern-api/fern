@@ -1,7 +1,5 @@
 using SeedExhaustive.Core;
 
-#nullable enable
-
 namespace SeedExhaustive.Endpoints;
 
 public partial class EndpointsClient
@@ -12,15 +10,19 @@ public partial class EndpointsClient
     {
         _client = client;
         Container = new ContainerClient(_client);
+        ContentType = new ContentTypeClient(_client);
         Enum = new EnumClient(_client);
         HttpMethods = new HttpMethodsClient(_client);
         Object = new ObjectClient(_client);
         Params = new ParamsClient(_client);
         Primitive = new PrimitiveClient(_client);
+        Put = new PutClient(_client);
         Union = new UnionClient(_client);
     }
 
     public ContainerClient Container { get; }
+
+    public ContentTypeClient ContentType { get; }
 
     public EnumClient Enum { get; }
 
@@ -31,6 +33,8 @@ public partial class EndpointsClient
     public ParamsClient Params { get; }
 
     public PrimitiveClient Primitive { get; }
+
+    public PutClient Put { get; }
 
     public UnionClient Union { get; }
 }

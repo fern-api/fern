@@ -32,13 +32,13 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFile
         });
 
 export declare namespace CustomFiles {
-    type Raw = CustomFiles.Basic | CustomFiles.Custom;
+    export type Raw = CustomFiles.Basic | CustomFiles.Custom;
 
-    interface Basic extends BasicCustomFiles.Raw {
+    export interface Basic extends BasicCustomFiles.Raw {
         type: "basic";
     }
 
-    interface Custom {
+    export interface Custom {
         type: "custom";
         value: Record<Language.Raw, Files.Raw | null | undefined>;
     }

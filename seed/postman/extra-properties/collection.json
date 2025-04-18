@@ -45,7 +45,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"_type\": \"CreateUserRequest\",\n    \"_version\": \"v1\",\n    \"name\": \"string\"\n}",
+              "raw": "{\n    \"_type\": \"CreateUserRequest\",\n    \"_version\": \"v1\",\n    \"name\": \"name\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -82,7 +82,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"_type\": \"CreateUserRequest\",\n    \"_version\": \"v1\",\n    \"name\": \"string\"\n}",
+                  "raw": "{\n    \"_type\": \"CreateUserRequest\",\n    \"_version\": \"v1\",\n    \"name\": \"name\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -91,7 +91,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"name\": \"string\"\n}",
+              "body": "{\n    \"name\": \"name\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

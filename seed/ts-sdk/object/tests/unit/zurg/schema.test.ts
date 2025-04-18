@@ -26,8 +26,8 @@ describe("Schema", () => {
                             dog: object({ value: boolean() }),
                             cat: object({ value: property("raw_cat", number()) }),
                         }),
-                    })
-                )
+                    }),
+                ),
             ),
             d: property("raw_d", boolean()),
             e: booleanLiteral(true),
@@ -73,6 +73,6 @@ describe("Schema", () => {
                 d: false,
                 e: true,
             },
-        }
+        },
     );
 });

@@ -1,40 +1,41 @@
-import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from "@fern-api/ir-sdk";
+
 import { FernFileContext } from "../FernFileContext";
 import { convertHttpHeader } from "./services/convertHttpService";
 import { convertEnumTypeDeclaration } from "./type-declarations/convertEnumTypeDeclaration";
 
-export async function convertApiVersionScheme({
+export function convertApiVersionScheme({
     file,
     rawApiFileSchema
 }: {
     file: FernFileContext;
     rawApiFileSchema: RawSchemas.RootApiFileSchema;
-}): Promise<ApiVersionScheme | undefined> {
+}): ApiVersionScheme | undefined {
     if (rawApiFileSchema.version == null) {
         return undefined;
     }
     return ApiVersionScheme.header({
-        header: await convertHeader({
+        header: convertHeader({
             file,
             header: rawApiFileSchema.version.header
         }),
-        value: await convertEnum({
+        value: convertEnum({
             file,
             versionDeclaration: rawApiFileSchema.version
         })
     });
 }
 
-async function convertHeader({
+function convertHeader({
     file,
     header
 }: {
     file: FernFileContext;
     header: RawSchemas.VersionDeclarationHeaderSchema;
-}): Promise<HttpHeader> {
+}): HttpHeader {
     if (typeof header === "string") {
-        return await convertHttpHeader({
+        return convertHttpHeader({
             file,
             headerKey: header,
             header: {
@@ -42,7 +43,7 @@ async function convertHeader({
             }
         });
     }
-    return await convertHttpHeader({
+    return convertHttpHeader({
         file,
         headerKey: header.value,
         header: {
@@ -53,14 +54,14 @@ async function convertHeader({
     });
 }
 
-async function convertEnum({
+function convertEnum({
     file,
     versionDeclaration
 }: {
     file: FernFileContext;
     versionDeclaration: RawSchemas.VersionDeclarationSchema;
-}): Promise<EnumTypeDeclaration> {
-    return await convertEnumTypeDeclaration({
+}): EnumTypeDeclaration {
+    return convertEnumTypeDeclaration({
         _enum: {
             default: versionDeclaration.default,
             enum: versionDeclaration.values

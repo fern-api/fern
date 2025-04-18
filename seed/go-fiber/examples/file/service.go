@@ -4,3 +4,5 @@ package file
 
 type GetFileRequest struct {
 }
+
+type Filename = string

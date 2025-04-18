@@ -2,23 +2,33 @@
 
 namespace Seed\Organization\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class CreateOrganizationRequest extends SerializableType
+class CreateOrganizationRequest extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @param string $name
+     * @param array{
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        string $name,
+        array $values,
     ) {
-        $this->name = $name;
+        $this->name = $values['name'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

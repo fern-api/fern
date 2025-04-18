@@ -1,1 +1,415 @@
-[]
+- version: 0.14.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        This updates the PHP generator to better support undiscriminated unions that
+        define one or more `optional` types.
+
+        With this, the generator unwraps each of the optional types, and includes a `|null`
+        variant (e.g. `array<string, mixed>|Metadata|null`).
+  irVersion: 55
+
+- version: 0.14.1
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Upgrade to IRv57.
+  irVersion: 55
+
+- version: 0.14.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Support literal types
+  irVersion: 55
+
+- version: 0.13.7
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Make constructor private for union types and remove static unknown constructor
+  irVersion: 55
+
+- version: 0.13.6
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix an issue where the value field of the deserialized discriminated union was null.
+  irVersion: 55
+
+- version: 0.13.5
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Change discriminated union method name from `->getvalue()` to `->getValue()`.
+  irVersion: 55
+
+- version: 0.13.4
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Flatten test directory structure from `tests/package-name/**` to `tests/**` so it matches the psr-4 structure defined in composer.json.
+        Without this change, you cannot reference classes within the `tests` directory from your tests, for example, a `Helpers` class for common test utilities.
+  irVersion: 55
+
+- version: 0.13.3
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix issue where an empty request would be JSON serialized as an empty array instead of an empty object.
+  irVersion: 55
+
+- version: 0.13.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fix a bug where literal global headers could not be overridden in the root client constructor.
+  irVersion: 55
+
+- version: 0.13.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Render union references as their type references rather than mixed.
+  irVersion: 55
+
+- version: 0.13.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for configuring a request timeout.
+    - type: fix
+      summary: >-
+        Fix a bug where the private pagination method helpers collided with magic methods (e.g. `__get`).
+  irVersion: 55
+
+- version: 0.12.0
+  changelogEntry:
+    - type: feat
+      summary: Add support for discriminated unions.
+  irVersion: 55
+
+- version: 0.11.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        The SDK now supports a `bodyProperties` and `queryParameters` request option, which
+        can be used to add arbitrary properties to the request. This is useful for interacting
+        with alpha or undocumented functionality.
+
+        ```php
+        $response = $client->users->list(
+          new ListUsersRequest([
+            ...
+          ]),
+          [
+            'queryParameters' => [
+              'limit' => 100,
+            ],
+          ]
+        );
+        ```
+  irVersion: 55
+
+- version: 0.10.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        You can now modify the generated `composer.json` file by adding a `composerJson` property to your generator configuration.
+
+        Here's an example of the `generators.yml` file with the `composerJson` property:
+
+        ```yaml generators.yml
+        ...
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                ...
+                config:
+                  composerJson:
+                    description: This is my PHP library
+                    keywords:
+                    - myCustomTag
+                    license:
+                    - "LGPL-2.1-only"
+                    - "GPL-3.0-or-later"
+                    scripts:
+                      hello: echo hello
+        ```
+
+        Which will result in the following composer.json file:
+
+        ```jsonc composer.json
+        {
+          // ...,
+          "description": "This is my PHP library",
+          "keywords": [
+            "myCustomTag",
+            // ...,
+          ],
+          "license": [
+            "LGPL-2.1-only",
+            "GPL-3.0-or-later"
+          ],
+          // ...,
+          "scripts": {
+            // ...,
+            "hello": "echo hello"
+          }
+        }
+        ```
+  irVersion: 55
+
+- version: 0.9.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add the ability to access alpha or undocumented response properties from every class.
+        Users can access the additional properties like so:
+
+        ```php
+        $response = $client->users->get(...);
+        $additionalProperties = $response->getAdditionalProperties();
+        ```
+  irVersion: 55
+
+- version: 0.8.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add automatic pagination support for endpoints that return a paginated response.
+
+        Here's an example of how users can use paginated endpoints:
+
+        ```php
+        $items = $client->list($request);
+        foreach($items as $item){
+            echo $item;
+        }
+        $pages = $items->getPages();
+        foreach($pages as $page){
+            foreach($page as $item){
+                echo $item;
+            }
+        }
+        ```
+  irVersion: 55
+
+- version: 0.7.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        The SDK now supports inline path parameters in the generated request class like so:
+
+        ```php
+        class GetUserRequest extends JsonSerializableType
+        {
+            /**
+            * @var string $userId
+            */
+            public string $userId;
+        }
+        ```
+
+        You can configure this in your `generators.yml` like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.7.0
+          config:
+            inlinePathParameters: true
+        ```
+  irVersion: 55
+
+- version: 0.6.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        You can now configure the generated class property access to be `public` or `private`.
+
+         - When the access is public, both the getter and setter methods are omitted (default).
+         - When the access is private, both the getter and setter methods are generated.
+
+        You can configure this in your `generators.yml` like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.6.0
+          config:
+            propertyAccess: private
+        ```
+  irVersion: 55
+
+- version: 0.5.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Update the endpoint generator to not require the in-lined request wrapper if it's
+        only composed of optional properties.
+    - type: fix
+      summary: >-
+        Update optional query parameters lists to be generated as an optional array instead
+        of an array of optional values.
+  irVersion: 55
+
+- version: 0.5.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Catch HTTP request exceptions and rethrow it as a FooApiException.
+  irVersion: 55
+
+- version: 0.5.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add the `__toString()` magic method to all generated class types.
+  irVersion: 55
+
+- version: 0.4.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Retry HTTP requests on status codes 408, 429, 5XX.
+        You can configure the maximum number of retries like this:
+
+        ```php
+        $client = new FooClient("token", ['maxRetries' => 3])
+        $client->bar($request, ['maxRetries' => 5]);
+        ```
+
+        The default for `maxRetries` is 2, meaning up to 3 HTTP requests may be sent.
+        Set `maxRetries` to 0 to disable retries.
+
+        If you create your own HTTP client and pass it to the root client, you must add the desired middlewares yourself.
+        Here's how you would add the `RetryMiddleware` to a custom HTTP client:
+
+        ```php
+        $handlerStack = HandlerStack::create();
+        $handlerStack->push(RetryMiddleware::create());
+        $httpClient = new Client(['handler' => $handlerStack]);
+        $client = new FooClient(['client' => $client]);
+        ```
+  irVersion: 55
+
+- version: 0.3.2
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Upgrade to IRv55 to recognize nullable types.
+  irVersion: 55
+- version: 0.3.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Improve multiline parameter docs by writing them above the tag, e.g.
+
+        ```php
+        class UpdateUserRequest extends JsonSerializableType
+        {
+            /**
+            * The user to update.
+            *
+            * See [User](https://acme.co/user) for more information.
+            *
+            * @var ?User $user
+            */
+            public ?User $user;
+        }
+        ```
+    - type: fix
+      summary: >-
+        Add .idea to the generated .gitignore file.
+  irVersion: 53
+- version: 0.3.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for customizing the package name, which is used in the `User-Agent` header.
+        Users can configure this like so:
+
+        ```yaml
+        - name: fernapi/fern-php-sdk
+          version: 0.3.0
+          config:
+            packageName: acme/acme-php
+        ```
+  irVersion: 53
+- version: 0.2.3
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Updates a variety of properties in the generated composer.json file, including:
+
+          - Pin guzzlehttp/guzzle to version ^7.4.
+          - Custom license support.
+          - Set `memory-limit` to 1G in the `analyze` script.
+  irVersion: 53
+- version: 0.2.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Handle cross package type name deconfliction
+  irVersion: 53
+- version: 0.2.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Override escaped method names in the generated client.
+  irVersion: 53
+- version: 0.2.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for multipart file uploads.
+  irVersion: 53
+- version: 0.1.4
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Add `null` to annotations for optional undiscriminated unions.
+  irVersion: 53
+- version: 0.1.3
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Support inheritance for types and inlined requests.
+    - type: feat
+      summary: >-
+        Support undiscriminated unions.
+    - type: fix
+      summary: >-
+        Fix ci.yml `php-version` field name.
+    - type: feat
+      summary: >-
+        We now allow an empty constructor on types with no required properties.
+  irVersion: 53
+- version: 0.1.2
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Represent enums in objects as strings.
+    - type: fix
+      summary: >-
+        Generated wrapped requests now implement `JsonSerializableType`.
+    - type: fix
+      summary: >-
+        Fix a bug where we don't set the request options baseurl properly.
+    - type: fix
+      summary: >-
+        Fix bugs in our numeric type serde and add tests.
+  irVersion: 53
+- version: 0.1.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        The generated `.github/workflows/ci.yml` file now uses 'shivammathur/setup-php@v2'
+        to install `php` and `composer`.
+  irVersion: 53
+- version: 0.1.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Initial release.
+  irVersion: 53

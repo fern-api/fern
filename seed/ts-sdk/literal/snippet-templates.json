@@ -584,6 +584,58 @@
                                                     "type": "generic"
                                                 },
                                                 "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "containerObject: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "isOptional": true,
+                                                    "inputDelimiter": ",\n\t\t\t\t",
+                                                    "templateInputs": [
+                                                        {
+                                                            "value": {
+                                                                "imports": [],
+                                                                "isOptional": true,
+                                                                "containerTemplateString": "nestedObjects: [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                                "delimiter": ",\n\t\t\t\t\t",
+                                                                "innerTemplate": {
+                                                                    "imports": [],
+                                                                    "templateString": "{\n\t\t\t\t\t\t$FERN_INPUT\n\t\t\t\t\t}",
+                                                                    "isOptional": true,
+                                                                    "inputDelimiter": ",\n\t\t\t\t\t\t",
+                                                                    "templateInputs": [
+                                                                        {
+                                                                            "value": {
+                                                                                "imports": [],
+                                                                                "templateString": "strProp: $FERN_INPUT",
+                                                                                "isOptional": true,
+                                                                                "templateInputs": [
+                                                                                    {
+                                                                                        "location": "RELATIVE",
+                                                                                        "path": "strProp",
+                                                                                        "type": "payload"
+                                                                                    }
+                                                                                ],
+                                                                                "type": "generic"
+                                                                            },
+                                                                            "type": "template"
+                                                                        }
+                                                                    ],
+                                                                    "type": "generic"
+                                                                },
+                                                                "templateInput": {
+                                                                    "location": "BODY",
+                                                                    "path": "containerObject.nestedObjects",
+                                                                    "type": "payload"
+                                                                },
+                                                                "type": "iterable"
+                                                            },
+                                                            "type": "template"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"

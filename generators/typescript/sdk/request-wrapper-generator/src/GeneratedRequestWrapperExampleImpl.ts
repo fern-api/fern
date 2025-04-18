@@ -1,3 +1,7 @@
+import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
+import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
+
 import {
     ExampleEndpointCall,
     ExampleTypeReferenceShape,
@@ -5,9 +9,6 @@ import {
     Name,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
-import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
 
 export declare namespace GeneratedRequestWrapperExampleImpl {
     export interface Init {
@@ -96,6 +97,20 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     context.type.getGeneratedExample(header.value).build(context, opts)
                 );
             });
+
+        const pathParamProperties = generatedType.shouldInlinePathParameters()
+            ? [...this.example.servicePathParameters, ...this.example.endpointPathParameters]
+                  .filter((pathParam) => this.isNotLiteral(pathParam.value.shape))
+                  .map((pathParam) => {
+                      return ts.factory.createPropertyAssignment(
+                          asObjectProperty(
+                              generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName
+                          ),
+                          context.type.getGeneratedExample(pathParam.value).build(context, opts)
+                      );
+                  })
+            : [];
+
         const queryParamProperties = [...this.example.queryParameters]
             .filter((queryParam) => this.isNotLiteral(queryParam.value.shape))
             .map((queryParam) => {
@@ -166,7 +181,13 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             }) ?? [];
 
         return ts.factory.createObjectLiteralExpression(
-            [...fileProperties, ...headerProperties, ...queryParamProperties, ...bodyProperties],
+            [
+                ...fileProperties,
+                ...headerProperties,
+                ...pathParamProperties,
+                ...queryParamProperties,
+                ...bodyProperties
+            ],
             true
         );
     }

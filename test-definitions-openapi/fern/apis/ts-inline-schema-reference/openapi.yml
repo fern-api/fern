@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: 1.0.0
+paths:
+  /example:
+    get:
+      summary: Get Example
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Schema1"
+                  - $ref: "#/components/schemas/Schema2"
+  /root:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                foo:
+                  type: string
+                bar:
+                  type: object
+                  properties:
+                    foo:
+                      type: string
+                    inner_bar:
+                      type: object
+                      properties:
+                        foo:
+                          type: string
+                        bar:
+                          type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  foo:
+                    type: string
+                  bar:
+                    type: object
+                    properties:
+                      foo:
+                        type: string
+                      inner_bar:
+                        type: object
+                        properties:
+                          foo:
+                            type: string
+                          bar:
+                            type: string
+
+components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  schemas:
+    Schema1:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        inline_union_map:
+          type: object
+          additionalProperties:
+            anyOf:
+              - type: string
+                nullable: true
+              - type: number
+              - type: boolean
+              - type: array
+    Schema2:
+      type: object
+      properties:
+        email:
+          type: string
+        age:
+          type: integer
+        testEnum:
+          type: string
+          enum:
+            - test1
+            - test2
+            - test3
+        testDiscriminatedUnion:
+          discriminator:
+            propertyName: objectType
+          oneOf:
+            - type: object
+              properties:
+                objectType:
+                  type: string
+            - type: object
+              properties:
+                objectType:
+                  type: string
+        testUnion:
+          oneOf:
+            - type: object
+              properties:
+                a:
+                  type: string
+            - type: object
+              properties:
+                b:
+                  type: string
+
+    RootUnionMap:
+      type: object
+      additionalProperties:
+        anyOf:
+          - type: string
+            nullable: true
+          - type: number
+          - type: boolean
+          - type: array

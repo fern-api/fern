@@ -15,7 +15,7 @@ export interface ContainerServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnListOfObjects(
         req: express.Request<
@@ -29,7 +29,7 @@ export interface ContainerServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnSetOfPrimitives(
         req: express.Request<never, Set<string>, Set<string>, never>,
@@ -38,7 +38,7 @@ export interface ContainerServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnSetOfObjects(
         req: express.Request<
@@ -52,7 +52,7 @@ export interface ContainerServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnMapPrimToPrim(
         req: express.Request<never, Record<string, string>, Record<string, string>, never>,
@@ -61,7 +61,7 @@ export interface ContainerServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnMapOfPrimToObject(
         req: express.Request<
@@ -75,7 +75,7 @@ export interface ContainerServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
     getAndReturnOptional(
         req: express.Request<
@@ -89,19 +89,22 @@ export interface ContainerServiceMethods {
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },
-        next: express.NextFunction
+        next: express.NextFunction,
     ): void | Promise<void>;
 }
 
 export class ContainerService {
     private router;
 
-    constructor(private readonly methods: ContainerServiceMethods, middleware: express.RequestHandler[] = []) {
+    constructor(
+        private readonly methods: ContainerServiceMethods,
+        middleware: express.RequestHandler[] = [],
+    ) {
         this.router = express.Router({ mergeParams: true }).use(
             express.json({
                 strict: false,
             }),
-            ...middleware
+            ...middleware,
         );
     }
 
@@ -127,14 +130,14 @@ export class ContainerService {
                                             unrecognizedObjectKeys: "passthrough",
                                             allowUnrecognizedUnionMembers: true,
                                             allowUnrecognizedEnumValues: true,
-                                        }
-                                    )
+                                        },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -142,7 +145,7 @@ export class ContainerService {
                         console.warn(
                             `Endpoint 'getAndReturnListOfPrimitives' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -153,7 +156,7 @@ export class ContainerService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -175,14 +178,14 @@ export class ContainerService {
                                             unrecognizedObjectKeys: "passthrough",
                                             allowUnrecognizedUnionMembers: true,
                                             allowUnrecognizedEnumValues: true,
-                                        }
-                                    )
+                                        },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -190,7 +193,7 @@ export class ContainerService {
                         console.warn(
                             `Endpoint 'getAndReturnListOfObjects' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -201,7 +204,7 @@ export class ContainerService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -223,14 +226,14 @@ export class ContainerService {
                                             unrecognizedObjectKeys: "passthrough",
                                             allowUnrecognizedUnionMembers: true,
                                             allowUnrecognizedEnumValues: true,
-                                        }
-                                    )
+                                        },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -238,7 +241,7 @@ export class ContainerService {
                         console.warn(
                             `Endpoint 'getAndReturnSetOfPrimitives' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -249,7 +252,7 @@ export class ContainerService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -271,14 +274,14 @@ export class ContainerService {
                                             unrecognizedObjectKeys: "passthrough",
                                             allowUnrecognizedUnionMembers: true,
                                             allowUnrecognizedEnumValues: true,
-                                        }
-                                    )
+                                        },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -286,7 +289,7 @@ export class ContainerService {
                         console.warn(
                             `Endpoint 'getAndReturnSetOfObjects' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -297,7 +300,7 @@ export class ContainerService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -319,14 +322,14 @@ export class ContainerService {
                                             unrecognizedObjectKeys: "passthrough",
                                             allowUnrecognizedUnionMembers: true,
                                             allowUnrecognizedEnumValues: true,
-                                        }
-                                    )
+                                        },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -334,7 +337,7 @@ export class ContainerService {
                         console.warn(
                             `Endpoint 'getAndReturnMapPrimToPrim' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -345,7 +348,7 @@ export class ContainerService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -367,14 +370,14 @@ export class ContainerService {
                                             unrecognizedObjectKeys: "passthrough",
                                             allowUnrecognizedUnionMembers: true,
                                             allowUnrecognizedEnumValues: true,
-                                        }
-                                    )
+                                        },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -382,7 +385,7 @@ export class ContainerService {
                         console.warn(
                             `Endpoint 'getAndReturnMapOfPrimToObject' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -393,7 +396,7 @@ export class ContainerService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);
@@ -415,14 +418,14 @@ export class ContainerService {
                                             unrecognizedObjectKeys: "passthrough",
                                             allowUnrecognizedUnionMembers: true,
                                             allowUnrecognizedEnumValues: true,
-                                        }
-                                    )
+                                        },
+                                    ),
                                 );
                             },
                             cookie: res.cookie.bind(res),
                             locals: res.locals,
                         },
-                        next
+                        next,
                     );
                     next();
                 } catch (error) {
@@ -430,7 +433,7 @@ export class ContainerService {
                         console.warn(
                             `Endpoint 'getAndReturnOptional' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
-                                " the endpoint's errors list in your Fern Definition."
+                                " the endpoint's errors list in your Fern Definition.",
                         );
                         await error.send(res);
                     } else {
@@ -441,7 +444,7 @@ export class ContainerService {
             } else {
                 res.status(422).json({
                     errors: request.errors.map(
-                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message,
                     ),
                 });
                 next(request.errors);

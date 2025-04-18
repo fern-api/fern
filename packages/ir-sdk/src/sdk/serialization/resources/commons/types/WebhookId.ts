@@ -10,5 +10,5 @@ export const WebhookId: core.serialization.Schema<serializers.WebhookId.Raw, Fer
     core.serialization.string();
 
 export declare namespace WebhookId {
-    type Raw = string;
+    export type Raw = string;
 }

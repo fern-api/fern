@@ -1,12 +1,10 @@
 using SeedErrorProperty.Core;
 
-#nullable enable
-
 namespace SeedErrorProperty;
 
 public partial class SeedErrorPropertyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public SeedErrorPropertyClient(ClientOptions? clientOptions = null)
     {
@@ -32,7 +30,7 @@ public partial class SeedErrorPropertyClient
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
 
-    public ErrorsClient Errors { get; init; }
+    public ErrorsClient Errors { get; }
 
-    public PropertyBasedErrorClient PropertyBasedError { get; init; }
+    public PropertyBasedErrorClient PropertyBasedError { get; }
 }

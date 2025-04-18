@@ -1,6 +1,6 @@
 # Seed C# Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
 [![nuget shield](https://img.shields.io/nuget/v/SeedOauthClientCredentialsDefault)](https://nuget.org/packages/SeedOauthClientCredentialsDefault)
 
 The Seed C# library provides convenient access to the Seed API from C#.
@@ -8,7 +8,7 @@ The Seed C# library provides convenient access to the Seed API from C#.
 ## Installation
 
 ```sh
-nuget install SeedOauthClientCredentialsDefault
+dotnet add package SeedOauthClientCredentialsDefault
 ```
 
 ## Usage
@@ -18,12 +18,12 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedOauthClientCredentialsDefault;
 
-var client = new SeedOauthClientCredentialsDefaultClient();
+var client = new SeedOauthClientCredentialsDefaultClient("CLIENT_ID", "CLIENT_SECRET");
 await client.Auth.GetTokenAsync(
     new GetTokenRequest
     {
-        ClientId = "string",
-        ClientSecret = "string",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
         GrantType = "client_credentials",
     }
 );
@@ -50,10 +50,10 @@ try {
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retriable when any of the following HTTP status codes is returned:
+A request is deemed retryable when any of the following HTTP status codes is returned:
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)

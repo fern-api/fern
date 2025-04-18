@@ -1,4 +1,5 @@
 import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { generateEnumName, generateEnumValue } from "../../utils/NamingUtilities";
 import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";

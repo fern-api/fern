@@ -13,5 +13,4 @@ class AbstractTypeSnippetGenerator(ABC):
         self.snippet_writer = snippet_writer
 
     @abstractmethod
-    def generate_snippet(self) -> Optional[AST.Expression]:
-        ...
+    def generate_snippet(self) -> Optional[AST.Expression]: ...

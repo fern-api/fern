@@ -1,5 +1,7 @@
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 import { GeneratedSdkErrorSchema } from "@fern-typescript/contexts";
+
+import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+
 import { GeneratedSdkErrorSchemaImpl } from "./GeneratedSdkErrorSchemaImpl";
 
 export declare namespace SdkErrorSchemaGenerator {

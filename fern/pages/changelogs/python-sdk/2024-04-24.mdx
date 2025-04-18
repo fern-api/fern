@@ -1,0 +1,10 @@
+## 1.4.0-rc3
+**`(fix):`** pin mypy dependency to 1.9.0 to prevent introducing upstream bugs
+
+### What's been fixed
+- Set `mypy` dev dependency in generated `pyproject.toml` to `1.9.0`. This prevents upstream `mypy` bugs from affecting user builds. Note that this is only a dev dependency, so it does not affect the behavior of the SDK.
+- Temporarily disable unit test generation.
+
+### What's changed
+- Improvement: Use named parameters for all `httpx` request params.
+

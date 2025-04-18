@@ -1,8 +1,10 @@
-import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
+
+import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+
 import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
 import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";
 import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator";
@@ -16,6 +18,7 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
         retainOriginalCasing: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
@@ -33,7 +36,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         errorDiscriminationStrategy,
         includeSerdeLayer,
         noOptionalProperties,
-        retainOriginalCasing
+        retainOriginalCasing,
+        enableInlineTypes
     }: GeneratedEndpointErrorUnionImpl.Init) {
         this.endpoint = endpoint;
 
@@ -57,7 +61,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                         errorDiscriminationStrategy,
                         includeUtilsOnUnionMembers,
                         noOptionalProperties,
-                        retainOriginalCasing
+                        retainOriginalCasing,
+                        enableInlineTypes
                     })
             ),
             getReferenceToUnion: (context) =>
@@ -73,7 +78,10 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             includeOtherInUnionTypes: true,
             includeSerdeLayer,
             noOptionalProperties,
-            retainOriginalCasing
+            retainOriginalCasing,
+            enableInlineTypes,
+            // generate separate root types for errors in union
+            inline: false
         });
     }
 
@@ -95,7 +103,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     }
 
     public writeToFile(context: SdkContext): void {
-        this.errorUnion.writeToFile(context);
+        context.sourceFile.addStatements(this.errorUnion.generateStatements(context));
     }
 
     public getErrorUnion(): GeneratedUnion<SdkContext> {

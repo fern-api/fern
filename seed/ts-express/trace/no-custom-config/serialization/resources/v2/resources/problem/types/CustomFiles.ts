@@ -13,7 +13,7 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.CustomFiles.R
             custom: core.serialization.object({
                 value: core.serialization.record(
                     core.serialization.lazy(() => serializers.Language),
-                    core.serialization.lazyObject(() => serializers.v2.Files).optional()
+                    core.serialization.lazyObject(() => serializers.v2.Files).optional(),
                 ),
             }),
         })
@@ -23,13 +23,13 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.CustomFiles.R
         });
 
 export declare namespace CustomFiles {
-    type Raw = CustomFiles.Basic | CustomFiles.Custom;
+    export type Raw = CustomFiles.Basic | CustomFiles.Custom;
 
-    interface Basic extends serializers.v2.BasicCustomFiles.Raw {
+    export interface Basic extends serializers.v2.BasicCustomFiles.Raw {
         type: "basic";
     }
 
-    interface Custom {
+    export interface Custom {
         type: "custom";
         value: Record<serializers.Language.Raw, serializers.v2.Files.Raw | null | undefined>;
     }

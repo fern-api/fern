@@ -33,17 +33,17 @@ export const StreamingResponse: core.serialization.Schema<serializers.StreamingR
         });
 
 export declare namespace StreamingResponse {
-    type Raw = StreamingResponse.Json | StreamingResponse.Text | StreamingResponse.Sse;
+    export type Raw = StreamingResponse.Json | StreamingResponse.Text | StreamingResponse.Sse;
 
-    interface Json extends JsonStreamChunk.Raw {
+    export interface Json extends JsonStreamChunk.Raw {
         type: "json";
     }
 
-    interface Text extends TextStreamChunk.Raw {
+    export interface Text extends TextStreamChunk.Raw {
         type: "text";
     }
 
-    interface Sse extends SseStreamChunk.Raw {
+    export interface Sse extends SseStreamChunk.Raw {
         type: "sse";
     }
 }

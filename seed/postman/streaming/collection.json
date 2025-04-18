@@ -91,7 +91,7 @@
                 }
               },
               "description": null,
-              "body": "[\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    },\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    }\n]",
+              "body": "[\n    {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n]",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -200,7 +200,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"

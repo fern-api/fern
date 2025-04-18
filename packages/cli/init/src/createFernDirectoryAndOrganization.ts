@@ -1,12 +1,18 @@
-import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
-import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME, fernConfigJson } from "@fern-api/configuration";
-import { createVenusService } from "@fern-api/core";
-import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { askToLogin } from "@fern-api/login";
-import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
+
+import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
+import {
+    FERN_DIRECTORY,
+    PROJECT_CONFIG_FILENAME,
+    fernConfigJson,
+    loadProjectConfig
+} from "@fern-api/configuration-loader";
+import { createVenusService } from "@fern-api/core";
+import { AbsoluteFilePath, RelativeFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
+import { askToLogin } from "@fern-api/login";
+import { TaskContext } from "@fern-api/task-context";
 
 export async function createFernDirectoryAndWorkspace({
     organization,
@@ -39,7 +45,7 @@ export async function createFernDirectoryAndWorkspace({
                 if (response.ok) {
                     organization = response.body.organizationId;
                 } else {
-                    taskContext.failAndThrow("Unathorized. FERN_TOKEN is invalid.");
+                    taskContext.failAndThrow("Unauthorized. FERN_TOKEN is invalid.");
                     // dummy return value to appease the linter. won't actually ever get run.
                     return { absolutePathToFernDirectory: AbsoluteFilePath.of("/dummy"), organization: "dummy" };
                 }
@@ -53,7 +59,7 @@ export async function createFernDirectoryAndWorkspace({
             versionOfCli
         });
     } else {
-        const projectConfig = await fernConfigJson.loadProjectConfig({
+        const projectConfig = await loadProjectConfig({
             directory: pathToFernDirectory,
             context: taskContext
         });

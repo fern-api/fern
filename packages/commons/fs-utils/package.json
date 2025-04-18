@@ -19,30 +19,32 @@
     "compile": "tsc --build",
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "glob": "^8.0.3",
-    "glob-promise": "^5.0.0",
+    "@fern-api/path-utils": "workspace:*",
+    "glob": "^11.0.0",
     "json-stream-stringify": "^3.1.4",
     "stream-json": "^1.8.0",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/node": "^18.7.18",
-    "@types/stream-json": "^1.7.7",
-    "depcheck": "^1.4.6",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/path-utils": "workspace:*",
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.7.1",
-    "typescript": "4.6.4",
-    "vitest": "^2.0.5"
+    "prettier": "^3.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "typescript": "5.7.2",
+    "@types/jest": "^29.5.14",
+    "@types/stream-json": "^1.7.7",
+    "vitest": "^2.1.9"
   }
 }

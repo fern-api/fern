@@ -18,7 +18,7 @@ export const RunningSubmissionState: core.serialization.Schema<
 ]);
 
 export declare namespace RunningSubmissionState {
-    type Raw =
+    export type Raw =
         | "QUEUEING_SUBMISSION"
         | "KILLING_HISTORICAL_SUBMISSIONS"
         | "WRITING_SUBMISSION_TO_FILE"

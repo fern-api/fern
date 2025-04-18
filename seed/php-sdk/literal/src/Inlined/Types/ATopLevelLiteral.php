@@ -2,23 +2,33 @@
 
 namespace Seed\Inlined\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ATopLevelLiteral extends SerializableType
+class ATopLevelLiteral extends JsonSerializableType
 {
     /**
      * @var ANestedLiteral $nestedLiteral
      */
-    #[JsonProperty("nestedLiteral")]
+    #[JsonProperty('nestedLiteral')]
     public ANestedLiteral $nestedLiteral;
 
     /**
-     * @param ANestedLiteral $nestedLiteral
+     * @param array{
+     *   nestedLiteral: ANestedLiteral,
+     * } $values
      */
     public function __construct(
-        ANestedLiteral $nestedLiteral,
+        array $values,
     ) {
-        $this->nestedLiteral = $nestedLiteral;
+        $this->nestedLiteral = $values['nestedLiteral'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

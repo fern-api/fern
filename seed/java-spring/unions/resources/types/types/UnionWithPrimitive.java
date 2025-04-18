@@ -103,6 +103,7 @@ public final class UnionWithPrimitive {
   }
 
   @JsonTypeName("integer")
+  @JsonIgnoreProperties("type")
   private static final class IntegerValue implements Value {
     @JsonProperty("value")
     private int value;
@@ -141,6 +142,7 @@ public final class UnionWithPrimitive {
   }
 
   @JsonTypeName("string")
+  @JsonIgnoreProperties("type")
   private static final class StringValue implements Value {
     @JsonProperty("value")
     private String value;
@@ -178,6 +180,7 @@ public final class UnionWithPrimitive {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

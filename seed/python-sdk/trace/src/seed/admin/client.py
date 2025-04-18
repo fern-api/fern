@@ -2,13 +2,10 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawAdminClient
 from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_submission_status import TestSubmissionStatus
 from ..core.request_options import RequestOptions
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.serialization import convert_and_respect_annotation_metadata
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 import datetime as dt
 from ..submission.types.test_submission_update_info import TestSubmissionUpdateInfo
 from ..submission.types.workspace_submission_status import WorkspaceSubmissionStatus
@@ -19,6 +16,7 @@ from ..v_2.problem.types.test_case_id import TestCaseId
 from ..submission.types.trace_response_v_2 import TraceResponseV2
 from ..submission.types.workspace_run_details import WorkspaceRunDetails
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawAdminClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,7 +24,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class AdminClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawAdminClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawAdminClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawAdminClient
+        """
+        return self._raw_client
 
     def update_test_submission_status(
         self,
@@ -67,22 +76,10 @@ class AdminClient:
             request=TestSubmissionStatus(),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=TestSubmissionStatus, direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.update_test_submission_status(
+            submission_id, request=request, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def send_test_submission_update(
         self,
@@ -130,25 +127,10 @@ class AdminClient:
             update_info=TestSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json={
-                "updateTime": update_time,
-                "updateInfo": convert_and_respect_annotation_metadata(
-                    object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.send_test_submission_update(
+            submission_id, update_time=update_time, update_info=update_info, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def update_workspace_submission_status(
         self,
@@ -189,22 +171,10 @@ class AdminClient:
             request=WorkspaceSubmissionStatus(),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.update_workspace_submission_status(
+            submission_id, request=request, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def send_workspace_submission_update(
         self,
@@ -254,25 +224,10 @@ class AdminClient:
             ),
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json={
-                "updateTime": update_time,
-                "updateInfo": convert_and_respect_annotation_metadata(
-                    object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.send_workspace_submission_update(
+            submission_id, update_time=update_time, update_info=update_info, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def store_traced_test_case(
         self,
@@ -329,16 +284,16 @@ class AdminClient:
             submission_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
-            test_case_id="string",
+            test_case_id="testCaseId",
             result=TestCaseResultWithStdout(
                 result=TestCaseResult(
                     expected_result=VariableValue_IntegerValue(value=1),
                     actual_result=ActualResult_Value(
-                        value=VariableValue_IntegerValue(value={"key": "value"})
+                        value=VariableValue_IntegerValue(value=1)
                     ),
                     passed=True,
                 ),
-                stdout="string",
+                stdout="stdout",
             ),
             trace_responses=[
                 TraceResponse(
@@ -354,41 +309,70 @@ class AdminClient:
                     stack=StackInformation(
                         num_stack_frames=1,
                         top_stack_frame=StackFrame(
-                            method_name="string",
+                            method_name="methodName",
                             line_number=1,
                             scopes=[
                                 Scope(
-                                    variables={"string": {"key": "value"}},
-                                )
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
                             ],
                         ),
                     ),
-                    stdout="string",
-                )
+                    stdout="stdout",
+                ),
+                TraceResponse(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
+                ),
             ],
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
-            method="POST",
-            json={
-                "result": convert_and_respect_annotation_metadata(
-                    object_=result, annotation=TestCaseResultWithStdout, direction="write"
-                ),
-                "traceResponses": convert_and_respect_annotation_metadata(
-                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.store_traced_test_case(
+            submission_id, test_case_id, result=result, trace_responses=trace_responses, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def store_traced_test_case_v_2(
         self,
@@ -437,7 +421,7 @@ class AdminClient:
             submission_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
-            test_case_id="string",
+            test_case_id="testCaseId",
             request=[
                 TraceResponseV2(
                     submission_id=uuid.UUID(
@@ -445,8 +429,8 @@ class AdminClient:
                     ),
                     line_number=1,
                     file=TracedFile(
-                        filename="string",
-                        directory="string",
+                        filename="filename",
+                        directory="directory",
                     ),
                     return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(
@@ -456,36 +440,74 @@ class AdminClient:
                     stack=StackInformation(
                         num_stack_frames=1,
                         top_stack_frame=StackFrame(
-                            method_name="string",
+                            method_name="methodName",
                             line_number=1,
                             scopes=[
                                 Scope(
-                                    variables={"string": {"key": "value"}},
-                                )
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
                             ],
                         ),
                     ),
-                    stdout="string",
-                )
+                    stdout="stdout",
+                ),
+                TraceResponseV2(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    file=TracedFile(
+                        filename="filename",
+                        directory="directory",
+                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
+                ),
             ],
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.store_traced_test_case_v_2(
+            submission_id, test_case_id, request=request, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def store_traced_workspace(
         self,
@@ -538,16 +560,16 @@ class AdminClient:
             ),
             workspace_run_details=WorkspaceRunDetails(
                 exception_v_2=ExceptionV2_Generic(
-                    exception_type="string",
-                    exception_message="string",
-                    exception_stacktrace="string",
+                    exception_type="exceptionType",
+                    exception_message="exceptionMessage",
+                    exception_stacktrace="exceptionStacktrace",
                 ),
                 exception=ExceptionInfo(
-                    exception_type="string",
-                    exception_message="string",
-                    exception_stacktrace="string",
+                    exception_type="exceptionType",
+                    exception_message="exceptionMessage",
+                    exception_stacktrace="exceptionStacktrace",
                 ),
-                stdout="string",
+                stdout="stdout",
             ),
             trace_responses=[
                 TraceResponse(
@@ -563,41 +585,73 @@ class AdminClient:
                     stack=StackInformation(
                         num_stack_frames=1,
                         top_stack_frame=StackFrame(
-                            method_name="string",
+                            method_name="methodName",
                             line_number=1,
                             scopes=[
                                 Scope(
-                                    variables={"string": {"key": "value"}},
-                                )
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
                             ],
                         ),
                     ),
-                    stdout="string",
-                )
+                    stdout="stdout",
+                ),
+                TraceResponse(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
+                ),
             ],
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json={
-                "workspaceRunDetails": convert_and_respect_annotation_metadata(
-                    object_=workspace_run_details, annotation=WorkspaceRunDetails, direction="write"
-                ),
-                "traceResponses": convert_and_respect_annotation_metadata(
-                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
-                ),
-            },
+        response = self._raw_client.store_traced_workspace(
+            submission_id,
+            workspace_run_details=workspace_run_details,
+            trace_responses=trace_responses,
             request_options=request_options,
-            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def store_traced_workspace_v_2(
         self,
@@ -650,8 +704,8 @@ class AdminClient:
                     ),
                     line_number=1,
                     file=TracedFile(
-                        filename="string",
-                        directory="string",
+                        filename="filename",
+                        directory="directory",
                     ),
                     return_value=DebugVariableValue_IntegerValue(value=1),
                     expression_location=ExpressionLocation(
@@ -661,41 +715,90 @@ class AdminClient:
                     stack=StackInformation(
                         num_stack_frames=1,
                         top_stack_frame=StackFrame(
-                            method_name="string",
+                            method_name="methodName",
                             line_number=1,
                             scopes=[
                                 Scope(
-                                    variables={"string": {"key": "value"}},
-                                )
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
                             ],
                         ),
                     ),
-                    stdout="string",
-                )
+                    stdout="stdout",
+                ),
+                TraceResponseV2(
+                    submission_id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    line_number=1,
+                    file=TracedFile(
+                        filename="filename",
+                        directory="directory",
+                    ),
+                    return_value=DebugVariableValue_IntegerValue(value=1),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="methodName",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                                Scope(
+                                    variables={
+                                        "variables": DebugVariableValue_IntegerValue(
+                                            value=1
+                                        )
+                                    },
+                                ),
+                            ],
+                        ),
+                    ),
+                    stdout="stdout",
+                ),
             ],
         )
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.store_traced_workspace_v_2(
+            submission_id, request=request, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncAdminClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawAdminClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawAdminClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawAdminClient
+        """
+        return self._raw_client
 
     async def update_test_submission_status(
         self,
@@ -743,22 +846,10 @@ class AsyncAdminClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=TestSubmissionStatus, direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.update_test_submission_status(
+            submission_id, request=request, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def send_test_submission_update(
         self,
@@ -815,25 +906,10 @@ class AsyncAdminClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json={
-                "updateTime": update_time,
-                "updateInfo": convert_and_respect_annotation_metadata(
-                    object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.send_test_submission_update(
+            submission_id, update_time=update_time, update_info=update_info, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def update_workspace_submission_status(
         self,
@@ -881,22 +957,10 @@ class AsyncAdminClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.update_workspace_submission_status(
+            submission_id, request=request, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def send_workspace_submission_update(
         self,
@@ -953,25 +1017,10 @@ class AsyncAdminClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json={
-                "updateTime": update_time,
-                "updateInfo": convert_and_respect_annotation_metadata(
-                    object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.send_workspace_submission_update(
+            submission_id, update_time=update_time, update_info=update_info, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def store_traced_test_case(
         self,
@@ -1032,16 +1081,16 @@ class AsyncAdminClient:
                 submission_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                test_case_id="string",
+                test_case_id="testCaseId",
                 result=TestCaseResultWithStdout(
                     result=TestCaseResult(
                         expected_result=VariableValue_IntegerValue(value=1),
                         actual_result=ActualResult_Value(
-                            value=VariableValue_IntegerValue(value={"key": "value"})
+                            value=VariableValue_IntegerValue(value=1)
                         ),
                         passed=True,
                     ),
-                    stdout="string",
+                    stdout="stdout",
                 ),
                 trace_responses=[
                     TraceResponse(
@@ -1057,44 +1106,73 @@ class AsyncAdminClient:
                         stack=StackInformation(
                             num_stack_frames=1,
                             top_stack_frame=StackFrame(
-                                method_name="string",
+                                method_name="methodName",
                                 line_number=1,
                                 scopes=[
                                     Scope(
-                                        variables={"string": {"key": "value"}},
-                                    )
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
                                 ],
                             ),
                         ),
-                        stdout="string",
-                    )
+                        stdout="stdout",
+                    ),
+                    TraceResponse(
+                        submission_id=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        line_number=1,
+                        return_value=DebugVariableValue_IntegerValue(value=1),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="methodName",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                ],
+                            ),
+                        ),
+                        stdout="stdout",
+                    ),
                 ],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
-            method="POST",
-            json={
-                "result": convert_and_respect_annotation_metadata(
-                    object_=result, annotation=TestCaseResultWithStdout, direction="write"
-                ),
-                "traceResponses": convert_and_respect_annotation_metadata(
-                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.store_traced_test_case(
+            submission_id, test_case_id, result=result, trace_responses=trace_responses, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def store_traced_test_case_v_2(
         self,
@@ -1147,7 +1225,7 @@ class AsyncAdminClient:
                 submission_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                test_case_id="string",
+                test_case_id="testCaseId",
                 request=[
                     TraceResponseV2(
                         submission_id=uuid.UUID(
@@ -1155,8 +1233,8 @@ class AsyncAdminClient:
                         ),
                         line_number=1,
                         file=TracedFile(
-                            filename="string",
-                            directory="string",
+                            filename="filename",
+                            directory="directory",
                         ),
                         return_value=DebugVariableValue_IntegerValue(value=1),
                         expression_location=ExpressionLocation(
@@ -1166,39 +1244,77 @@ class AsyncAdminClient:
                         stack=StackInformation(
                             num_stack_frames=1,
                             top_stack_frame=StackFrame(
-                                method_name="string",
+                                method_name="methodName",
                                 line_number=1,
                                 scopes=[
                                     Scope(
-                                        variables={"string": {"key": "value"}},
-                                    )
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
                                 ],
                             ),
                         ),
-                        stdout="string",
-                    )
+                        stdout="stdout",
+                    ),
+                    TraceResponseV2(
+                        submission_id=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        line_number=1,
+                        file=TracedFile(
+                            filename="filename",
+                            directory="directory",
+                        ),
+                        return_value=DebugVariableValue_IntegerValue(value=1),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="methodName",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                ],
+                            ),
+                        ),
+                        stdout="stdout",
+                    ),
                 ],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.store_traced_test_case_v_2(
+            submission_id, test_case_id, request=request, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def store_traced_workspace(
         self,
@@ -1255,16 +1371,16 @@ class AsyncAdminClient:
                 ),
                 workspace_run_details=WorkspaceRunDetails(
                     exception_v_2=ExceptionV2_Generic(
-                        exception_type="string",
-                        exception_message="string",
-                        exception_stacktrace="string",
+                        exception_type="exceptionType",
+                        exception_message="exceptionMessage",
+                        exception_stacktrace="exceptionStacktrace",
                     ),
                     exception=ExceptionInfo(
-                        exception_type="string",
-                        exception_message="string",
-                        exception_stacktrace="string",
+                        exception_type="exceptionType",
+                        exception_message="exceptionMessage",
+                        exception_stacktrace="exceptionStacktrace",
                     ),
-                    stdout="string",
+                    stdout="stdout",
                 ),
                 trace_responses=[
                     TraceResponse(
@@ -1280,44 +1396,76 @@ class AsyncAdminClient:
                         stack=StackInformation(
                             num_stack_frames=1,
                             top_stack_frame=StackFrame(
-                                method_name="string",
+                                method_name="methodName",
                                 line_number=1,
                                 scopes=[
                                     Scope(
-                                        variables={"string": {"key": "value"}},
-                                    )
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
                                 ],
                             ),
                         ),
-                        stdout="string",
-                    )
+                        stdout="stdout",
+                    ),
+                    TraceResponse(
+                        submission_id=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        line_number=1,
+                        return_value=DebugVariableValue_IntegerValue(value=1),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="methodName",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                ],
+                            ),
+                        ),
+                        stdout="stdout",
+                    ),
                 ],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json={
-                "workspaceRunDetails": convert_and_respect_annotation_metadata(
-                    object_=workspace_run_details, annotation=WorkspaceRunDetails, direction="write"
-                ),
-                "traceResponses": convert_and_respect_annotation_metadata(
-                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
-                ),
-            },
+        response = await self._raw_client.store_traced_workspace(
+            submission_id,
+            workspace_run_details=workspace_run_details,
+            trace_responses=trace_responses,
             request_options=request_options,
-            omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def store_traced_workspace_v_2(
         self,
@@ -1374,8 +1522,8 @@ class AsyncAdminClient:
                         ),
                         line_number=1,
                         file=TracedFile(
-                            filename="string",
-                            directory="string",
+                            filename="filename",
+                            directory="directory",
                         ),
                         return_value=DebugVariableValue_IntegerValue(value=1),
                         expression_location=ExpressionLocation(
@@ -1385,36 +1533,74 @@ class AsyncAdminClient:
                         stack=StackInformation(
                             num_stack_frames=1,
                             top_stack_frame=StackFrame(
-                                method_name="string",
+                                method_name="methodName",
                                 line_number=1,
                                 scopes=[
                                     Scope(
-                                        variables={"string": {"key": "value"}},
-                                    )
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
                                 ],
                             ),
                         ),
-                        stdout="string",
-                    )
+                        stdout="stdout",
+                    ),
+                    TraceResponseV2(
+                        submission_id=uuid.UUID(
+                            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        ),
+                        line_number=1,
+                        file=TracedFile(
+                            filename="filename",
+                            directory="directory",
+                        ),
+                        return_value=DebugVariableValue_IntegerValue(value=1),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="methodName",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                    Scope(
+                                        variables={
+                                            "variables": DebugVariableValue_IntegerValue(
+                                                value=1
+                                            )
+                                        },
+                                    ),
+                                ],
+                            ),
+                        ),
+                        stdout="stdout",
+                    ),
                 ],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.store_traced_workspace_v_2(
+            submission_id, request=request, request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

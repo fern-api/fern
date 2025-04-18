@@ -1,9 +1,11 @@
-import { assertNever } from "@fern-api/core-utils";
-import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { Reference, Zurg, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkErrorSchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
+
+import { assertNever } from "@fern-api/core-utils";
+
+import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedSdkErrorSchemaImpl {
     export interface Init {
@@ -101,7 +103,8 @@ export class GeneratedSdkErrorSchemaImpl
     protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode)
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
+            isExported: true
         });
     }
 

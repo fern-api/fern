@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_service.post"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedApiWideBasePath;\n\nvar client = new SeedApiWideBasePathClient();\nawait client.Service.PostAsync(\"string\", \"string\", \"string\", 1);\n"
+                "type": "csharp",
+                "client": "using SeedApiWideBasePath;\n\nvar client = new SeedApiWideBasePathClient();\nawait client.Service.PostAsync(\"pathParam\", \"serviceParam\", \"resourceParam\", 1);\n"
             }
         }
     ]

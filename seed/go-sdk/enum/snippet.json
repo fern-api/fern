@@ -13,13 +13,13 @@
         },
         {
             "id": {
-                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+                "path": "/path/{operand}/{operandOrColor}",
                 "method": "POST",
                 "identifier_override": "endpoint_path-param.send"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.PathParam.Send(\n\tcontext.TODO(),\n\tfern.OperandGreaterThan,\n\tfern.OperandLessThan,\n\tfern.NewColorOrOperandFromColor(\n\t\tfern.ColorRed,\n\t),\n\tfern.NewColorOrOperandFromColor(\n\t\tfern.ColorRed,\n\t),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/enum/fern\"\n\tfernclient \"github.com/enum/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.PathParam.Send(\n\tcontext.TODO(),\n\tfern.OperandGreaterThan,\n\tfern.NewColorOrOperandFromColor(\n\t\tfern.ColorRed,\n\t),\n)\n"
             }
         },
         {

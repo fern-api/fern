@@ -1,8 +1,10 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import { visitDefinitionFileYamlAst } from "../../ast";
 import path from "path";
+
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { Rule, RuleViolation } from "../../Rule";
+import { visitDefinitionFileYamlAst } from "../../ast";
 
 type RelativeDirectoryPath = string;
 type DeclaredName = string;
@@ -11,8 +13,8 @@ type Declarations = Record<RelativeDirectoryPath, Record<DeclaredName, RelativeF
 
 export const NoDuplicateDeclarationsRule: Rule = {
     name: "no-duplicate-declarations",
-    create: async ({ workspace, logger }) => {
-        const declarations = await getDeclarations(workspace);
+    create: ({ workspace, logger }) => {
+        const declarations = getDeclarations(workspace);
 
         // keep track of seen types, so we only warn starting on the second instance
         const seenTypes: Record<RelativeDirectoryPath, Set<DeclaredName>> = {};
@@ -43,7 +45,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
             const indexOfThisDeclarations = declarationsForName.indexOf(relativeFilepath);
             const duplicates = declarationsForName.filter((_declaration, index) => index !== indexOfThisDeclarations);
             return duplicates.map((duplicate) => ({
-                severity: "error",
+                severity: "fatal",
                 message: `${declaredName} is already declared in ${
                     duplicate === relativeFilepath ? "this file" : duplicate
                 }`
@@ -68,10 +70,10 @@ export const NoDuplicateDeclarationsRule: Rule = {
     }
 };
 
-async function getDeclarations(workspace: FernWorkspace): Promise<Declarations> {
+function getDeclarations(workspace: FernWorkspace): Declarations {
     const declarations: Declarations = {};
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
         const relativeDirectoryPath: RelativeDirectoryPath = path.dirname(relativeFilepath);
 
         const declarationsForDirectory = (declarations[relativeDirectoryPath] ??= {});
@@ -79,7 +81,7 @@ async function getDeclarations(workspace: FernWorkspace): Promise<Declarations> 
             (declarationsForDirectory[declaredName] ??= []).push(relativeFilepath);
         };
 
-        await visitDefinitionFileYamlAst(file, {
+        visitDefinitionFileYamlAst(file, {
             typeName: (typeName) => {
                 addDeclaration(typeName);
             },

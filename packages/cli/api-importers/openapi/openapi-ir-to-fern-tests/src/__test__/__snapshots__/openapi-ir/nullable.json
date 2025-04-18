@@ -1,0 +1,1009 @@
+{
+  "title": "Nullable Properties API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Create a user",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostUsersRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostUsersRequest",
+          "schema": "UserCreate",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "User created successfully",
+        "schema": {
+          "generatedName": "PostUsersResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "settings": {
+                  "properties": {
+                    "theme": {
+                      "value": {
+                        "value": "theme",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "notifications": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastModified": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "stats": {
+                  "properties": {
+                    "totalLogins": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastLoginTime": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "accountStatus": {
+                      "value": "active",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Update a user",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PutUsersRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PutUsersRequest",
+          "schema": "UserUpdate",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "User updated successfully",
+        "schema": {
+          "generatedName": "PutUsersResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "PUT",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "settings": {
+                  "properties": {
+                    "theme": {
+                      "value": {
+                        "value": "theme",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "notifications": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastModified": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "stats": {
+                  "properties": {
+                    "totalLogins": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastLoginTime": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "accountStatus": {
+                      "value": "active",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get a user",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "userId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetUsersUserIdRequestUserId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "name": "activated",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetUsersUserIdRequestActivated",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "email",
+          "schema": {
+            "generatedName": "GetUsersUserIdRequestEmail",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetUsersUserIdRequestEmail",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetUsersUserIdRequest",
+      "response": {
+        "description": "User retrieved successfully",
+        "schema": {
+          "generatedName": "GetUsersUserIdResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/users/{userId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "value": {
+                  "value": "userId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": "activated",
+              "value": {
+                "value": {
+                  "value": "activated",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "settings": {
+                  "properties": {
+                    "theme": {
+                      "value": {
+                        "value": "theme",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "notifications": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastModified": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "stats": {
+                  "properties": {
+                    "totalLogins": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastLoginTime": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "accountStatus": {
+                      "value": "active",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "UserCreate": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userCreateName",
+            "key": "name",
+            "schema": {
+              "generatedName": "userCreateName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserCreateName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userCreateEmail",
+            "key": "email",
+            "schema": {
+              "generatedName": "userCreateEmail",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserCreateEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userCreateSettings",
+            "key": "settings",
+            "schema": {
+              "generatedName": "userCreateSettings",
+              "value": {
+                "generatedName": "UserCreateSettings",
+                "schema": "UserSettings",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "UserCreate",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "UserUpdate": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userUpdateName",
+            "key": "name",
+            "schema": {
+              "generatedName": "userUpdateName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserUpdateName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userUpdateEmail",
+            "key": "email",
+            "schema": {
+              "generatedName": "userUpdateEmail",
+              "value": {
+                "generatedName": "UserUpdateEmail",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserUpdateEmail",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userUpdateSettings",
+            "key": "settings",
+            "schema": {
+              "generatedName": "userUpdateSettings",
+              "value": {
+                "generatedName": "UserUpdateSettings",
+                "schema": "UserSettings",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "UserUpdate",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "generatedName": "userId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userName",
+            "key": "name",
+            "schema": {
+              "generatedName": "userName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userEmail",
+            "key": "email",
+            "schema": {
+              "generatedName": "userEmail",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "generatedName": "userCreatedAt",
+              "value": {
+                "generatedName": "UserCreatedAt",
+                "value": {
+                  "schema": {
+                    "type": "datetime"
+                  },
+                  "generatedName": "UserCreatedAt",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userSettings",
+            "key": "settings",
+            "schema": {
+              "generatedName": "userSettings",
+              "value": {
+                "generatedName": "UserSettings",
+                "schema": "UserSettings",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "userStats",
+            "key": "stats",
+            "schema": {
+              "generatedName": "userStats",
+              "value": {
+                "generatedName": "UserStats",
+                "schema": "UserStats",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "User",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "UserSettings": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userSettingsTheme",
+            "key": "theme",
+            "schema": {
+              "generatedName": "userSettingsTheme",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserSettingsTheme",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userSettingsNotifications",
+            "key": "notifications",
+            "schema": {
+              "generatedName": "userSettingsNotifications",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "UserSettingsNotifications",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userSettingsLastModified",
+            "key": "lastModified",
+            "schema": {
+              "generatedName": "userSettingsLastModified",
+              "value": {
+                "generatedName": "UserSettingsLastModified",
+                "value": {
+                  "schema": {
+                    "type": "datetime"
+                  },
+                  "generatedName": "UserSettingsLastModified",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "UserSettings",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "UserStats": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userStatsTotalLogins",
+            "key": "totalLogins",
+            "schema": {
+              "generatedName": "userStatsTotalLogins",
+              "value": {
+                "generatedName": "UserStatsTotalLogins",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "UserStatsTotalLogins",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userStatsLastLoginTime",
+            "key": "lastLoginTime",
+            "schema": {
+              "generatedName": "userStatsLastLoginTime",
+              "value": {
+                "generatedName": "UserStatsLastLoginTime",
+                "value": {
+                  "schema": {
+                    "type": "datetime"
+                  },
+                  "generatedName": "UserStatsLastLoginTime",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userStatsAccountStatus",
+            "key": "accountStatus",
+            "schema": {
+              "generatedName": "userStatsAccountStatus",
+              "value": {
+                "generatedName": "UserStatsAccountStatus",
+                "value": {
+                  "generatedName": "UserStatsAccountStatus",
+                  "values": [
+                    {
+                      "generatedName": "active",
+                      "value": "active",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "suspended",
+                      "value": "suspended",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "deleted",
+                      "value": "deleted",
+                      "casing": {}
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "UserStats",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

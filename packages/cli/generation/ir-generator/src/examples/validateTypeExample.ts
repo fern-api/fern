@@ -1,5 +1,6 @@
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
@@ -18,7 +19,8 @@ export function validateTypeExample({
     exampleResolver,
     example,
     workspace,
-    breadcrumbs
+    breadcrumbs,
+    depth
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -28,6 +30,7 @@ export function validateTypeExample({
     example: RawSchemas.ExampleTypeValueSchema;
     workspace: FernWorkspace;
     breadcrumbs: string[];
+    depth: number;
 }): ExampleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {
@@ -38,7 +41,8 @@ export function validateTypeExample({
                 exampleResolver,
                 example,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth
             });
         },
         enum: (rawEnum) => {
@@ -58,7 +62,8 @@ export function validateTypeExample({
                 typeResolver,
                 exampleResolver,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth
             });
         },
         discriminatedUnion: (rawUnion) => {
@@ -70,7 +75,8 @@ export function validateTypeExample({
                 typeResolver,
                 exampleResolver,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth
             });
         },
         undiscriminatedUnion: (rawUnion) => {
@@ -81,7 +87,8 @@ export function validateTypeExample({
                 typeResolver,
                 exampleResolver,
                 workspace,
-                breadcrumbs
+                breadcrumbs,
+                depth
             });
         }
     });

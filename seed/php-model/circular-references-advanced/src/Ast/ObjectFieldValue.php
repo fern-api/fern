@@ -2,35 +2,44 @@
 
 namespace Seed\Ast;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
 /**
-* This type allows us to test a circular reference with a union type (see FieldValue).
+ * This type allows us to test a circular reference with a union type (see FieldValue).
  */
-class ObjectFieldValue extends SerializableType
+class ObjectFieldValue extends JsonSerializableType
 {
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @var mixed $value
+     * @var FieldValue $value
      */
-    #[JsonProperty("value")]
-    public mixed $value;
+    #[JsonProperty('value')]
+    public FieldValue $value;
 
     /**
-     * @param string $name
-     * @param mixed $value
+     * @param array{
+     *   name: string,
+     *   value: FieldValue,
+     * } $values
      */
     public function __construct(
-        string $name,
-        mixed $value,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->value = $value;
+        $this->name = $values['name'];
+        $this->value = $values['value'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

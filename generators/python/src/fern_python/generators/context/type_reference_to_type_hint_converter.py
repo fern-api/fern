@@ -1,11 +1,10 @@
 from typing import Callable, Optional, cast
 
-import fern.ir.resources as ir_types
-
+from .pydantic_generator_context import PydanticGeneratorContext
 from fern_python.codegen import AST
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
-from .pydantic_generator_context import PydanticGeneratorContext
+import fern.ir.resources as ir_types
 
 
 class TypeReferenceToTypeHintConverter:
@@ -50,7 +49,7 @@ class TypeReferenceToTypeHintConverter:
         in_endpoint: Optional[bool],
         as_if_type_checking_import: bool = False,
     ) -> AST.TypeHint:
-        is_primative = self._context.get_declaration_for_type_id(name.type_id).shape.visit(
+        is_primitive = self._context.get_declaration_for_type_id(name.type_id).shape.visit(
             alias=lambda alias_td: alias_td.resolved_type.visit(
                 container=lambda c: False, named=lambda n: False, primitive=lambda p: True, unknown=lambda: False
             ),
@@ -65,7 +64,7 @@ class TypeReferenceToTypeHintConverter:
             as_request=in_endpoint if in_endpoint is not None else False,
             as_if_type_checking_import=as_if_type_checking_import,
         )
-        if is_primative:
+        if is_primitive:
             return AST.TypeHint.set(inner_hint)
         if in_endpoint:
             return AST.TypeHint.sequence(inner_hint)
@@ -86,7 +85,7 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    for_typeddict=False,
                 )
             )
             if in_endpoint
@@ -96,7 +95,7 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    for_typeddict=False,
                 )
             ),
             map_=lambda map_type: AST.TypeHint.dict(
@@ -105,14 +104,14 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    for_typeddict=False,
                 ),
                 value_type=self.get_type_hint_for_type_reference(
                     type_reference=map_type.value_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    for_typeddict=False,
                 ),
             ),
             # Fern sets become Pydanic lists, since Pydantic models aren't hashable
@@ -123,7 +122,7 @@ class TypeReferenceToTypeHintConverter:
                         must_import_after_current_declaration=must_import_after_current_declaration,
                         as_if_type_checking_import=as_if_type_checking_import,
                         in_endpoint=in_endpoint,
-                        for_typeddict=for_typeddict,
+                        for_typeddict=False,
                     )
                 )
                 if in_endpoint
@@ -133,7 +132,7 @@ class TypeReferenceToTypeHintConverter:
                         must_import_after_current_declaration=must_import_after_current_declaration,
                         as_if_type_checking_import=as_if_type_checking_import,
                         in_endpoint=in_endpoint,
-                        for_typeddict=for_typeddict,
+                        for_typeddict=False,
                     )
                 ),
                 named=lambda type_reference: self._get_set_type_hint_for_named(
@@ -147,9 +146,18 @@ class TypeReferenceToTypeHintConverter:
                 ),
                 unknown=lambda: AST.TypeHint.list(AST.TypeHint.any()),
             ),
+            nullable=lambda wrapped_type: AST.TypeHint.optional(
+                self.get_type_hint_for_type_reference(
+                    type_reference=self._unbox_type_reference(wrapped_type),
+                    must_import_after_current_declaration=must_import_after_current_declaration,
+                    as_if_type_checking_import=as_if_type_checking_import,
+                    in_endpoint=in_endpoint,
+                    for_typeddict=for_typeddict,
+                )
+            ),
             optional=lambda wrapped_type: AST.TypeHint.optional(
                 self.get_type_hint_for_type_reference(
-                    type_reference=wrapped_type,
+                    type_reference=self._unbox_type_reference(wrapped_type),
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
@@ -163,7 +171,10 @@ class TypeReferenceToTypeHintConverter:
                     must_import_after_current_declaration=must_import_after_current_declaration,
                     as_if_type_checking_import=as_if_type_checking_import,
                     in_endpoint=in_endpoint,
-                    for_typeddict=for_typeddict,
+                    # As soon as we handle the top-level typing_extensions.NotRequired, we don't
+                    # want to propagate the TypedDict handling any further. The remaining nested
+                    # type references should be handled as normal.
+                    for_typeddict=False,
                 )
             ),
             literal=self.visit_literal,
@@ -209,3 +220,26 @@ class TypeReferenceToTypeHintConverter:
             float_=AST.TypeHint.float_,
         )
         return to_return
+
+    def _unbox_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+        return type_reference.visit(
+            container=lambda container: self._unbox_type_reference_container(
+                type_reference=type_reference,
+                container=container,
+            ),
+            named=lambda _: type_reference,
+            primitive=lambda _: type_reference,
+            unknown=lambda: type_reference,
+        )
+
+    def _unbox_type_reference_container(
+        self, type_reference: ir_types.TypeReference, container: ir_types.ContainerType
+    ) -> ir_types.TypeReference:
+        return container.visit(
+            list_=lambda _: type_reference,
+            map_=lambda _: type_reference,
+            set_=lambda _: type_reference,
+            nullable=lambda nullable: self._unbox_type_reference(type_reference=nullable),
+            optional=lambda optional: self._unbox_type_reference(type_reference=optional),
+            literal=lambda _: type_reference,
+        )

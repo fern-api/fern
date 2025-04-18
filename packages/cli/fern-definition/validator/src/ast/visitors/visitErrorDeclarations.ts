@@ -1,11 +1,12 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema";
+
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 import { visitTypeDeclaration } from "./visitTypeDeclarations";
 
-export async function visitErrorDeclarations({
+export function visitErrorDeclarations({
     errorDeclarations,
     visitor,
     nodePath
@@ -13,18 +14,18 @@ export async function visitErrorDeclarations({
     errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
-}): Promise<void> {
+}): void {
     if (errorDeclarations == null) {
         return;
     }
     for (const [errorName, errorDeclaration] of Object.entries(errorDeclarations)) {
         const nodePathForError = [...nodePath, errorName];
-        await visitor.errorDeclaration?.({ errorName, declaration: errorDeclaration }, nodePathForError);
-        await visitErrorDeclaration({ errorName, declaration: errorDeclaration, visitor, nodePathForError });
+        visitor.errorDeclaration?.({ errorName, declaration: errorDeclaration }, nodePathForError);
+        visitErrorDeclaration({ errorName, declaration: errorDeclaration, visitor, nodePathForError });
     }
 }
 
-async function visitErrorDeclaration({
+function visitErrorDeclaration({
     errorName,
     declaration,
     visitor,
@@ -38,20 +39,20 @@ async function visitErrorDeclaration({
     const visitTypeReference = createTypeReferenceVisitor(visitor);
 
     if (typeof declaration === "string") {
-        await visitTypeReference(declaration, nodePathForError);
+        visitTypeReference(declaration, nodePathForError);
     } else {
-        await visitObject(declaration, {
+        visitObject(declaration, {
             docs: createDocsVisitor(visitor, nodePathForError),
             "status-code": noop,
-            type: async (type) => {
+            type: (type) => {
                 if (type == null) {
                     return;
                 }
                 const nodePathForErrorType = [...nodePathForError, "type"];
                 if (typeof type === "string") {
-                    await visitTypeReference(type, nodePathForErrorType);
+                    visitTypeReference(type, nodePathForErrorType);
                 } else {
-                    await visitTypeDeclaration({
+                    visitTypeDeclaration({
                         typeName: errorName,
                         declaration: type,
                         visitor,
@@ -59,13 +60,13 @@ async function visitErrorDeclaration({
                     });
                 }
             },
-            examples: async (examples) => {
+            examples: (examples) => {
                 if (examples == null) {
                     return;
                 }
                 for (const example of examples) {
                     const nodePathForErrorExample = [...nodePathForError, "type"];
-                    await visitor.exampleError?.({ errorName, declaration, example }, nodePathForErrorExample);
+                    visitor.exampleError?.({ errorName, declaration, example }, nodePathForErrorExample);
                 }
             }
         });

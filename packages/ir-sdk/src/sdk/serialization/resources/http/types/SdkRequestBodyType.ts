@@ -31,13 +31,13 @@ export const SdkRequestBodyType: core.serialization.Schema<
     });
 
 export declare namespace SdkRequestBodyType {
-    type Raw = SdkRequestBodyType.TypeReference | SdkRequestBodyType.Bytes;
+    export type Raw = SdkRequestBodyType.TypeReference | SdkRequestBodyType.Bytes;
 
-    interface TypeReference extends HttpRequestBodyReference.Raw {
+    export interface TypeReference extends HttpRequestBodyReference.Raw {
         type: "typeReference";
     }
 
-    interface Bytes extends BytesRequest.Raw {
+    export interface Bytes extends BytesRequest.Raw {
         type: "bytes";
     }
 }

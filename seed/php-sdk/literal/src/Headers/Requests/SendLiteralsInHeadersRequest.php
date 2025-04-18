@@ -2,38 +2,39 @@
 
 namespace Seed\Headers\Requests;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SendLiteralsInHeadersRequest
+class SendLiteralsInHeadersRequest extends JsonSerializableType
 {
     /**
-     * @var string $endpointVersion
+     * @var '02-12-2024' $endpointVersion
      */
     public string $endpointVersion;
 
     /**
-     * @var bool $async
+     * @var true $async
      */
     public bool $async;
 
     /**
      * @var string $query
      */
-    #[JsonProperty("query")]
+    #[JsonProperty('query')]
     public string $query;
 
     /**
-     * @param string $endpointVersion
-     * @param bool $async
-     * @param string $query
+     * @param array{
+     *   endpointVersion: '02-12-2024',
+     *   async: true,
+     *   query: string,
+     * } $values
      */
     public function __construct(
-        string $endpointVersion,
-        bool $async,
-        string $query,
+        array $values,
     ) {
-        $this->endpointVersion = $endpointVersion;
-        $this->async = $async;
-        $this->query = $query;
+        $this->endpointVersion = $values['endpointVersion'];
+        $this->async = $values['async'];
+        $this->query = $values['query'];
     }
 }

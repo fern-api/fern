@@ -13,7 +13,7 @@ export const TracedTestCase: core.serialization.ObjectSchema<serializers.TracedT
     });
 
 export declare namespace TracedTestCase {
-    interface Raw {
+    export interface Raw {
         result: serializers.TestCaseResultWithStdout.Raw;
         traceResponsesSize: number;
     }

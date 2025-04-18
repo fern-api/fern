@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "page": {
+      "type": "integer"
+    },
+    "next": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/users.NextPage"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "per_page": {
+      "type": "integer"
+    },
+    "total_page": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "page",
+    "per_page",
+    "total_page"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "users.NextPage": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page",
+        "starting_after"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

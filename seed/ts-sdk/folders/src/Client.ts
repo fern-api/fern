@@ -8,22 +8,37 @@ import { A } from "./api/resources/a/client/Client";
 import { Folder } from "./api/resources/folder/client/Client";
 
 export declare namespace SeedApiClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class SeedApiClient {
+    protected _a: A | undefined;
+    protected _folder: Folder | undefined;
+
     constructor(protected readonly _options: SeedApiClient.Options) {}
+
+    public get a(): A {
+        return (this._a ??= new A(this._options));
+    }
+
+    public get folder(): Folder {
+        return (this._folder ??= new Folder(this._options));
+    }
 
     /**
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -31,9 +46,15 @@ export class SeedApiClient {
      * @example
      *     await client.foo()
      */
-    public async foo(requestOptions?: SeedApiClient.RequestOptions): Promise<void> {
+    public foo(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__foo(requestOptions));
+    }
+
+    private async __foo(requestOptions?: SeedApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
-            url: await core.Supplier.get(this._options.environment),
+            url:
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -42,6 +63,7 @@ export class SeedApiClient {
                 "User-Agent": "@fern/folders/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -50,13 +72,14 @@ export class SeedApiClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -65,25 +88,15 @@ export class SeedApiClient {
                 throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.SeedApiTimeoutError();
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected _a: A | undefined;
-
-    public get a(): A {
-        return (this._a ??= new A(this._options));
-    }
-
-    protected _folder: Folder | undefined;
-
-    public get folder(): Folder {
-        return (this._folder ??= new Folder(this._options));
     }
 }

@@ -6,7 +6,6 @@ import typing
 import pydantic
 import datetime as dt
 import uuid
-import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
@@ -26,29 +25,10 @@ class ObjectWithOptionalField(UniversalBaseModel):
     date: typing.Optional[dt.date] = None
     uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
     base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
-    list_: typing.Optional[typing.List[str]] = pydantic.Field(
-        alias="list", default=None
-    )
+    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
     set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
-    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(
-        alias="map", default=None
-    )
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
     bigint: typing.Optional[str] = None
-
-    class Partial(typing.TypedDict):
-        string: typing_extensions.NotRequired[typing.Optional[str]]
-        integer: typing_extensions.NotRequired[typing.Optional[int]]
-        long_: typing_extensions.NotRequired[typing.Optional[int]]
-        double: typing_extensions.NotRequired[typing.Optional[float]]
-        bool_: typing_extensions.NotRequired[typing.Optional[bool]]
-        datetime: typing_extensions.NotRequired[typing.Optional[dt.datetime]]
-        date: typing_extensions.NotRequired[typing.Optional[dt.date]]
-        uuid_: typing_extensions.NotRequired[typing.Optional[uuid.UUID]]
-        base_64: typing_extensions.NotRequired[typing.Optional[str]]
-        list_: typing_extensions.NotRequired[typing.Optional[typing.List[str]]]
-        set_: typing_extensions.NotRequired[typing.Optional[typing.Set[str]]]
-        map_: typing_extensions.NotRequired[typing.Optional[typing.Dict[int, str]]]
-        bigint: typing_extensions.NotRequired[typing.Optional[str]]
 
     class Validators:
         """
@@ -111,106 +91,56 @@ class ObjectWithOptionalField(UniversalBaseModel):
                 ...
         """
 
-        _pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators._PreRootValidator]
-        ] = []
-        _post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators._RootValidator]
-        ] = []
-        _string_pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreStringValidator]
-        ] = []
-        _string_post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.StringValidator]
-        ] = []
+        _pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators._PreRootValidator]] = []
+        _post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators._RootValidator]] = []
+        _string_pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreStringValidator]] = []
+        _string_post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.StringValidator]] = []
         _integer_pre_validators: typing.ClassVar[
             typing.List[ObjectWithOptionalField.Validators.PreIntegerValidator]
         ] = []
-        _integer_post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.IntegerValidator]
-        ] = []
-        _long__pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreLongValidator]
-        ] = []
-        _long__post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.LongValidator]
-        ] = []
-        _double_pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreDoubleValidator]
-        ] = []
-        _double_post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.DoubleValidator]
-        ] = []
-        _bool__pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreBoolValidator]
-        ] = []
-        _bool__post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.BoolValidator]
-        ] = []
+        _integer_post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.IntegerValidator]] = []
+        _long__pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreLongValidator]] = []
+        _long__post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.LongValidator]] = []
+        _double_pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreDoubleValidator]] = []
+        _double_post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.DoubleValidator]] = []
+        _bool__pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreBoolValidator]] = []
+        _bool__post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.BoolValidator]] = []
         _datetime_pre_validators: typing.ClassVar[
             typing.List[ObjectWithOptionalField.Validators.PreDatetimeValidator]
         ] = []
         _datetime_post_validators: typing.ClassVar[
             typing.List[ObjectWithOptionalField.Validators.DatetimeValidator]
         ] = []
-        _date_pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreDateValidator]
-        ] = []
-        _date_post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.DateValidator]
-        ] = []
-        _uuid__pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreUuidValidator]
-        ] = []
-        _uuid__post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.UuidValidator]
-        ] = []
+        _date_pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreDateValidator]] = []
+        _date_post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.DateValidator]] = []
+        _uuid__pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreUuidValidator]] = []
+        _uuid__post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.UuidValidator]] = []
         _base_64_pre_validators: typing.ClassVar[
             typing.List[ObjectWithOptionalField.Validators.PreBase64Validator]
         ] = []
-        _base_64_post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.Base64Validator]
-        ] = []
-        _list__pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreListValidator]
-        ] = []
-        _list__post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.ListValidator]
-        ] = []
-        _set__pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreSetValidator]
-        ] = []
-        _set__post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.SetValidator]
-        ] = []
-        _map__pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreMapValidator]
-        ] = []
-        _map__post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.MapValidator]
-        ] = []
-        _bigint_pre_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.PreBigintValidator]
-        ] = []
-        _bigint_post_validators: typing.ClassVar[
-            typing.List[ObjectWithOptionalField.Validators.BigintValidator]
-        ] = []
+        _base_64_post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.Base64Validator]] = []
+        _list__pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreListValidator]] = []
+        _list__post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.ListValidator]] = []
+        _set__pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreSetValidator]] = []
+        _set__post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.SetValidator]] = []
+        _map__pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreMapValidator]] = []
+        _map__post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.MapValidator]] = []
+        _bigint_pre_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.PreBigintValidator]] = []
+        _bigint_post_validators: typing.ClassVar[typing.List[ObjectWithOptionalField.Validators.BigintValidator]] = []
 
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators._RootValidator],
-            ObjectWithOptionalField.Validators._RootValidator,
+            [ObjectWithOptionalField.Validators._RootValidator], ObjectWithOptionalField.Validators._RootValidator
         ]: ...
         @typing.overload
         @classmethod
         def root(
             cls, *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators._PreRootValidator],
-            ObjectWithOptionalField.Validators._PreRootValidator,
+            [ObjectWithOptionalField.Validators._PreRootValidator], ObjectWithOptionalField.Validators._PreRootValidator
         ]: ...
         @classmethod
         def root(cls, *, pre: bool = False) -> typing.Any:
@@ -234,13 +164,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["string"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["string"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.StringValidator],
-            ObjectWithOptionalField.Validators.StringValidator,
+            [ObjectWithOptionalField.Validators.StringValidator], ObjectWithOptionalField.Validators.StringValidator
         ]: ...
         @typing.overload
         @classmethod
@@ -253,32 +179,23 @@ class ObjectWithOptionalField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["integer"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["integer"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.IntegerValidator],
-            ObjectWithOptionalField.Validators.IntegerValidator,
+            [ObjectWithOptionalField.Validators.IntegerValidator], ObjectWithOptionalField.Validators.IntegerValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["long_"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.PreLongValidator],
-            ObjectWithOptionalField.Validators.PreLongValidator,
+            [ObjectWithOptionalField.Validators.PreLongValidator], ObjectWithOptionalField.Validators.PreLongValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["long_"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["long_"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.LongValidator],
-            ObjectWithOptionalField.Validators.LongValidator,
+            [ObjectWithOptionalField.Validators.LongValidator], ObjectWithOptionalField.Validators.LongValidator
         ]: ...
         @typing.overload
         @classmethod
@@ -291,32 +208,23 @@ class ObjectWithOptionalField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["double"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["double"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.DoubleValidator],
-            ObjectWithOptionalField.Validators.DoubleValidator,
+            [ObjectWithOptionalField.Validators.DoubleValidator], ObjectWithOptionalField.Validators.DoubleValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["bool_"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.PreBoolValidator],
-            ObjectWithOptionalField.Validators.PreBoolValidator,
+            [ObjectWithOptionalField.Validators.PreBoolValidator], ObjectWithOptionalField.Validators.PreBoolValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["bool_"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["bool_"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.BoolValidator],
-            ObjectWithOptionalField.Validators.BoolValidator,
+            [ObjectWithOptionalField.Validators.BoolValidator], ObjectWithOptionalField.Validators.BoolValidator
         ]: ...
         @typing.overload
         @classmethod
@@ -329,51 +237,37 @@ class ObjectWithOptionalField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["datetime"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["datetime"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.DatetimeValidator],
-            ObjectWithOptionalField.Validators.DatetimeValidator,
+            [ObjectWithOptionalField.Validators.DatetimeValidator], ObjectWithOptionalField.Validators.DatetimeValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["date"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.PreDateValidator],
-            ObjectWithOptionalField.Validators.PreDateValidator,
+            [ObjectWithOptionalField.Validators.PreDateValidator], ObjectWithOptionalField.Validators.PreDateValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["date"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["date"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.DateValidator],
-            ObjectWithOptionalField.Validators.DateValidator,
+            [ObjectWithOptionalField.Validators.DateValidator], ObjectWithOptionalField.Validators.DateValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["uuid_"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.PreUuidValidator],
-            ObjectWithOptionalField.Validators.PreUuidValidator,
+            [ObjectWithOptionalField.Validators.PreUuidValidator], ObjectWithOptionalField.Validators.PreUuidValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["uuid_"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["uuid_"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.UuidValidator],
-            ObjectWithOptionalField.Validators.UuidValidator,
+            [ObjectWithOptionalField.Validators.UuidValidator], ObjectWithOptionalField.Validators.UuidValidator
         ]: ...
         @typing.overload
         @classmethod
@@ -386,70 +280,51 @@ class ObjectWithOptionalField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["base_64"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["base_64"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.Base64Validator],
-            ObjectWithOptionalField.Validators.Base64Validator,
+            [ObjectWithOptionalField.Validators.Base64Validator], ObjectWithOptionalField.Validators.Base64Validator
         ]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["list_"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.PreListValidator],
-            ObjectWithOptionalField.Validators.PreListValidator,
+            [ObjectWithOptionalField.Validators.PreListValidator], ObjectWithOptionalField.Validators.PreListValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["list_"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["list_"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.ListValidator],
-            ObjectWithOptionalField.Validators.ListValidator,
+            [ObjectWithOptionalField.Validators.ListValidator], ObjectWithOptionalField.Validators.ListValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["set_"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.PreSetValidator],
-            ObjectWithOptionalField.Validators.PreSetValidator,
+            [ObjectWithOptionalField.Validators.PreSetValidator], ObjectWithOptionalField.Validators.PreSetValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["set_"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["set_"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.SetValidator],
-            ObjectWithOptionalField.Validators.SetValidator,
+            [ObjectWithOptionalField.Validators.SetValidator], ObjectWithOptionalField.Validators.SetValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
             cls, field_name: typing.Literal["map_"], *, pre: typing.Literal[True]
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.PreMapValidator],
-            ObjectWithOptionalField.Validators.PreMapValidator,
+            [ObjectWithOptionalField.Validators.PreMapValidator], ObjectWithOptionalField.Validators.PreMapValidator
         ]: ...
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["map_"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["map_"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.MapValidator],
-            ObjectWithOptionalField.Validators.MapValidator,
+            [ObjectWithOptionalField.Validators.MapValidator], ObjectWithOptionalField.Validators.MapValidator
         ]: ...
         @typing.overload
         @classmethod
@@ -462,13 +337,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         @typing.overload
         @classmethod
         def field(
-            cls,
-            field_name: typing.Literal["bigint"],
-            *,
-            pre: typing.Literal[False] = False,
+            cls, field_name: typing.Literal["bigint"], *, pre: typing.Literal[False] = False
         ) -> typing.Callable[
-            [ObjectWithOptionalField.Validators.BigintValidator],
-            ObjectWithOptionalField.Validators.BigintValidator,
+            [ObjectWithOptionalField.Validators.BigintValidator], ObjectWithOptionalField.Validators.BigintValidator
         ]: ...
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
@@ -543,168 +414,114 @@ class ObjectWithOptionalField(UniversalBaseModel):
             return decorator
 
         class PreStringValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class StringValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[str],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[str], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[str]: ...
 
         class PreIntegerValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class IntegerValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[int],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[int], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[int]: ...
 
         class PreLongValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class LongValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[int],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[int], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[int]: ...
 
         class PreDoubleValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class DoubleValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[float],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[float], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[float]: ...
 
         class PreBoolValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class BoolValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[bool],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[bool], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[bool]: ...
 
         class PreDatetimeValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class DatetimeValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[dt.datetime],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[dt.datetime], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[dt.datetime]: ...
 
         class PreDateValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class DateValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[dt.date],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[dt.date], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[dt.date]: ...
 
         class PreUuidValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class UuidValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[uuid.UUID],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[uuid.UUID], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[uuid.UUID]: ...
 
         class PreBase64Validator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class Base64Validator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[str],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[str], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[str]: ...
 
         class PreListValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class ListValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[typing.List[str]],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[typing.List[str]], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[typing.List[str]]: ...
 
         class PreSetValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class SetValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[typing.Set[str]],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[typing.Set[str]], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[typing.Set[str]]: ...
 
         class PreMapValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class MapValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[typing.Dict[int, str]],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[typing.Dict[int, str]], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[typing.Dict[int, str]]: ...
 
         class PreBigintValidator(typing.Protocol):
-            def __call__(
-                self, __v: typing.Any, __values: ObjectWithOptionalField.Partial
-            ) -> typing.Any: ...
+            def __call__(self, __v: typing.Any, __values: ObjectWithOptionalField.Partial) -> typing.Any: ...
 
         class BigintValidator(typing.Protocol):
             def __call__(
-                self,
-                __v: typing.Optional[str],
-                __values: ObjectWithOptionalField.Partial,
+                self, __v: typing.Optional[str], __values: ObjectWithOptionalField.Partial
             ) -> typing.Optional[str]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
 
         class _RootValidator(typing.Protocol):
-            def __call__(
-                self, __values: ObjectWithOptionalField.Partial
-            ) -> ObjectWithOptionalField.Partial: ...
+            def __call__(self, __values: ObjectWithOptionalField.Partial) -> ObjectWithOptionalField.Partial: ...
 
     @universal_root_validator(pre=True)
     def _pre_validate_types_object_with_optional_field(
@@ -868,9 +685,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("list_", pre=True)
     def _pre_validate_list_(
-        cls,
-        v: typing.Optional[typing.List[str]],
-        values: ObjectWithOptionalField.Partial,
+        cls, v: typing.Optional[typing.List[str]], values: ObjectWithOptionalField.Partial
     ) -> typing.Optional[typing.List[str]]:
         for validator in ObjectWithOptionalField.Validators._list__pre_validators:
             v = validator(v, values)
@@ -878,9 +693,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("list_", pre=False)
     def _post_validate_list_(
-        cls,
-        v: typing.Optional[typing.List[str]],
-        values: ObjectWithOptionalField.Partial,
+        cls, v: typing.Optional[typing.List[str]], values: ObjectWithOptionalField.Partial
     ) -> typing.Optional[typing.List[str]]:
         for validator in ObjectWithOptionalField.Validators._list__post_validators:
             v = validator(v, values)
@@ -888,9 +701,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("set_", pre=True)
     def _pre_validate_set_(
-        cls,
-        v: typing.Optional[typing.Set[str]],
-        values: ObjectWithOptionalField.Partial,
+        cls, v: typing.Optional[typing.Set[str]], values: ObjectWithOptionalField.Partial
     ) -> typing.Optional[typing.Set[str]]:
         for validator in ObjectWithOptionalField.Validators._set__pre_validators:
             v = validator(v, values)
@@ -898,9 +709,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("set_", pre=False)
     def _post_validate_set_(
-        cls,
-        v: typing.Optional[typing.Set[str]],
-        values: ObjectWithOptionalField.Partial,
+        cls, v: typing.Optional[typing.Set[str]], values: ObjectWithOptionalField.Partial
     ) -> typing.Optional[typing.Set[str]]:
         for validator in ObjectWithOptionalField.Validators._set__post_validators:
             v = validator(v, values)
@@ -908,9 +717,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("map_", pre=True)
     def _pre_validate_map_(
-        cls,
-        v: typing.Optional[typing.Dict[int, str]],
-        values: ObjectWithOptionalField.Partial,
+        cls, v: typing.Optional[typing.Dict[int, str]], values: ObjectWithOptionalField.Partial
     ) -> typing.Optional[typing.Dict[int, str]]:
         for validator in ObjectWithOptionalField.Validators._map__pre_validators:
             v = validator(v, values)
@@ -918,9 +725,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("map_", pre=False)
     def _post_validate_map_(
-        cls,
-        v: typing.Optional[typing.Dict[int, str]],
-        values: ObjectWithOptionalField.Partial,
+        cls, v: typing.Optional[typing.Dict[int, str]], values: ObjectWithOptionalField.Partial
     ) -> typing.Optional[typing.Dict[int, str]]:
         for validator in ObjectWithOptionalField.Validators._map__post_validators:
             v = validator(v, values)
@@ -943,9 +748,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
         return v
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "FOO",
+    "BAR"
+  ],
+  "definitions": {}
+}

@@ -2,34 +2,43 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use DateTime;
-use Seed\Core\JsonProperty;
-use Seed\Core\DateType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\Date;
 
-class TestSubmissionUpdate extends SerializableType
+class TestSubmissionUpdate extends JsonSerializableType
 {
     /**
      * @var DateTime $updateTime
      */
-    #[JsonProperty("updateTime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('updateTime'), Date(Date::TYPE_DATETIME)]
     public DateTime $updateTime;
 
     /**
-     * @var mixed $updateInfo
+     * @var TestSubmissionUpdateInfo $updateInfo
      */
-    #[JsonProperty("updateInfo")]
-    public mixed $updateInfo;
+    #[JsonProperty('updateInfo')]
+    public TestSubmissionUpdateInfo $updateInfo;
 
     /**
-     * @param DateTime $updateTime
-     * @param mixed $updateInfo
+     * @param array{
+     *   updateTime: DateTime,
+     *   updateInfo: TestSubmissionUpdateInfo,
+     * } $values
      */
     public function __construct(
-        DateTime $updateTime,
-        mixed $updateInfo,
+        array $values,
     ) {
-        $this->updateTime = $updateTime;
-        $this->updateInfo = $updateInfo;
+        $this->updateTime = $values['updateTime'];
+        $this->updateInfo = $values['updateInfo'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

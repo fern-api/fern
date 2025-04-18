@@ -85,10 +85,11 @@ errors:
       },
       {
         "contents": "instances:
-  - url: https://fern.dev.docs.buildwithfern.com
-title: fern | Documentation
+  - url: https://fern.docs.dev.buildwithfern.com
+title: Fern | Documentation
 navigation:
   - api: API Reference
+    paginated: true
 colors:
   accentPrimary: '#ffffff'
   background: '#000000'
@@ -105,17 +106,70 @@ colors:
         "type": "file",
       },
       {
-        "contents": "default-group: local
+        "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
 groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.39.3
         output:
           location: local-file-system
           path: ../sdks/typescript
+        version: 0.49.1
 ",
         "name": "generators.yml",
+        "type": "file",
+      },
+    ],
+    "name": "fern",
+    "type": "directory",
+  },
+]
+`;
+
+exports[`fern init > init mintlify 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": "instances:
+  - url: https://test-api.docs.buildwithfern.com
+title: Test API
+favicon: favicon.png
+logo:
+  light: logo.png
+  dark: logo.png
+  height: 28
+colors:
+  accent-primary:
+    dark: '#0050B4'
+    light: '#4D9CFF'
+  background: {}
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
+navigation: []
+",
+        "name": "docs.yml",
+        "type": "file",
+      },
+      {
+        "contents": "<binary>",
+        "name": "favicon.png",
+        "type": "file",
+      },
+      {
+        "contents": "{
+    "version": "0.0.0",
+    "organization": "fern"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "<binary>",
+        "name": "logo.png",
         "type": "file",
       },
     ],
@@ -138,25 +192,29 @@ exports[`fern init > init openapi 1`] = `
         "type": "file",
       },
       {
-        "contents": "default-group: local
+        "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../petstore-openapi.yml
+default-group: local
 groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.39.3
         output:
           location: local-file-system
           path: ../sdks/typescript
-api:
-  path: openapi/petstore-openapi.yml
+        version: 0.49.1
 ",
         "name": "generators.yml",
         "type": "file",
       },
-      {
-        "contents": [
-          {
-            "contents": "openapi: "3.0.0"
+    ],
+    "name": "fern",
+    "type": "directory",
+  },
+  {
+    "contents": "openapi: "3.0.0"
 info:
   version: 1.0.0
   title: Swagger Petstore
@@ -270,16 +328,8 @@ components:
         message:
           type: string
 ",
-            "name": "petstore-openapi.yml",
-            "type": "file",
-          },
-        ],
-        "name": "openapi",
-        "type": "directory",
-      },
-    ],
-    "name": "fern",
-    "type": "directory",
+    "name": "petstore-openapi.yml",
+    "type": "file",
   },
 ]
 `;
@@ -374,15 +424,16 @@ errors:
     "type": "file",
   },
   {
-    "contents": "default-group: local
+    "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
 groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.39.3
         output:
           location: local-file-system
           path: ../sdks/typescript
+        version: 0.49.1
 ",
     "name": "generators.yml",
     "type": "file",

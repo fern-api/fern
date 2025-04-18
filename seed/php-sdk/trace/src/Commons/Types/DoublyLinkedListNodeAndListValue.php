@@ -2,32 +2,41 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class DoublyLinkedListNodeAndListValue extends SerializableType
+class DoublyLinkedListNodeAndListValue extends JsonSerializableType
 {
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var DoublyLinkedListValue $fullList
      */
-    #[JsonProperty("fullList")]
+    #[JsonProperty('fullList')]
     public DoublyLinkedListValue $fullList;
 
     /**
-     * @param string $nodeId
-     * @param DoublyLinkedListValue $fullList
+     * @param array{
+     *   nodeId: string,
+     *   fullList: DoublyLinkedListValue,
+     * } $values
      */
     public function __construct(
-        string $nodeId,
-        DoublyLinkedListValue $fullList,
+        array $values,
     ) {
-        $this->nodeId = $nodeId;
-        $this->fullList = $fullList;
+        $this->nodeId = $values['nodeId'];
+        $this->fullList = $values['fullList'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

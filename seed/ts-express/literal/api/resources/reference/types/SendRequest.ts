@@ -8,6 +8,8 @@ export interface SendRequest {
     prompt: "You are a helpful assistant";
     query: string;
     stream: false;
+    ending: "$ending";
     context: SeedLiteral.SomeLiteral;
     maybeContext?: SeedLiteral.SomeLiteral;
+    containerObject: SeedLiteral.ContainerObject;
 }

@@ -10,5 +10,5 @@ export const Tag: core.serialization.Schema<serializers.commons.Tag.Raw, SeedExa
     core.serialization.string();
 
 export declare namespace Tag {
-    type Raw = string;
+    export type Raw = string;
 }

@@ -9,14 +9,16 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 
 export declare namespace Homepage {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
@@ -25,6 +27,8 @@ export declare namespace Homepage {
         abortSignal?: AbortSignal;
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -37,13 +41,23 @@ export class Homepage {
      * @example
      *     await client.homepage.getHomepageProblems()
      */
-    public async getHomepageProblems(
-        requestOptions?: Homepage.RequestOptions
-    ): Promise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
+    public getHomepageProblems(
+        requestOptions?: Homepage.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
+    }
+
+    private async __getHomepageProblems(
+        requestOptions?: Homepage.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>
+    > {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/homepage-problems",
             ),
             method: "GET",
             headers: {
@@ -58,6 +72,7 @@ export class Homepage {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -68,19 +83,28 @@ export class Homepage {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
+                data: {
+                    ok: true,
+                    body: serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.homepage.getHomepageProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.homepage.getHomepageProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -89,16 +113,25 @@ export class Homepage {
      * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string")])
+     *     await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")])
      */
-    public async setHomepageProblems(
+    public setHomepageProblems(
         request: SeedTrace.ProblemId[],
-        requestOptions?: Homepage.RequestOptions
-    ): Promise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
+        requestOptions?: Homepage.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
+    }
+
+    private async __setHomepageProblems(
+        request: SeedTrace.ProblemId[],
+        requestOptions?: Homepage.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                "/homepage-problems",
             ),
             method: "POST",
             headers: {
@@ -113,6 +146,7 @@ export class Homepage {
                 "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -126,14 +160,23 @@ export class Homepage {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.homepage.setHomepageProblems.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.homepage.setHomepageProblems.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

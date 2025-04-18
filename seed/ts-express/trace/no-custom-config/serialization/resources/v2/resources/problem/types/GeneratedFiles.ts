@@ -12,20 +12,20 @@ export const GeneratedFiles: core.serialization.ObjectSchema<
 > = core.serialization.object({
     generatedTestCaseFiles: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
     generatedTemplateFiles: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
     other: core.serialization.record(
         core.serialization.lazy(() => serializers.Language),
-        core.serialization.lazyObject(() => serializers.v2.Files).optional()
+        core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
 });
 
 export declare namespace GeneratedFiles {
-    interface Raw {
+    export interface Raw {
         generatedTestCaseFiles: Record<serializers.Language.Raw, serializers.v2.Files.Raw | null | undefined>;
         generatedTemplateFiles: Record<serializers.Language.Raw, serializers.v2.Files.Raw | null | undefined>;
         other: Record<serializers.Language.Raw, serializers.v2.Files.Raw | null | undefined>;

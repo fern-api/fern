@@ -1,10 +1,11 @@
-import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
-import { InteractiveTaskContext } from "@fern-api/task-context";
 import axios from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
 import { mkdir, rm } from "fs/promises";
 import { pipeline } from "stream/promises";
+
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { InteractiveTaskContext } from "@fern-api/task-context";
 
 export async function downloadSnippetsForTask({
     snippetsS3PreSignedReadUrl,

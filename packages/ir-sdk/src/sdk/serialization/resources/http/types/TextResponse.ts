@@ -6,10 +6,11 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDocs } from "../../commons/types/WithDocs";
+import { WithV2Examples } from "../../examples/types/WithV2Examples";
 
 export const TextResponse: core.serialization.ObjectSchema<serializers.TextResponse.Raw, FernIr.TextResponse> =
-    core.serialization.objectWithoutOptionalProperties({}).extend(WithDocs);
+    core.serialization.objectWithoutOptionalProperties({}).extend(WithDocs).extend(WithV2Examples);
 
 export declare namespace TextResponse {
-    interface Raw extends WithDocs.Raw {}
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {}
 }

@@ -1,17 +1,19 @@
+import { mapValues } from "lodash-es";
+
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
-import { visitDefinitionFileYamlAst } from "../../ast";
-import { mapValues } from "lodash-es";
+
 import { Rule, RuleViolation } from "../../Rule";
+import { visitDefinitionFileYamlAst } from "../../ast";
 
 type ErrorName = string;
 
 export const NoUndefinedErrorReferenceRule: Rule = {
     name: "no-undefined-error-reference",
-    create: async ({ workspace }) => {
-        const errorsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = await getErrorsByFilepath(workspace);
+    create: ({ workspace }) => {
+        const errorsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = getErrorsByFilepath(workspace);
 
         function doesErrorExist(errorName: string, relativeFilepath: RelativeFilePath) {
             const errorsForFilepath = errorsByFilepath[relativeFilepath];
@@ -38,7 +40,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
 
             return [
                 {
-                    severity: "error",
+                    severity: "fatal",
                     message: "Error is not defined."
                 }
             ];
@@ -59,19 +61,19 @@ export const NoUndefinedErrorReferenceRule: Rule = {
     }
 };
 
-async function getErrorsByFilepath(workspace: FernWorkspace) {
-    const erorrsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = {};
+function getErrorsByFilepath(workspace: FernWorkspace) {
+    const errorsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = {};
 
-    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+    visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
         const errorsForFile = new Set<ErrorName>();
-        erorrsByFilepath[relativeFilepath] = errorsForFile;
+        errorsByFilepath[relativeFilepath] = errorsForFile;
 
-        await visitDefinitionFileYamlAst(file, {
+        visitDefinitionFileYamlAst(file, {
             errorDeclaration: ({ errorName }) => {
                 errorsForFile.add(errorName);
             }
         });
     });
 
-    return erorrsByFilepath;
+    return errorsByFilepath;
 }
