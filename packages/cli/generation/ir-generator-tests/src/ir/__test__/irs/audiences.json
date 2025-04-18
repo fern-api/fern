@@ -1181,6 +1181,7 @@
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
+                    "source": null,
                     "availability": null,
                     "docs": "Add a movie to the database"
                 }

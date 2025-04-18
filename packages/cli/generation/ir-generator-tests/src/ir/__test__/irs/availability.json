@@ -511,6 +511,7 @@
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
+                    "source": null,
                     "availability": null,
                     "docs": null
                 }
