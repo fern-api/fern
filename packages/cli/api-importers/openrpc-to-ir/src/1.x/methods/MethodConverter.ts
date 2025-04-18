@@ -5,7 +5,11 @@ import {
     HttpEndpoint,
     HttpPath,
     HttpRequestBody,
+    HttpResponse,
+    HttpResponseBody,
     InlinedRequestBodyProperty,
+    JsonResponse,
+    JsonResponseBody,
     PathParameter,
     PrimitiveTypeV2,
     TypeDeclaration,
@@ -108,6 +112,43 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             }
         }
 
+        let jsonResponseBody: JsonResponseBody | undefined = undefined;
+        if (this.method.result != null) {
+            let resolvedResult: ContentDescriptorObject | undefined = undefined;
+            if (this.context.isReferenceObject(this.method.result)) {
+                const resolvedResultResponse = await this.context.resolveReference<ContentDescriptorObject>(
+                    this.method.result
+                );
+                if (resolvedResultResponse.resolved) {
+                    resolvedResult = resolvedResultResponse.value;
+                }
+            } else {
+                resolvedResult = this.method.result;
+            }
+
+            if (resolvedResult != null) {
+                const resultSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
+                    breadcrumbs: [...this.breadcrumbs, "result"],
+                    context: this.context,
+                    schemaOrReference: resolvedResult.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
+                });
+                const schemaId = [...this.method.name, "Result"].join("_");
+                const schema = await resultSchemaConverter.convert();
+                if (schema != null) {
+                    jsonResponseBody = {
+                        docs: resolvedResult.description,
+                        v2Examples: undefined,
+                        responseBodyType: schema.type
+                    };
+                    inlinedTypes = {
+                        ...schema.inlinedTypes,
+                        ...inlinedTypes,
+                        ...(schema.schema != null ? { [schemaId]: schema.schema } : {})
+                    };
+                }
+            }
+        }
+
         const endpoint: HttpEndpoint = {
             baseUrl: undefined,
             basePath: undefined,
@@ -137,7 +178,10 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                       })
                     : undefined,
             sdkRequest: undefined,
-            response: undefined,
+            response:
+                jsonResponseBody != null
+                    ? { body: HttpResponseBody.json(JsonResponse.response(jsonResponseBody)), statusCode: undefined }
+                    : undefined,
             errors: [],
             idempotent: false,
             pagination: undefined,
