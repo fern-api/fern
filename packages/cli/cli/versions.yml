@@ -1,3 +1,16 @@
+- changelogEntry:
+  - summary: |
+      Support OpenRPC specs as first class APIs in generators.yml and in the `apis` folder. 
+    type: fix
+  irVersion: 57
+  version: 0.57.28
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where deeply wrapped file request properties were not being parsed correctly.
+    type: fix
+  irVersion: 57
+  version: 0.57.27
 
 - changelogEntry:
   - summary: |

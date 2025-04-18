@@ -141,7 +141,7 @@ function convertService(
                 }
             }
         }
-        const endpoint = {
+        const endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition = {
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
             description: irEndpoint.docs ?? undefined,
@@ -209,7 +209,17 @@ function convertService(
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
             errors: undefined,
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
-            examples
+            examples,
+            protocol: irEndpoint.source?._visit<FdrCjsSdk.api.v1.Protocol | undefined>({
+                openapi: () => {
+                    return { type: "rest" };
+                },
+                openrpc: () => {
+                    return { type: "openrpc", methodName: irEndpoint.id };
+                },
+                proto: () => undefined,
+                _other: () => undefined
+            })
         };
         endpoints.push(endpoint);
     }

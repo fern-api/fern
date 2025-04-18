@@ -2095,6 +2095,7 @@
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
+                    "source": null,
                     "availability": null,
                     "docs": "Add a movie to the database"
                 },
@@ -4385,6 +4386,7 @@
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
+                    "source": null,
                     "availability": null,
                     "docs": "Retrieve a movie from the database based on the ID"
                 }

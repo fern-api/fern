@@ -2147,6 +2147,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
             },
             "streamParameter": null,
           },
+          "source": null,
           "transport": null,
           "userSpecifiedExamples": [],
           "v2Examples": null,
@@ -3558,6 +3559,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
             },
             "streamParameter": null,
           },
+          "source": null,
           "transport": null,
           "userSpecifiedExamples": [
             {
@@ -5302,6 +5304,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
             },
             "streamParameter": null,
           },
+          "source": null,
           "transport": null,
           "userSpecifiedExamples": [],
           "v2Examples": null,

@@ -7,16 +7,14 @@ import {
     MultipleBaseUrlsEnvironment,
     SingleBaseUrlEnvironment
 } from "@fern-api/ir-sdk";
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
+import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ServerNameExtension } from "../../extensions/x-fern-server-name";
-import { OpenAPIConverter } from "../OpenAPIConverter";
-import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 const DEFAULT_BASE_URL_ID = "Base";
 
 export declare namespace ServersConverter {
-    export interface Args extends OpenAPIConverter.Args {
+    export interface Args extends AbstractConverter.AbstractArgs {
         servers?: OpenAPIV3_1.ServerObject[];
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
     }
@@ -28,7 +26,7 @@ export declare namespace ServersConverter {
 }
 
 export class ServersConverter extends AbstractConverter<
-    OpenAPIConverterContext3_1,
+    AbstractConverterContext<object>,
     ServersConverter.Output | undefined
 > {
     private readonly servers?: OpenAPIV3_1.ServerObject[];
@@ -127,7 +125,7 @@ export class ServersConverter extends AbstractConverter<
         context
     }: {
         server: OpenAPIV3_1.ServerObject;
-        context: OpenAPIConverterContext3_1;
+        context: AbstractConverterContext<object>;
     }): string {
         const serverNameExtension = new ServerNameExtension({ breadcrumbs: [], server, context });
         const serverName = serverNameExtension.convert();
