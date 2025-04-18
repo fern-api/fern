@@ -1,6 +1,12 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FileProperty, FileUploadRequestProperty, HttpRequestBody, ObjectProperty } from "@fern-api/ir-sdk";
+import {
+    FileProperty,
+    FileUploadRequestProperty,
+    HttpRequestBody,
+    ObjectProperty,
+    TypeReference
+} from "@fern-api/ir-sdk";
 import { Converters } from "@fern-api/v2-importer-commons";
 
 export declare namespace RequestBodyConverter {
@@ -136,63 +142,29 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     }
 
     private convertRequestBodyProperty({ property, contentType }: { property: ObjectProperty; contentType: string }) {
-        if (this.context.isFile(property.valueType)) {
-            return FileUploadRequestProperty.file(
-                FileProperty.file({
-                    key: property.name,
-                    isOptional: false,
-                    contentType,
-                    docs: property.docs
-                })
-            );
-        }
-        if (this.context.isOptional(property.valueType) && this.context.isFile(property.valueType.container.optional)) {
-            return FileUploadRequestProperty.file(
-                FileProperty.file({
-                    key: property.name,
-                    isOptional: true,
-                    contentType,
-                    docs: property.docs
-                })
-            );
-        }
-        if (this.context.isList(property.valueType) && this.context.isFile(property.valueType.container.list)) {
-            return FileUploadRequestProperty.file(
-                FileProperty.fileArray({
-                    key: property.name,
-                    isOptional: false,
-                    contentType,
-                    docs: property.docs
-                })
-            );
-        }
-        if (
-            this.context.isList(property.valueType) &&
-            this.context.isOptional(property.valueType.container.list) &&
-            this.context.isFile(property.valueType.container.list.container.optional)
-        ) {
-            return FileUploadRequestProperty.file(
-                FileProperty.fileArray({
-                    key: property.name,
-                    isOptional: false,
-                    contentType,
-                    docs: property.docs
-                })
-            );
-        }
-        if (
-            this.context.isOptional(property.valueType) &&
-            this.context.isList(property.valueType.container.optional) &&
-            this.context.isFile(property.valueType.container.optional.container.list)
-        ) {
-            return FileUploadRequestProperty.file(
-                FileProperty.fileArray({
-                    key: property.name,
-                    isOptional: true,
-                    contentType,
-                    docs: property.docs
-                })
-            );
+        const { isFile, isOptional, isArray } = this.recursivelyCheckPropertyIsFile({
+            typeReference: property.valueType
+        });
+        if (isFile) {
+            if (isArray) {
+                return FileUploadRequestProperty.file(
+                    FileProperty.fileArray({
+                        key: property.name,
+                        isOptional,
+                        contentType,
+                        docs: property.docs
+                    })
+                );
+            } else {
+                return FileUploadRequestProperty.file(
+                    FileProperty.file({
+                        key: property.name,
+                        isOptional,
+                        contentType,
+                        docs: property.docs
+                    })
+                );
+            }
         }
         return FileUploadRequestProperty.bodyProperty({
             ...property,
@@ -200,5 +172,46 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             style: undefined,
             name: property.name
         });
+    }
+
+    private recursivelyCheckPropertyIsFile({
+        typeReference,
+        isOptional,
+        isArray
+    }: {
+        typeReference: TypeReference;
+        isOptional?: boolean;
+        isArray?: boolean;
+    }): {
+        isFile: boolean;
+        isOptional: boolean;
+        isArray: boolean;
+    } {
+        if (this.context.isList(typeReference)) {
+            return this.recursivelyCheckPropertyIsFile({
+                typeReference: typeReference.container.list,
+                isOptional,
+                isArray: true
+            });
+        }
+        if (this.context.isOptional(typeReference)) {
+            return this.recursivelyCheckPropertyIsFile({
+                typeReference: typeReference.container.optional,
+                isOptional: true,
+                isArray
+            });
+        }
+        if (this.context.isNullable(typeReference)) {
+            return this.recursivelyCheckPropertyIsFile({
+                typeReference: typeReference.container.nullable,
+                isOptional,
+                isArray
+            });
+        }
+        if (this.context.isFile(typeReference)) {
+            return { isFile: true, isOptional: isOptional ?? false, isArray: isArray ?? false };
+        } else {
+            return { isFile: false, isOptional: isOptional ?? false, isArray: isArray ?? false };
+        }
     }
 }

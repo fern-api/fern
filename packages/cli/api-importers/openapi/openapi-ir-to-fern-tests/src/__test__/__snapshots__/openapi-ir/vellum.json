@@ -4177,6 +4177,7 @@
             "schema": {
               "isOptional": false,
               "isArray": false,
+              "description": "The file contents of the document.",
               "type": "file"
             },
             "description": "The file contents of the document.",

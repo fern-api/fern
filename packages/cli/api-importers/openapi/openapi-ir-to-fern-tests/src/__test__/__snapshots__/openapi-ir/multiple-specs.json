@@ -23,6 +23,7 @@
             "schema": {
               "isOptional": false,
               "isArray": false,
+              "description": "The file to upload",
               "type": "file"
             },
             "description": "The file to upload",
@@ -88,6 +89,7 @@
               "description": "A list of files to upload",
               "type": "file"
             },
+            "description": "A list of files to upload",
             "exploded": false
           },
           {
@@ -98,6 +100,7 @@
               "description": "An optional list of files to upload",
               "type": "file"
             },
+            "description": "An optional list of files to upload",
             "exploded": false
           }
         ],
@@ -146,6 +149,7 @@
             "schema": {
               "isOptional": false,
               "isArray": false,
+              "description": "The file to upload",
               "type": "file"
             },
             "description": "The file to upload",

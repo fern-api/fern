@@ -1328,10 +1328,12 @@
             "schema": {
               "isOptional": false,
               "isArray": false,
+              "description": "Audio sample file",
               "type": "file"
             },
             "description": "Audio sample file",
-            "exploded": false
+            "exploded": false,
+            "encoding": "form"
           },
           {
             "key": "consent",
