@@ -2,10 +2,10 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, HttpEndpoint } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
+import { ServersConverter } from "@fern-api/v2-importer-commons";
 
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
-import { ServersConverter } from "../../servers/ServersConverter";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
 export declare namespace OperationConverter {

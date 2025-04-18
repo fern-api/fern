@@ -2,6 +2,7 @@ export { AbstractConverter } from "./AbstractConverter";
 export { AbstractConverterContext, type Spec } from "./AbstractConverterContext";
 export { AbstractExtension } from "./AbstractExtension";
 export * as Converters from "./converters";
+export * from "./converters";
 export { SchemaOrReferenceConverter } from "./converters/schema";
 export { ErrorCollector, type OpenApiError } from "./ErrorCollector";
 export * as Extensions from "./extensions";
