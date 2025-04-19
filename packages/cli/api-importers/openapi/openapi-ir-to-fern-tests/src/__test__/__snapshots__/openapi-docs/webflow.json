@@ -16663,6 +16663,7 @@ service:
         },
         "webhooks": {
           "form_submission": {
+            "audiences": [],
             "display-name": "Form Submission",
             "docs": "Information about a form that was subitted",
             "examples": [
@@ -17354,6 +17355,7 @@ service:
   display-name: Forms
 webhooks:
   form_submission:
+    audiences: []
     method: POST
     display-name: Form Submission
     headers: {}
@@ -17653,6 +17655,7 @@ Required scope | `ecommerce:write`
         },
         "webhooks": {
           "ecomm_inventory_changed": {
+            "audiences": [],
             "display-name": "Updated eComm Inventory",
             "examples": [
               {
@@ -17867,6 +17870,7 @@ service:
   display-name: Inventory
 webhooks:
   ecomm_inventory_changed:
+    audiences: []
     method: POST
     display-name: Updated eComm Inventory
     headers: {}
@@ -18096,6 +18100,7 @@ webhooks:
         },
         "webhooks": {
           "collection_item_changed": {
+            "audiences": [],
             "display-name": "Item Updated",
             "examples": [
               {
@@ -18128,6 +18133,7 @@ webhooks:
             },
           },
           "collection_item_created": {
+            "audiences": [],
             "display-name": "Item Created",
             "examples": [
               {
@@ -18160,6 +18166,7 @@ webhooks:
             },
           },
           "collection_item_deleted": {
+            "audiences": [],
             "display-name": "Item Deleted",
             "examples": [
               {
@@ -18181,6 +18188,7 @@ webhooks:
             "payload": "CollectionItemDeletedPayload",
           },
           "collection_item_unpublished": {
+            "audiences": [],
             "display-name": "Item Unpublished",
             "examples": [
               {
@@ -18364,6 +18372,7 @@ webhooks:
       openapi: ../openapi.yml
 webhooks:
   collection_item_created:
+    audiences: []
     method: POST
     display-name: Item Created
     headers: {}
@@ -18390,6 +18399,7 @@ webhooks:
             featured: true
             color: '#db4b68'
   collection_item_changed:
+    audiences: []
     method: POST
     display-name: Item Updated
     headers: {}
@@ -18416,6 +18426,7 @@ webhooks:
             featured: true
             color: '#db4b68'
   collection_item_deleted:
+    audiences: []
     method: POST
     display-name: Item Deleted
     headers: {}
@@ -18429,6 +18440,7 @@ webhooks:
             workspaceId: 625860a7a6c16d624927122f
             collectionId: 664243617fcc8b464b23c4ee
   collection_item_unpublished:
+    audiences: []
     method: POST
     display-name: Item Unpublished
     headers: {}
@@ -28196,6 +28208,7 @@ Required scope | `ecommerce:write`
         },
         "webhooks": {
           "ecomm_new_order": {
+            "audiences": [],
             "display-name": "New eComm Order",
             "examples": [
               {
@@ -28422,6 +28435,7 @@ Required scope | `ecommerce:write`
             "payload": "EcommNewOrderPayload",
           },
           "ecomm_order_changed": {
+            "audiences": [],
             "display-name": "Updated eComm Order",
             "examples": [
               {
@@ -36078,6 +36092,7 @@ service:
   display-name: Orders
 webhooks:
   ecomm_new_order:
+    audiences: []
     method: POST
     display-name: New eComm Order
     headers: {}
@@ -36260,6 +36275,7 @@ webhooks:
               url: >-
                 https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa
   ecomm_order_changed:
+    audiences: []
     method: POST
     display-name: Updated eComm Order
     headers: {}
@@ -37656,6 +37672,7 @@ Required scope | `pages:write`
         },
         "webhooks": {
           "page_created": {
+            "audiences": [],
             "display-name": "Page Created",
             "examples": [
               {
@@ -37680,6 +37697,7 @@ Required scope | `pages:write`
             },
           },
           "page_deleted": {
+            "audiences": [],
             "display-name": "Page Deleted",
             "examples": [
               {
@@ -37704,6 +37722,7 @@ Required scope | `pages:write`
             },
           },
           "page_metadata_updated": {
+            "audiences": [],
             "display-name": "Page Metadata Updated",
             "examples": [
               {
@@ -38710,6 +38729,7 @@ service:
   display-name: Pages
 webhooks:
   page_created:
+    audiences: []
     method: POST
     display-name: Page Created
     headers: {}
@@ -38725,6 +38745,7 @@ webhooks:
             pageTitle: Heart of Gold Specs
             createdOn: '2024-07-26T16:32:50Z'
   page_metadata_updated:
+    audiences: []
     method: POST
     display-name: Page Metadata Updated
     headers: {}
@@ -38740,6 +38761,7 @@ webhooks:
             pageTitle: Heart of Gold Specs
             lastUpdated: '2024-07-26T16:32:50Z'
   page_deleted:
+    audiences: []
     method: POST
     display-name: Page Deleted
     headers: {}
@@ -48469,6 +48491,7 @@ service:
         },
         "webhooks": {
           "site_publish": {
+            "audiences": [],
             "display-name": "Site Publish",
             "examples": [
               {
@@ -49098,6 +49121,7 @@ service:
   display-name: Sites
 webhooks:
   site_publish:
+    audiences: []
     method: POST
     display-name: Site Publish
     headers: {}
@@ -52440,6 +52464,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
         },
         "webhooks": {
           "user_account_added": {
+            "audiences": [],
             "display-name": "New User Added",
             "examples": [
               {
@@ -52469,6 +52494,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "payload": "UserAccountAddedPayload",
           },
           "user_account_deleted": {
+            "audiences": [],
             "display-name": "Account Deleted",
             "examples": [
               {
@@ -52498,6 +52524,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "payload": "UserAccountDeletedPayload",
           },
           "user_account_updated": {
+            "audiences": [],
             "display-name": "Account Updated",
             "examples": [
               {
@@ -53768,6 +53795,7 @@ service:
     openapi: ../openapi.yml
 webhooks:
   user_account_added:
+    audiences: []
     method: POST
     display-name: New User Added
     headers: {}
@@ -53786,6 +53814,7 @@ webhooks:
               - slug: webflowers
                 type: admin
   user_account_updated:
+    audiences: []
     method: POST
     display-name: Account Updated
     headers: {}
@@ -53804,6 +53833,7 @@ webhooks:
               - slug: webflowers
                 type: admin
   user_account_deleted:
+    audiences: []
     method: POST
     display-name: Account Deleted
     headers: {}

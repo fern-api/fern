@@ -9,6 +9,7 @@
   "endpoints": [],
   "webhooks": [
     {
+      "audiences": [],
       "method": "POST",
       "operationId": "CreatePet",
       "tags": [],
