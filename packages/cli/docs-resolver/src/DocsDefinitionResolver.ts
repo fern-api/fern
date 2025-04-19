@@ -466,9 +466,9 @@ export class DocsDefinitionResolver {
                 return apiWorkspace;
             }
         }
-        const errorMessage = apiSection.apiName 
+        const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : `Failed to load API Definition referenced in docs`;
+            : "Failed to load API Definition referenced in docs";
         throw new Error(errorMessage);
     }
 
@@ -481,9 +481,9 @@ export class DocsDefinitionResolver {
                 return ossWorkspace;
             }
         }
-        const errorMessage = apiSection.apiName 
+        const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : `Failed to load API Definition referenced in docs`;
+            : "Failed to load API Definition referenced in docs";
         throw new Error(errorMessage);
     }
 
