@@ -20938,7 +20938,7 @@
                 "data": {
                   "status": "approved",
                   "ids": [
-                    0
+                    42
                   ]
                 }
               },
@@ -20948,7 +20948,7 @@
                   "data": {
                     "status": "approved",
                     "ids": [
-                      0
+                      42
                     ]
                   }
                 }
@@ -21449,7 +21449,7 @@
                   "ongoing_time_based"
                 ],
                 "statuses": [
-                  null
+                  "approved"
                 ],
                 "reporter_id": 42,
                 "date_from": "2022-01-01",
@@ -21713,7 +21713,7 @@
                   "ongoing_time_based"
                 ],
                 "statuses": [
-                  null
+                  "approved"
                 ],
                 "reporter_id": 42,
                 "date_from": "2022-01-01",
@@ -22545,7 +22545,7 @@
                 "data": {
                   "status": "approved",
                   "ids": [
-                    0
+                    42
                   ]
                 }
               },
@@ -22555,7 +22555,7 @@
                   "data": {
                     "status": "approved",
                     "ids": [
-                      0
+                      42
                     ]
                   }
                 }
@@ -23348,7 +23348,7 @@
                 "data": {
                   "status": "approved",
                   "ids": [
-                    0
+                    42
                   ]
                 }
               },
@@ -23358,7 +23358,7 @@
                   "data": {
                     "status": "approved",
                     "ids": [
-                      0
+                      42
                     ]
                   }
                 }
@@ -24904,7 +24904,7 @@
                   "accrued_holiday"
                 ],
                 "statuses": [
-                  null
+                  "approved"
                 ],
                 "invoice_id": 42,
                 "reporter_id": 42,
@@ -25210,7 +25210,7 @@
                   "accrued_holiday"
                 ],
                 "statuses": [
-                  null
+                  "approved"
                 ],
                 "invoice_id": 42,
                 "reporter_id": 42,
@@ -25876,7 +25876,7 @@
                 "data": {
                   "status": "approved",
                   "ids": [
-                    0
+                    42
                   ]
                 }
               },
@@ -25886,7 +25886,7 @@
                   "data": {
                     "status": "approved",
                     "ids": [
-                      0
+                      42
                     ]
                   }
                 }

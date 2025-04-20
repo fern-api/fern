@@ -39262,7 +39262,11 @@
                     },
                     "name": "foo",
                     "transactions": [
-                      null
+                      {
+                        "amount": 42,
+                        "description": "foo",
+                        "value_date": "foo"
+                      }
                     ],
                     "frequency": "MONTHLY",
                     "average_transaction_amount": 42,
@@ -39316,7 +39320,11 @@
                     },
                     "name": "foo",
                     "transactions": [
-                      null
+                      {
+                        "amount": 42,
+                        "description": "foo",
+                        "value_date": "foo"
+                      }
                     ],
                     "frequency": "MONTHLY",
                     "average_transaction_amount": 42,
@@ -39491,7 +39499,11 @@
                     },
                     "name": "foo",
                     "transactions": [
-                      null
+                      {
+                        "amount": 42,
+                        "description": "foo",
+                        "value_date": "foo"
+                      }
                     ],
                     "frequency": "MONTHLY",
                     "average_transaction_amount": 42,
@@ -39545,7 +39557,11 @@
                     },
                     "name": "foo",
                     "transactions": [
-                      null
+                      {
+                        "amount": 42,
+                        "description": "foo",
+                        "value_date": "foo"
+                      }
                     ],
                     "frequency": "MONTHLY",
                     "average_transaction_amount": 42,
@@ -39717,7 +39733,11 @@
                     },
                     "name": "foo",
                     "transactions": [
-                      null
+                      {
+                        "amount": 42,
+                        "description": "foo",
+                        "value_date": "foo"
+                      }
                     ],
                     "frequency": "MONTHLY",
                     "average_transaction_amount": 42,
@@ -39771,7 +39791,11 @@
                     },
                     "name": "foo",
                     "transactions": [
-                      null
+                      {
+                        "amount": 42,
+                        "description": "foo",
+                        "value_date": "foo"
+                      }
                     ],
                     "frequency": "MONTHLY",
                     "average_transaction_amount": 42,
