@@ -10,6 +10,7 @@ import { Logger } from "@fern-api/logger";
 
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
+const APP_PREVIEW_FOLDER_NAME = "app-preview";
 const BUNDLE_FOLDER_NAME = "bundle";
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 
@@ -25,11 +26,28 @@ export function getPathToPreviewFolder(): AbsoluteFilePath {
     );
 }
 
+export function getPathToAppPreviewFolder(): AbsoluteFilePath {
+    return join(
+        AbsoluteFilePath.of(homedir()),
+        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
+        RelativeFilePath.of(APP_PREVIEW_FOLDER_NAME)
+    );
+}
+
 export function getPathToBundleFolder(): AbsoluteFilePath {
     return join(
         AbsoluteFilePath.of(homedir()),
         RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
         RelativeFilePath.of(PREVIEW_FOLDER_NAME),
+        RelativeFilePath.of(BUNDLE_FOLDER_NAME)
+    );
+}
+
+export function getPathToAppBundleFolder(): AbsoluteFilePath {
+    return join(
+        AbsoluteFilePath.of(homedir()),
+        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
+        RelativeFilePath.of(APP_PREVIEW_FOLDER_NAME),
         RelativeFilePath.of(BUNDLE_FOLDER_NAME)
     );
 }

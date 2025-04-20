@@ -1094,6 +1094,11 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     boolean: true,
                     default: false,
                     description: "Check for broken links in your docs"
+                })
+                .option("beta", {
+                    boolean: true,
+                    default: false,
+                    description: "Run the beta app router development server"
                 }),
         async (argv) => {
             let port: number;
@@ -1112,7 +1117,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 cliContext,
                 port,
                 bundlePath,
-                brokenLinks: argv.brokenLinks
+                brokenLinks: argv.brokenLinks,
+                appPreview: argv.beta
             });
         }
     );
