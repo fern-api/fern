@@ -691,6 +691,11 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("v2", {
                     boolean: true,
                     description: "Use v2 format"
+                })
+                .option("from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             if (argv.v2) {
@@ -700,6 +705,17 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         defaultToAllApiWorkspaces: false
                     }),
                     outputFilepath: resolve(cwd(), argv.pathToOutput),
+                    directFromOpenapi: false,
+                    cliContext
+                });
+            } else if (argv.fromOpenapi) {
+                await generateOpenApiToFdrApiDefinitionForWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    outputFilepath: resolve(cwd(), argv.pathToOutput),
+                    directFromOpenapi: true,
                     cliContext
                 });
             } else {
