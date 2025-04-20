@@ -98,6 +98,33 @@
       "websockets": [],
       "types": [],
       "subpackages": []
+    },
+    "status2": {
+      "subpackageId": "status2",
+      "name": "status2",
+      "endpoints": [],
+      "webhooks": [
+        {
+          "id": "update",
+          "path": [],
+          "method": "POST",
+          "name": "Update",
+          "headers": [],
+          "payload": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Update"
+              }
+            }
+          },
+          "examples": []
+        }
+      ],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
     }
   },
   "rootPackage": {
@@ -108,7 +135,8 @@
       "Update"
     ],
     "subpackages": [
-      "status"
+      "status",
+      "status2"
     ]
   },
   "snippetsConfiguration": {},

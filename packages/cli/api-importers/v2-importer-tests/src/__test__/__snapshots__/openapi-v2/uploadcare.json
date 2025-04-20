@@ -2681,7 +2681,7 @@
               },
               "datetime_original": "foo",
               "dpi": [
-                0
+                42
               ]
             },
             "video_info": {},
@@ -8231,7 +8231,7 @@
             },
             "datetime_original": "foo",
             "dpi": [
-              0
+              42
             ]
           }
         }
@@ -10091,7 +10091,7 @@
             },
             "datetime_original": "foo",
             "dpi": [
-              0
+              42
             ]
           }
         }
