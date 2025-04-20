@@ -49,6 +49,7 @@
         },
         "webhooks": {
           "update": {
+            "audiences": [],
             "display-name": undefined,
             "examples": [
               {
@@ -64,6 +65,7 @@
             "payload": "root.Update",
           },
           "updateInlined": {
+            "audiences": [],
             "display-name": undefined,
             "examples": [
               {
@@ -82,6 +84,7 @@
   root: __package__.yml
 webhooks:
   update:
+    audiences: []
     method: POST
     headers: {}
     payload: root.Update
@@ -89,6 +92,7 @@ webhooks:
       - payload:
           message: message
   updateInlined:
+    audiences: []
     method: POST
     headers: {}
     payload: StatusUpdateInlinedPayload
@@ -101,6 +105,47 @@ types:
       message-inlined: optional<string>
     source:
       openapi: ../openapi.yml
+",
+    },
+    "status2.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "webhooks": {
+          "update": {
+            "audiences": [
+              "private",
+            ],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "message": "message",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.Update",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+webhooks:
+  update:
+    audiences:
+      - private
+    method: POST
+    headers: {}
+    payload: root.Update
+    examples:
+      - payload:
+          message: message
 ",
     },
   },

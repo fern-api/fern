@@ -424,6 +424,64 @@
         },
         "examples": []
       }
+    ],
+    "status2": [
+      {
+        "id": "status2.update",
+        "name": {
+          "originalName": "update",
+          "camelCase": {
+            "unsafeName": "update",
+            "safeName": "update"
+          },
+          "snakeCase": {
+            "unsafeName": "update",
+            "safeName": "update"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE",
+            "safeName": "UPDATE"
+          },
+          "pascalCase": {
+            "unsafeName": "Update",
+            "safeName": "Update"
+          }
+        },
+        "method": "POST",
+        "headers": [],
+        "payload": {
+          "payloadType": {
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            },
+            "name": {
+              "originalName": "Update",
+              "camelCase": {
+                "unsafeName": "update",
+                "safeName": "update"
+              },
+              "snakeCase": {
+                "unsafeName": "update",
+                "safeName": "update"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "UPDATE",
+                "safeName": "UPDATE"
+              },
+              "pascalCase": {
+                "unsafeName": "Update",
+                "safeName": "Update"
+              }
+            },
+            "typeId": "Update",
+            "inline": false,
+            "type": "named"
+          },
+          "type": "reference"
+        },
+        "examples": []
+      }
     ]
   },
   "headers": [],
@@ -447,7 +505,8 @@
     ],
     "errors": [],
     "subpackages": [
-      "status"
+      "status",
+      "status2"
     ],
     "hasEndpointsInTree": false
   },
@@ -519,6 +578,75 @@
       "errors": [],
       "subpackages": [],
       "webhooks": "status",
+      "hasEndpointsInTree": false
+    },
+    "status2": {
+      "name": {
+        "originalName": "status2",
+        "camelCase": {
+          "unsafeName": "status2",
+          "safeName": "status2"
+        },
+        "snakeCase": {
+          "unsafeName": "status_2",
+          "safeName": "status_2"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "STATUS_2",
+          "safeName": "STATUS_2"
+        },
+        "pascalCase": {
+          "unsafeName": "Status2",
+          "safeName": "Status2"
+        }
+      },
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "status2",
+            "camelCase": {
+              "unsafeName": "status2",
+              "safeName": "status2"
+            },
+            "snakeCase": {
+              "unsafeName": "status_2",
+              "safeName": "status_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "STATUS_2",
+              "safeName": "STATUS_2"
+            },
+            "pascalCase": {
+              "unsafeName": "Status2",
+              "safeName": "Status2"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "status2",
+          "camelCase": {
+            "unsafeName": "status2",
+            "safeName": "status2"
+          },
+          "snakeCase": {
+            "unsafeName": "status_2",
+            "safeName": "status_2"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "STATUS_2",
+            "safeName": "STATUS_2"
+          },
+          "pascalCase": {
+            "unsafeName": "Status2",
+            "safeName": "Status2"
+          }
+        }
+      },
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "webhooks": "status2",
       "hasEndpointsInTree": false
     }
   },

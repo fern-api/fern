@@ -1720,6 +1720,7 @@ types:
       openapi: openapi/trains/openapi.yml
 webhooks:
   new-booking:
+    audiences: []
     display-name: New Booking
     docs: >
       Subscribe to new bookings being created, to update integrations for your

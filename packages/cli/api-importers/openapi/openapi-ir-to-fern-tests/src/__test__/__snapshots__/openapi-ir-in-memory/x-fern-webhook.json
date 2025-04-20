@@ -57,6 +57,26 @@
             }
           }
         }
+      },
+      "/status2": {
+        "post": {
+          "operationId": "update-status2",
+          "x-fern-webhook": true,
+          "x-fern-audiences": [
+            "private"
+          ],
+          "x-fern-sdk-group-name": "status2",
+          "x-fern-sdk-method-name": "update",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Update"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "components": {

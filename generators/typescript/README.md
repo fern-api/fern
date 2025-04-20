@@ -360,6 +360,56 @@ If `doNotHandleUnrecognizedErrors` is enabled and you throw a non-Fern error, th
 and passed on with `next(error)`. It's your responsibility to set up error-catching middleware that handles
 the error and returns a response to the client.
 
+#### ✨ `retainOriginalCasing`
+
+**Type:** boolean
+
+**Default:** `false`
+
+When enabled, property names in the generated code will retain their original casing from the API definition instead of being converted to camelCase.
+
+```yaml
+# generators.yml
+config:
+  retainOriginalCasing: true
+```
+
+**Before (default behavior):**
+If your API definition has a property named `display_name`, it would be converted to `displayName` in the generated TypeScript code.
+
+**After (with retainOriginalCasing):**
+The property `display_name` will remain as `display_name` in the generated TypeScript interfaces.
+
+**Example with OpenAPI input:**
+```yaml
+# OpenAPI schema
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: string
+        display_name:
+          type: string
+```
+
+Generated TypeScript with `retainOriginalCasing: true`:
+```typescript
+export interface User {
+  user_id: string;
+  display_name: string;
+}
+```
+
+Generated TypeScript with default settings (`retainOriginalCasing: false`):
+```typescript
+export interface User {
+  userId: string;
+  displayName: string;
+}
+```
+
 ## Versions
 
 Find the latest version number and changelog for this generator in [this SDK Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#sdk-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.
