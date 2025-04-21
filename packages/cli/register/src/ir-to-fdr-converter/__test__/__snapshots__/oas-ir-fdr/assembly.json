@@ -4408,7 +4408,8 @@
                     "limit": 42,
                     "result_count": 42,
                     "current_url": "foo",
-                    "prev_url": "foo"
+                    "prev_url": "foo",
+                    "next_url": "foo"
                   },
                   "transcripts": [
                     {
@@ -4416,6 +4417,7 @@
                       "resource_url": "foo",
                       "status": "queued",
                       "created": "foo",
+                      "completed": "foo",
                       "audio_url": "foo"
                     }
                   ]
@@ -4428,7 +4430,8 @@
                     "limit": 42,
                     "result_count": 42,
                     "current_url": "foo",
-                    "prev_url": "foo"
+                    "prev_url": "foo",
+                    "next_url": "foo"
                   },
                   "transcripts": [
                     {
@@ -4436,6 +4439,7 @@
                       "resource_url": "foo",
                       "status": "queued",
                       "created": "foo",
+                      "completed": "foo",
                       "audio_url": "foo"
                     }
                   ]
@@ -4524,11 +4528,173 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
+                  "language_code": "en",
                   "audio_url": "foo",
+                  "text": "foo",
+                  "words": [
+                    {
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "speaker": "foo"
+                    }
+                  ],
+                  "utterances": [
+                    {
+                      "channel": "foo",
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "words": [
+                        {
+                          "confidence": 42,
+                          "start": 42,
+                          "end": 42,
+                          "text": "foo",
+                          "speaker": "foo"
+                        }
+                      ]
+                    }
+                  ],
+                  "confidence": 42,
+                  "audio_duration": 42,
+                  "punctuate": true,
+                  "format_text": true,
+                  "dual_channel": true,
+                  "webhook_url": "foo",
+                  "webhook_status_code": 42,
                   "webhook_auth": true,
+                  "webhook_auth_header_name": "foo",
+                  "speed_boost": true,
                   "auto_highlights": true,
+                  "auto_highlights_result": {
+                    "results": [
+                      {
+                        "count": 42,
+                        "rank": 42,
+                        "text": "foo",
+                        "timestamps": [
+                          {
+                            "start": 42,
+                            "end": 42
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "audio_start_from": 42,
+                  "audio_end_at": 42,
+                  "word_boost": [
+                    "foo"
+                  ],
+                  "boost_param": "foo",
+                  "filter_profanity": true,
                   "redact_pii": true,
-                  "summarization": true
+                  "redact_pii_audio": true,
+                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_policies": [
+                    "medical_process"
+                  ],
+                  "redact_pii_sub": "entity_type",
+                  "speaker_labels": true,
+                  "speakers_expected": 42,
+                  "content_safety": true,
+                  "content_safety_labels": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "label": "foo",
+                            "confidence": 42,
+                            "severity": 42
+                          }
+                        ],
+                        "sentences_idx_start": 42,
+                        "sentences_idx_end": 42,
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        },
+                        "summary": {},
+                        "severity_score_summary": {}
+                      }
+                    ]
+                  },
+                  "iab_categories": true,
+                  "iab_categories_result": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "relevance": 42,
+                            "label": "foo"
+                          }
+                        ],
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        }
+                      }
+                    ],
+                    "summary": {}
+                  },
+                  "language_detection": true,
+                  "custom_spelling": [
+                    {
+                      "from": [
+                        "foo"
+                      ],
+                      "to": "foo"
+                    }
+                  ],
+                  "auto_chapters": true,
+                  "chapters": [
+                    {
+                      "gist": "foo",
+                      "headline": "foo",
+                      "summary": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "summarization": true,
+                  "summary_type": "foo",
+                  "summary_model": "foo",
+                  "summary": "foo",
+                  "custom_topics": true,
+                  "topics": [
+                    "foo"
+                  ],
+                  "disfluencies": true,
+                  "sentiment_analysis": true,
+                  "sentiment_analysis_results": [
+                    {
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42,
+                      "sentiment": "POSITIVE",
+                      "confidence": 42,
+                      "speaker": "foo"
+                    }
+                  ],
+                  "entity_detection": true,
+                  "entities": [
+                    {
+                      "entity_type": "banking_information",
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "speech_threshold": 42,
+                  "throttled": true,
+                  "error": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4538,11 +4704,173 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
+                  "language_code": "en",
                   "audio_url": "foo",
+                  "text": "foo",
+                  "words": [
+                    {
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "speaker": "foo"
+                    }
+                  ],
+                  "utterances": [
+                    {
+                      "channel": "foo",
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "words": [
+                        {
+                          "confidence": 42,
+                          "start": 42,
+                          "end": 42,
+                          "text": "foo",
+                          "speaker": "foo"
+                        }
+                      ]
+                    }
+                  ],
+                  "confidence": 42,
+                  "audio_duration": 42,
+                  "punctuate": true,
+                  "format_text": true,
+                  "dual_channel": true,
+                  "webhook_url": "foo",
+                  "webhook_status_code": 42,
                   "webhook_auth": true,
+                  "webhook_auth_header_name": "foo",
+                  "speed_boost": true,
                   "auto_highlights": true,
+                  "auto_highlights_result": {
+                    "results": [
+                      {
+                        "count": 42,
+                        "rank": 42,
+                        "text": "foo",
+                        "timestamps": [
+                          {
+                            "start": 42,
+                            "end": 42
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "audio_start_from": 42,
+                  "audio_end_at": 42,
+                  "word_boost": [
+                    "foo"
+                  ],
+                  "boost_param": "foo",
+                  "filter_profanity": true,
                   "redact_pii": true,
-                  "summarization": true
+                  "redact_pii_audio": true,
+                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_policies": [
+                    "medical_process"
+                  ],
+                  "redact_pii_sub": "entity_type",
+                  "speaker_labels": true,
+                  "speakers_expected": 42,
+                  "content_safety": true,
+                  "content_safety_labels": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "label": "foo",
+                            "confidence": 42,
+                            "severity": 42
+                          }
+                        ],
+                        "sentences_idx_start": 42,
+                        "sentences_idx_end": 42,
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        },
+                        "summary": {},
+                        "severity_score_summary": {}
+                      }
+                    ]
+                  },
+                  "iab_categories": true,
+                  "iab_categories_result": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "relevance": 42,
+                            "label": "foo"
+                          }
+                        ],
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        }
+                      }
+                    ],
+                    "summary": {}
+                  },
+                  "language_detection": true,
+                  "custom_spelling": [
+                    {
+                      "from": [
+                        "foo"
+                      ],
+                      "to": "foo"
+                    }
+                  ],
+                  "auto_chapters": true,
+                  "chapters": [
+                    {
+                      "gist": "foo",
+                      "headline": "foo",
+                      "summary": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "summarization": true,
+                  "summary_type": "foo",
+                  "summary_model": "foo",
+                  "summary": "foo",
+                  "custom_topics": true,
+                  "topics": [
+                    "foo"
+                  ],
+                  "disfluencies": true,
+                  "sentiment_analysis": true,
+                  "sentiment_analysis_results": [
+                    {
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42,
+                      "sentiment": "POSITIVE",
+                      "confidence": 42,
+                      "speaker": "foo"
+                    }
+                  ],
+                  "entity_detection": true,
+                  "entities": [
+                    {
+                      "entity_type": "banking_information",
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "speech_threshold": 42,
+                  "throttled": true,
+                  "error": "foo"
                 }
               }
             }
@@ -4629,11 +4957,173 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
+                  "language_code": "en",
                   "audio_url": "foo",
+                  "text": "foo",
+                  "words": [
+                    {
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "speaker": "foo"
+                    }
+                  ],
+                  "utterances": [
+                    {
+                      "channel": "foo",
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "words": [
+                        {
+                          "confidence": 42,
+                          "start": 42,
+                          "end": 42,
+                          "text": "foo",
+                          "speaker": "foo"
+                        }
+                      ]
+                    }
+                  ],
+                  "confidence": 42,
+                  "audio_duration": 42,
+                  "punctuate": true,
+                  "format_text": true,
+                  "dual_channel": true,
+                  "webhook_url": "foo",
+                  "webhook_status_code": 42,
                   "webhook_auth": true,
+                  "webhook_auth_header_name": "foo",
+                  "speed_boost": true,
                   "auto_highlights": true,
+                  "auto_highlights_result": {
+                    "results": [
+                      {
+                        "count": 42,
+                        "rank": 42,
+                        "text": "foo",
+                        "timestamps": [
+                          {
+                            "start": 42,
+                            "end": 42
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "audio_start_from": 42,
+                  "audio_end_at": 42,
+                  "word_boost": [
+                    "foo"
+                  ],
+                  "boost_param": "foo",
+                  "filter_profanity": true,
                   "redact_pii": true,
-                  "summarization": true
+                  "redact_pii_audio": true,
+                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_policies": [
+                    "medical_process"
+                  ],
+                  "redact_pii_sub": "entity_type",
+                  "speaker_labels": true,
+                  "speakers_expected": 42,
+                  "content_safety": true,
+                  "content_safety_labels": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "label": "foo",
+                            "confidence": 42,
+                            "severity": 42
+                          }
+                        ],
+                        "sentences_idx_start": 42,
+                        "sentences_idx_end": 42,
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        },
+                        "summary": {},
+                        "severity_score_summary": {}
+                      }
+                    ]
+                  },
+                  "iab_categories": true,
+                  "iab_categories_result": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "relevance": 42,
+                            "label": "foo"
+                          }
+                        ],
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        }
+                      }
+                    ],
+                    "summary": {}
+                  },
+                  "language_detection": true,
+                  "custom_spelling": [
+                    {
+                      "from": [
+                        "foo"
+                      ],
+                      "to": "foo"
+                    }
+                  ],
+                  "auto_chapters": true,
+                  "chapters": [
+                    {
+                      "gist": "foo",
+                      "headline": "foo",
+                      "summary": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "summarization": true,
+                  "summary_type": "foo",
+                  "summary_model": "foo",
+                  "summary": "foo",
+                  "custom_topics": true,
+                  "topics": [
+                    "foo"
+                  ],
+                  "disfluencies": true,
+                  "sentiment_analysis": true,
+                  "sentiment_analysis_results": [
+                    {
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42,
+                      "sentiment": "POSITIVE",
+                      "confidence": 42,
+                      "speaker": "foo"
+                    }
+                  ],
+                  "entity_detection": true,
+                  "entities": [
+                    {
+                      "entity_type": "banking_information",
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "speech_threshold": 42,
+                  "throttled": true,
+                  "error": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4643,11 +5133,173 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
+                  "language_code": "en",
                   "audio_url": "foo",
+                  "text": "foo",
+                  "words": [
+                    {
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "speaker": "foo"
+                    }
+                  ],
+                  "utterances": [
+                    {
+                      "channel": "foo",
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "words": [
+                        {
+                          "confidence": 42,
+                          "start": 42,
+                          "end": 42,
+                          "text": "foo",
+                          "speaker": "foo"
+                        }
+                      ]
+                    }
+                  ],
+                  "confidence": 42,
+                  "audio_duration": 42,
+                  "punctuate": true,
+                  "format_text": true,
+                  "dual_channel": true,
+                  "webhook_url": "foo",
+                  "webhook_status_code": 42,
                   "webhook_auth": true,
+                  "webhook_auth_header_name": "foo",
+                  "speed_boost": true,
                   "auto_highlights": true,
+                  "auto_highlights_result": {
+                    "results": [
+                      {
+                        "count": 42,
+                        "rank": 42,
+                        "text": "foo",
+                        "timestamps": [
+                          {
+                            "start": 42,
+                            "end": 42
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "audio_start_from": 42,
+                  "audio_end_at": 42,
+                  "word_boost": [
+                    "foo"
+                  ],
+                  "boost_param": "foo",
+                  "filter_profanity": true,
                   "redact_pii": true,
-                  "summarization": true
+                  "redact_pii_audio": true,
+                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_policies": [
+                    "medical_process"
+                  ],
+                  "redact_pii_sub": "entity_type",
+                  "speaker_labels": true,
+                  "speakers_expected": 42,
+                  "content_safety": true,
+                  "content_safety_labels": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "label": "foo",
+                            "confidence": 42,
+                            "severity": 42
+                          }
+                        ],
+                        "sentences_idx_start": 42,
+                        "sentences_idx_end": 42,
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        },
+                        "summary": {},
+                        "severity_score_summary": {}
+                      }
+                    ]
+                  },
+                  "iab_categories": true,
+                  "iab_categories_result": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "relevance": 42,
+                            "label": "foo"
+                          }
+                        ],
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        }
+                      }
+                    ],
+                    "summary": {}
+                  },
+                  "language_detection": true,
+                  "custom_spelling": [
+                    {
+                      "from": [
+                        "foo"
+                      ],
+                      "to": "foo"
+                    }
+                  ],
+                  "auto_chapters": true,
+                  "chapters": [
+                    {
+                      "gist": "foo",
+                      "headline": "foo",
+                      "summary": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "summarization": true,
+                  "summary_type": "foo",
+                  "summary_model": "foo",
+                  "summary": "foo",
+                  "custom_topics": true,
+                  "topics": [
+                    "foo"
+                  ],
+                  "disfluencies": true,
+                  "sentiment_analysis": true,
+                  "sentiment_analysis_results": [
+                    {
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42,
+                      "sentiment": "POSITIVE",
+                      "confidence": 42,
+                      "speaker": "foo"
+                    }
+                  ],
+                  "entity_detection": true,
+                  "entities": [
+                    {
+                      "entity_type": "banking_information",
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "speech_threshold": 42,
+                  "throttled": true,
+                  "error": "foo"
                 }
               }
             }
@@ -4734,11 +5386,173 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
+                  "language_code": "en",
                   "audio_url": "foo",
+                  "text": "foo",
+                  "words": [
+                    {
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "speaker": "foo"
+                    }
+                  ],
+                  "utterances": [
+                    {
+                      "channel": "foo",
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "words": [
+                        {
+                          "confidence": 42,
+                          "start": 42,
+                          "end": 42,
+                          "text": "foo",
+                          "speaker": "foo"
+                        }
+                      ]
+                    }
+                  ],
+                  "confidence": 42,
+                  "audio_duration": 42,
+                  "punctuate": true,
+                  "format_text": true,
+                  "dual_channel": true,
+                  "webhook_url": "foo",
+                  "webhook_status_code": 42,
                   "webhook_auth": true,
+                  "webhook_auth_header_name": "foo",
+                  "speed_boost": true,
                   "auto_highlights": true,
+                  "auto_highlights_result": {
+                    "results": [
+                      {
+                        "count": 42,
+                        "rank": 42,
+                        "text": "foo",
+                        "timestamps": [
+                          {
+                            "start": 42,
+                            "end": 42
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "audio_start_from": 42,
+                  "audio_end_at": 42,
+                  "word_boost": [
+                    "foo"
+                  ],
+                  "boost_param": "foo",
+                  "filter_profanity": true,
                   "redact_pii": true,
-                  "summarization": true
+                  "redact_pii_audio": true,
+                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_policies": [
+                    "medical_process"
+                  ],
+                  "redact_pii_sub": "entity_type",
+                  "speaker_labels": true,
+                  "speakers_expected": 42,
+                  "content_safety": true,
+                  "content_safety_labels": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "label": "foo",
+                            "confidence": 42,
+                            "severity": 42
+                          }
+                        ],
+                        "sentences_idx_start": 42,
+                        "sentences_idx_end": 42,
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        },
+                        "summary": {},
+                        "severity_score_summary": {}
+                      }
+                    ]
+                  },
+                  "iab_categories": true,
+                  "iab_categories_result": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "relevance": 42,
+                            "label": "foo"
+                          }
+                        ],
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        }
+                      }
+                    ],
+                    "summary": {}
+                  },
+                  "language_detection": true,
+                  "custom_spelling": [
+                    {
+                      "from": [
+                        "foo"
+                      ],
+                      "to": "foo"
+                    }
+                  ],
+                  "auto_chapters": true,
+                  "chapters": [
+                    {
+                      "gist": "foo",
+                      "headline": "foo",
+                      "summary": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "summarization": true,
+                  "summary_type": "foo",
+                  "summary_model": "foo",
+                  "summary": "foo",
+                  "custom_topics": true,
+                  "topics": [
+                    "foo"
+                  ],
+                  "disfluencies": true,
+                  "sentiment_analysis": true,
+                  "sentiment_analysis_results": [
+                    {
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42,
+                      "sentiment": "POSITIVE",
+                      "confidence": 42,
+                      "speaker": "foo"
+                    }
+                  ],
+                  "entity_detection": true,
+                  "entities": [
+                    {
+                      "entity_type": "banking_information",
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "speech_threshold": 42,
+                  "throttled": true,
+                  "error": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4748,11 +5562,173 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
+                  "language_code": "en",
                   "audio_url": "foo",
+                  "text": "foo",
+                  "words": [
+                    {
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "speaker": "foo"
+                    }
+                  ],
+                  "utterances": [
+                    {
+                      "channel": "foo",
+                      "confidence": 42,
+                      "start": 42,
+                      "end": 42,
+                      "text": "foo",
+                      "words": [
+                        {
+                          "confidence": 42,
+                          "start": 42,
+                          "end": 42,
+                          "text": "foo",
+                          "speaker": "foo"
+                        }
+                      ]
+                    }
+                  ],
+                  "confidence": 42,
+                  "audio_duration": 42,
+                  "punctuate": true,
+                  "format_text": true,
+                  "dual_channel": true,
+                  "webhook_url": "foo",
+                  "webhook_status_code": 42,
                   "webhook_auth": true,
+                  "webhook_auth_header_name": "foo",
+                  "speed_boost": true,
                   "auto_highlights": true,
+                  "auto_highlights_result": {
+                    "results": [
+                      {
+                        "count": 42,
+                        "rank": 42,
+                        "text": "foo",
+                        "timestamps": [
+                          {
+                            "start": 42,
+                            "end": 42
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "audio_start_from": 42,
+                  "audio_end_at": 42,
+                  "word_boost": [
+                    "foo"
+                  ],
+                  "boost_param": "foo",
+                  "filter_profanity": true,
                   "redact_pii": true,
-                  "summarization": true
+                  "redact_pii_audio": true,
+                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_policies": [
+                    "medical_process"
+                  ],
+                  "redact_pii_sub": "entity_type",
+                  "speaker_labels": true,
+                  "speakers_expected": 42,
+                  "content_safety": true,
+                  "content_safety_labels": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "label": "foo",
+                            "confidence": 42,
+                            "severity": 42
+                          }
+                        ],
+                        "sentences_idx_start": 42,
+                        "sentences_idx_end": 42,
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        },
+                        "summary": {},
+                        "severity_score_summary": {}
+                      }
+                    ]
+                  },
+                  "iab_categories": true,
+                  "iab_categories_result": {
+                    "status": "success",
+                    "results": [
+                      {
+                        "text": "foo",
+                        "labels": [
+                          {
+                            "relevance": 42,
+                            "label": "foo"
+                          }
+                        ],
+                        "timestamp": {
+                          "start": 42,
+                          "end": 42
+                        }
+                      }
+                    ],
+                    "summary": {}
+                  },
+                  "language_detection": true,
+                  "custom_spelling": [
+                    {
+                      "from": [
+                        "foo"
+                      ],
+                      "to": "foo"
+                    }
+                  ],
+                  "auto_chapters": true,
+                  "chapters": [
+                    {
+                      "gist": "foo",
+                      "headline": "foo",
+                      "summary": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "summarization": true,
+                  "summary_type": "foo",
+                  "summary_model": "foo",
+                  "summary": "foo",
+                  "custom_topics": true,
+                  "topics": [
+                    "foo"
+                  ],
+                  "disfluencies": true,
+                  "sentiment_analysis": true,
+                  "sentiment_analysis_results": [
+                    {
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42,
+                      "sentiment": "POSITIVE",
+                      "confidence": 42,
+                      "speaker": "foo"
+                    }
+                  ],
+                  "entity_detection": true,
+                  "entities": [
+                    {
+                      "entity_type": "banking_information",
+                      "text": "foo",
+                      "start": 42,
+                      "end": 42
+                    }
+                  ],
+                  "speech_threshold": 42,
+                  "throttled": true,
+                  "error": "foo"
                 }
               }
             }
@@ -4948,7 +5924,8 @@
                           "confidence": 42,
                           "start": 42,
                           "end": 42,
-                          "text": "foo"
+                          "text": "foo",
+                          "speaker": "foo"
                         }
                       ]
                     }
@@ -4972,7 +5949,8 @@
                           "confidence": 42,
                           "start": 42,
                           "end": 42,
-                          "text": "foo"
+                          "text": "foo",
+                          "speaker": "foo"
                         }
                       ]
                     }
@@ -5073,7 +6051,8 @@
                           "confidence": 42,
                           "start": 42,
                           "end": 42,
-                          "text": "foo"
+                          "text": "foo",
+                          "speaker": "foo"
                         }
                       ]
                     }
@@ -5097,7 +6076,8 @@
                           "confidence": 42,
                           "start": 42,
                           "end": 42,
-                          "text": "foo"
+                          "text": "foo",
+                          "speaker": "foo"
                         }
                       ]
                     }

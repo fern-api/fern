@@ -204,22 +204,30 @@
               "Request-Timeout-Millis": 42
             },
             "requestBody": {
-              "query": "foo"
+              "query": "How can I use the Vectara platform?"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "query": "foo"
+                "query": "How can I use the Vectara platform?"
               }
             },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "chat_id": "foo",
+                "turn_id": "foo",
+                "answer": "foo"
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "chat_id": "foo",
+                "turn_id": "foo",
+                "answer": "foo"
+              }
             }
           }
         ],

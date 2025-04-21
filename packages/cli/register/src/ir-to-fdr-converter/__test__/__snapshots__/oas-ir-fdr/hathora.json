@@ -1679,7 +1679,13 @@
                     "createdAt": "foo",
                     "createdBy": "foo",
                     "orgId": "foo",
-                    "authConfiguration": {},
+                    "authConfiguration": {
+                      "google": {
+                        "clientId": "foo"
+                      },
+                      "nickname": {},
+                      "anonymous": {}
+                    },
                     "appSecret": "foo",
                     "appId": "foo",
                     "appName": "foo",
@@ -1714,7 +1720,13 @@
                     "createdAt": "foo",
                     "createdBy": "foo",
                     "orgId": "foo",
-                    "authConfiguration": {},
+                    "authConfiguration": {
+                      "google": {
+                        "clientId": "foo"
+                      },
+                      "nickname": {},
+                      "anonymous": {}
+                    },
                     "appSecret": "foo",
                     "appId": "foo",
                     "appName": "foo",
@@ -1831,7 +1843,13 @@
                   "createdAt": "foo",
                   "createdBy": "foo",
                   "orgId": "foo",
-                  "authConfiguration": {},
+                  "authConfiguration": {
+                    "google": {
+                      "clientId": "foo"
+                    },
+                    "nickname": {},
+                    "anonymous": {}
+                  },
                   "appSecret": "foo",
                   "appId": "foo",
                   "appName": "foo"
@@ -1845,7 +1863,13 @@
                   "createdAt": "foo",
                   "createdBy": "foo",
                   "orgId": "foo",
-                  "authConfiguration": {},
+                  "authConfiguration": {
+                    "google": {
+                      "clientId": "foo"
+                    },
+                    "nickname": {},
+                    "anonymous": {}
+                  },
                   "appSecret": "foo",
                   "appId": "foo",
                   "appName": "foo"
@@ -1960,7 +1984,13 @@
                   "createdAt": "foo",
                   "createdBy": "foo",
                   "orgId": "foo",
-                  "authConfiguration": {},
+                  "authConfiguration": {
+                    "google": {
+                      "clientId": "foo"
+                    },
+                    "nickname": {},
+                    "anonymous": {}
+                  },
                   "appSecret": "foo",
                   "appId": "foo",
                   "appName": "foo"
@@ -1974,7 +2004,13 @@
                   "createdAt": "foo",
                   "createdBy": "foo",
                   "orgId": "foo",
-                  "authConfiguration": {},
+                  "authConfiguration": {
+                    "google": {
+                      "clientId": "foo"
+                    },
+                    "nickname": {},
+                    "anonymous": {}
+                  },
                   "appSecret": "foo",
                   "appId": "foo",
                   "appName": "foo"
@@ -2065,7 +2101,13 @@
                   "createdAt": "foo",
                   "createdBy": "foo",
                   "orgId": "foo",
-                  "authConfiguration": {},
+                  "authConfiguration": {
+                    "google": {
+                      "clientId": "foo"
+                    },
+                    "nickname": {},
+                    "anonymous": {}
+                  },
                   "appSecret": "foo",
                   "appId": "foo",
                   "appName": "foo"
@@ -2079,7 +2121,13 @@
                   "createdAt": "foo",
                   "createdBy": "foo",
                   "orgId": "foo",
-                  "authConfiguration": {},
+                  "authConfiguration": {
+                    "google": {
+                      "clientId": "foo"
+                    },
+                    "nickname": {},
+                    "anonymous": {}
+                  },
                   "appSecret": "foo",
                   "appId": "foo",
                   "appName": "foo"
@@ -3984,6 +4032,7 @@
                 "type": "json",
                 "value": [
                   {
+                    "state": {},
                     "initialConfig": {},
                     "createdAt": "foo",
                     "createdBy": "foo",
@@ -3999,6 +4048,7 @@
                 "type": "json",
                 "value": [
                   {
+                    "state": {},
                     "initialConfig": {},
                     "createdAt": "foo",
                     "createdBy": "foo",
@@ -4163,6 +4213,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4176,6 +4227,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4329,6 +4381,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4342,6 +4395,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4495,6 +4549,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4508,6 +4563,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4669,6 +4725,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4682,6 +4739,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4789,6 +4847,7 @@
                 "type": "json",
                 "value": [
                   {
+                    "state": {},
                     "initialConfig": {},
                     "createdAt": "foo",
                     "createdBy": "foo",
@@ -4804,6 +4863,7 @@
                 "type": "json",
                 "value": [
                   {
+                    "state": {},
                     "initialConfig": {},
                     "createdAt": "foo",
                     "createdBy": "foo",
@@ -4911,6 +4971,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -4924,6 +4985,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -5058,6 +5120,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -5071,6 +5134,7 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "state": {},
                   "initialConfig": {},
                   "createdAt": "foo",
                   "createdBy": "foo",
@@ -5576,11 +5640,61 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "cpu": [
+                    {
+                      "value": 42,
+                      "timestamp": 42
+                    }
+                  ],
+                  "memory": [
+                    {
+                      "value": 42,
+                      "timestamp": 42
+                    }
+                  ],
+                  "rate_egress": [
+                    {
+                      "value": 42,
+                      "timestamp": 42
+                    }
+                  ],
+                  "total_egress": [
+                    {
+                      "value": 42,
+                      "timestamp": 42
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "cpu": [
+                    {
+                      "value": 42,
+                      "timestamp": 42
+                    }
+                  ],
+                  "memory": [
+                    {
+                      "value": 42,
+                      "timestamp": 42
+                    }
+                  ],
+                  "rate_egress": [
+                    {
+                      "value": 42,
+                      "timestamp": 42
+                    }
+                  ],
+                  "total_egress": [
+                    {
+                      "value": 42,
+                      "timestamp": 42
+                    }
+                  ]
+                }
               }
             }
           ],

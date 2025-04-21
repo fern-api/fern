@@ -1919,18 +1919,25 @@
                   "data": [
                     {
                       "date_created": "foo",
-                      "id": "foo",
-                      "name": "foo"
+                      "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                      "name": "Special Widget",
+                      "upload_uri": "foo"
                     }
                   ],
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -1942,18 +1949,25 @@
                   "data": [
                     {
                       "date_created": "foo",
-                      "id": "foo",
-                      "name": "foo"
+                      "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                      "name": "Special Widget",
+                      "upload_uri": "foo"
                     }
                   ],
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2027,12 +2041,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo"
+                "name": "Special Widget"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo"
+                  "name": "Special Widget"
                 }
               },
               "responseStatusCode": 201,
@@ -2041,17 +2055,24 @@
                 "value": {
                   "data": {
                     "date_created": "foo",
-                    "id": "foo",
-                    "name": "foo"
+                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                    "name": "Special Widget",
+                    "upload_uri": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2062,17 +2083,24 @@
                 "value": {
                   "data": {
                     "date_created": "foo",
-                    "id": "foo",
-                    "name": "foo"
+                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                    "name": "Special Widget",
+                    "upload_uri": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2222,17 +2250,24 @@
                 "value": {
                   "data": {
                     "date_created": "foo",
-                    "id": "foo",
-                    "name": "foo"
+                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                    "name": "Special Widget",
+                    "upload_uri": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2243,17 +2278,24 @@
                 "value": {
                   "data": {
                     "date_created": "foo",
-                    "id": "foo",
-                    "name": "foo"
+                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                    "name": "Special Widget",
+                    "upload_uri": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2366,20 +2408,28 @@
                 "value": {
                   "data": [
                     {
-                      "name": "foo",
+                      "name": "Acme corp login",
+                      "status": "foo",
                       "tags": [
                         "foo"
-                      ]
+                      ],
+                      "upload_uri": "foo"
                     }
                   ],
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2390,20 +2440,28 @@
                 "value": {
                   "data": [
                     {
-                      "name": "foo",
+                      "name": "Acme corp login",
+                      "status": "foo",
                       "tags": [
                         "foo"
-                      ]
+                      ],
+                      "upload_uri": "foo"
                     }
                   ],
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2477,12 +2535,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo"
+                "name": "Acme corp login"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo"
+                  "name": "Acme corp login"
                 }
               },
               "responseStatusCode": 201,
@@ -2490,19 +2548,27 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "name": "foo",
+                    "name": "Acme corp login",
+                    "status": "foo",
                     "tags": [
                       "foo"
-                    ]
+                    ],
+                    "upload_uri": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2512,19 +2578,27 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "name": "foo",
+                    "name": "Acme corp login",
+                    "status": "foo",
                     "tags": [
                       "foo"
-                    ]
+                    ],
+                    "upload_uri": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2692,19 +2766,27 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "name": "foo",
+                    "name": "Acme corp login",
+                    "status": "foo",
                     "tags": [
                       "foo"
-                    ]
+                    ],
+                    "upload_uri": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2714,19 +2796,27 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "name": "foo",
+                    "name": "Acme corp login",
+                    "status": "foo",
                     "tags": [
                       "foo"
-                    ]
+                    ],
+                    "upload_uri": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2878,20 +2968,45 @@
                     },
                     "sessions": [
                       {
-                        "configuration": {},
-                        "id": "foo",
-                        "status": "foo"
+                        "cdp_url": "foo",
+                        "cdp_ws_url": "foo",
+                        "chromedriver_url": "foo",
+                        "configuration": {
+                          "persist_profile": true,
+                          "persist_profile_name": "default",
+                          "persist_profile_tags": [
+                            "foo"
+                          ],
+                          "profile_id": "linkedin",
+                          "timeoutMinutes": 10
+                        },
+                        "current_usage": 42,
+                        "date_created": "foo",
+                        "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                        "last_activity": "foo",
+                        "live_view": {
+                          "airtop_browser_url": "foo",
+                          "token": "foo"
+                        },
+                        "status": "active",
+                        "url": "foo"
                       }
                     ]
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -2913,20 +3028,45 @@
                     },
                     "sessions": [
                       {
-                        "configuration": {},
-                        "id": "foo",
-                        "status": "foo"
+                        "cdp_url": "foo",
+                        "cdp_ws_url": "foo",
+                        "chromedriver_url": "foo",
+                        "configuration": {
+                          "persist_profile": true,
+                          "persist_profile_name": "default",
+                          "persist_profile_tags": [
+                            "foo"
+                          ],
+                          "profile_id": "linkedin",
+                          "timeoutMinutes": 10
+                        },
+                        "current_usage": 42,
+                        "date_created": "foo",
+                        "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                        "last_activity": "foo",
+                        "live_view": {
+                          "airtop_browser_url": "foo",
+                          "token": "foo"
+                        },
+                        "status": "active",
+                        "url": "foo"
                       }
                     ]
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3009,18 +3149,43 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "configuration": {},
-                    "id": "foo",
-                    "status": "foo"
+                    "cdp_url": "foo",
+                    "cdp_ws_url": "foo",
+                    "chromedriver_url": "foo",
+                    "configuration": {
+                      "persist_profile": true,
+                      "persist_profile_name": "default",
+                      "persist_profile_tags": [
+                        "foo"
+                      ],
+                      "profile_id": "linkedin",
+                      "timeoutMinutes": 10
+                    },
+                    "current_usage": 42,
+                    "date_created": "foo",
+                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                    "last_activity": "foo",
+                    "live_view": {
+                      "airtop_browser_url": "foo",
+                      "token": "foo"
+                    },
+                    "status": "active",
+                    "url": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3030,18 +3195,43 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "configuration": {},
-                    "id": "foo",
-                    "status": "foo"
+                    "cdp_url": "foo",
+                    "cdp_ws_url": "foo",
+                    "chromedriver_url": "foo",
+                    "configuration": {
+                      "persist_profile": true,
+                      "persist_profile_name": "default",
+                      "persist_profile_tags": [
+                        "foo"
+                      ],
+                      "profile_id": "linkedin",
+                      "timeoutMinutes": 10
+                    },
+                    "current_usage": 42,
+                    "date_created": "foo",
+                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                    "last_activity": "foo",
+                    "live_view": {
+                      "airtop_browser_url": "foo",
+                      "token": "foo"
+                    },
+                    "status": "active",
+                    "url": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3129,18 +3319,43 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "configuration": {},
-                    "id": "foo",
-                    "status": "foo"
+                    "cdp_url": "foo",
+                    "cdp_ws_url": "foo",
+                    "chromedriver_url": "foo",
+                    "configuration": {
+                      "persist_profile": true,
+                      "persist_profile_name": "default",
+                      "persist_profile_tags": [
+                        "foo"
+                      ],
+                      "profile_id": "linkedin",
+                      "timeoutMinutes": 10
+                    },
+                    "current_usage": 42,
+                    "date_created": "foo",
+                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                    "last_activity": "foo",
+                    "live_view": {
+                      "airtop_browser_url": "foo",
+                      "token": "foo"
+                    },
+                    "status": "active",
+                    "url": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3150,18 +3365,43 @@
                 "type": "json",
                 "value": {
                   "data": {
-                    "configuration": {},
-                    "id": "foo",
-                    "status": "foo"
+                    "cdp_url": "foo",
+                    "cdp_ws_url": "foo",
+                    "chromedriver_url": "foo",
+                    "configuration": {
+                      "persist_profile": true,
+                      "persist_profile_name": "default",
+                      "persist_profile_tags": [
+                        "foo"
+                      ],
+                      "profile_id": "linkedin",
+                      "timeoutMinutes": 10
+                    },
+                    "current_usage": 42,
+                    "date_created": "foo",
+                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                    "last_activity": "foo",
+                    "live_view": {
+                      "airtop_browser_url": "foo",
+                      "token": "foo"
+                    },
+                    "status": "active",
+                    "url": "foo"
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3459,12 +3699,18 @@
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3480,12 +3726,18 @@
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
-                  "meta": {},
+                  "meta": {
+                    "requestId": "foo"
+                  },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3601,12 +3853,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "prompt": "foo"
+                "prompt": "What is the main idea of this page?"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "prompt": "foo"
+                  "prompt": "What is the main idea of this page?"
                 }
               },
               "responseStatusCode": 201,
@@ -3618,10 +3870,17 @@
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
                   "meta": {
+                    "clientProvided": {
+                      "clientRequestId": "foo",
+                      "timeThresholdMs": 42
+                    },
+                    "requestId": "foo",
                     "status": "success",
                     "usage": {
                       "credits": 42,
@@ -3630,6 +3889,8 @@
                   },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3643,10 +3904,17 @@
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
                   "meta": {
+                    "clientProvided": {
+                      "clientRequestId": "foo",
+                      "timeThresholdMs": 42
+                    },
+                    "requestId": "foo",
                     "status": "success",
                     "usage": {
                       "credits": 42,
@@ -3655,6 +3923,8 @@
                   },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3766,15 +4036,23 @@
                         "contentType": "foo",
                         "text": "foo"
                       },
+                      "selectedText": "foo",
                       "title": "foo"
                     }
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
                   "meta": {
+                    "clientProvided": {
+                      "clientRequestId": "foo",
+                      "timeThresholdMs": 42
+                    },
+                    "requestId": "foo",
                     "status": "success",
                     "usage": {
                       "credits": 42,
@@ -3783,6 +4061,8 @@
                   },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3797,15 +4077,23 @@
                         "contentType": "foo",
                         "text": "foo"
                       },
+                      "selectedText": "foo",
                       "title": "foo"
                     }
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
                   "meta": {
+                    "clientProvided": {
+                      "clientRequestId": "foo",
+                      "timeThresholdMs": 42
+                    },
+                    "requestId": "foo",
                     "status": "success",
                     "usage": {
                       "credits": 42,
@@ -3814,6 +4102,8 @@
                   },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3942,10 +4232,17 @@
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
                   "meta": {
+                    "clientProvided": {
+                      "clientRequestId": "foo",
+                      "timeThresholdMs": 42
+                    },
+                    "requestId": "foo",
                     "status": "success",
                     "usage": {
                       "credits": 42,
@@ -3954,6 +4251,8 @@
                   },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]
@@ -3967,10 +4266,17 @@
                   },
                   "errors": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ],
                   "meta": {
+                    "clientProvided": {
+                      "clientRequestId": "foo",
+                      "timeThresholdMs": 42
+                    },
+                    "requestId": "foo",
                     "status": "success",
                     "usage": {
                       "credits": 42,
@@ -3979,6 +4285,8 @@
                   },
                   "warnings": [
                     {
+                      "code": "foo",
+                      "details": {},
                       "message": "foo"
                     }
                   ]

@@ -81,11 +81,17 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "foo": "foo",
+                "bar": "foo"
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "foo": "foo",
+                "bar": "foo"
+              }
             }
           }
         ],
@@ -137,11 +143,17 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "foo": "foo",
+                "bar": "foo"
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "foo": "foo",
+                "bar": "foo"
+              }
             }
           }
         ],

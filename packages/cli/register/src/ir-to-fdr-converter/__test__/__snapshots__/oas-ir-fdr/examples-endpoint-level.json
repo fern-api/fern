@@ -321,14 +321,14 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "species": "foo",
-              "height": 42
+              "species": "Quercus alba",
+              "height": 25.4
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "species": "foo",
-                "height": 42
+                "species": "Quercus alba",
+                "height": 25.4
               }
             },
             "responseStatusCode": 201,

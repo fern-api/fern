@@ -1,195 +1,638 @@
 {
   "types": {
-    "EndUserOneOfZero": {
-      "name": "EndUserOneOfZero",
+    "EndUserProfileMetadata": {
+      "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+      "name": "EndUserProfileMetadata",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "EndUserProfileSystemProperties": {
+      "description": "Read-only profile information set by Ada",
+      "name": "EndUserProfileSystemProperties",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The end user's browser user-agent information captured by Ada",
+            "key": "user_agent",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's device information captured by Ada",
+            "key": "device",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's browser information captured by Ada",
+            "key": "browser",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's browser version captured by Ada",
+            "key": "browser_version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "Whether the introductory message of a campaign has been displayed to the end user",
+            "key": "introshown",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The ID for the last answer displayed to the end user during a conversation",
+            "key": "last_answer_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The last question asked by the end user",
+            "key": "last_question_asked",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The ID for the first message sent to the end user via Sunshine Conversations",
+            "key": "sunshine_first_message_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The ID for the Sunshine Conversation for this end user",
+            "key": "sunshine_conversation_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The channel used to communicate with the end user via Sunshine Conversations",
+            "key": "sunshine_end_user_channel",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The date the end user signed up for Sunshine Conversations",
+            "key": "sunshine_signed_up_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The Sunshine Conversations user ID for the end user",
+            "key": "sunshine_user_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "EndUserProfile": {
+      "description": "The end user's profile information",
+      "name": "EndUserProfile",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The end user's first name",
+            "key": "first_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's last name",
+            "key": "last_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's email address",
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's language in BCP 47 format",
+            "key": "language",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+            "key": "metadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserProfileMetadata"
+              }
+            }
+          },
+          {
+            "description": "Read-only profile information set by Ada",
+            "key": "system_properties",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserProfileSystemProperties"
+              }
+            }
+          }
+        ]
       }
     },
     "EndUser": {
       "name": "EndUser",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [],
+        "properties": [
           {
-            "typeName": "EndUserOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "EndUserOneOfZero"
+            "description": "The unique Ada-generated ID for the end user",
+            "key": "end_user_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's profile information",
+            "key": "profile",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUserProfile"
+              }
+            }
+          },
+          {
+            "description": "The date and time the end user was created",
+            "key": "created_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The date and time the end user was updated",
+            "key": "updated_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
       }
     },
-    "EndUserRequestOneOfZero": {
-      "name": "EndUserRequestOneOfZero",
+    "EndUserRequestProfileMetadata": {
+      "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+      "name": "EndUserRequestProfileMetadata",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "EndUserRequestProfile": {
+      "description": "The end user's profile information",
+      "name": "EndUserRequestProfile",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The end user's first name",
+            "key": "first_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's last name",
+            "key": "last_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's email address",
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "The end user's language in BCP 47 format",
+            "key": "language",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
+            "key": "metadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "EndUserRequestProfileMetadata"
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "EndUserRequest": {
       "name": "EndUserRequest",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [],
+        "properties": [
           {
-            "typeName": "EndUserRequestOneOfZero",
-            "type": {
+            "description": "The end user's profile information",
+            "key": "profile",
+            "valueType": {
               "type": "id",
-              "value": "EndUserRequestOneOfZero"
+              "value": "EndUserRequestProfile"
             }
           }
         ]
-      }
-    },
-    "ErrorOneOfZero": {
-      "name": "ErrorOneOfZero",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "Error": {
       "name": "Error",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [],
+        "properties": [
           {
-            "typeName": "ErrorOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "ErrorOneOfZero"
+            "description": "The error message",
+            "key": "msg",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Extra information about the error",
+            "key": "details",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
-      }
-    },
-    "ErrorsOneOfZero": {
-      "name": "ErrorsOneOfZero",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "Errors": {
       "name": "Errors",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [],
+        "properties": [
           {
-            "typeName": "ErrorsOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "ErrorsOneOfZero"
+            "description": "A list of errors",
+            "key": "errors",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
             }
           }
         ]
       }
     },
-    "EndUsersOneOfZero": {
-      "name": "EndUsersOneOfZero",
+    "EndUsersMeta": {
+      "description": "Metadata returned with the results including but not limited to a link to the next page of data",
+      "name": "EndUsersMeta",
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": []
+        "properties": [
+          {
+            "description": "Link to the next page of data using a cursor value",
+            "key": "next_page_url",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "url"
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "EndUsers": {
       "name": "EndUsers",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "EndUsersOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "EndUsersOneOfZero"
-            }
-          }
-        ]
-      }
-    },
-    "EndUserCreatedWebhookPayloadTypeOneOfZero": {
-      "name": "EndUserCreatedWebhookPayloadTypeOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "EndUserCreatedWebhookPayloadType": {
-      "description": "The webhook event type description",
-      "name": "EndUserCreatedWebhookPayloadType",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "EndUserCreatedWebhookPayloadTypeOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "EndUserCreatedWebhookPayloadTypeOneOfZero"
-            }
-          }
-        ]
-      }
-    },
-    "EndUserCreatedWebhookPayloadTimestampOneOfZero": {
-      "name": "EndUserCreatedWebhookPayloadTimestampOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "EndUserCreatedWebhookPayloadTimestamp": {
-      "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
-      "name": "EndUserCreatedWebhookPayloadTimestamp",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "EndUserCreatedWebhookPayloadTimestampOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "EndUserCreatedWebhookPayloadTimestampOneOfZero"
-            }
-          }
-        ]
-      }
-    },
-    "EndUserCreatedWebhookPayloadDataOneOfZero": {
-      "name": "EndUserCreatedWebhookPayloadDataOneOfZero",
-      "shape": {
         "type": "object",
         "extends": [],
-        "properties": []
+        "properties": [
+          {
+            "description": "List of end user profiles",
+            "key": "end_users",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "EndUser"
+                }
+              }
+            }
+          },
+          {
+            "description": "Metadata returned with the results including but not limited to a link to the next page of data",
+            "key": "meta",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EndUsersMeta"
+              }
+            }
+          }
+        ]
       }
     },
     "EndUserCreatedWebhookPayloadData": {
       "description": "The webhook event data",
       "name": "EndUserCreatedWebhookPayloadData",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [
+          "EndUser"
+        ],
+        "properties": [
           {
-            "typeName": "EndUserCreatedWebhookPayloadDataOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "EndUserCreatedWebhookPayloadDataOneOfZero"
+            "description": "The unique Ada-generated ID for the end user",
+            "key": "end_user_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The date and time the end user was created",
+            "key": "created_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The date and time the end user was updated",
+            "key": "updated_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -207,8 +650,10 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "EndUserCreatedWebhookPayloadType"
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -218,8 +663,10 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "EndUserCreatedWebhookPayloadTimestamp"
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -237,81 +684,52 @@
         ]
       }
     },
-    "EndUserUpdatedWebhookPayloadTypeOneOfZero": {
-      "name": "EndUserUpdatedWebhookPayloadTypeOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "EndUserUpdatedWebhookPayloadType": {
-      "description": "The webhook event type description",
-      "name": "EndUserUpdatedWebhookPayloadType",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "EndUserUpdatedWebhookPayloadTypeOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "EndUserUpdatedWebhookPayloadTypeOneOfZero"
-            }
-          }
-        ]
-      }
-    },
-    "EndUserUpdatedWebhookPayloadTimestampOneOfZero": {
-      "name": "EndUserUpdatedWebhookPayloadTimestampOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "EndUserUpdatedWebhookPayloadTimestamp": {
-      "description": "The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.",
-      "name": "EndUserUpdatedWebhookPayloadTimestamp",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "EndUserUpdatedWebhookPayloadTimestampOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "EndUserUpdatedWebhookPayloadTimestampOneOfZero"
-            }
-          }
-        ]
-      }
-    },
-    "EndUserUpdatedWebhookPayloadDataOneOfZero": {
-      "name": "EndUserUpdatedWebhookPayloadDataOneOfZero",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "EndUserUpdatedWebhookPayloadData": {
       "description": "The webhook event data",
       "name": "EndUserUpdatedWebhookPayloadData",
       "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
+        "type": "object",
+        "extends": [
+          "EndUser"
+        ],
+        "properties": [
           {
-            "typeName": "EndUserUpdatedWebhookPayloadDataOneOfZero",
-            "type": {
-              "type": "id",
-              "value": "EndUserUpdatedWebhookPayloadDataOneOfZero"
+            "description": "The unique Ada-generated ID for the end user",
+            "key": "end_user_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The date and time the end user was created",
+            "key": "created_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The date and time the end user was updated",
+            "key": "updated_at",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -329,8 +747,10 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "EndUserUpdatedWebhookPayloadType"
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -340,8 +760,10 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "EndUserUpdatedWebhookPayloadTimestamp"
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -770,18 +1192,82 @@
               "path": "/end-users/v1",
               "pathParameters": {},
               "queryParameters": {
-                "cursor": "foo",
-                "limit": 42
+                "cursor": "65a17e3f43bec88e2792d0eb",
+                "limit": 8
               },
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "end_users": [
+                    {
+                      "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                      "profile": {
+                        "first_name": "Ada",
+                        "last_name": "Lovelace",
+                        "email": "ada.lovelace@ada.cx",
+                        "language": "en-US",
+                        "metadata": {},
+                        "system_properties": {
+                          "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                          "device": "macos",
+                          "browser": "Chrome",
+                          "browser_version": "119.0.0.0",
+                          "introshown": false,
+                          "last_answer_id": "650071321ef45533437f6f29",
+                          "last_question_asked": "What is my account balance?",
+                          "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                          "sunshine_conversation_id": "12345abc",
+                          "sunshine_end_user_channel": "whatsapp",
+                          "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                          "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a"
+                        }
+                      },
+                      "created_at": "2023-12-08T19:06:04.890000",
+                      "updated_at": "2023-12-08T19:06:04.890000"
+                    }
+                  ],
+                  "meta": {
+                    "next_page_url": "https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb"
+                  }
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "end_users": [
+                    {
+                      "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                      "profile": {
+                        "first_name": "Ada",
+                        "last_name": "Lovelace",
+                        "email": "ada.lovelace@ada.cx",
+                        "language": "en-US",
+                        "metadata": {},
+                        "system_properties": {
+                          "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                          "device": "macos",
+                          "browser": "Chrome",
+                          "browser_version": "119.0.0.0",
+                          "introshown": false,
+                          "last_answer_id": "650071321ef45533437f6f29",
+                          "last_question_asked": "What is my account balance?",
+                          "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                          "sunshine_conversation_id": "12345abc",
+                          "sunshine_end_user_channel": "whatsapp",
+                          "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                          "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a"
+                        }
+                      },
+                      "created_at": "2023-12-08T19:06:04.890000",
+                      "updated_at": "2023-12-08T19:06:04.890000"
+                    }
+                  ],
+                  "meta": {
+                    "next_page_url": "https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb"
+                  }
+                }
               }
             }
           ],

@@ -7906,19 +7906,21 @@
               "path": "/artifacts.locate",
               "pathParameters": {},
               "queryParameters": {
-                "id": "foo"
+                "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>"
               },
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "expires_at": "foo",
                   "url": "foo"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "expires_at": "foo",
                   "url": "foo"
                 }
               }
@@ -8009,7 +8011,7 @@
                       "value": "foo"
                     }
                   ],
-                  "id": "foo",
+                  "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
                   "url": "foo"
                 }
               },
@@ -8022,7 +8024,7 @@
                       "value": "foo"
                     }
                   ],
-                  "id": "foo",
+                  "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
                   "url": "foo"
                 }
               }
@@ -8114,7 +8116,10 @@
                 "type": "json",
                 "value": {
                   "access_token": "foo",
+                  "client_id": "foo",
                   "expires_in": 42,
+                  "refresh_token": "foo",
+                  "scope": "foo",
                   "token_type": "bearer"
                 }
               },
@@ -8122,7 +8127,10 @@
                 "type": "json",
                 "value": {
                   "access_token": "foo",
+                  "client_id": "foo",
                   "expires_in": 42,
+                  "refresh_token": "foo",
+                  "scope": "foo",
                   "token_type": "bearer"
                 }
               }
@@ -8262,7 +8270,26 @@
                 "type": "json",
                 "value": {
                   "token": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "client_id": "foo",
+                    "expires_at": "foo",
+                    "issued_at": "foo",
+                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                    "scopes": [
+                      "foo"
+                    ],
+                    "status": "active",
+                    "subject": "foo",
+                    "token_hint": "foo"
                   }
                 }
               },
@@ -8270,7 +8297,26 @@
                 "type": "json",
                 "value": {
                   "token": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "client_id": "foo",
+                    "expires_at": "foo",
+                    "issued_at": "foo",
+                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                    "scopes": [
+                      "foo"
+                    ],
+                    "status": "active",
+                    "subject": "foo",
+                    "token_hint": "foo"
                   }
                 }
               }
@@ -8377,7 +8423,26 @@
                 "value": {
                   "tokens": [
                     {
-                      "id": "foo"
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "client_id": "foo",
+                      "expires_at": "foo",
+                      "issued_at": "foo",
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "scopes": [
+                        "foo"
+                      ],
+                      "status": "active",
+                      "subject": "foo",
+                      "token_hint": "foo"
                     }
                   ]
                 }
@@ -8387,7 +8452,26 @@
                 "value": {
                   "tokens": [
                     {
-                      "id": "foo"
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "client_id": "foo",
+                      "expires_at": "foo",
+                      "issued_at": "foo",
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "scopes": [
+                        "foo"
+                      ],
+                      "status": "active",
+                      "subject": "foo",
+                      "token_hint": "foo"
                     }
                   ]
                 }
@@ -8539,7 +8623,26 @@
                 "type": "json",
                 "value": {
                   "token": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "client_id": "foo",
+                    "expires_at": "foo",
+                    "issued_at": "foo",
+                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                    "scopes": [
+                      "foo"
+                    ],
+                    "status": "active",
+                    "subject": "foo",
+                    "token_hint": "foo"
                   }
                 }
               },
@@ -8547,7 +8650,26 @@
                 "type": "json",
                 "value": {
                   "token": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "client_id": "foo",
+                    "expires_at": "foo",
+                    "issued_at": "foo",
+                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                    "scopes": [
+                      "foo"
+                    ],
+                    "status": "active",
+                    "subject": "foo",
+                    "token_hint": "foo"
                   }
                 }
               }
@@ -8643,6 +8765,8 @@
                 "type": "json",
                 "value": {
                   "auth_connection": {
+                    "display_name": "foo",
+                    "enabled": true,
                     "id": "foo",
                     "type": "google_apps"
                   }
@@ -8652,6 +8776,8 @@
                 "type": "json",
                 "value": {
                   "auth_connection": {
+                    "display_name": "foo",
+                    "enabled": true,
                     "id": "foo",
                     "type": "google_apps"
                   }
@@ -8797,6 +8923,8 @@
                 "type": "json",
                 "value": {
                   "auth_connection": {
+                    "display_name": "foo",
+                    "enabled": true,
                     "id": "foo",
                     "type": "google_apps"
                   }
@@ -8806,6 +8934,8 @@
                 "type": "json",
                 "value": {
                   "auth_connection": {
+                    "display_name": "foo",
+                    "enabled": true,
                     "id": "foo",
                     "type": "google_apps"
                   }
@@ -8872,6 +9002,8 @@
                 "value": {
                   "auth_connections": [
                     {
+                      "display_name": "foo",
+                      "enabled": true,
                       "id": "foo",
                       "type": "google_apps"
                     }
@@ -8883,6 +9015,8 @@
                 "value": {
                   "auth_connections": [
                     {
+                      "display_name": "foo",
+                      "enabled": true,
                       "id": "foo",
                       "type": "google_apps"
                     }
@@ -9040,6 +9174,8 @@
                 "type": "json",
                 "value": {
                   "auth_connection": {
+                    "display_name": "foo",
+                    "enabled": true,
                     "id": "foo",
                     "type": "google_apps"
                   }
@@ -9049,6 +9185,8 @@
                 "type": "json",
                 "value": {
                   "auth_connection": {
+                    "display_name": "foo",
+                    "enabled": true,
                     "id": "foo",
                     "type": "google_apps"
                   }
@@ -9222,9 +9360,34 @@
                 "value": {
                   "dev_users": [
                     {
-                      "id": "foo"
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "phone_numbers": [
+                        "foo"
+                      ],
+                      "state": "active",
+                      "external_identities": [
+                        {}
+                      ]
                     }
-                  ]
+                  ],
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo"
                 }
               },
               "responseBodyV3": {
@@ -9232,9 +9395,34 @@
                 "value": {
                   "dev_users": [
                     {
-                      "id": "foo"
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "phone_numbers": [
+                        "foo"
+                      ],
+                      "state": "active",
+                      "external_identities": [
+                        {}
+                      ]
                     }
-                  ]
+                  ],
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo"
                 }
               }
             }
@@ -9297,7 +9485,30 @@
                 "type": "json",
                 "value": {
                   "dev_user": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "phone_numbers": [
+                      "foo"
+                    ],
+                    "state": "active",
+                    "external_identities": [
+                      {}
+                    ]
                   }
                 }
               },
@@ -9305,7 +9516,30 @@
                 "type": "json",
                 "value": {
                   "dev_user": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "display_picture": {
+                      "display_id": "foo",
+                      "id": "foo"
+                    },
+                    "email": "foo",
+                    "full_name": "foo",
+                    "phone_numbers": [
+                      "foo"
+                    ],
+                    "state": "active",
+                    "external_identities": [
+                      {}
+                    ]
                   }
                 }
               }
@@ -9490,12 +9724,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
                 }
               },
               "responseStatusCode": 200,
@@ -9572,7 +9806,7 @@
               "path": "/parts.get",
               "pathParameters": {},
               "queryParameters": {
-                "id": "foo"
+                "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -9767,21 +10001,25 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
                   "parts": [
                     {
                       "type": "capability"
                     }
-                  ]
+                  ],
+                  "prev_cursor": "foo"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
                   "parts": [
                     {
                       "type": "capability"
                     }
-                  ]
+                  ],
+                  "prev_cursor": "foo"
                 }
               }
             }
@@ -9853,13 +10091,13 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo",
+                "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 "type": "capability"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                   "type": "capability"
                 }
               },
@@ -9972,7 +10210,20 @@
                 "type": "json",
                 "value": {
                   "rev_org": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "description": "foo",
+                    "domain": "foo",
+                    "external_ref": "foo"
                   }
                 }
               },
@@ -9980,7 +10231,20 @@
                 "type": "json",
                 "value": {
                   "rev_org": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "description": "foo",
+                    "domain": "foo",
+                    "external_ref": "foo"
                   }
                 }
               }
@@ -10053,12 +10317,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
                 }
               },
               "responseStatusCode": 200,
@@ -10135,7 +10399,7 @@
               "path": "/rev-orgs.get",
               "pathParameters": {},
               "queryParameters": {
-                "id": "foo"
+                "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -10143,7 +10407,20 @@
                 "type": "json",
                 "value": {
                   "rev_org": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "description": "foo",
+                    "domain": "foo",
+                    "external_ref": "foo"
                   }
                 }
               },
@@ -10151,7 +10428,20 @@
                 "type": "json",
                 "value": {
                   "rev_org": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "description": "foo",
+                    "domain": "foo",
+                    "external_ref": "foo"
                   }
                 }
               }
@@ -10373,9 +10663,24 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo",
                   "rev_orgs": [
                     {
-                      "id": "foo"
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "display_name": "foo",
+                      "description": "foo",
+                      "domain": "foo",
+                      "external_ref": "foo"
                     }
                   ]
                 }
@@ -10383,9 +10688,24 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo",
                   "rev_orgs": [
                     {
-                      "id": "foo"
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "display_name": "foo",
+                      "description": "foo",
+                      "domain": "foo",
+                      "external_ref": "foo"
                     }
                   ]
                 }
@@ -10459,12 +10779,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>"
                 }
               },
               "responseStatusCode": 200,
@@ -10472,7 +10792,20 @@
                 "type": "json",
                 "value": {
                   "rev_org": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "description": "foo",
+                    "domain": "foo",
+                    "external_ref": "foo"
                   }
                 }
               },
@@ -10480,7 +10813,20 @@
                 "type": "json",
                 "value": {
                   "rev_org": {
-                    "id": "foo"
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "display_name": "foo",
+                    "description": "foo",
+                    "domain": "foo",
+                    "external_ref": "foo"
                   }
                 }
               }
@@ -10576,7 +10922,20 @@
                 "type": "json",
                 "value": {
                   "tag": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "allowed_values": [
+                      "foo"
+                    ],
+                    "description": "foo",
                     "name": "foo"
                   }
                 }
@@ -10585,7 +10944,20 @@
                 "type": "json",
                 "value": {
                   "tag": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "allowed_values": [
+                      "foo"
+                    ],
+                    "description": "foo",
                     "name": "foo"
                   }
                 }
@@ -10659,12 +11031,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>"
                 }
               },
               "responseStatusCode": 200,
@@ -10741,7 +11113,7 @@
               "path": "/tags.get",
               "pathParameters": {},
               "queryParameters": {
-                "id": "foo"
+                "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -10749,7 +11121,20 @@
                 "type": "json",
                 "value": {
                   "tag": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "allowed_values": [
+                      "foo"
+                    ],
+                    "description": "foo",
                     "name": "foo"
                   }
                 }
@@ -10758,7 +11143,20 @@
                 "type": "json",
                 "value": {
                   "tag": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "allowed_values": [
+                      "foo"
+                    ],
+                    "description": "foo",
                     "name": "foo"
                   }
                 }
@@ -10864,9 +11262,24 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo",
                   "tags": [
                     {
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
                       "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "allowed_values": [
+                        "foo"
+                      ],
+                      "description": "foo",
                       "name": "foo"
                     }
                   ]
@@ -10875,9 +11288,24 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo",
                   "tags": [
                     {
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
                       "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "allowed_values": [
+                        "foo"
+                      ],
+                      "description": "foo",
                       "name": "foo"
                     }
                   ]
@@ -10952,12 +11380,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>"
                 }
               },
               "responseStatusCode": 200,
@@ -10965,7 +11393,20 @@
                 "type": "json",
                 "value": {
                   "tag": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "allowed_values": [
+                      "foo"
+                    ],
+                    "description": "foo",
                     "name": "foo"
                   }
                 }
@@ -10974,7 +11415,20 @@
                 "type": "json",
                 "value": {
                   "tag": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "allowed_values": [
+                      "foo"
+                    ],
+                    "description": "foo",
                     "name": "foo"
                   }
                 }
@@ -11058,13 +11512,13 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "object": "foo",
+                "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 "type": "timeline_comment"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "object": "foo",
+                  "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                   "type": "timeline_comment"
                 }
               },
@@ -11272,7 +11726,7 @@
               "path": "/timeline-entries.list",
               "pathParameters": {},
               "queryParameters": {
-                "object": "foo",
+                "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 "cursor": "foo",
                 "limit": 42,
                 "mode": "after"
@@ -11282,6 +11736,8 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo",
                   "timeline_entries": [
                     {
                       "type": "timeline_comment"
@@ -11292,6 +11748,8 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo",
                   "timeline_entries": [
                     {
                       "type": "timeline_comment"
@@ -11487,7 +11945,19 @@
                 "type": "json",
                 "value": {
                   "webhook": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "event_types": [
+                      "part_created"
+                    ],
                     "secret": "foo",
                     "status": "active",
                     "url": "foo"
@@ -11498,7 +11968,19 @@
                 "type": "json",
                 "value": {
                   "webhook": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "event_types": [
+                      "part_created"
+                    ],
                     "secret": "foo",
                     "status": "active",
                     "url": "foo"
@@ -11574,12 +12056,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>"
                 }
               },
               "responseStatusCode": 200,
@@ -11656,7 +12138,7 @@
               "path": "/webhooks.get",
               "pathParameters": {},
               "queryParameters": {
-                "id": "foo"
+                "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -11664,7 +12146,19 @@
                 "type": "json",
                 "value": {
                   "webhook": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "event_types": [
+                      "part_created"
+                    ],
                     "secret": "foo",
                     "status": "active",
                     "url": "foo"
@@ -11675,7 +12169,19 @@
                 "type": "json",
                 "value": {
                   "webhook": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "event_types": [
+                      "part_created"
+                    ],
                     "secret": "foo",
                     "status": "active",
                     "url": "foo"
@@ -11743,7 +12249,19 @@
                 "value": {
                   "webhooks": [
                     {
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
                       "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "event_types": [
+                        "part_created"
+                      ],
                       "secret": "foo",
                       "status": "active",
                       "url": "foo"
@@ -11756,7 +12274,19 @@
                 "value": {
                   "webhooks": [
                     {
+                      "created_by": {
+                        "type": "dev_user"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
                       "id": "foo",
+                      "modified_by": {
+                        "type": "dev_user"
+                      },
+                      "modified_date": "foo",
+                      "event_types": [
+                        "part_created"
+                      ],
                       "secret": "foo",
                       "status": "active",
                       "url": "foo"
@@ -11833,12 +12363,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>"
                 }
               },
               "responseStatusCode": 200,
@@ -11846,7 +12376,19 @@
                 "type": "json",
                 "value": {
                   "webhook": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "event_types": [
+                      "part_created"
+                    ],
                     "secret": "foo",
                     "status": "active",
                     "url": "foo"
@@ -11857,7 +12399,19 @@
                 "type": "json",
                 "value": {
                   "webhook": {
+                    "created_by": {
+                      "type": "dev_user"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
                     "id": "foo",
+                    "modified_by": {
+                      "type": "dev_user"
+                    },
+                    "modified_date": "foo",
+                    "event_types": [
+                      "part_created"
+                    ],
                     "secret": "foo",
                     "status": "active",
                     "url": "foo"
@@ -11943,7 +12497,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "applies_to_part": "foo",
+                "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 "owned_by": [
                   "foo"
                 ],
@@ -11953,7 +12507,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "applies_to_part": "foo",
+                  "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                   "owned_by": [
                     "foo"
                   ],
@@ -12047,12 +12601,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>"
                 }
               },
               "responseStatusCode": 200,
@@ -12386,7 +12940,7 @@
               "path": "/works.get",
               "pathParameters": {},
               "queryParameters": {
-                "id": "foo"
+                "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -12672,6 +13226,8 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo",
                   "works": [
                     {
                       "type": "issue"
@@ -12682,6 +13238,8 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "next_cursor": "foo",
+                  "prev_cursor": "foo",
                   "works": [
                     {
                       "type": "issue"
@@ -12758,13 +13316,13 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo",
+                "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                 "type": "issue"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                   "type": "issue"
                 }
               },

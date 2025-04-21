@@ -529,7 +529,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
+                "name": "doggie",
                 "photoUrls": [
                   "foo"
                 ]
@@ -537,7 +537,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "name": "doggie",
                   "photoUrls": [
                     "foo"
                   ]
@@ -547,19 +547,43 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -633,7 +657,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
+                "name": "doggie",
                 "photoUrls": [
                   "foo"
                 ]
@@ -641,7 +665,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "name": "doggie",
                   "photoUrls": [
                     "foo"
                   ]
@@ -651,19 +675,43 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -743,10 +791,22 @@
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
+                    "id": 10,
+                    "name": "doggie",
+                    "category": {
+                      "id": 1,
+                      "name": "Dogs"
+                    },
                     "photoUrls": [
                       "foo"
-                    ]
+                    ],
+                    "tags": [
+                      {
+                        "id": 42,
+                        "name": "foo"
+                      }
+                    ],
+                    "status": "available"
                   }
                 ]
               },
@@ -754,10 +814,22 @@
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
+                    "id": 10,
+                    "name": "doggie",
+                    "category": {
+                      "id": 1,
+                      "name": "Dogs"
+                    },
                     "photoUrls": [
                       "foo"
-                    ]
+                    ],
+                    "tags": [
+                      {
+                        "id": 42,
+                        "name": "foo"
+                      }
+                    ],
+                    "status": "available"
                   }
                 ]
               }
@@ -845,10 +917,22 @@
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
+                    "id": 10,
+                    "name": "doggie",
+                    "category": {
+                      "id": 1,
+                      "name": "Dogs"
+                    },
                     "photoUrls": [
                       "foo"
-                    ]
+                    ],
+                    "tags": [
+                      {
+                        "id": 42,
+                        "name": "foo"
+                      }
+                    ],
+                    "status": "available"
                   }
                 ]
               },
@@ -856,10 +940,22 @@
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
+                    "id": 10,
+                    "name": "doggie",
+                    "category": {
+                      "id": 1,
+                      "name": "Dogs"
+                    },
                     "photoUrls": [
                       "foo"
-                    ]
+                    ],
+                    "tags": [
+                      {
+                        "id": 42,
+                        "name": "foo"
+                      }
+                    ],
+                    "status": "available"
                   }
                 ]
               }
@@ -943,19 +1039,43 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -1068,19 +1188,43 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -1260,11 +1404,19 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "code": 42,
+                  "type": "foo",
+                  "message": "foo"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "code": 42,
+                  "type": "foo",
+                  "message": "foo"
+                }
               }
             }
           ],
@@ -1427,11 +1579,25 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "petId": 198772,
+                  "quantity": 7,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": true
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "petId": 198772,
+                  "quantity": 7,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": true
+                }
               }
             }
           ],
@@ -1512,11 +1678,25 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "petId": 198772,
+                  "quantity": 7,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": true
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "petId": 198772,
+                  "quantity": 7,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": true
+                }
               }
             }
           ],
@@ -1672,11 +1852,29 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               }
             }
           ],
@@ -1755,11 +1953,29 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               }
             }
           ],
@@ -1981,11 +2197,29 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               }
             }
           ],
@@ -2250,7 +2484,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
+                "name": "doggie",
                 "photoUrls": [
                   "foo"
                 ]
@@ -2258,7 +2492,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "name": "doggie",
                   "photoUrls": [
                     "foo"
                   ]
@@ -2268,19 +2502,43 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -2354,7 +2612,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
+                "name": "doggie",
                 "photoUrls": [
                   "foo"
                 ]
@@ -2362,7 +2620,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "name": "doggie",
                   "photoUrls": [
                     "foo"
                   ]
@@ -2372,19 +2630,43 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -2464,10 +2746,22 @@
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
+                    "id": 10,
+                    "name": "doggie",
+                    "category": {
+                      "id": 1,
+                      "name": "Dogs"
+                    },
                     "photoUrls": [
                       "foo"
-                    ]
+                    ],
+                    "tags": [
+                      {
+                        "id": 42,
+                        "name": "foo"
+                      }
+                    ],
+                    "status": "available"
                   }
                 ]
               },
@@ -2475,10 +2769,22 @@
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
+                    "id": 10,
+                    "name": "doggie",
+                    "category": {
+                      "id": 1,
+                      "name": "Dogs"
+                    },
                     "photoUrls": [
                       "foo"
-                    ]
+                    ],
+                    "tags": [
+                      {
+                        "id": 42,
+                        "name": "foo"
+                      }
+                    ],
+                    "status": "available"
                   }
                 ]
               }
@@ -2566,10 +2872,22 @@
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
+                    "id": 10,
+                    "name": "doggie",
+                    "category": {
+                      "id": 1,
+                      "name": "Dogs"
+                    },
                     "photoUrls": [
                       "foo"
-                    ]
+                    ],
+                    "tags": [
+                      {
+                        "id": 42,
+                        "name": "foo"
+                      }
+                    ],
+                    "status": "available"
                   }
                 ]
               },
@@ -2577,10 +2895,22 @@
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
+                    "id": 10,
+                    "name": "doggie",
+                    "category": {
+                      "id": 1,
+                      "name": "Dogs"
+                    },
                     "photoUrls": [
                       "foo"
-                    ]
+                    ],
+                    "tags": [
+                      {
+                        "id": 42,
+                        "name": "foo"
+                      }
+                    ],
+                    "status": "available"
                   }
                 ]
               }
@@ -2664,19 +2994,43 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -2789,19 +3143,43 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "foo"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -2981,11 +3359,19 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "code": 42,
+                  "type": "foo",
+                  "message": "foo"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "code": 42,
+                  "type": "foo",
+                  "message": "foo"
+                }
               }
             }
           ],
@@ -3148,11 +3534,25 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "petId": 198772,
+                  "quantity": 7,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": true
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "petId": 198772,
+                  "quantity": 7,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": true
+                }
               }
             }
           ],
@@ -3233,11 +3633,25 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "petId": 198772,
+                  "quantity": 7,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": true
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "petId": 198772,
+                  "quantity": 7,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": true
+                }
               }
             }
           ],
@@ -3393,11 +3807,29 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               }
             }
           ],
@@ -3476,11 +3908,29 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               }
             }
           ],
@@ -3702,11 +4152,29 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": 10,
+                  "username": "theUser",
+                  "firstName": "John",
+                  "lastName": "James",
+                  "email": "john@email.com",
+                  "password": "12345",
+                  "phone": "12345",
+                  "userStatus": 1
+                }
               }
             }
           ],

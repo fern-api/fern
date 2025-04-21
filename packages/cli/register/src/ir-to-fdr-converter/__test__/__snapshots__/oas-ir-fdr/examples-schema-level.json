@@ -177,9 +177,15 @@
               "type": "json",
               "value": [
                 {
-                  "species": "foo",
-                  "height": 42,
-                  "id": "foo"
+                  "species": "Ferntacular",
+                  "height": 25.4,
+                  "age": 50,
+                  "location": {
+                    "latitude": 42,
+                    "longitude": 42
+                  },
+                  "id": "foo",
+                  "plantedDate": "foo"
                 }
               ]
             },
@@ -187,9 +193,15 @@
               "type": "json",
               "value": [
                 {
-                  "species": "foo",
-                  "height": 42,
-                  "id": "foo"
+                  "species": "Ferntacular",
+                  "height": 25.4,
+                  "age": 50,
+                  "location": {
+                    "latitude": 42,
+                    "longitude": 42
+                  },
+                  "id": "foo",
+                  "plantedDate": "foo"
                 }
               ]
             }
@@ -278,16 +290,16 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "species": "foo",
-                "height": 42,
+                "species": "Ferntacular",
+                "height": 25.4,
                 "id": "foo"
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "species": "foo",
-                "height": 42,
+                "species": "Ferntacular",
+                "height": 25.4,
                 "id": "foo"
               }
             }
@@ -363,16 +375,16 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "species": "foo",
-                "height": 42,
+                "species": "Ferntacular",
+                "height": 25.4,
                 "id": "foo"
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "species": "foo",
-                "height": 42,
+                "species": "Ferntacular",
+                "height": 25.4,
                 "id": "foo"
               }
             }

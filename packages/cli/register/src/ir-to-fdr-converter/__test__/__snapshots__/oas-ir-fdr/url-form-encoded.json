@@ -112,24 +112,30 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "username": "foo",
-              "email": "foo"
+              "username": "johndoe",
+              "email": "john@example.com"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "username": "foo",
-                "email": "foo"
+                "username": "johndoe",
+                "email": "john@example.com"
               }
             },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "status": "success",
+                "message": "Data received successfully."
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "status": "success",
+                "message": "Data received successfully."
+              }
             }
           }
         ],

@@ -1636,11 +1636,43 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": "foo",
+                    "carrier": "foo",
+                    "firstName": "foo",
+                    "lastName": "foo",
+                    "phone": "foo",
+                    "email": "foo",
+                    "policies": [
+                      "foo"
+                    ],
+                    "createdAt": "foo",
+                    "modifiedAt": "foo",
+                    "refreshedAt": "foo"
+                  }
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": "foo",
+                    "carrier": "foo",
+                    "firstName": "foo",
+                    "lastName": "foo",
+                    "phone": "foo",
+                    "email": "foo",
+                    "policies": [
+                      "foo"
+                    ],
+                    "createdAt": "foo",
+                    "modifiedAt": "foo",
+                    "refreshedAt": "foo"
+                  }
+                }
               }
             }
           ],
@@ -1774,11 +1806,159 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": "foo",
+                    "account": "foo",
+                    "type": "auto",
+                    "carrier": "foo",
+                    "policyNumber": "foo",
+                    "isActive": true,
+                    "effectiveDate": "foo",
+                    "expirationDate": "foo",
+                    "address": {
+                      "addressLine1": "foo",
+                      "country": "foo",
+                      "addressLine2": "foo",
+                      "state": "foo",
+                      "city": "foo",
+                      "postalCode": "foo"
+                    },
+                    "coverages": [
+                      {
+                        "property": "foo",
+                        "code": "BI",
+                        "label": "foo",
+                        "limitPerPerson": 42,
+                        "limitPerAccident": 42,
+                        "deductible": 42
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "id": "foo",
+                        "type": "vehicle",
+                        "data": {
+                          "bodyStyle": "foo",
+                          "vin": "foo",
+                          "model": "foo",
+                          "year": "foo",
+                          "make": "foo"
+                        }
+                      }
+                    ],
+                    "insureds": [
+                      {
+                        "property": "foo",
+                        "firstName": "foo",
+                        "lastName": "foo",
+                        "dateOfBirthYear": "foo",
+                        "licenseNo": "foo",
+                        "licenseState": "foo",
+                        "licenseStatus": "foo",
+                        "dateOfBirth": "foo",
+                        "type": "foo"
+                      }
+                    ],
+                    "thirdParties": [
+                      {
+                        "property": "foo",
+                        "type": "lienholder",
+                        "name": "foo",
+                        "address": {
+                          "addressLine1": "foo",
+                          "country": "foo",
+                          "addressLine2": "foo",
+                          "state": "foo",
+                          "city": "foo",
+                          "postalCode": "foo"
+                        }
+                      }
+                    ],
+                    "createdAt": "foo",
+                    "modifiedAt": "foo",
+                    "refreshedAt": "foo"
+                  }
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": "foo",
+                    "account": "foo",
+                    "type": "auto",
+                    "carrier": "foo",
+                    "policyNumber": "foo",
+                    "isActive": true,
+                    "effectiveDate": "foo",
+                    "expirationDate": "foo",
+                    "address": {
+                      "addressLine1": "foo",
+                      "country": "foo",
+                      "addressLine2": "foo",
+                      "state": "foo",
+                      "city": "foo",
+                      "postalCode": "foo"
+                    },
+                    "coverages": [
+                      {
+                        "property": "foo",
+                        "code": "BI",
+                        "label": "foo",
+                        "limitPerPerson": 42,
+                        "limitPerAccident": 42,
+                        "deductible": 42
+                      }
+                    ],
+                    "properties": [
+                      {
+                        "id": "foo",
+                        "type": "vehicle",
+                        "data": {
+                          "bodyStyle": "foo",
+                          "vin": "foo",
+                          "model": "foo",
+                          "year": "foo",
+                          "make": "foo"
+                        }
+                      }
+                    ],
+                    "insureds": [
+                      {
+                        "property": "foo",
+                        "firstName": "foo",
+                        "lastName": "foo",
+                        "dateOfBirthYear": "foo",
+                        "licenseNo": "foo",
+                        "licenseState": "foo",
+                        "licenseStatus": "foo",
+                        "dateOfBirth": "foo",
+                        "type": "foo"
+                      }
+                    ],
+                    "thirdParties": [
+                      {
+                        "property": "foo",
+                        "type": "lienholder",
+                        "name": "foo",
+                        "address": {
+                          "addressLine1": "foo",
+                          "country": "foo",
+                          "addressLine2": "foo",
+                          "state": "foo",
+                          "city": "foo",
+                          "postalCode": "foo"
+                        }
+                      }
+                    ],
+                    "createdAt": "foo",
+                    "modifiedAt": "foo",
+                    "refreshedAt": "foo"
+                  }
+                }
               }
             }
           ],
@@ -1896,11 +2076,47 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": "foo",
+                    "name": "foo",
+                    "domain": "foo",
+                    "address": {
+                      "addressLine1": "foo",
+                      "country": "foo",
+                      "addressLine2": "foo",
+                      "state": "foo",
+                      "city": "foo",
+                      "postalCode": "foo"
+                    },
+                    "phone": "foo",
+                    "logoUrl": "foo",
+                    "modifiedAt": "foo"
+                  }
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": "foo",
+                    "name": "foo",
+                    "domain": "foo",
+                    "address": {
+                      "addressLine1": "foo",
+                      "country": "foo",
+                      "addressLine2": "foo",
+                      "state": "foo",
+                      "city": "foo",
+                      "postalCode": "foo"
+                    },
+                    "phone": "foo",
+                    "logoUrl": "foo",
+                    "modifiedAt": "foo"
+                  }
+                }
               }
             }
           ],
@@ -1988,11 +2204,51 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": "foo",
+                      "name": "foo",
+                      "domain": "foo",
+                      "address": {
+                        "addressLine1": "foo",
+                        "country": "foo",
+                        "addressLine2": "foo",
+                        "state": "foo",
+                        "city": "foo",
+                        "postalCode": "foo"
+                      },
+                      "phone": "foo",
+                      "logoUrl": "foo",
+                      "modifiedAt": "foo"
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": "foo",
+                      "name": "foo",
+                      "domain": "foo",
+                      "address": {
+                        "addressLine1": "foo",
+                        "country": "foo",
+                        "addressLine2": "foo",
+                        "state": "foo",
+                        "city": "foo",
+                        "postalCode": "foo"
+                      },
+                      "phone": "foo",
+                      "logoUrl": "foo",
+                      "modifiedAt": "foo"
+                    }
+                  ]
+                }
               }
             }
           ],

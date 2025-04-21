@@ -18867,14 +18867,14 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "title": "foo",
-                "author_id": 42
+                "title": "Thanks for everything",
+                "author_id": 1295
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "title": "foo",
-                  "author_id": 42
+                  "title": "Thanks for everything",
+                  "author_id": 1295
                 }
               },
               "responseStatusCode": 200,
@@ -19716,12 +19716,12 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "name": "foo"
+                "name": "collection 51"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo"
+                  "name": "collection 51"
                 }
               },
               "responseStatusCode": 200,
@@ -26140,12 +26140,12 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "name": "foo"
+                "name": "Independent"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo"
+                  "name": "Independent"
                 }
               },
               "responseStatusCode": 200,
@@ -26924,18 +26924,18 @@
               "requestBody": {
                 "from": {
                   "type": "lead",
-                  "id": "foo"
+                  "id": "536e564f316c83104c000020"
                 },
-                "body": "foo"
+                "body": "Hello"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "from": {
                     "type": "lead",
-                    "id": "foo"
+                    "id": "536e564f316c83104c000020"
                   },
-                  "body": "foo"
+                  "body": "Hello"
                 }
               },
               "responseStatusCode": 200,
@@ -28183,14 +28183,14 @@
               "requestBody": {
                 "message_type": "close",
                 "type": "admin",
-                "admin_id": "foo"
+                "admin_id": "12345"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "message_type": "close",
                   "type": "admin",
-                  "admin_id": "foo"
+                  "admin_id": "12345"
                 }
               },
               "responseStatusCode": 200,
@@ -28880,12 +28880,12 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "admin_id": "foo"
+                "admin_id": "5017690"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "admin_id": "foo"
+                  "admin_id": "5017690"
                 }
               },
               "responseStatusCode": 200,
@@ -28988,15 +28988,15 @@
               },
               "requestBody": {
                 "type": "conversation_part",
-                "conversation_id": "foo",
-                "conversation_part_id": "foo"
+                "conversation_id": "19894788788",
+                "conversation_part_id": "19381789428"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "conversation_part",
-                  "conversation_id": "foo",
-                  "conversation_part_id": "foo"
+                  "conversation_id": "19894788788",
+                  "conversation_part_id": "19381789428"
                 }
               },
               "responseStatusCode": 200,
@@ -29285,12 +29285,12 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "ticket_type_id": "foo"
+                "ticket_type_id": "1234"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "ticket_type_id": "foo"
+                  "ticket_type_id": "1234"
                 }
               },
               "responseStatusCode": 200,
@@ -30177,14 +30177,14 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "name": "foo",
+                "name": "My Data Attribute",
                 "model": "contact",
                 "data_type": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "name": "My Data Attribute",
                   "model": "contact",
                   "data_type": "string"
                 }
@@ -30806,14 +30806,14 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "created_at_after": 42,
-                "created_at_before": 42
+                "created_at_after": 1527811200,
+                "created_at_before": 1527811200
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "created_at_after": 42,
-                  "created_at_before": 42
+                  "created_at_after": 1527811200,
+                  "created_at_before": 1527811200
                 }
               },
               "responseStatusCode": 200,
@@ -31566,14 +31566,14 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "title": "foo",
-                "sender_id": 42
+                "title": "Halloween is here!",
+                "sender_id": 123
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "title": "foo",
-                  "sender_id": 42
+                  "title": "Halloween is here!",
+                  "sender_id": 123
                 }
               },
               "responseStatusCode": 200,
@@ -31905,14 +31905,14 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "title": "foo",
-                "sender_id": 42
+                "title": "Halloween is here!",
+                "sender_id": 123
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "title": "foo",
-                  "sender_id": 42
+                  "title": "Halloween is here!",
+                  "sender_id": 123
                 }
               },
               "responseStatusCode": 200,
@@ -32824,12 +32824,12 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "phone": "foo"
+                "phone": "+1 1234567890"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "phone": "foo"
+                  "phone": "+1 1234567890"
                 }
               },
               "responseStatusCode": 200,
@@ -33183,15 +33183,15 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "name": "foo",
-                "description": "foo",
+                "name": "Bug Priority",
+                "description": "Priority level of the bug",
                 "data_type": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "description": "foo",
+                  "name": "Bug Priority",
+                  "description": "Priority level of the bug",
                   "data_type": "string"
                 }
               },
@@ -33610,12 +33610,12 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "name": "foo"
+                "name": "Bug"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo"
+                  "name": "Bug"
                 }
               },
               "responseStatusCode": 200,
@@ -34054,7 +34054,7 @@
               "description": "",
               "path": "/tickets/",
               "pathParameters": {
-                "id": "foo"
+                "id": "123"
               },
               "queryParameters": {},
               "headers": {
@@ -34198,7 +34198,7 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "ticket_type_id": "foo",
+                "ticket_type_id": "1234",
                 "contacts": [
                   {}
                 ]
@@ -34206,7 +34206,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "ticket_type_id": "foo",
+                  "ticket_type_id": "1234",
                   "contacts": [
                     {}
                   ]
@@ -35815,14 +35815,14 @@
                 "Intercom-Version": "1.0"
               },
               "requestBody": {
-                "type": "foo",
+                "type": "user",
                 "user": {},
                 "visitor": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "type": "foo",
+                  "type": "user",
                   "user": {},
                   "visitor": {}
                 }

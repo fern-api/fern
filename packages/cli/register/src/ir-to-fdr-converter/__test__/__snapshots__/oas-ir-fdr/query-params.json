@@ -219,11 +219,19 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "results": [
+                  "foo"
+                ]
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "results": [
+                  "foo"
+                ]
+              }
             }
           }
         ],

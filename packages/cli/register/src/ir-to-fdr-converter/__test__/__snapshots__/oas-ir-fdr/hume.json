@@ -4963,8 +4963,17 @@
                   "user_id": "foo",
                   "job_id": "foo",
                   "request": {
+                    "models": null,
+                    "transcription": null,
+                    "urls": [
+                      "foo"
+                    ],
+                    "callback_url": "foo",
+                    "notify": true,
                     "files": [
                       {
+                        "filename": "foo",
+                        "content_type": "foo",
                         "md5sum": "foo"
                       }
                     ]
@@ -4978,8 +4987,17 @@
                   "user_id": "foo",
                   "job_id": "foo",
                   "request": {
+                    "models": null,
+                    "transcription": null,
+                    "urls": [
+                      "foo"
+                    ],
+                    "callback_url": "foo",
+                    "notify": true,
                     "files": [
                       {
+                        "filename": "foo",
+                        "content_type": "foo",
                         "md5sum": "foo"
                       }
                     ]
@@ -5288,8 +5306,17 @@
                   "user_id": "foo",
                   "job_id": "foo",
                   "request": {
+                    "models": null,
+                    "transcription": null,
+                    "urls": [
+                      "foo"
+                    ],
+                    "callback_url": "foo",
+                    "notify": true,
                     "files": [
                       {
+                        "filename": "foo",
+                        "content_type": "foo",
                         "md5sum": "foo"
                       }
                     ]
@@ -5305,8 +5332,17 @@
                   "user_id": "foo",
                   "job_id": "foo",
                   "request": {
+                    "models": null,
+                    "transcription": null,
+                    "urls": [
+                      "foo"
+                    ],
+                    "callback_url": "foo",
+                    "notify": true,
                     "files": [
                       {
+                        "filename": "foo",
+                        "content_type": "foo",
                         "md5sum": "foo"
                       }
                     ]
@@ -5485,7 +5521,29 @@
               "type": "json",
               "value": [
                 {
-                  "source": {}
+                  "source": {},
+                  "results": {
+                    "predictions": [
+                      {
+                        "file": "foo",
+                        "models": {
+                          "face": null,
+                          "burst": null,
+                          "prosody": null,
+                          "language": null,
+                          "ner": null,
+                          "facemesh": null
+                        }
+                      }
+                    ],
+                    "errors": [
+                      {
+                        "message": "foo",
+                        "file": "foo"
+                      }
+                    ]
+                  },
+                  "error": "foo"
                 }
               ]
             },
@@ -5493,7 +5551,29 @@
               "type": "json",
               "value": [
                 {
-                  "source": {}
+                  "source": {},
+                  "results": {
+                    "predictions": [
+                      {
+                        "file": "foo",
+                        "models": {
+                          "face": null,
+                          "burst": null,
+                          "prosody": null,
+                          "language": null,
+                          "ner": null,
+                          "facemesh": null
+                        }
+                      }
+                    ],
+                    "errors": [
+                      {
+                        "message": "foo",
+                        "file": "foo"
+                      }
+                    ]
+                  },
+                  "error": "foo"
                 }
               ]
             }

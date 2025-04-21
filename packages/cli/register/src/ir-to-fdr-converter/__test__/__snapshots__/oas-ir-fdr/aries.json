@@ -32972,13 +32972,25 @@
               "responseBody": {
                 "type": "json",
                 "value": [
-                  {}
+                  {
+                    "cred_info": {},
+                    "interval": {},
+                    "presentation_referents": [
+                      "1_age_uuid"
+                    ]
+                  }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": [
-                  {}
+                  {
+                    "cred_info": {},
+                    "interval": {},
+                    "presentation_referents": [
+                      "1_age_uuid"
+                    ]
+                  }
                 ]
               }
             }
@@ -34519,13 +34531,25 @@
               "responseBody": {
                 "type": "json",
                 "value": [
-                  {}
+                  {
+                    "cred_info": {},
+                    "interval": {},
+                    "presentation_referents": [
+                      "1_age_uuid"
+                    ]
+                  }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": [
-                  {}
+                  {
+                    "cred_info": {},
+                    "interval": {},
+                    "presentation_referents": [
+                      "1_age_uuid"
+                    ]
+                  }
                 ]
               }
             }

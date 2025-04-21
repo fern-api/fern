@@ -128,11 +128,19 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "status": "success",
+                "message": "foo",
+                "custom_fields": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "status": "success",
+                "message": "foo",
+                "custom_fields": {}
+              }
             }
           }
         ],
