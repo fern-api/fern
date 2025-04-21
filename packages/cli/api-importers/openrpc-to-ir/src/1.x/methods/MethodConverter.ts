@@ -138,7 +138,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 if (schema != null) {
                     jsonResponseBody = {
                         docs: resolvedResult.description,
-                        v2Examples: undefined,
+                        v2Examples: schema?.schema?.v2Examples,
                         responseBodyType: schema.type
                     };
                     inlinedTypes = {
