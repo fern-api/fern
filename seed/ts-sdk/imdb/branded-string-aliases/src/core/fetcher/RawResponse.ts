@@ -1,3 +1,5 @@
+import { Headers } from "./Headers";
+
 /**
  * The raw response from the fetch call excluding the body.
  */
