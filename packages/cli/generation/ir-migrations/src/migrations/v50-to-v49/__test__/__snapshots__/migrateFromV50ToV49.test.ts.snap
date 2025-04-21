@@ -143,7 +143,7 @@ exports[`migrateFromV50ToV49 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "291de79d",
+                "id": "356526a6",
                 "name": null,
                 "queryParameters": [
                   {

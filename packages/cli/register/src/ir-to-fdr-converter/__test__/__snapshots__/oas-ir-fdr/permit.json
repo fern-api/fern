@@ -7473,7 +7473,8 @@
                     "is_enterprise": true,
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "name": "foo",
+                    "settings": {}
                   }
                 ]
               },
@@ -7486,7 +7487,8 @@
                     "is_enterprise": true,
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "name": "foo",
+                    "settings": {}
                   }
                 ]
               }
@@ -7578,7 +7580,10 @@
                   "is_enterprise": true,
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "settings": {},
+                  "api_key_id": "foo",
+                  "api_key_secret": "foo"
                 }
               },
               "responseBodyV3": {
@@ -7589,7 +7594,10 @@
                   "is_enterprise": true,
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "settings": {},
+                  "api_key_id": "foo",
+                  "api_key_secret": "foo"
                 }
               }
             }
@@ -7677,7 +7685,8 @@
                   "is_enterprise": true,
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "settings": {}
                 }
               },
               "responseBodyV3": {
@@ -7688,7 +7697,8 @@
                   "is_enterprise": true,
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "settings": {}
                 }
               }
             }
@@ -7860,7 +7870,8 @@
                   "is_enterprise": true,
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "settings": {}
                 }
               },
               "responseBodyV3": {
@@ -7871,7 +7882,8 @@
                   "is_enterprise": true,
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "settings": {}
                 }
               }
             }
@@ -7938,7 +7950,8 @@
                   "is_enterprise": true,
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "settings": {}
                 }
               },
               "responseBodyV3": {
@@ -7949,7 +7962,8 @@
                   "is_enterprise": true,
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "settings": {}
                 }
               }
             }
@@ -8061,11 +8075,15 @@
                 "value": [
                   {
                     "key": "foo",
+                    "urn_namespace": "foo",
                     "id": "foo",
                     "organization_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "name": "foo",
+                    "description": "foo",
+                    "settings": {},
+                    "active_policy_repo_id": "foo"
                   }
                 ]
               },
@@ -8074,11 +8092,15 @@
                 "value": [
                   {
                     "key": "foo",
+                    "urn_namespace": "foo",
                     "id": "foo",
                     "organization_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "name": "foo",
+                    "description": "foo",
+                    "settings": {},
+                    "active_policy_repo_id": "foo"
                   }
                 ]
               }
@@ -8166,22 +8188,30 @@
                 "type": "json",
                 "value": {
                   "key": "foo",
+                  "urn_namespace": "foo",
                   "id": "foo",
                   "organization_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "settings": {},
+                  "active_policy_repo_id": "foo"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "key": "foo",
+                  "urn_namespace": "foo",
                   "id": "foo",
                   "organization_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "settings": {},
+                  "active_policy_repo_id": "foo"
                 }
               }
             }
@@ -8265,22 +8295,30 @@
                 "type": "json",
                 "value": {
                   "key": "foo",
+                  "urn_namespace": "foo",
                   "id": "foo",
                   "organization_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "settings": {},
+                  "active_policy_repo_id": "foo"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "key": "foo",
+                  "urn_namespace": "foo",
                   "id": "foo",
                   "organization_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "settings": {},
+                  "active_policy_repo_id": "foo"
                 }
               }
             }
@@ -8448,22 +8486,30 @@
                 "type": "json",
                 "value": {
                   "key": "foo",
+                  "urn_namespace": "foo",
                   "id": "foo",
                   "organization_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "settings": {},
+                  "active_policy_repo_id": "foo"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "key": "foo",
+                  "urn_namespace": "foo",
                   "id": "foo",
                   "organization_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "settings": {},
+                  "active_policy_repo_id": "foo"
                 }
               }
             }
@@ -8581,9 +8627,18 @@
                   "created_at": "foo",
                   "updated_at": "foo",
                   "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {},
                   "pdp_configs": [
                     {
                       "id": "foo",
+                      "name": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
                       "environment_id": "foo",
@@ -8602,10 +8657,17 @@
                         "id": "foo",
                         "email": "foo",
                         "email_verified": true,
+                        "name": "foo",
+                        "given_name": "foo",
+                        "family_name": "foo",
+                        "picture": "foo",
                         "is_superuser": true,
                         "is_onboarding": true,
                         "onboarding_step": "create_organization",
                         "created_at": "foo",
+                        "last_login": "foo",
+                        "last_ip": "foo",
+                        "logins_count": 42,
                         "identities": [
                           {
                             "user_id": "foo",
@@ -8616,12 +8678,31 @@
                             "auth0_info": {}
                           }
                         ],
+                        "invite": {
+                          "member_id": "foo",
+                          "email": "foo",
+                          "role": "admin",
+                          "id": "foo",
+                          "organization_id": "foo",
+                          "invite_code": "foo",
+                          "created_at": "foo",
+                          "status": "pending",
+                          "failed_reason": "foo"
+                        },
                         "settings": {},
                         "grants": [
                           {
                             "organization_id": "foo",
+                            "project_id": "foo",
+                            "environment_id": "foo",
                             "object_type": "org",
-                            "access_level": "admin"
+                            "access_level": "admin",
+                            "organization_key": "foo",
+                            "project_key": "foo",
+                            "environment_key": "foo",
+                            "organization_name": "foo",
+                            "project_name": "foo",
+                            "environment_name": "foo"
                           }
                         ]
                       }
@@ -8639,9 +8720,18 @@
                   "created_at": "foo",
                   "updated_at": "foo",
                   "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {},
                   "pdp_configs": [
                     {
                       "id": "foo",
+                      "name": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
                       "environment_id": "foo",
@@ -8660,10 +8750,17 @@
                         "id": "foo",
                         "email": "foo",
                         "email_verified": true,
+                        "name": "foo",
+                        "given_name": "foo",
+                        "family_name": "foo",
+                        "picture": "foo",
                         "is_superuser": true,
                         "is_onboarding": true,
                         "onboarding_step": "create_organization",
                         "created_at": "foo",
+                        "last_login": "foo",
+                        "last_ip": "foo",
+                        "logins_count": 42,
                         "identities": [
                           {
                             "user_id": "foo",
@@ -8674,12 +8771,31 @@
                             "auth0_info": {}
                           }
                         ],
+                        "invite": {
+                          "member_id": "foo",
+                          "email": "foo",
+                          "role": "admin",
+                          "id": "foo",
+                          "organization_id": "foo",
+                          "invite_code": "foo",
+                          "created_at": "foo",
+                          "status": "pending",
+                          "failed_reason": "foo"
+                        },
                         "settings": {},
                         "grants": [
                           {
                             "organization_id": "foo",
+                            "project_id": "foo",
+                            "environment_id": "foo",
                             "object_type": "org",
-                            "access_level": "admin"
+                            "access_level": "admin",
+                            "organization_key": "foo",
+                            "project_key": "foo",
+                            "environment_key": "foo",
+                            "organization_name": "foo",
+                            "project_name": "foo",
+                            "environment_name": "foo"
                           }
                         ]
                       }
@@ -8812,7 +8928,15 @@
                     "project_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "name": "foo",
+                    "description": "foo",
+                    "custom_branch_name": "foo",
+                    "jwks": {
+                      "keys": [
+                        {}
+                      ]
+                    },
+                    "settings": {}
                   }
                 ]
               },
@@ -8826,7 +8950,15 @@
                     "project_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "name": "foo",
+                    "description": "foo",
+                    "custom_branch_name": "foo",
+                    "jwks": {
+                      "keys": [
+                        {}
+                      ]
+                    },
+                    "settings": {}
                   }
                 ]
               }
@@ -8940,7 +9072,15 @@
                   "project_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
                 }
               },
               "responseBodyV3": {
@@ -8952,7 +9092,15 @@
                   "project_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
                 }
               }
             }
@@ -9060,7 +9208,15 @@
                   "project_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
                 }
               },
               "responseBodyV3": {
@@ -9072,7 +9228,15 @@
                   "project_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
                 }
               }
             }
@@ -9283,7 +9447,15 @@
                   "project_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
                 }
               },
               "responseBodyV3": {
@@ -9295,7 +9467,15 @@
                   "project_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
                 }
               }
             }
@@ -9425,7 +9605,15 @@
                   "project_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
                 }
               },
               "responseBodyV3": {
@@ -9437,7 +9625,15 @@
                   "project_id": "foo",
                   "created_at": "foo",
                   "updated_at": "foo",
-                  "name": "foo"
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
                 }
               }
             }
@@ -9637,10 +9833,16 @@
                       "environment_id": "foo",
                       "created_at": "foo",
                       "updated_at": "foo",
-                      "name": "foo"
+                      "name": "foo",
+                      "urn": "foo",
+                      "description": "foo",
+                      "actions": {},
+                      "attributes": {},
+                      "action_groups": {}
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               },
               "responseBodyV3": {
@@ -9655,10 +9857,16 @@
                       "environment_id": "foo",
                       "created_at": "foo",
                       "updated_at": "foo",
-                      "name": "foo"
+                      "name": "foo",
+                      "urn": "foo",
+                      "description": "foo",
+                      "actions": {},
+                      "attributes": {},
+                      "action_groups": {}
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               }
             }
@@ -10774,6 +10982,8 @@
                 "value": [
                   {
                     "name": "foo",
+                    "description": "foo",
+                    "attributes": {},
                     "key": "foo",
                     "id": "foo",
                     "permission_name": "foo",
@@ -10791,6 +11001,8 @@
                 "value": [
                   {
                     "name": "foo",
+                    "description": "foo",
+                    "attributes": {},
                     "key": "foo",
                     "id": "foo",
                     "permission_name": "foo",
@@ -11621,6 +11833,11 @@
                 "value": [
                   {
                     "name": "foo",
+                    "description": "foo",
+                    "attributes": {},
+                    "actions": [
+                      "foo"
+                    ],
                     "key": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -11637,6 +11854,11 @@
                 "value": [
                   {
                     "name": "foo",
+                    "description": "foo",
+                    "attributes": {},
+                    "actions": [
+                      "foo"
+                    ],
                     "key": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -12488,6 +12710,14 @@
                 "value": [
                   {
                     "name": "foo",
+                    "description": "foo",
+                    "permissions": [
+                      "foo"
+                    ],
+                    "attributes": {},
+                    "extends": [
+                      "foo"
+                    ],
                     "key": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -12504,6 +12734,14 @@
                 "value": [
                   {
                     "name": "foo",
+                    "description": "foo",
+                    "permissions": [
+                      "foo"
+                    ],
+                    "attributes": {},
+                    "extends": [
+                      "foo"
+                    ],
                     "key": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -13756,6 +13994,14 @@
                   "roles": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -13774,6 +14020,14 @@
                   "roles": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -13925,6 +14179,14 @@
                   "roles": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -13943,6 +14205,14 @@
                   "roles": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -14123,6 +14393,7 @@
                 "value": [
                   {
                     "type": "bool",
+                    "description": "foo",
                     "key": "foo",
                     "id": "foo",
                     "resource_id": "foo",
@@ -14141,6 +14412,7 @@
                 "value": [
                   {
                     "type": "bool",
+                    "description": "foo",
                     "key": "foo",
                     "id": "foo",
                     "resource_id": "foo",
@@ -15008,6 +15280,7 @@
                 "value": [
                   {
                     "type": "bool",
+                    "description": "foo",
                     "key": "foo",
                     "id": "foo",
                     "resource_id": "foo",
@@ -15026,6 +15299,7 @@
                 "value": [
                   {
                     "type": "bool",
+                    "description": "foo",
                     "key": "foo",
                     "id": "foo",
                     "resource_id": "foo",
@@ -15892,6 +16166,14 @@
                   "data": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -15901,7 +16183,8 @@
                       "updated_at": "foo"
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               },
               "responseBodyV3": {
@@ -15910,6 +16193,14 @@
                   "data": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -15919,7 +16210,8 @@
                       "updated_at": "foo"
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               }
             }
@@ -17020,6 +17312,14 @@
                   "roles": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -17037,6 +17337,14 @@
                   "roles": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -17168,6 +17476,14 @@
                   "roles": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -17185,6 +17501,14 @@
                   "roles": [
                     {
                       "name": "foo",
+                      "description": "foo",
+                      "permissions": [
+                        "foo"
+                      ],
+                      "attributes": {},
+                      "extends": [
+                        "foo"
+                      ],
                       "key": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -17384,16 +17708,38 @@
                   "data": [
                     {
                       "key": "foo",
+                      "type": "userset",
+                      "autogenerated": true,
+                      "resource_id": "foo",
                       "id": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
                       "environment_id": "foo",
                       "created_at": "foo",
                       "updated_at": "foo",
-                      "name": "foo"
+                      "resource": {
+                        "key": "foo",
+                        "id": "foo",
+                        "organization_id": "foo",
+                        "project_id": "foo",
+                        "environment_id": "foo",
+                        "created_at": "foo",
+                        "updated_at": "foo",
+                        "name": "foo",
+                        "urn": "foo",
+                        "description": "foo",
+                        "actions": {},
+                        "attributes": {},
+                        "action_groups": {}
+                      },
+                      "name": "foo",
+                      "description": "foo",
+                      "conditions": {},
+                      "parent_id": "foo"
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               },
               "responseBodyV3": {
@@ -17402,16 +17748,38 @@
                   "data": [
                     {
                       "key": "foo",
+                      "type": "userset",
+                      "autogenerated": true,
+                      "resource_id": "foo",
                       "id": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
                       "environment_id": "foo",
                       "created_at": "foo",
                       "updated_at": "foo",
-                      "name": "foo"
+                      "resource": {
+                        "key": "foo",
+                        "id": "foo",
+                        "organization_id": "foo",
+                        "project_id": "foo",
+                        "environment_id": "foo",
+                        "created_at": "foo",
+                        "updated_at": "foo",
+                        "name": "foo",
+                        "urn": "foo",
+                        "description": "foo",
+                        "actions": {},
+                        "attributes": {},
+                        "action_groups": {}
+                      },
+                      "name": "foo",
+                      "description": "foo",
+                      "conditions": {},
+                      "parent_id": "foo"
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               }
             }
@@ -18320,13 +18688,34 @@
                 "value": [
                   {
                     "key": "foo",
+                    "type": "userset",
+                    "autogenerated": true,
+                    "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
                     "project_id": "foo",
                     "environment_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "resource": {
+                      "key": "foo",
+                      "id": "foo",
+                      "organization_id": "foo",
+                      "project_id": "foo",
+                      "environment_id": "foo",
+                      "created_at": "foo",
+                      "updated_at": "foo",
+                      "name": "foo",
+                      "urn": "foo",
+                      "description": "foo",
+                      "actions": {},
+                      "attributes": {},
+                      "action_groups": {}
+                    },
+                    "name": "foo",
+                    "description": "foo",
+                    "conditions": {},
+                    "parent_id": "foo"
                   }
                 ]
               },
@@ -18335,13 +18724,34 @@
                 "value": [
                   {
                     "key": "foo",
+                    "type": "userset",
+                    "autogenerated": true,
+                    "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
                     "project_id": "foo",
                     "environment_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "resource": {
+                      "key": "foo",
+                      "id": "foo",
+                      "organization_id": "foo",
+                      "project_id": "foo",
+                      "environment_id": "foo",
+                      "created_at": "foo",
+                      "updated_at": "foo",
+                      "name": "foo",
+                      "urn": "foo",
+                      "description": "foo",
+                      "actions": {},
+                      "attributes": {},
+                      "action_groups": {}
+                    },
+                    "name": "foo",
+                    "description": "foo",
+                    "conditions": {},
+                    "parent_id": "foo"
                   }
                 ]
               }
@@ -18503,13 +18913,34 @@
                 "value": [
                   {
                     "key": "foo",
+                    "type": "userset",
+                    "autogenerated": true,
+                    "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
                     "project_id": "foo",
                     "environment_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "resource": {
+                      "key": "foo",
+                      "id": "foo",
+                      "organization_id": "foo",
+                      "project_id": "foo",
+                      "environment_id": "foo",
+                      "created_at": "foo",
+                      "updated_at": "foo",
+                      "name": "foo",
+                      "urn": "foo",
+                      "description": "foo",
+                      "actions": {},
+                      "attributes": {},
+                      "action_groups": {}
+                    },
+                    "name": "foo",
+                    "description": "foo",
+                    "conditions": {},
+                    "parent_id": "foo"
                   }
                 ]
               },
@@ -18518,13 +18949,34 @@
                 "value": [
                   {
                     "key": "foo",
+                    "type": "userset",
+                    "autogenerated": true,
+                    "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
                     "project_id": "foo",
                     "environment_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "name": "foo"
+                    "resource": {
+                      "key": "foo",
+                      "id": "foo",
+                      "organization_id": "foo",
+                      "project_id": "foo",
+                      "environment_id": "foo",
+                      "created_at": "foo",
+                      "updated_at": "foo",
+                      "name": "foo",
+                      "urn": "foo",
+                      "description": "foo",
+                      "actions": {},
+                      "attributes": {},
+                      "action_groups": {}
+                    },
+                    "name": "foo",
+                    "description": "foo",
+                    "conditions": {},
+                    "parent_id": "foo"
                   }
                 ]
               }
@@ -18706,10 +19158,30 @@
                       "id": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
-                      "environment_id": "foo"
+                      "environment_id": "foo",
+                      "associated_tenants": [
+                        {
+                          "tenant": "foo",
+                          "roles": [
+                            "foo"
+                          ],
+                          "status": "active"
+                        }
+                      ],
+                      "roles": [
+                        {
+                          "role": "foo",
+                          "tenant": "foo"
+                        }
+                      ],
+                      "email": "foo",
+                      "first_name": "foo",
+                      "last_name": "foo",
+                      "attributes": {}
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               },
               "responseBodyV3": {
@@ -18721,10 +19193,30 @@
                       "id": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
-                      "environment_id": "foo"
+                      "environment_id": "foo",
+                      "associated_tenants": [
+                        {
+                          "tenant": "foo",
+                          "roles": [
+                            "foo"
+                          ],
+                          "status": "active"
+                        }
+                      ],
+                      "roles": [
+                        {
+                          "role": "foo",
+                          "tenant": "foo"
+                        }
+                      ],
+                      "email": "foo",
+                      "first_name": "foo",
+                      "last_name": "foo",
+                      "attributes": {}
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               }
             }
@@ -20248,10 +20740,30 @@
                       "id": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
-                      "environment_id": "foo"
+                      "environment_id": "foo",
+                      "associated_tenants": [
+                        {
+                          "tenant": "foo",
+                          "roles": [
+                            "foo"
+                          ],
+                          "status": "active"
+                        }
+                      ],
+                      "roles": [
+                        {
+                          "role": "foo",
+                          "tenant": "foo"
+                        }
+                      ],
+                      "email": "foo",
+                      "first_name": "foo",
+                      "last_name": "foo",
+                      "attributes": {}
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               },
               "responseBodyV3": {
@@ -20263,10 +20775,30 @@
                       "id": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
-                      "environment_id": "foo"
+                      "environment_id": "foo",
+                      "associated_tenants": [
+                        {
+                          "tenant": "foo",
+                          "roles": [
+                            "foo"
+                          ],
+                          "status": "active"
+                        }
+                      ],
+                      "roles": [
+                        {
+                          "role": "foo",
+                          "tenant": "foo"
+                        }
+                      ],
+                      "email": "foo",
+                      "first_name": "foo",
+                      "last_name": "foo",
+                      "attributes": {}
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               }
             }
@@ -20442,10 +20974,13 @@
                       "created_at": "foo",
                       "updated_at": "foo",
                       "last_action_at": "foo",
-                      "name": "foo"
+                      "name": "foo",
+                      "description": "foo",
+                      "attributes": {}
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               },
               "responseBodyV3": {
@@ -20461,10 +20996,13 @@
                       "created_at": "foo",
                       "updated_at": "foo",
                       "last_action_at": "foo",
-                      "name": "foo"
+                      "name": "foo",
+                      "description": "foo",
+                      "attributes": {}
                     }
                   ],
-                  "total_count": 42
+                  "total_count": 42,
+                  "page_count": 42
                 }
               }
             }
@@ -21797,11 +22335,15 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "assignments_created": 42
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "assignments_created": 42
+                }
               }
             }
           ],
@@ -21919,11 +22461,15 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "assignments_removed": 42
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "assignments_removed": 42
+                }
               }
             }
           ],
@@ -22564,6 +23110,7 @@
                 "value": [
                   {
                     "key": "foo",
+                    "tenant": "foo",
                     "resource": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -22571,7 +23118,9 @@
                     "environment_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "resource_id": "foo"
+                    "resource_id": "foo",
+                    "tenant_id": "foo",
+                    "attributes": {}
                   }
                 ]
               },
@@ -22580,6 +23129,7 @@
                 "value": [
                   {
                     "key": "foo",
+                    "tenant": "foo",
                     "resource": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -22587,7 +23137,9 @@
                     "environment_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "resource_id": "foo"
+                    "resource_id": "foo",
+                    "tenant_id": "foo",
+                    "attributes": {}
                   }
                 ]
               }

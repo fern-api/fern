@@ -294,11 +294,41 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": "foo",
+                "name": "foo",
+                "email": "foo",
+                "createdAt": "foo",
+                "settings": {
+                  "theme": "foo",
+                  "notifications": true,
+                  "lastModified": "foo"
+                },
+                "stats": {
+                  "totalLogins": 42,
+                  "lastLoginTime": "foo",
+                  "accountStatus": "active"
+                }
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": "foo",
+                "name": "foo",
+                "email": "foo",
+                "createdAt": "foo",
+                "settings": {
+                  "theme": "foo",
+                  "notifications": true,
+                  "lastModified": "foo"
+                },
+                "stats": {
+                  "totalLogins": 42,
+                  "lastLoginTime": "foo",
+                  "accountStatus": "active"
+                }
+              }
             }
           }
         ],
@@ -370,11 +400,41 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": "foo",
+                "name": "foo",
+                "email": "foo",
+                "createdAt": "foo",
+                "settings": {
+                  "theme": "foo",
+                  "notifications": true,
+                  "lastModified": "foo"
+                },
+                "stats": {
+                  "totalLogins": 42,
+                  "lastLoginTime": "foo",
+                  "accountStatus": "active"
+                }
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": "foo",
+                "name": "foo",
+                "email": "foo",
+                "createdAt": "foo",
+                "settings": {
+                  "theme": "foo",
+                  "notifications": true,
+                  "lastModified": "foo"
+                },
+                "stats": {
+                  "totalLogins": 42,
+                  "lastLoginTime": "foo",
+                  "accountStatus": "active"
+                }
+              }
             }
           }
         ],

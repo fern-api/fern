@@ -175,11 +175,35 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "meta": {
+                  "hasMore": true
+                },
+                "users": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "email": "foo",
+                    "age": 42
+                  }
+                ]
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "meta": {
+                  "hasMore": true
+                },
+                "users": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "email": "foo",
+                    "age": 42
+                  }
+                ]
+              }
             }
           }
         ],
@@ -260,11 +284,35 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "meta": {
+                  "hasMore": true
+                },
+                "users": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "email": "foo",
+                    "age": 42
+                  }
+                ]
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "meta": {
+                  "hasMore": true
+                },
+                "users": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "email": "foo",
+                    "age": 42
+                  }
+                ]
+              }
             }
           }
         ],

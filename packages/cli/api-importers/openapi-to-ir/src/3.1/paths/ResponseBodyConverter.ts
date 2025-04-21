@@ -60,7 +60,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         responseBodyType: convertedSchema.type,
                         docs: this.responseBody.description,
                         v2Examples: await this.convertMediaTypeObjectExamples({
-                            mediaTypeObject
+                            mediaTypeObject,
+                            generateOptionalProperties: true
                         })
                     })
                 );
@@ -88,7 +89,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     const responseBody = HttpResponseBody.bytes({
                         docs: this.responseBody.description,
                         v2Examples: await this.convertMediaTypeObjectExamples({
-                            mediaTypeObject
+                            mediaTypeObject,
+                            generateOptionalProperties: true
                         })
                     });
                     return {
@@ -99,7 +101,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 const responseBody = HttpResponseBody.fileDownload({
                     docs: this.responseBody.description,
                     v2Examples: await this.convertMediaTypeObjectExamples({
-                        mediaTypeObject
+                        mediaTypeObject,
+                        generateOptionalProperties: true
                     })
                 });
                 return {

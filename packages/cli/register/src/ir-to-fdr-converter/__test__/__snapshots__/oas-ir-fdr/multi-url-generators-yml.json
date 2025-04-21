@@ -159,11 +159,21 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": "foo",
+                "username": "foo",
+                "email": "foo",
+                "createdAt": "foo"
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": "foo",
+                "username": "foo",
+                "email": "foo",
+                "createdAt": "foo"
+              }
             }
           }
         ],
@@ -243,11 +253,21 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": "foo",
+                "username": "foo",
+                "email": "foo",
+                "createdAt": "foo"
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": "foo",
+                "username": "foo",
+                "email": "foo",
+                "createdAt": "foo"
+              }
             }
           }
         ],
@@ -307,11 +327,19 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "accessToken": "foo",
+                "tokenType": "foo",
+                "expiresIn": 42
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "accessToken": "foo",
+                "tokenType": "foo",
+                "expiresIn": 42
+              }
             }
           }
         ],

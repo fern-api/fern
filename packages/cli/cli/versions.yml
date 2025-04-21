@@ -1,5 +1,15 @@
 - changelogEntry:
   - summary: |
+      Objects use property schema examples when generating examples; request and response examples are generated with
+      optional properties included.
+
+      Single element type arrays will resolve to the single element in the example.
+    type: feat
+  irVersion: 57
+  version: 0.57.34
+
+- changelogEntry:
+  - summary: |
       Improve OpenRPC response example generation by wrapping example payloads in JSON-RPC 2.0 format with metadata 
       (jsonrpc version and request id). This ensures generated examples match the actual JSON-RPC response format.
     type: feat

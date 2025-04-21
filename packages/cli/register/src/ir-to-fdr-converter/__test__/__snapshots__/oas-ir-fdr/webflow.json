@@ -41999,11 +41999,27 @@
               "responseStatusCode": 202,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "customDomains": [
+                    {
+                      "id": "589a331aa51e760df7ccb89d",
+                      "url": "test-api-domain.com"
+                    }
+                  ],
+                  "publishToWebflowSubdomain": true
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "customDomains": [
+                    {
+                      "id": "589a331aa51e760df7ccb89d",
+                      "url": "test-api-domain.com"
+                    }
+                  ],
+                  "publishToWebflowSubdomain": true
+                }
               }
             }
           ],
@@ -44413,25 +44429,25 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "foo"
+                "id": "580e64008c9a982ac9b8b754"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "580e64008c9a982ac9b8b754"
                 }
               },
               "responseStatusCode": 202,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "580e64008c9a982ac9b8b754"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo"
+                  "id": "580e64008c9a982ac9b8b754"
                 }
               }
             }
@@ -48044,14 +48060,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "fileName": "foo",
-                "fileHash": "foo"
+                "fileName": "file.png",
+                "fileHash": "3c7d87c9575702bc3b1e991f4d3c638e"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "fileName": "foo",
-                  "fileHash": "foo"
+                  "fileName": "file.png",
+                  "fileHash": "3c7d87c9575702bc3b1e991f4d3c638e"
                 }
               },
               "responseStatusCode": 200,
@@ -48189,11 +48205,57 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "55131cd036c09f7d07883dfc",
+                  "contentType": "image/png",
+                  "size": 1500,
+                  "siteId": "62749158efef318abc8d5a0f",
+                  "hostedUrl": "example.com/hostedimage.png",
+                  "originalFileName": "image.png",
+                  "displayName": "example-image-123.png",
+                  "lastUpdated": "2016-09-06T21:12:22.148Z",
+                  "createdOn": "2016-09-02T23:26:22.241Z",
+                  "variants": [
+                    {
+                      "hostedUrl": "example.com/hostedimage.png",
+                      "originalFileName": "image.png",
+                      "displayName": "A brown dog",
+                      "format": "foo",
+                      "width": 1500,
+                      "height": 900,
+                      "quality": 42,
+                      "error": "foo"
+                    }
+                  ],
+                  "altText": "A red chair"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "55131cd036c09f7d07883dfc",
+                  "contentType": "image/png",
+                  "size": 1500,
+                  "siteId": "62749158efef318abc8d5a0f",
+                  "hostedUrl": "example.com/hostedimage.png",
+                  "originalFileName": "image.png",
+                  "displayName": "example-image-123.png",
+                  "lastUpdated": "2016-09-06T21:12:22.148Z",
+                  "createdOn": "2016-09-02T23:26:22.241Z",
+                  "variants": [
+                    {
+                      "hostedUrl": "example.com/hostedimage.png",
+                      "originalFileName": "image.png",
+                      "displayName": "A brown dog",
+                      "format": "foo",
+                      "width": 1500,
+                      "height": 900,
+                      "quality": 42,
+                      "error": "foo"
+                    }
+                  ],
+                  "altText": "A red chair"
+                }
               }
             }
           ],
@@ -48363,22 +48425,68 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "displayName": "foo"
+                "displayName": "bulldoze.png"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "displayName": "foo"
+                  "displayName": "bulldoze.png"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "55131cd036c09f7d07883dfc",
+                  "contentType": "image/png",
+                  "size": 1500,
+                  "siteId": "62749158efef318abc8d5a0f",
+                  "hostedUrl": "example.com/hostedimage.png",
+                  "originalFileName": "image.png",
+                  "displayName": "example-image-123.png",
+                  "lastUpdated": "2016-09-06T21:12:22.148Z",
+                  "createdOn": "2016-09-02T23:26:22.241Z",
+                  "variants": [
+                    {
+                      "hostedUrl": "example.com/hostedimage.png",
+                      "originalFileName": "image.png",
+                      "displayName": "A brown dog",
+                      "format": "foo",
+                      "width": 1500,
+                      "height": 900,
+                      "quality": 42,
+                      "error": "foo"
+                    }
+                  ],
+                  "altText": "A red chair"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "55131cd036c09f7d07883dfc",
+                  "contentType": "image/png",
+                  "size": 1500,
+                  "siteId": "62749158efef318abc8d5a0f",
+                  "hostedUrl": "example.com/hostedimage.png",
+                  "originalFileName": "image.png",
+                  "displayName": "example-image-123.png",
+                  "lastUpdated": "2016-09-06T21:12:22.148Z",
+                  "createdOn": "2016-09-02T23:26:22.241Z",
+                  "variants": [
+                    {
+                      "hostedUrl": "example.com/hostedimage.png",
+                      "originalFileName": "image.png",
+                      "displayName": "A brown dog",
+                      "format": "foo",
+                      "width": 1500,
+                      "height": 900,
+                      "quality": 42,
+                      "error": "foo"
+                    }
+                  ],
+                  "altText": "A red chair"
+                }
               }
             }
           ],
@@ -48617,12 +48725,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "displayName": "foo"
+                "displayName": "my asset folder"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "displayName": "foo"
+                  "displayName": "my asset folder"
                 }
               },
               "responseStatusCode": 200,
@@ -51366,11 +51474,181 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "items": [
+                    {
+                      "product": {
+                        "id": "580e63fc8c9a982ac9b8b745",
+                        "cmsLocaleId": "653ad57de882f528b32e810e",
+                        "lastPublished": "2023-03-17T18:47:35.560Z",
+                        "lastUpdated": "2023-03-17T18:47:35.560Z",
+                        "createdOn": "2023-03-17T18:47:35.560Z",
+                        "isArchived": false,
+                        "isDraft": false,
+                        "fieldData": {
+                          "name": "T-Shirt",
+                          "slug": "t-shirt",
+                          "description": "A plain cotton t-shirt.",
+                          "shippable": true,
+                          "sku-properties": [
+                            {
+                              "id": "Color",
+                              "name": "Color",
+                              "enum": [
+                                {
+                                  "id": [
+                                    "royal-blue",
+                                    "crimson-red",
+                                    "forrest-green"
+                                  ],
+                                  "name": "Royal Blue",
+                                  "slug": "royal-blue"
+                                }
+                              ]
+                            }
+                          ],
+                          "categories": [
+                            "foo"
+                          ],
+                          "tax-category": "standard-taxable",
+                          "default-sku": "foo",
+                          "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                        }
+                      },
+                      "skus": [
+                        {
+                          "id": "580e63fc8c9a982ac9b8b745",
+                          "cmsLocaleId": "653ad57de882f528b32e810e",
+                          "lastPublished": "2023-03-17T18:47:35.560Z",
+                          "lastUpdated": "2023-03-17T18:47:35.560Z",
+                          "createdOn": "2023-03-17T18:47:35.560Z",
+                          "fieldData": {
+                            "sku-values": {},
+                            "name": "Blue T-shirt",
+                            "slug": "t-shirt-blue",
+                            "price": {
+                              "value": 100,
+                              "unit": "USD"
+                            },
+                            "compare-at-price": {
+                              "value": 100,
+                              "unit": "USD"
+                            },
+                            "ec-sku-billing-method": "one-time",
+                            "ec-sku-subscription-plan": {
+                              "interval": "day",
+                              "frequency": 1,
+                              "trial": 7,
+                              "plans": [
+                                {
+                                  "platform": "stripe",
+                                  "id": "foo",
+                                  "status": "active"
+                                }
+                              ]
+                            },
+                            "track-inventory": true,
+                            "quantity": 10
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "pagination": {
+                    "limit": 100,
+                    "offset": 0,
+                    "total": 100
+                  }
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "items": [
+                    {
+                      "product": {
+                        "id": "580e63fc8c9a982ac9b8b745",
+                        "cmsLocaleId": "653ad57de882f528b32e810e",
+                        "lastPublished": "2023-03-17T18:47:35.560Z",
+                        "lastUpdated": "2023-03-17T18:47:35.560Z",
+                        "createdOn": "2023-03-17T18:47:35.560Z",
+                        "isArchived": false,
+                        "isDraft": false,
+                        "fieldData": {
+                          "name": "T-Shirt",
+                          "slug": "t-shirt",
+                          "description": "A plain cotton t-shirt.",
+                          "shippable": true,
+                          "sku-properties": [
+                            {
+                              "id": "Color",
+                              "name": "Color",
+                              "enum": [
+                                {
+                                  "id": [
+                                    "royal-blue",
+                                    "crimson-red",
+                                    "forrest-green"
+                                  ],
+                                  "name": "Royal Blue",
+                                  "slug": "royal-blue"
+                                }
+                              ]
+                            }
+                          ],
+                          "categories": [
+                            "foo"
+                          ],
+                          "tax-category": "standard-taxable",
+                          "default-sku": "foo",
+                          "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                        }
+                      },
+                      "skus": [
+                        {
+                          "id": "580e63fc8c9a982ac9b8b745",
+                          "cmsLocaleId": "653ad57de882f528b32e810e",
+                          "lastPublished": "2023-03-17T18:47:35.560Z",
+                          "lastUpdated": "2023-03-17T18:47:35.560Z",
+                          "createdOn": "2023-03-17T18:47:35.560Z",
+                          "fieldData": {
+                            "sku-values": {},
+                            "name": "Blue T-shirt",
+                            "slug": "t-shirt-blue",
+                            "price": {
+                              "value": 100,
+                              "unit": "USD"
+                            },
+                            "compare-at-price": {
+                              "value": 100,
+                              "unit": "USD"
+                            },
+                            "ec-sku-billing-method": "one-time",
+                            "ec-sku-subscription-plan": {
+                              "interval": "day",
+                              "frequency": 1,
+                              "trial": 7,
+                              "plans": [
+                                {
+                                  "platform": "stripe",
+                                  "id": "foo",
+                                  "status": "active"
+                                }
+                              ]
+                            },
+                            "track-inventory": true,
+                            "quantity": 10
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "pagination": {
+                    "limit": 100,
+                    "offset": 0,
+                    "total": 100
+                  }
+                }
               }
             }
           ],
@@ -51502,11 +51780,163 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "product": {
+                    "id": "580e63fc8c9a982ac9b8b745",
+                    "cmsLocaleId": "653ad57de882f528b32e810e",
+                    "lastPublished": "2023-03-17T18:47:35.560Z",
+                    "lastUpdated": "2023-03-17T18:47:35.560Z",
+                    "createdOn": "2023-03-17T18:47:35.560Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "T-Shirt",
+                      "slug": "t-shirt",
+                      "description": "A plain cotton t-shirt.",
+                      "shippable": true,
+                      "sku-properties": [
+                        {
+                          "id": "Color",
+                          "name": "Color",
+                          "enum": [
+                            {
+                              "id": [
+                                "royal-blue",
+                                "crimson-red",
+                                "forrest-green"
+                              ],
+                              "name": "Royal Blue",
+                              "slug": "royal-blue"
+                            }
+                          ]
+                        }
+                      ],
+                      "categories": [
+                        "foo"
+                      ],
+                      "tax-category": "standard-taxable",
+                      "default-sku": "foo",
+                      "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                    }
+                  },
+                  "skus": [
+                    {
+                      "id": "580e63fc8c9a982ac9b8b745",
+                      "cmsLocaleId": "653ad57de882f528b32e810e",
+                      "lastPublished": "2023-03-17T18:47:35.560Z",
+                      "lastUpdated": "2023-03-17T18:47:35.560Z",
+                      "createdOn": "2023-03-17T18:47:35.560Z",
+                      "fieldData": {
+                        "sku-values": {},
+                        "name": "Blue T-shirt",
+                        "slug": "t-shirt-blue",
+                        "price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "compare-at-price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "ec-sku-billing-method": "one-time",
+                        "ec-sku-subscription-plan": {
+                          "interval": "day",
+                          "frequency": 1,
+                          "trial": 7,
+                          "plans": [
+                            {
+                              "platform": "stripe",
+                              "id": "foo",
+                              "status": "active"
+                            }
+                          ]
+                        },
+                        "track-inventory": true,
+                        "quantity": 10
+                      }
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "product": {
+                    "id": "580e63fc8c9a982ac9b8b745",
+                    "cmsLocaleId": "653ad57de882f528b32e810e",
+                    "lastPublished": "2023-03-17T18:47:35.560Z",
+                    "lastUpdated": "2023-03-17T18:47:35.560Z",
+                    "createdOn": "2023-03-17T18:47:35.560Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "T-Shirt",
+                      "slug": "t-shirt",
+                      "description": "A plain cotton t-shirt.",
+                      "shippable": true,
+                      "sku-properties": [
+                        {
+                          "id": "Color",
+                          "name": "Color",
+                          "enum": [
+                            {
+                              "id": [
+                                "royal-blue",
+                                "crimson-red",
+                                "forrest-green"
+                              ],
+                              "name": "Royal Blue",
+                              "slug": "royal-blue"
+                            }
+                          ]
+                        }
+                      ],
+                      "categories": [
+                        "foo"
+                      ],
+                      "tax-category": "standard-taxable",
+                      "default-sku": "foo",
+                      "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                    }
+                  },
+                  "skus": [
+                    {
+                      "id": "580e63fc8c9a982ac9b8b745",
+                      "cmsLocaleId": "653ad57de882f528b32e810e",
+                      "lastPublished": "2023-03-17T18:47:35.560Z",
+                      "lastUpdated": "2023-03-17T18:47:35.560Z",
+                      "createdOn": "2023-03-17T18:47:35.560Z",
+                      "fieldData": {
+                        "sku-values": {},
+                        "name": "Blue T-shirt",
+                        "slug": "t-shirt-blue",
+                        "price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "compare-at-price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "ec-sku-billing-method": "one-time",
+                        "ec-sku-subscription-plan": {
+                          "interval": "day",
+                          "frequency": 1,
+                          "trial": 7,
+                          "plans": [
+                            {
+                              "platform": "stripe",
+                              "id": "foo",
+                              "status": "active"
+                            }
+                          ]
+                        },
+                        "track-inventory": true,
+                        "quantity": 10
+                      }
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -51608,11 +52038,163 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "product": {
+                    "id": "580e63fc8c9a982ac9b8b745",
+                    "cmsLocaleId": "653ad57de882f528b32e810e",
+                    "lastPublished": "2023-03-17T18:47:35.560Z",
+                    "lastUpdated": "2023-03-17T18:47:35.560Z",
+                    "createdOn": "2023-03-17T18:47:35.560Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "T-Shirt",
+                      "slug": "t-shirt",
+                      "description": "A plain cotton t-shirt.",
+                      "shippable": true,
+                      "sku-properties": [
+                        {
+                          "id": "Color",
+                          "name": "Color",
+                          "enum": [
+                            {
+                              "id": [
+                                "royal-blue",
+                                "crimson-red",
+                                "forrest-green"
+                              ],
+                              "name": "Royal Blue",
+                              "slug": "royal-blue"
+                            }
+                          ]
+                        }
+                      ],
+                      "categories": [
+                        "foo"
+                      ],
+                      "tax-category": "standard-taxable",
+                      "default-sku": "foo",
+                      "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                    }
+                  },
+                  "skus": [
+                    {
+                      "id": "580e63fc8c9a982ac9b8b745",
+                      "cmsLocaleId": "653ad57de882f528b32e810e",
+                      "lastPublished": "2023-03-17T18:47:35.560Z",
+                      "lastUpdated": "2023-03-17T18:47:35.560Z",
+                      "createdOn": "2023-03-17T18:47:35.560Z",
+                      "fieldData": {
+                        "sku-values": {},
+                        "name": "Blue T-shirt",
+                        "slug": "t-shirt-blue",
+                        "price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "compare-at-price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "ec-sku-billing-method": "one-time",
+                        "ec-sku-subscription-plan": {
+                          "interval": "day",
+                          "frequency": 1,
+                          "trial": 7,
+                          "plans": [
+                            {
+                              "platform": "stripe",
+                              "id": "foo",
+                              "status": "active"
+                            }
+                          ]
+                        },
+                        "track-inventory": true,
+                        "quantity": 10
+                      }
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "product": {
+                    "id": "580e63fc8c9a982ac9b8b745",
+                    "cmsLocaleId": "653ad57de882f528b32e810e",
+                    "lastPublished": "2023-03-17T18:47:35.560Z",
+                    "lastUpdated": "2023-03-17T18:47:35.560Z",
+                    "createdOn": "2023-03-17T18:47:35.560Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                      "name": "T-Shirt",
+                      "slug": "t-shirt",
+                      "description": "A plain cotton t-shirt.",
+                      "shippable": true,
+                      "sku-properties": [
+                        {
+                          "id": "Color",
+                          "name": "Color",
+                          "enum": [
+                            {
+                              "id": [
+                                "royal-blue",
+                                "crimson-red",
+                                "forrest-green"
+                              ],
+                              "name": "Royal Blue",
+                              "slug": "royal-blue"
+                            }
+                          ]
+                        }
+                      ],
+                      "categories": [
+                        "foo"
+                      ],
+                      "tax-category": "standard-taxable",
+                      "default-sku": "foo",
+                      "ec-product-type": "ff42fee0113744f693a764e3431a9cc2"
+                    }
+                  },
+                  "skus": [
+                    {
+                      "id": "580e63fc8c9a982ac9b8b745",
+                      "cmsLocaleId": "653ad57de882f528b32e810e",
+                      "lastPublished": "2023-03-17T18:47:35.560Z",
+                      "lastUpdated": "2023-03-17T18:47:35.560Z",
+                      "createdOn": "2023-03-17T18:47:35.560Z",
+                      "fieldData": {
+                        "sku-values": {},
+                        "name": "Blue T-shirt",
+                        "slug": "t-shirt-blue",
+                        "price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "compare-at-price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "ec-sku-billing-method": "one-time",
+                        "ec-sku-subscription-plan": {
+                          "interval": "day",
+                          "frequency": 1,
+                          "trial": 7,
+                          "plans": [
+                            {
+                              "platform": "stripe",
+                              "id": "foo",
+                              "status": "active"
+                            }
+                          ]
+                        },
+                        "track-inventory": true,
+                        "quantity": 10
+                      }
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -52041,11 +52623,87 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "skus": [
+                    {
+                      "id": "580e63fc8c9a982ac9b8b745",
+                      "cmsLocaleId": "653ad57de882f528b32e810e",
+                      "lastPublished": "2023-03-17T18:47:35.560Z",
+                      "lastUpdated": "2023-03-17T18:47:35.560Z",
+                      "createdOn": "2023-03-17T18:47:35.560Z",
+                      "fieldData": {
+                        "sku-values": {},
+                        "name": "Blue T-shirt",
+                        "slug": "t-shirt-blue",
+                        "price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "compare-at-price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "ec-sku-billing-method": "one-time",
+                        "ec-sku-subscription-plan": {
+                          "interval": "day",
+                          "frequency": 1,
+                          "trial": 7,
+                          "plans": [
+                            {
+                              "platform": "stripe",
+                              "id": "foo",
+                              "status": "active"
+                            }
+                          ]
+                        },
+                        "track-inventory": true,
+                        "quantity": 10
+                      }
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "skus": [
+                    {
+                      "id": "580e63fc8c9a982ac9b8b745",
+                      "cmsLocaleId": "653ad57de882f528b32e810e",
+                      "lastPublished": "2023-03-17T18:47:35.560Z",
+                      "lastUpdated": "2023-03-17T18:47:35.560Z",
+                      "createdOn": "2023-03-17T18:47:35.560Z",
+                      "fieldData": {
+                        "sku-values": {},
+                        "name": "Blue T-shirt",
+                        "slug": "t-shirt-blue",
+                        "price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "compare-at-price": {
+                          "value": 100,
+                          "unit": "USD"
+                        },
+                        "ec-sku-billing-method": "one-time",
+                        "ec-sku-subscription-plan": {
+                          "interval": "day",
+                          "frequency": 1,
+                          "trial": 7,
+                          "plans": [
+                            {
+                              "platform": "stripe",
+                              "id": "foo",
+                              "status": "active"
+                            }
+                          ]
+                        },
+                        "track-inventory": true,
+                        "quantity": 10
+                      }
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -52208,11 +52866,79 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "580e63fc8c9a982ac9b8b745",
+                  "cmsLocaleId": "653ad57de882f528b32e810e",
+                  "lastPublished": "2023-03-17T18:47:35.560Z",
+                  "lastUpdated": "2023-03-17T18:47:35.560Z",
+                  "createdOn": "2023-03-17T18:47:35.560Z",
+                  "fieldData": {
+                    "sku-values": {},
+                    "name": "Blue T-shirt",
+                    "slug": "t-shirt-blue",
+                    "price": {
+                      "value": 100,
+                      "unit": "USD"
+                    },
+                    "compare-at-price": {
+                      "value": 100,
+                      "unit": "USD"
+                    },
+                    "ec-sku-billing-method": "one-time",
+                    "ec-sku-subscription-plan": {
+                      "interval": "day",
+                      "frequency": 1,
+                      "trial": 7,
+                      "plans": [
+                        {
+                          "platform": "stripe",
+                          "id": "foo",
+                          "status": "active"
+                        }
+                      ]
+                    },
+                    "track-inventory": true,
+                    "quantity": 10
+                  }
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "580e63fc8c9a982ac9b8b745",
+                  "cmsLocaleId": "653ad57de882f528b32e810e",
+                  "lastPublished": "2023-03-17T18:47:35.560Z",
+                  "lastUpdated": "2023-03-17T18:47:35.560Z",
+                  "createdOn": "2023-03-17T18:47:35.560Z",
+                  "fieldData": {
+                    "sku-values": {},
+                    "name": "Blue T-shirt",
+                    "slug": "t-shirt-blue",
+                    "price": {
+                      "value": 100,
+                      "unit": "USD"
+                    },
+                    "compare-at-price": {
+                      "value": 100,
+                      "unit": "USD"
+                    },
+                    "ec-sku-billing-method": "one-time",
+                    "ec-sku-subscription-plan": {
+                      "interval": "day",
+                      "frequency": 1,
+                      "trial": 7,
+                      "plans": [
+                        {
+                          "platform": "stripe",
+                          "id": "foo",
+                          "status": "active"
+                        }
+                      ]
+                    },
+                    "track-inventory": true,
+                    "quantity": 10
+                  }
+                }
               }
             }
           ],
@@ -55993,11 +56719,19 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "5bfedb42bab0ad90fa7dad39",
+                  "quantity": 100,
+                  "inventoryType": "infinite"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "5bfedb42bab0ad90fa7dad39",
+                  "quantity": 100,
+                  "inventoryType": "infinite"
+                }
               }
             }
           ],
@@ -56155,11 +56889,19 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "5bfedb42bab0ad90fa7dad39",
+                  "quantity": 100,
+                  "inventoryType": "infinite"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "5bfedb42bab0ad90fa7dad39",
+                  "quantity": 100,
+                  "inventoryType": "infinite"
+                }
               }
             }
           ],
@@ -56251,11 +56993,19 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "siteId": "5eb0b5583bf24e2d3a488969",
+                  "createdOn": "2018-10-04T15:21:02.042Z",
+                  "defaultCurrency": "USD"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "siteId": "5eb0b5583bf24e2d3a488969",
+                  "createdOn": "2018-10-04T15:21:02.042Z",
+                  "defaultCurrency": "USD"
+                }
               }
             }
           ],

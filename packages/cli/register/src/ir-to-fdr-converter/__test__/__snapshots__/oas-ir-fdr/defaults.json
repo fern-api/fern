@@ -209,11 +209,21 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "boolField1": true,
+                "boolField2": true,
+                "stringField": "foo",
+                "numberField": 42
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "boolField1": true,
+                "boolField2": true,
+                "stringField": "foo",
+                "numberField": 42
+              }
             }
           }
         ],

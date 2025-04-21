@@ -164,11 +164,15 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "message": "foo"
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "message": "foo"
+              }
             }
           }
         ],

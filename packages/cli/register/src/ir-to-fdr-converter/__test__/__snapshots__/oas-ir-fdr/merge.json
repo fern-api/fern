@@ -10514,11 +10514,33 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "0496d4c2-42e6-4072-80b3-7b69bfdc76fd",
+                  "integration": "BambooHR",
+                  "integration_slug": "bamboohr",
+                  "category": "hris",
+                  "end_user_origin_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "end_user_organization_name": "Waystar Royco",
+                  "end_user_email_address": "kendall.roy@waystar-royco.com",
+                  "status": "COMPLETE",
+                  "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
+                  "is_duplicate": true
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "0496d4c2-42e6-4072-80b3-7b69bfdc76fd",
+                  "integration": "BambooHR",
+                  "integration_slug": "bamboohr",
+                  "category": "hris",
+                  "end_user_origin_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "end_user_organization_name": "Waystar Royco",
+                  "end_user_email_address": "kendall.roy@waystar-royco.com",
+                  "status": "COMPLETE",
+                  "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
+                  "is_duplicate": true
+                }
               }
             }
           ],
@@ -10613,18 +10635,36 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "account_token": "foo",
+                  "account_token": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
                   "integration": {
-                    "name": "foo"
+                    "name": "foo",
+                    "categories": [
+                      "hris"
+                    ],
+                    "image": "foo",
+                    "square_image": "foo",
+                    "color": "foo",
+                    "slug": "foo",
+                    "is_in_beta": true,
+                    "api_endpoints_to_documentation_urls": {}
                   }
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "account_token": "foo",
+                  "account_token": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
                   "integration": {
-                    "name": "foo"
+                    "name": "foo",
+                    "categories": [
+                      "hris"
+                    ],
+                    "image": "foo",
+                    "square_image": "foo",
+                    "color": "foo",
+                    "slug": "foo",
+                    "is_in_beta": true,
+                    "api_endpoints_to_documentation_urls": {}
                   }
                 }
               }
@@ -10715,18 +10755,64 @@
                 "type": "json",
                 "value": {
                   "integration": {
-                    "name": "foo"
+                    "name": "foo",
+                    "categories": [
+                      "hris"
+                    ],
+                    "image": "foo",
+                    "square_image": "foo",
+                    "color": "foo",
+                    "slug": "foo",
+                    "is_in_beta": true,
+                    "api_endpoints_to_documentation_urls": {}
                   },
-                  "passthrough_available": true
+                  "passthrough_available": true,
+                  "available_model_operations": [
+                    {
+                      "model_name": "Candidate",
+                      "available_operations": [
+                        "foo"
+                      ],
+                      "required_post_parameters": [
+                        "foo"
+                      ],
+                      "supported_fields": [
+                        "foo"
+                      ]
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "integration": {
-                    "name": "foo"
+                    "name": "foo",
+                    "categories": [
+                      "hris"
+                    ],
+                    "image": "foo",
+                    "square_image": "foo",
+                    "color": "foo",
+                    "slug": "foo",
+                    "is_in_beta": true,
+                    "api_endpoints_to_documentation_urls": {}
                   },
-                  "passthrough_available": true
+                  "passthrough_available": true,
+                  "available_model_operations": [
+                    {
+                      "model_name": "Candidate",
+                      "available_operations": [
+                        "foo"
+                      ],
+                      "required_post_parameters": [
+                        "foo"
+                      ],
+                      "supported_fields": [
+                        "foo"
+                      ]
+                    }
+                  ]
                 }
               }
             }
@@ -11034,11 +11120,59 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                      "remote_id": "123234",
+                      "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
+                      "account_number": "439291590",
+                      "routing_number": "089690059",
+                      "bank_name": "Chase",
+                      "account_type": "SAVINGS",
+                      "remote_created_at": "2021-12-06T10:11:26Z",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                      "remote_id": "123234",
+                      "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
+                      "account_number": "439291590",
+                      "routing_number": "089690059",
+                      "bank_name": "Chase",
+                      "account_type": "SAVINGS",
+                      "remote_created_at": "2021-12-06T10:11:26Z",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -11188,11 +11322,47 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                  "remote_id": "123234",
+                  "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
+                  "account_number": "439291590",
+                  "routing_number": "089690059",
+                  "bank_name": "Chase",
+                  "account_type": "SAVINGS",
+                  "remote_created_at": "2021-12-06T10:11:26Z",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                  "remote_id": "123234",
+                  "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
+                  "account_number": "439291590",
+                  "routing_number": "089690059",
+                  "bank_name": "Chase",
+                  "account_type": "SAVINGS",
+                  "remote_created_at": "2021-12-06T10:11:26Z",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -11437,11 +11607,61 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
+                      "remote_id": "19202938",
+                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "provider_name": "Blue Shield of California",
+                      "benefit_plan_type": "foo",
+                      "employee_contribution": 23.65,
+                      "company_contribution": 150,
+                      "start_date": "2020-11-15 00:59:25.309761+00:00",
+                      "end_date": "2021-10-15 00:23:25.309761+00:00",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
+                      "remote_id": "19202938",
+                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "provider_name": "Blue Shield of California",
+                      "benefit_plan_type": "foo",
+                      "employee_contribution": 23.65,
+                      "company_contribution": 150,
+                      "start_date": "2020-11-15 00:59:25.309761+00:00",
+                      "end_date": "2021-10-15 00:23:25.309761+00:00",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -11567,11 +11787,49 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "provider_name": "Blue Shield of California",
+                  "benefit_plan_type": "foo",
+                  "employee_contribution": 23.65,
+                  "company_contribution": 150,
+                  "start_date": "2020-11-15 00:59:25.309761+00:00",
+                  "end_date": "2021-10-15 00:23:25.309761+00:00",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "provider_name": "Blue Shield of California",
+                  "benefit_plan_type": "foo",
+                  "employee_contribution": 23.65,
+                  "company_contribution": 150,
+                  "start_date": "2020-11-15 00:59:25.309761+00:00",
+                  "end_date": "2021-10-15 00:23:25.309761+00:00",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -11790,11 +12048,57 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                      "remote_id": "19202938",
+                      "legal_name": "Waystar Royco, Inc.",
+                      "display_name": "Waystar Royco",
+                      "eins": [
+                        "foo"
+                      ],
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                      "remote_id": "19202938",
+                      "legal_name": "Waystar Royco, Inc.",
+                      "display_name": "Waystar Royco",
+                      "eins": [
+                        "foo"
+                      ],
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -11908,11 +12212,45 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                  "remote_id": "19202938",
+                  "legal_name": "Waystar Royco, Inc.",
+                  "display_name": "Waystar Royco",
+                  "eins": [
+                    "foo"
+                  ],
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                  "remote_id": "19202938",
+                  "legal_name": "Waystar Royco, Inc.",
+                  "display_name": "Waystar Royco",
+                  "eins": [
+                    "foo"
+                  ],
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -12303,11 +12641,173 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
+                      "remote_id": "19202938",
+                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "gross_pay": 1342.67,
+                      "net_pay": 865.78,
+                      "start_date": "2020-11-08T00:00:00Z",
+                      "end_date": "2020-11-09T00:00:00Z",
+                      "check_date": "2020-11-10T00:00:00Z",
+                      "earnings": [
+                        {
+                          "id": "babbced6-3a81-4775-8da2-490dc6385259",
+                          "remote_id": "52802",
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "amount": 1002.34,
+                          "type": "SALARY",
+                          "remote_was_deleted": true,
+                          "modified_at": "2021-10-16T00:00:00Z",
+                          "field_mappings": {},
+                          "remote_data": [
+                            {
+                              "path": "foo",
+                              "data": {}
+                            }
+                          ]
+                        }
+                      ],
+                      "deductions": [
+                        {
+                          "id": "5fd439fc-1b64-4755-b275-64918936c365",
+                          "remote_id": "93478612",
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "name": "Social Security",
+                          "employee_deduction": 34.54,
+                          "company_deduction": 78.78,
+                          "remote_was_deleted": true,
+                          "modified_at": "2021-10-16T00:00:00Z",
+                          "field_mappings": {},
+                          "remote_data": [
+                            {
+                              "path": "foo",
+                              "data": {}
+                            }
+                          ]
+                        }
+                      ],
+                      "taxes": [
+                        {
+                          "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
+                          "remote_id": "26806834",
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "name": "California State Income Tax",
+                          "amount": 100.25,
+                          "employer_tax": "False",
+                          "remote_was_deleted": true,
+                          "modified_at": "2021-10-16T00:00:00Z",
+                          "field_mappings": {},
+                          "remote_data": [
+                            {
+                              "path": "foo",
+                              "data": {}
+                            }
+                          ]
+                        }
+                      ],
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
+                      "remote_id": "19202938",
+                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "gross_pay": 1342.67,
+                      "net_pay": 865.78,
+                      "start_date": "2020-11-08T00:00:00Z",
+                      "end_date": "2020-11-09T00:00:00Z",
+                      "check_date": "2020-11-10T00:00:00Z",
+                      "earnings": [
+                        {
+                          "id": "babbced6-3a81-4775-8da2-490dc6385259",
+                          "remote_id": "52802",
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "amount": 1002.34,
+                          "type": "SALARY",
+                          "remote_was_deleted": true,
+                          "modified_at": "2021-10-16T00:00:00Z",
+                          "field_mappings": {},
+                          "remote_data": [
+                            {
+                              "path": "foo",
+                              "data": {}
+                            }
+                          ]
+                        }
+                      ],
+                      "deductions": [
+                        {
+                          "id": "5fd439fc-1b64-4755-b275-64918936c365",
+                          "remote_id": "93478612",
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "name": "Social Security",
+                          "employee_deduction": 34.54,
+                          "company_deduction": 78.78,
+                          "remote_was_deleted": true,
+                          "modified_at": "2021-10-16T00:00:00Z",
+                          "field_mappings": {},
+                          "remote_data": [
+                            {
+                              "path": "foo",
+                              "data": {}
+                            }
+                          ]
+                        }
+                      ],
+                      "taxes": [
+                        {
+                          "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
+                          "remote_id": "26806834",
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "name": "California State Income Tax",
+                          "amount": 100.25,
+                          "employer_tax": "False",
+                          "remote_was_deleted": true,
+                          "modified_at": "2021-10-16T00:00:00Z",
+                          "field_mappings": {},
+                          "remote_data": [
+                            {
+                              "path": "foo",
+                              "data": {}
+                            }
+                          ]
+                        }
+                      ],
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -12433,11 +12933,161 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                  "gross_pay": 1342.67,
+                  "net_pay": 865.78,
+                  "start_date": "2020-11-08T00:00:00Z",
+                  "end_date": "2020-11-09T00:00:00Z",
+                  "check_date": "2020-11-10T00:00:00Z",
+                  "earnings": [
+                    {
+                      "id": "babbced6-3a81-4775-8da2-490dc6385259",
+                      "remote_id": "52802",
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "amount": 1002.34,
+                      "type": "SALARY",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ],
+                  "deductions": [
+                    {
+                      "id": "5fd439fc-1b64-4755-b275-64918936c365",
+                      "remote_id": "93478612",
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "name": "Social Security",
+                      "employee_deduction": 34.54,
+                      "company_deduction": 78.78,
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ],
+                  "taxes": [
+                    {
+                      "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
+                      "remote_id": "26806834",
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "name": "California State Income Tax",
+                      "amount": 100.25,
+                      "employer_tax": "False",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ],
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                  "gross_pay": 1342.67,
+                  "net_pay": 865.78,
+                  "start_date": "2020-11-08T00:00:00Z",
+                  "end_date": "2020-11-09T00:00:00Z",
+                  "check_date": "2020-11-10T00:00:00Z",
+                  "earnings": [
+                    {
+                      "id": "babbced6-3a81-4775-8da2-490dc6385259",
+                      "remote_id": "52802",
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "amount": 1002.34,
+                      "type": "SALARY",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ],
+                  "deductions": [
+                    {
+                      "id": "5fd439fc-1b64-4755-b275-64918936c365",
+                      "remote_id": "93478612",
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "name": "Social Security",
+                      "employee_deduction": 34.54,
+                      "company_deduction": 78.78,
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ],
+                  "taxes": [
+                    {
+                      "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
+                      "remote_id": "26806834",
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "name": "California State Income Tax",
+                      "amount": 100.25,
+                      "employer_tax": "False",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ],
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -12934,11 +13584,111 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                      "remote_id": "19202938",
+                      "employee_number": "2",
+                      "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                      "first_name": "Greg",
+                      "last_name": "Hirsch",
+                      "display_full_name": "Cousin Greg Hirsch",
+                      "username": "cousingreg",
+                      "groups": [
+                        "foo"
+                      ],
+                      "work_email": "greg@merge.dev",
+                      "personal_email": "greg@gmail.com",
+                      "mobile_phone_number": "+1234567890",
+                      "employments": [
+                        "foo"
+                      ],
+                      "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                      "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                      "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                      "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                      "ssn": "1234567890",
+                      "gender": "MALE",
+                      "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                      "marital_status": "SINGLE",
+                      "date_of_birth": "1990-11-10T00:00:00Z",
+                      "hire_date": "2020-10-10T00:00:00Z",
+                      "start_date": "2020-10-11T00:00:00Z",
+                      "remote_created_at": "2020-10-11T00:00:00Z",
+                      "employment_status": "ACTIVE",
+                      "termination_date": "2021-10-12T00:00:00Z",
+                      "avatar": "http://alturl.com/h2h8m",
+                      "custom_fields": {},
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                      "remote_id": "19202938",
+                      "employee_number": "2",
+                      "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                      "first_name": "Greg",
+                      "last_name": "Hirsch",
+                      "display_full_name": "Cousin Greg Hirsch",
+                      "username": "cousingreg",
+                      "groups": [
+                        "foo"
+                      ],
+                      "work_email": "greg@merge.dev",
+                      "personal_email": "greg@gmail.com",
+                      "mobile_phone_number": "+1234567890",
+                      "employments": [
+                        "foo"
+                      ],
+                      "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                      "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                      "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                      "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                      "ssn": "1234567890",
+                      "gender": "MALE",
+                      "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                      "marital_status": "SINGLE",
+                      "date_of_birth": "1990-11-10T00:00:00Z",
+                      "hire_date": "2020-10-10T00:00:00Z",
+                      "start_date": "2020-10-11T00:00:00Z",
+                      "remote_created_at": "2020-10-11T00:00:00Z",
+                      "employment_status": "ACTIVE",
+                      "termination_date": "2021-10-12T00:00:00Z",
+                      "avatar": "http://alturl.com/h2h8m",
+                      "custom_fields": {},
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -13068,19 +13818,80 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "model": {},
+                  "model": {
+                    "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                    "remote_id": "19202938",
+                    "employee_number": "2",
+                    "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                    "first_name": "Greg",
+                    "last_name": "Hirsch",
+                    "display_full_name": "Cousin Greg Hirsch",
+                    "username": "cousingreg",
+                    "groups": [
+                      "foo"
+                    ],
+                    "work_email": "greg@merge.dev",
+                    "personal_email": "greg@gmail.com",
+                    "mobile_phone_number": "+1234567890",
+                    "employments": [
+                      "foo"
+                    ],
+                    "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                    "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                    "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                    "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                    "ssn": "1234567890",
+                    "gender": "MALE",
+                    "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "marital_status": "SINGLE",
+                    "date_of_birth": "1990-11-10T00:00:00Z",
+                    "hire_date": "2020-10-10T00:00:00Z",
+                    "start_date": "2020-10-11T00:00:00Z",
+                    "remote_created_at": "2020-10-11T00:00:00Z",
+                    "employment_status": "ACTIVE",
+                    "termination_date": "2021-10-12T00:00:00Z",
+                    "avatar": "http://alturl.com/h2h8m",
+                    "custom_fields": {},
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  },
                   "warnings": [
                     {
-                      "title": "foo",
-                      "detail": "foo",
-                      "problem_type": "foo"
+                      "source": {
+                        "pointer": "foo"
+                      },
+                      "title": "Unrecognized Field",
+                      "detail": "An unrecognized field, age, was passed in with request data.",
+                      "problem_type": "UNRECOGNIZED_FIELD"
                     }
                   ],
                   "errors": [
                     {
-                      "title": "foo",
-                      "detail": "foo",
-                      "problem_type": "foo"
+                      "source": {
+                        "pointer": "foo"
+                      },
+                      "title": "Missing Required Field",
+                      "detail": "custom_fields is a required field on model.",
+                      "problem_type": "MISSING_REQUIRED_FIELD"
+                    }
+                  ],
+                  "logs": [
+                    {
+                      "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
+                      "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
+                      "log_summary": {
+                        "url": "https://harvest.greenhouse.io/v1/candidates/",
+                        "method": "POST",
+                        "status_code": 200
+                      }
                     }
                   ]
                 }
@@ -13088,19 +13899,80 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "model": {},
+                  "model": {
+                    "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                    "remote_id": "19202938",
+                    "employee_number": "2",
+                    "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                    "first_name": "Greg",
+                    "last_name": "Hirsch",
+                    "display_full_name": "Cousin Greg Hirsch",
+                    "username": "cousingreg",
+                    "groups": [
+                      "foo"
+                    ],
+                    "work_email": "greg@merge.dev",
+                    "personal_email": "greg@gmail.com",
+                    "mobile_phone_number": "+1234567890",
+                    "employments": [
+                      "foo"
+                    ],
+                    "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                    "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                    "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                    "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                    "ssn": "1234567890",
+                    "gender": "MALE",
+                    "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "marital_status": "SINGLE",
+                    "date_of_birth": "1990-11-10T00:00:00Z",
+                    "hire_date": "2020-10-10T00:00:00Z",
+                    "start_date": "2020-10-11T00:00:00Z",
+                    "remote_created_at": "2020-10-11T00:00:00Z",
+                    "employment_status": "ACTIVE",
+                    "termination_date": "2021-10-12T00:00:00Z",
+                    "avatar": "http://alturl.com/h2h8m",
+                    "custom_fields": {},
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  },
                   "warnings": [
                     {
-                      "title": "foo",
-                      "detail": "foo",
-                      "problem_type": "foo"
+                      "source": {
+                        "pointer": "foo"
+                      },
+                      "title": "Unrecognized Field",
+                      "detail": "An unrecognized field, age, was passed in with request data.",
+                      "problem_type": "UNRECOGNIZED_FIELD"
                     }
                   ],
                   "errors": [
                     {
-                      "title": "foo",
-                      "detail": "foo",
-                      "problem_type": "foo"
+                      "source": {
+                        "pointer": "foo"
+                      },
+                      "title": "Missing Required Field",
+                      "detail": "custom_fields is a required field on model.",
+                      "problem_type": "MISSING_REQUIRED_FIELD"
+                    }
+                  ],
+                  "logs": [
+                    {
+                      "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
+                      "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
+                      "log_summary": {
+                        "url": "https://harvest.greenhouse.io/v1/candidates/",
+                        "method": "POST",
+                        "status_code": 200
+                      }
                     }
                   ]
                 }
@@ -13267,11 +14139,99 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                  "remote_id": "19202938",
+                  "employee_number": "2",
+                  "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                  "first_name": "Greg",
+                  "last_name": "Hirsch",
+                  "display_full_name": "Cousin Greg Hirsch",
+                  "username": "cousingreg",
+                  "groups": [
+                    "foo"
+                  ],
+                  "work_email": "greg@merge.dev",
+                  "personal_email": "greg@gmail.com",
+                  "mobile_phone_number": "+1234567890",
+                  "employments": [
+                    "foo"
+                  ],
+                  "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                  "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                  "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                  "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                  "ssn": "1234567890",
+                  "gender": "MALE",
+                  "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                  "marital_status": "SINGLE",
+                  "date_of_birth": "1990-11-10T00:00:00Z",
+                  "hire_date": "2020-10-10T00:00:00Z",
+                  "start_date": "2020-10-11T00:00:00Z",
+                  "remote_created_at": "2020-10-11T00:00:00Z",
+                  "employment_status": "ACTIVE",
+                  "termination_date": "2021-10-12T00:00:00Z",
+                  "avatar": "http://alturl.com/h2h8m",
+                  "custom_fields": {},
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                  "remote_id": "19202938",
+                  "employee_number": "2",
+                  "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                  "first_name": "Greg",
+                  "last_name": "Hirsch",
+                  "display_full_name": "Cousin Greg Hirsch",
+                  "username": "cousingreg",
+                  "groups": [
+                    "foo"
+                  ],
+                  "work_email": "greg@merge.dev",
+                  "personal_email": "greg@gmail.com",
+                  "mobile_phone_number": "+1234567890",
+                  "employments": [
+                    "foo"
+                  ],
+                  "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                  "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                  "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                  "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                  "ssn": "1234567890",
+                  "gender": "MALE",
+                  "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                  "marital_status": "SINGLE",
+                  "date_of_birth": "1990-11-10T00:00:00Z",
+                  "hire_date": "2020-10-10T00:00:00Z",
+                  "start_date": "2020-10-11T00:00:00Z",
+                  "remote_created_at": "2020-10-11T00:00:00Z",
+                  "employment_status": "ACTIVE",
+                  "termination_date": "2021-10-12T00:00:00Z",
+                  "avatar": "http://alturl.com/h2h8m",
+                  "custom_fields": {},
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -13455,6 +14415,11 @@
                 "type": "json",
                 "value": {
                   "request_schema": {},
+                  "remote_field_classes": {},
+                  "status": {
+                    "linked_account_status": "foo",
+                    "can_make_request": true
+                  },
                   "has_conditional_params": true,
                   "has_required_linked_account_params": true
                 }
@@ -13463,6 +14428,11 @@
                 "type": "json",
                 "value": {
                   "request_schema": {},
+                  "remote_field_classes": {},
+                  "status": {
+                    "linked_account_status": "foo",
+                    "can_make_request": true
+                  },
                   "has_conditional_params": true,
                   "has_required_linked_account_params": true
                 }
@@ -13746,11 +14716,67 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
+                      "remote_id": "19202938",
+                      "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                      "job_title": "Executive Assistant to Tom Wambsgans",
+                      "pay_rate": "50000.00",
+                      "pay_period": "HOUR",
+                      "pay_frequency": "WEEKLY",
+                      "pay_currency": "XUA",
+                      "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
+                      "flsa_status": "EXEMPT",
+                      "effective_date": "2023-10-06T18:42:34Z",
+                      "employment_type": "FULL_TIME",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
+                      "remote_id": "19202938",
+                      "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                      "job_title": "Executive Assistant to Tom Wambsgans",
+                      "pay_rate": "50000.00",
+                      "pay_period": "HOUR",
+                      "pay_frequency": "WEEKLY",
+                      "pay_currency": "XUA",
+                      "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
+                      "flsa_status": "EXEMPT",
+                      "effective_date": "2023-10-06T18:42:34Z",
+                      "employment_type": "FULL_TIME",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -13900,11 +14926,55 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
+                  "remote_id": "19202938",
+                  "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                  "job_title": "Executive Assistant to Tom Wambsgans",
+                  "pay_rate": "50000.00",
+                  "pay_period": "HOUR",
+                  "pay_frequency": "WEEKLY",
+                  "pay_currency": "XUA",
+                  "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
+                  "flsa_status": "EXEMPT",
+                  "effective_date": "2023-10-06T18:42:34Z",
+                  "employment_type": "FULL_TIME",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
+                  "remote_id": "19202938",
+                  "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                  "job_title": "Executive Assistant to Tom Wambsgans",
+                  "pay_rate": "50000.00",
+                  "pay_period": "HOUR",
+                  "pay_frequency": "WEEKLY",
+                  "pay_currency": "XUA",
+                  "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
+                  "flsa_status": "EXEMPT",
+                  "effective_date": "2023-10-06T18:42:34Z",
+                  "employment_type": "FULL_TIME",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -13989,27 +15059,27 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo"
+                "name": "Remote Deployment Key 1"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo"
+                  "name": "Remote Deployment Key 1"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "key": "foo"
+                  "name": "Remote Deployment Key 1",
+                  "key": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "key": "foo"
+                  "name": "Remote Deployment Key 1",
+                  "key": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA"
                 }
               }
             }
@@ -14267,11 +15337,53 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "134e0111-0f67-44f6-98f0-597000290bb3",
+                      "remote_id": "800293",
+                      "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
+                      "name": "COST_CENTER_US",
+                      "type": "TEAM",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "134e0111-0f67-44f6-98f0-597000290bb3",
+                      "remote_id": "800293",
+                      "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
+                      "name": "COST_CENTER_US",
+                      "type": "TEAM",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -14409,11 +15521,41 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "134e0111-0f67-44f6-98f0-597000290bb3",
+                  "remote_id": "800293",
+                  "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
+                  "name": "COST_CENTER_US",
+                  "type": "TEAM",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "134e0111-0f67-44f6-98f0-597000290bb3",
+                  "remote_id": "800293",
+                  "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
+                  "name": "COST_CENTER_US",
+                  "type": "TEAM",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -14670,11 +15812,45 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "status": "ONGOING",
+                      "error_description": "string",
+                      "end_user": {},
+                      "first_incident_time": "2022-12-05T16:19:15.161Z",
+                      "last_incident_time": "2022-12-05T16:19:15.161Z",
+                      "is_muted": true,
+                      "error_details": [
+                        "foo"
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "status": "ONGOING",
+                      "error_description": "string",
+                      "end_user": {},
+                      "first_incident_time": "2022-12-05T16:19:15.161Z",
+                      "last_incident_time": "2022-12-05T16:19:15.161Z",
+                      "is_muted": true,
+                      "error_details": [
+                        "foo"
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -14760,13 +15936,31 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "error_description": "foo"
+                  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "status": "ONGOING",
+                  "error_description": "string",
+                  "end_user": {},
+                  "first_incident_time": "2022-12-05T16:19:15.161Z",
+                  "last_incident_time": "2022-12-05T16:19:15.161Z",
+                  "is_muted": true,
+                  "error_details": [
+                    "foo"
+                  ]
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "error_description": "foo"
+                  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "status": "ONGOING",
+                  "error_description": "string",
+                  "end_user": {},
+                  "first_incident_time": "2022-12-05T16:19:15.161Z",
+                  "last_incident_time": "2022-12-05T16:19:15.161Z",
+                  "is_muted": true,
+                  "error_details": [
+                    "foo"
+                  ]
                 }
               }
             }
@@ -14874,13 +16068,17 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "link_token": "foo"
+                  "link_token": "necdP7FtdASl1fQwm62be2_dM4wBG8_GactqoUV0",
+                  "integration_name": "Lever",
+                  "magic_link_url": "https://link.merge.dev/asdfjkl12345jsndfgi2i83n"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "link_token": "foo"
+                  "link_token": "necdP7FtdASl1fQwm62be2_dM4wBG8_GactqoUV0",
+                  "integration_name": "Lever",
+                  "magic_link_url": "https://link.merge.dev/asdfjkl12345jsndfgi2i83n"
                 }
               }
             }
@@ -15137,11 +16335,93 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "e59b1821-f85c-4e28-a6b3-1804156f3563",
+                      "category": "hris",
+                      "status": "COMPLETE",
+                      "status_detail": "foo",
+                      "end_user_origin_id": "3ac95cde-6c7f-4eef-afec-be710b42308d",
+                      "end_user_organization_name": "Foo Bar, LLC",
+                      "end_user_email_address": "hradmin@foobar.dev",
+                      "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
+                      "is_duplicate": true,
+                      "integration": {
+                        "name": "foo",
+                        "categories": [
+                          "hris"
+                        ],
+                        "image": "foo",
+                        "square_image": "foo",
+                        "color": "foo",
+                        "slug": "foo",
+                        "passthrough_available": true,
+                        "available_model_operations": [
+                          {
+                            "model_name": "Candidate",
+                            "available_operations": [
+                              "foo"
+                            ],
+                            "required_post_parameters": [
+                              "foo"
+                            ],
+                            "supported_fields": [
+                              "foo"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "e59b1821-f85c-4e28-a6b3-1804156f3563",
+                      "category": "hris",
+                      "status": "COMPLETE",
+                      "status_detail": "foo",
+                      "end_user_origin_id": "3ac95cde-6c7f-4eef-afec-be710b42308d",
+                      "end_user_organization_name": "Foo Bar, LLC",
+                      "end_user_email_address": "hradmin@foobar.dev",
+                      "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
+                      "is_duplicate": true,
+                      "integration": {
+                        "name": "foo",
+                        "categories": [
+                          "hris"
+                        ],
+                        "image": "foo",
+                        "square_image": "foo",
+                        "color": "foo",
+                        "slug": "foo",
+                        "passthrough_available": true,
+                        "available_model_operations": [
+                          {
+                            "model_name": "Candidate",
+                            "available_operations": [
+                              "foo"
+                            ],
+                            "required_post_parameters": [
+                              "foo"
+                            ],
+                            "supported_fields": [
+                              "foo"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -15384,11 +16664,65 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
+                      "remote_id": "93018402",
+                      "name": "NYC Office",
+                      "phone_number": "+1111111111",
+                      "street_1": "2920 Broadway",
+                      "street_2": "2nd Floor",
+                      "city": "New York ",
+                      "state": "NY",
+                      "zip_code": "10027",
+                      "country": "AF",
+                      "location_type": "HOME",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
+                      "remote_id": "93018402",
+                      "name": "NYC Office",
+                      "phone_number": "+1111111111",
+                      "street_1": "2920 Broadway",
+                      "street_2": "2nd Floor",
+                      "city": "New York ",
+                      "state": "NY",
+                      "zip_code": "10027",
+                      "country": "AF",
+                      "location_type": "HOME",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -15526,11 +16860,53 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
+                  "remote_id": "93018402",
+                  "name": "NYC Office",
+                  "phone_number": "+1111111111",
+                  "street_1": "2920 Broadway",
+                  "street_2": "2nd Floor",
+                  "city": "New York ",
+                  "state": "NY",
+                  "zip_code": "10027",
+                  "country": "AF",
+                  "location_type": "HOME",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
+                  "remote_id": "93018402",
+                  "name": "NYC Office",
+                  "phone_number": "+1111111111",
+                  "street_1": "2920 Broadway",
+                  "street_2": "2nd Floor",
+                  "city": "New York ",
+                  "state": "NY",
+                  "zip_code": "10027",
+                  "country": "AF",
+                  "location_type": "HOME",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -15629,32 +17005,38 @@
               },
               "requestBody": {
                 "method": "GET",
-                "path": "foo"
+                "path": "/scooters"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "method": "GET",
-                  "path": "foo"
+                  "path": "/scooters"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "method": "foo",
-                  "path": "foo",
-                  "status": 42,
-                  "response": null
+                  "method": "GET",
+                  "path": "/scooters",
+                  "status": 200,
+                  "response": null,
+                  "response_headers": {},
+                  "response_type": "JSON",
+                  "headers": {}
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "method": "foo",
-                  "path": "foo",
-                  "status": 42,
-                  "response": null
+                  "method": "GET",
+                  "path": "/scooters",
+                  "status": 200,
+                  "response": null,
+                  "response_headers": {},
+                  "response_type": "JSON",
+                  "headers": {}
                 }
               }
             }
@@ -15874,11 +17256,49 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                      "remote_id": "800293",
+                      "pay_group_name": "contractor",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                      "remote_id": "800293",
+                      "pay_group_name": "contractor",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -15992,11 +17412,37 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                  "remote_id": "800293",
+                  "pay_group_name": "contractor",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                  "remote_id": "800293",
+                  "pay_group_name": "contractor",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -16311,11 +17757,57 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
+                      "remote_id": "19202938",
+                      "run_state": "PAID",
+                      "run_type": "REGULAR",
+                      "start_date": "2020-11-08T00:00:00Z",
+                      "end_date": "2020-11-15T00:00:00Z",
+                      "check_date": "2020-11-15T00:00:00Z",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
+                      "remote_id": "19202938",
+                      "run_state": "PAID",
+                      "run_type": "REGULAR",
+                      "start_date": "2020-11-08T00:00:00Z",
+                      "end_date": "2020-11-15T00:00:00Z",
+                      "check_date": "2020-11-15T00:00:00Z",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -16453,11 +17945,45 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
+                  "remote_id": "19202938",
+                  "run_state": "PAID",
+                  "run_type": "REGULAR",
+                  "start_date": "2020-11-08T00:00:00Z",
+                  "end_date": "2020-11-15T00:00:00Z",
+                  "check_date": "2020-11-15T00:00:00Z",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
+                  "remote_id": "19202938",
+                  "run_state": "PAID",
+                  "run_type": "REGULAR",
+                  "start_date": "2020-11-08T00:00:00Z",
+                  "end_date": "2020-11-15T00:00:00Z",
+                  "check_date": "2020-11-15T00:00:00Z",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -16542,27 +18068,27 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo"
+                "name": "Remote Deployment Key 1"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo"
+                  "name": "Remote Deployment Key 1"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "key": "foo"
+                  "name": "Remote Deployment Key 1",
+                  "key": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "key": "foo"
+                  "name": "Remote Deployment Key 1",
+                  "key": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA"
                 }
               }
             }
@@ -17122,11 +18648,39 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "model_name": "Employee",
+                      "model_id": "hris.Employee",
+                      "last_sync_start": "2021-03-30T19:44:18.695973Z",
+                      "next_sync_start": "2021-03-30T20:44:18.662942Z",
+                      "status": "SYNCING",
+                      "is_initial_sync": true,
+                      "selective_sync_configurations_usage": "IN_NEXT_SYNC"
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "model_name": "Employee",
+                      "model_id": "hris.Employee",
+                      "last_sync_start": "2021-03-30T19:44:18.695973Z",
+                      "next_sync_start": "2021-03-30T20:44:18.662942Z",
+                      "status": "SYNCING",
+                      "is_initial_sync": true,
+                      "selective_sync_configurations_usage": "IN_NEXT_SYNC"
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -17218,10 +18772,13 @@
                 "type": "json",
                 "value": [
                   {
-                    "model_name": "foo",
-                    "model_id": "foo",
+                    "model_name": "Employee",
+                    "model_id": "hris.Employee",
+                    "last_sync_start": "2021-03-30T19:44:18.695973Z",
+                    "next_sync_start": "2021-03-30T20:44:18.662942Z",
                     "status": "SYNCING",
-                    "is_initial_sync": true
+                    "is_initial_sync": true,
+                    "selective_sync_configurations_usage": "IN_NEXT_SYNC"
                   }
                 ]
               },
@@ -17229,10 +18786,13 @@
                 "type": "json",
                 "value": [
                   {
-                    "model_name": "foo",
-                    "model_id": "foo",
+                    "model_name": "Employee",
+                    "model_id": "hris.Employee",
+                    "last_sync_start": "2021-03-30T19:44:18.695973Z",
+                    "next_sync_start": "2021-03-30T20:44:18.662942Z",
                     "status": "SYNCING",
-                    "is_initial_sync": true
+                    "is_initial_sync": true,
+                    "selective_sync_configurations_usage": "IN_NEXT_SYNC"
                   }
                 ]
               }
@@ -17479,11 +19039,51 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
+                      "remote_id": "19202938",
+                      "name": "Engineering",
+                      "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
+                      "remote_id": "19202938",
+                      "name": "Engineering",
+                      "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -17609,11 +19209,39 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
+                  "remote_id": "19202938",
+                  "name": "Engineering",
+                  "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
+                  "remote_id": "19202938",
+                  "name": "Engineering",
+                  "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -17920,11 +19548,65 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                      "remote_id": "19202938",
+                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                      "status": "REQUESTED",
+                      "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                      "units": "HOURS",
+                      "amount": 3,
+                      "request_type": "VACATION",
+                      "start_time": "2020-11-10T00:00:00Z",
+                      "end_time": "2020-11-17T00:00:00Z",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                      "remote_id": "19202938",
+                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                      "status": "REQUESTED",
+                      "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                      "units": "HOURS",
+                      "amount": 3,
+                      "request_type": "VACATION",
+                      "start_time": "2020-11-10T00:00:00Z",
+                      "end_time": "2020-11-17T00:00:00Z",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -18054,19 +19736,57 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "model": {},
+                  "model": {
+                    "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                    "remote_id": "19202938",
+                    "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                    "status": "REQUESTED",
+                    "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                    "units": "HOURS",
+                    "amount": 3,
+                    "request_type": "VACATION",
+                    "start_time": "2020-11-10T00:00:00Z",
+                    "end_time": "2020-11-17T00:00:00Z",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  },
                   "warnings": [
                     {
-                      "title": "foo",
-                      "detail": "foo",
-                      "problem_type": "foo"
+                      "source": {
+                        "pointer": "foo"
+                      },
+                      "title": "Unrecognized Field",
+                      "detail": "An unrecognized field, age, was passed in with request data.",
+                      "problem_type": "UNRECOGNIZED_FIELD"
                     }
                   ],
                   "errors": [
                     {
-                      "title": "foo",
-                      "detail": "foo",
-                      "problem_type": "foo"
+                      "source": {
+                        "pointer": "foo"
+                      },
+                      "title": "Missing Required Field",
+                      "detail": "custom_fields is a required field on model.",
+                      "problem_type": "MISSING_REQUIRED_FIELD"
+                    }
+                  ],
+                  "logs": [
+                    {
+                      "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
+                      "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
+                      "log_summary": {
+                        "url": "https://harvest.greenhouse.io/v1/candidates/",
+                        "method": "POST",
+                        "status_code": 200
+                      }
                     }
                   ]
                 }
@@ -18074,19 +19794,57 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "model": {},
+                  "model": {
+                    "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                    "remote_id": "19202938",
+                    "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                    "status": "REQUESTED",
+                    "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                    "units": "HOURS",
+                    "amount": 3,
+                    "request_type": "VACATION",
+                    "start_time": "2020-11-10T00:00:00Z",
+                    "end_time": "2020-11-17T00:00:00Z",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  },
                   "warnings": [
                     {
-                      "title": "foo",
-                      "detail": "foo",
-                      "problem_type": "foo"
+                      "source": {
+                        "pointer": "foo"
+                      },
+                      "title": "Unrecognized Field",
+                      "detail": "An unrecognized field, age, was passed in with request data.",
+                      "problem_type": "UNRECOGNIZED_FIELD"
                     }
                   ],
                   "errors": [
                     {
-                      "title": "foo",
-                      "detail": "foo",
-                      "problem_type": "foo"
+                      "source": {
+                        "pointer": "foo"
+                      },
+                      "title": "Missing Required Field",
+                      "detail": "custom_fields is a required field on model.",
+                      "problem_type": "MISSING_REQUIRED_FIELD"
+                    }
+                  ],
+                  "logs": [
+                    {
+                      "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
+                      "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
+                      "log_summary": {
+                        "url": "https://harvest.greenhouse.io/v1/candidates/",
+                        "method": "POST",
+                        "status_code": 200
+                      }
                     }
                   ]
                 }
@@ -18239,11 +19997,53 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                  "status": "REQUESTED",
+                  "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                  "units": "HOURS",
+                  "amount": 3,
+                  "request_type": "VACATION",
+                  "start_time": "2020-11-10T00:00:00Z",
+                  "end_time": "2020-11-17T00:00:00Z",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                  "status": "REQUESTED",
+                  "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                  "units": "HOURS",
+                  "amount": 3,
+                  "request_type": "VACATION",
+                  "start_time": "2020-11-10T00:00:00Z",
+                  "end_time": "2020-11-17T00:00:00Z",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -18322,6 +20122,11 @@
                 "type": "json",
                 "value": {
                   "request_schema": {},
+                  "remote_field_classes": {},
+                  "status": {
+                    "linked_account_status": "foo",
+                    "can_make_request": true
+                  },
                   "has_conditional_params": true,
                   "has_required_linked_account_params": true
                 }
@@ -18330,6 +20135,11 @@
                 "type": "json",
                 "value": {
                   "request_schema": {},
+                  "remote_field_classes": {},
+                  "status": {
+                    "linked_account_status": "foo",
+                    "can_make_request": true
+                  },
                   "has_conditional_params": true,
                   "has_required_linked_account_params": true
                 }
@@ -18613,11 +20423,55 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                      "remote_id": "19202938",
+                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "balance": "60.0",
+                      "used": "45.0",
+                      "policy_type": "VACATION",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "results": [
+                    {
+                      "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                      "remote_id": "19202938",
+                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "balance": "60.0",
+                      "used": "45.0",
+                      "policy_type": "VACATION",
+                      "remote_was_deleted": true,
+                      "modified_at": "2021-10-16T00:00:00Z",
+                      "field_mappings": {},
+                      "remote_data": [
+                        {
+                          "path": "foo",
+                          "data": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -18767,11 +20621,43 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "balance": "60.0",
+                  "used": "45.0",
+                  "policy_type": "VACATION",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               },
               "responseBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "balance": "60.0",
+                  "used": "45.0",
+                  "policy_type": "VACATION",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
+                    {
+                      "path": "foo",
+                      "data": {}
+                    }
+                  ]
+                }
               }
             }
           ],
@@ -18864,7 +20750,8 @@
                 "value": [
                   {
                     "event": "foo",
-                    "is_active": true
+                    "is_active": true,
+                    "key": "foo"
                   }
                 ]
               },
@@ -18873,7 +20760,8 @@
                 "value": [
                   {
                     "event": "foo",
-                    "is_active": true
+                    "is_active": true,
+                    "key": "foo"
                   }
                 ]
               }
@@ -18978,14 +20866,16 @@
                 "type": "json",
                 "value": {
                   "event": "foo",
-                  "is_active": true
+                  "is_active": true,
+                  "key": "foo"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "event": "foo",
-                  "is_active": true
+                  "is_active": true,
+                  "key": "foo"
                 }
               }
             }

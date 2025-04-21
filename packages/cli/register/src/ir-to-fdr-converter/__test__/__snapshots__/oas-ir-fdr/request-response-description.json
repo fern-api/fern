@@ -97,11 +97,17 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": 42,
+                "name": "foo"
+              }
             },
             "responseBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "id": 42,
+                "name": "foo"
+              }
             }
           }
         ],
