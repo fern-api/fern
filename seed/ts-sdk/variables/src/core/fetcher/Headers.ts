@@ -1,10 +1,4 @@
-declare global {
-    interface HeadersConstructor {
-        new (init?: HeadersInit): Headers;
-    }
-}
-
-let Headers: HeadersConstructor;
+let Headers: typeof globalThis.Headers;
 
 if (typeof globalThis.Headers !== "undefined") {
     Headers = globalThis.Headers;
@@ -96,5 +90,4 @@ if (typeof globalThis.Headers !== "undefined") {
     };
 }
 
-export type { HeadersConstructor };
 export { Headers };
