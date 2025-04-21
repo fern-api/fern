@@ -1,4 +1,3 @@
-import { spawn } from "child_process";
 import path from "path";
 
 import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
@@ -25,23 +24,21 @@ export async function runAppPreviewServer({
     bundlePath?: string;
 }): Promise<void> {
     const bundleRoot = getPathToAppBundleFolder();
-    const serverPath = path.join(bundleRoot, "dist/server.js");
+    const serverPath = path.join(bundleRoot, ".next/standalone/packages/fern-docs/bundle/server.js");
 
     // Prepare environment variables based on the provided instructions
     const env = {
         ...process.env,
-        NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${port}`,
         PORT: port.toString(),
+        HOSTNAME: "0.0.0.0",
+        // temporarily point at currently running FDR location
+        NEXT_PUBLIC_FDR_ORIGIN: "http://localhost:3001",
+        NEXT_PUBLIC_IS_LOCAL: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot
     };
 
-    // Log the server path to verify
-    context.logger.info(`Starting preview server from: ${serverPath}`);
-
     await loggingExeca(context.logger, "node", [serverPath], {
-        doNotPipeOutput: true,
-        cwd: bundleRoot,
         env
     });
 
