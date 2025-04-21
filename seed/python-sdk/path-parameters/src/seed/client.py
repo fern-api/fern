@@ -31,10 +31,7 @@ class SeedPathParameters:
     Examples
     --------
     from seed import SeedPathParameters
-
-    client = SeedPathParameters(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -82,10 +79,7 @@ class AsyncSeedPathParameters:
     Examples
     --------
     from seed import AsyncSeedPathParameters
-
-    client = AsyncSeedPathParameters(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

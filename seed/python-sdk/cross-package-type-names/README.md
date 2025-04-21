@@ -21,15 +21,8 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedCrossPackageTypeNames
-
-client = SeedCrossPackageTypeNames(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.foo.find(
-    optional_string="optionalString",
-    public_property="publicProperty",
-    private_property=1,
-)
+client = SeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
+client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
 ```
 
 ## Async Client
@@ -37,25 +30,12 @@ client.foo.find(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedCrossPackageTypeNames
-
-client = AsyncSeedCrossPackageTypeNames(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.foo.find(
-        optional_string="optionalString",
-        public_property="publicProperty",
-        private_property=1,
-    )
-
-
-asyncio.run(main())
-```
+    await client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -64,7 +44,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.foo.find(...)
 except ApiError as e:
@@ -101,12 +80,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedCrossPackageTypeNames
-
-client = SeedCrossPackageTypeNames(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedCrossPackageTypeNames(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.foo.find(..., request_options={
@@ -120,17 +94,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedCrossPackageTypeNames
-
-client = SeedCrossPackageTypeNames(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedCrossPackageTypeNames(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

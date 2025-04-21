@@ -51,7 +51,6 @@ class UnionWithDuplicatePrimitive(UniversalRootModel):
     Examples
     --------
     from seed.types import UnionWithDuplicatePrimitive_Integer1
-
     UnionWithDuplicatePrimitive_Integer1(value=9)
     """
 

@@ -32,11 +32,7 @@ class SeedPagination:
     Examples
     --------
     from seed import SeedPagination
-
-    client = SeedPagination(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -87,11 +83,7 @@ class AsyncSeedPagination:
     Examples
     --------
     from seed import AsyncSeedPagination
-
-    client = AsyncSeedPagination(
-        token="YOUR_TOKEN",
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

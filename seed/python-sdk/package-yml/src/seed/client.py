@@ -35,10 +35,7 @@ class SeedPackageYml:
     Examples
     --------
     from seed import SeedPackageYml
-
-    client = SeedPackageYml(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -95,15 +92,8 @@ class SeedPackageYml:
         Examples
         --------
         from seed import SeedPackageYml
-
-        client = SeedPackageYml(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.echo(
-            id="id-ksfd9c1",
-            name="Hello world!",
-            size=20,
-        )
+        client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )
+        client.echo(id='id-ksfd9c1', name='Hello world!', size=20, )
         """
         response = self._raw_client.echo(id, name=name, size=size, request_options=request_options)
         return response.data
@@ -130,10 +120,7 @@ class AsyncSeedPackageYml:
     Examples
     --------
     from seed import AsyncSeedPackageYml
-
-    client = AsyncSeedPackageYml(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedPackageYml(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -191,23 +178,11 @@ class AsyncSeedPackageYml:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedPackageYml
-
-        client = AsyncSeedPackageYml(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedPackageYml(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.echo(
-                id="id-ksfd9c1",
-                name="Hello world!",
-                size=20,
-            )
-
-
+            await client.echo(id='id-ksfd9c1', name='Hello world!', size=20, )
         asyncio.run(main())
         """
         response = await self._raw_client.echo(id, name=name, size=size, request_options=request_options)

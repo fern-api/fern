@@ -40,10 +40,7 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
+        client = SeedApi(base_url="https://yourhost.com/path/to/api", )
         client.folder.service.endpoint()
         """
         response = self._raw_client.endpoint(request_options=request_options)
@@ -67,13 +64,9 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.folder.service.unknown_request(
-            request={"key": "value"},
-        )
+        client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+        client.folder.service.unknown_request(request={'key': 'value'}
+        , )
         """
         response = self._raw_client.unknown_request(request=request, request_options=request_options)
         return response.data
@@ -107,19 +100,11 @@ class AsyncServiceClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedApi(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
             await client.folder.service.endpoint()
-
-
         asyncio.run(main())
         """
         response = await self._raw_client.endpoint(request_options=request_options)
@@ -142,21 +127,12 @@ class AsyncServiceClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedApi(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.folder.service.unknown_request(
-                request={"key": "value"},
-            )
-
-
+            await client.folder.service.unknown_request(request={'key': 'value'}
+            , )
         asyncio.run(main())
         """
         response = await self._raw_client.unknown_request(request=request, request_options=request_options)

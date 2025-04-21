@@ -11,10 +11,7 @@ class Foo(UniversalBaseModel):
     Examples
     --------
     from seed.unions.resources.types import Foo
-
-    Foo(
-        name="example1",
-    )
+    Foo(name='example1', )
     """
 
     name: str

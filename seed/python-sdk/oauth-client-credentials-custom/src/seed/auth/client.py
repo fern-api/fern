@@ -60,19 +60,8 @@ class AuthClient:
         Examples
         --------
         from seed import SeedOauthClientCredentials
-
-        client = SeedOauthClientCredentials(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
-        client.auth.get_token_with_client_credentials(
-            cid="cid",
-            csr="csr",
-            scp="scp",
-            entity_id="entity_id",
-            scope="scope",
-        )
+        client = SeedOauthClientCredentials(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
+        client.auth.get_token_with_client_credentials(cid='cid', csr='csr', scp='scp', entity_id='entity_id', scope='scope', )
         """
         response = self._raw_client.get_token_with_client_credentials(
             cid=cid, csr=csr, scp=scp, entity_id=entity_id, scope=scope, request_options=request_options
@@ -109,18 +98,8 @@ class AuthClient:
         Examples
         --------
         from seed import SeedOauthClientCredentials
-
-        client = SeedOauthClientCredentials(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
-        client.auth.refresh_token(
-            client_id="client_id",
-            client_secret="client_secret",
-            refresh_token="refresh_token",
-            scope="scope",
-        )
+        client = SeedOauthClientCredentials(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
+        client.auth.refresh_token(client_id='client_id', client_secret='client_secret', refresh_token='refresh_token', scope='scope', )
         """
         response = self._raw_client.refresh_token(
             client_id=client_id,
@@ -179,27 +158,11 @@ class AsyncAuthClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedOauthClientCredentials
-
-        client = AsyncSeedOauthClientCredentials(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
-
-
+        import asyncio
+        client = AsyncSeedOauthClientCredentials(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
         async def main() -> None:
-            await client.auth.get_token_with_client_credentials(
-                cid="cid",
-                csr="csr",
-                scp="scp",
-                entity_id="entity_id",
-                scope="scope",
-            )
-
-
+            await client.auth.get_token_with_client_credentials(cid='cid', csr='csr', scp='scp', entity_id='entity_id', scope='scope', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_token_with_client_credentials(
@@ -236,26 +199,11 @@ class AsyncAuthClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedOauthClientCredentials
-
-        client = AsyncSeedOauthClientCredentials(
-            base_url="https://yourhost.com/path/to/api",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
-
-
+        import asyncio
+        client = AsyncSeedOauthClientCredentials(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
         async def main() -> None:
-            await client.auth.refresh_token(
-                client_id="client_id",
-                client_secret="client_secret",
-                refresh_token="refresh_token",
-                scope="scope",
-            )
-
-
+            await client.auth.refresh_token(client_id='client_id', client_secret='client_secret', refresh_token='refresh_token', scope='scope', )
         asyncio.run(main())
         """
         response = await self._raw_client.refresh_token(

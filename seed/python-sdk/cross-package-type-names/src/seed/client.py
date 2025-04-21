@@ -33,10 +33,7 @@ class SeedCrossPackageTypeNames:
     Examples
     --------
     from seed import SeedCrossPackageTypeNames
-
-    client = SeedCrossPackageTypeNames(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -85,10 +82,7 @@ class AsyncSeedCrossPackageTypeNames:
     Examples
     --------
     from seed import AsyncSeedCrossPackageTypeNames
-
-    client = AsyncSeedCrossPackageTypeNames(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

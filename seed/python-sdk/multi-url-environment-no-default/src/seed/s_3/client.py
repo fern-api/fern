@@ -43,14 +43,8 @@ class S3Client:
         --------
         from seed import SeedMultiUrlEnvironmentNoDefault
         from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
-
-        client = SeedMultiUrlEnvironmentNoDefault(
-            token="YOUR_TOKEN",
-            environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
-        )
-        client.s_3.get_presigned_url(
-            s_3_key="s3Key",
-        )
+        client = SeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
+        client.s_3.get_presigned_url(s_3_key='s3Key', )
         """
         response = self._raw_client.get_presigned_url(s_3_key=s_3_key, request_options=request_options)
         return response.data
@@ -86,23 +80,12 @@ class AsyncS3Client:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedMultiUrlEnvironmentNoDefault
         from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
-
-        client = AsyncSeedMultiUrlEnvironmentNoDefault(
-            token="YOUR_TOKEN",
-            environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
-        )
-
-
+        import asyncio
+        client = AsyncSeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
         async def main() -> None:
-            await client.s_3.get_presigned_url(
-                s_3_key="s3Key",
-            )
-
-
+            await client.s_3.get_presigned_url(s_3_key='s3Key', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_presigned_url(s_3_key=s_3_key, request_options=request_options)

@@ -40,14 +40,8 @@ class PutClient:
         Examples
         --------
         from seed import SeedExhaustive
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.put.add(
-            id="id",
-        )
+        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+        client.endpoints.put.add(id='id', )
         """
         response = self._raw_client.add(id, request_options=request_options)
         return response.data
@@ -83,22 +77,11 @@ class AsyncPutClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedExhaustive
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.endpoints.put.add(
-                id="id",
-            )
-
-
+            await client.endpoints.put.add(id='id', )
         asyncio.run(main())
         """
         response = await self._raw_client.add(id, request_options=request_options)

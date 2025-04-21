@@ -224,16 +224,12 @@ packages = [
         def to_string(self) -> str:
             deps = self.deps_to_string(self.dependencies)
             dev_deps = self.deps_to_string(self.dev_dependencies)
-            # Note mypy and pydantic don't play well together, we either needed
-            # to use an old mypy version (1.0.1) or bump the pydantic version (1.10.7)
-            # I couldn't confirm bumping the pydantic version worked, so we lower mypy for now
-            # https://github.com/pydantic/pydantic/issues/5070
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
 {deps}
-[tool.poetry.dev-dependencies]
-mypy = "1.0.1"
+[tool.poetry.group.dev.dependencies]
+mypy = "==1.13.0"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
@@ -254,6 +250,25 @@ plugins = ["pydantic.mypy"]
 [tool.ruff]
 line-length = 120
 
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+]
+ignore = [
+    "E402",  # Module level import not at top of file
+    "E501",  # Line too long
+    "E711",  # Comparison to `None` should be `cond is not None`
+    "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+    "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+    "E722",  # Do not use bare `except`
+    "E731",  # Do not assign a `lambda` expression, use a `def`
+    "F821",  # Undefined name
+    "F841"   # Local variable ... is assigned to but never used
+]
+
+[tool.ruff.isort]
+section-order = ["future", "standard-library", "third-party", "first-party"]
 """
 
     @dataclass(frozen=True)

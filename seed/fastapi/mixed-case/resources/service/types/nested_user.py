@@ -11,16 +11,9 @@ class NestedUser(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.mixed_case.resources.service import NestedUser, User
-
-    NestedUser(
-        name="username",
-        nested_user=User(
-            user_name="nestedUsername",
-            metadata_tags=["tag1", "tag2"],
-            extra_properties={"foo": "bar", "baz": "qux"},
-        ),
-    )
+    from seed.mixed_case.resources.service import NestedUser
+    from seed.mixed_case.resources.service import User
+    NestedUser(name='username', nested_user=User(user_name='nestedUsername', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, ), )
     """
 
     name: str = pydantic.Field(alias="Name")

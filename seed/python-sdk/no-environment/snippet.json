@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_dummy.getDummy"
             },
             "snippet": {
-                "sync_client": "from seed import SeedNoEnvironment\n\nclient = SeedNoEnvironment(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.dummy.get_dummy()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNoEnvironment\n\nclient = AsyncSeedNoEnvironment(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.dummy.get_dummy()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedNoEnvironment\nclient = SeedNoEnvironment(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nclient.dummy.get_dummy()\n",
+                "async_client": "from seed import AsyncSeedNoEnvironment\nimport asyncio\nclient = AsyncSeedNoEnvironment(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.dummy.get_dummy()\nasyncio.run(main())",
                 "type": "python"
             }
         }

@@ -45,14 +45,8 @@ class OrganizationsClient:
         Examples
         --------
         from seed import SeedPathParameters
-
-        client = SeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.organizations.get_organization(
-            tenant_id="tenant_id",
-            organization_id="organization_id",
-        )
+        client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
+        client.organizations.get_organization(tenant_id='tenant_id', organization_id='organization_id', )
         """
         response = self._raw_client.get_organization(tenant_id, organization_id, request_options=request_options)
         return response.data
@@ -84,15 +78,8 @@ class OrganizationsClient:
         Examples
         --------
         from seed import SeedPathParameters
-
-        client = SeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.organizations.get_organization_user(
-            tenant_id="tenant_id",
-            organization_id="organization_id",
-            user_id="user_id",
-        )
+        client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
+        client.organizations.get_organization_user(tenant_id='tenant_id', organization_id='organization_id', user_id='user_id', )
         """
         response = self._raw_client.get_organization_user(
             tenant_id, organization_id, user_id, request_options=request_options
@@ -126,15 +113,8 @@ class OrganizationsClient:
         Examples
         --------
         from seed import SeedPathParameters
-
-        client = SeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.organizations.search_organizations(
-            tenant_id="tenant_id",
-            organization_id="organization_id",
-            limit=1,
-        )
+        client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
+        client.organizations.search_organizations(tenant_id='tenant_id', organization_id='organization_id', limit=1, )
         """
         response = self._raw_client.search_organizations(
             tenant_id, organization_id, limit=limit, request_options=request_options
@@ -176,22 +156,11 @@ class AsyncOrganizationsClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedPathParameters
-
-        client = AsyncSeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.organizations.get_organization(
-                tenant_id="tenant_id",
-                organization_id="organization_id",
-            )
-
-
+            await client.organizations.get_organization(tenant_id='tenant_id', organization_id='organization_id', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_organization(tenant_id, organization_id, request_options=request_options)
@@ -223,23 +192,11 @@ class AsyncOrganizationsClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedPathParameters
-
-        client = AsyncSeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.organizations.get_organization_user(
-                tenant_id="tenant_id",
-                organization_id="organization_id",
-                user_id="user_id",
-            )
-
-
+            await client.organizations.get_organization_user(tenant_id='tenant_id', organization_id='organization_id', user_id='user_id', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_organization_user(
@@ -273,23 +230,11 @@ class AsyncOrganizationsClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedPathParameters
-
-        client = AsyncSeedPathParameters(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.organizations.search_organizations(
-                tenant_id="tenant_id",
-                organization_id="organization_id",
-                limit=1,
-            )
-
-
+            await client.organizations.search_organizations(tenant_id='tenant_id', organization_id='organization_id', limit=1, )
         asyncio.run(main())
         """
         response = await self._raw_client.search_organizations(

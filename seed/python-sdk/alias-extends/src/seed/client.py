@@ -33,10 +33,7 @@ class SeedAliasExtends:
     Examples
     --------
     from seed import SeedAliasExtends
-
-    client = SeedAliasExtends(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedAliasExtends(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -92,13 +89,8 @@ class SeedAliasExtends:
         Examples
         --------
         from seed import SeedAliasExtends
-
-        client = SeedAliasExtends(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.extended_inline_request_body(
-            child="child",
-        )
+        client = SeedAliasExtends(base_url="https://yourhost.com/path/to/api", )
+        client.extended_inline_request_body(child='child', )
         """
         response = self._raw_client.extended_inline_request_body(
             child=child, parent=parent, request_options=request_options
@@ -127,10 +119,7 @@ class AsyncSeedAliasExtends:
     Examples
     --------
     from seed import AsyncSeedAliasExtends
-
-    client = AsyncSeedAliasExtends(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedAliasExtends(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -185,21 +174,11 @@ class AsyncSeedAliasExtends:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedAliasExtends
-
-        client = AsyncSeedAliasExtends(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedAliasExtends(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.extended_inline_request_body(
-                child="child",
-            )
-
-
+            await client.extended_inline_request_body(child='child', )
         asyncio.run(main())
         """
         response = await self._raw_client.extended_inline_request_body(

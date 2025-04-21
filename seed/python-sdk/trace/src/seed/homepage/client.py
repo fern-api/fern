@@ -43,11 +43,7 @@ class HomepageClient:
         Examples
         --------
         from seed import SeedTrace
-
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
+        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.homepage.get_homepage_problems()
         """
         response = self._raw_client.get_homepage_problems(request_options=request_options)
@@ -71,14 +67,8 @@ class HomepageClient:
         Examples
         --------
         from seed import SeedTrace
-
-        client = SeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-        client.homepage.set_homepage_problems(
-            request=["string", "string"],
-        )
+        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+        client.homepage.set_homepage_problems(request=['string', 'string'], )
         """
         response = self._raw_client.set_homepage_problems(request=request, request_options=request_options)
         return response.data
@@ -114,20 +104,11 @@ class AsyncHomepageClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedTrace
-
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-
-
+        import asyncio
+        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         async def main() -> None:
             await client.homepage.get_homepage_problems()
-
-
         asyncio.run(main())
         """
         response = await self._raw_client.get_homepage_problems(request_options=request_options)
@@ -150,22 +131,11 @@ class AsyncHomepageClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedTrace
-
-        client = AsyncSeedTrace(
-            x_random_header="YOUR_X_RANDOM_HEADER",
-            token="YOUR_TOKEN",
-        )
-
-
+        import asyncio
+        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         async def main() -> None:
-            await client.homepage.set_homepage_problems(
-                request=["string", "string"],
-            )
-
-
+            await client.homepage.set_homepage_problems(request=['string', 'string'], )
         asyncio.run(main())
         """
         response = await self._raw_client.set_homepage_problems(request=request, request_options=request_options)

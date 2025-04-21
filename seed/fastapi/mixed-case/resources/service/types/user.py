@@ -11,12 +11,7 @@ class User(UniversalBaseModel):
     Examples
     --------
     from seed.mixed_case.resources.service import User
-
-    User(
-        user_name="username",
-        metadata_tags=["tag1", "tag2"],
-        extra_properties={"foo": "bar", "baz": "qux"},
-    )
+    User(user_name='username', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, )
     """
 
     user_name: str = pydantic.Field(alias="userName")

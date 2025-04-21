@@ -102,7 +102,7 @@ class SnippetTemplateFactory:
         snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for templates
-        return snippet.to_str(should_format_override=False).strip()
+        return snippet.to_str().strip()
 
     def _expression_to_snippet_str_and_imports(
         self,
@@ -110,8 +110,8 @@ class SnippetTemplateFactory:
     ) -> Tuple[str, str]:
         snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(expr)
-        snippet_full = snippet.to_str(should_format_override=False)
-        snippet_without_imports = snippet.to_str(should_format_override=False, include_imports=False)
+        snippet_full = snippet.to_str()
+        snippet_without_imports = snippet.to_str(include_imports=False)
 
         # For some reason we're appending newlines to snippets, so we need to strip them for templates
         return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()

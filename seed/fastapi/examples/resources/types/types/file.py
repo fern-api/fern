@@ -11,11 +11,7 @@ class File(UniversalBaseModel):
     Examples
     --------
     from seed.examples.resources.types import File
-
-    File(
-        name="file.txt",
-        contents="...",
-    )
+    File(name='file.txt', contents='...', )
     """
 
     name: str

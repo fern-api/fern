@@ -27,10 +27,7 @@ class SeedWebsocket:
     Examples
     --------
     from seed import SeedWebsocket
-
-    client = SeedWebsocket(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedWebsocket(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -76,10 +73,7 @@ class AsyncSeedWebsocket:
     Examples
     --------
     from seed import AsyncSeedWebsocket
-
-    client = AsyncSeedWebsocket(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedWebsocket(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

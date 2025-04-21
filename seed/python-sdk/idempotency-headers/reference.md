@@ -14,15 +14,8 @@
 
 ```python
 from seed import SeedIdempotencyHeaders
-
-client = SeedIdempotencyHeaders(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.payment.create(
-    amount=1,
-    currency="USD",
-)
+client = SeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+client.payment.create(amount=1, currency="USD", )
 
 ```
 </dd>
@@ -96,14 +89,8 @@ client.payment.create(
 
 ```python
 from seed import SeedIdempotencyHeaders
-
-client = SeedIdempotencyHeaders(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.payment.delete(
-    payment_id="paymentId",
-)
+client = SeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+client.payment.delete(payment_id='paymentId', )
 
 ```
 </dd>

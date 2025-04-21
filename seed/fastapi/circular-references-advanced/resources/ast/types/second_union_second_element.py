@@ -19,6 +19,6 @@ class SecondUnionSecondElement(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .first_union import FirstUnion  # noqa: E402
+from .first_union import FirstUnion  # noqa: E402, F401
 
 update_forward_refs(SecondUnionSecondElement)

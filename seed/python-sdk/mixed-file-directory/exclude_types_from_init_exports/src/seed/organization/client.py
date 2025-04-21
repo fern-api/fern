@@ -45,13 +45,8 @@ class OrganizationClient:
         Examples
         --------
         from seed import SeedMixedFileDirectory
-
-        client = SeedMixedFileDirectory(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.organization.create(
-            name="name",
-        )
+        client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
+        client.organization.create(name='name', )
         """
         response = self._raw_client.create(name=name, request_options=request_options)
         return response.data
@@ -89,21 +84,11 @@ class AsyncOrganizationClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedMixedFileDirectory
-
-        client = AsyncSeedMixedFileDirectory(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.organization.create(
-                name="name",
-            )
-
-
+            await client.organization.create(name='name', )
         asyncio.run(main())
         """
         response = await self._raw_client.create(name=name, request_options=request_options)

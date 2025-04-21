@@ -20,8 +20,6 @@ class SeedMultiUrlEnvironment:
     environment : SeedMultiUrlEnvironmentEnvironment
         The environment to use for requests from the client. from .environment import SeedMultiUrlEnvironmentEnvironment
 
-
-
         Defaults to SeedMultiUrlEnvironmentEnvironment.PRODUCTION
 
 
@@ -39,10 +37,7 @@ class SeedMultiUrlEnvironment:
     Examples
     --------
     from seed import SeedMultiUrlEnvironment
-
-    client = SeedMultiUrlEnvironment(
-        token="YOUR_TOKEN",
-    )
+    client = SeedMultiUrlEnvironment(token="YOUR_TOKEN", )
     """
 
     def __init__(
@@ -80,8 +75,6 @@ class AsyncSeedMultiUrlEnvironment:
     environment : SeedMultiUrlEnvironmentEnvironment
         The environment to use for requests from the client. from .environment import SeedMultiUrlEnvironmentEnvironment
 
-
-
         Defaults to SeedMultiUrlEnvironmentEnvironment.PRODUCTION
 
 
@@ -99,10 +92,7 @@ class AsyncSeedMultiUrlEnvironment:
     Examples
     --------
     from seed import AsyncSeedMultiUrlEnvironment
-
-    client = AsyncSeedMultiUrlEnvironment(
-        token="YOUR_TOKEN",
-    )
+    client = AsyncSeedMultiUrlEnvironment(token="YOUR_TOKEN", )
     """
 
     def __init__(

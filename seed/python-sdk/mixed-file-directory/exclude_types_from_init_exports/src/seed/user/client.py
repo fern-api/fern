@@ -48,13 +48,8 @@ class UserClient:
         Examples
         --------
         from seed import SeedMixedFileDirectory
-
-        client = SeedMixedFileDirectory(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.list(
-            limit=1,
-        )
+        client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
+        client.user.list(limit=1, )
         """
         response = self._raw_client.list(limit=limit, request_options=request_options)
         return response.data
@@ -96,21 +91,11 @@ class AsyncUserClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedMixedFileDirectory
-
-        client = AsyncSeedMixedFileDirectory(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.user.list(
-                limit=1,
-            )
-
-
+            await client.user.list(limit=1, )
         asyncio.run(main())
         """
         response = await self._raw_client.list(limit=limit, request_options=request_options)

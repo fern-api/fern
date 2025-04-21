@@ -21,13 +21,9 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedUnknownAsAny
-
-client = SeedUnknownAsAny(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.unknown.post(
-    request={"key": "value"},
-)
+client = SeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )
+client.unknown.post(request={'key': 'value'}
+, )
 ```
 
 ## Async Client
@@ -35,23 +31,13 @@ client.unknown.post(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedUnknownAsAny
-
-client = AsyncSeedUnknownAsAny(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.unknown.post(
-        request={"key": "value"},
-    )
-
-
-asyncio.run(main())
-```
+    await client.unknown.post(request={'key': 'value'}
+    , )
+asyncio.run(main())```
 
 ## Exception Handling
 
@@ -60,7 +46,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.unknown.post(...)
 except ApiError as e:
@@ -97,12 +82,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedUnknownAsAny
-
-client = SeedUnknownAsAny(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedUnknownAsAny(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.unknown.post(..., request_options={
@@ -116,17 +96,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedUnknownAsAny
-
-client = SeedUnknownAsAny(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedUnknownAsAny(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

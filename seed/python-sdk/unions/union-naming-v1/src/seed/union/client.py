@@ -43,13 +43,8 @@ class UnionClient:
         Examples
         --------
         from seed import SeedUnions
-
-        client = SeedUnions(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.union.get(
-            id="id",
-        )
+        client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
+        client.union.get(id='id', )
         """
         response = self._raw_client.get(id, request_options=request_options)
         return response.data
@@ -71,15 +66,8 @@ class UnionClient:
         --------
         from seed import SeedUnions
         from seed.union import CircleShape
-
-        client = SeedUnions(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.union.update(
-            request=CircleShape(
-                radius=1.1,
-            ),
-        )
+        client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
+        client.union.update(request=CircleShape(radius=1.1, ), )
         """
         response = self._raw_client.update(request=request, request_options=request_options)
         return response.data
@@ -115,21 +103,11 @@ class AsyncUnionClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedUnions
-
-        client = AsyncSeedUnions(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedUnions(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.union.get(
-                id="id",
-            )
-
-
+            await client.union.get(id='id', )
         asyncio.run(main())
         """
         response = await self._raw_client.get(id, request_options=request_options)
@@ -150,24 +128,12 @@ class AsyncUnionClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedUnions
         from seed.union import CircleShape
-
-        client = AsyncSeedUnions(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedUnions(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.union.update(
-                request=CircleShape(
-                    radius=1.1,
-                ),
-            )
-
-
+            await client.union.update(request=CircleShape(radius=1.1, ), )
         asyncio.run(main())
         """
         response = await self._raw_client.update(request=request, request_options=request_options)

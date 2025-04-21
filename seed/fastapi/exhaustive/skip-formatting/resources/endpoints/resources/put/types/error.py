@@ -6,17 +6,14 @@ from .error_code import ErrorCode
 import typing
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-
-
 class Error(UniversalBaseModel):
     category: ErrorCategory
     code: ErrorCode
     detail: typing.Optional[str] = None
     field: typing.Optional[str] = None
-
+    
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

@@ -45,13 +45,8 @@ class DummyClient:
         Examples
         --------
         from seed import SeedStreaming
-
-        client = SeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        response = client.dummy.generate_stream(
-            num_events=1,
-        )
+        client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
+        response = client.dummy.generate_stream(num_events=1, )
         for chunk in response:
             yield chunk
         """
@@ -74,13 +69,8 @@ class DummyClient:
         Examples
         --------
         from seed import SeedStreaming
-
-        client = SeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.dummy.generate(
-            num_events=5,
-        )
+        client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
+        client.dummy.generate(num_events=5, )
         """
         response = self._raw_client.generate(num_events=num_events, request_options=request_options)
         return response.data
@@ -118,23 +108,13 @@ class AsyncDummyClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedStreaming
-
-        client = AsyncSeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            response = await client.dummy.generate_stream(
-                num_events=1,
-            )
+            response = await client.dummy.generate_stream(num_events=1, )
             async for chunk in response:
                 yield chunk
-
-
         asyncio.run(main())
         """
         async with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
@@ -158,21 +138,11 @@ class AsyncDummyClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedStreaming
-
-        client = AsyncSeedStreaming(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.dummy.generate(
-                num_events=5,
-            )
-
-
+            await client.dummy.generate(num_events=5, )
         asyncio.run(main())
         """
         response = await self._raw_client.generate(num_events=num_events, request_options=request_options)

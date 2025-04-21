@@ -27,7 +27,6 @@ class UnionWithDuplicatePrimitive_String2(UniversalBaseModel):
 
 """
 from seed.unions.resources import UnionWithDuplicatePrimitive_Integer1
-
 UnionWithDuplicatePrimitive_Integer1(value=9)
 """
 UnionWithDuplicatePrimitive = typing.Union[

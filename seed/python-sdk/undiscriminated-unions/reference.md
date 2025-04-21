@@ -14,13 +14,8 @@
 
 ```python
 from seed import SeedUndiscriminatedUnions
-
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.union.get(
-    request="string",
-)
+client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
+client.union.get(request='string', )
 
 ```
 </dd>
@@ -70,10 +65,7 @@ client.union.get(
 
 ```python
 from seed import SeedUndiscriminatedUnions
-
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
 client.union.get_metadata()
 
 ```
@@ -116,13 +108,9 @@ client.union.get_metadata()
 
 ```python
 from seed import SeedUndiscriminatedUnions
-
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.union.update_metadata(
-    request={"string": {"key": "value"}},
-)
+client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
+client.union.update_metadata(request={'string': {'key': 'value'}
+}, )
 
 ```
 </dd>
@@ -172,13 +160,9 @@ client.union.update_metadata(
 
 ```python
 from seed import SeedUndiscriminatedUnions
-
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.union.call(
-    union={"union": {"key": "value"}},
-)
+client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
+client.union.call(union={'union': {'key': 'value'}
+}, )
 
 ```
 </dd>

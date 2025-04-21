@@ -43,14 +43,8 @@ class ServiceClient:
         --------
         from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-
-        client = SeedExhaustive(
-            token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
-        )
-        client.file.notification.service.get_exception(
-            notification_id="notification-hsy129x",
-        )
+        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+        client.file.notification.service.get_exception(notification_id='notification-hsy129x', )
         """
         response = self._raw_client.get_exception(notification_id, request_options=request_options)
         return response.data
@@ -88,23 +82,12 @@ class AsyncServiceClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-
-        client = AsyncSeedExhaustive(
-            token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
-        )
-
-
+        import asyncio
+        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
         async def main() -> None:
-            await client.file.notification.service.get_exception(
-                notification_id="notification-hsy129x",
-            )
-
-
+            await client.file.notification.service.get_exception(notification_id='notification-hsy129x', )
         asyncio.run(main())
         """
         response = await self._raw_client.get_exception(notification_id, request_options=request_options)

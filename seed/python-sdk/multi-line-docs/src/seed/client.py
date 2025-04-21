@@ -29,10 +29,7 @@ class SeedMultiLineDocs:
     Examples
     --------
     from seed import SeedMultiLineDocs
-
-    client = SeedMultiLineDocs(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedMultiLineDocs(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedMultiLineDocs:
     Examples
     --------
     from seed import AsyncSeedMultiLineDocs
-
-    client = AsyncSeedMultiLineDocs(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedMultiLineDocs(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(

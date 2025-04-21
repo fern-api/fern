@@ -11,10 +11,7 @@ class Organization(UniversalBaseModel):
     Examples
     --------
     from seed.mixed_case.resources import Organization
-
-    Organization(
-        name="orgName",
-    )
+    Organization(name='orgName', )
     """
 
     name: str

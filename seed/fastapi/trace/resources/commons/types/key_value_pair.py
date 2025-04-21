@@ -20,6 +20,6 @@ class KeyValuePair(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .variable_value import VariableValue  # noqa: E402
+from .variable_value import VariableValue  # noqa: E402, F401
 
 update_forward_refs(KeyValuePair)

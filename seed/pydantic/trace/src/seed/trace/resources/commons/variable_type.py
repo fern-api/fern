@@ -89,8 +89,8 @@ class VariableType_MapType(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .list_type import ListType  # noqa: E402
-from .map_type import MapType  # noqa: E402
+from .list_type import ListType  # noqa: E402, F401
+from .map_type import MapType  # noqa: E402, F401
 
 
 class VariableType_BinaryTreeType(UniversalBaseModel):

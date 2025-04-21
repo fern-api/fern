@@ -55,6 +55,9 @@ class SdkGenerator(AbstractGenerator):
     def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
         return "sdk"
 
+    def should_fix_files(self) -> bool:
+        return True
+
     def should_format_files(
         self,
         *,

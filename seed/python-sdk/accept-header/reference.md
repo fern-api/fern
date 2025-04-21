@@ -14,11 +14,7 @@
 
 ```python
 from seed import SeedAccept
-
-client = SeedAccept(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedAccept(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
 client.service.endpoint()
 
 ```

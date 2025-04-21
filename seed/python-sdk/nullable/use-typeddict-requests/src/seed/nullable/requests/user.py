@@ -3,7 +3,6 @@
 import typing_extensions
 from ..types.user_id import UserId
 import typing
-import typing_extensions
 from .metadata import MetadataParams
 from ..types.email import Email
 from .weird_number import WeirdNumberParams

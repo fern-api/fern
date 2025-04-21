@@ -62,17 +62,8 @@ class InlinedClient:
         Examples
         --------
         from seed import SeedLiteral
-
-        client = SeedLiteral(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.inlined.send(
-            temperature=10.1,
-            context="You're super wise",
-            maybe_context="You're super wise",
-            object_with_literal={"nested_literal": {"my_literal": "How super cool"}},
-            query="What is the weather today",
-        )
+        client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
+        client.inlined.send(temperature=10.1, context="You're super wise", maybe_context="You're super wise", object_with_literal={'nested_literal': {'my_literal': 'How super cool'}}, query='What is the weather today', )
         """
         response = self._raw_client.send(
             query=query,
@@ -132,27 +123,11 @@ class AsyncInlinedClient:
 
         Examples
         --------
-        import asyncio
-
         from seed import AsyncSeedLiteral
-
-        client = AsyncSeedLiteral(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
+        import asyncio
+        client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.inlined.send(
-                temperature=10.1,
-                context="You're super wise",
-                maybe_context="You're super wise",
-                object_with_literal={
-                    "nested_literal": {"my_literal": "How super cool"}
-                },
-                query="What is the weather today",
-            )
-
-
+            await client.inlined.send(temperature=10.1, context="You're super wise", maybe_context="You're super wise", object_with_literal={'nested_literal': {'my_literal': 'How super cool'}}, query='What is the weather today', )
         asyncio.run(main())
         """
         response = await self._raw_client.send(

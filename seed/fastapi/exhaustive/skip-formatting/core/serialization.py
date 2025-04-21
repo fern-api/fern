@@ -161,7 +161,9 @@ def _convert_mapping(
 ) -> typing.Mapping[str, object]:
     converted_object: typing.Dict[str, object] = {}
     try:
-        annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
+        annotations = typing_extensions.get_type_hints(
+            expected_type, include_extras=True
+        )
     except NameError:
         # The TypedDict contains a circular reference, so
         # we use the __annotations__ attribute directly.

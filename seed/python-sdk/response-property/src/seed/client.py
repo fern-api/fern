@@ -29,10 +29,7 @@ class SeedResponseProperty:
     Examples
     --------
     from seed import SeedResponseProperty
-
-    client = SeedResponseProperty(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
@@ -79,10 +76,7 @@ class AsyncSeedResponseProperty:
     Examples
     --------
     from seed import AsyncSeedResponseProperty
-
-    client = AsyncSeedResponseProperty(
-        base_url="https://yourhost.com/path/to/api",
-    )
+    client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
     """
 
     def __init__(
