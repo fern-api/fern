@@ -1982,19 +1982,35 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "web3_clientVersion",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": "string",
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            }
           }
         ],
         "protocol": {
@@ -2078,28 +2094,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "data": "data"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "data": "data"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -2162,19 +2166,35 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_listening",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": true,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": true
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            }
           }
         ],
         "protocol": {
@@ -2237,19 +2257,35 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_peerCount",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": "string",
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            }
           }
         ],
         "protocol": {
@@ -2313,19 +2349,35 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_version",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": "string",
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            }
           }
         ],
         "protocol": {
@@ -2384,31 +2436,35 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_blockNumber",
+              "params": []
+            },
             "responseStatusCode": 200,
             "responseBody": {
-              "startingBlock": "startingBlock",
-              "currentBlock": "currentBlock",
-              "highestBlock": "highestBlock",
-              "knownStates": "knownStates",
-              "pulledStates": "pulledStates"
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "startingBlock": "startingBlock",
-                "currentBlock": "currentBlock",
-                "highestBlock": "highestBlock",
-                "knownStates": "knownStates",
-                "pulledStates": "pulledStates"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -2492,7 +2548,20 @@
           "description": "The return value of the executed contract"
         },
         "errorsV2": [],
-        "examples": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 200
+          }
+        ],
         "protocol": {
           "type": "openrpc",
           "methodName": "eth_call"
@@ -2554,19 +2623,35 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_chainId",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": "string",
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            }
           }
         ],
         "protocol": {
@@ -2626,19 +2711,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_coinbase",
+              "params": []
             },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -2715,7 +2800,20 @@
           "description": "The amount of gas used"
         },
         "errorsV2": [],
-        "examples": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 200
+          }
+        ],
         "protocol": {
           "type": "openrpc",
           "methodName": "eth_estimateGas"
@@ -2772,19 +2870,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_gasPrice",
+              "params": []
             },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -2871,30 +2969,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "address": "address",
-              "blockNumber": "blockNumber"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "address": "address",
-                "blockNumber": "blockNumber"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -2982,78 +3066,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockHash": "blockHash",
-              "includeTransactions": true
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockHash": "blockHash",
-                "includeTransactions": true
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": {
-              "number": "number",
-              "parentHash": "parentHash",
-              "sha3Uncles": "sha3Uncles",
-              "logsBloom": "logsBloom",
-              "transactionsRoot": "transactionsRoot",
-              "stateRoot": "stateRoot",
-              "receiptsRoot": "receiptsRoot",
-              "miner": "miner",
-              "difficulty": "difficulty",
-              "totalDifficulty": "totalDifficulty",
-              "extraData": "extraData",
-              "size": "size",
-              "gasLimit": "gasLimit",
-              "gasUsed": "gasUsed",
-              "timestamp": "timestamp",
-              "transactions": [
-                "transactions",
-                "transactions"
-              ],
-              "uncles": [
-                "uncles",
-                "uncles"
-              ]
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "number": "number",
-                "parentHash": "parentHash",
-                "sha3Uncles": "sha3Uncles",
-                "logsBloom": "logsBloom",
-                "transactionsRoot": "transactionsRoot",
-                "stateRoot": "stateRoot",
-                "receiptsRoot": "receiptsRoot",
-                "miner": "miner",
-                "difficulty": "difficulty",
-                "totalDifficulty": "totalDifficulty",
-                "extraData": "extraData",
-                "size": "size",
-                "gasLimit": "gasLimit",
-                "gasUsed": "gasUsed",
-                "timestamp": "timestamp",
-                "transactions": [
-                  "transactions",
-                  "transactions"
-                ],
-                "uncles": [
-                  "uncles",
-                  "uncles"
-                ]
-              }
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -3141,78 +3163,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockNumber": {},
-              "includeTransactions": true
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockNumber": {},
-                "includeTransactions": true
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": {
-              "number": "number",
-              "parentHash": "parentHash",
-              "sha3Uncles": "sha3Uncles",
-              "logsBloom": "logsBloom",
-              "transactionsRoot": "transactionsRoot",
-              "stateRoot": "stateRoot",
-              "receiptsRoot": "receiptsRoot",
-              "miner": "miner",
-              "difficulty": "difficulty",
-              "totalDifficulty": "totalDifficulty",
-              "extraData": "extraData",
-              "size": "size",
-              "gasLimit": "gasLimit",
-              "gasUsed": "gasUsed",
-              "timestamp": "timestamp",
-              "transactions": [
-                "transactions",
-                "transactions"
-              ],
-              "uncles": [
-                "uncles",
-                "uncles"
-              ]
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "number": "number",
-                "parentHash": "parentHash",
-                "sha3Uncles": "sha3Uncles",
-                "logsBloom": "logsBloom",
-                "transactionsRoot": "transactionsRoot",
-                "stateRoot": "stateRoot",
-                "receiptsRoot": "receiptsRoot",
-                "miner": "miner",
-                "difficulty": "difficulty",
-                "totalDifficulty": "totalDifficulty",
-                "extraData": "extraData",
-                "size": "size",
-                "gasLimit": "gasLimit",
-                "gasUsed": "gasUsed",
-                "timestamp": "timestamp",
-                "transactions": [
-                  "transactions",
-                  "transactions"
-                ],
-                "uncles": [
-                  "uncles",
-                  "uncles"
-                ]
-              }
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -3291,28 +3251,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockHash": "blockHash"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockHash": "blockHash"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -3391,28 +3339,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockNumber": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockNumber": {}
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -3499,30 +3435,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "address": "address",
-              "blockNumber": "blockNumber"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "address": "address",
-                "blockNumber": "blockNumber"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -3603,70 +3525,36 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "filterId": "filterId"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "filterId": "filterId"
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "address": "address",
-                "blockHash": "blockHash",
-                "blockNumber": "blockNumber",
-                "data": "data",
-                "logIndex": "logIndex",
-                "removed": true,
-                "topics": [],
-                "transactionHash": "transactionHash"
-              },
-              {
-                "address": "address",
-                "blockHash": "blockHash",
-                "blockNumber": "blockNumber",
-                "data": "data",
-                "logIndex": "logIndex",
-                "removed": true,
-                "topics": [],
-                "transactionHash": "transactionHash"
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "address": "address",
-                  "blockHash": "blockHash",
-                  "blockNumber": "blockNumber",
-                  "data": "data",
-                  "logIndex": "logIndex",
-                  "removed": true,
-                  "topics": [],
-                  "transactionHash": "transactionHash"
-                },
-                {
-                  "address": "address",
-                  "blockHash": "blockHash",
-                  "blockNumber": "blockNumber",
-                  "data": "data",
-                  "logIndex": "logIndex",
-                  "removed": true,
-                  "topics": [],
-                  "transactionHash": "transactionHash"
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -3748,70 +3636,36 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "filterId": "filterId"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "filterId": "filterId"
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "address": "address",
-                "blockHash": "blockHash",
-                "blockNumber": "blockNumber",
-                "data": "data",
-                "logIndex": "logIndex",
-                "removed": true,
-                "topics": [],
-                "transactionHash": "transactionHash"
-              },
-              {
-                "address": "address",
-                "blockHash": "blockHash",
-                "blockNumber": "blockNumber",
-                "data": "data",
-                "logIndex": "logIndex",
-                "removed": true,
-                "topics": [],
-                "transactionHash": "transactionHash"
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "address": "address",
-                  "blockHash": "blockHash",
-                  "blockNumber": "blockNumber",
-                  "data": "data",
-                  "logIndex": "logIndex",
-                  "removed": true,
-                  "topics": [],
-                  "transactionHash": "transactionHash"
-                },
-                {
-                  "address": "address",
-                  "blockHash": "blockHash",
-                  "blockNumber": "blockNumber",
-                  "data": "data",
-                  "logIndex": "logIndex",
-                  "removed": true,
-                  "topics": [],
-                  "transactionHash": "transactionHash"
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -3890,28 +3744,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "transactionHash": "transactionHash"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "transactionHash": "transactionHash"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -3998,30 +3840,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockHash": "blockHash",
-              "index": "index"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockHash": "blockHash",
-                "index": "index"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -4108,30 +3936,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockNumber": {},
-              "index": "index"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockNumber": {},
-                "index": "index"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -4213,70 +4027,36 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "filter": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "filter": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "address": "address",
-                "blockHash": "blockHash",
-                "blockNumber": "blockNumber",
-                "data": "data",
-                "logIndex": "logIndex",
-                "removed": true,
-                "topics": [],
-                "transactionHash": "transactionHash"
-              },
-              {
-                "address": "address",
-                "blockHash": "blockHash",
-                "blockNumber": "blockNumber",
-                "data": "data",
-                "logIndex": "logIndex",
-                "removed": true,
-                "topics": [],
-                "transactionHash": "transactionHash"
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "address": "address",
-                  "blockHash": "blockHash",
-                  "blockNumber": "blockNumber",
-                  "data": "data",
-                  "logIndex": "logIndex",
-                  "removed": true,
-                  "topics": [],
-                  "transactionHash": "transactionHash"
-                },
-                {
-                  "address": "address",
-                  "blockHash": "blockHash",
-                  "blockNumber": "blockNumber",
-                  "data": "data",
-                  "logIndex": "logIndex",
-                  "removed": true,
-                  "topics": [],
-                  "transactionHash": "transactionHash"
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -4368,32 +4148,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "address": "address",
-              "key": "key",
-              "blockNumber": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "address": "address",
-                "key": "key",
-                "blockNumber": {}
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -4480,42 +4244,40 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockHash": "blockHash",
-              "index": "index"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockHash": "blockHash",
-                "index": "index"
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "startingBlock": "startingBlock",
-              "currentBlock": "currentBlock",
-              "highestBlock": "highestBlock",
-              "knownStates": "knownStates",
-              "pulledStates": "pulledStates"
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {
+                  "gas": "foo",
+                  "gasPrice": "foo",
+                  "nonce": null
+                }
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "startingBlock": "startingBlock",
-                "currentBlock": "currentBlock",
-                "highestBlock": "highestBlock",
-                "knownStates": "knownStates",
-                "pulledStates": "pulledStates"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {
+                  "gas": "foo",
+                  "gasPrice": "foo",
+                  "nonce": null
+                }
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -4602,42 +4364,40 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockNumber": {},
-              "index": "index"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockNumber": {},
-                "index": "index"
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "startingBlock": "startingBlock",
-              "currentBlock": "currentBlock",
-              "highestBlock": "highestBlock",
-              "knownStates": "knownStates",
-              "pulledStates": "pulledStates"
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {
+                  "gas": "foo",
+                  "gasPrice": "foo",
+                  "nonce": null
+                }
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "startingBlock": "startingBlock",
-                "currentBlock": "currentBlock",
-                "highestBlock": "highestBlock",
-                "knownStates": "knownStates",
-                "pulledStates": "pulledStates"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {
+                  "gas": "foo",
+                  "gasPrice": "foo",
+                  "nonce": null
+                }
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -4716,40 +4476,40 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "transactionHash": "transactionHash"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "transactionHash": "transactionHash"
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "startingBlock": "startingBlock",
-              "currentBlock": "currentBlock",
-              "highestBlock": "highestBlock",
-              "knownStates": "knownStates",
-              "pulledStates": "pulledStates"
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {
+                  "gas": "foo",
+                  "gasPrice": "foo",
+                  "nonce": null
+                }
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "startingBlock": "startingBlock",
-                "currentBlock": "currentBlock",
-                "highestBlock": "highestBlock",
-                "knownStates": "knownStates",
-                "pulledStates": "pulledStates"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {
+                  "gas": "foo",
+                  "gasPrice": "foo",
+                  "nonce": null
+                }
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -4834,42 +4594,32 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "address": "address",
-              "blockNumber": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "address": "address",
-                "blockNumber": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "startingBlock": "startingBlock",
-              "currentBlock": "currentBlock",
-              "highestBlock": "highestBlock",
-              "knownStates": "knownStates",
-              "pulledStates": "pulledStates"
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": null
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "startingBlock": "startingBlock",
-                "currentBlock": "currentBlock",
-                "highestBlock": "highestBlock",
-                "knownStates": "knownStates",
-                "pulledStates": "pulledStates"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": null
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -4948,40 +4698,60 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "transactionHash": "transactionHash"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "transactionHash": "transactionHash"
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "startingBlock": "startingBlock",
-              "currentBlock": "currentBlock",
-              "highestBlock": "highestBlock",
-              "knownStates": "knownStates",
-              "pulledStates": "pulledStates"
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {
+                  "blockHash": "foo",
+                  "blockNumber": "foo",
+                  "contractAddress": "foo",
+                  "cumulativeGasUsed": "foo",
+                  "from": null,
+                  "gasUsed": "foo",
+                  "logs": [
+                    {}
+                  ],
+                  "logsBloom": "foo",
+                  "to": "foo",
+                  "transactionHash": "foo",
+                  "transactionIndex": null
+                }
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "startingBlock": "startingBlock",
-                "currentBlock": "currentBlock",
-                "highestBlock": "highestBlock",
-                "knownStates": "knownStates",
-                "pulledStates": "pulledStates"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {
+                  "blockHash": "foo",
+                  "blockNumber": "foo",
+                  "contractAddress": "foo",
+                  "cumulativeGasUsed": "foo",
+                  "from": null,
+                  "gasUsed": "foo",
+                  "logs": [
+                    {}
+                  ],
+                  "logsBloom": "foo",
+                  "to": "foo",
+                  "transactionHash": "foo",
+                  "transactionIndex": null
+                }
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -5067,78 +4837,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockHash": "blockHash",
-              "index": "index"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockHash": "blockHash",
-                "index": "index"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": {
-              "number": "number",
-              "parentHash": "parentHash",
-              "sha3Uncles": "sha3Uncles",
-              "logsBloom": "logsBloom",
-              "transactionsRoot": "transactionsRoot",
-              "stateRoot": "stateRoot",
-              "receiptsRoot": "receiptsRoot",
-              "miner": "miner",
-              "difficulty": "difficulty",
-              "totalDifficulty": "totalDifficulty",
-              "extraData": "extraData",
-              "size": "size",
-              "gasLimit": "gasLimit",
-              "gasUsed": "gasUsed",
-              "timestamp": "timestamp",
-              "transactions": [
-                "transactions",
-                "transactions"
-              ],
-              "uncles": [
-                "uncles",
-                "uncles"
-              ]
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "number": "number",
-                "parentHash": "parentHash",
-                "sha3Uncles": "sha3Uncles",
-                "logsBloom": "logsBloom",
-                "transactionsRoot": "transactionsRoot",
-                "stateRoot": "stateRoot",
-                "receiptsRoot": "receiptsRoot",
-                "miner": "miner",
-                "difficulty": "difficulty",
-                "totalDifficulty": "totalDifficulty",
-                "extraData": "extraData",
-                "size": "size",
-                "gasLimit": "gasLimit",
-                "gasUsed": "gasUsed",
-                "timestamp": "timestamp",
-                "transactions": [
-                  "transactions",
-                  "transactions"
-                ],
-                "uncles": [
-                  "uncles",
-                  "uncles"
-                ]
-              }
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -5226,78 +4934,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "uncleBlockNumber": "uncleBlockNumber",
-              "index": "index"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "uncleBlockNumber": "uncleBlockNumber",
-                "index": "index"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": {
-              "number": "number",
-              "parentHash": "parentHash",
-              "sha3Uncles": "sha3Uncles",
-              "logsBloom": "logsBloom",
-              "transactionsRoot": "transactionsRoot",
-              "stateRoot": "stateRoot",
-              "receiptsRoot": "receiptsRoot",
-              "miner": "miner",
-              "difficulty": "difficulty",
-              "totalDifficulty": "totalDifficulty",
-              "extraData": "extraData",
-              "size": "size",
-              "gasLimit": "gasLimit",
-              "gasUsed": "gasUsed",
-              "timestamp": "timestamp",
-              "transactions": [
-                "transactions",
-                "transactions"
-              ],
-              "uncles": [
-                "uncles",
-                "uncles"
-              ]
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "number": "number",
-                "parentHash": "parentHash",
-                "sha3Uncles": "sha3Uncles",
-                "logsBloom": "logsBloom",
-                "transactionsRoot": "transactionsRoot",
-                "stateRoot": "stateRoot",
-                "receiptsRoot": "receiptsRoot",
-                "miner": "miner",
-                "difficulty": "difficulty",
-                "totalDifficulty": "totalDifficulty",
-                "extraData": "extraData",
-                "size": "size",
-                "gasLimit": "gasLimit",
-                "gasUsed": "gasUsed",
-                "timestamp": "timestamp",
-                "transactions": [
-                  "transactions",
-                  "transactions"
-                ],
-                "uncles": [
-                  "uncles",
-                  "uncles"
-                ]
-              }
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -5376,28 +5022,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockHash": "blockHash"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockHash": "blockHash"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -5476,28 +5110,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockNumber": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockNumber": {}
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -5583,42 +5205,32 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "address": "address",
-              "blockNumber": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "address": "address",
-                "blockNumber": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "startingBlock": "startingBlock",
-              "currentBlock": "currentBlock",
-              "highestBlock": "highestBlock",
-              "knownStates": "knownStates",
-              "pulledStates": "pulledStates"
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "startingBlock": "startingBlock",
-                "currentBlock": "currentBlock",
-                "highestBlock": "highestBlock",
-                "knownStates": "knownStates",
-                "pulledStates": "pulledStates"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -5679,33 +5291,39 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getWork",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "key": "value"
-              },
-              {
-                "key": "value"
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  null
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "key": "value"
-                },
-                {
-                  "key": "value"
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  null
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -5765,19 +5383,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_hashrate",
+              "params": []
             },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -5839,19 +5457,35 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_mining",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": true,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": true
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            }
           }
         ],
         "protocol": {
@@ -5910,19 +5544,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_newBlockFilter",
+              "params": []
             },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -6001,28 +5635,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "filter": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "filter": {}
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -6081,19 +5703,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_newPendingTransactionFilter",
+              "params": []
             },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -6152,19 +5774,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": [],
-            "responseBodyV3": {
-              "type": "json",
-              "value": []
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_pendingTransactions",
+              "params": []
             },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -6224,19 +5846,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_protocolVersion",
+              "params": []
             },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -6316,28 +5938,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "signedTransactionData": "signedTransactionData"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "signedTransactionData": "signedTransactionData"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": "string",
-            "responseBodyV3": {
-              "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -6426,30 +6036,32 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "hashRate": "hashRate",
-              "id": "id"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "hashRate": "hashRate",
-                "id": "id"
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": true,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": true
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            }
           }
         ],
         "protocol": {
@@ -6542,7 +6154,36 @@
           "description": "returns true if the provided solution is valid, otherwise false."
         },
         "errorsV2": [],
-        "examples": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            }
+          }
+        ],
         "protocol": {
           "type": "openrpc",
           "methodName": "eth_submitWork"
@@ -6599,31 +6240,35 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_syncing",
+              "params": []
+            },
             "responseStatusCode": 200,
             "responseBody": {
-              "startingBlock": "startingBlock",
-              "currentBlock": "currentBlock",
-              "highestBlock": "highestBlock",
-              "knownStates": "knownStates",
-              "pulledStates": "pulledStates"
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "startingBlock": "startingBlock",
-                "currentBlock": "currentBlock",
-                "highestBlock": "highestBlock",
-                "knownStates": "knownStates",
-                "pulledStates": "pulledStates"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -6704,28 +6349,32 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "filterId": "filterId"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "filterId": "filterId"
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": true,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": true
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            }
           }
         ],
         "protocol": {

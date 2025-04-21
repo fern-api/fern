@@ -186,50 +186,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "limit": 1
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "limit": 1
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "id": 1,
-                "name": "name",
-                "tag": "tag"
-              },
-              {
-                "id": 1,
-                "name": "name",
-                "tag": "tag"
-              }
-            ],
-            "responseBodyV3": {
-              "type": "json",
-              "value": [
-                {
-                  "id": 1,
-                  "name": "name",
-                  "tag": "tag"
-                },
-                {
-                  "id": 1,
-                  "name": "name",
-                  "tag": "tag"
-                }
-              ]
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -328,30 +294,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "newPetName": "newPetName",
-              "newPetTag": "newPetTag"
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "newPetName": "newPetName",
-                "newPetTag": "newPetTag"
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": 1,
-            "responseBodyV3": {
-              "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
@@ -438,36 +390,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "name": "",
+            "description": "",
+            "path": "/",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "petId": 1
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "petId": 1
-              }
+              "type": "json"
             },
-            "responseStatusCode": 200,
-            "responseBody": {
-              "id": 1,
-              "name": "name",
-              "tag": "tag"
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "name": "name",
-                "tag": "tag"
-              }
-            },
-            "codeSamples": []
+            "responseStatusCode": 200
           }
         ],
         "protocol": {

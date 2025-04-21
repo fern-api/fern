@@ -103,7 +103,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         wireValue: resolvedParam.name
                     }),
                     valueType: schema.type,
-                    v2Examples: schema.schema?.v2Examples,
+                    v2Examples: schema.schema?.v2Examples
                 });
                 inlinedTypes = {
                     ...schema.inlinedTypes,

@@ -24,7 +24,7 @@ export function generateResponseExample({
     if (endpoint.response == null) {
         return result;
     }
-    
+
     if (endpoint.response.body == null) {
         // For OpenRPC endpoints with no body, still return a JSON-RPC response format
         if (endpoint.source?.type === "openrpc") {
@@ -48,14 +48,16 @@ export function generateResponseExample({
                 const firstAutoExample = Object.values(autoExamples)[0];
 
                 if (firstUserExample !== undefined) {
-                    const example = endpoint.source?.type === "openrpc" 
-                        ? wrapAsJsonRpcResponse(firstUserExample)
-                        : firstUserExample;
+                    const example =
+                        endpoint.source?.type === "openrpc"
+                            ? wrapAsJsonRpcResponse(firstUserExample)
+                            : firstUserExample;
                     result.body = V2HttpEndpointResponseBody.json(example);
                 } else if (firstAutoExample !== undefined) {
-                    const example = endpoint.source?.type === "openrpc"
-                        ? wrapAsJsonRpcResponse(firstAutoExample)
-                        : firstAutoExample;
+                    const example =
+                        endpoint.source?.type === "openrpc"
+                            ? wrapAsJsonRpcResponse(firstAutoExample)
+                            : firstAutoExample;
                     result.body = V2HttpEndpointResponseBody.json(example);
                 }
             }
@@ -74,7 +76,7 @@ export function generateResponseExample({
 
 /**
  * Wraps a payload in a JSON-RPC 2.0 response format
- * 
+ *
  * @param payload The result payload to wrap
  * @param id Optional request ID (defaults to 1)
  * @returns A formatted JSON-RPC 2.0 response object
@@ -86,4 +88,3 @@ export function wrapAsJsonRpcResponse(payload: unknown, id: number = 1): unknown
         result: payload
     };
 }
-
