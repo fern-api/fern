@@ -14,6 +14,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
