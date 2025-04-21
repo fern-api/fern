@@ -99,6 +99,7 @@ class ModuleManager:
                 # controlled to avoid issues with circular imports
                 should_sort_imports=False,
             )
+            
             all_exports: Set[str] = set()
             for module_exports_line in self._build_sorted_exports(module_info):
                 if len(module_exports_line.exports) > 0:
