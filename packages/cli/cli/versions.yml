@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      Improve OpenRPC response example generation by wrapping example payloads in JSON-RPC 2.0 format with metadata 
+      (jsonrpc version and request id). This ensures generated examples match the actual JSON-RPC response format.
+    type: feat
+  irVersion: 57
+  version: 0.57.33
+
+- changelogEntry:
+  - summary: |
       Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers, 
       one for each enum value. For example, a server with URL "https://{region}.example.com" where region 
       is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
