@@ -15,6 +15,13 @@ function isPathedValue(value: unknown): value is { path: unknown } {
     return typeof value === "object" && value != null && "path" in value;
 }
 
+function getLastPathSegment(pathStr: string): string {
+    const lastForwardSlash = pathStr.lastIndexOf("/");
+    const lastBackSlash = pathStr.lastIndexOf("\\");
+    const lastSlashIndex = Math.max(lastForwardSlash, lastBackSlash);
+    return lastSlashIndex >= 0 ? pathStr.substring(lastSlashIndex + 1) : pathStr;
+}
+
 export interface CrossPlatformFormData {
     setup(): Promise<void>;
 
@@ -66,7 +73,7 @@ export class Node18FormData implements CrossPlatformFormData {
             return value.name;
         }
         if (isPathedValue(value) && value.path) {
-            return value.path.toString().split("/").pop();
+            return getLastPathSegment(value.path.toString());
         }
         return undefined;
     }
@@ -140,7 +147,7 @@ export class Node16FormData implements CrossPlatformFormData {
             return value.name;
         }
         if (isPathedValue(value) && value.path) {
-            return value.path.toString().split("/").pop();
+            return getLastPathSegment(value.path.toString());
         }
         return undefined;
     }
@@ -194,7 +201,7 @@ export class WebFormData implements CrossPlatformFormData {
             return value.name;
         }
         if (isPathedValue(value) && value.path) {
-            return value.path.toString().split("/").pop();
+            return getLastPathSegment(value.path.toString());
         }
         return undefined;
     }
