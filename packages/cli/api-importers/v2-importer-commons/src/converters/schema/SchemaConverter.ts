@@ -110,10 +110,17 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
         }
 
-        if (Array.isArray(this.schema.type)) {
-            const schemaTypeArray = this.schema.type;
-            this.schema.type = undefined;
-            this.schema.oneOf = schemaTypeArray.map((type) => ({ type: type as OpenAPIV3_1.NonArraySchemaObjectType }));
+        if (Array.isArray(this.schema.type) && this.schema.type.length > 0) {
+            if (this.schema.type.length === 1) {
+                this.schema.type = this.schema.type[0];
+            } else {
+                const schemaTypeArray = this.schema.type;
+                this.schema.type = undefined;
+                this.schema.oneOf = schemaTypeArray.map((type) => ({
+                    type: type as OpenAPIV3_1.NonArraySchemaObjectType
+                }));
+            }
+            return this.convertSchema();
         }
 
         if (this.schema.oneOf != null || this.schema.anyOf != null) {

@@ -5,6 +5,7 @@ import { AbstractConverter, AbstractConverterContext, type OpenApiError } from "
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        generateOptionalProperties?: boolean;
         example: unknown;
         depth?: number;
     }
@@ -66,12 +67,21 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     private readonly example: unknown;
     private readonly depth: number;
+    private readonly generateOptionalProperties: boolean;
 
-    constructor({ breadcrumbs, context, schema, example, depth = 0 }: ExampleConverter.Args) {
+    constructor({
+        breadcrumbs,
+        context,
+        schema,
+        example,
+        depth = 0,
+        generateOptionalProperties = false
+    }: ExampleConverter.Args) {
         super({ breadcrumbs, context });
         this.example = example;
         this.schema = schema;
         this.depth = depth;
+        this.generateOptionalProperties = generateOptionalProperties;
     }
 
     public async convert(): Promise<ExampleConverter.Output> {
@@ -102,12 +112,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
+        if (Array.isArray(resolvedSchema.type)) {
+            return this.convertSchemaTypeArray({
+                resolvedSchema
+            });
+        }
+
         if (resolvedSchema.type == "null") {
             return this.convertNull();
         }
 
         if (resolvedSchema.type == "boolean") {
-            return this.convertBoolean();
+            return await this.convertBoolean();
         }
 
         if (resolvedSchema.enum != null) {
@@ -115,15 +131,15 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         if (resolvedSchema.type == "number") {
-            return this.convertNumber();
+            return await this.convertNumber();
         }
 
         if (resolvedSchema.type == "string") {
-            return this.convertString();
+            return await this.convertString();
         }
 
         if (resolvedSchema.type == "integer") {
-            return this.convertInteger();
+            return await this.convertInteger();
         }
 
         if (resolvedSchema.type == "array") {
@@ -134,12 +150,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         if (resolvedSchema.type == "object" || resolvedSchema.properties != null) {
             return this.convertObject({
-                resolvedSchema
-            });
-        }
-
-        if (Array.isArray(resolvedSchema.type)) {
-            return this.convertSchemaTypeArray({
                 resolvedSchema
             });
         }
@@ -206,7 +216,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
               };
     }
 
-    private convertBoolean(): ExampleConverter.Output {
+    private async convertBoolean(): Promise<ExampleConverter.Output> {
         const isValid = typeof this.example === "boolean";
         return isValid
             ? {
@@ -218,7 +228,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             : {
                   isValid: false,
                   coerced: false,
-                  validExample: this.EXAMPLE_BOOLEAN,
+                  validExample: (await this.maybeResolveSchemaExample<boolean>(this.schema)) ?? this.EXAMPLE_BOOLEAN,
                   errors: [
                       {
                           message: `Example is not a boolean: ${JSON.stringify(this.example, null, 2)}`,
@@ -250,7 +260,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
               };
     }
 
-    private convertNumber(): ExampleConverter.Output {
+    private async convertNumber(): Promise<ExampleConverter.Output> {
         if (typeof this.example === "number") {
             return {
                 isValid: true,
@@ -273,7 +283,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            validExample: this.EXAMPLE_NUMBER,
+            validExample: (await this.maybeResolveSchemaExample<number>(this.schema)) ?? this.EXAMPLE_NUMBER,
             errors: [
                 {
                     message: `Example is not a number: ${JSON.stringify(this.example, null, 2)}`,
@@ -283,7 +293,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         };
     }
 
-    private convertString(): ExampleConverter.Output {
+    private async convertString(): Promise<ExampleConverter.Output> {
         if (typeof this.example === "string") {
             return {
                 isValid: true,
@@ -306,7 +316,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            validExample: this.EXAMPLE_STRING,
+            validExample: (await this.maybeResolveSchemaExample<string>(this.schema)) ?? this.EXAMPLE_STRING,
             errors: [
                 {
                     message: `Example cannot be converted to string: ${JSON.stringify(this.example, null, 2)}`,
@@ -316,7 +326,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         };
     }
 
-    private convertInteger(): ExampleConverter.Output {
+    private async convertInteger(): Promise<ExampleConverter.Output> {
         if (typeof this.example === "number" && Number.isInteger(this.example)) {
             return {
                 isValid: true,
@@ -341,7 +351,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return {
             isValid: false,
             coerced: false,
-            validExample: this.EXAMPLE_INTEGER,
+            validExample: (await this.maybeResolveSchemaExample<number>(this.schema)) ?? this.EXAMPLE_INTEGER,
             errors: [
                 {
                     message: `Example is not an integer: ${JSON.stringify(this.example, null, 2)}`,
@@ -370,7 +380,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     context: this.context,
                     schema: resolvedSchema.items,
                     example: item,
-                    depth: this.depth + 1
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties
                 });
                 return await exampleConverter.convert();
             })
@@ -394,8 +405,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema.type == "object" && resolvedSchema.properties == null) {
             return { isValid: true, coerced: false, validExample: this.example ?? {}, errors: [] };
         }
+
         const exampleObj =
             typeof this.example !== "object" || this.example == null ? {} : (this.example as Record<string, unknown>);
+
         const resultsByKey = await Promise.all(
             Object.entries(resolvedSchema.properties ?? {}).map(async ([key, property]) => {
                 const isOmittedFromExample =
@@ -403,15 +416,29 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     (!("nullable" in property) && exampleObj[key] == null) ||
                     ("nullable" in property && property.nullable === true && exampleObj[key] === undefined);
                 const isOptional = !resolvedSchema.required?.includes(key);
+
                 if (isOmittedFromExample && isOptional) {
+                    if (this.example === undefined && this.generateOptionalProperties) {
+                        const exampleConverter = new ExampleConverter({
+                            breadcrumbs: [...this.breadcrumbs, key],
+                            context: this.context,
+                            schema: property,
+                            example: undefined,
+                            depth: this.depth + 1,
+                            generateOptionalProperties: this.generateOptionalProperties
+                        });
+                        return { key, result: await exampleConverter.convert() };
+                    }
                     return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
                 }
+
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
                     context: this.context,
                     schema: property,
                     example: exampleObj[key],
-                    depth: this.depth + 1
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties
                 });
                 const result = await exampleConverter.convert();
                 return { key, result };
@@ -442,6 +469,17 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (!Array.isArray(resolvedSchema.type)) {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
         }
+        if (resolvedSchema.type.length === 1) {
+            const exampleConverter = new ExampleConverter({
+                breadcrumbs: this.breadcrumbs,
+                context: this.context,
+                schema: { ...resolvedSchema, type: resolvedSchema.type[0] } as OpenAPIV3_1.SchemaObject,
+                example: this.example,
+                depth: this.depth,
+                generateOptionalProperties: this.generateOptionalProperties
+            });
+            return await exampleConverter.convert();
+        }
         const results = await Promise.all(
             resolvedSchema.type.map(async (subSchema, index) => {
                 const exampleConverter = new ExampleConverter({
@@ -449,7 +487,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     context: this.context,
                     schema: { ...resolvedSchema, type: subSchema } as OpenAPIV3_1.SchemaObject,
                     example: this.example,
-                    depth: this.depth + 1
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties
                 });
                 return await exampleConverter.convert();
             })
@@ -483,7 +522,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     context: this.context,
                     schema: subSchema,
                     example: this.example,
-                    depth: this.depth + 1
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties
                 });
                 return await exampleConverter.convert();
             })
@@ -535,7 +575,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     context: this.context,
                     schema: { ...resolvedSchema, ...subSchema, oneOf: undefined },
                     example: this.example,
-                    depth: this.depth + 1
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties
                 });
                 return await exampleConverter.convert();
             })
@@ -575,7 +616,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     context: this.context,
                     schema: subSchema,
                     example: this.example,
-                    depth: this.depth + 1
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties
                 });
                 return await exampleConverter.convert();
             })
@@ -598,6 +640,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             validExample,
             errors: isValid ? [] : results.flatMap((result) => result.errors)
         };
+    }
+
+    private async maybeResolveSchemaExample<Type>(
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    ): Promise<Type | undefined> {
+        const resolvedSchema = await this.resolveSchema(schema);
+        if (resolvedSchema == null) {
+            return undefined;
+        }
+        if ("example" in resolvedSchema) {
+            return resolvedSchema.example as Type;
+        }
+        if ("examples" in resolvedSchema) {
+            return Object.values(resolvedSchema.examples ?? {})[0] as Type;
+        }
+        return undefined;
     }
 
     private async resolveSchema(

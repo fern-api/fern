@@ -147,7 +147,8 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
             breadcrumbs: this.breadcrumbs,
             context: this.context,
             schema: resolvedSchema,
-            example: example ?? schemaExamples[0]
+            example: example ?? schemaExamples[0],
+            generateOptionalProperties: true
         });
         const { validExample: convertedExample, errors } = await exampleConverter.convert();
         if (!ignoreErrors) {
