@@ -197,7 +197,7 @@ export class ServersConverter extends AbstractConverter<
                         variables: Object.keys(newVariables).length > 0 ? newVariables : undefined,
                         "x-fern-server-name": server.description
                             ? `${server.description}_${enumValue}`
-                            : (`${enumValue}` as any),
+                            : `${enumValue}`,
                         description: server.description
                     };
 
