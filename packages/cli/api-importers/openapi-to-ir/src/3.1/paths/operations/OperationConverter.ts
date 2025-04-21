@@ -120,8 +120,9 @@ export class OperationConverter extends AbstractOperationConverter {
                 source: HttpEndpointSource.openapi()
             },
             inlinedTypes: this.inlinedTypes,
-            servers: this.operation.servers?.filter((endpointServer) => 
-                !this.context.spec.servers?.some((topLevelServer) => topLevelServer.url === endpointServer.url)
+            servers: this.operation.servers?.filter(
+                (endpointServer) =>
+                    !this.context.spec.servers?.some((topLevelServer) => topLevelServer.url === endpointServer.url)
             )
         };
     }
