@@ -6,6 +6,7 @@ on:
       - "generators/python/**"
     branches:
       - main
+  workflow_dispatch:
   workflow_call:
 
 jobs:
