@@ -6,6 +6,7 @@ on:
       - "generators/python/**"
     branches:
       - main
+      - "dak/ci/python-generator-failure"
   workflow_dispatch:
   workflow_call:
 
