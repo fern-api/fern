@@ -1985,7 +1985,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -2097,7 +2099,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -2169,7 +2173,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -2260,7 +2266,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -2352,7 +2360,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -2439,7 +2449,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -2553,7 +2565,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -2626,7 +2640,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -2714,7 +2730,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -2805,7 +2823,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -2873,7 +2893,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -2972,7 +2994,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3069,7 +3093,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3166,7 +3192,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3254,7 +3282,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3342,7 +3372,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3438,7 +3470,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3528,7 +3562,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3639,7 +3675,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3747,7 +3785,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3843,7 +3883,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3939,7 +3981,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4030,7 +4074,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4151,7 +4197,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4247,7 +4295,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4367,7 +4417,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4479,7 +4531,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4597,7 +4651,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4701,7 +4757,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4840,7 +4898,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4937,7 +4997,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5025,7 +5087,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5113,7 +5177,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5208,7 +5274,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5294,7 +5362,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -5386,7 +5456,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -5460,7 +5532,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -5547,7 +5621,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -5638,7 +5714,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5706,7 +5784,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -5777,7 +5857,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -5849,7 +5931,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -5941,7 +6025,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -6039,7 +6125,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -6159,7 +6247,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -6243,7 +6333,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBody": {
@@ -6352,7 +6444,9 @@
             "name": "",
             "description": "",
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "apiKey": "apiKey"
+            },
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
