@@ -38,7 +38,7 @@ export async function writePostmanGithubWorkflows({
         
         steps:
           - name: Checkout repo
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
           
           - name: Publish Postman Collection
             uses: fern-api/action-postman-sync@v1.8
