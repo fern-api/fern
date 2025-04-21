@@ -60,6 +60,7 @@ line-length = 120
 select = [
     "E",  # pycodestyle errors
     "F",  # pyflakes
+    "I",  # isort
 ]
 ignore = [
     "E402",  # Module level import not at top of file

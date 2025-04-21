@@ -129,7 +129,7 @@ class ImportsManager:
             s += f" as {import_.alias}"
 
         if self._has_written_any_statements:
-            s += " # noqa: E402, F401"
+            s += " # noqa: E402, F401, I001"
 
         if import_.alternative_import is not None:
             alternative_import = self._get_import_as_string(import_.alternative_import)
