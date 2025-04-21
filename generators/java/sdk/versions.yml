@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Auth header prefix should prepend with a concatenation operator
+      type: fix
+  createdAt: '2025-04-21'
+  irVersion: 55
+  version: 2.32.9
+- changelogEntry:
+    - summary: |
         Use safe name for version enum
       type: fix
   createdAt: '2025-04-09'
