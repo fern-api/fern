@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import fs from "fs";
+
 import { Node18FormData, WebFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
 
 describe("CrossPlatformFormData", () => {
@@ -68,6 +70,22 @@ describe("CrossPlatformFormData", () => {
                 data += decoder.decode(chunk);
             }
             expect(data).toContain("test.txt");
+        });
+
+        it("should append stream with path", async () => {
+            const expectedFileName = "testfile.txt";
+            const filePath = "/test/testfile.txt";
+            const stream = (await import("readable-stream")).Readable.from(["file content"]);
+            (stream as any).path = filePath;
+            await formData.appendFile("file", stream);
+
+            const request = await formData.getRequest();
+            const decoder = new TextDecoder("utf-8");
+            let data = "";
+            for await (const chunk of request.body) {
+                data += decoder.decode(chunk);
+            }
+            expect(data).toContain(`Content-Disposition: form-data; name="file"; filename="${expectedFileName}"`);
         });
     });
 
