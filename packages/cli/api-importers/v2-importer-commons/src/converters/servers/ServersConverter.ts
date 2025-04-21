@@ -98,7 +98,7 @@ export class ServersConverter extends AbstractConverter<
             };
         }
 
-        const environments: SingleBaseUrlEnvironment[] = this.servers
+        const environments: SingleBaseUrlEnvironment[] = this.withExplodedServers(this.servers)
             .map((server) => {
                 const serverName = ServersConverter.getServerName({ server, context: this.context });
                 return {
@@ -144,5 +144,67 @@ export class ServersConverter extends AbstractConverter<
             }
         }
         return url;
+    }
+
+    /**
+     * Explodes servers with enum variables into multiple servers, one for each enum value.
+     * For example, a server with URL "https://{region}.example.com" where region is an enum ["us", "eu"]
+     * will be exploded into two servers: "https://us.example.com" and "https://eu.example.com"
+     */
+    private withExplodedServers(servers: OpenAPIV3_1.ServerObject[]): OpenAPIV3_1.ServerObject[] {
+        return servers
+            .flatMap((server) => {
+                if (server.variables == null) {
+                    return [server];
+                }
+
+                const variablesWithEnums = Object.entries(server.variables).filter(
+                    ([_, variable]) => variable.enum != null && variable.enum.length > 0
+                );
+
+                if (variablesWithEnums.length === 0) {
+                    return [server];
+                }
+
+                // Take the first variable with an enum to explode
+                const firstVariable = variablesWithEnums[0];
+                if (firstVariable == null) {
+                    return [server];
+                }
+                const [variableName, variable] = firstVariable;
+
+                if (variable.enum == null) {
+                    return [server];
+                }
+
+                return variable.enum.map((enumValue) => {
+                    const newUrl = server.url.replace(`{${variableName}}`, enumValue);
+
+                    // Create a new server with the variable replaced in the URL
+                    // and remove the exploded variable from variables
+                    const newVariables: Record<string, OpenAPIV3_1.ServerVariableObject> = {};
+
+                    // Copy all variables except the one we're exploding
+                    for (const [key, value] of Object.entries(server.variables ?? {})) {
+                        if (key !== variableName) {
+                            newVariables[key] = value;
+                        }
+                    }
+
+                    const newServer: OpenAPIV3_1.ServerObject & { [key: string]: unknown } = {
+                        ...server,
+                        url: newUrl,
+                        variables: Object.keys(newVariables).length > 0 ? newVariables : undefined,
+                        "x-fern-server-name": server.description
+                            ? `${server.description}_${enumValue}`
+                            : `${enumValue}`,
+                        description: server.description
+                    };
+
+                    // Recursively explode any remaining enum variables
+                    return this.withExplodedServers([newServer])[0];
+                });
+            })
+            .filter(isNonNullish);
     }
 }

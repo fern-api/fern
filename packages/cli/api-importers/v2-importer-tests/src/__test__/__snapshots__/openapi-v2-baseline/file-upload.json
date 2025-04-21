@@ -408,6 +408,7 @@
                     "wireValue": "list_file"
                   },
                   "isOptional": false,
+                  "docs": "A list of files to upload",
                   "type": "fileArray"
                 },
                 "type": "file"
@@ -437,6 +438,7 @@
                     "wireValue": "maybe_list_file"
                   },
                   "isOptional": true,
+                  "docs": "An optional list of files to upload",
                   "type": "fileArray"
                 },
                 "type": "file"
