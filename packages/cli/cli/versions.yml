@@ -1,5 +1,14 @@
 - changelogEntry:
   - summary: |
+      Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers, 
+      one for each enum value. For example, a server with URL "https://{region}.example.com" where region 
+      is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
+    type: feat
+  irVersion: 57
+  version: 0.57.32
+
+- changelogEntry:
+  - summary: |
       Enable the `--from-openapi` flag for `fdr generate` to generate a FDR API definition from an OpenAPI spec.
     type: feat
   irVersion: 57
