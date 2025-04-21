@@ -21,7 +21,15 @@ export function generateResponseExample({
         body: undefined,
         docs: undefined
     };
-    if (endpoint.response == null || endpoint.response.body == null) {
+    if (endpoint.response == null) {
+        return result;
+    }
+
+    if (endpoint.response.body == null) {
+        // For OpenRPC endpoints with no body, still return a JSON-RPC response format
+        if (endpoint.source?.type === "openrpc") {
+            result.body = V2HttpEndpointResponseBody.json(wrapAsJsonRpcResponse(null));
+        }
         return result;
     }
     switch (endpoint.response.body.type) {
@@ -40,9 +48,17 @@ export function generateResponseExample({
                 const firstAutoExample = Object.values(autoExamples)[0];
 
                 if (firstUserExample !== undefined) {
-                    result.body = V2HttpEndpointResponseBody.json(firstUserExample);
+                    const example =
+                        endpoint.source?.type === "openrpc"
+                            ? wrapAsJsonRpcResponse(firstUserExample)
+                            : firstUserExample;
+                    result.body = V2HttpEndpointResponseBody.json(example);
                 } else if (firstAutoExample !== undefined) {
-                    result.body = V2HttpEndpointResponseBody.json(firstAutoExample);
+                    const example =
+                        endpoint.source?.type === "openrpc"
+                            ? wrapAsJsonRpcResponse(firstAutoExample)
+                            : firstAutoExample;
+                    result.body = V2HttpEndpointResponseBody.json(example);
                 }
             }
             break;
@@ -56,4 +72,19 @@ export function generateResponseExample({
         }
     }
     return result;
+}
+
+/**
+ * Wraps a payload in a JSON-RPC 2.0 response format
+ *
+ * @param payload The result payload to wrap
+ * @param id Optional request ID (defaults to 1)
+ * @returns A formatted JSON-RPC 2.0 response object
+ */
+export function wrapAsJsonRpcResponse(payload: unknown, id: number = 1): unknown {
+    return {
+        id,
+        jsonrpc: "2.0",
+        result: payload
+    };
 }

@@ -5306,108 +5306,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Pubkey": "Pubkey",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Pubkey": "Pubkey",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -5499,30 +5425,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Pubkey": "Pubkey",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Pubkey": "Pubkey",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -5612,108 +5542,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "slot": 1,
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "slot": 1,
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -5795,106 +5651,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "block": 1
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "block": 1
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -5976,28 +5760,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -6077,106 +5867,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -6281,38 +5999,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "start_slot": 1,
-              "end_slot": 1,
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "start_slot": 1,
-                "end_slot": 1,
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              1,
-              1
-            ],
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  42
+                ]
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                1,
-                1
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  42
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -6417,38 +6135,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "start_slot": 1,
-              "limit": 1,
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "start_slot": 1,
-                "limit": 1,
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              1,
-              1
-            ],
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  42
+                ]
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                1,
-                1
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  42
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -6530,28 +6248,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "block": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "block": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -6614,77 +6338,41 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getClusterNodes",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -6764,106 +6452,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -6923,97 +6539,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getEpochSchedule",
+              "params": []
+            },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -7103,30 +6659,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Message": {},
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Message": {},
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -7188,19 +6748,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getFirstAvailableBlock",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -7262,19 +6840,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getGenesisHash",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": "string",
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            }
           }
         ],
         "protocol": {
@@ -7334,97 +6930,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getHealth",
+              "params": []
+            },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -7484,97 +7020,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getHighestSnapshotSlot",
+              "params": []
+            },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -7634,97 +7110,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getIdentity",
+              "params": []
+            },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -7804,106 +7220,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -7963,97 +7307,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getInflationRate",
+              "params": []
+            },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -8136,86 +7420,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Addresses": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Addresses": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -8298,86 +7534,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -8457,106 +7645,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -8618,19 +7734,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getMaxRetransmitSlot",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -8692,19 +7826,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getMaxShredInsertSlot",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -8794,30 +7946,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Account data length": {},
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Account data length": {},
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -8913,94 +8069,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Pubkeys": [
-                "Pubkeys",
-                "Pubkeys"
-              ],
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Pubkeys": [
-                  "Pubkeys",
-                  "Pubkeys"
-                ],
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -9093,88 +8193,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Pubkey": "Pubkey",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Pubkey": "Pubkey",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -9259,86 +8309,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "limit": 1
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "limit": 1
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -9426,92 +8428,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Account addresses": [
-                "Account addresses",
-                "Account addresses"
-              ]
-            },
             "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
               "type": "json",
               "value": {
-                "Account addresses": [
-                  "Account addresses",
-                  "Account addresses"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
                 ]
               }
             },
-            "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              }
-            ],
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -9604,88 +8552,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Account address": "Account address",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Account address": "Account address",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -9781,94 +8679,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Signatures": [
-                "Signatures",
-                "Signatures"
-              ],
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Signatures": [
-                  "Signatures",
-                  "Signatures"
-                ],
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -9950,28 +8792,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -10053,28 +8901,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": "string",
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            }
           }
         ],
         "protocol": {
@@ -10171,36 +9025,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Start slot": 1,
-              "Limit": 1
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Start slot": 1,
-                "Limit": 1
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              "string",
-              "string"
-            ],
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  "foo"
+                ]
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                "string",
-                "string"
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  "foo"
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -10280,106 +9136,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -10469,108 +9253,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Token account Pubkey": "Token account Pubkey",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Token account Pubkey": "Token account Pubkey",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -10671,90 +9381,38 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Token owner Pubkey": "Token owner Pubkey",
-              "Token filter": {},
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Token owner Pubkey": "Token owner Pubkey",
-                "Token filter": {},
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              },
-              {
-                "pubkey": "pubkey",
-                "account": {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
               }
-            ],
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": [
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                },
-                {
-                  "pubkey": "pubkey",
-                  "account": {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                }
-              ]
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": [
+                  {}
+                ]
+              }
+            }
           }
         ],
         "protocol": {
@@ -10844,108 +9502,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Token Mint Pubkey": "Token Mint Pubkey",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Token Mint Pubkey": "Token Mint Pubkey",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -11035,108 +9619,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Transaction signature": "Transaction signature",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Transaction signature": "Transaction signature",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -11196,97 +9706,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "getVersion",
+              "params": []
+            },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -11366,106 +9816,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
@@ -11557,30 +9935,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "blockhash": "blockhash",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "blockhash": "blockhash",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": true,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": true
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": true
+              }
+            }
           }
         ],
         "protocol": {
@@ -11642,19 +10024,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "minimumLedgerSlot",
+              "params": []
+            },
             "responseStatusCode": 200,
-            "responseBody": 1,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": 1
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": 42
+              }
+            }
           }
         ],
         "protocol": {
@@ -11756,32 +10156,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Pubkey": "Pubkey",
-              "Lamports": 1,
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Pubkey": "Pubkey",
-                "Lamports": 1,
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": "string",
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            }
           }
         ],
         "protocol": {
@@ -11873,30 +10275,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Transaction": "Transaction",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Transaction": "Transaction",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
-            "responseBody": "string",
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            },
             "responseBodyV3": {
               "type": "json",
-              "value": "string"
-            },
-            "codeSamples": []
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": "foo"
+              }
+            }
           }
         ],
         "protocol": {
@@ -11986,108 +10392,34 @@
         "errorsV2": [],
         "examples": [
           {
-            "path": "/apiKey",
+            "name": "",
+            "description": "",
+            "path": "/",
             "pathParameters": {
               "apiKey": "apiKey"
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "Transaction": "Transaction",
-              "Configuration": {}
-            },
             "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "Transaction": "Transaction",
-                "Configuration": {}
-              }
+              "type": "json"
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "err": "err",
-              "logs": [
-                "logs",
-                "logs"
-              ],
-              "accounts": [
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                },
-                {
-                  "lamports": 1,
-                  "owner": "owner",
-                  "data": [
-                    "data",
-                    "data"
-                  ],
-                  "executable": true,
-                  "rentEpoch": 1,
-                  "size": 1
-                }
-              ],
-              "unitsConsumed": 1,
-              "returnData": {
-                "programId": "programId",
-                "data": [
-                  "data",
-                  "data"
-                ]
-              },
-              "innerInstructions": {}
+              "type": "json",
+              "value": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
+              }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "err": "err",
-                "logs": [
-                  "logs",
-                  "logs"
-                ],
-                "accounts": [
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  },
-                  {
-                    "lamports": 1,
-                    "owner": "owner",
-                    "data": [
-                      "data",
-                      "data"
-                    ],
-                    "executable": true,
-                    "rentEpoch": 1,
-                    "size": 1
-                  }
-                ],
-                "unitsConsumed": 1,
-                "returnData": {
-                  "programId": "programId",
-                  "data": [
-                    "data",
-                    "data"
-                  ]
-                },
-                "innerInstructions": {}
+                "id": 1,
+                "jsonrpc": "2.0",
+                "result": {}
               }
-            },
-            "codeSamples": []
+            }
           }
         ],
         "protocol": {
