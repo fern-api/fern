@@ -516,23 +516,14 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     .build();
             requestOptionsTypeSpec.addField(requestOptionsField);
 
+            String headerValue = "this." + headerName.getName().getCamelCase().getSafeName();
+            if (headerPrefix.isPresent()) {
+                headerValue = String.format("\"%s\" + %s", headerPrefix.get(), headerValue);
+            }
+
             getHeadersCodeBlock
                     .beginControlFlow("if (this.$N != null)", requestOptionsField)
-                    .addStatement(
-                            "$N.put($S, $L)",
-                            HEADERS_FIELD,
-                            headerName.getWireValue(),
-                            headerPrefix
-                                    .map(prefix -> "\"" + prefix + " \"" + "this."
-                                            + headerName
-                                                    .getName()
-                                                    .getCamelCase()
-                                                    .getSafeName())
-                                    .orElseGet(() -> "this."
-                                            + headerName
-                                                    .getName()
-                                                    .getCamelCase()
-                                                    .getSafeName()))
+                    .addStatement("$N.put($S, $L)", HEADERS_FIELD, headerName.getWireValue(), headerValue)
                     .endControlFlow();
 
             return new RequestOption(builderField, requestOptionsField);
