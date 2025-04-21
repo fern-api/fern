@@ -183,7 +183,7 @@ export class ServersConverter extends AbstractConverter<
                     // Create a new server with the variable replaced in the URL
                     // and remove the exploded variable from variables
                     const newVariables: Record<string, OpenAPIV3_1.ServerVariableObject> = {};
-                    
+
                     // Copy all variables except the one we're exploding
                     for (const [key, value] of Object.entries(server.variables ?? {})) {
                         if (key !== variableName) {
