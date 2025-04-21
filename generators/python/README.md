@@ -8,10 +8,6 @@
 
 # Python Generator
 
-[![Contributors](https://img.shields.io/github/contributors/fern-api/fern-python.svg)](https://GitHub.com/dotnet/docs/graphs/contributors/)
-[![Pulls-opened](https://img.shields.io/github/issues-pr/fern-api/fern-python.svg)](https://GitHub.com/dotnet/docs/pulls?q=is%3Aissue+is%3Aopened)
-[![Pulls-merged](https://img.shields.io/github/issues-search/fern-api/fern-python?label=merged%20pull%20requests&query=is%3Apr%20is%3Aclosed%20is%3Amerged&color=darkviolet)](https://github.com/dotnet/docs/pulls?q=is%3Apr+is%3Aclosed+is%3Amerged)
-
 [![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
 
 </div>
