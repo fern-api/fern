@@ -11609,7 +11609,20 @@
           "headers": [],
           "response": {
             "value": {
-              "properties": {},
+              "properties": {
+                "data": {
+                  "properties": {
+                    "updated": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
               "type": "object"
             },
             "type": "withoutStreaming"
