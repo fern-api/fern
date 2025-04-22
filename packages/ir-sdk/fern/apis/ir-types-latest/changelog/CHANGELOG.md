@@ -49,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v55.3.0] - 2024-02-19
 
-- Feature: The Dynamic IR now supports optional list of examples in each enpdoint.
+- Feature: The Dynamic IR now supports optional list of examples in each endpoint.
 
 ## [v55.2.0] - 2024-02-18
 
