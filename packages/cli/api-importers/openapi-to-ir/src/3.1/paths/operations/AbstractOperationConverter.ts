@@ -8,6 +8,7 @@ import {
     HttpResponse,
     PathParameter,
     QueryParameter,
+    ResponseErrors,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
@@ -41,6 +42,7 @@ interface ConvertedRequestBody {
 }
 interface ConvertedResponseBody {
     value: HttpResponse;
+    errors: ResponseErrors | undefined;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -92,20 +94,19 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             return { pathParameters, queryParameters, headers };
         }
 
-        for (let parameter of this.operation.parameters) {
-            if (this.context.isReferenceObject(parameter)) {
-                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
-                if (resolvedReference.resolved) {
-                    parameter = resolvedReference.value;
-                } else {
-                    continue;
-                }
+        for (const parameter of this.operation.parameters) {
+            const resolvedParameter = await this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: parameter,
+                breadcrumbs
+            });
+            if (resolvedParameter == null) {
+                continue;
             }
 
             const parameterConverter = new ParameterConverter({
                 context: this.context,
                 breadcrumbs,
-                parameter
+                parameter: resolvedParameter
             });
 
             const convertedParameter = await parameterConverter.convert();
@@ -169,17 +170,10 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             return undefined;
         }
 
-        let resolvedRequestBody: OpenAPIV3_1.RequestBodyObject | undefined = undefined;
-        if (this.context.isReferenceObject(this.operation.requestBody)) {
-            const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.RequestBodyObject>(
-                this.operation.requestBody
-            );
-            if (resolvedReference.resolved) {
-                resolvedRequestBody = resolvedReference.value;
-            }
-        } else {
-            resolvedRequestBody = this.operation.requestBody;
-        }
+        const resolvedRequestBody = await this.context.resolveMaybeReference<OpenAPIV3_1.RequestBodyObject>({
+            schemaOrReference: this.operation.requestBody,
+            breadcrumbs
+        });
 
         if (resolvedRequestBody == null) {
             return null;
@@ -222,46 +216,48 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
             const statusCodeNum = parseInt(statusCode);
-            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
                 continue;
             }
+            // Convert Successful Responses (2xx)
+            if (statusCodeNum >= 200 && statusCodeNum < 300) {
+                const resolvedResponse = await this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                    schemaOrReference: response,
+                    breadcrumbs: [...breadcrumbs, statusCode]
+                });
 
-            let resolvedResponse: OpenAPIV3_1.ResponseObject | undefined = undefined;
-            if (this.context.isReferenceObject(response)) {
-                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ResponseObject>(response);
-                if (resolvedReference.resolved) {
-                    resolvedResponse = resolvedReference.value;
+                if (resolvedResponse == null) {
+                    continue;
                 }
-            } else {
-                resolvedResponse = response;
-            }
 
-            if (resolvedResponse == null) {
-                continue;
+                const responseBodyConverter = new ResponseBodyConverter({
+                    context: this.context,
+                    breadcrumbs: [...breadcrumbs, statusCode],
+                    responseBody: resolvedResponse,
+                    group: group ?? [],
+                    method,
+                    statusCode,
+                    streamingExtension
+                });
+                const converted = await responseBodyConverter.convert();
+                if (converted != null) {
+                    this.inlinedTypes = {
+                        ...this.inlinedTypes,
+                        ...converted.inlinedTypes
+                    };
+                    return {
+                        value: {
+                            statusCode: statusCodeNum,
+                            body: converted.responseBody
+                        },
+                        errors: [],
+                        examples: converted.examples
+                    };
+                }
             }
-
-            const responseBodyConverter = new ResponseBodyConverter({
-                context: this.context,
-                breadcrumbs: [...breadcrumbs, statusCode],
-                responseBody: resolvedResponse,
-                group: group ?? [],
-                method,
-                statusCode,
-                streamingExtension
-            });
-            const convertedResponseBody = await responseBodyConverter.convert();
-            if (convertedResponseBody != null) {
-                this.inlinedTypes = {
-                    ...this.inlinedTypes,
-                    ...convertedResponseBody.inlinedTypes
-                };
-                return {
-                    value: {
-                        statusCode: statusCodeNum,
-                        body: convertedResponseBody.responseBody
-                    },
-                    examples: convertedResponseBody.examples
-                };
+            // Convert Error Responses (4xx)
+            if (statusCodeNum >= 400 && statusCodeNum < 500) {
+                // TODO: Implement error parsing.
             }
         }
 

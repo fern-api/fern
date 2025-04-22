@@ -71,16 +71,12 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
         const requestProperties: InlinedRequestBodyProperty[] = [];
         for (const param of this.method.params) {
-            let resolvedParam: ContentDescriptorObject;
-            if (this.context.isReferenceObject(param)) {
-                const resolvedParamResponse = await this.context.resolveReference<ContentDescriptorObject>(param);
-                if (resolvedParamResponse.resolved) {
-                    resolvedParam = resolvedParamResponse.value;
-                } else {
-                    continue;
-                }
-            } else {
-                resolvedParam = param;
+            const resolvedParam = await this.context.resolveMaybeReference<ContentDescriptorObject>({
+                schemaOrReference: param,
+                breadcrumbs: [...this.breadcrumbs, "params"]
+            });
+            if (resolvedParam == null) {
+                continue;
             }
 
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
@@ -114,17 +110,10 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
         let jsonResponseBody: JsonResponseBody | undefined = undefined;
         if (this.method.result != null) {
-            let resolvedResult: ContentDescriptorObject | undefined = undefined;
-            if (this.context.isReferenceObject(this.method.result)) {
-                const resolvedResultResponse = await this.context.resolveReference<ContentDescriptorObject>(
-                    this.method.result
-                );
-                if (resolvedResultResponse.resolved) {
-                    resolvedResult = resolvedResultResponse.value;
-                }
-            } else {
-                resolvedResult = this.method.result;
-            }
+            const resolvedResult = await this.context.resolveMaybeReference<ContentDescriptorObject>({
+                schemaOrReference: this.method.result,
+                breadcrumbs: [...this.breadcrumbs, "result"]
+            });
 
             if (resolvedResult != null) {
                 const resultSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({

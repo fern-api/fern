@@ -48,7 +48,6 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = await this.parseMediaTypeObject({
                 mediaTypeObject,
-                contentType,
                 schemaId
             });
             if (convertedSchema == null) {
@@ -78,7 +77,6 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = await this.parseMediaTypeObject({
                 mediaTypeObject,
-                contentType,
                 schemaId
             });
             if (convertedSchema == null) {

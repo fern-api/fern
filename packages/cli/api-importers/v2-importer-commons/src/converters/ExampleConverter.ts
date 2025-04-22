@@ -88,7 +88,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (this.depth > this.MAX_DEPTH) {
             return { isValid: true, coerced: false, validExample: this.example, errors: [] };
         }
-        const resolvedSchema = await this.resolveSchema(this.schema);
+        const resolvedSchema = await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: this.schema,
+            breadcrumbs: this.breadcrumbs
+        });
         if (resolvedSchema == null) {
             return {
                 isValid: false,
@@ -645,7 +648,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private async maybeResolveSchemaExample<Type>(
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): Promise<Type | undefined> {
-        const resolvedSchema = await this.resolveSchema(schema);
+        const resolvedSchema = await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: schema,
+            breadcrumbs: this.breadcrumbs
+        });
         if (resolvedSchema == null) {
             return undefined;
         }
@@ -656,18 +662,5 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return Object.values(resolvedSchema.examples ?? {})[0] as Type;
         }
         return undefined;
-    }
-
-    private async resolveSchema(
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    ): Promise<OpenAPIV3_1.SchemaObject | undefined> {
-        if (this.context.isReferenceObject(schema)) {
-            const resolved = await this.context.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
-            if (resolved.resolved) {
-                return resolved.value;
-            }
-            return undefined;
-        }
-        return schema;
     }
 }

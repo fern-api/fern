@@ -278,13 +278,21 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return examples;
     }
 
-    public async resolveToSchema(
-        schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
-    ): Promise<OpenAPIV3_1.SchemaObject> {
+    public async resolveMaybeReference<T>({
+        schemaOrReference,
+        breadcrumbs
+    }: {
+        schemaOrReference: OpenAPIV3_1.ReferenceObject | T;
+        breadcrumbs: string[];
+    }): Promise<T | undefined> {
         if (this.isReferenceObject(schemaOrReference)) {
-            const resolved = await this.resolveReference<OpenAPIV3_1.SchemaObject>(schemaOrReference);
+            const resolved = await this.resolveReference<T>(schemaOrReference);
             if (!resolved.resolved) {
-                throw new Error("Failed to resolve reference");
+                this.errorCollector.collect({
+                    message: `Failed to resolve reference: ${schemaOrReference.$ref}`,
+                    path: breadcrumbs
+                });
+                return undefined;
             }
             return resolved.value;
         }
@@ -296,24 +304,19 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return example;
         }
         const resolved = await this.resolveReference(example);
-        if (resolved.resolved && this.isExampleWithValue(resolved.value)) {
-            return resolved.value.value;
-        }
-        return undefined;
+        return resolved.resolved ? this.returnExampleValue(resolved.value) : undefined;
     }
 
     public async resolveExampleWithValue(example: unknown): Promise<unknown> {
         if (!this.isReferenceObject(example)) {
-            if (this.isExampleWithValue(example)) {
-                return example.value;
-            }
-            return example;
+            return this.returnExampleValue(example);
         }
         const resolved = await this.resolveReference(example);
-        if (resolved.resolved && this.isExampleWithValue(resolved.value)) {
-            return resolved.value.value;
-        }
-        return undefined;
+        return resolved.resolved ? this.returnExampleValue(resolved.value) : undefined;
+    }
+
+    public returnExampleValue(example: unknown): unknown {
+        return this.isExampleWithValue(example) ? example.value : example;
     }
 
     public async getPropertyAccess(
