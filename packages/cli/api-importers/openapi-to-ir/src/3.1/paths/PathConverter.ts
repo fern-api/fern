@@ -45,7 +45,6 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             const operation = this.pathItem[method];
 
             if (operation == null) {
-                // TODO: log the skip here
                 continue;
             }
 

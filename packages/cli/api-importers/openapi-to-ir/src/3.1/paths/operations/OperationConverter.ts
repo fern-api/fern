@@ -16,6 +16,7 @@ export declare namespace OperationConverter {
 
     export interface Output extends AbstractOperationConverter.Output {
         endpoint: HttpEndpoint;
+        errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
         servers?: OpenAPIV3_1.ServerObject[];
     }
 }
@@ -65,7 +66,10 @@ export class OperationConverter extends AbstractOperationConverter {
             streamingExtension
         });
         const response = convertedResponseBody != null ? convertedResponseBody.value : undefined;
+        const endpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : [];
         const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? this.context.spec.servers?.[0];
+
+        // TODO: We'll need to perform conversion for the top-level errors as well.
 
         const endpointId = [];
         if (this.context.namespace != null) {
@@ -85,6 +89,7 @@ export class OperationConverter extends AbstractOperationConverter {
 
         return {
             group,
+            errors: {},
             endpoint: {
                 id: endpointId.join("."),
                 displayName: this.operation.summary,
@@ -98,7 +103,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 requestBody,
                 sdkRequest: undefined,
                 response,
-                errors: [],
+                errors: endpointErrors,
                 auth: this.operation.security != null || this.context.spec.security != null,
                 availability: await this.context.getAvailability({
                     node: this.operation,

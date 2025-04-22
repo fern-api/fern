@@ -38,6 +38,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
         let ir = {
             ...this.ir,
+            errors,
             apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
             constants: {
                 errorInstanceIdKey: this.context.casingsGenerator.generateNameAndWireValue({
@@ -213,6 +214,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
                     if (endpoint.servers && endpoint.servers[0] != null) {
                         endpointLevelServers.push(endpoint.servers[0]);
+                    }
+                    if (endpoint.errors) {
+                        for (const [errorId, error] of Object.entries(endpoint.errors)) {
+                            errors[errorId] = error;
+                        }
                     }
                 }
 

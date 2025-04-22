@@ -20,6 +20,7 @@ import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
 import { RequestBodyConverter } from "../RequestBodyConverter";
 import { ResponseBodyConverter } from "../ResponseBodyConverter";
+import { ResponseErrorConverter } from "../ResponseErrorConverter";
 
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
@@ -42,7 +43,7 @@ interface ConvertedRequestBody {
 }
 interface ConvertedResponseBody {
     value: HttpResponse;
-    errors: ResponseErrors | undefined;
+    errors: ResponseErrors;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -214,10 +215,22 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             return undefined;
         }
 
+        let convertedResponseBody: ConvertedResponseBody | undefined = undefined;
+
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
             const statusCodeNum = parseInt(statusCode);
             if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
                 continue;
+            }
+            if (convertedResponseBody == null) {
+                convertedResponseBody = {
+                    value: {
+                        statusCode: statusCodeNum,
+                        body: undefined
+                    },
+                    errors: [],
+                    examples: {}
+                };
             }
             // Convert Successful Responses (2xx)
             if (statusCodeNum >= 200 && statusCodeNum < 300) {
@@ -245,23 +258,40 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         ...this.inlinedTypes,
                         ...converted.inlinedTypes
                     };
-                    return {
-                        value: {
-                            statusCode: statusCodeNum,
-                            body: converted.responseBody
-                        },
-                        errors: [],
-                        examples: converted.examples
-                    };
+                    convertedResponseBody.value.body = converted.responseBody;
                 }
             }
             // Convert Error Responses (4xx)
             if (statusCodeNum >= 400 && statusCodeNum < 500) {
-                // TODO: Implement error parsing.
+                const resolvedResponse = await this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                    schemaOrReference: response,
+                    breadcrumbs: [...breadcrumbs, statusCode]
+                });
+
+                if (resolvedResponse == null) {
+                    continue;
+                }
+
+                const responseErrorConverter = new ResponseErrorConverter({
+                    context: this.context,
+                    breadcrumbs: [...breadcrumbs, statusCode],
+                    responseError: resolvedResponse,
+                    group: group ?? [],
+                    method,
+                    statusCode
+                });
+                const converted = await responseErrorConverter.convert();
+                if (converted != null) {
+                    this.inlinedTypes = {
+                        ...this.inlinedTypes,
+                        ...converted.inlinedTypes
+                    };
+                    convertedResponseBody.errors.push(converted.error);
+                }
             }
         }
 
-        return undefined;
+        return convertedResponseBody;
     }
 
     protected computeGroupNameAndLocationFromExtensions(): GroupNameAndLocation | undefined {
