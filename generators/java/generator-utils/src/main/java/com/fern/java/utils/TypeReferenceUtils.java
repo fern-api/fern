@@ -214,8 +214,22 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitLiteral(Literal literal) {
-            throw new RuntimeException(
-                    "Unexpected attempt to get name of type literal: " + literal); // todo: finalize this
+            return literal.visit(new Literal.Visitor<String>() {
+                @Override
+                public String visitString(String s) {
+                    return "String";
+                }
+
+                @Override
+                public String visitBoolean(boolean b) {
+                    return "Boolean";
+                }
+
+                @Override
+                public String _visitUnknown(Object o) {
+                    throw new RuntimeException("Unknown literal type " + o);
+                }
+            });
         }
 
         @Override
