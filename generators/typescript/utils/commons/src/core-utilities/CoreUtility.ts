@@ -28,6 +28,7 @@ export declare namespace CoreUtility {
         pathInCoreUtilities: ExportedDirectory[];
         addDependencies?: (dependencyManager: DependencyManager) => void;
         writeConditionalFiles?: (pathToSrc: AbsoluteFilePath) => Promise<void>;
+        dependsOn?: CoreUtility.Manifest[];
     }
 }
 

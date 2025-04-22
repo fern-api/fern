@@ -168,6 +168,7 @@ class GeneratorCli:
             features.append(
                 generatorcli.readme.ReadmeFeature(
                     id=feature.id,
+                    advanced=feature.advanced,
                     description=feature.description,
                     snippets=feature_snippets,
                     snippets_are_optional=False,
