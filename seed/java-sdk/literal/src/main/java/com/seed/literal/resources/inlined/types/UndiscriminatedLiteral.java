@@ -68,7 +68,14 @@ public final class UndiscriminatedLiteral {
         return new UndiscriminatedLiteral(value, 1);
     }
 
-    public static UndiscriminatedLiteral ofLiteral(String value) {
+    /**
+     * @param value must be one of the following:
+     *   <ul>
+     *       <li>"$ending"</li>
+     *       <li>"10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"</li>
+     *   </ul>
+     */
+    public static UndiscriminatedLiteral ofLiteral(final String value) {
         switch (value) {
             case "$ending":
                 return new UndiscriminatedLiteral(value, 2);
