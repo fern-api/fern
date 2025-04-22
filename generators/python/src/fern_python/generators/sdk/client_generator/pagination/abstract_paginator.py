@@ -33,6 +33,7 @@ class Paginator:
     PAGINATION_GET_NEXT_VARIABLE = "_get_next"
     PAGINATION_HAS_NEXT_VARIABLE = "_has_next"
     PAGINATION_ITEMS_VARIABLE = "_items"
+    RESPONSE_VARIABLE = "_response"
 
     def __init__(
         self,
@@ -89,7 +90,7 @@ class Paginator:
         next_none_safe_condition = self.get_next_none_safe_condition()
         if next_none_safe_condition is not None:
             self.init_custom_vars_pre_next(writer=writer)
-            writer.write_line(next_none_safe_condition)
+            writer.write_line(f"if {next_none_safe_condition}:")
             with writer.indent():
                 init_vars(writer=writer)
         else:
@@ -99,21 +100,50 @@ class Paginator:
         items_non_safe_condition = self._get_none_safe_property_condition(self.get_results_property())
         results_property = f"{Paginator.PARSED_RESPONSE_VARIABLE}.{self.access_results_property_path()}"
         if items_non_safe_condition is not None:
-            writer.write_line(f"{Paginator.PAGINATION_ITEMS_VARIABLE} = []")
-            writer.write_line(items_non_safe_condition)
-            with writer.indent():
-                writer.write_line(f"{Paginator.PAGINATION_ITEMS_VARIABLE} = {results_property}")
+            writer.write_node(
+                AST.VariableDeclaration(
+                    name=Paginator.PAGINATION_ITEMS_VARIABLE,
+                    initializer=AST.Expression(
+                        AST.ConditionalExpression(
+                            test=AST.Expression(items_non_safe_condition),
+                            left=AST.Expression(results_property),
+                            right=AST.Expression("[]"),
+                        )
+                    ),
+                )
+            )
         else:
-            writer.write_line(f"{Paginator.PAGINATION_ITEMS_VARIABLE} = {results_property}")
+            writer.write_node(
+                AST.VariableDeclaration(
+                    name=Paginator.PAGINATION_ITEMS_VARIABLE,
+                    initializer=AST.Expression(results_property),
+                )
+            )
 
         # Step 5: Instantiate paginator
-        writer.write("return ")
+        paginator_expr = self._context.core_utilities.instantiate_paginator(
+            items=AST.Expression(Paginator.PAGINATION_ITEMS_VARIABLE),
+            has_next=AST.Expression(Paginator.PAGINATION_HAS_NEXT_VARIABLE),
+            get_next=AST.Expression(Paginator.PAGINATION_GET_NEXT_VARIABLE),
+            is_async=self._is_async,
+        )
+
+        response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
         writer.write_node(
-            self._context.core_utilities.instantiate_paginator(
-                items=AST.Expression(Paginator.PAGINATION_ITEMS_VARIABLE),
-                has_next=AST.Expression(Paginator.PAGINATION_HAS_NEXT_VARIABLE),
-                get_next=AST.Expression(Paginator.PAGINATION_GET_NEXT_VARIABLE),
-                is_async=self._is_async,
+            AST.ReturnStatement(
+                value=AST.ClassInstantiation(
+                    class_=AST.ClassReference(
+                        qualified_name_excluding_import=(),
+                        import_=AST.ReferenceImport(
+                            module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
+                            named_import=response_class,
+                        ),
+                    ),
+                    kwargs=[
+                        ("response", AST.Expression("_response")),
+                        ("data", paginator_expr),
+                    ],
+                )
             )
         )
         writer.write_newline_if_last_line_not()
@@ -130,7 +160,7 @@ class Paginator:
                 condition += " and "
             built_path += f"{property.snake_case.safe_name}"
             condition += f"{built_path} is not None"
-        return f"if {condition}:"
+        return condition
 
     # Need to do null-safe dereferencing here, with some fallback value
     def _response_property_to_dot_access(self, response_property: ir_types.ResponseProperty) -> str:

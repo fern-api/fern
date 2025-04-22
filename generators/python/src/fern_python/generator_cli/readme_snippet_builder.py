@@ -21,6 +21,7 @@ class ReadmeSnippetBuilder:
     ASYNC_CLIENT_FEATURE_ID: generatorcli.FeatureId = "ASYNC_CLIENT"
     STREAMING_FEATURE_ID: generatorcli.FeatureId = "STREAMING"
     PAGINATION_FEATURE_ID: generatorcli.FeatureId = "PAGINATION"
+    ACCESS_RAW_RESPONSE_DATA_FEATURE_ID: generatorcli.FeatureId = "ACCESS_RAW_RESPONSE_DATA"
     WEBSOCKETS_FEATURE_ID: generatorcli.FeatureId = "WEBSOCKETS"
 
     NO_FEATURE_PLACEHOLDER_ID: generatorcli.FeatureId = "NO_FEATURE"
@@ -79,6 +80,10 @@ class ReadmeSnippetBuilder:
 
         if self._websocket_enabled:
             snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = self._build_websocket_snippets()
+
+        snippets[ReadmeSnippetBuilder.ACCESS_RAW_RESPONSE_DATA_FEATURE_ID] = (
+            self._build_access_raw_response_data_snippets()
+        )
 
         return snippets
 
@@ -196,6 +201,120 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
         except Exception as e:
             print(f"Failed to generage exception handling snippets with exception {e}")
             return []
+
+    def _build_access_raw_response_data_snippets(self) -> List[str]:
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_node(
+                AST.VariableDeclaration(
+                    name="client",
+                    initializer=AST.Expression(
+                        AST.ClassInstantiation(
+                            class_=self._root_client.sync_client.class_reference,
+                            args=[AST.Expression("...")],
+                        )
+                    ),
+                )
+            )
+
+            endpoints_with_pagination_feature = self._filter_endpoint_ids_by_feature(
+                ReadmeSnippetBuilder.PAGINATION_FEATURE_ID
+            )
+            filtered_endpoints_with_pagination_feature = [
+                e for e in endpoints_with_pagination_feature if e in self._endpoint_snippet_map
+            ]
+            pagination_endpoint_id = (
+                filtered_endpoints_with_pagination_feature[0]
+                if len(filtered_endpoints_with_pagination_feature) > 0
+                else None
+            )
+
+            endpoints_with_streaming_feature = self._filter_endpoint_ids_by_feature(
+                ReadmeSnippetBuilder.STREAMING_FEATURE_ID
+            )
+            filtered_endpoints_with_streaming_feature = [
+                e for e in endpoints_with_streaming_feature if e in self._endpoint_snippet_map
+            ]
+            streaming_endpoint_id = (
+                filtered_endpoints_with_streaming_feature[0]
+                if len(filtered_endpoints_with_streaming_feature) > 0
+                else None
+            )
+
+            # Only include the default endpoint if it's not a pagination or streaming endpoint, as we don't want to duplicate the snippets.
+            if self._default_endpoint_id not in {pagination_endpoint_id, streaming_endpoint_id} and (
+                endpoint := self._endpoint_metadata.get_endpoint_metadata(self._default_endpoint_id)
+            ):
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name="response",
+                        initializer=AST.Expression(
+                            f"client.{endpoint.endpoint_package_path}with_raw_response.{endpoint.method_name}({'...' if self._endpoint_metadata.has_parameters(self._default_endpoint_id) else ''})"
+                        ),
+                    )
+                )
+                writer.write_line("print(response.headers)  # access the response headers")
+                writer.write_line("print(response.data)  # access the underlying object")
+
+            if pagination_endpoint_id and (
+                endpoint := self._endpoint_metadata.get_endpoint_metadata(pagination_endpoint_id)
+            ):
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name="response",
+                        initializer=AST.Expression(
+                            f"client.{endpoint.endpoint_package_path}with_raw_response.{endpoint.method_name}({'...' if self._endpoint_metadata.has_parameters(pagination_endpoint_id) else ''})"
+                        ),
+                    )
+                )
+                writer.write_line("print(response.headers)  # access the response headers")
+                writer.write_node(
+                    AST.ForStatement(
+                        target="item",
+                        iterable="response.data",
+                        body=[AST.Expression("print(item)  # access the underlying object(s)")],
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+                writer.write_node(
+                    AST.ForStatement(
+                        target="page",
+                        iterable="response.data.iter_pages()",
+                        body=[
+                            AST.ForStatement(
+                                target="item",
+                                iterable="page",
+                                body=[AST.Expression("print(item)  # access the underlying object(s)")],
+                            )
+                        ],
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+
+            if streaming_endpoint_id and (
+                endpoint := self._endpoint_metadata.get_endpoint_metadata(streaming_endpoint_id)
+            ):
+                writer.write_node(
+                    AST.WithStatement(
+                        context_managers=[
+                            AST.WithContextManager(
+                                expression=AST.Expression(
+                                    f"client.{endpoint.endpoint_package_path}with_raw_response.{endpoint.method_name}({'...' if self._endpoint_metadata.has_parameters(streaming_endpoint_id) else ''})"
+                                ),
+                                as_variable="response",
+                            )
+                        ],
+                        body=[
+                            AST.Expression("print(response.headers)  # access the response headers\n"),
+                            AST.ForStatement(
+                                target="chunk",
+                                iterable="response.data",
+                                body=[AST.Expression("print(chunk)  # access the underlying object(s)")],
+                            ),
+                        ],
+                    )
+                )
+
+        return [self._expression_to_snippet_str(AST.Expression(AST.CodeWriter(write)))]
 
     def _build_retries_snippets(self) -> List[str]:
         try:

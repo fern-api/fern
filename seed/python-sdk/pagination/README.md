@@ -46,6 +46,7 @@ async def main() -> None:
     response = await client.complex_.search(pagination=StartingAfterPaging(per_page=1, starting_after='starting_after', ), query=SingleFilterSearchRequest(field='field', operator="=", value='value', ), )
     async for item in response:
         yield item
+    
     # alternatively, you can paginate page-by-page
     async for page in response.iter_pages():
         yield page
@@ -83,6 +84,23 @@ for page in response.iter_pages():
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedPagination
+client = SeedPagination(..., )
+response = client.complex_.with_raw_response.search(...)
+print(response.headers)  # access the response headers
+for item in response.data:
+    print(item)  # access the underlying object(s)
+for page in response.data.iter_pages():
+    for item in page:
+        print(item)  # access the underlying object(s)
+```
 
 ### Retries
 

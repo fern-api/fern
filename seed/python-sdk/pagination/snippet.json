@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nfrom seed.complex_ import StartingAfterPaging\nfrom seed.complex_ import SingleFilterSearchRequest\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.complex_.search(pagination=StartingAfterPaging(per_page=1, starting_after='starting_after', ), query=SingleFilterSearchRequest(field='field', operator=\"=\", value='value', ), )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nfrom seed.complex_ import StartingAfterPaging\nfrom seed.complex_ import SingleFilterSearchRequest\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.complex_.search(pagination=StartingAfterPaging(per_page=1, starting_after='starting_after', ), query=SingleFilterSearchRequest(field='field', operator=\"=\", value='value', ), )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nfrom seed.complex_ import StartingAfterPaging\nfrom seed.complex_ import SingleFilterSearchRequest\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.complex_.search(pagination=StartingAfterPaging(per_page=1, starting_after='starting_after', ), query=SingleFilterSearchRequest(field='field', operator=\"=\", value='value', ), )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -23,7 +23,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_cursor_pagination(page=1, per_page=1, order=\"asc\", starting_after='starting_after', )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_cursor_pagination(page=1, per_page=1, order=\"asc\", starting_after='starting_after', )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_cursor_pagination(page=1, per_page=1, order=\"asc\", starting_after='starting_after', )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -36,7 +36,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_mixed_type_cursor_pagination(cursor='cursor', )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_mixed_type_cursor_pagination(cursor='cursor', )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_mixed_type_cursor_pagination(cursor='cursor', )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -49,7 +49,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nfrom seed.users import WithCursor\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_body_cursor_pagination(pagination=WithCursor(cursor='cursor', ), )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nfrom seed.users import WithCursor\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_body_cursor_pagination(pagination=WithCursor(cursor='cursor', ), )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nfrom seed.users import WithCursor\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_body_cursor_pagination(pagination=WithCursor(cursor='cursor', ), )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -62,7 +62,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_offset_pagination(page=1, per_page=1, order=\"asc\", starting_after='starting_after', )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_offset_pagination(page=1, per_page=1, order=\"asc\", starting_after='starting_after', )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_offset_pagination(page=1, per_page=1, order=\"asc\", starting_after='starting_after', )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -75,7 +75,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_double_offset_pagination(page=1.1, per_page=1.1, order=\"asc\", starting_after='starting_after', )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_double_offset_pagination(page=1.1, per_page=1.1, order=\"asc\", starting_after='starting_after', )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_double_offset_pagination(page=1.1, per_page=1.1, order=\"asc\", starting_after='starting_after', )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -88,7 +88,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nfrom seed.users import WithPage\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_body_offset_pagination(pagination=WithPage(page=1, ), )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nfrom seed.users import WithPage\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_body_offset_pagination(pagination=WithPage(page=1, ), )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nfrom seed.users import WithPage\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_body_offset_pagination(pagination=WithPage(page=1, ), )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -101,7 +101,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_offset_step_pagination(page=1, limit=1, order=\"asc\", )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_offset_step_pagination(page=1, limit=1, order=\"asc\", )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_offset_step_pagination(page=1, limit=1, order=\"asc\", )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -114,7 +114,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_offset_pagination_has_next_page(page=1, limit=1, order=\"asc\", )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_offset_pagination_has_next_page(page=1, limit=1, order=\"asc\", )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_offset_pagination_has_next_page(page=1, limit=1, order=\"asc\", )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -127,7 +127,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nimport uuid\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_extended_results(cursor=uuid.UUID(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", ), )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport uuid\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_extended_results(cursor=uuid.UUID(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", ), )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport uuid\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_extended_results(cursor=uuid.UUID(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", ), )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -140,7 +140,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nimport uuid\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_extended_results_and_optional_data(cursor=uuid.UUID(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", ), )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport uuid\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_extended_results_and_optional_data(cursor=uuid.UUID(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", ), )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport uuid\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_extended_results_and_optional_data(cursor=uuid.UUID(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", ), )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -153,7 +153,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_usernames(starting_after='starting_after', )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_usernames(starting_after='starting_after', )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_usernames(starting_after='starting_after', )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -166,7 +166,7 @@
             },
             "snippet": {
                 "sync_client": "from seed import SeedPagination\nclient = SeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nresponse = client.users.list_with_global_config(offset=1, )\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
-                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_global_config(offset=1, )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
+                "async_client": "from seed import AsyncSeedPagination\nimport asyncio\nclient = AsyncSeedPagination(token=\"YOUR_TOKEN\", base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    response = await client.users.list_with_global_config(offset=1, )\n    async for item in response:\n        yield item\n    \n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\nasyncio.run(main())",
                 "type": "python"
             }
         }

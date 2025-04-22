@@ -292,7 +292,6 @@ allowedFailures:
   - exhaustive:pydantic-v1-wrapped
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
-  - pagination
   - pagination-custom
   - simple-fhir
   - streaming-parameter
