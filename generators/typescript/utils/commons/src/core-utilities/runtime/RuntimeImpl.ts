@@ -6,19 +6,20 @@ import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { Runtime } from "./Runtime";
 
-export class RuntimeImpl extends CoreUtility implements Runtime {
-    public readonly MANIFEST = {
-        name: "runtime",
-        repoInfoForTesting: {
-            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/runtime")
-        },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/runtime"),
-        pathInCoreUtilities: [{ nameOnDisk: "runtime", exportDeclaration: { exportAll: true } }],
-        addDependencies: (dependencyManager: DependencyManager): void => {
-            return;
-        }
-    };
+export const MANIFEST: CoreUtility.Manifest = {
+    name: "runtime",
+    repoInfoForTesting: {
+        path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/runtime")
+    },
+    originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/runtime"),
+    pathInCoreUtilities: [{ nameOnDisk: "runtime", exportDeclaration: { exportAll: true } }],
+    addDependencies: (dependencyManager: DependencyManager): void => {
+        return;
+    }
+};
 
+export class RuntimeImpl extends CoreUtility implements Runtime {
+    public readonly MANIFEST = MANIFEST;
     public readonly type = {
         _getReferenceTo: this.withExportedName(
             "RUNTIME",

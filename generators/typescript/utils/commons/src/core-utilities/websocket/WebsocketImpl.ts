@@ -4,6 +4,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { DependencyManager, DependencyType } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
+import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
 import { Websocket } from "./Websocket";
 
 export class WebsocketImpl extends CoreUtility implements Websocket {
@@ -17,7 +18,8 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("ws", "^8.16.0");
             dependencyManager.addDependency("@types/ws", "^8.5.10", { type: DependencyType.DEV });
-        }
+        },
+        dependsOn: [RuntimeManifest]
     };
 
     public ReconnectingWebSocket = {

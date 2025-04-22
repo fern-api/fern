@@ -162,9 +162,21 @@ export class CoreUtilitiesManager {
         this.authOverrides[filepath] = content;
     }
 
+    private addManifestAndDependencies(manifest: CoreUtility.Manifest): void {
+        if (this.referencedCoreUtilities[manifest.name] != null) {
+            return;
+        }
+        this.referencedCoreUtilities[manifest.name] = manifest;
+        if (manifest.dependsOn != null) {
+            for (const dependency of manifest.dependsOn) {
+                this.addManifestAndDependencies(dependency);
+            }
+        }
+    }
+
     private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
-            this.referencedCoreUtilities[manifest.name] = manifest;
+            this.addManifestAndDependencies(manifest);
             return getReferenceToExportViaNamespaceImport({
                 exportedName,
                 filepathInsideNamespaceImport: manifest.pathInCoreUtilities,
