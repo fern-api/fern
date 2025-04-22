@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using SeedMixedCase.Core;
 
 namespace SeedMixedCase;
@@ -13,8 +13,7 @@ public record User
     public IEnumerable<string> MetadataTags { get; set; } = new List<string>();
 
     [JsonPropertyName("EXTRA_PROPERTIES")]
-    public Dictionary<string, string> ExtraProperties { get; set; } =
-        new Dictionary<string, string>();
+    public Dictionary<string, string> ExtraProperties { get; set; } = new Dictionary<string, string>();
 
     /// <summary>
     /// Additional properties received from the response, if any.
@@ -23,12 +22,10 @@ public record User
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

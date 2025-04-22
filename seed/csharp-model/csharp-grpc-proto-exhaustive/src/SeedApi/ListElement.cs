@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
 
@@ -17,33 +17,28 @@ public record ListElement
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <summary>
     /// Returns a new ListElement type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static ListElement FromProto(ProtoDataV1Grpc.ListElement value)
-    {
-        return new ListElement { Id = value.Id };
+    internal static ListElement FromProto(ProtoDataV1Grpc.ListElement value) {
+        return new ListElement{Id = value.Id};
     }
 
     /// <summary>
     /// Maps the ListElement type into its Protobuf-equivalent representation.
     /// </summary>
-    internal ProtoDataV1Grpc.ListElement ToProto()
-    {
+    internal ProtoDataV1Grpc.ListElement ToProto() {
         var result = new ProtoDataV1Grpc.ListElement();
-        if (Id != null)
-        {
+        if (Id != null) {
             result.Id = Id ?? "";
         }
         return result;
     }
 
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

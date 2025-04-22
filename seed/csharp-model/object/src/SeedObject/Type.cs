@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using SeedObject.Core;
 
 namespace SeedObject;
@@ -55,8 +55,7 @@ public record Type
     public IEnumerable<IEnumerable<int>> Fifteen { get; set; } = new List<IEnumerable<int>>();
 
     [JsonPropertyName("sixteen")]
-    public IEnumerable<Dictionary<string, int>> Sixteen { get; set; } =
-        new List<Dictionary<string, int>>();
+    public IEnumerable<Dictionary<string, int>> Sixteen { get; set; } = new List<Dictionary<string, int>>();
 
     [JsonPropertyName("seventeen")]
     public IEnumerable<string> Seventeen { get; set; } = new List<string>();
@@ -92,12 +91,10 @@ public record Type
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

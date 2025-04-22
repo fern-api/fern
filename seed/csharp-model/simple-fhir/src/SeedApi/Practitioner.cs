@@ -1,6 +1,6 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
+using System.Text.Json;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -17,9 +17,7 @@ public record Practitioner
     public required string Id { get; set; }
 
     [JsonPropertyName("related_resources")]
-    public IEnumerable<
-        OneOf<Account, Patient, Practitioner, Script>
-    > RelatedResources { get; set; } = new List<OneOf<Account, Patient, Practitioner, Script>>();
+    public IEnumerable<OneOf<Account, Patient, Practitioner, Script>> RelatedResources { get; set; } = new List<OneOf<Account, Patient, Practitioner, Script>>();
 
     [JsonPropertyName("memo")]
     public required Memo Memo { get; set; }
@@ -31,12 +29,10 @@ public record Practitioner
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

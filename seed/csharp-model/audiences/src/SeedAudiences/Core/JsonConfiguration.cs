@@ -1,3 +1,4 @@
+
 using global::System.Text.Json;
 using global::System.Text.Json.Nodes;
 using global::System.Text.Json.Serialization;
@@ -70,6 +71,7 @@ internal static partial class JsonOptions
                                 propertyInfo.IsRequired = false;
                             }
                         }
+                        
                     },
                 },
             },

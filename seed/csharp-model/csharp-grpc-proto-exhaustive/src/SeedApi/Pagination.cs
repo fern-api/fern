@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
 
@@ -17,33 +17,28 @@ public record Pagination
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <summary>
     /// Returns a new Pagination type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static Pagination FromProto(ProtoDataV1Grpc.Pagination value)
-    {
-        return new Pagination { Next = value.Next };
+    internal static Pagination FromProto(ProtoDataV1Grpc.Pagination value) {
+        return new Pagination{Next = value.Next};
     }
 
     /// <summary>
     /// Maps the Pagination type into its Protobuf-equivalent representation.
     /// </summary>
-    internal ProtoDataV1Grpc.Pagination ToProto()
-    {
+    internal ProtoDataV1Grpc.Pagination ToProto() {
         var result = new ProtoDataV1Grpc.Pagination();
-        if (Next != null)
-        {
+        if (Next != null) {
             result.Next = Next ?? "";
         }
         return result;
     }
 
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

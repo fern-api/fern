@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
 
@@ -23,53 +23,37 @@ public record FetchResponse
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <summary>
     /// Returns a new FetchResponse type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static FetchResponse FromProto(ProtoDataV1Grpc.FetchResponse value)
-    {
-        return new FetchResponse
-        {
-            Columns = value.Columns?.ToDictionary(
-                kvp => kvp.Key,
-                kvp => Column.FromProto(kvp.Value)
-            ),
-            Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
-        };
+    internal static FetchResponse FromProto(ProtoDataV1Grpc.FetchResponse value) {
+        return new FetchResponse{Columns = value.Columns?.ToDictionary(kvp => kvp.Key, kvp => Column.FromProto(kvp.Value)), Namespace = value.Namespace, Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null};
     }
 
     /// <summary>
     /// Maps the FetchResponse type into its Protobuf-equivalent representation.
     /// </summary>
-    internal ProtoDataV1Grpc.FetchResponse ToProto()
-    {
+    internal ProtoDataV1Grpc.FetchResponse ToProto() {
         var result = new ProtoDataV1Grpc.FetchResponse();
-        if (Columns != null && Columns.Any())
-        {
-            foreach (var kvp in Columns)
-            {
+        if (Columns != null && Columns.Any()) {
+            foreach (var kvp in Columns) {
                 result.Columns.Add(kvp.Key, kvp.Value.ToProto());
             }
             ;
         }
-        if (Namespace != null)
-        {
+        if (Namespace != null) {
             result.Namespace = Namespace ?? "";
         }
-        if (Usage != null)
-        {
+        if (Usage != null) {
             result.Usage = Usage.ToProto();
         }
         return result;
     }
 
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }
