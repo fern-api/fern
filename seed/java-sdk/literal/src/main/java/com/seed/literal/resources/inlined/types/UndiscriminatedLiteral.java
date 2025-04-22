@@ -74,6 +74,7 @@ public final class UndiscriminatedLiteral {
      *       <li>"$ending"</li>
      *       <li>"10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"</li>
      *   </ul>
+     * @throws RuntimeException if value is not one of the allowed values
      */
     public static UndiscriminatedLiteral ofLiteral(final String value) {
         switch (value) {
@@ -82,7 +83,7 @@ public final class UndiscriminatedLiteral {
             case "10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)":
                 return new UndiscriminatedLiteral(value, 2);
             default:
-                throw new RuntimeException("Unknown string literal");
+                throw new RuntimeException("Unknown string literal \"" + value + "\"");
         }
     }
 
