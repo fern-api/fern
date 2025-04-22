@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.14.4
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue where filename and plain text content-type parameters were being incorrectly serialized.
+
 - version: 4.14.3
   irVersion: 57
   changelogEntry:

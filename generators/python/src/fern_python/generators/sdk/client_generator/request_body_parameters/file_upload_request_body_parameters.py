@@ -1,12 +1,13 @@
 from typing import Dict, List, Optional
 
-from ...context.sdk_generator_context import SdkGeneratorContext
-from ..constants import DEFAULT_BODY_PARAMETER_VALUE
-from .abstract_request_body_parameters import AbstractRequestBodyParameters
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 
-import fern.ir.resources as ir_types
+from ...context.sdk_generator_context import SdkGeneratorContext
+from ..constants import DEFAULT_BODY_PARAMETER_VALUE
+from .abstract_request_body_parameters import AbstractRequestBodyParameters
 
 FILETYPE_DOCS = "See core.File for more documentation"
 
@@ -143,17 +144,15 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                             writer.write_line("**(")
                             with writer.indent():
                                 writer.write(f'{{"{property_as_union.name.wire_value}": (None, ')
-                                writer.write_node(
-                                    AST.Expression(
-                                        Json.dumps(
-                                            AST.Expression(
-                                                self._context.core_utilities.jsonable_encoder(
-                                                    AST.Expression(property_as_union.name.wire_value)
-                                                )
-                                            )
-                                        )
+                                expression = AST.Expression(
+                                    self._context.core_utilities.jsonable_encoder(
+                                        AST.Expression(property_as_union.name.wire_value)
                                     )
                                 )
+                                if property_as_union.content_type == "text/plain":
+                                    writer.write_node(expression)
+                                else:
+                                    writer.write_node(AST.Expression(Json.dumps(expression)))
                                 writer.write_line(f', "{property_as_union.content_type}")}}')
                                 writer.write_line(f"if {property_as_union.name.wire_value} is not OMIT ")
                                 writer.write_line("else {}")
