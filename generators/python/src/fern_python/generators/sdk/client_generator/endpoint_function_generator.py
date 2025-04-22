@@ -360,11 +360,7 @@ class EndpointFunctionGenerator:
         else:
             return_type = self._get_response_body_type(None, self._is_async, streaming_parameter)
 
-        return (
-            return_type
-            if not self.is_paginated
-            else self._context.core_utilities.get_paginator_type(return_type, is_async=self._is_async)
-        )
+        return return_type
 
     def deconflict_parameter_name(self, name: str, used_names: List[str]) -> str:
         while name in used_names:
@@ -573,9 +569,20 @@ class EndpointFunctionGenerator:
                     param = pagination.page
                     page_param_name = request_property_to_name(param.property)
                     page_param_default = retrieve_pagination_default(param.property.root.value_type)
-                    writer.write_line(
-                        f"{page_param_name} = {page_param_name} if {page_param_name} is not None else {page_param_default}"
-                    )
+
+                    if any(named_param.name == page_param_name for named_param in named_parameters):
+                        writer.write_node(
+                            AST.VariableDeclaration(
+                                name=page_param_name,
+                                initializer=AST.Expression(
+                                    AST.ConditionalExpression(
+                                        test=AST.Expression(f"{page_param_name} is not None"),
+                                        left=AST.Expression(page_param_name),
+                                        right=AST.Expression(str(page_param_default)),
+                                    )
+                                ),
+                            )
+                        )
 
             def get_httpx_request(
                 is_streaming: bool, response_code_writer: EndpointResponseCodeWriter
@@ -1040,23 +1047,38 @@ class EndpointFunctionGenerator:
         is_async: bool,
         streaming_parameter: Optional[StreamingParameterType] = None,
     ) -> AST.TypeHint:
+        # First get the underlying type without any wrappers
         underlying_type_hint = self._get_response_body_underlying_type(response_body, is_async, streaming_parameter)
+
+        # Apply pagination if needed
+        if self.is_paginated:
+            underlying_type_hint = self._get_pagination_results_type(underlying_type_hint)
+            type_hint = self._context.core_utilities.get_paginator_type(underlying_type_hint, is_async=is_async)
+        else:
+            type_hint = underlying_type_hint
+
+        # Handle streaming case
         is_streaming = response_body and is_streaming_endpoint(self._endpoint)
-
-        if not self._is_raw_client:
-            if is_streaming:
-                return (
-                    AST.TypeHint.async_iterator(underlying_type_hint)
-                    if is_async
-                    else AST.TypeHint.iterator(underlying_type_hint)
-                )
-            return self._get_pagination_results_type(underlying_type_hint) if self.is_paginated else underlying_type_hint
-
         if is_streaming:
-            type_hint = self._get_stream_func_return_type()
-            return AST.TypeHint.async_iterator(type_hint) if is_async else AST.TypeHint.iterator(type_hint)
+            if self._is_raw_client:
+                stream_type = self._get_stream_func_return_type()
+                streaming_type = (
+                    AST.TypeHint.async_iterator(stream_type) if is_async else AST.TypeHint.iterator(stream_type)
+                )
+            else:
+                streaming_type = (
+                    AST.TypeHint.async_iterator(type_hint) if is_async else AST.TypeHint.iterator(type_hint)
+                )
 
-        return self._get_http_response_wrapper_type(is_async, underlying_type_hint)
+            result_type = streaming_type
+        else:
+            result_type = type_hint
+
+        # Finally add HTTP response wrapper for raw clients
+        if self._is_raw_client and not is_streaming:
+            return self._get_http_response_wrapper_type(is_async, result_type)
+
+        return result_type
 
     def _get_response_body_underlying_type(
         self,
@@ -1493,6 +1515,11 @@ class EndpointFunctionGenerator:
     def _get_http_response_wrapper_type(
         self, is_async: bool, underlying_type: Optional[AST.TypeHint] = None
     ) -> AST.TypeHint:
+        # Create properly typed parameter list or None
+        type_params = None
+        if underlying_type is not None:
+            type_params = [AST.TypeParameter(underlying_type)]
+
         return AST.TypeHint(
             type=AST.ClassReference(
                 qualified_name_excluding_import=(),
@@ -1501,7 +1528,7 @@ class EndpointFunctionGenerator:
                     named_import="AsyncHttpResponse" if is_async else "HttpResponse",
                 ),
             ),
-            type_parameters=[underlying_type] if underlying_type is not None else None,
+            type_parameters=type_params,
         )
 
     def generate_wrapper_function(self) -> AST.FunctionDeclaration:
@@ -1755,24 +1782,37 @@ class EndpointFunctionSnippetGenerator:
                 or self.streaming_parameter == "streaming"
             )
         ):
-            # For raw clients, iterate over response.data rather than response
-            response_accessor = f"{response_name}.data" if self.is_raw_client else response_name
 
             def snippet_writer(writer: AST.NodeWriter) -> None:
-                if is_async:
-                    writer.write("async ")
-                writer.write_line(f"for {chunk_name} in {response_accessor}:")
-                with writer.indent():
-                    writer.write_line(f"yield {chunk_name}")
-
                 if is_paginated:
+                    writer.write_node(
+                        AST.ForStatement(
+                            target=chunk_name,
+                            iterable=response_name,
+                            body=[AST.YieldStatement(value=chunk_name)],
+                            is_async=is_async,
+                        )
+                    )
+                    writer.write_line()
                     writer.write_line("# alternatively, you can paginate page-by-page")
-                    page_accessor = f"{response_name}.data" if self.is_raw_client else response_name
-                    if is_async:
-                        writer.write("async ")
-                    writer.write_line(f"for page in {page_accessor}.iter_pages():")
-                    with writer.indent():
-                        writer.write_line("yield page")
+                    writer.write_node(
+                        AST.ForStatement(
+                            target="page",
+                            iterable=f"{response_name}.iter_pages()",
+                            body=[AST.YieldStatement(value="page")],
+                            is_async=is_async,
+                        )
+                    )
+                else:
+                    writer.write_node(
+                        AST.ForStatement(
+                            target=chunk_name,
+                            # For raw clients, iterate over response.data rather than response
+                            iterable=f"{response_name}.data" if self.is_raw_client else response_name,
+                            body=[AST.YieldStatement(value=chunk_name)],
+                            is_async=is_async,
+                        )
+                    )
 
             return AST.Expression(AST.CodeWriter(snippet_writer))
         return None

@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.14.3
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add support for receiving raw responses from pagination endpoints.
+
 - version: 4.14.2
   irVersion: 57
   changelogEntry:
