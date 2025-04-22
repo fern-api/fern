@@ -23,7 +23,7 @@ export async function runAppPreviewServer({
     port: number;
     bundlePath?: string;
 }): Promise<void> {
-    const bundleRoot = getPathToAppBundleFolder();
+    const bundleRoot = "/Users/catherinedeskur/Documents/Fern/bundle";
     const serverPath = path.join(bundleRoot, ".next/standalone/packages/fern-docs/bundle/server.js");
 
     // Prepare environment variables based on the provided instructions
@@ -31,6 +31,7 @@ export async function runAppPreviewServer({
         ...process.env,
         PORT: port.toString(),
         HOSTNAME: "0.0.0.0",
+        NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
         // temporarily point at currently running FDR location
         NEXT_PUBLIC_FDR_ORIGIN: "http://localhost:3001",
         NEXT_PUBLIC_IS_LOCAL: "1",
