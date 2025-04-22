@@ -1,6 +1,6 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace;
+using System.Text.Json;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2;
@@ -17,8 +17,7 @@ public record CreateProblemRequestV2
     public required object CustomFiles { get; set; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; set; } =
-        new List<TestCaseTemplate>();
+    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; set; } = new List<TestCaseTemplate>();
 
     [JsonPropertyName("testcases")]
     public IEnumerable<TestCaseV2> Testcases { get; set; } = new List<TestCaseV2>();
@@ -36,12 +35,10 @@ public record CreateProblemRequestV2
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

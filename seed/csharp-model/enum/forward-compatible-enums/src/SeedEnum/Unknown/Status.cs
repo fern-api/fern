@@ -10,8 +10,7 @@ public readonly record struct Status : IStringEnum
 
     public static readonly Status Unknown = new(Values.Unknown);
 
-    public Status(string value)
-    {
+    public Status (string value) {
         Value = value;
     }
 
@@ -23,21 +22,18 @@ public readonly record struct Status : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static Status FromCustom(string value)
-    {
+    public static Status FromCustom(string value) {
         return new Status(value);
     }
 
-    public bool Equals(string? other)
-    {
+    public bool Equals(string? other) {
         return Value.Equals(other);
     }
 
     /// <summary>
     /// Returns the string value of the enum.
     /// </summary>
-    public override string ToString()
-    {
+    public override string ToString() {
         return Value;
     }
 
@@ -58,4 +54,5 @@ public readonly record struct Status : IStringEnum
 
         public const string Unknown = "Unknown";
     }
+
 }

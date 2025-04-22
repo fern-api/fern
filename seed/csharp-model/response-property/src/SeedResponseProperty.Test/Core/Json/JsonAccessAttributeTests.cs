@@ -17,8 +17,7 @@ public class JsonAccessAttributeTests
         [JsonAccess(JsonAccessType.WriteOnly)]
         public string? WriteOnlyProp { get; set; }
 
-        [JsonPropertyName("normal_prop")]
-        public string? NormalProp { get; set; }
+        [JsonPropertyName("normal_prop")] public string? NormalProp { get; set; }
 
         [JsonPropertyName("read_only_nullable_list")]
         [JsonAccess(JsonAccessType.ReadOnly)]
@@ -36,8 +35,7 @@ public class JsonAccessAttributeTests
         [JsonAccess(JsonAccessType.WriteOnly)]
         public IEnumerable<string> WriteOnlyList { get; set; } = [];
 
-        [JsonPropertyName("normal_list")]
-        public IEnumerable<string> NormalList { get; set; } = [];
+        [JsonPropertyName("normal_list")] public IEnumerable<string> NormalList { get; set; } = [];
 
         [JsonPropertyName("normal_nullable_list")]
         public IEnumerable<string>? NullableNormalList { get; set; }
@@ -46,7 +44,8 @@ public class JsonAccessAttributeTests
     [Test]
     public void JsonAccessAttribute_ShouldWorkAsExpected()
     {
-        const string json = """
+        const string json =
+            """
             {
                 "read_only_prop": "read",
                 "write_only_prop": "write",
@@ -103,7 +102,8 @@ public class JsonAccessAttributeTests
         obj.NullableNormalList = new List<string> { "new_normal" };
 
         var serializedJson = JsonUtils.Serialize(obj);
-        const string expectedJson = """
+        const string expectedJson =
+            """
             {
               "write_only_prop": "write",
               "normal_prop": "new_value",
@@ -129,7 +129,8 @@ public class JsonAccessAttributeTests
     [Test]
     public void JsonAccessAttribute_WithNullListsInJson_ShouldWorkAsExpected()
     {
-        const string json = """
+        const string json =
+            """
             {
                 "read_only_prop": "read",
                 "normal_prop": "normal_prop",

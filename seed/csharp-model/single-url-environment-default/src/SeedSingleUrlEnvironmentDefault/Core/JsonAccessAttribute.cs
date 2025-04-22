@@ -9,5 +9,5 @@ internal class JsonAccessAttribute(JsonAccessType accessType) : Attribute
 internal enum JsonAccessType
 {
     ReadOnly,
-    WriteOnly,
+    WriteOnly
 }

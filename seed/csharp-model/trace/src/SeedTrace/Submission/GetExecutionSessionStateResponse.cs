@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -7,8 +7,7 @@ namespace SeedTrace;
 public record GetExecutionSessionStateResponse
 {
     [JsonPropertyName("states")]
-    public Dictionary<string, ExecutionSessionState> States { get; set; } =
-        new Dictionary<string, ExecutionSessionState>();
+    public Dictionary<string, ExecutionSessionState> States { get; set; } = new Dictionary<string, ExecutionSessionState>();
 
     [JsonPropertyName("numWarmingInstances")]
     public int? NumWarmingInstances { get; set; }
@@ -23,12 +22,10 @@ public record GetExecutionSessionStateResponse
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

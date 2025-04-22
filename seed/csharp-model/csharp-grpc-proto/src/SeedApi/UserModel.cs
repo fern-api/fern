@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 using SeedApi.Core;
 using ProtoUserV1 = User.V1;
 
@@ -29,56 +29,40 @@ public record UserModel
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <summary>
     /// Returns a new UserModel type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static UserModel FromProto(ProtoUserV1.UserModel value)
-    {
-        return new UserModel
-        {
-            Username = value.Username,
-            Email = value.Email,
-            Age = value.Age,
-            Weight = value.Weight,
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
-        };
+    internal static UserModel FromProto(ProtoUserV1.UserModel value) {
+        return new UserModel{Username = value.Username, Email = value.Email, Age = value.Age, Weight = value.Weight, Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null};
     }
 
     /// <summary>
     /// Maps the UserModel type into its Protobuf-equivalent representation.
     /// </summary>
-    internal ProtoUserV1.UserModel ToProto()
-    {
+    internal ProtoUserV1.UserModel ToProto() {
         var result = new ProtoUserV1.UserModel();
-        if (Username != null)
-        {
+        if (Username != null) {
             result.Username = Username ?? "";
         }
-        if (Email != null)
-        {
+        if (Email != null) {
             result.Email = Email ?? "";
         }
-        if (Age != null)
-        {
+        if (Age != null) {
             result.Age = Age ?? 0;
         }
-        if (Weight != null)
-        {
+        if (Weight != null) {
             result.Weight = Weight ?? 0.0f;
         }
-        if (Metadata != null)
-        {
+        if (Metadata != null) {
             result.Metadata = Metadata.ToProto();
         }
         return result;
     }
 
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

@@ -1,6 +1,6 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Commons;
+using System.Text.Json;
 using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
@@ -23,12 +23,10 @@ public record Node
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
-
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
     /// <inheritdoc />
-    public override string ToString()
-    {
+    public override string ToString() {
         return JsonUtils.Serialize(this);
     }
+
 }

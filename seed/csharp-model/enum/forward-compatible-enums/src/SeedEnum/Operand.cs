@@ -16,8 +16,7 @@ public readonly record struct Operand : IStringEnum
     /// </summary>
     public static readonly Operand LessThan = new(Values.LessThan);
 
-    public Operand(string value)
-    {
+    public Operand (string value) {
         Value = value;
     }
 
@@ -29,21 +28,18 @@ public readonly record struct Operand : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static Operand FromCustom(string value)
-    {
+    public static Operand FromCustom(string value) {
         return new Operand(value);
     }
 
-    public bool Equals(string? other)
-    {
+    public bool Equals(string? other) {
         return Value.Equals(other);
     }
 
     /// <summary>
     /// Returns the string value of the enum.
     /// </summary>
-    public override string ToString()
-    {
+    public override string ToString() {
         return Value;
     }
 
@@ -70,4 +66,5 @@ public readonly record struct Operand : IStringEnum
         /// </summary>
         public const string LessThan = "less_than";
     }
+
 }
