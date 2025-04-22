@@ -1,4 +1,3 @@
-
 let Headers: typeof globalThis.Headers;
 
 if (typeof globalThis.Headers !== "undefined") {
@@ -9,24 +8,24 @@ if (typeof globalThis.Headers !== "undefined") {
 
         constructor(init?: HeadersInit) {
             this.headers = new Map();
-            
+
             if (init) {
                 if (init instanceof Headers) {
                     init.forEach((value, key) => this.append(key, value));
                 } else if (Array.isArray(init)) {
                     for (const [key, value] of init) {
-                        if (typeof key === 'string' && typeof value === 'string') {
+                        if (typeof key === "string" && typeof value === "string") {
                             this.append(key, value);
                         } else {
-                            throw new TypeError('Each header entry must be a [string, string] tuple');
+                            throw new TypeError("Each header entry must be a [string, string] tuple");
                         }
                     }
                 } else {
                     for (const [key, value] of Object.entries(init)) {
-                        if (typeof value === 'string') {
+                        if (typeof value === "string") {
                             this.append(key, value);
                         } else {
-                            throw new TypeError('Header values must be strings');
+                            throw new TypeError("Header values must be strings");
                         }
                     }
                 }
