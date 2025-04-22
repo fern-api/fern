@@ -82,7 +82,7 @@ types:
     union:
       npm: NpmPublishingConfiguration
       pypi: PypiPublishingConfiguration
-      maven: MavenPublshingConfiguration
+      maven: MavenPublishingConfiguration
       nuget: NugetPublishingConfiguration
       rubyGems: RubyGemsPublishingConfiguration
       packagist: PackagistPublishingConfiguration
@@ -111,7 +111,7 @@ types:
         type: optional<string>
         docs: PyPI authentication token for publishing
 
-  MavenPublshingConfiguration:
+  MavenPublishingConfiguration:
     properties:
       url:
         type: optional<string>

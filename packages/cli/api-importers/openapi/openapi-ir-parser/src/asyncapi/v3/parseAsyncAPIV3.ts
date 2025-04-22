@@ -96,11 +96,11 @@ export function parseAsyncAPIV3({
 
     for (const [originalMessageId, occurrences] of Object.entries(seenMessages)) {
         if (occurrences.length === 1) {
-            const occurence = occurrences[0] as SeenMessage;
-            const occurenceChannelId = occurence.channelId as ChannelId;
-            messageSchemas[occurenceChannelId] = messageSchemas[occurenceChannelId] || {};
-            messageSchemas[occurenceChannelId][originalMessageId] = convertSchema(
-                occurence.payload,
+            const occurrence = occurrences[0] as SeenMessage;
+            const occurrenceChannelId = occurrence.channelId as ChannelId;
+            messageSchemas[occurrenceChannelId] = messageSchemas[occurrenceChannelId] || {};
+            messageSchemas[occurrenceChannelId][originalMessageId] = convertSchema(
+                occurrence.payload,
                 false,
                 context,
                 [originalMessageId],
