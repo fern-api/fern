@@ -3,6 +3,7 @@ import { ts } from "ts-morph";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { CoreUtility } from "../CoreUtility";
+import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
 import { StreamUtils, StreamingFetcher } from "./StreamUtils";
 
 export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
@@ -15,7 +16,8 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
         pathInCoreUtilities: [{ nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (): void => {
             return;
-        }
+        },
+        dependsOn: [RuntimeManifest]
     };
 
     public Stream = {

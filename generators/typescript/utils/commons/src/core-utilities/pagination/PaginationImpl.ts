@@ -3,6 +3,7 @@ import { ts } from "ts-morph";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { CoreUtility } from "../CoreUtility";
+import { MANIFEST as FetcherManifest } from "../fetcher/FetcherImpl";
 import { Pagination } from "./Pagination";
 
 export class PaginationImpl extends CoreUtility implements Pagination {
@@ -15,7 +16,8 @@ export class PaginationImpl extends CoreUtility implements Pagination {
         pathInCoreUtilities: [{ nameOnDisk: "pagination", exportDeclaration: { exportAll: true } }],
         addDependencies: (): void => {
             return;
-        }
+        },
+        dependsOn: [FetcherManifest]
     };
 
     public Page = {
