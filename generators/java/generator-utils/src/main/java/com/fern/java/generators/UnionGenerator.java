@@ -435,9 +435,21 @@ public final class UnionGenerator extends AbstractTypeGenerator {
             MethodSpec.Builder staticFactoryBuilder = MethodSpec.methodBuilder(getVisitorParameterName())
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                     .returns(getUnionClassName());
-            boolean isLiteral = singleUnionType.getShape().getSingleProperty().map(SingleUnionTypeProperty::getType).flatMap(TypeReference::getContainer).map(ContainerType::isLiteral).orElse(false);
+            boolean isLiteral = singleUnionType
+                    .getShape()
+                    .getSingleProperty()
+                    .map(SingleUnionTypeProperty::getType)
+                    .flatMap(TypeReference::getContainer)
+                    .map(ContainerType::isLiteral)
+                    .orElse(false);
             if (isLiteral) {
-                Literal literal = singleUnionType.getShape().getSingleProperty().map(SingleUnionTypeProperty::getType).flatMap(TypeReference::getContainer).flatMap(ContainerType::getLiteral).get();
+                Literal literal = singleUnionType
+                        .getShape()
+                        .getSingleProperty()
+                        .map(SingleUnionTypeProperty::getType)
+                        .flatMap(TypeReference::getContainer)
+                        .flatMap(ContainerType::getLiteral)
+                        .get();
                 CodeBlock value = literal.visit(new Literal.Visitor<CodeBlock>() {
                     @Override
                     public CodeBlock visitString(String s) {
@@ -454,12 +466,8 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                         throw new RuntimeException("Got unknown literal type " + o);
                     }
                 });
-                staticFactoryBuilder
-                        .addStatement(
-                                "return new $T(new $T($L))",
-                                getUnionClassName(),
-                                getUnionSubTypeWrapperClass(),
-                                value);
+                staticFactoryBuilder.addStatement(
+                        "return new $T(new $T($L))", getUnionClassName(), getUnionSubTypeWrapperClass(), value);
             } else if (getUnionSubTypeTypeName().isPresent()) {
                 staticFactoryBuilder
                         .addParameter(getUnionSubTypeTypeName().get(), getValueFieldName())
