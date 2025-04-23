@@ -370,6 +370,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["client-class-name"] ?? `${this.getComputedClientName()}Client`;
     }
 
+    public getRootClientAccess(): csharp.Access {
+        return this.customConfig["root-client-class-access"] ?? csharp.Access.Public;
+    }
+
     public getRootClientClassNameForSnippets(): string {
         if (this.customConfig["exported-client-class-name"] != null) {
             return this.customConfig["exported-client-class-name"];

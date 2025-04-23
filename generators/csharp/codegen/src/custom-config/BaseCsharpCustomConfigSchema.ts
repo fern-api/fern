@@ -15,6 +15,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "use-discriminated-unions": z.boolean().optional(),
 
     // General options.
+    "root-client-class-access": z.enum(["public", "internal"]).optional(),
     "custom-pager-name": z.string().optional(),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
     "experimental-additional-properties": z.boolean().optional(),
