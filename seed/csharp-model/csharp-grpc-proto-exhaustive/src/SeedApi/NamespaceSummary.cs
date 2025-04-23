@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
 
@@ -17,28 +17,33 @@ public record NamespaceSummary
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Returns a new NamespaceSummary type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static NamespaceSummary FromProto(ProtoDataV1Grpc.NamespaceSummary value) {
-        return new NamespaceSummary{Count = value.Count};
+    internal static NamespaceSummary FromProto(ProtoDataV1Grpc.NamespaceSummary value)
+    {
+        return new NamespaceSummary { Count = value.Count };
     }
 
     /// <summary>
     /// Maps the NamespaceSummary type into its Protobuf-equivalent representation.
     /// </summary>
-    internal ProtoDataV1Grpc.NamespaceSummary ToProto() {
+    internal ProtoDataV1Grpc.NamespaceSummary ToProto()
+    {
         var result = new ProtoDataV1Grpc.NamespaceSummary();
-        if (Count != null) {
+        if (Count != null)
+        {
             result.Count = Count ?? 0;
         }
         return result;
     }
 
     /// <inheritdoc />
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

@@ -1,27 +1,36 @@
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
-using System.Runtime.Serialization;
 
 namespace SeedApi;
 
 [JsonConverter(typeof(EnumSerializer<FieldBehavior>))]
 public enum FieldBehavior
 {
-    [EnumMember(Value = "FIELD_BEHAVIOR_UNSPECIFIED")]FieldBehaviorUnspecified,
+    [EnumMember(Value = "FIELD_BEHAVIOR_UNSPECIFIED")]
+    FieldBehaviorUnspecified,
 
-    [EnumMember(Value = "OPTIONAL")]Optional,
+    [EnumMember(Value = "OPTIONAL")]
+    Optional,
 
-    [EnumMember(Value = "REQUIRED")]Required,
+    [EnumMember(Value = "REQUIRED")]
+    Required,
 
-    [EnumMember(Value = "OUTPUT_ONLY")]OutputOnly,
+    [EnumMember(Value = "OUTPUT_ONLY")]
+    OutputOnly,
 
-    [EnumMember(Value = "INPUT_ONLY")]InputOnly,
+    [EnumMember(Value = "INPUT_ONLY")]
+    InputOnly,
 
-    [EnumMember(Value = "IMMUTABLE")]Immutable,
+    [EnumMember(Value = "IMMUTABLE")]
+    Immutable,
 
-    [EnumMember(Value = "UNORDERED_LIST")]UnorderedList,
+    [EnumMember(Value = "UNORDERED_LIST")]
+    UnorderedList,
 
-    [EnumMember(Value = "NON_EMPTY_DEFAULT")]NonEmptyDefault,
+    [EnumMember(Value = "NON_EMPTY_DEFAULT")]
+    NonEmptyDefault,
 
-    [EnumMember(Value = "IDENTIFIER")]Identifier
+    [EnumMember(Value = "IDENTIFIER")]
+    Identifier,
 }

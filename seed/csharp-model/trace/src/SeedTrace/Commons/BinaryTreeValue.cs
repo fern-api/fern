@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -10,7 +10,8 @@ public record BinaryTreeValue
     public string? Root { get; set; }
 
     [JsonPropertyName("nodes")]
-    public Dictionary<string, BinaryTreeNodeValue> Nodes { get; set; } = new Dictionary<string, BinaryTreeNodeValue>();
+    public Dictionary<string, BinaryTreeNodeValue> Nodes { get; set; } =
+        new Dictionary<string, BinaryTreeNodeValue>();
 
     /// <summary>
     /// Additional properties received from the response, if any.
@@ -19,10 +20,12 @@ public record BinaryTreeValue
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
     /// <inheritdoc />
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }
