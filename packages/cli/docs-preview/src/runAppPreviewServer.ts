@@ -1,4 +1,6 @@
 import chalk from "chalk";
+import { spawn } from "child_process";
+// import { loggingExeca } from "@fern-api/logging-execa";
 import cors from "cors";
 import express from "express";
 import http from "http";
@@ -9,6 +11,7 @@ import { type WebSocket, WebSocketServer } from "ws";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+// import { WebSocket } from "ws"
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 
@@ -53,7 +56,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     id: undefined
 };
 
-export async function runPreviewServer({
+export async function runAppPreviewServer({
     initialProject,
     reloadProject,
     validateProject,
@@ -72,19 +75,18 @@ export async function runPreviewServer({
         context.logger.info(`Using bundle from path: ${bundlePath}`);
     } else {
         try {
-            const url = process.env.DOCS_PREVIEW_BUCKET;
+            const url = process.env.APP_DOCS_PREVIEW_BUCKET;
             if (url == null) {
                 throw new Error(
                     "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 );
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, app: true });
         } catch (err) {
-            const pathToBundle = getPathToBundleFolder({});
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
             }
-            if (await doesPathExist(pathToBundle)) {
+            if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
                 context.logger.warn("Falling back to cached bundle...");
             } else {
                 context.logger.warn("Please reach out to support@buildwithfern.com.");
@@ -92,6 +94,72 @@ export async function runPreviewServer({
             }
         }
     }
+
+    const bundleRoot = bundlePath || getPathToBundleFolder({ app: true });
+    const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
+    const backendPort = port + 1;
+
+    const env = {
+        ...process.env,
+        PORT: port.toString(),
+        HOSTNAME: "0.0.0.0",
+        NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
+        NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
+        NEXT_PUBLIC_IS_LOCAL: "1",
+        NEXT_DISABLE_CACHE: "1",
+        NODE_ENV: "development",
+        NODE_PATH: bundleRoot
+    };
+
+    const serverProcess = spawn("node", [serverPath], {
+        env,
+        detached: true,
+        stdio: ["ignore", "pipe", "pipe"]
+    });
+
+    serverProcess.stdout?.on("data", (data) => {
+        context.logger.debug(`[Next.js] ${data.toString()}`);
+    });
+
+    // some errors from the frontend don't need to be sent to user
+    serverProcess.stderr?.on("data", (data) => {
+        context.logger.debug(`[Next.js] ${data.toString()}`);
+    });
+
+    context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
+
+    serverProcess.on("error", (err) => {
+        context.logger.error(`Server process error: ${err.message}`);
+    });
+
+    serverProcess.on("exit", (code, signal) => {
+        if (code) {
+            context.logger.error(`Server process exited with code: ${code}`);
+        } else if (signal) {
+            context.logger.debug(`Server process killed with signal: ${signal}`);
+        } else {
+            context.logger.debug("Server process exited");
+        }
+    });
+
+    const cleanup = () => {
+        if (serverProcess.pid) {
+            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
+            try {
+                process.kill(-serverProcess.pid, "SIGTERM");
+            } catch (err) {
+                context.logger.error(`Failed to kill server process: ${err}`);
+            }
+        }
+    };
+
+    // clean up process
+    process.on("SIGINT", cleanup);
+    process.on("SIGTERM", cleanup);
+    process.on("exit", cleanup);
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    context.logger.debug(`Next.js server should now be running on http://localhost:${port}`);
 
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
@@ -159,11 +227,9 @@ export async function runPreviewServer({
         }
     };
 
-    // initialize docs definition
     docsDefinition = await reloadDocsDefinition();
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
-    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({});
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
@@ -178,19 +244,16 @@ export async function runPreviewServer({
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
 
-        // Don't schedule another reload if one is in progress
         if (isReloading) {
             return;
         }
 
         editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
 
-        // Clear any existing timer
         if (reloadTimer != null) {
             clearTimeout(reloadTimer);
         }
 
-        // Set up new timer
         reloadTimer = setTimeout(() => {
             void (async () => {
                 isReloading = true;
@@ -250,16 +313,9 @@ export async function runPreviewServer({
         return next();
     });
 
-    app.use("/_next", express.static(path.join(bundleRoot, "/_next")));
+    app.listen(backendPort);
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    app.use("*", async (_req, res) => {
-        return res.sendFile(path.join(bundleRoot, "/[[...slug]].html"));
-    });
-
-    app.listen(port);
-
-    context.logger.info(`Running server on http://localhost:${port}`);
+    context.logger.info(`Running server on http://localhost:${backendPort}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
