@@ -110,16 +110,7 @@ class EndpointResponseCodeWriter:
                             AST.TryStatement(
                                 body=[
                                     AST.YieldStatement(
-                                        AST.Expression(
-                                            AST.FunctionInvocation(
-                                                function_definition=AST.Reference(
-                                                    qualified_name_excluding_import=(
-                                                        f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data",
-                                                    ),
-                                                ),
-                                                args=[],
-                                            )
-                                        ),
+                                        AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"),
                                     ),
                                 ],
                                 handlers=[
