@@ -47,15 +47,9 @@ export function generateRequestBodyExample({
                 const firstAutoExample = Object.values(autoExamples)[0];
 
                 if (firstUserExample !== undefined) {
-                    result.requestBody =
-                        endpoint.source?.type === "openrpc"
-                            ? wrapAsJsonRpcRequest(endpoint.id, firstUserExample)
-                            : firstUserExample;
+                    result.requestBody = firstUserExample;
                 } else if (firstAutoExample !== undefined) {
-                    result.requestBody =
-                        endpoint.source?.type === "openrpc"
-                            ? wrapAsJsonRpcRequest(endpoint.id, firstAutoExample)
-                            : firstAutoExample;
+                    result.requestBody = firstAutoExample;
                 }
                 break;
             }
@@ -72,15 +66,9 @@ export function generateRequestBodyExample({
                     const firstAutoExample = Object.values(autoExamples)[0];
 
                     if (firstUserExample !== undefined) {
-                        result.requestBody =
-                            endpoint.source?.type === "openrpc"
-                                ? wrapAsJsonRpcRequest(endpoint.id, firstUserExample)
-                                : firstUserExample;
+                        result.requestBody = firstUserExample;
                     } else if (firstAutoExample !== undefined) {
-                        result.requestBody =
-                            endpoint.source?.type === "openrpc"
-                                ? wrapAsJsonRpcRequest(endpoint.id, firstAutoExample)
-                                : firstAutoExample;
+                        result.requestBody = firstAutoExample;
                     }
                 }
                 break;
@@ -89,37 +77,6 @@ export function generateRequestBodyExample({
                 assertNever(endpoint.requestBody);
             }
         }
-    } else {
-        // For OpenRPC endpoints with no request body, still return a JSON-RPC request format with empty params
-        if (endpoint.source?.type === "openrpc") {
-            result.requestBody = wrapAsJsonRpcRequest(endpoint.id, []);
-        }
     }
     return result;
-}
-
-/**
- * Wraps a payload in a JSON-RPC 2.0 request format
- *
- * @param method The method name to call
- * @param params The parameters to include in the request
- * @param id Optional request ID (defaults to 1)
- * @returns A formatted JSON-RPC 2.0 request object
- */
-export function wrapAsJsonRpcRequest(method: string, params: unknown, id: number = 1): unknown {
-    let processedParams: unknown;
-
-    // If params is an object, convert it to an array of values
-    if (params !== null && typeof params === "object" && !Array.isArray(params)) {
-        processedParams = Object.values(params);
-    } else {
-        processedParams = params;
-    }
-
-    return {
-        id,
-        jsonrpc: "2.0",
-        method,
-        params: processedParams
-    };
 }
