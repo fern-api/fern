@@ -62,8 +62,8 @@ class ServiceClient:
         client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
         client.service.get_movie(movie_id='movie-c06a4ad7', )
         """
-        response = self._raw_client.get_movie(movie_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_movie(movie_id, request_options=request_options)
+        return _response.data
 
     def create_movie(
         self,
@@ -118,7 +118,7 @@ class ServiceClient:
         , 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
         }, revenue=1000000, )
         """
-        response = self._raw_client.create_movie(
+        _response = self._raw_client.create_movie(
             id=id,
             title=title,
             from_=from_,
@@ -130,7 +130,7 @@ class ServiceClient:
             book=book,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def get_metadata(
         self,
@@ -163,10 +163,10 @@ class ServiceClient:
         client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
         client.service.get_metadata(x_api_version='0.0.1', shallow=False, tag='development', )
         """
-        response = self._raw_client.get_metadata(
+        _response = self._raw_client.get_metadata(
             x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def create_big_entity(
         self,
@@ -247,7 +247,7 @@ class ServiceClient:
         client.service.create_big_entity(cast_member=Actor(name='name', id='id', ), extended_movie=ExtendedMovie(id='id', prequel='prequel', title='title', from_='from', rating=1.1, tag='tag', book='book', metadata={'metadata': {'key': 'value'}
         }, revenue=1000000, cast=['cast', 'cast'], ), entity=Entity(type="primitive", name='name', ), metadata=Metadata_Html(value='metadata'), common_metadata=Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), event_info=EventInfo_Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), data=Data_String(value='data'), migration=Migration(name='name', status="RUNNING", ), exception=Exception_Generic(exception_type='exceptionType', exception_message='exceptionMessage', exception_stacktrace='exceptionStacktrace', ), test=Test_And(value=True), node=Node(name='name', nodes=[Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], ), Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], )], trees=[Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], ), Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], )], ), directory=Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], ), Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], )], ), moment=Moment(id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), date=datetime.date.fromisoformat("2023-01-15", ), datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), ), )
         """
-        response = self._raw_client.create_big_entity(
+        _response = self._raw_client.create_big_entity(
             cast_member=cast_member,
             extended_movie=extended_movie,
             entity=entity,
@@ -263,7 +263,7 @@ class ServiceClient:
             moment=moment,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -304,8 +304,8 @@ class AsyncServiceClient:
             await client.service.get_movie(movie_id='movie-c06a4ad7', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie(movie_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_movie(movie_id, request_options=request_options)
+        return _response.data
 
     async def create_movie(
         self,
@@ -363,7 +363,7 @@ class AsyncServiceClient:
             }, revenue=1000000, )
         asyncio.run(main())
         """
-        response = await self._raw_client.create_movie(
+        _response = await self._raw_client.create_movie(
             id=id,
             title=title,
             from_=from_,
@@ -375,7 +375,7 @@ class AsyncServiceClient:
             book=book,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def get_metadata(
         self,
@@ -411,10 +411,10 @@ class AsyncServiceClient:
             await client.service.get_metadata(x_api_version='0.0.1', shallow=False, tag='development', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_metadata(
+        _response = await self._raw_client.get_metadata(
             x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def create_big_entity(
         self,
@@ -498,7 +498,7 @@ class AsyncServiceClient:
             }, revenue=1000000, cast=['cast', 'cast'], ), entity=Entity(type="primitive", name='name', ), metadata=Metadata_Html(value='metadata'), common_metadata=Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), event_info=EventInfo_Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), data=Data_String(value='data'), migration=Migration(name='name', status="RUNNING", ), exception=Exception_Generic(exception_type='exceptionType', exception_message='exceptionMessage', exception_stacktrace='exceptionStacktrace', ), test=Test_And(value=True), node=Node(name='name', nodes=[Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], ), Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], )], trees=[Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], ), Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], )], ), directory=Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], ), Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], )], ), moment=Moment(id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), date=datetime.date.fromisoformat("2023-01-15", ), datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.create_big_entity(
+        _response = await self._raw_client.create_big_entity(
             cast_member=cast_member,
             extended_movie=extended_movie,
             entity=entity,
@@ -514,4 +514,4 @@ class AsyncServiceClient:
             moment=moment,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

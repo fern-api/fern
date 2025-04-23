@@ -52,10 +52,10 @@ class ServiceClient:
         client = SeedContentTypes(base_url="https://yourhost.com/path/to/api", )
         client.service.patch(application='application', require_auth=True, )
         """
-        response = self._raw_client.patch(
+        _response = self._raw_client.patch(
             application=application, require_auth=require_auth, request_options=request_options
         )
-        return response.data
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -103,7 +103,7 @@ class AsyncServiceClient:
             await client.service.patch(application='application', require_auth=True, )
         asyncio.run(main())
         """
-        response = await self._raw_client.patch(
+        _response = await self._raw_client.patch(
             application=application, require_auth=require_auth, request_options=request_options
         )
-        return response.data
+        return _response.data

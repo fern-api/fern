@@ -39,8 +39,8 @@ class BClient:
         client = SeedApi(base_url="https://yourhost.com/path/to/api", )
         client.a.b.foo()
         """
-        response = self._raw_client.foo(request_options=request_options)
-        return response.data
+        _response = self._raw_client.foo(request_options=request_options)
+        return _response.data
 
 
 class AsyncBClient:
@@ -78,5 +78,5 @@ class AsyncBClient:
             await client.a.b.foo()
         asyncio.run(main())
         """
-        response = await self._raw_client.foo(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.foo(request_options=request_options)
+        return _response.data

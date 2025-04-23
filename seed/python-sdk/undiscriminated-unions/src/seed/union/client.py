@@ -47,8 +47,8 @@ class UnionClient:
         client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
         client.union.get(request='string', )
         """
-        response = self._raw_client.get(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get(request=request, request_options=request_options)
+        return _response.data
 
     def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
         """
@@ -67,8 +67,8 @@ class UnionClient:
         client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
         client.union.get_metadata()
         """
-        response = self._raw_client.get_metadata(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_metadata(request_options=request_options)
+        return _response.data
 
     def update_metadata(
         self, *, request: MetadataUnion, request_options: typing.Optional[RequestOptions] = None
@@ -92,8 +92,8 @@ class UnionClient:
         client.union.update_metadata(request={'string': {'key': 'value'}
         }, )
         """
-        response = self._raw_client.update_metadata(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.update_metadata(request=request, request_options=request_options)
+        return _response.data
 
     def call(
         self, *, union: typing.Optional[MetadataUnion] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -117,8 +117,8 @@ class UnionClient:
         client.union.call(union={'union': {'key': 'value'}
         }, )
         """
-        response = self._raw_client.call(union=union, request_options=request_options)
-        return response.data
+        _response = self._raw_client.call(union=union, request_options=request_options)
+        return _response.data
 
 
 class AsyncUnionClient:
@@ -158,8 +158,8 @@ class AsyncUnionClient:
             await client.union.get(request='string', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get(request=request, request_options=request_options)
+        return _response.data
 
     async def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
         """
@@ -181,8 +181,8 @@ class AsyncUnionClient:
             await client.union.get_metadata()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_metadata(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_metadata(request_options=request_options)
+        return _response.data
 
     async def update_metadata(
         self, *, request: MetadataUnion, request_options: typing.Optional[RequestOptions] = None
@@ -209,8 +209,8 @@ class AsyncUnionClient:
             }, )
         asyncio.run(main())
         """
-        response = await self._raw_client.update_metadata(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.update_metadata(request=request, request_options=request_options)
+        return _response.data
 
     async def call(
         self, *, union: typing.Optional[MetadataUnion] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -237,5 +237,5 @@ class AsyncUnionClient:
             }, )
         asyncio.run(main())
         """
-        response = await self._raw_client.call(union=union, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.call(union=union, request_options=request_options)
+        return _response.data

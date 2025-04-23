@@ -45,8 +45,8 @@ class HeadersClient:
         client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
         client.headers.send(query='What is the weather today', )
         """
-        response = self._raw_client.send(query=query, request_options=request_options)
-        return response.data
+        _response = self._raw_client.send(query=query, request_options=request_options)
+        return _response.data
 
 
 class AsyncHeadersClient:
@@ -86,5 +86,5 @@ class AsyncHeadersClient:
             await client.headers.send(query='What is the weather today', )
         asyncio.run(main())
         """
-        response = await self._raw_client.send(query=query, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.send(query=query, request_options=request_options)
+        return _response.data

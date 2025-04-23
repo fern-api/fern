@@ -43,8 +43,8 @@ class UserClient:
         client = SeedVersion(base_url="https://yourhost.com/path/to/api", )
         client.user.get_user(user_id='userId', )
         """
-        response = self._raw_client.get_user(user_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_user(user_id, request_options=request_options)
+        return _response.data
 
 
 class AsyncUserClient:
@@ -84,5 +84,5 @@ class AsyncUserClient:
             await client.user.get_user(user_id='userId', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_user(user_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_user(user_id, request_options=request_options)
+        return _response.data

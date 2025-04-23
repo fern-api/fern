@@ -45,8 +45,8 @@ class UnionClient:
         client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
         client.union.get(id='id', )
         """
-        response = self._raw_client.get(id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
 
     def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -68,8 +68,8 @@ class UnionClient:
         client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
         client.union.update(request=Shape_Circle(radius=1.1, ), )
         """
-        response = self._raw_client.update(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.update(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncUnionClient:
@@ -109,8 +109,8 @@ class AsyncUnionClient:
             await client.union.get(id='id', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get(id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get(id, request_options=request_options)
+        return _response.data
 
     async def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -135,5 +135,5 @@ class AsyncUnionClient:
             await client.union.update(request=Shape_Circle(radius=1.1, ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.update(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.update(request=request, request_options=request_options)
+        return _response.data

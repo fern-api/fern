@@ -45,8 +45,8 @@ class UserClient:
         client = SeedExtraProperties(base_url="https://yourhost.com/path/to/api", )
         client.user.create_user(name='name', )
         """
-        response = self._raw_client.create_user(name=name, request_options=request_options)
-        return response.data
+        _response = self._raw_client.create_user(name=name, request_options=request_options)
+        return _response.data
 
 
 class AsyncUserClient:
@@ -86,5 +86,5 @@ class AsyncUserClient:
             await client.user.create_user(name='name', )
         asyncio.run(main())
         """
-        response = await self._raw_client.create_user(name=name, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.create_user(name=name, request_options=request_options)
+        return _response.data

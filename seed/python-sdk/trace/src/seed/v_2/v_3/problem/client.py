@@ -46,8 +46,8 @@ class ProblemClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.v_2.v_3.problem.get_lightweight_problems()
         """
-        response = self._raw_client.get_lightweight_problems(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_lightweight_problems(request_options=request_options)
+        return _response.data
 
     def get_problems(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ProblemInfoV2]:
         """
@@ -68,8 +68,8 @@ class ProblemClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.v_2.v_3.problem.get_problems()
         """
-        response = self._raw_client.get_problems(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_problems(request_options=request_options)
+        return _response.data
 
     def get_latest_problem(
         self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
@@ -94,8 +94,8 @@ class ProblemClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.v_2.v_3.problem.get_latest_problem(problem_id='problemId', )
         """
-        response = self._raw_client.get_latest_problem(problem_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_latest_problem(problem_id, request_options=request_options)
+        return _response.data
 
     def get_problem_version(
         self, problem_id: ProblemId, problem_version: int, *, request_options: typing.Optional[RequestOptions] = None
@@ -122,8 +122,8 @@ class ProblemClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.v_2.v_3.problem.get_problem_version(problem_id='problemId', problem_version=1, )
         """
-        response = self._raw_client.get_problem_version(problem_id, problem_version, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_problem_version(problem_id, problem_version, request_options=request_options)
+        return _response.data
 
 
 class AsyncProblemClient:
@@ -165,8 +165,8 @@ class AsyncProblemClient:
             await client.v_2.v_3.problem.get_lightweight_problems()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_lightweight_problems(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_lightweight_problems(request_options=request_options)
+        return _response.data
 
     async def get_problems(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -192,8 +192,8 @@ class AsyncProblemClient:
             await client.v_2.v_3.problem.get_problems()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_problems(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_problems(request_options=request_options)
+        return _response.data
 
     async def get_latest_problem(
         self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
@@ -221,8 +221,8 @@ class AsyncProblemClient:
             await client.v_2.v_3.problem.get_latest_problem(problem_id='problemId', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_latest_problem(problem_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_latest_problem(problem_id, request_options=request_options)
+        return _response.data
 
     async def get_problem_version(
         self, problem_id: ProblemId, problem_version: int, *, request_options: typing.Optional[RequestOptions] = None
@@ -252,7 +252,7 @@ class AsyncProblemClient:
             await client.v_2.v_3.problem.get_problem_version(problem_id='problemId', problem_version=1, )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_problem_version(
+        _response = await self._raw_client.get_problem_version(
             problem_id, problem_version, request_options=request_options
         )
-        return response.data
+        return _response.data

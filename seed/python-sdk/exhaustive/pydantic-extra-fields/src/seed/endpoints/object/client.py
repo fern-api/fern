@@ -95,7 +95,7 @@ class ObjectClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.object.get_and_return_with_optional_field(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         """
-        response = self._raw_client.get_and_return_with_optional_field(
+        _response = self._raw_client.get_and_return_with_optional_field(
             string=string,
             integer=integer,
             long_=long_,
@@ -111,7 +111,7 @@ class ObjectClient:
             bigint=bigint,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def get_and_return_with_required_field(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -134,8 +134,8 @@ class ObjectClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.object.get_and_return_with_required_field(string='string', )
         """
-        response = self._raw_client.get_and_return_with_required_field(string=string, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_with_required_field(string=string, request_options=request_options)
+        return _response.data
 
     def get_and_return_with_map_of_map(
         self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
@@ -158,8 +158,8 @@ class ObjectClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.object.get_and_return_with_map_of_map(map_={'map': {'map': 'map'}}, )
         """
-        response = self._raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
+        return _response.data
 
     def get_and_return_nested_with_optional_field(
         self,
@@ -191,10 +191,10 @@ class ObjectClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.object.get_and_return_nested_with_optional_field(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )
         """
-        response = self._raw_client.get_and_return_nested_with_optional_field(
+        _response = self._raw_client.get_and_return_nested_with_optional_field(
             string=string, nested_object=nested_object, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def get_and_return_nested_with_required_field(
         self,
@@ -229,10 +229,10 @@ class ObjectClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.object.get_and_return_nested_with_required_field(string_='string', string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )
         """
-        response = self._raw_client.get_and_return_nested_with_required_field(
+        _response = self._raw_client.get_and_return_nested_with_required_field(
             string_, string=string, nested_object=nested_object, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def get_and_return_nested_with_required_field_as_list(
         self,
@@ -262,10 +262,10 @@ class ObjectClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.object.get_and_return_nested_with_required_field_as_list(request=[NestedObjectWithRequiredField(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), ), NestedObjectWithRequiredField(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )], )
         """
-        response = self._raw_client.get_and_return_nested_with_required_field_as_list(
+        _response = self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data
 
 
 class AsyncObjectClient:
@@ -349,7 +349,7 @@ class AsyncObjectClient:
             await client.endpoints.object.get_and_return_with_optional_field(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_with_optional_field(
+        _response = await self._raw_client.get_and_return_with_optional_field(
             string=string,
             integer=integer,
             long_=long_,
@@ -365,7 +365,7 @@ class AsyncObjectClient:
             bigint=bigint,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_with_required_field(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -391,10 +391,10 @@ class AsyncObjectClient:
             await client.endpoints.object.get_and_return_with_required_field(string='string', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_with_required_field(
+        _response = await self._raw_client.get_and_return_with_required_field(
             string=string, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_with_map_of_map(
         self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
@@ -420,8 +420,8 @@ class AsyncObjectClient:
             await client.endpoints.object.get_and_return_with_map_of_map(map_={'map': {'map': 'map'}}, )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_with_map_of_map(map_=map_, request_options=request_options)
+        return _response.data
 
     async def get_and_return_nested_with_optional_field(
         self,
@@ -456,10 +456,10 @@ class AsyncObjectClient:
             await client.endpoints.object.get_and_return_nested_with_optional_field(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_nested_with_optional_field(
+        _response = await self._raw_client.get_and_return_nested_with_optional_field(
             string=string, nested_object=nested_object, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_nested_with_required_field(
         self,
@@ -497,10 +497,10 @@ class AsyncObjectClient:
             await client.endpoints.object.get_and_return_nested_with_required_field(string_='string', string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_nested_with_required_field(
+        _response = await self._raw_client.get_and_return_nested_with_required_field(
             string_, string=string, nested_object=nested_object, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_nested_with_required_field_as_list(
         self,
@@ -533,7 +533,7 @@ class AsyncObjectClient:
             await client.endpoints.object.get_and_return_nested_with_required_field_as_list(request=[NestedObjectWithRequiredField(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), ), NestedObjectWithRequiredField(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )], )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
+        _response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data

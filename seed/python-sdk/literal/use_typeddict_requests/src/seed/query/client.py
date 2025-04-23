@@ -61,7 +61,7 @@ class QueryClient:
         client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
         client.query.send(query='What is the weather today', )
         """
-        response = self._raw_client.send(
+        _response = self._raw_client.send(
             query=query,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
@@ -69,7 +69,7 @@ class QueryClient:
             alias_optional_stream=alias_optional_stream,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncQueryClient:
@@ -126,7 +126,7 @@ class AsyncQueryClient:
             await client.query.send(query='What is the weather today', )
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
+        _response = await self._raw_client.send(
             query=query,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
@@ -134,4 +134,4 @@ class AsyncQueryClient:
             alias_optional_stream=alias_optional_stream,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

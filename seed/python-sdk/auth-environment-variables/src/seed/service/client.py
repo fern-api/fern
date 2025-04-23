@@ -42,8 +42,8 @@ class ServiceClient:
         client = SeedAuthEnvironmentVariables(x_another_header="YOUR_X_ANOTHER_HEADER", api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
         client.service.get_with_api_key()
         """
-        response = self._raw_client.get_with_api_key(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_with_api_key(request_options=request_options)
+        return _response.data
 
     def get_with_header(
         self,
@@ -72,10 +72,10 @@ class ServiceClient:
         client = SeedAuthEnvironmentVariables(x_another_header="YOUR_X_ANOTHER_HEADER", api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
         client.service.get_with_header(x_endpoint_header='X-Endpoint-Header', )
         """
-        response = self._raw_client.get_with_header(
+        _response = self._raw_client.get_with_header(
             x_endpoint_header=x_endpoint_header, request_options=request_options
         )
-        return response.data
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -115,8 +115,8 @@ class AsyncServiceClient:
             await client.service.get_with_api_key()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_api_key(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_with_api_key(request_options=request_options)
+        return _response.data
 
     async def get_with_header(
         self,
@@ -148,7 +148,7 @@ class AsyncServiceClient:
             await client.service.get_with_header(x_endpoint_header='X-Endpoint-Header', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_header(
+        _response = await self._raw_client.get_with_header(
             x_endpoint_header=x_endpoint_header, request_options=request_options
         )
-        return response.data
+        return _response.data

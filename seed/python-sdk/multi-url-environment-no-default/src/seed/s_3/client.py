@@ -45,8 +45,8 @@ class S3Client:
         client = SeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
         client.s_3.get_presigned_url(s_3_key='s3Key', )
         """
-        response = self._raw_client.get_presigned_url(s_3_key=s_3_key, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_presigned_url(s_3_key=s_3_key, request_options=request_options)
+        return _response.data
 
 
 class AsyncS3Client:
@@ -87,5 +87,5 @@ class AsyncS3Client:
             await client.s_3.get_presigned_url(s_3_key='s3Key', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_presigned_url(s_3_key=s_3_key, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_presigned_url(s_3_key=s_3_key, request_options=request_options)
+        return _response.data

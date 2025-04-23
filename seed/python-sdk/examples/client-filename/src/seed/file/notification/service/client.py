@@ -45,8 +45,8 @@ class ServiceClient:
         client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
         client.file.notification.service.get_exception(notification_id='notification-hsy129x', )
         """
-        response = self._raw_client.get_exception(notification_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_exception(notification_id, request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -89,5 +89,5 @@ class AsyncServiceClient:
             await client.file.notification.service.get_exception(notification_id='notification-hsy129x', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_exception(notification_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_exception(notification_id, request_options=request_options)
+        return _response.data

@@ -44,10 +44,10 @@ class MigrationClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.migration.get_attempted_migrations(admin_key_header='admin-key-header', )
         """
-        response = self._raw_client.get_attempted_migrations(
+        _response = self._raw_client.get_attempted_migrations(
             admin_key_header=admin_key_header, request_options=request_options
         )
-        return response.data
+        return _response.data
 
 
 class AsyncMigrationClient:
@@ -89,7 +89,7 @@ class AsyncMigrationClient:
             await client.migration.get_attempted_migrations(admin_key_header='admin-key-header', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_attempted_migrations(
+        _response = await self._raw_client.get_attempted_migrations(
             admin_key_header=admin_key_header, request_options=request_options
         )
-        return response.data
+        return _response.data

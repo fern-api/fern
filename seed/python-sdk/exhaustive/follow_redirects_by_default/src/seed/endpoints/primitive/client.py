@@ -46,8 +46,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_string(request='string', )
         """
-        response = self._raw_client.get_and_return_string(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_string(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
@@ -68,8 +68,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_int(request=1, )
         """
-        response = self._raw_client.get_and_return_int(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_int(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_long(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
@@ -90,8 +90,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_long(request=1000000, )
         """
-        response = self._raw_client.get_and_return_long(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_long(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_double(
         self, *, request: float, request_options: typing.Optional[RequestOptions] = None
@@ -114,8 +114,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_double(request=1.1, )
         """
-        response = self._raw_client.get_and_return_double(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_double(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_bool(self, *, request: bool, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -136,8 +136,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_bool(request=True, )
         """
-        response = self._raw_client.get_and_return_bool(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_bool(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_datetime(
         self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
@@ -161,8 +161,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_datetime(request=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )
         """
-        response = self._raw_client.get_and_return_datetime(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_datetime(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_date(
         self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
@@ -186,8 +186,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_date(request=datetime.date.fromisoformat("2023-01-15", ), )
         """
-        response = self._raw_client.get_and_return_date(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_date(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_uuid(
         self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
@@ -211,8 +211,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_uuid(request=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), )
         """
-        response = self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_base_64(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -233,8 +233,8 @@ class PrimitiveClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.primitive.get_and_return_base_64(request='SGVsbG8gd29ybGQh', )
         """
-        response = self._raw_client.get_and_return_base_64(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_base_64(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncPrimitiveClient:
@@ -276,8 +276,8 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_string(request='string', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_string(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_string(request=request, request_options=request_options)
+        return _response.data
 
     async def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
@@ -301,8 +301,8 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_int(request=1, )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_int(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_int(request=request, request_options=request_options)
+        return _response.data
 
     async def get_and_return_long(
         self, *, request: int, request_options: typing.Optional[RequestOptions] = None
@@ -328,8 +328,8 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_long(request=1000000, )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_long(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_long(request=request, request_options=request_options)
+        return _response.data
 
     async def get_and_return_double(
         self, *, request: float, request_options: typing.Optional[RequestOptions] = None
@@ -355,8 +355,8 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_double(request=1.1, )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_double(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_double(request=request, request_options=request_options)
+        return _response.data
 
     async def get_and_return_bool(
         self, *, request: bool, request_options: typing.Optional[RequestOptions] = None
@@ -382,8 +382,8 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_bool(request=True, )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_bool(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_bool(request=request, request_options=request_options)
+        return _response.data
 
     async def get_and_return_datetime(
         self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
@@ -410,8 +410,8 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_datetime(request=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_datetime(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_datetime(request=request, request_options=request_options)
+        return _response.data
 
     async def get_and_return_date(
         self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
@@ -438,8 +438,8 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_date(request=datetime.date.fromisoformat("2023-01-15", ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_date(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_date(request=request, request_options=request_options)
+        return _response.data
 
     async def get_and_return_uuid(
         self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
@@ -466,8 +466,8 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_uuid(request=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
+        return _response.data
 
     async def get_and_return_base_64(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
@@ -493,5 +493,5 @@ class AsyncPrimitiveClient:
             await client.endpoints.primitive.get_and_return_base_64(request='SGVsbG8gd29ybGQh', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_base_64(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_base_64(request=request, request_options=request_options)
+        return _response.data
