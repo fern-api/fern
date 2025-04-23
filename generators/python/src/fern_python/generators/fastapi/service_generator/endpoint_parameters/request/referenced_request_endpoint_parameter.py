@@ -2,7 +2,7 @@ from ....context import FastApiGeneratorContext
 from .request_endpoint_parameter import RequestEndpointParameter
 from fern_python.codegen import AST
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class ReferencedRequestEndpointParameter(RequestEndpointParameter):

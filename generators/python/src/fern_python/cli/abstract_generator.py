@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import os
 import re
-from abc import ABC, abstractmethod
 import textwrap
+from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 from .publisher import Publisher
@@ -11,7 +11,7 @@ from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 from fern.generator_exec import GeneratorConfig, PypiMetadata
 from fern.generator_exec.config import (
     GeneratorPublishConfig,
@@ -53,7 +53,10 @@ class AbstractGenerator(ABC):
             user_defined_toml = generator_config.custom_config.get("pyproject_toml")
 
         exclude_types_from_init_exports = False
-        if generator_config.custom_config is not None and "exclude_types_from_init_exports" in generator_config.custom_config:
+        if (
+            generator_config.custom_config is not None
+            and "exclude_types_from_init_exports" in generator_config.custom_config
+        ):
             exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
 
         with Project(

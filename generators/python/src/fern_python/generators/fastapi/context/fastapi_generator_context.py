@@ -7,7 +7,7 @@ from fern_python.codegen import AST, Filepath
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 from fern.generator_exec import GeneratorConfig
 
 

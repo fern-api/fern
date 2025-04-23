@@ -12,7 +12,7 @@ from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 @dataclass

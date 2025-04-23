@@ -5,7 +5,7 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
-from fern.ir.resources import NameAndWireValue
+from fern.ir.resources import NameAndWireValue  # type: ignore[import-untyped]
 
 
 class FernHTTPExceptionGenerator:

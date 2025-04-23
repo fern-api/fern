@@ -19,7 +19,7 @@ from fern_python.generators.fastapi.service_generator.endpoint_parameters.reques
 )
 from typing_extensions import Never
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class EndpointGenerator:

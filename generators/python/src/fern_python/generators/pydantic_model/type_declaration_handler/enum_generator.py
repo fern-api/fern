@@ -10,7 +10,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract
 )
 from fern_python.snippet import SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 # Note enums are the same for both pydantic models and typeddicts os the generator is not multiplexed

@@ -11,7 +11,7 @@ from fern_python.generators.pydantic_model.custom_config import UnionNamingVersi
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 from ordered_set import OrderedSet
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 from fern.generator_exec import GeneratorConfig
 
 

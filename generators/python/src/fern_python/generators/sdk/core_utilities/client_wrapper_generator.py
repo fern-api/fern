@@ -12,7 +12,7 @@ from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 @dataclass
@@ -463,13 +463,15 @@ class ClientWrapperGenerator:
     ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             params_empty = True
-            for param in constructor_parameters:
-                if param.private_member_name is not None:
-                    writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+            for constructor_param in constructor_parameters:
+                if constructor_param.private_member_name is not None:
+                    writer.write_line(
+                        f"self.{constructor_param.private_member_name} = {constructor_param.constructor_parameter_name}"
+                    )
                     params_empty = False
-            for param in literal_headers:
+            for literal_header in literal_headers:
                 writer.write_line(
-                    f"self.{param.private_member_name} = {param.constructor_parameter_name}"
+                    f"self.{literal_header.private_member_name} = {literal_header.constructor_parameter_name}"
                 )
                 params_empty = False
             if params_empty:

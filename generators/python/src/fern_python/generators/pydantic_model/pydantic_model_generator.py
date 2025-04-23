@@ -18,7 +18,7 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 from fern.generator_exec.config import GeneratorConfig
 
 

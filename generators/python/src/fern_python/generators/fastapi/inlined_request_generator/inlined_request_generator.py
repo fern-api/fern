@@ -6,7 +6,7 @@ from ...pydantic_model.type_declaration_handler.pydantic_models.pydantic_model_o
 from ..context import FastApiGeneratorContext
 from fern_python.codegen import SourceFile
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class InlinedRequestGenerator:

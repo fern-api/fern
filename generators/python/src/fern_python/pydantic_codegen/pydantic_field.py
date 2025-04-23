@@ -3,7 +3,7 @@ from typing import Optional
 
 from fern_python.codegen import AST
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 @dataclass(frozen=True)

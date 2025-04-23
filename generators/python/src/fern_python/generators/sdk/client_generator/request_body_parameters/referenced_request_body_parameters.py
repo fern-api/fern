@@ -10,7 +10,7 @@ from fern_python.codegen.ast.nodes.declarations.function.named_function_paramete
 )
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
@@ -73,7 +73,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                 property_name = self._get_property_name(property)
                 if names_to_deconflict is not None and property_name in names_to_deconflict:
                     maybe_body_name = self.get_body_name()
-                    property_name = f'{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else "request")}_{property_name}'
+                    property_name = f"{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else 'request')}_{property_name}"
 
                 self.parameter_name_rewrites[property.name.name] = property_name
                 parameters.append(

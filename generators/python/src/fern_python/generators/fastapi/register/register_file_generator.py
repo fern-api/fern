@@ -4,7 +4,7 @@ from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI, Starlette
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 FAST_API_REGISTRATION_ARGS = [("dependencies", AST.TypeHint.optional(AST.TypeHint.sequence(FastAPI.DependsType)))]
 

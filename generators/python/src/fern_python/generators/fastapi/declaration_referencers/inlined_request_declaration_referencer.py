@@ -4,7 +4,7 @@ from .fastapi_declaration_referencer import FastApiDeclarationReferencer
 from .service_declaration_referencer import ServiceDeclarationReferencer
 from fern_python.codegen import ExportStrategy, Filepath
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 @dataclass(frozen=True)

@@ -4,7 +4,7 @@ from ...context.sdk_generator_context import SdkGeneratorContext
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from fern_python.codegen import AST
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class BytesRequestBodyParameters(AbstractRequestBodyParameters):

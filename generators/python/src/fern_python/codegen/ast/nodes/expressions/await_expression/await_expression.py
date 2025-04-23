@@ -8,10 +8,12 @@ from ..expression import Expression
 
 
 class AwaitExpression(Expression):
+    expression: Expression
+
     def __init__(
         self,
         expression: Union[Expression, AstNode, Reference, str],
-    ):
+    ) -> None:
         self.expression = Expression(expression) if isinstance(expression, (AstNode, Reference, str)) else expression
 
     def get_metadata(self) -> AstNodeMetadata:

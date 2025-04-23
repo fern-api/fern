@@ -46,7 +46,7 @@ from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import build_snippet_writer
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
 from fern.generator_exec.config import GeneratorConfig
 

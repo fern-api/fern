@@ -23,7 +23,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 @dataclass
@@ -319,7 +319,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             else self._context.get_class_name_for_generated_raw_root_client()
         )
 
-    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
         return (
             self._context.get_async_raw_client_class_reference_for_root_client()
             if is_async
@@ -826,11 +826,11 @@ class RootClientGenerator(BaseWrappedClientGenerator):
         constructor_info = client_wrapper_generator._get_constructor_info(
             exclude_auth=exclude_auth if exclude_auth else use_oauth_token_provider
         )
-        for wrapper_param in constructor_info.constructor_parameters:
+        for constructor_param in constructor_info.constructor_parameters:
             client_wrapper_constructor_kwargs.append(
                 (
-                    wrapper_param.constructor_parameter_name,
-                    AST.Expression(wrapper_param.constructor_parameter_name),
+                    constructor_param.constructor_parameter_name,
+                    AST.Expression(constructor_param.constructor_parameter_name),
                 )
             )
 
@@ -926,7 +926,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
         for wrapper_param in constructor_info.literal_headers:
             client_wrapper_constructor_kwargs.append(
                 (
-                    wrapper_param.header.name.name.snake_case.safe_name,
+                    wrapper_param.header.name.name.snake_case.safe_name,  # type: ignore[attr-defined]
                     AST.Expression(wrapper_param.header.name.name.snake_case.safe_name),
                 )
             )

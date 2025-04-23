@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from fern.ir import IntermediateRepresentation
+from fern.ir import IntermediateRepresentation  # type: ignore[import-untyped]
 
 
 def test_ir_deserialization() -> None:

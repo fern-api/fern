@@ -4,7 +4,7 @@ from ...expressions import Expression
 from ...type_hint import TypeHint
 from .function_parameter import FunctionParameter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class NamedFunctionParameter(FunctionParameter):

@@ -2,7 +2,7 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from .generated_environment import GeneratedEnvironment
 from fern_python.codegen import AST, SourceFile
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class MultipleBaseUrlsEnvironmentGenerator:

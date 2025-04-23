@@ -3,7 +3,7 @@ from typing import Callable, Generic, Optional, Tuple, TypeVar
 
 from fern_python.codegen import AST, ExportStrategy, Filepath
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 T = TypeVar("T")
 

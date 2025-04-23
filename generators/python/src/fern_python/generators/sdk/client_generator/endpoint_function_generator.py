@@ -40,7 +40,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
 )
 from fern_python.snippet import SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -1558,7 +1558,7 @@ class EndpointFunctionGenerator:
             if is_streaming_endpoint(self._endpoint):
                 response_alias = "r"
                 if self._is_async:
-                    body = [
+                    body: list[AST.AstNode] = [
                         AST.ForStatement(
                             target=data_attribute,
                             iterable=AST.Expression(f"{response_alias}.{data_attribute}"),

@@ -13,7 +13,7 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class ReadmeSnippetBuilder:

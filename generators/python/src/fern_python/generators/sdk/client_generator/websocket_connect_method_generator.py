@@ -18,7 +18,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url_property_name,
 )
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [

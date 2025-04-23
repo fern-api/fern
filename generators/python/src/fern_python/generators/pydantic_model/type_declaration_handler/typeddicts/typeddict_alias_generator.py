@@ -6,7 +6,7 @@ from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenera
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet import SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class TypedDictAliasGenerator(AbstractAliasGenerator):

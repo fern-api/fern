@@ -5,7 +5,7 @@ from ..endpoint_parameter import EndpointParameter
 from fern_python.codegen import AST
 from fern_python.external_dependencies.fastapi import FastAPI
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class FileUploadRequestFileParameter(EndpointParameter):

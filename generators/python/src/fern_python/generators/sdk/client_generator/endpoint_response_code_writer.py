@@ -17,7 +17,7 @@ from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class EndpointResponseCodeWriter:
@@ -134,7 +134,7 @@ class EndpointResponseCodeWriter:
                 ]
             )
         else:
-            body = []
+            body = list[AST.AstNode]()
             if stream_response_union.type == "json" and stream_response_union.terminator is not None:
                 body.append(
                     AST.ConditionalTree(

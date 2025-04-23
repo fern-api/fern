@@ -4,7 +4,7 @@ from typing import List, Optional
 from fern_python.codegen import AST
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 # Duplicative of snippets,

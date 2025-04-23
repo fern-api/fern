@@ -58,7 +58,7 @@ from fern_python.generators.sdk.context.sdk_generator_context import SdkGenerato
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.snippet.template_utils import TEMPLATE_SENTINEL
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 
 
@@ -933,6 +933,7 @@ class SnippetTemplateFactory:
             return "PATCH"
         if method is ir_types.HttpMethod.DELETE:
             return "DELETE"
+        raise ValueError(f"Unknown HTTP method: {method}")
 
     def generate_templates(self) -> List[SnippetRegistryEntry]:
         snippet_templates: List[SnippetRegistryEntry] = []

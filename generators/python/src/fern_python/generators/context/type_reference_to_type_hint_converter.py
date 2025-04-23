@@ -4,7 +4,7 @@ from .pydantic_generator_context import PydanticGeneratorContext
 from fern_python.codegen import AST
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class TypeReferenceToTypeHintConverter:

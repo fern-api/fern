@@ -9,7 +9,7 @@ from ..undiscriminated_union_generator import (
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class TypeddictUndiscriminatedUnionGenerator(AbstractUndiscriminatedUnionGenerator):

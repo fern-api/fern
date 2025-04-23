@@ -3,7 +3,7 @@ import sys
 from .abstract_generator import AbstractGenerator
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 from fern.generator_exec.config import GeneratorConfig
 from fern.generator_exec.logging import (
     ErrorExitStatusUpdate,

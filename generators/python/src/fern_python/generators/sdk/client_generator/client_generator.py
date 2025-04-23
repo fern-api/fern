@@ -61,7 +61,7 @@ class ClientGenerator(BaseWrappedClientGenerator):
             else self._context.get_raw_client_class_name_for_subpackage_service(self._subpackage_id)
         )
 
-    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
         return (
             self._context.get_async_raw_client_class_reference_for_subpackage_service(self._subpackage_id)
             if is_async

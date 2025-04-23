@@ -17,7 +17,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.type_utiliti
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from typing_extensions import Never
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
 BUILDER_ARGUMENT_NAME = "value"

@@ -4,7 +4,7 @@ from ...context import FastApiGeneratorContext
 from fern_python.codegen import AST
 from typing_extensions import assert_never
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 def convert_to_singular_type(context: FastApiGeneratorContext, type: ir_types.TypeReference) -> AST.TypeHint:

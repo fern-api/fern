@@ -9,7 +9,7 @@ from .abc.abstract_type_snippet_generator import AbstractTypeSnippetGenerator
 from fern_python.codegen import SourceFile
 from fern_python.snippet import SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 @dataclass

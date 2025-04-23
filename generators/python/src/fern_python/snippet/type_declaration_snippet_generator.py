@@ -2,7 +2,7 @@ from typing import Callable, Optional
 
 from fern_python.codegen import AST
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 AliasSnippetGenerator = Callable[[ir_types.ExampleAliasType], Optional[AST.Expression]]
 EnumSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleEnumType], AST.Expression]

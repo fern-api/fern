@@ -1,6 +1,6 @@
 from typing import Dict
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 def can_tr_be_fern_model(tr: ir_types.TypeReference, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]) -> bool:

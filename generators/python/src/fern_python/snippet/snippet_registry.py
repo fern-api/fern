@@ -7,7 +7,7 @@ from fern_python.source_file_factory import SourceFileFactory
 from typing_extensions import assert_never
 
 import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class SnippetRegistry:

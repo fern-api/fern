@@ -1,4 +1,4 @@
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 def declared_type_name_to_named_type(declared_type_name: ir_types.DeclaredTypeName) -> ir_types.NamedType:

@@ -20,7 +20,7 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
 import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 README_FILENAME = "README.md"
 REFERENCE_FILENAME = "reference.md"

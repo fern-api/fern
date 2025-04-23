@@ -1,4 +1,4 @@
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 def request_property_to_name(request_property: ir_types.RequestPropertyValue) -> str:

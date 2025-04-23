@@ -17,7 +17,7 @@ from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnionGenerator):

@@ -11,7 +11,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract
 )
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 @dataclass(frozen=True)

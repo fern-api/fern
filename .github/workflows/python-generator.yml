@@ -19,6 +19,9 @@ jobs:
         uses: snok/install-poetry@v1
         with:
           version: 1.8.5
+      
+      - name: Clear Poetry virtualenv IR directory
+        run: rm -rf /home/runner/.cache/pypoetry/virtualenvs/
 
       - name: Install Dependencies
         working-directory: ./generators/python

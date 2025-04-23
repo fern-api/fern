@@ -21,7 +21,7 @@ from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
 from fern_python.utils import pascal_case
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 from fern.generator_exec import GeneratorConfig
 
 

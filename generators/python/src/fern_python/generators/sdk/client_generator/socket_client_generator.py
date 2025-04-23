@@ -11,7 +11,7 @@ from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.websockets import Websockets
 from fern_python.utils import snake_case
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 @dataclass

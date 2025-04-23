@@ -14,7 +14,7 @@ from fern_python.external_dependencies.typing_extensions import (
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet.snippet_writer import SnippetWriter
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 TYPING_EXTENSIONS_MODULE = AST.Module.external(
     module_path=("typing_extensions",),

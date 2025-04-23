@@ -28,7 +28,7 @@ from fern_python.generators.sdk.environment_generators.single_base_url_environme
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class SnippetTestFactory:

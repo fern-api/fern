@@ -14,7 +14,7 @@ from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class FernAwarePydanticModel:

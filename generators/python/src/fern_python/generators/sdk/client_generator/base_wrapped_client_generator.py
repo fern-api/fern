@@ -1,13 +1,23 @@
+from abc import abstractmethod
+
 from .base_client_generator import BaseClientGenerator
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient
 from fern_python.codegen import AST
 
-import fern.ir.resources as ir_types
+import fern.ir.resources as ir_types  # type: ignore[import-untyped]
 
 
 class BaseWrappedClientGenerator(BaseClientGenerator):
     """Base class for client generators that wrap a raw client."""
+
+    @abstractmethod
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
+        """Get the reference to the raw client class."""
+
+    @abstractmethod
+    def get_raw_client_class_name(self, *, is_async: bool) -> str:
+        """Get the name of the raw client class."""
 
     def _create_with_raw_response_method(self, *, is_async: bool) -> AST.FunctionDeclaration:
         """Create a method that returns the raw client for more control over the response."""
