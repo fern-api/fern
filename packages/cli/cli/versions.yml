@@ -79,6 +79,13 @@
   
 - changelogEntry:
   - summary: |
+      Local development mode for app router is available in alpha for `fern`. 
+    type: feat
+  irVersion: 57
+  version: 0.58.0-rc1
+  
+- changelogEntry:
+  - summary: |
       Local development mode for app router is available in alpha for `fern-dev`. 
     type: feat
   irVersion: 57
