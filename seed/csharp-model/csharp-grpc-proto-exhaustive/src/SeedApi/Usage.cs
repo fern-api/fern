@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
 
@@ -17,28 +17,33 @@ public record Usage
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Returns a new Usage type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static Usage FromProto(ProtoDataV1Grpc.Usage value) {
-        return new Usage{Units = value.Units};
+    internal static Usage FromProto(ProtoDataV1Grpc.Usage value)
+    {
+        return new Usage { Units = value.Units };
     }
 
     /// <summary>
     /// Maps the Usage type into its Protobuf-equivalent representation.
     /// </summary>
-    internal ProtoDataV1Grpc.Usage ToProto() {
+    internal ProtoDataV1Grpc.Usage ToProto()
+    {
         var result = new ProtoDataV1Grpc.Usage();
-        if (Units != null) {
+        if (Units != null)
+        {
             result.Units = Units ?? 0;
         }
         return result;
     }
 
     /// <inheritdoc />
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

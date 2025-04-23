@@ -3,10 +3,9 @@ namespace SeedSingleUrlEnvironmentDefault;
 /// <summary>
 /// File parameter for uploading files.
 /// </summary>
-public record FileParameter :
-    IDisposable
+public record FileParameter : IDisposable
 #if NET6_0_OR_GREATER
-    , IAsyncDisposable
+        , IAsyncDisposable
 #endif
 {
     private bool _disposed;
@@ -36,7 +35,8 @@ public record FileParameter :
     /// <inheritdoc cref="Dispose()" />
     protected virtual void Dispose(bool disposing)
     {
-        if (_disposed) return;
+        if (_disposed)
+            return;
         if (disposing)
         {
             Stream.Dispose();
