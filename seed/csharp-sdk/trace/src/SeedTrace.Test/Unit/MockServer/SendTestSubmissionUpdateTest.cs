@@ -32,20 +32,19 @@ public class SendTestSubmissionUpdateTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Admin.SendTestSubmissionUpdateAsync(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    new TestSubmissionUpdate
-                    {
-                        UpdateTime = DateTime.Parse(
-                            "2024-01-15T09:30:00.000Z",
-                            null,
-                            DateTimeStyles.AdjustToUniversal
-                        ),
-                        UpdateInfo = RunningSubmissionState.QueueingSubmission,
-                    }
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Admin.SendTestSubmissionUpdateAsync(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                new TestSubmissionUpdate
+                {
+                    UpdateTime = DateTime.Parse(
+                        "2024-01-15T09:30:00.000Z",
+                        null,
+                        DateTimeStyles.AdjustToUniversal
+                    ),
+                    UpdateInfo = RunningSubmissionState.QueueingSubmission,
+                }
+            )
         );
     }
 }

@@ -25,9 +25,8 @@ public class BootInstanceTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" })
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" })
         );
     }
 }
