@@ -90,7 +90,7 @@ class ContentTypeClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.content_type.post_json_patch_content_type(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         """
-        response = self._raw_client.post_json_patch_content_type(
+        _response = self._raw_client.post_json_patch_content_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -106,7 +106,7 @@ class ContentTypeClient:
             bigint=bigint,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def post_json_patch_content_with_charset_type(
         self,
@@ -171,7 +171,7 @@ class ContentTypeClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.content_type.post_json_patch_content_with_charset_type(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         """
-        response = self._raw_client.post_json_patch_content_with_charset_type(
+        _response = self._raw_client.post_json_patch_content_with_charset_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -187,7 +187,7 @@ class ContentTypeClient:
             bigint=bigint,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncContentTypeClient:
@@ -271,7 +271,7 @@ class AsyncContentTypeClient:
             await client.endpoints.content_type.post_json_patch_content_type(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         asyncio.run(main())
         """
-        response = await self._raw_client.post_json_patch_content_type(
+        _response = await self._raw_client.post_json_patch_content_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -287,7 +287,7 @@ class AsyncContentTypeClient:
             bigint=bigint,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def post_json_patch_content_with_charset_type(
         self,
@@ -355,7 +355,7 @@ class AsyncContentTypeClient:
             await client.endpoints.content_type.post_json_patch_content_with_charset_type(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         asyncio.run(main())
         """
-        response = await self._raw_client.post_json_patch_content_with_charset_type(
+        _response = await self._raw_client.post_json_patch_content_with_charset_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -371,4 +371,4 @@ class AsyncContentTypeClient:
             bigint=bigint,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

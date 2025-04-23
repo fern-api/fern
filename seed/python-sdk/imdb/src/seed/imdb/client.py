@@ -52,8 +52,8 @@ class ImdbClient:
         client = SeedApi(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.imdb.create_movie(title='title', rating=1.1, )
         """
-        response = self._raw_client.create_movie(title=title, rating=rating, request_options=request_options)
-        return response.data
+        _response = self._raw_client.create_movie(title=title, rating=rating, request_options=request_options)
+        return _response.data
 
     def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
@@ -74,8 +74,8 @@ class ImdbClient:
         client = SeedApi(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.imdb.get_movie(movie_id='movieId', )
         """
-        response = self._raw_client.get_movie(movie_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_movie(movie_id, request_options=request_options)
+        return _response.data
 
 
 class AsyncImdbClient:
@@ -121,8 +121,8 @@ class AsyncImdbClient:
             await client.imdb.create_movie(title='title', rating=1.1, )
         asyncio.run(main())
         """
-        response = await self._raw_client.create_movie(title=title, rating=rating, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.create_movie(title=title, rating=rating, request_options=request_options)
+        return _response.data
 
     async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
@@ -146,5 +146,5 @@ class AsyncImdbClient:
             await client.imdb.get_movie(movie_id='movieId', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie(movie_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_movie(movie_id, request_options=request_options)
+        return _response.data

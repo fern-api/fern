@@ -103,10 +103,10 @@ class SeedValidation:
         client = SeedValidation(base_url="https://yourhost.com/path/to/api", )
         client.create(decimal=2.2, even=100, name='foo', shape="SQUARE", )
         """
-        response = self._raw_client.create(
+        _response = self._raw_client.create(
             decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def get(
         self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
@@ -133,8 +133,8 @@ class SeedValidation:
         client = SeedValidation(base_url="https://yourhost.com/path/to/api", )
         client.get(decimal=2.2, even=100, name='foo', )
         """
-        response = self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
+        return _response.data
 
 
 class AsyncSeedValidation:
@@ -230,10 +230,10 @@ class AsyncSeedValidation:
             await client.create(decimal=2.2, even=100, name='foo', shape="SQUARE", )
         asyncio.run(main())
         """
-        response = await self._raw_client.create(
+        _response = await self._raw_client.create(
             decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get(
         self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
@@ -263,5 +263,5 @@ class AsyncSeedValidation:
             await client.get(decimal=2.2, even=100, name='foo', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
+        return _response.data

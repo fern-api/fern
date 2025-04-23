@@ -48,8 +48,8 @@ class SubmissionClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.submission.create_execution_session(language="JAVA", )
         """
-        response = self._raw_client.create_execution_session(language, request_options=request_options)
-        return response.data
+        _response = self._raw_client.create_execution_session(language, request_options=request_options)
+        return _response.data
 
     def get_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -74,8 +74,8 @@ class SubmissionClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.submission.get_execution_session(session_id='sessionId', )
         """
-        response = self._raw_client.get_execution_session(session_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_execution_session(session_id, request_options=request_options)
+        return _response.data
 
     def stop_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -100,8 +100,8 @@ class SubmissionClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.submission.stop_execution_session(session_id='sessionId', )
         """
-        response = self._raw_client.stop_execution_session(session_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.stop_execution_session(session_id, request_options=request_options)
+        return _response.data
 
     def get_execution_sessions_state(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -122,8 +122,8 @@ class SubmissionClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.submission.get_execution_sessions_state()
         """
-        response = self._raw_client.get_execution_sessions_state(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_execution_sessions_state(request_options=request_options)
+        return _response.data
 
 
 class AsyncSubmissionClient:
@@ -167,8 +167,8 @@ class AsyncSubmissionClient:
             await client.submission.create_execution_session(language="JAVA", )
         asyncio.run(main())
         """
-        response = await self._raw_client.create_execution_session(language, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.create_execution_session(language, request_options=request_options)
+        return _response.data
 
     async def get_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -196,8 +196,8 @@ class AsyncSubmissionClient:
             await client.submission.get_execution_session(session_id='sessionId', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_execution_session(session_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_execution_session(session_id, request_options=request_options)
+        return _response.data
 
     async def stop_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -225,8 +225,8 @@ class AsyncSubmissionClient:
             await client.submission.stop_execution_session(session_id='sessionId', )
         asyncio.run(main())
         """
-        response = await self._raw_client.stop_execution_session(session_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.stop_execution_session(session_id, request_options=request_options)
+        return _response.data
 
     async def get_execution_sessions_state(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -250,5 +250,5 @@ class AsyncSubmissionClient:
             await client.submission.get_execution_sessions_state()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_execution_sessions_state(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_execution_sessions_state(request_options=request_options)
+        return _response.data

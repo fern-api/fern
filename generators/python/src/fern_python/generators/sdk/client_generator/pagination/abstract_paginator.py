@@ -2,6 +2,7 @@ from abc import abstractmethod
 from typing import List, Optional
 
 from fern_python.codegen import AST
+from fern_python.generators.sdk.client_generator.constants import RESPONSE_VARIABLE
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
 import fern.ir.resources as ir_types
@@ -33,7 +34,6 @@ class Paginator:
     PAGINATION_GET_NEXT_VARIABLE = "_get_next"
     PAGINATION_HAS_NEXT_VARIABLE = "_has_next"
     PAGINATION_ITEMS_VARIABLE = "_items"
-    RESPONSE_VARIABLE = "_response"
 
     def __init__(
         self,
@@ -140,7 +140,7 @@ class Paginator:
                         ),
                     ),
                     kwargs=[
-                        ("response", AST.Expression("_response")),
+                        ("response", AST.Expression(RESPONSE_VARIABLE)),
                         ("data", paginator_expr),
                     ],
                 )

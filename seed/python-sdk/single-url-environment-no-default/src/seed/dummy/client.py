@@ -40,8 +40,8 @@ class DummyClient:
         client = SeedSingleUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
         client.dummy.get_dummy()
         """
-        response = self._raw_client.get_dummy(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_dummy(request_options=request_options)
+        return _response.data
 
 
 class AsyncDummyClient:
@@ -80,5 +80,5 @@ class AsyncDummyClient:
             await client.dummy.get_dummy()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_dummy(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_dummy(request_options=request_options)
+        return _response.data

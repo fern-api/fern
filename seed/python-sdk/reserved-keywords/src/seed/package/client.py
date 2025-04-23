@@ -41,8 +41,8 @@ class PackageClient:
         client = SeedNurseryApi(base_url="https://yourhost.com/path/to/api", )
         client.package.test(for_='for', )
         """
-        response = self._raw_client.test(for_=for_, request_options=request_options)
-        return response.data
+        _response = self._raw_client.test(for_=for_, request_options=request_options)
+        return _response.data
 
 
 class AsyncPackageClient:
@@ -82,5 +82,5 @@ class AsyncPackageClient:
             await client.package.test(for_='for', )
         asyncio.run(main())
         """
-        response = await self._raw_client.test(for_=for_, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.test(for_=for_, request_options=request_options)
+        return _response.data

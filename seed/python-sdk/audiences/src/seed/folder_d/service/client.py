@@ -41,8 +41,8 @@ class ServiceClient:
         client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
         client.folder_d.service.get_direct_thread()
         """
-        response = self._raw_client.get_direct_thread(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_direct_thread(request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -81,5 +81,5 @@ class AsyncServiceClient:
             await client.folder_d.service.get_direct_thread()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_direct_thread(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_direct_thread(request_options=request_options)
+        return _response.data

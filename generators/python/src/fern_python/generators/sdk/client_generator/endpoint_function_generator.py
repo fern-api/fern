@@ -15,6 +15,7 @@ from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
+from fern_python.generators.sdk.client_generator.constants import RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -605,7 +606,7 @@ class EndpointFunctionGenerator:
                     request_body=json_request_body_var,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=files,
-                    response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
+                    response_variable_name=RESPONSE_VARIABLE,
                     request_options_variable_name=request_options_variable_name,
                     headers=self._get_headers_for_endpoint(
                         service=service,
@@ -1556,41 +1557,40 @@ class EndpointFunctionGenerator:
             )
             data_attribute = "data"
             if is_streaming_endpoint(self._endpoint):
-                response_alias = "r"
+                response_variable = "r"
                 if self._is_async:
                     body = [
                         AST.ForStatement(
                             target=data_attribute,
-                            iterable=AST.Expression(f"{response_alias}.{data_attribute}"),
+                            iterable=AST.Expression(f"{response_variable}.{data_attribute}"),
                             is_async=True,
                             body=[AST.YieldStatement(AST.Expression(data_attribute))],
                         )
                     ]
                 else:
                     body = [
-                        AST.YieldStatement(AST.Expression(f"{response_alias}.{data_attribute}"), is_yield_from=True)
+                        AST.YieldStatement(AST.Expression(f"{response_variable}.{data_attribute}"), is_yield_from=True)
                     ]
 
                 writer.write_node(
                     AST.WithStatement(
                         context_managers=[
-                            AST.WithContextManager(expression=func_invocation_expr, as_variable=response_alias)
+                            AST.WithContextManager(expression=func_invocation_expr, as_variable=response_variable)
                         ],
                         body=body,
                         is_async=self._is_async,
                     )
                 )
             else:
-                response_alias = "response"
                 writer.write_node(
                     AST.VariableDeclaration(
-                        name=response_alias,
+                        name=RESPONSE_VARIABLE,
                         initializer=(
                             AST.AwaitExpression(func_invocation_expr) if self._is_async else func_invocation_expr
                         ),
                     )
                 )
-                writer.write_node(AST.ReturnStatement(f"{response_alias}.{data_attribute}"))
+                writer.write_node(AST.ReturnStatement(f"{RESPONSE_VARIABLE}.{data_attribute}"))
 
         return AST.FunctionDeclaration(
             name=get_endpoint_name(self._endpoint),

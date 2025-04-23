@@ -41,8 +41,8 @@ class PropertyBasedErrorClient:
         client = SeedErrorProperty(base_url="https://yourhost.com/path/to/api", )
         client.property_based_error.throw_error()
         """
-        response = self._raw_client.throw_error(request_options=request_options)
-        return response.data
+        _response = self._raw_client.throw_error(request_options=request_options)
+        return _response.data
 
 
 class AsyncPropertyBasedErrorClient:
@@ -82,5 +82,5 @@ class AsyncPropertyBasedErrorClient:
             await client.property_based_error.throw_error()
         asyncio.run(main())
         """
-        response = await self._raw_client.throw_error(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.throw_error(request_options=request_options)
+        return _response.data

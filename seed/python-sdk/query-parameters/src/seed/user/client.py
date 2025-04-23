@@ -93,7 +93,7 @@ class UserClient:
         client = SeedQueryParameters(base_url="https://yourhost.com/path/to/api", )
         client.user.get_username(limit=1, id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), date=datetime.date.fromisoformat("2023-01-15", ), deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), bytes='SGVsbG8gd29ybGQh', user=User(name='name', tags=['tags', 'tags'], ), user_list=[User(name='name', tags=['tags', 'tags'], ), User(name='name', tags=['tags', 'tags'], )], optional_deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), key_value={'keyValue': 'keyValue'}, optional_string='optionalString', nested_user=NestedUser(name='name', user=User(name='name', tags=['tags', 'tags'], ), ), optional_user=User(name='name', tags=['tags', 'tags'], ), exclude_user=User(name='name', tags=['tags', 'tags'], ), filter='filter', )
         """
-        response = self._raw_client.get_username(
+        _response = self._raw_client.get_username(
             limit=limit,
             id=id,
             date=date,
@@ -110,7 +110,7 @@ class UserClient:
             optional_user=optional_user,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncUserClient:
@@ -198,7 +198,7 @@ class AsyncUserClient:
             await client.user.get_username(limit=1, id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), date=datetime.date.fromisoformat("2023-01-15", ), deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), bytes='SGVsbG8gd29ybGQh', user=User(name='name', tags=['tags', 'tags'], ), user_list=[User(name='name', tags=['tags', 'tags'], ), User(name='name', tags=['tags', 'tags'], )], optional_deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), key_value={'keyValue': 'keyValue'}, optional_string='optionalString', nested_user=NestedUser(name='name', user=User(name='name', tags=['tags', 'tags'], ), ), optional_user=User(name='name', tags=['tags', 'tags'], ), exclude_user=User(name='name', tags=['tags', 'tags'], ), filter='filter', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_username(
+        _response = await self._raw_client.get_username(
             limit=limit,
             id=id,
             date=date,
@@ -215,4 +215,4 @@ class AsyncUserClient:
             optional_user=optional_user,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

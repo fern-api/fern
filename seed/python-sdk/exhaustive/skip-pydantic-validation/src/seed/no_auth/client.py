@@ -49,8 +49,8 @@ class NoAuthClient:
         client.no_auth.post_with_no_auth(request={'key': 'value'}
         , )
         """
-        response = self._raw_client.post_with_no_auth(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.post_with_no_auth(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncNoAuthClient:
@@ -95,5 +95,5 @@ class AsyncNoAuthClient:
             , )
         asyncio.run(main())
         """
-        response = await self._raw_client.post_with_no_auth(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.post_with_no_auth(request=request, request_options=request_options)
+        return _response.data

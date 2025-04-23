@@ -60,14 +60,14 @@ class PaymentClient:
         client = SeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.payment.create(amount=1, currency="USD", )
         """
-        response = self._raw_client.create(
+        _response = self._raw_client.create(
             amount=amount,
             currency=currency,
             idempotency_key=idempotency_key,
             idempotency_expiration=idempotency_expiration,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -88,8 +88,8 @@ class PaymentClient:
         client = SeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.payment.delete(payment_id='paymentId', )
         """
-        response = self._raw_client.delete(payment_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.delete(payment_id, request_options=request_options)
+        return _response.data
 
 
 class AsyncPaymentClient:
@@ -143,14 +143,14 @@ class AsyncPaymentClient:
             await client.payment.create(amount=1, currency="USD", )
         asyncio.run(main())
         """
-        response = await self._raw_client.create(
+        _response = await self._raw_client.create(
             amount=amount,
             currency=currency,
             idempotency_key=idempotency_key,
             idempotency_expiration=idempotency_expiration,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -174,5 +174,5 @@ class AsyncPaymentClient:
             await client.payment.delete(payment_id='paymentId', )
         asyncio.run(main())
         """
-        response = await self._raw_client.delete(payment_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.delete(payment_id, request_options=request_options)
+        return _response.data

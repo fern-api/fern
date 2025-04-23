@@ -71,8 +71,8 @@ class DummyClient:
         client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
         client.dummy.generate(num_events=5, )
         """
-        response = self._raw_client.generate(num_events=num_events, request_options=request_options)
-        return response.data
+        _response = self._raw_client.generate(num_events=num_events, request_options=request_options)
+        return _response.data
 
 
 class AsyncDummyClient:
@@ -144,5 +144,5 @@ class AsyncDummyClient:
             await client.dummy.generate(num_events=5, )
         asyncio.run(main())
         """
-        response = await self._raw_client.generate(num_events=num_events, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.generate(num_events=num_events, request_options=request_options)
+        return _response.data

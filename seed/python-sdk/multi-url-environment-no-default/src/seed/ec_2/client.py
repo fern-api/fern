@@ -45,8 +45,8 @@ class Ec2Client:
         client = SeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
         client.ec_2.boot_instance(size='size', )
         """
-        response = self._raw_client.boot_instance(size=size, request_options=request_options)
-        return response.data
+        _response = self._raw_client.boot_instance(size=size, request_options=request_options)
+        return _response.data
 
 
 class AsyncEc2Client:
@@ -87,5 +87,5 @@ class AsyncEc2Client:
             await client.ec_2.boot_instance(size='size', )
         asyncio.run(main())
         """
-        response = await self._raw_client.boot_instance(size=size, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.boot_instance(size=size, request_options=request_options)
+        return _response.data

@@ -47,8 +47,8 @@ class HttpMethodsClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.http_methods.test_get(id='id', )
         """
-        response = self._raw_client.test_get(id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.test_get(id, request_options=request_options)
+        return _response.data
 
     def test_post(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -71,8 +71,8 @@ class HttpMethodsClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.http_methods.test_post(string='string', )
         """
-        response = self._raw_client.test_post(string=string, request_options=request_options)
-        return response.data
+        _response = self._raw_client.test_post(string=string, request_options=request_options)
+        return _response.data
 
     def test_put(
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -97,8 +97,8 @@ class HttpMethodsClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.http_methods.test_put(id='id', string='string', )
         """
-        response = self._raw_client.test_put(id, string=string, request_options=request_options)
-        return response.data
+        _response = self._raw_client.test_put(id, string=string, request_options=request_options)
+        return _response.data
 
     def test_patch(
         self,
@@ -166,7 +166,7 @@ class HttpMethodsClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.http_methods.test_patch(id='id', string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         """
-        response = self._raw_client.test_patch(
+        _response = self._raw_client.test_patch(
             id,
             string=string,
             integer=integer,
@@ -183,7 +183,7 @@ class HttpMethodsClient:
             bigint=bigint,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -204,8 +204,8 @@ class HttpMethodsClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.http_methods.test_delete(id='id', )
         """
-        response = self._raw_client.test_delete(id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.test_delete(id, request_options=request_options)
+        return _response.data
 
 
 class AsyncHttpMethodsClient:
@@ -245,8 +245,8 @@ class AsyncHttpMethodsClient:
             await client.endpoints.http_methods.test_get(id='id', )
         asyncio.run(main())
         """
-        response = await self._raw_client.test_get(id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.test_get(id, request_options=request_options)
+        return _response.data
 
     async def test_post(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -272,8 +272,8 @@ class AsyncHttpMethodsClient:
             await client.endpoints.http_methods.test_post(string='string', )
         asyncio.run(main())
         """
-        response = await self._raw_client.test_post(string=string, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.test_post(string=string, request_options=request_options)
+        return _response.data
 
     async def test_put(
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -301,8 +301,8 @@ class AsyncHttpMethodsClient:
             await client.endpoints.http_methods.test_put(id='id', string='string', )
         asyncio.run(main())
         """
-        response = await self._raw_client.test_put(id, string=string, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.test_put(id, string=string, request_options=request_options)
+        return _response.data
 
     async def test_patch(
         self,
@@ -373,7 +373,7 @@ class AsyncHttpMethodsClient:
             await client.endpoints.http_methods.test_patch(id='id', string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
         asyncio.run(main())
         """
-        response = await self._raw_client.test_patch(
+        _response = await self._raw_client.test_patch(
             id,
             string=string,
             integer=integer,
@@ -390,7 +390,7 @@ class AsyncHttpMethodsClient:
             bigint=bigint,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -414,5 +414,5 @@ class AsyncHttpMethodsClient:
             await client.endpoints.http_methods.test_delete(id='id', )
         asyncio.run(main())
         """
-        response = await self._raw_client.test_delete(id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.test_delete(id, request_options=request_options)
+        return _response.data

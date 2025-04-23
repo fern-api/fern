@@ -88,7 +88,7 @@ class ProblemClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.problem.create_problem(problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
         """
-        response = self._raw_client.create_problem(
+        _response = self._raw_client.create_problem(
             problem_name=problem_name,
             problem_description=problem_description,
             files=files,
@@ -98,7 +98,7 @@ class ProblemClient:
             method_name=method_name,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def update_problem(
         self,
@@ -156,7 +156,7 @@ class ProblemClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.problem.update_problem(problem_id='problemId', problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
         """
-        response = self._raw_client.update_problem(
+        _response = self._raw_client.update_problem(
             problem_id,
             problem_name=problem_name,
             problem_description=problem_description,
@@ -167,7 +167,7 @@ class ProblemClient:
             method_name=method_name,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def delete_problem(self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -190,8 +190,8 @@ class ProblemClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.problem.delete_problem(problem_id='problemId', )
         """
-        response = self._raw_client.delete_problem(problem_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.delete_problem(problem_id, request_options=request_options)
+        return _response.data
 
     def get_default_starter_files(
         self,
@@ -233,10 +233,10 @@ class ProblemClient:
         client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
         client.problem.get_default_starter_files(input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), method_name='methodName', )
         """
-        response = self._raw_client.get_default_starter_files(
+        _response = self._raw_client.get_default_starter_files(
             input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
         )
-        return response.data
+        return _response.data
 
 
 class AsyncProblemClient:
@@ -310,7 +310,7 @@ class AsyncProblemClient:
             await client.problem.create_problem(problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
         asyncio.run(main())
         """
-        response = await self._raw_client.create_problem(
+        _response = await self._raw_client.create_problem(
             problem_name=problem_name,
             problem_description=problem_description,
             files=files,
@@ -320,7 +320,7 @@ class AsyncProblemClient:
             method_name=method_name,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def update_problem(
         self,
@@ -381,7 +381,7 @@ class AsyncProblemClient:
             await client.problem.update_problem(problem_id='problemId', problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
         asyncio.run(main())
         """
-        response = await self._raw_client.update_problem(
+        _response = await self._raw_client.update_problem(
             problem_id,
             problem_name=problem_name,
             problem_description=problem_description,
@@ -392,7 +392,7 @@ class AsyncProblemClient:
             method_name=method_name,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def delete_problem(
         self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
@@ -420,8 +420,8 @@ class AsyncProblemClient:
             await client.problem.delete_problem(problem_id='problemId', )
         asyncio.run(main())
         """
-        response = await self._raw_client.delete_problem(problem_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.delete_problem(problem_id, request_options=request_options)
+        return _response.data
 
     async def get_default_starter_files(
         self,
@@ -466,7 +466,7 @@ class AsyncProblemClient:
             await client.problem.get_default_starter_files(input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), method_name='methodName', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_default_starter_files(
+        _response = await self._raw_client.get_default_starter_files(
             input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
         )
-        return response.data
+        return _response.data

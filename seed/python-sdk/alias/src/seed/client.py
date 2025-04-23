@@ -85,8 +85,8 @@ class SeedAlias:
         client = SeedAlias(base_url="https://yourhost.com/path/to/api", )
         client.get(type_id='typeId', )
         """
-        response = self._raw_client.get(type_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get(type_id, request_options=request_options)
+        return _response.data
 
 
 class AsyncSeedAlias:
@@ -168,5 +168,5 @@ class AsyncSeedAlias:
             await client.get(type_id='typeId', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get(type_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get(type_id, request_options=request_options)
+        return _response.data

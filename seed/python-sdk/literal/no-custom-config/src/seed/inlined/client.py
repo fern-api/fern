@@ -66,7 +66,7 @@ class InlinedClient:
         client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
         client.inlined.send(temperature=10.1, context="You're super wise", maybe_context="You're super wise", object_with_literal=ATopLevelLiteral(nested_literal=ANestedLiteral(), ), query='What is the weather today', )
         """
-        response = self._raw_client.send(
+        _response = self._raw_client.send(
             query=query,
             object_with_literal=object_with_literal,
             context=context,
@@ -74,7 +74,7 @@ class InlinedClient:
             maybe_context=maybe_context,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncInlinedClient:
@@ -133,7 +133,7 @@ class AsyncInlinedClient:
             await client.inlined.send(temperature=10.1, context="You're super wise", maybe_context="You're super wise", object_with_literal=ATopLevelLiteral(nested_literal=ANestedLiteral(), ), query='What is the weather today', )
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
+        _response = await self._raw_client.send(
             query=query,
             object_with_literal=object_with_literal,
             context=context,
@@ -141,4 +141,4 @@ class AsyncInlinedClient:
             maybe_context=maybe_context,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

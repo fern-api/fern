@@ -43,8 +43,8 @@ class ServiceClient:
         client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )
         client.service.nop(id='id-a2ijs82', nested_id='id-219xca8', )
         """
-        response = self._raw_client.nop(id, nested_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.nop(id, nested_id, request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -86,5 +86,5 @@ class AsyncServiceClient:
             await client.service.nop(id='id-a2ijs82', nested_id='id-219xca8', )
         asyncio.run(main())
         """
-        response = await self._raw_client.nop(id, nested_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.nop(id, nested_id, request_options=request_options)
+        return _response.data
