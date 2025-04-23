@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Support for literals in union types
+      type: fix
+  createdAt: '2025-04-23'
+  irVersion: 55
+  version: 2.33.0
+- changelogEntry:
+    - summary: |
         Auth header prefix should prepend with a concatenation operator
       type: fix
   createdAt: '2025-04-21'
