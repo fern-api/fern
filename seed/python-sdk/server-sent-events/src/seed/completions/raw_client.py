@@ -55,7 +55,7 @@ class RawCompletionsClient:
                                 if _sse.data == [[DONE]]:
                                     return
                                 try:
-                                    yield _sse.data()
+                                    yield _sse.data
                                 except Exception:
                                     pass
                             return
@@ -110,7 +110,7 @@ class AsyncRawCompletionsClient:
                                 if _sse.data == [[DONE]]:
                                     return
                                 try:
-                                    yield _sse.data()
+                                    yield _sse.data
                                 except Exception:
                                     pass
                             return
