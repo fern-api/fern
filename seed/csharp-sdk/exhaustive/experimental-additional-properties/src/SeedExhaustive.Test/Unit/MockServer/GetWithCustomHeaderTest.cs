@@ -25,16 +25,15 @@ public class GetWithCustomHeaderTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.ReqWithHeaders.GetWithCustomHeaderAsync(
-                    new ReqWithHeaders
-                    {
-                        XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
-                        XTestServiceHeader = "X-TEST-SERVICE-HEADER",
-                        Body = "string",
-                    }
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.ReqWithHeaders.GetWithCustomHeaderAsync(
+                new ReqWithHeaders
+                {
+                    XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
+                    XTestServiceHeader = "X-TEST-SERVICE-HEADER",
+                    Body = "string",
+                }
+            )
         );
     }
 }

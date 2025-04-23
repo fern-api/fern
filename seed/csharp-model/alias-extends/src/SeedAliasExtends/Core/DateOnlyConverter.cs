@@ -169,7 +169,6 @@ namespace SeedAliasExtends.Core
     // ReSharper disable SuggestVarOrType_SimpleTypes
     // ReSharper disable SuggestVarOrType_BuiltInTypes
 
-
     internal static class JsonHelpers
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

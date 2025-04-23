@@ -6,6 +6,12 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.16.3
+  createdAt: "2025-04-23"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Upgrade Csharpier formatter to `1.*` for faster and better formatting.
 - version: 1.16.2
   createdAt: "2025-04-22"
   irVersion: 57
