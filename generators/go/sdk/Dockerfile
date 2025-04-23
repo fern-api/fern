@@ -7,7 +7,7 @@ RUN git config --global user.name "fern" && git config --global user.email "hey@
 COPY generators/go-v2/sdk/dist/cli.cjs /dist/cli.cjs
 
 # Stage 2: Final Go image
-FROM golang:1.22.7-alpine3.19
+FROM golang:1.23.8-alpine3.20
 
 WORKDIR /workspace
 
