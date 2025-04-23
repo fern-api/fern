@@ -29,16 +29,16 @@ public final class DiscriminatedLiteral {
         return new DiscriminatedLiteral(new CustomNameValue(value));
     }
 
-    public static DiscriminatedLiteral defaultName(String value) {
-        return new DiscriminatedLiteral(new DefaultNameValue(value));
+    public static DiscriminatedLiteral defaultName() {
+        return new DiscriminatedLiteral(new DefaultNameValue("Bob"));
     }
 
     public static DiscriminatedLiteral george(boolean value) {
         return new DiscriminatedLiteral(new GeorgeValue(value));
     }
 
-    public static DiscriminatedLiteral literalGeorge(Boolean value) {
-        return new DiscriminatedLiteral(new LiteralGeorgeValue(value));
+    public static DiscriminatedLiteral literalGeorge() {
+        return new DiscriminatedLiteral(new LiteralGeorgeValue(true));
     }
 
     public boolean isCustomName() {
