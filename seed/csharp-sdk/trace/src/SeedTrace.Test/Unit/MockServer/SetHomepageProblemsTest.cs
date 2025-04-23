@@ -25,11 +25,10 @@ public class SetHomepageProblemsTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Homepage.SetHomepageProblemsAsync(
-                    new List<string>() { "string", "string" }
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Homepage.SetHomepageProblemsAsync(
+                new List<string>() { "string", "string" }
+            )
         );
     }
 }
