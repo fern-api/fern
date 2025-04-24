@@ -5,7 +5,17 @@
 from .types import SendResponse
 from . import headers, inlined, path, query, reference
 from .client import AsyncSeedLiteral, SeedLiteral
-from .inlined import ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral, UndiscriminatedLiteral
+from .inlined import (
+    ANestedLiteral,
+    ATopLevelLiteral,
+    DiscriminatedLiteral,
+    DiscriminatedLiteral_CustomName,
+    DiscriminatedLiteral_DefaultName,
+    DiscriminatedLiteral_George,
+    DiscriminatedLiteral_LiteralGeorge,
+    SomeAliasedLiteral,
+    UndiscriminatedLiteral,
+)
 from .query import AliasToPrompt, AliasToStream
 from .reference import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
 from .version import __version__
@@ -17,6 +27,11 @@ __all__ = [
     "AliasToStream",
     "AsyncSeedLiteral",
     "ContainerObject",
+    "DiscriminatedLiteral",
+    "DiscriminatedLiteral_CustomName",
+    "DiscriminatedLiteral_DefaultName",
+    "DiscriminatedLiteral_George",
+    "DiscriminatedLiteral_LiteralGeorge",
     "NestedObjectWithLiterals",
     "SeedLiteral",
     "SendRequest",
