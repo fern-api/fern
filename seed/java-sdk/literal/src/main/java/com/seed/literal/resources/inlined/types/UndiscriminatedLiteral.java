@@ -6,7 +6,6 @@ package com.seed.literal.resources.inlined.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -34,7 +33,7 @@ public final class UndiscriminatedLiteral {
         if (this.type == 0) {
             return visitor.visit((String) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((boolean) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -59,18 +58,34 @@ public final class UndiscriminatedLiteral {
         return this.value.toString();
     }
 
+    /**
+     * @param value must be one of the following:
+     * <ul>
+     * <li>"$ending"</li>
+     * <li>"10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"</li>
+     * </ul>
+     * Or an arbitrary string.
+     */
     public static UndiscriminatedLiteral of(String value) {
         return new UndiscriminatedLiteral(value, 0);
     }
 
-    public static UndiscriminatedLiteral of(String value) {
+    public static UndiscriminatedLiteral of(boolean value) {
         return new UndiscriminatedLiteral(value, 1);
     }
 
     public interface Visitor<T> {
+        /**
+         * @param value must be one of the following:
+         * <ul>
+         * <li>"$ending"</li>
+         * <li>"10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"</li>
+         * </ul>
+         * Or an arbitrary string.
+         */
         T visit(String value);
 
-        T visit(String value);
+        T visit(boolean value);
     }
 
     static final class Deserializer extends StdDeserializer<UndiscriminatedLiteral> {
@@ -85,9 +100,8 @@ public final class UndiscriminatedLiteral {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
             } catch (IllegalArgumentException e) {
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<String>() {}));
-            } catch (IllegalArgumentException e) {
+            if (value instanceof Boolean) {
+                return of((Boolean) value);
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

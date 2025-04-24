@@ -19,6 +19,7 @@ import com.fern.java.utils.NamedTypeId;
 import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
@@ -434,7 +435,40 @@ public final class UnionGenerator extends AbstractTypeGenerator {
             MethodSpec.Builder staticFactoryBuilder = MethodSpec.methodBuilder(getVisitorParameterName())
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                     .returns(getUnionClassName());
-            if (getUnionSubTypeTypeName().isPresent()) {
+            boolean isLiteral = singleUnionType
+                    .getShape()
+                    .getSingleProperty()
+                    .map(SingleUnionTypeProperty::getType)
+                    .flatMap(TypeReference::getContainer)
+                    .map(ContainerType::isLiteral)
+                    .orElse(false);
+            if (isLiteral) {
+                Literal literal = singleUnionType
+                        .getShape()
+                        .getSingleProperty()
+                        .map(SingleUnionTypeProperty::getType)
+                        .flatMap(TypeReference::getContainer)
+                        .flatMap(ContainerType::getLiteral)
+                        .get();
+                CodeBlock value = literal.visit(new Literal.Visitor<CodeBlock>() {
+                    @Override
+                    public CodeBlock visitString(String s) {
+                        return CodeBlock.of("$S", s);
+                    }
+
+                    @Override
+                    public CodeBlock visitBoolean(boolean b) {
+                        return CodeBlock.of("$L", b);
+                    }
+
+                    @Override
+                    public CodeBlock _visitUnknown(Object o) {
+                        throw new RuntimeException("Got unknown literal type " + o);
+                    }
+                });
+                staticFactoryBuilder.addStatement(
+                        "return new $T(new $T($L))", getUnionClassName(), getUnionSubTypeWrapperClass(), value);
+            } else if (getUnionSubTypeTypeName().isPresent()) {
                 staticFactoryBuilder
                         .addParameter(getUnionSubTypeTypeName().get(), getValueFieldName())
                         .addStatement(
