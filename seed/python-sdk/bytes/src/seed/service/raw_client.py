@@ -39,6 +39,9 @@ class RawServiceClient:
             "upload-content",
             method="POST",
             content=request,
+            headers={
+                "content-type": "application/octet-stream",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -103,6 +106,9 @@ class AsyncRawServiceClient:
             "upload-content",
             method="POST",
             content=request,
+            headers={
+                "content-type": "application/octet-stream",
+            },
             request_options=request_options,
             omit=OMIT,
         )
