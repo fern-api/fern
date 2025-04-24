@@ -81,6 +81,7 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = False
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
@@ -92,8 +93,7 @@ class RawUsersClient:
                         order=order,
                         starting_after=_parsed_next,
                         request_options=request_options,
-                    )
-                _items = _parsed_response.data
+                    ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -134,13 +134,13 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list_with_mixed_type_cursor_pagination(
                     cursor=_parsed_next,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -186,6 +186,7 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = False
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
@@ -194,8 +195,7 @@ class RawUsersClient:
                     _get_next = lambda: self.list_with_body_cursor_pagination(
                         pagination=pagination,
                         request_options=request_options,
-                    )
-                _items = _parsed_response.data
+                    ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -257,6 +257,7 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination(
                     page=page + 1,
@@ -264,8 +265,7 @@ class RawUsersClient:
                     order=order,
                     starting_after=starting_after,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -327,6 +327,7 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list_with_double_offset_pagination(
                     page=page + 1,
@@ -334,8 +335,7 @@ class RawUsersClient:
                     order=order,
                     starting_after=starting_after,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -381,12 +381,12 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list_with_body_offset_pagination(
                     pagination=pagination,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -444,14 +444,14 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_step_pagination(
-                    page=page + 1,
+                    page=page + len(_items),
                     limit=limit,
                     order=order,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -509,14 +509,14 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
-                    page=page + 1,
+                    page=page + len(_items),
                     limit=limit,
                     order=order,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -557,14 +557,14 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data.users if _parsed_response.data is not None else []
+
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list_with_extended_results(
                     cursor=_parsed_next,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data.users if _parsed_response.data is not None else []
-
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -605,14 +605,14 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data.users if _parsed_response.data is not None else []
+
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list_with_extended_results_and_optional_data(
                     cursor=_parsed_next,
                     request_options=request_options,
-                )
-                _items = _parsed_response.data.users if _parsed_response.data is not None else []
-
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -655,6 +655,8 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.cursor.data if _parsed_response.cursor is not None else []
+
                 _has_next = False
                 _get_next = None
                 if _parsed_response.cursor is not None:
@@ -663,9 +665,7 @@ class RawUsersClient:
                     _get_next = lambda: self.list_usernames(
                         starting_after=_parsed_next,
                         request_options=request_options,
-                    )
-                _items = _parsed_response.cursor.data if _parsed_response.cursor is not None else []
-
+                    ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -708,12 +708,12 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.results
                 _has_next = True
                 _get_next = lambda: self.list_with_global_config(
                     offset=offset + 1,
                     request_options=request_options,
-                )
-                _items = _parsed_response.results
+                ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -778,19 +778,23 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = False
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
                     _has_next = _parsed_next is not None and _parsed_next != ""
-                    _get_next = lambda: self.list_with_cursor_pagination(
-                        page=page,
-                        per_page=per_page,
-                        order=order,
-                        starting_after=_parsed_next,
-                        request_options=request_options,
-                    )
-                _items = _parsed_response.data
+
+                    async def _get_next():
+                        _next_page_response = await self.list_with_cursor_pagination(
+                            page=page,
+                            per_page=per_page,
+                            order=order,
+                            starting_after=_parsed_next,
+                            request_options=request_options,
+                        )
+                        return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -831,13 +835,17 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None and _parsed_next != ""
-                _get_next = lambda: self.list_with_mixed_type_cursor_pagination(
-                    cursor=_parsed_next,
-                    request_options=request_options,
-                )
-                _items = _parsed_response.data
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_mixed_type_cursor_pagination(
+                        cursor=_parsed_next,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -883,16 +891,20 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data
                 _has_next = False
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
                     _has_next = _parsed_next is not None and _parsed_next != ""
-                    _get_next = lambda: self.list_with_body_cursor_pagination(
-                        pagination=pagination,
-                        request_options=request_options,
-                    )
-                _items = _parsed_response.data
+
+                    async def _get_next():
+                        _next_page_response = await self.list_with_body_cursor_pagination(
+                            pagination=pagination,
+                            request_options=request_options,
+                        )
+                        return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -954,15 +966,19 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list_with_offset_pagination(
-                    page=page + 1,
-                    per_page=per_page,
-                    order=order,
-                    starting_after=starting_after,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_offset_pagination(
+                        page=page + 1,
+                        per_page=per_page,
+                        order=order,
+                        starting_after=starting_after,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -1024,15 +1040,19 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list_with_double_offset_pagination(
-                    page=page + 1,
-                    per_page=per_page,
-                    order=order,
-                    starting_after=starting_after,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_double_offset_pagination(
+                        page=page + 1,
+                        per_page=per_page,
+                        order=order,
+                        starting_after=starting_after,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -1078,12 +1098,16 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list_with_body_offset_pagination(
-                    pagination=pagination,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_body_offset_pagination(
+                        pagination=pagination,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -1141,14 +1165,18 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list_with_offset_step_pagination(
-                    page=page + 1,
-                    limit=limit,
-                    order=order,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_offset_step_pagination(
+                        page=page + len(_items),
+                        limit=limit,
+                        order=order,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -1206,14 +1234,18 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list_with_offset_pagination_has_next_page(
-                    page=page + 1,
-                    limit=limit,
-                    order=order,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.data
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_offset_pagination_has_next_page(
+                        page=page + len(_items),
+                        limit=limit,
+                        order=order,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -1254,13 +1286,17 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data.users if _parsed_response.data is not None else []
+
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None and _parsed_next != ""
-                _get_next = lambda: self.list_with_extended_results(
-                    cursor=_parsed_next,
-                    request_options=request_options,
-                )
-                _items = _parsed_response.data.users if _parsed_response.data is not None else []
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_extended_results(
+                        cursor=_parsed_next,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
 
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
@@ -1302,13 +1338,17 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.data.users if _parsed_response.data is not None else []
+
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None and _parsed_next != ""
-                _get_next = lambda: self.list_with_extended_results_and_optional_data(
-                    cursor=_parsed_next,
-                    request_options=request_options,
-                )
-                _items = _parsed_response.data.users if _parsed_response.data is not None else []
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_extended_results_and_optional_data(
+                        cursor=_parsed_next,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
 
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
@@ -1352,16 +1392,20 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.cursor.data if _parsed_response.cursor is not None else []
+
                 _has_next = False
                 _get_next = None
                 if _parsed_response.cursor is not None:
                     _parsed_next = _parsed_response.cursor.after
                     _has_next = _parsed_next is not None and _parsed_next != ""
-                    _get_next = lambda: self.list_usernames(
-                        starting_after=_parsed_next,
-                        request_options=request_options,
-                    )
-                _items = _parsed_response.cursor.data if _parsed_response.cursor is not None else []
+
+                    async def _get_next():
+                        _next_page_response = await self.list_usernames(
+                            starting_after=_parsed_next,
+                            request_options=request_options,
+                        )
+                        return _next_page_response.data
 
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
@@ -1405,12 +1449,16 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
-                _has_next = True
-                _get_next = lambda: self.list_with_global_config(
-                    offset=offset + 1,
-                    request_options=request_options,
-                )
                 _items = _parsed_response.results
+                _has_next = True
+
+                async def _get_next():
+                    _next_page_response = await self.list_with_global_config(
+                        offset=offset + 1,
+                        request_options=request_options,
+                    )
+                    return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
