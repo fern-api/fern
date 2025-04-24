@@ -14255,6 +14255,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "BaseUploadRequest",
               "camelCase": {
@@ -14908,6 +14909,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "MultipartFileUploadStartRequest",
               "camelCase": {
@@ -15746,6 +15748,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "MultipartFileUploadCompleteRequest",
               "camelCase": {
@@ -16096,6 +16099,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "FromUrlUploadRequest",
               "camelCase": {
@@ -17625,6 +17629,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "CreateFilesGroupRequest",
               "camelCase": {

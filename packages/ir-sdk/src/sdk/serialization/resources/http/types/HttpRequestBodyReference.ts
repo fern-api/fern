@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDocs } from "../../commons/types/WithDocs";
+import { WithContentType } from "../../commons/types/WithContentType";
 
 export const HttpRequestBodyReference: core.serialization.ObjectSchema<
     serializers.HttpRequestBodyReference.Raw,
@@ -13,13 +14,12 @@ export const HttpRequestBodyReference: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         requestBodyType: core.serialization.lazy(() => serializers.TypeReference),
-        contentType: core.serialization.string().optional(),
     })
-    .extend(WithDocs);
+    .extend(WithDocs)
+    .extend(WithContentType);
 
 export declare namespace HttpRequestBodyReference {
-    export interface Raw extends WithDocs.Raw {
+    export interface Raw extends WithDocs.Raw, WithContentType.Raw {
         requestBodyType: serializers.TypeReference.Raw;
-        contentType?: string | null;
     }
 }

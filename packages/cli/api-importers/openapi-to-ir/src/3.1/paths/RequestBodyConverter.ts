@@ -57,6 +57,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
 
             if (convertedSchema.schema?.shape.type === "object") {
                 const requestBody = HttpRequestBody.fileUpload({
+                    contentType,
                     docs: this.requestBody.description,
                     name: this.context.casingsGenerator.generateName(schemaId),
                     properties: convertedSchema.schema?.shape.properties.map((property) => {

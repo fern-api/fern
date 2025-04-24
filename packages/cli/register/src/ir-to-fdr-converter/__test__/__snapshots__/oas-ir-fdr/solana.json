@@ -6346,12 +6346,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getClusterNodes",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -6547,12 +6541,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getEpochSchedule",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -6756,12 +6744,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getFirstAvailableBlock",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -6848,12 +6830,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getGenesisHash",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -6938,12 +6914,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getHealth",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -7028,12 +6998,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getHighestSnapshotSlot",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -7118,12 +7082,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getIdentity",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -7315,12 +7273,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getInflationRate",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -7742,12 +7694,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getMaxRetransmitSlot",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -7834,12 +7780,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getMaxShredInsertSlot",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -9714,12 +9654,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "getVersion",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -10032,12 +9966,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "minimumLedgerSlot",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",

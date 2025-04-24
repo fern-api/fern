@@ -183,6 +183,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "docs": "Test request body\n",
             "name": {
               "originalName": "testUpload_Request",
