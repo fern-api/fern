@@ -29,6 +29,8 @@ public static class ValueConvert
 
     internal static string ToPathParameterString(ulong v) => ToString(v);
 
+    internal static string ToPathParameterString(string v) => ToString(v);
+
     internal static string ToPathParameterString(char v) => ToString(v);
 
     internal static string ToPathParameterString(Guid v) => ToString(v);
@@ -104,6 +106,8 @@ public static class ValueConvert
     internal static string ToString(ulong v) => v.ToString(CultureInfo.InvariantCulture);
 
     internal static string ToString(char v) => v.ToString(CultureInfo.InvariantCulture);
+
+    internal static string ToString(string v) => v;
 
     internal static string ToString(Guid v) => v.ToString("D");
 }
