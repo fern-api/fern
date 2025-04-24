@@ -1,0 +1,208 @@
+{
+  "title": "Test extension `x-fern-sdk-namespace` and `x-fern-sdk-group-name` for schemas.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "auth",
+          "user"
+        ],
+        "methodName": [
+          "get"
+        ]
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UserGetRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "UserGetResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "This endpoint should be in `auth/user.yml`",
+      "authed": false,
+      "method": "GET",
+      "path": "/auth/user",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "generatedName": "userId",
+              "value": {
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "generatedName": "UserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [
+                "user"
+              ],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "This user object should be in user.yml",
+        "generatedName": "User",
+        "groupName": [
+          "user"
+        ],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {
+      "animal": {
+        "Animal": {
+          "description": "animal.Animal",
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "Animal",
+          "namespace": "animal",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "Dog": {
+          "description": "animal.dog.Dog",
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "Dog",
+          "namespace": "animal",
+          "groupName": [
+            "dog"
+          ],
+          "type": "primitive"
+        },
+        "Chow": {
+          "description": "animal.dog.chow.Chow",
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "Chow",
+          "namespace": "animal",
+          "groupName": [
+            "dog",
+            "chow"
+          ],
+          "type": "primitive"
+        }
+      },
+      "galaxy": {
+        "Galaxy": {
+          "description": "galaxy.Galaxy",
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "Galaxy",
+          "namespace": "galaxy",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "Planet": {
+          "description": "galaxy.planet.Planet",
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "Planet",
+          "namespace": "galaxy",
+          "groupName": [
+            "planet"
+          ],
+          "type": "primitive"
+        },
+        "Earth": {
+          "description": "galaxy.planet.earth.Earth",
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "Earth",
+          "namespace": "galaxy",
+          "groupName": [
+            "planet",
+            "earth"
+          ],
+          "type": "primitive"
+        }
+      }
+    }
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
