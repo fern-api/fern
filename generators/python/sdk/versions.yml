@@ -1,4 +1,18 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.15.1
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+         Add support for retrieving response headers from the generated `ApiError` class.
+
+        ```python
+        try:
+          ...
+        except ApiError as e:
+          print(e.headers)
+        ```
+
 - version: 4.15.0
   irVersion: 57
   changelogEntry:

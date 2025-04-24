@@ -5,4 +5,6 @@ from ...core.api_error import ApiError
 
 class UnauthorizedError(ApiError):
     def __init__(self) -> None:
-        super().__init__(status_code=401)
+        super().__init__(
+            status_code=401,
+        )

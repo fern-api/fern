@@ -19,6 +19,7 @@ class WebsocketConnectResponseCodeWriter:
                 writer.write("raise ")
                 writer.write_node(
                     self._context.core_utilities.instantiate_api_error(
+                        headers=None,
                         body=AST.Expression('"Websocket initialized with invalid credentials."'),
                         status_code=AST.Expression("status_code"),
                     )
@@ -26,6 +27,7 @@ class WebsocketConnectResponseCodeWriter:
             writer.write("raise ")
             writer.write_node(
                 self._context.core_utilities.instantiate_api_error(
+                    headers=None,
                     body=AST.Expression('"Unexpected error when initializing websocket connection."'),
                     status_code=AST.Expression("status_code"),
                 )
