@@ -1280,9 +1280,8 @@ class EndpointFunctionGenerator:
 
         if endpoint.request_body is not None:
             unioned_value = endpoint.request_body.get_as_union()
-            if unioned_value.type == "inlinedRequestBody":
-                if unioned_value.content_type is not None:
-                    headers.append(("content-type", AST.Expression(f'"{unioned_value.content_type}"')))
+            if unioned_value.content_type is not None: 
+                headers.append(("content-type", AST.Expression(f'"{unioned_value.content_type}"')))
 
         for header in ir_headers:
             literal_header_value = self._context.get_literal_header_value(header)
