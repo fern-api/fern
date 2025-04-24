@@ -27,6 +27,38 @@ module SeedLiteralClient
         rescue StandardError
           # noop
         end
+        begin
+          struct.is_a?(String) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+          return struct unless struct.nil?
+
+          return nil
+        rescue StandardError
+          # noop
+        end
+        begin
+          struct.is_a?(Boolean) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+          return struct unless struct.nil?
+
+          return nil
+        rescue StandardError
+          # noop
+        end
+        begin
+          struct.is_a?(Boolean) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+          return struct unless struct.nil?
+
+          return nil
+        rescue StandardError
+          # noop
+        end
+        begin
+          struct.is_a?(Boolean) != false || raise("Passed value for field struct is not the expected type, validation failed.")
+          return struct unless struct.nil?
+
+          return nil
+        rescue StandardError
+          # noop
+        end
         struct
       end
 
@@ -44,6 +76,26 @@ module SeedLiteralClient
         end
         begin
           return obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        rescue StandardError
+          # noop
+        end
+        begin
+          return obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        rescue StandardError
+          # noop
+        end
+        begin
+          return obj.is_a?(Boolean) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        rescue StandardError
+          # noop
+        end
+        begin
+          return obj.is_a?(Boolean) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        rescue StandardError
+          # noop
+        end
+        begin
+          return obj.is_a?(Boolean) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         rescue StandardError
           # noop
         end
