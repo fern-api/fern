@@ -57,6 +57,8 @@ public static class ValueConvert
 
     internal static string ToQueryStringValue(ulong v) => ToString(v);
 
+    internal static string ToQueryStringValue(string v) => v is null ? "" : v;
+
     internal static string ToQueryStringValue(char v) => ToString(v);
 
     internal static string ToQueryStringValue(Guid v) => ToString(v);
