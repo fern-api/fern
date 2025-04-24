@@ -5,7 +5,7 @@
       without the additional JSON-RPC envelope.
     type: feat
   irVersion: 57
-  version: 0.57.36
+  version: 0.57.37
 
 - changelogEntry:
   - summary: |
