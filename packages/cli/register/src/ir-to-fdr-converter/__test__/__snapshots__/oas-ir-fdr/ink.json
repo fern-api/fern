@@ -3398,12 +3398,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_blockNumber",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -3631,12 +3625,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_chainId",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -3864,12 +3852,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_gasPrice",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -5961,12 +5943,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_syncing",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -6064,12 +6040,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "net_version",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -6167,12 +6137,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "web3_clientVersion",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",

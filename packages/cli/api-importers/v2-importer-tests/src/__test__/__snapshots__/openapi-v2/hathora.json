@@ -28918,6 +28918,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "BuildV1_RunBuild_Request",
               "camelCase": {

@@ -10484,13 +10484,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "web3_clientVersion",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {
@@ -11138,13 +11132,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "net_listening",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {
@@ -11393,13 +11381,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "net_peerCount",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {
@@ -11650,13 +11632,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "net_version",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {
@@ -12664,13 +12640,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_blockNumber",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {
@@ -13245,13 +13215,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_chainId",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {
@@ -13546,13 +13510,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_coinbase",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -14103,13 +14061,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_gasPrice",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -51167,13 +51119,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_getWork",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {
@@ -51470,13 +51416,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_hashrate",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -51712,13 +51652,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_mining",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {
@@ -52012,13 +51946,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_newBlockFilter",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -53088,13 +53016,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_newPendingTransactionFilter",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -53405,13 +53327,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_pendingTransactions",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -53697,13 +53613,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_protocolVersion",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -56043,13 +55953,7 @@
                     "apiKey": "apiKey"
                   },
                   "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "eth_syncing",
-                    "params": []
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "body": {

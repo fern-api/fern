@@ -12247,6 +12247,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Upload_baseUpload_Request",
               "camelCase": {
@@ -12749,6 +12750,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Upload_multipartFileUploadStart_Request",
               "camelCase": {
@@ -13496,6 +13498,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Upload_multipartFileUploadComplete_Request",
               "camelCase": {
@@ -13862,6 +13865,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Upload_fromURLUpload_Request",
               "camelCase": {
@@ -22629,6 +22633,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Groups_createFilesGroup_Request",
               "camelCase": {

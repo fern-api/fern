@@ -51,6 +51,7 @@ export function convertHttpRequestBody({
     const fileUploadRequest = parseFileUploadRequest(request);
     if (fileUploadRequest != null) {
         return HttpRequestBody.fileUpload({
+            contentType: request["content-type"],
             name: file.casingsGenerator.generateName(fileUploadRequest.name),
             properties: fileUploadRequest.properties.map((property) => {
                 if (property.isFile) {
