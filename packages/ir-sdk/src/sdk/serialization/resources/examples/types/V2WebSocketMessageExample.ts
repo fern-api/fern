@@ -5,19 +5,18 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { WebSocketMessageId } from "../../websocket/types/WebSocketMessageId";
 
 export const V2WebSocketMessageExample: core.serialization.ObjectSchema<
     serializers.V2WebSocketMessageExample.Raw,
     FernIr.V2WebSocketMessageExample
 > = core.serialization.objectWithoutOptionalProperties({
-    type: WebSocketMessageId,
+    type: core.serialization.string(),
     body: core.serialization.unknown(),
 });
 
 export declare namespace V2WebSocketMessageExample {
     export interface Raw {
-        type: WebSocketMessageId.Raw;
+        type: string;
         body?: unknown;
     }
 }

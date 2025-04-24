@@ -5,6 +5,6 @@
 import * as FernIr from "../../../index";
 
 export interface V2EndpointLocation {
-    method: FernIr.HttpMethod;
+    method: FernIr.V2EndpointLocationHttpMethod;
     path: string;
 }
