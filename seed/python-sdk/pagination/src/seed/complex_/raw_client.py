@@ -55,6 +55,9 @@ class RawComplexClient:
                     object_=query, annotation=SearchRequestQuery, direction="write"
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -122,6 +125,9 @@ class AsyncRawComplexClient:
                 "query": convert_and_respect_annotation_metadata(
                     object_=query, annotation=SearchRequestQuery, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

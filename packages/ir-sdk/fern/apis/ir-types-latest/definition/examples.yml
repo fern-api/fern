@@ -3,9 +3,7 @@
 imports:
   commons: commons.yml
   environment: environment.yml
-  http: http.yml
   types: types.yml
-  websocket: websocket.yml
 
 types:
 
@@ -77,7 +75,9 @@ types:
 
   V2WebSocketMessageExample:
     properties:
-      type: websocket.WebSocketMessageId
+      type: 
+        type: string
+        docs: The same as websocket.WebsocketMessageId
       body: unknown
   
   # Webhook Examples
@@ -113,8 +113,16 @@ types:
 
   V2EndpointLocation:
     properties:
-      method: http.HttpMethod
+      method: V2EndpointLocationHttpMethod
       path: string
+  
+  V2EndpointLocationHttpMethod: 
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
 
   V2EnvironmentValues:
     discriminated: false

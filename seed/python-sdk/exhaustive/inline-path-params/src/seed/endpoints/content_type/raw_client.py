@@ -91,6 +91,9 @@ class RawContentTypeClient:
                 "map": map_,
                 "bigint": bigint,
             },
+            headers={
+                "content-type": "application/json-patch+json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -174,6 +177,9 @@ class RawContentTypeClient:
                 "set": set_,
                 "map": map_,
                 "bigint": bigint,
+            },
+            headers={
+                "content-type": "application/json-patch+json; charset=utf-8",
             },
             request_options=request_options,
             omit=OMIT,
@@ -264,6 +270,9 @@ class AsyncRawContentTypeClient:
                 "map": map_,
                 "bigint": bigint,
             },
+            headers={
+                "content-type": "application/json-patch+json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -347,6 +356,9 @@ class AsyncRawContentTypeClient:
                 "set": set_,
                 "map": map_,
                 "bigint": bigint,
+            },
+            headers={
+                "content-type": "application/json-patch+json; charset=utf-8",
             },
             request_options=request_options,
             omit=OMIT,
