@@ -70,6 +70,7 @@ class RawComplexClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.conversations
                 _has_next = False
                 _get_next = None
                 if _parsed_response.pages is not None and _parsed_response.pages.next is not None:
@@ -79,8 +80,7 @@ class RawComplexClient:
                         query=query,
                         pagination=pagination,
                         request_options=request_options,
-                    )
-                _items = _parsed_response.conversations
+                    ).data
                 return HttpResponse(
                     response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )
@@ -141,17 +141,21 @@ class AsyncRawComplexClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.conversations
                 _has_next = False
                 _get_next = None
                 if _parsed_response.pages is not None and _parsed_response.pages.next is not None:
                     _parsed_next = _parsed_response.pages.next.starting_after
                     _has_next = _parsed_next is not None and _parsed_next != ""
-                    _get_next = lambda: self.search(
-                        query=query,
-                        pagination=pagination,
-                        request_options=request_options,
-                    )
-                _items = _parsed_response.conversations
+
+                    async def _get_next():
+                        _next_page_response = await self.search(
+                            query=query,
+                            pagination=pagination,
+                            request_options=request_options,
+                        )
+                        return _next_page_response.data
+
                 return AsyncHttpResponse(
                     response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
                 )

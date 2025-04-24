@@ -76,27 +76,6 @@ class Paginator:
     def write(self, *, writer: AST.NodeWriter) -> None:
         self.init_parsed_response(writer=writer)
 
-        def init_vars(writer: AST.NodeWriter) -> None:
-            # Step 1: Initialize custom variables
-            self.init_custom_vars_after_next(writer=writer)
-
-            # Step 2: Initialize has_next
-            writer.write_line(f"{Paginator.PAGINATION_HAS_NEXT_VARIABLE} = {self.init_has_next()}")
-
-            # Step 3: Initialize get_next
-            writer.write(f"{Paginator.PAGINATION_GET_NEXT_VARIABLE} =")
-            self.init_get_next(writer=writer)
-
-        next_none_safe_condition = self.get_next_none_safe_condition()
-        if next_none_safe_condition is not None:
-            self.init_custom_vars_pre_next(writer=writer)
-            writer.write_line(f"if {next_none_safe_condition}:")
-            with writer.indent():
-                init_vars(writer=writer)
-        else:
-            init_vars(writer=writer)
-
-        # Step 4: Get items
         items_non_safe_condition = self._get_none_safe_property_condition(self.get_results_property())
         results_property = f"{Paginator.PARSED_RESPONSE_VARIABLE}.{self.access_results_property_path()}"
         if items_non_safe_condition is not None:
@@ -120,7 +99,26 @@ class Paginator:
                 )
             )
 
-        # Step 5: Instantiate paginator
+        def init_vars(writer: AST.NodeWriter) -> None:
+            # Step 1: Initialize custom variables
+            self.init_custom_vars_after_next(writer=writer)
+
+            # Step 2: Initialize has_next
+            writer.write_line(f"{Paginator.PAGINATION_HAS_NEXT_VARIABLE} = {self.init_has_next()}")
+
+            # Step 3: Initialize get_next
+            self.init_get_next(writer=writer)
+
+        next_none_safe_condition = self.get_next_none_safe_condition()
+        if next_none_safe_condition is not None:
+            self.init_custom_vars_pre_next(writer=writer)
+            writer.write_line(f"if {next_none_safe_condition}:")
+            with writer.indent():
+                init_vars(writer=writer)
+        else:
+            init_vars(writer=writer)
+
+        # Step 4: Instantiate paginator
         paginator_expr = self._context.core_utilities.instantiate_paginator(
             items=AST.Expression(Paginator.PAGINATION_ITEMS_VARIABLE),
             has_next=AST.Expression(Paginator.PAGINATION_HAS_NEXT_VARIABLE),

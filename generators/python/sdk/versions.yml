@@ -1,4 +1,16 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.15.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for offset step pagination, where the offset position represents the element's index rather
+        than the page number.
+
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where paginated endpoints were not returning the underlying data.
+
 - version: 4.14.6
   irVersion: 57
   changelogEntry:
