@@ -448,6 +448,9 @@ class RawServiceClient:
                     else {}
                 ),
             },
+            headers={
+                "content-type": "multipart/form-data",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -892,6 +895,9 @@ class AsyncRawServiceClient:
                     if request is not OMIT
                     else {}
                 ),
+            },
+            headers={
+                "content-type": "multipart/form-data",
             },
             request_options=request_options,
             omit=OMIT,
