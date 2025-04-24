@@ -123,27 +123,24 @@ class Paginator:
             items=AST.Expression(Paginator.PAGINATION_ITEMS_VARIABLE),
             has_next=AST.Expression(Paginator.PAGINATION_HAS_NEXT_VARIABLE),
             get_next=AST.Expression(Paginator.PAGINATION_GET_NEXT_VARIABLE),
-            is_async=self._is_async,
-        )
-
-        response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
-        writer.write_node(
-            AST.ReturnStatement(
-                value=AST.ClassInstantiation(
+            response=AST.Expression(
+                AST.ClassInstantiation(
                     class_=AST.ClassReference(
                         qualified_name_excluding_import=(),
                         import_=AST.ReferenceImport(
-                            module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
-                            named_import=response_class,
+                            module=AST.Module.local(*self._context.core_utilities._module_path, "pagination"),
+                            named_import="BaseHttpResponse",
                         ),
                     ),
                     kwargs=[
                         ("response", AST.Expression(RESPONSE_VARIABLE)),
-                        ("data", paginator_expr),
                     ],
                 )
-            )
+            ),
+            is_async=self._is_async,
         )
+
+        writer.write_node(AST.ReturnStatement(value=paginator_expr))
         writer.write_newline_if_last_line_not()
 
     def _get_none_safe_property_condition(self, response_property: ir_types.ResponseProperty) -> Optional[str]:

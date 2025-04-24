@@ -5,8 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.pagination import AsyncPager, SyncPager
+from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -29,7 +28,7 @@ class RawComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SyncPager[Conversation]]:
+    ) -> SyncPager[Conversation]:
         """
         Parameters
         ----------
@@ -42,7 +41,7 @@ class RawComplexClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[Conversation]]
+        SyncPager[Conversation]
         """
         _response = self._client_wrapper.httpx_client.request(
             "conversations/search",
@@ -80,9 +79,9 @@ class RawComplexClient:
                         query=query,
                         pagination=pagination,
                         request_options=request_options,
-                    ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                    )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -100,7 +99,7 @@ class AsyncRawComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AsyncPager[Conversation]]:
+    ) -> AsyncPager[Conversation]:
         """
         Parameters
         ----------
@@ -113,7 +112,7 @@ class AsyncRawComplexClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[Conversation]]
+        AsyncPager[Conversation]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "conversations/search",
@@ -149,15 +148,14 @@ class AsyncRawComplexClient:
                     _has_next = _parsed_next is not None and _parsed_next != ""
 
                     async def _get_next():
-                        _next_page_response = await self.search(
+                        return await self.search(
                             query=query,
                             pagination=pagination,
                             request_options=request_options,
                         )
-                        return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:

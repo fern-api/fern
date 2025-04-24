@@ -43,9 +43,8 @@ class CursorPagination(Paginator):
         if self._is_async:
             writer.write(f"async def {Paginator.PAGINATION_GET_NEXT_VARIABLE}():")
             with writer.indent():
-                writer.write("_next_page_response = await ")
+                writer.write("return await ")
                 self.write_get_next_body(writer=writer)
-                writer.write_line("return _next_page_response.data")
         else:
             writer.write(f"{Paginator.PAGINATION_GET_NEXT_VARIABLE} =")
             writer.write("lambda: ")
@@ -70,11 +69,6 @@ class CursorPagination(Paginator):
                 writer.write(f"{parameter.name}={parameter.name}")
             writer.write(", ")
         writer.write(")")
-        if not self._is_async:
-            # TODO: For now, we always just return the .data property for the _get_next call.
-            # We might need to revisit this if we need the SyncPager to have access to the
-            # raw response.
-            writer.write(".data")
         writer.write_line("")
 
     def get_results_property(self) -> ir_types.ResponseProperty:

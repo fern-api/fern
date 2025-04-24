@@ -6,8 +6,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.pagination import AsyncPager, SyncPager
+from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -38,7 +37,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -59,7 +58,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -93,9 +92,9 @@ class RawUsersClient:
                         order=order,
                         starting_after=_parsed_next,
                         request_options=request_options,
-                    ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                    )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -104,7 +103,7 @@ class RawUsersClient:
 
     def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -115,7 +114,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -140,9 +139,9 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_mixed_type_cursor_pagination(
                     cursor=_parsed_next,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -151,7 +150,7 @@ class RawUsersClient:
 
     def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -164,7 +163,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -195,9 +194,9 @@ class RawUsersClient:
                     _get_next = lambda: self.list_with_body_cursor_pagination(
                         pagination=pagination,
                         request_options=request_options,
-                    ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                    )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -212,7 +211,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -233,7 +232,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         page = page if page is not None else 0
 
@@ -265,9 +264,9 @@ class RawUsersClient:
                     order=order,
                     starting_after=starting_after,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -282,7 +281,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -303,7 +302,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         page = page if page is not None else 1
 
@@ -335,9 +334,9 @@ class RawUsersClient:
                     order=order,
                     starting_after=starting_after,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -346,7 +345,7 @@ class RawUsersClient:
 
     def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -359,7 +358,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -386,9 +385,9 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_body_offset_pagination(
                     pagination=pagination,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -402,7 +401,7 @@ class RawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -421,7 +420,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         page = page if page is not None else 1
 
@@ -451,9 +450,9 @@ class RawUsersClient:
                     limit=limit,
                     order=order,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -467,7 +466,7 @@ class RawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -486,7 +485,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         page = page if page is not None else 1
 
@@ -516,9 +515,9 @@ class RawUsersClient:
                     limit=limit,
                     order=order,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -527,7 +526,7 @@ class RawUsersClient:
 
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -538,7 +537,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -564,9 +563,9 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_extended_results(
                     cursor=_parsed_next,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -575,7 +574,7 @@ class RawUsersClient:
 
     def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SyncPager[User]]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -586,7 +585,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[User]]
+        SyncPager[User]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -612,9 +611,9 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_extended_results_and_optional_data(
                     cursor=_parsed_next,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -623,7 +622,7 @@ class RawUsersClient:
 
     def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SyncPager[str]]:
+    ) -> SyncPager[str]:
         """
         Parameters
         ----------
@@ -636,7 +635,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[str]]
+        SyncPager[str]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -665,9 +664,9 @@ class RawUsersClient:
                     _get_next = lambda: self.list_usernames(
                         starting_after=_parsed_next,
                         request_options=request_options,
-                    ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                    )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -676,7 +675,7 @@ class RawUsersClient:
 
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SyncPager[str]]:
+    ) -> SyncPager[str]:
         """
         Parameters
         ----------
@@ -687,7 +686,7 @@ class RawUsersClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[str]]
+        SyncPager[str]
         """
         offset = offset if offset is not None else 1
 
@@ -713,9 +712,9 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_global_config(
                     offset=offset + 1,
                     request_options=request_options,
-                ).data
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -735,7 +734,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -756,7 +755,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -786,17 +785,16 @@ class AsyncRawUsersClient:
                     _has_next = _parsed_next is not None and _parsed_next != ""
 
                     async def _get_next():
-                        _next_page_response = await self.list_with_cursor_pagination(
+                        return await self.list_with_cursor_pagination(
                             page=page,
                             per_page=per_page,
                             order=order,
                             starting_after=_parsed_next,
                             request_options=request_options,
                         )
-                        return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -805,7 +803,7 @@ class AsyncRawUsersClient:
 
     async def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -816,7 +814,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -840,14 +838,13 @@ class AsyncRawUsersClient:
                 _has_next = _parsed_next is not None and _parsed_next != ""
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_mixed_type_cursor_pagination(
+                    return await self.list_with_mixed_type_cursor_pagination(
                         cursor=_parsed_next,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -856,7 +853,7 @@ class AsyncRawUsersClient:
 
     async def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -869,7 +866,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -899,14 +896,13 @@ class AsyncRawUsersClient:
                     _has_next = _parsed_next is not None and _parsed_next != ""
 
                     async def _get_next():
-                        _next_page_response = await self.list_with_body_cursor_pagination(
+                        return await self.list_with_body_cursor_pagination(
                             pagination=pagination,
                             request_options=request_options,
                         )
-                        return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -921,7 +917,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -942,7 +938,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         page = page if page is not None else 0
 
@@ -970,17 +966,16 @@ class AsyncRawUsersClient:
                 _has_next = True
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_offset_pagination(
+                    return await self.list_with_offset_pagination(
                         page=page + 1,
                         per_page=per_page,
                         order=order,
                         starting_after=starting_after,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -995,7 +990,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -1016,7 +1011,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         page = page if page is not None else 1
 
@@ -1044,17 +1039,16 @@ class AsyncRawUsersClient:
                 _has_next = True
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_double_offset_pagination(
+                    return await self.list_with_double_offset_pagination(
                         page=page + 1,
                         per_page=per_page,
                         order=order,
                         starting_after=starting_after,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1063,7 +1057,7 @@ class AsyncRawUsersClient:
 
     async def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -1076,7 +1070,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1102,14 +1096,13 @@ class AsyncRawUsersClient:
                 _has_next = True
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_body_offset_pagination(
+                    return await self.list_with_body_offset_pagination(
                         pagination=pagination,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1123,7 +1116,7 @@ class AsyncRawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -1142,7 +1135,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         page = page if page is not None else 1
 
@@ -1169,16 +1162,15 @@ class AsyncRawUsersClient:
                 _has_next = True
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_offset_step_pagination(
+                    return await self.list_with_offset_step_pagination(
                         page=page + len(_items),
                         limit=limit,
                         order=order,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1192,7 +1184,7 @@ class AsyncRawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -1211,7 +1203,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         page = page if page is not None else 1
 
@@ -1238,16 +1230,15 @@ class AsyncRawUsersClient:
                 _has_next = True
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_offset_pagination_has_next_page(
+                    return await self.list_with_offset_pagination_has_next_page(
                         page=page + len(_items),
                         limit=limit,
                         order=order,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1256,7 +1247,7 @@ class AsyncRawUsersClient:
 
     async def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -1267,7 +1258,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1292,14 +1283,13 @@ class AsyncRawUsersClient:
                 _has_next = _parsed_next is not None and _parsed_next != ""
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_extended_results(
+                    return await self.list_with_extended_results(
                         cursor=_parsed_next,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1308,7 +1298,7 @@ class AsyncRawUsersClient:
 
     async def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[AsyncPager[User]]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -1319,7 +1309,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[User]]
+        AsyncPager[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1344,14 +1334,13 @@ class AsyncRawUsersClient:
                 _has_next = _parsed_next is not None and _parsed_next != ""
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_extended_results_and_optional_data(
+                    return await self.list_with_extended_results_and_optional_data(
                         cursor=_parsed_next,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1360,7 +1349,7 @@ class AsyncRawUsersClient:
 
     async def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[AsyncPager[str]]:
+    ) -> AsyncPager[str]:
         """
         Parameters
         ----------
@@ -1373,7 +1362,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[str]]
+        AsyncPager[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1401,14 +1390,13 @@ class AsyncRawUsersClient:
                     _has_next = _parsed_next is not None and _parsed_next != ""
 
                     async def _get_next():
-                        _next_page_response = await self.list_usernames(
+                        return await self.list_usernames(
                             starting_after=_parsed_next,
                             request_options=request_options,
                         )
-                        return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -1417,7 +1405,7 @@ class AsyncRawUsersClient:
 
     async def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[AsyncPager[str]]:
+    ) -> AsyncPager[str]:
         """
         Parameters
         ----------
@@ -1428,7 +1416,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncHttpResponse[AsyncPager[str]]
+        AsyncPager[str]
         """
         offset = offset if offset is not None else 1
 
@@ -1453,14 +1441,13 @@ class AsyncRawUsersClient:
                 _has_next = True
 
                 async def _get_next():
-                    _next_page_response = await self.list_with_global_config(
+                    return await self.list_with_global_config(
                         offset=offset + 1,
                         request_options=request_options,
                     )
-                    return _next_page_response.data
 
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
