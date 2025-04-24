@@ -306,7 +306,7 @@ The `CodeBlocks` component allows you to display multiple code blocks in a tabbe
     </Tab>
 </Tabs>
 
-### Example of Synchronized Blocks
+## Example of Synchronized Blocks
 
 Multiple `CodeBlocks` on a page automatically synchronize, showing the same language across all blocks.
 
@@ -361,3 +361,62 @@ System.out.println("Second code block - syncs with the one above!");
 puts "Second code block - syncs with the one above!"
 ```
 </CodeBlocks>
+
+### Override synchronization
+
+You can override the synchronization of code blocks by setting the `for` prop.
+
+<Tabs>
+    <Tab title="Example">
+        <CodeGroup>
+            ```bash title="npm" for="npm"
+            npm install plantstore
+            ```
+            ```bash title="pnpm" for="pnpm"
+            pnpm add plantstore
+            ```
+            ```bash title="yarn" for="yarn"
+            yarn add plantstore
+            ```
+        </CodeGroup>
+        
+        <CodeGroup>
+            ```bash title="npm" for="npm"
+            npm uninstall plantstore
+            ```
+            ```bash title="pnpm" for="pnpm"
+            pnpm remove plantstore
+            ```
+            ```bash title="yarn" for="yarn"
+            yarn remove plantstore
+            ```
+        </CodeGroup>
+    </Tab>
+    <Tab title="Markdown">
+        ````md
+        <CodeGroup>
+            ```bash title="npm" for="npm"
+            npm install plantstore
+            ```
+            ```bash title="pnpm" for="pnpm"
+            pnpm add plantstore
+            ```
+            ```bash title="yarn" for="yarn"
+            yarn add plantstore
+            ```
+        </CodeGroup>
+        
+        <CodeGroup>
+            ```bash title="npm" for="npm"
+            npm uninstall plantstore
+            ```
+            ```bash title="pnpm" for="pnpm"
+            pnpm remove plantstore
+            ```
+            ```bash title="yarn" for="yarn"
+            yarn remove plantstore
+            ```
+        </CodeGroup>
+        ````
+    </Tab>
+</Tabs>
