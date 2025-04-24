@@ -6,9 +6,10 @@ import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { EnumValue } from "./EnumValue";
-import { WithDescription } from "../../commons/types/WithDescription";
-import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
+import { WithNamespace } from "../../commons/types/WithNamespace";
+import { WithName } from "../../commons/types/WithName";
+import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
@@ -20,9 +21,10 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
             default: EnumValue.optional(),
             values: core.serialization.list(EnumValue),
         })
-        .extend(WithDescription)
-        .extend(WithName)
         .extend(WithSdkGroupName)
+        .extend(WithNamespace)
+        .extend(WithName)
+        .extend(WithDescription)
         .extend(WithAvailability)
         .extend(WithSource)
         .extend(WithTitle)
@@ -30,9 +32,10 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
 
 export declare namespace EnumSchema {
     export interface Raw
-        extends WithDescription.Raw,
+        extends WithSdkGroupName.Raw,
+            WithNamespace.Raw,
             WithName.Raw,
-            WithSdkGroupName.Raw,
+            WithDescription.Raw,
             WithAvailability.Raw,
             WithSource.Raw,
             WithTitle.Raw,

@@ -610,6 +610,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         nameOverride: undefined,
         generatedName: "",
         title: undefined,
+        namespace: undefined,
         groupName: undefined,
         additionalProperties: false,
         availability: undefined,

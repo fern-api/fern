@@ -156,6 +156,7 @@ export function generateIr({
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {})
             .map(([key, schema]) => {
+                const schemaNamespace = getExtension<string>(schema, FernOpenAPIExtension.SDK_NAMESPACE);
                 if (!isReferenceObject(schema)) {
                     const ignoreSchema = getExtension<boolean>(schema, FernOpenAPIExtension.IGNORE);
                     if (ignoreSchema != null && ignoreSchema) {
@@ -171,12 +172,12 @@ export function generateIr({
                                 context,
                                 [key],
                                 source,
-                                namespace
+                                schemaNamespace ?? namespace
                             )
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, context, [key], source, namespace)];
+                return [key, convertSchema(schema, false, context, [key], source, schemaNamespace ?? namespace)];
             })
             .filter((entry) => entry.length > 0)
     );
@@ -481,6 +482,7 @@ function maybeAddBackDiscriminantsFromSchemas(
                             ),
                             title: undefined,
                             value: LiteralSchemaValue.string(discriminantValue),
+                            namespace: undefined,
                             groupName: undefined,
                             description: undefined,
                             availability: schema.availability

@@ -8,9 +8,10 @@ import * as core from "../../../../core";
 import { ReferencedSchema } from "../../finalIr/types/ReferencedSchema";
 import { AllOfPropertyConflict } from "../../finalIr/types/AllOfPropertyConflict";
 import { NamedFullExample } from "./NamedFullExample";
-import { WithDescription } from "../../commons/types/WithDescription";
-import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
+import { WithNamespace } from "../../commons/types/WithNamespace";
+import { WithName } from "../../commons/types/WithName";
+import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
@@ -27,9 +28,10 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
         fullExamples: core.serialization.list(NamedFullExample).optional(),
         additionalProperties: core.serialization.boolean(),
     })
-    .extend(WithDescription)
-    .extend(WithName)
     .extend(WithSdkGroupName)
+    .extend(WithNamespace)
+    .extend(WithName)
+    .extend(WithDescription)
     .extend(WithAvailability)
     .extend(WithSource)
     .extend(WithTitle)
@@ -37,9 +39,10 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
 
 export declare namespace ObjectSchemaWithExample {
     export interface Raw
-        extends WithDescription.Raw,
+        extends WithSdkGroupName.Raw,
+            WithNamespace.Raw,
             WithName.Raw,
-            WithSdkGroupName.Raw,
+            WithDescription.Raw,
             WithAvailability.Raw,
             WithSource.Raw,
             WithTitle.Raw,

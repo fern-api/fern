@@ -550,6 +550,7 @@
                     "type": "string"
                   },
                   "generatedName": "RequestWithAdditionalPropertiesExplicitId",
+                  "namespace": "additionalPropertiesDefaultsToTrue",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -558,6 +559,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToTrue",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -571,6 +573,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "RequestWithAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "groupName": [
             {
               "type": "namespace",
@@ -598,6 +601,7 @@
                     "type": "string"
                   },
                   "generatedName": "RequestWithoutAdditionalPropertiesExplicitId",
+                  "namespace": "additionalPropertiesDefaultsToTrue",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -606,6 +610,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToTrue",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -619,6 +624,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "RequestWithoutAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "groupName": [
             {
               "type": "namespace",
@@ -646,6 +652,7 @@
                     "type": "string"
                   },
                   "generatedName": "RequestId",
+                  "namespace": "additionalPropertiesDefaultsToTrue",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -654,6 +661,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToTrue",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -667,6 +675,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "Request",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "groupName": [
             {
               "type": "namespace",
@@ -694,6 +703,7 @@
                     "type": "string"
                   },
                   "generatedName": "ResponseWithAdditionalPropertiesExplicitId",
+                  "namespace": "additionalPropertiesDefaultsToTrue",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -702,6 +712,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToTrue",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -715,6 +726,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "ResponseWithAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "groupName": [
             {
               "type": "namespace",
@@ -742,6 +754,7 @@
                     "type": "string"
                   },
                   "generatedName": "ResponseWithoutAdditionalPropertiesExplicitId",
+                  "namespace": "additionalPropertiesDefaultsToTrue",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -750,6 +763,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToTrue",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -763,6 +777,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "ResponseWithoutAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "groupName": [
             {
               "type": "namespace",
@@ -790,6 +805,7 @@
                     "type": "string"
                   },
                   "generatedName": "ResponseId",
+                  "namespace": "additionalPropertiesDefaultsToTrue",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -798,6 +814,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToTrue",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -811,6 +828,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "Response",
+          "namespace": "additionalPropertiesDefaultsToTrue",
           "groupName": [
             {
               "type": "namespace",
@@ -840,6 +858,7 @@
                     "type": "string"
                   },
                   "generatedName": "RequestWithAdditionalPropertiesExplicitId",
+                  "namespace": "additionalPropertiesDefaultsToFalse",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -848,6 +867,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToFalse",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -861,6 +881,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "RequestWithAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "groupName": [
             {
               "type": "namespace",
@@ -888,6 +909,7 @@
                     "type": "string"
                   },
                   "generatedName": "RequestWithoutAdditionalPropertiesExplicitId",
+                  "namespace": "additionalPropertiesDefaultsToFalse",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -896,6 +918,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToFalse",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -909,6 +932,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "RequestWithoutAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "groupName": [
             {
               "type": "namespace",
@@ -936,6 +960,7 @@
                     "type": "string"
                   },
                   "generatedName": "RequestId",
+                  "namespace": "additionalPropertiesDefaultsToFalse",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -944,6 +969,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToFalse",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -957,6 +983,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "Request",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "groupName": [
             {
               "type": "namespace",
@@ -984,6 +1011,7 @@
                     "type": "string"
                   },
                   "generatedName": "ResponseWithAdditionalPropertiesExplicitId",
+                  "namespace": "additionalPropertiesDefaultsToFalse",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -992,6 +1020,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToFalse",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -1005,6 +1034,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "ResponseWithAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "groupName": [
             {
               "type": "namespace",
@@ -1032,6 +1062,7 @@
                     "type": "string"
                   },
                   "generatedName": "ResponseWithoutAdditionalPropertiesExplicitId",
+                  "namespace": "additionalPropertiesDefaultsToFalse",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -1040,6 +1071,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToFalse",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -1053,6 +1085,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "ResponseWithoutAdditionalPropertiesExplicit",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "groupName": [
             {
               "type": "namespace",
@@ -1080,6 +1113,7 @@
                     "type": "string"
                   },
                   "generatedName": "ResponseId",
+                  "namespace": "additionalPropertiesDefaultsToFalse",
                   "groupName": [
                     {
                       "type": "namespace",
@@ -1088,6 +1122,7 @@
                   ],
                   "type": "primitive"
                 },
+                "namespace": "additionalPropertiesDefaultsToFalse",
                 "groupName": [
                   {
                     "type": "namespace",
@@ -1101,6 +1136,7 @@
           ],
           "allOfPropertyConflicts": [],
           "generatedName": "Response",
+          "namespace": "additionalPropertiesDefaultsToFalse",
           "groupName": [
             {
               "type": "namespace",

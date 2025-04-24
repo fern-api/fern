@@ -529,9 +529,10 @@ types:
 
   PrimitiveSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
     properties:
@@ -606,9 +607,10 @@ types:
 
   LiteralSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
     properties:
@@ -621,9 +623,10 @@ types:
 
   ObjectSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -674,9 +677,10 @@ types:
 
   ArraySchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
@@ -685,9 +689,10 @@ types:
 
   MapSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithTitle
@@ -698,9 +703,10 @@ types:
 
   OptionalSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
@@ -709,9 +715,10 @@ types:
 
   NullableSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
@@ -720,9 +727,10 @@ types:
 
   EnumSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -756,9 +764,10 @@ types:
 
   ReferencedSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -772,9 +781,10 @@ types:
 
   DiscriminatedOneOfSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
@@ -792,9 +802,10 @@ types:
 
   UnDiscriminatedOneOfSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
