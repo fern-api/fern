@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix inline overrides undoing allow-multiple parameterization
+      type: fix
+  createdAt: '2025-04-24'
+  irVersion: 55
+  version: 2.33.1
+- changelogEntry:
+    - summary: |
         Support for literals in union types
       type: fix
   createdAt: '2025-04-23'
