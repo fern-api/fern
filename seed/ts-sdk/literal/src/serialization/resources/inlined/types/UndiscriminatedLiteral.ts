@@ -9,8 +9,23 @@ import * as core from "../../../../core";
 export const UndiscriminatedLiteral: core.serialization.Schema<
     serializers.UndiscriminatedLiteral.Raw,
     SeedLiteral.UndiscriminatedLiteral
-> = core.serialization.undiscriminatedUnion([core.serialization.string(), core.serialization.stringLiteral("$ending")]);
+> = core.serialization.undiscriminatedUnion([
+    core.serialization.string(),
+    core.serialization.stringLiteral("$ending"),
+    core.serialization.stringLiteral(
+        "10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)",
+    ),
+    core.serialization.booleanLiteral(true),
+    core.serialization.booleanLiteral(false),
+    core.serialization.boolean(),
+]);
 
 export declare namespace UndiscriminatedLiteral {
-    export type Raw = string | "$ending";
+    export type Raw =
+        | string
+        | "$ending"
+        | "10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"
+        | true
+        | false
+        | boolean;
 }
