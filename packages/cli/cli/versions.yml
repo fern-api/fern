@@ -3,7 +3,7 @@
       Add support for OpenRPC example parsing and rendering realistic requests and responses.
     type: fix
   irVersion: 57
-  version: 0.58.0
+  version: 0.58.1
 
 - changelogEntry:
   - summary: |
