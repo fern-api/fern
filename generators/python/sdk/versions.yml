@@ -2,7 +2,7 @@
 - version: 4.15.2
   irVersion: 57
   changelogEntry:
-    - type: feat
+    - type: fix
       summary: |
          Propagate response headers for websocket errors onto the generated `ApiError` class.
 
