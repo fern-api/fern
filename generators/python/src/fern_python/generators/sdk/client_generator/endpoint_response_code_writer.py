@@ -460,57 +460,31 @@ class EndpointResponseCodeWriter:
         def handle_endpoint_response(writer: AST.NodeWriter) -> None:
             writer.write_line(f"if 200 <= {RESPONSE_VARIABLE}.status_code < 300:")
             with writer.indent():
-                if self._response is None or self._response.body is None:
-                    if self._is_raw_client:
-                        # For raw clients, return HttpResponse/AsyncHttpResponse with data=None
-                        response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
-                        writer.write("return ")
-                        writer.write_node(
-                            AST.ClassInstantiation(
-                                class_=AST.ClassReference(
-                                    qualified_name_excluding_import=(),
-                                    import_=AST.ReferenceImport(
-                                        module=AST.Module.local(
-                                            *self._context.core_utilities._module_path, "http_response"
-                                        ),
-                                        named_import=response_class,
-                                    ),
-                                ),
-                                kwargs=[
-                                    ("response", AST.Expression(RESPONSE_VARIABLE)),
-                                    ("data", AST.Expression("None")),
-                                ],
-                            )
+                self._response.body.visit(
+                    json=lambda json_response: self._handle_success_json(
+                        writer=writer, json_response=json_response, use_response_json=False
+                    ),
+                    streaming=lambda stream_response: self._handle_success_stream(
+                        writer=writer, stream_response=stream_response
+                    ),
+                    file_download=lambda _: self._handle_success_file_download(writer=writer),
+                    text=lambda _: self._handle_success_text(writer=writer),
+                    stream_parameter=lambda stream_param_response: (
+                        self._handle_success_stream(
+                            writer=writer, stream_response=stream_param_response.stream_response
                         )
-                        writer.write_newline_if_last_line_not()
-                    else:
-                        writer.write_line("return")
-                else:
-                    self._response.body.visit(
-                        json=lambda json_response: self._handle_success_json(
-                            writer=writer, json_response=json_response, use_response_json=False
-                        ),
-                        streaming=lambda stream_response: self._handle_success_stream(
-                            writer=writer, stream_response=stream_response
-                        ),
-                        file_download=lambda _: self._handle_success_file_download(writer=writer),
-                        text=lambda _: self._handle_success_text(writer=writer),
-                        stream_parameter=lambda stream_param_response: (
-                            self._handle_success_stream(
-                                writer=writer, stream_response=stream_param_response.stream_response
-                            )
-                            if self._streaming_parameter == "streaming"
-                            else stream_param_response.non_stream_response.visit(
-                                json=lambda json_response: self._handle_success_json(
-                                    writer=writer, json_response=json_response, use_response_json=False
-                                ),
-                                file_download=lambda _: self._handle_success_file_download(writer=writer),
-                                text=lambda _: self._handle_success_text(writer=writer),
-                                bytes=lambda _: self._handle_success_bytes(writer=writer),
-                            )
-                        ),
-                        bytes=lambda _: self._handle_success_bytes(writer=writer),
-                    )
+                        if self._streaming_parameter == "streaming"
+                        else stream_param_response.non_stream_response.visit(
+                            json=lambda json_response: self._handle_success_json(
+                                writer=writer, json_response=json_response, use_response_json=False
+                            ),
+                            file_download=lambda _: self._handle_success_file_download(writer=writer),
+                            text=lambda _: self._handle_success_text(writer=writer),
+                            bytes=lambda _: self._handle_success_bytes(writer=writer),
+                        )
+                    ),
+                    bytes=lambda _: self._handle_success_bytes(writer=writer),
+                )
 
             # in streaming responses, we need to call read() or aread()
             # before deserializing or httpx will raise ResponseNotRead
