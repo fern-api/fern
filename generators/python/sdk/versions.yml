@@ -1,24 +1,10 @@
 # For unreleased changes, use unreleased.yml
-- version: 4.15.2
-  irVersion: 57
-  changelogEntry:
-    - type: fix
-      summary: |
-         Propagate response headers for websocket errors onto the generated `ApiError` class.
-
-- version: 4.15.1
+- version: 4.16.0
   irVersion: 57
   changelogEntry:
     - type: feat
       summary: |
          Add support for retrieving response headers from the generated `ApiError` class.
-
-        ```python
-        try:
-          ...
-        except ApiError as e:
-          print(e.headers)
-        ```
 
 - version: 4.15.0
   irVersion: 57
@@ -27,7 +13,6 @@
       summary: |
         Add support for offset step pagination, where the offset position represents the element's index rather
         than the page number.
-
     - type: fix
       summary: |
         Fixed an issue introduced in 4.14.0, where paginated endpoints were not returning the underlying data.
