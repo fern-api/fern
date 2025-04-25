@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.16.1
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Fixes an internal release issue in `4.16.0`.
+
 - version: 4.16.0
   irVersion: 57
   changelogEntry:
