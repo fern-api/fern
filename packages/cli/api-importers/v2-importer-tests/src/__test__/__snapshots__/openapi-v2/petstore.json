@@ -1584,16 +1584,13 @@
                     "value": {
                       "jsonrpc": "2.0",
                       "id": "1",
-                      "result": {
-                        "name": "listPetResultExample",
-                        "value": [
-                          {
-                            "id": 7,
-                            "name": "fluffy",
-                            "tag": "poodle"
-                          }
-                        ]
-                      }
+                      "result": [
+                        {
+                          "id": 7,
+                          "name": "fluffy",
+                          "tag": "poodle"
+                        }
+                      ]
                     },
                     "type": "json"
                   }
@@ -2086,10 +2083,7 @@
                     "value": {
                       "jsonrpc": "2.0",
                       "id": "1",
-                      "result": {
-                        "name": "listPetResultExample",
-                        "value": 7
-                      }
+                      "result": 7
                     },
                     "type": "json"
                   }
@@ -2780,12 +2774,9 @@
                       "jsonrpc": "2.0",
                       "id": "1",
                       "result": {
-                        "name": "getPetExampleResult",
-                        "value": {
-                          "name": "fluffy",
-                          "tag": "poodle",
-                          "id": 7
-                        }
+                        "name": "fluffy",
+                        "tag": "poodle",
+                        "id": 7
                       }
                     },
                     "type": "json"

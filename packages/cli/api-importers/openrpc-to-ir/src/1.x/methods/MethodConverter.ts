@@ -1,4 +1,4 @@
-import { ContentDescriptorObject, ExamplePairingObject, MethodObject } from "@open-rpc/meta-schema";
+import { ContentDescriptorObject, ExampleObject, ExamplePairingObject, MethodObject } from "@open-rpc/meta-schema";
 import { OpenAPIV3 } from "openapi-types";
 
 import {
@@ -204,7 +204,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
     private async convertExamples(): Promise<Record<string, FernIr.V2HttpEndpointExample>> {
         const examples: Record<string, FernIr.V2HttpEndpointExample> = {};
-        
+
         // If there are examples in the method, convert them
         let i = 0;
         if (this.method.examples && this.method.examples.length > 0) {
@@ -219,6 +219,19 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     }
                 } else {
                     resolvedExample = example;
+                }
+
+                // Extract the result from the example
+                let resolvedResult: ExampleObject | undefined;
+                if (resolvedExample.result) {
+                    if (this.context.isReferenceObject(resolvedExample.result)) {
+                        const resolvedResultResponse = await this.context.resolveReference<ExampleObject>(resolvedExample.result);
+                        if (resolvedResultResponse.resolved) {
+                            resolvedResult = resolvedResultResponse.value;
+                        }
+                    } else {
+                        resolvedResult = resolvedExample.result;
+                    }
                 }
 
                 const exampleName = resolvedExample.name ?? `Example ${i + 1}`;
@@ -242,21 +255,21 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     response: {
                         docs: undefined,
                         statusCode: undefined,
-                        body: resolvedExample.result 
+                        body: resolvedResult?.value
                             ? FernIr.V2HttpEndpointResponseBody.json({
-                                jsonrpc: "2.0",
-                                id: resolvedExample.examplePairedRequest?.id || "1",
-                                result: resolvedExample.result
+                                  jsonrpc: "2.0",
+                                  id: resolvedExample.examplePairedRequest?.id || "1",
+                                  result: resolvedResult.value
                               })
                             : undefined
                     },
                     codeSamples: []
                 };
             }
-            
+
             ++i;
         }
-        
+
         return examples;
     }
 }
