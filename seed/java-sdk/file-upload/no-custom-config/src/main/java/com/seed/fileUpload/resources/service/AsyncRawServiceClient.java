@@ -69,11 +69,11 @@ public class AsyncRawServiceClient {
             body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             String fileListMimeType = Files.probeContentType(fileList.toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
             body.addFormDataPart(
-                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
+                    "file_list", fileList.getName(), RequestBody.create(fileList, fileListMimeTypeMediaType));
             if (maybeFile.isPresent()) {
                 String maybeFileMimeType =
                         Files.probeContentType(maybeFile.get().toPath());
@@ -82,7 +82,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "maybe_file",
                         maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+                        RequestBody.create(maybeFile.get(), maybeFileMimeTypeMediaType));
             }
             if (maybeFileList.isPresent()) {
                 String maybeFileListMimeType =
@@ -92,7 +92,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "maybe_file_list",
                         maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+                        RequestBody.create(maybeFileList.get(), maybeFileListMimeTypeMediaType));
             }
             if (request.getMaybeInteger().isPresent()) {
                 body.addFormDataPart(
@@ -207,7 +207,7 @@ public class AsyncRawServiceClient {
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -281,7 +281,7 @@ public class AsyncRawServiceClient {
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -339,7 +339,7 @@ public class AsyncRawServiceClient {
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
             body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
             if (request.getFooBar().isPresent()) {
@@ -405,7 +405,7 @@ public class AsyncRawServiceClient {
         try {
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             QueryStringMapper.addFormDataPart(body, "foo", request.getFoo(), false);
             QueryStringMapper.addFormDataPart(body, "bar", request.getBar(), false);
         } catch (Exception e) {
@@ -474,11 +474,11 @@ public class AsyncRawServiceClient {
             QueryStringMapper.addFormDataPart(body, "integer", request.getInteger(), false);
             String fileMimeType = Files.probeContentType(file.toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
             String fileListMimeType = Files.probeContentType(fileList.toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
             body.addFormDataPart(
-                    "file_list", fileList.getName(), RequestBody.create(fileListMimeTypeMediaType, fileList));
+                    "file_list", fileList.getName(), RequestBody.create(fileList, fileListMimeTypeMediaType));
             if (maybeFile.isPresent()) {
                 String maybeFileMimeType =
                         Files.probeContentType(maybeFile.get().toPath());
@@ -487,7 +487,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "maybe_file",
                         maybeFile.get().getName(),
-                        RequestBody.create(maybeFileMimeTypeMediaType, maybeFile.get()));
+                        RequestBody.create(maybeFile.get(), maybeFileMimeTypeMediaType));
             }
             if (maybeFileList.isPresent()) {
                 String maybeFileListMimeType =
@@ -497,7 +497,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "maybe_file_list",
                         maybeFileList.get().getName(),
-                        RequestBody.create(maybeFileListMimeTypeMediaType, maybeFileList.get()));
+                        RequestBody.create(maybeFileList.get(), maybeFileListMimeTypeMediaType));
             }
             if (request.getMaybeInteger().isPresent()) {
                 QueryStringMapper.addFormDataPart(
@@ -598,7 +598,7 @@ public class AsyncRawServiceClient {
                 body.addFormDataPart(
                         "image_file",
                         imageFile.get().getName(),
-                        RequestBody.create(imageFileMimeTypeMediaType, imageFile.get()));
+                        RequestBody.create(imageFile.get(), imageFileMimeTypeMediaType));
             }
             if (request.getRequest().isPresent()) {
                 body.addFormDataPart(

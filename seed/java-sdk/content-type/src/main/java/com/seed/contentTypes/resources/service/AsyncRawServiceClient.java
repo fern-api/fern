@@ -44,8 +44,8 @@ public class AsyncRawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
-                    MediaType.parse("application/merge-patch+json"));
+                    MediaType.parse("application/merge-patch+json"),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }
