@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.15.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+         Propagate response headers for websocket errors onto the generated `ApiError` class.
+
 - version: 4.15.1
   irVersion: 57
   changelogEntry:
