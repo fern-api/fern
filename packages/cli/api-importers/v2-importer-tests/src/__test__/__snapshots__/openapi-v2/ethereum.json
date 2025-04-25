@@ -10895,10 +10895,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "sha3ParamExample",
-                      "value": "0x68656c6c6f20776f726c64"
-                    }
+                    "0x68656c6c6f20776f726c64"
                   ]
                 },
                 "response": {
@@ -36070,14 +36067,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "blockHashExample",
-                      "value": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
-                    },
-                    {
-                      "name": "indexExample",
-                      "value": "0x0"
-                    }
+                    "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+                    "0x0"
                   ]
                 },
                 "response": {},
@@ -47925,14 +47916,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "uncleBlockNumberExample",
-                      "value": "0x0"
-                    },
-                    {
-                      "name": "uncleBlockNumberIndexExample",
-                      "value": "0x0"
-                    }
+                    "0x0",
+                    "0x0"
                   ]
                 },
                 "response": {},
@@ -54964,21 +54949,9 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "nonceExample",
-                      "description": "example of a number only used once",
-                      "value": "0x0000000000000001"
-                    },
-                    {
-                      "name": "powHashExample",
-                      "description": "proof of work to submit",
-                      "value": "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22"
-                    },
-                    {
-                      "name": "mixHashExample",
-                      "description": "the mix digest example",
-                      "value": "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
-                    }
+                    "0x0000000000000001",
+                    "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+                    "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
                   ]
                 },
                 "response": {},

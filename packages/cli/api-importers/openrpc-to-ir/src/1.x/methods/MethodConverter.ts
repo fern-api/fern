@@ -236,6 +236,24 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
                 const exampleName = resolvedExample.name ?? `Example ${i + 1}`;
 
+                // Extract the request params from the example
+                let resolvedParams: ExampleObject[] = [];
+                if (resolvedExample.params && Array.isArray(resolvedExample.params)) {
+                    resolvedParams = [];
+                    for (const param of resolvedExample.params) {
+                        if (this.context.isReferenceObject(param)) {
+                            const resolvedParamResponse = await this.context.resolveReference<ExampleObject>(param);
+                            if (resolvedParamResponse.resolved) {
+                                resolvedParams.push(resolvedParamResponse.value);
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            resolvedParams.push(param);
+                        }
+                    }
+                }
+
                 // Create the example with request and response
                 examples[exampleName] = {
                     request: {
@@ -250,7 +268,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         pathParameters: {},
                         queryParameters: {},
                         headers: {},
-                        requestBody: resolvedExample.params ?? undefined
+                        requestBody: resolvedParams.map((param) => param.value) ?? undefined
                     },
                     response: {
                         docs: undefined,

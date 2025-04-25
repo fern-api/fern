@@ -15619,16 +15619,10 @@
                   "headers": {},
                   "requestBody": [
                     {
-                      "name": "Transaction",
-                      "value": {
-                        "to": "0x69498dd54bd25aa0c886cf1f8b8ae0856d55ff13",
-                        "value": "0x1"
-                      }
+                      "to": "0x69498dd54bd25aa0c886cf1f8b8ae0856d55ff13",
+                      "value": "0x1"
                     },
-                    {
-                      "name": "Block",
-                      "value": "latest"
-                    }
+                    "latest"
                   ]
                 },
                 "response": {
@@ -16500,12 +16494,9 @@
                   "headers": {},
                   "requestBody": [
                     {
-                      "name": "Transaction",
-                      "value": {
-                        "from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-                        "to": "0x44aa93095d6749a706051658b970b941c72c1d53",
-                        "value": "0x1"
-                      }
+                      "from": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+                      "to": "0x44aa93095d6749a706051658b970b941c72c1d53",
+                      "value": "0x1"
                     }
                   ]
                 },
@@ -17290,14 +17281,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Address",
-                      "value": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73"
-                    },
-                    {
-                      "name": "Block",
-                      "value": "latest"
-                    }
+                    "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+                    "latest"
                   ]
                 },
                 "response": {
@@ -17867,14 +17852,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Block hash",
-                      "value": "0xd5f1812548be429cbdc6376b29611fc49e06f1359758c4ceaaa3b393e2239f9c"
-                    },
-                    {
-                      "name": "Hydrated transactions",
-                      "value": false
-                    }
+                    "0xd5f1812548be429cbdc6376b29611fc49e06f1359758c4ceaaa3b393e2239f9c",
+                    false
                   ]
                 },
                 "response": {
@@ -18568,14 +18547,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Block number or tag",
-                      "value": "0x68b3"
-                    },
-                    {
-                      "name": "Hydrated transactions",
-                      "value": false
-                    }
+                    "0x68b3",
+                    false
                   ]
                 },
                 "response": {
@@ -19006,10 +18979,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Block hash",
-                      "value": "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"
-                    }
+                    "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"
                   ]
                 },
                 "response": {
@@ -19490,10 +19460,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Block number or tag",
-                      "value": "0xe8"
-                    }
+                    "0xe8"
                   ]
                 },
                 "response": {
@@ -20027,14 +19994,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Address",
-                      "value": "0xa50a51c09a5c451c52bb714527e1974b686d8e77"
-                    },
-                    {
-                      "name": "Block",
-                      "value": "latest"
-                    }
+                    "0xa50a51c09a5c451c52bb714527e1974b686d8e77",
+                    "latest"
                   ]
                 },
                 "response": {
@@ -20576,13 +20537,10 @@
                   "headers": {},
                   "requestBody": [
                     {
-                      "name": "Filter",
-                      "value": {
-                        "fromBlock": "0x137d3c2",
-                        "toBlock": "0x137d3c3",
-                        "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-                        "topics": []
-                      }
+                      "fromBlock": "0x137d3c2",
+                      "toBlock": "0x137d3c3",
+                      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                      "topics": []
                     }
                   ]
                 },
@@ -21376,21 +21334,12 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Address",
-                      "value": "0xe5cB067E90D5Cd1F8052B83562Ae670bA4A211a8"
-                    },
-                    {
-                      "name": "StorageKeys",
-                      "value": [
-                        "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-                        "0x283s34c8e2b1456f09832c71e5d6a0b4f8c9e1d3a2b5c7f0e6d4a8b2c1f3e5d7"
-                      ]
-                    },
-                    {
-                      "name": "Block",
-                      "value": "latest"
-                    }
+                    "0xe5cB067E90D5Cd1F8052B83562Ae670bA4A211a8",
+                    [
+                      "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                      "0x283s34c8e2b1456f09832c71e5d6a0b4f8c9e1d3a2b5c7f0e6d4a8b2c1f3e5d7"
+                    ],
+                    "latest"
                   ]
                 },
                 "response": {
@@ -22021,18 +21970,9 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Address",
-                      "value": "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73"
-                    },
-                    {
-                      "name": "Storage slot",
-                      "value": "0x0"
-                    },
-                    {
-                      "name": "Block",
-                      "value": "latest"
-                    }
+                    "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+                    "0x0",
+                    "latest"
                   ]
                 },
                 "response": {
@@ -22607,14 +22547,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Block hash",
-                      "value": "0xbf137c3a7a1ebdfac21252765e5d7f40d115c2757e4a4abee929be88c624fdb7"
-                    },
-                    {
-                      "name": "Transaction index",
-                      "value": "0x2"
-                    }
+                    "0xbf137c3a7a1ebdfac21252765e5d7f40d115c2757e4a4abee929be88c624fdb7",
+                    "0x2"
                   ]
                 },
                 "response": {
@@ -23292,14 +23226,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Block",
-                      "value": "0x1442e"
-                    },
-                    {
-                      "name": "Transaction index",
-                      "value": "0x2"
-                    }
+                    "0x1442e",
+                    "0x2"
                   ]
                 },
                 "response": {
@@ -23810,10 +23738,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Transaction hash",
-                      "value": "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44"
-                    }
+                    "0xa52be92809541220ee0aaaede6047d9a6c5d0cd96a517c854d944ee70a0ebb44"
                   ]
                 },
                 "response": {
@@ -24363,14 +24288,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Address",
-                      "value": "0xc94770007dda54cF92009BFF0dE90c06F603a09f"
-                    },
-                    {
-                      "name": "Block",
-                      "value": "latest"
-                    }
+                    "0xc94770007dda54cF92009BFF0dE90c06F603a09f",
+                    "latest"
                   ]
                 },
                 "response": {
@@ -24865,10 +24784,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Transaction hash",
-                      "value": "0x504ce587a65bdbdb6414a0c6c16d86a04dd79bfcc4f2950eec9634b30ce5370f"
-                    }
+                    "0x504ce587a65bdbdb6414a0c6c16d86a04dd79bfcc4f2950eec9634b30ce5370f"
                   ]
                 },
                 "response": {
@@ -25251,10 +25167,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Transaction",
-                      "value": "0xf869018203e882520894f17f52151ebef6c7334fad080c5704d77216b732881bc16d674ec80000801ba02da1c48b670996dcb1f447ef9ef00b33033c48a4fe938f420bec3e56bfd24071a062e0aa78a81bf0290afbc3a9d8e9a068e6d74caa66c5e0fa8a46deaae96b0833"
-                    }
+                    "0xf869018203e882520894f17f52151ebef6c7334fad080c5704d77216b732881bc16d674ec80000801ba02da1c48b670996dcb1f447ef9ef00b33033c48a4fe938f420bec3e56bfd24071a062e0aa78a81bf0290afbc3a9d8e9a068e6d74caa66c5e0fa8a46deaae96b0833"
                   ]
                 },
                 "response": {
@@ -26470,10 +26383,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "Data",
-                      "value": "0x68656c6c6f20776f726c64"
-                    }
+                    "0x68656c6c6f20776f726c64"
                   ]
                 },
                 "response": {

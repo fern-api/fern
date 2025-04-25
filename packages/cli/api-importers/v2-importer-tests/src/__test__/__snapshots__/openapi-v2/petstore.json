@@ -1573,10 +1573,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "limit",
-                      "value": 1
-                    }
+                    1
                   ]
                 },
                 "response": {
@@ -2068,14 +2065,8 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "newPetName",
-                      "value": "fluffy"
-                    },
-                    {
-                      "name": "tag",
-                      "value": "poodle"
-                    }
+                    "fluffy",
+                    "poodle"
                   ]
                 },
                 "response": {
@@ -2762,10 +2753,7 @@
                   "queryParameters": {},
                   "headers": {},
                   "requestBody": [
-                    {
-                      "name": "petId",
-                      "value": 7
-                    }
+                    7
                   ]
                 },
                 "response": {
