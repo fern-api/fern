@@ -1,4 +1,11 @@
-import { ContentDescriptorObject, MethodObject, OpenrpcDocument, ReferenceObject } from "@open-rpc/meta-schema";
+import {
+    ContentDescriptorObject,
+    ExampleObject,
+    ExamplePairingObject,
+    MethodObject,
+    OpenrpcDocument,
+    ReferenceObject
+} from "@open-rpc/meta-schema";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
@@ -9,7 +16,7 @@ import { AbstractConverterContext } from "@fern-api/v2-importer-commons";
  */
 export class OpenRPCConverterContext3_1 extends AbstractConverterContext<OpenrpcDocument> {
     public isReferenceObject(
-        parameter: MethodObject | ContentDescriptorObject | ReferenceObject
+        parameter: ExampleObject | ExamplePairingObject | MethodObject | ContentDescriptorObject | ReferenceObject
     ): parameter is ReferenceObject {
         return parameter != null && "$ref" in parameter;
     }
