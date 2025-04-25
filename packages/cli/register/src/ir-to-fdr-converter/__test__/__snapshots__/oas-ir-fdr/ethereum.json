@@ -2092,16 +2092,37 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "0x68656c6c6f20776f726c64"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "0x68656c6c6f20776f726c64"
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+              }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -2166,29 +2187,29 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
               "value": {
-                "id": 1,
                 "jsonrpc": "2.0",
+                "id": "1",
                 "result": true
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": 1,
                 "jsonrpc": "2.0",
+                "id": "1",
                 "result": true
               }
-            }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -4246,40 +4267,23 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+              "0x0"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+                "0x0"
+              ]
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {
-                  "gas": "foo",
-                  "gasPrice": "foo",
-                  "nonce": null
-                }
-              }
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {
-                  "gas": "foo",
-                  "gasPrice": "foo",
-                  "nonce": null
-                }
-              }
-            }
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -4948,16 +4952,23 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "0x0",
+              "0x0"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "0x0",
+                "0x0"
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -6156,32 +6167,25 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "0x0000000000000001",
+              "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+              "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "0x0000000000000001",
+                "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+                "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
+              ]
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
-            }
+            "codeSamples": []
           }
         ],
         "protocol": {

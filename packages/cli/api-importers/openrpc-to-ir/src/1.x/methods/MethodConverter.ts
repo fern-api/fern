@@ -225,7 +225,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 let resolvedResult: ExampleObject | undefined;
                 if (resolvedExample.result) {
                     if (this.context.isReferenceObject(resolvedExample.result)) {
-                        const resolvedResultResponse = await this.context.resolveReference<ExampleObject>(resolvedExample.result);
+                        const resolvedResultResponse = await this.context.resolveReference<ExampleObject>(
+                            resolvedExample.result
+                        );
                         if (resolvedResultResponse.resolved) {
                             resolvedResult = resolvedResultResponse.value;
                         }

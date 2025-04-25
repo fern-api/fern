@@ -188,16 +188,49 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              1
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                1
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": [
+                  {
+                    "id": 7,
+                    "name": "fluffy",
+                    "tag": "poodle"
+                  }
+                ]
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": [
+                  {
+                    "id": 7,
+                    "name": "fluffy",
+                    "tag": "poodle"
+                  }
+                ]
+              }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -298,16 +331,39 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "fluffy",
+              "poodle"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "fluffy",
+                "poodle"
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": 7
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": 7
+              }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -396,16 +452,45 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              7
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                7
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": {
+                  "name": "fluffy",
+                  "tag": "poodle",
+                  "id": 7
+                }
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": {
+                  "name": "fluffy",
+                  "tag": "poodle",
+                  "id": 7
+                }
+              }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
