@@ -557,6 +557,7 @@ class EndpointResponseCodeWriter:
         writer.write("raise ")
         writer.write_node(
             self._context.core_utilities.instantiate_api_error(
+                headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
                 body=AST.Expression(EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE),
                 status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
             )
@@ -666,6 +667,7 @@ class EndpointResponseCodeWriter:
         writer.write("raise ")
         writer.write_node(
             self._context.core_utilities.instantiate_api_error(
+                headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
                 body=AST.Expression(EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE),
                 status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
             )
@@ -690,6 +692,7 @@ class EndpointResponseCodeWriter:
             writer.write("raise ")
             writer.write_node(
                 self._context.core_utilities.instantiate_api_error(
+                    headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
                     body=AST.Expression(f"{RESPONSE_VARIABLE}.text"),
                     status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
                 )

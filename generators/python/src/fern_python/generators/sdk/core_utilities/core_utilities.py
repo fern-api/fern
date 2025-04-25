@@ -274,35 +274,50 @@ class CoreUtilities:
         )
 
     def instantiate_api_error(
-        self, *, status_code: Optional[AST.Expression], body: Optional[AST.Expression]
+        self,
+        *,
+        headers: Optional[AST.Expression],
+        status_code: Optional[AST.Expression],
+        body: Optional[AST.Expression],
     ) -> AST.AstNode:
         return self._instantiate_api_error(
-            constructor=AST.Expression(self.get_reference_to_api_error()), status_code=status_code, body=body
+            constructor=AST.Expression(self.get_reference_to_api_error()),
+            headers=headers,
+            status_code=status_code,
+            body=body,
         )
 
     def instantiate_api_error_from_subclass(
-        self, *, status_code: Optional[AST.Expression], body: Optional[AST.Expression]
+        self,
+        *,
+        headers: Optional[AST.Expression],
+        status_code: Optional[AST.Expression],
+        body: Optional[AST.Expression],
     ) -> AST.AstNode:
         return self._instantiate_api_error(
-            constructor=AST.Expression("super().__init__"), status_code=status_code, body=body
+            constructor=AST.Expression("super().__init__"), headers=headers, status_code=status_code, body=body
         )
 
     def _instantiate_api_error(
         self,
         *,
         constructor: AST.Expression,
+        headers: Optional[AST.Expression],
         status_code: Optional[AST.Expression],
         body: Optional[AST.Expression],
     ) -> AST.AstNode:
         def _write(writer: AST.NodeWriter) -> None:
             writer.write_node(constructor)
             writer.write("(")
+            if headers is not None:
+                writer.write("headers=dict(")
+                writer.write_node(headers)
+                writer.write("), ")
             if status_code is not None:
                 writer.write("status_code=")
                 writer.write_node(status_code)
+                writer.write(", ")
             if body is not None:
-                if status_code is not None:
-                    writer.write(", ")
                 writer.write("body=")
                 writer.write_node(body)
             writer.write_line(")")

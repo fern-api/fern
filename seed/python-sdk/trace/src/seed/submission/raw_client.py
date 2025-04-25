@@ -43,7 +43,7 @@ class RawSubmissionClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 ExecutionSessionResponse,
@@ -53,7 +53,7 @@ class RawSubmissionClient:
                 ),
             )
             return HttpResponse(response=_response, data=_data)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def get_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -80,7 +80,7 @@ class RawSubmissionClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.Optional[ExecutionSessionResponse],
@@ -90,7 +90,7 @@ class RawSubmissionClient:
                 ),
             )
             return HttpResponse(response=_response, data=_data)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def stop_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -119,8 +119,8 @@ class RawSubmissionClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def get_execution_sessions_state(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -143,7 +143,7 @@ class RawSubmissionClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 GetExecutionSessionStateResponse,
@@ -153,7 +153,7 @@ class RawSubmissionClient:
                 ),
             )
             return HttpResponse(response=_response, data=_data)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
 
 class AsyncRawSubmissionClient:
@@ -185,7 +185,7 @@ class AsyncRawSubmissionClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 ExecutionSessionResponse,
@@ -195,7 +195,7 @@ class AsyncRawSubmissionClient:
                 ),
             )
             return AsyncHttpResponse(response=_response, data=_data)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def get_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -222,7 +222,7 @@ class AsyncRawSubmissionClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.Optional[ExecutionSessionResponse],
@@ -232,7 +232,7 @@ class AsyncRawSubmissionClient:
                 ),
             )
             return AsyncHttpResponse(response=_response, data=_data)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def stop_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -261,8 +261,8 @@ class AsyncRawSubmissionClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def get_execution_sessions_state(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -285,7 +285,7 @@ class AsyncRawSubmissionClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 GetExecutionSessionStateResponse,
@@ -295,4 +295,4 @@ class AsyncRawSubmissionClient:
                 ),
             )
             return AsyncHttpResponse(response=_response, data=_data)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)

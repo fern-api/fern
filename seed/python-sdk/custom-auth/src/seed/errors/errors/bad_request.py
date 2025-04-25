@@ -5,4 +5,6 @@ from ...core.api_error import ApiError
 
 class BadRequest(ApiError):
     def __init__(self) -> None:
-        super().__init__(status_code=400)
+        super().__init__(
+            status_code=400,
+        )

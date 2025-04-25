@@ -40,6 +40,7 @@ class ErrorGenerator:
     def _write_constructor_body(self, writer: AST.NodeWriter) -> None:
         writer.write_node(
             self._context.core_utilities.instantiate_api_error_from_subclass(
+                headers=None,
                 status_code=AST.Expression(f"{self._error.status_code}"),
                 body=AST.Expression(ErrorGenerator._BODY_PARAMETER_NAME) if self._error.type is not None else None,
             )
