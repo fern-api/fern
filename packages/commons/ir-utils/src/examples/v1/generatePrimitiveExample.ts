@@ -26,6 +26,7 @@ export function generatePrimitiveExample({
         case "STRING": {
             return generatePrimitiveStringExample({
                 fieldName,
+                default_: maybeStringDefault(primitiveType.v2),
                 validation: maybeStringValidation(primitiveType.v2)
             });
         }
@@ -91,6 +92,19 @@ export function generatePrimitiveExample({
     }
 }
 
+/**
+ * Extracts the default value from a string primitive type if available
+ * @param v2 The primitive type V2 definition
+ * @returns The default value if present, otherwise undefined
+ */
+function maybeStringDefault(v2: PrimitiveTypeV2 | undefined): string | undefined {
+    if (v2?.type === "string") {
+        return v2.default;
+    }
+    return undefined;
+}
+
+
 function maybeStringValidation(v2: PrimitiveTypeV2 | undefined): StringValidationRules | undefined {
     if (v2?.type === "string") {
         const stringType = v2 as PrimitiveTypeV2.String;
@@ -132,11 +146,16 @@ function getStringExampleOfLength(length: number): string {
 
 function generatePrimitiveStringExample({
     fieldName,
+    default_,
     validation
 }: {
     fieldName: string | undefined;
+    default_: string | undefined;
     validation: StringValidationRules | undefined;
 }): ExampleGenerationSuccess<ExamplePrimitive> {
+    if (default_ != null) {
+        return { type: "success", example: ExamplePrimitive.string({ original: default_ }), jsonExample: default_ };
+    }
     if (validation) {
         const minLength = validation.minLength;
         const maxLength = validation.maxLength;
