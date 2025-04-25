@@ -104,7 +104,6 @@ function maybeStringDefault(v2: PrimitiveTypeV2 | undefined): string | undefined
     return undefined;
 }
 
-
 function maybeStringValidation(v2: PrimitiveTypeV2 | undefined): StringValidationRules | undefined {
     if (v2?.type === "string") {
         const stringType = v2 as PrimitiveTypeV2.String;
