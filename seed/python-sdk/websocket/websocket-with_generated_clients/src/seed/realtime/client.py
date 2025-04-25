@@ -69,8 +69,16 @@ class RealtimeClient:
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
-                raise ApiError(status_code=status_code, body="Websocket initialized with invalid credentials.")
-            raise ApiError(status_code=status_code, body="Unexpected error when initializing websocket connection.")
+                raise ApiError(
+                    headers=dict(headers),
+                    status_code=status_code,
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                headers=dict(headers),
+                status_code=status_code,
+                body="Unexpected error when initializing websocket connection.",
+            )
 
 
 class AsyncRealtimeClient:
@@ -129,5 +137,13 @@ class AsyncRealtimeClient:
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
-                raise ApiError(status_code=status_code, body="Websocket initialized with invalid credentials.")
-            raise ApiError(status_code=status_code, body="Unexpected error when initializing websocket connection.")
+                raise ApiError(
+                    headers=dict(headers),
+                    status_code=status_code,
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                headers=dict(headers),
+                status_code=status_code,
+                body="Unexpected error when initializing websocket connection.",
+            )
