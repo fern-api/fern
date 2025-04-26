@@ -11,6 +11,8 @@
 
 <br/>
 
+Fern is awesome. 
+
 [![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
