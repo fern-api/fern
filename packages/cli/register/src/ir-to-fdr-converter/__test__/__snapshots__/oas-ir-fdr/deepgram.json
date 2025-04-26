@@ -15356,7 +15356,7 @@
               "path": "/v1/listen",
               "pathParameters": {},
               "queryParameters": {
-                "diarize_version": "diarize_version"
+                "diarize_version": "v2"
               },
               "headers": {
                 "Authorization": "Authorization"

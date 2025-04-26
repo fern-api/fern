@@ -1,5 +1,15 @@
 - changelogEntry:
   - summary: |
+      Enhance example generation to consider default values when generating examples for primitive types. 
+      When a string primitive type has a default value specified, the example generator now uses this 
+      default value instead of a generic example. This produces more realistic and contextually 
+      appropriate examples in generated SDKs and documentation.
+    type: feat
+  irVersion: 57
+  version: 0.58.2
+
+- changelogEntry:
+  - summary: |
       Add support for OpenRPC example parsing and rendering realistic requests and responses.
     type: fix
   irVersion: 57
