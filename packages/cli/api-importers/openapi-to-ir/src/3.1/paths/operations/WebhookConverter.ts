@@ -14,13 +14,6 @@ export class WebhookConverter extends AbstractOperationConverter {
     }
 
     public async convert(): Promise<WebhookConverter.Output | undefined> {
-        if (this.operation.operationId == null) {
-            this.context.errorCollector.collect({
-                message: "Skipping webhook because no operation id present",
-                path: this.breadcrumbs
-            });
-            return undefined;
-        }
         if (this.operation.requestBody == null) {
             this.context.errorCollector.collect({
                 message: "Skipping webhook because no request body present",
