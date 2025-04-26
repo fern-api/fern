@@ -138,9 +138,30 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         const groupToWebhooks: Record<string, string[]> = {};
 
         for (const [, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {
-            if (webhookItem == null || !("post" in webhookItem) || !webhookItem.post?.operationId) {
-                continue;
+            if (webhookItem == null) {
+                this.context.errorCollector.collect({
+                    message: "Skipping empty webhook",
+                    path: this.breadcrumbs
+                });
+                return undefined;
             }
+
+            if (!("post" in webhookItem)) {
+                this.context.errorCollector.collect({
+                    message: "Skipping webhook because non-POST method",
+                    path: this.breadcrumbs
+                });
+                return undefined;
+            }
+
+            if (webhookItem.post?.operationId == null) {
+                this.context.errorCollector.collect({
+                    message: "Skipping webhook because no operation id present",
+                    path: this.breadcrumbs
+                });
+                return undefined;
+            }
+
             const operationId = webhookItem.post.operationId;
             const webHookConverter = new WebhookConverter({
                 context: this.context,
