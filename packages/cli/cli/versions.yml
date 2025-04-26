@@ -104,6 +104,13 @@
     type: fix
   irVersion: 57
   version: 0.57.26
+    
+- changelogEntry:
+  - summary: |
+      Local development mode for app router now uses the production bundle for previews.
+    type: feat
+  irVersion: 57
+  version: 0.58.1-rc0
   
 - changelogEntry:
   - summary: |
