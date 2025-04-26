@@ -171,9 +171,11 @@ export async function downloadBundle({
 
     if (app) {
         // install esbuild
-        await loggingExeca(logger, "pnpm", ["i", "esbuild"]);
+        logger.debug("Installing esbuild in directory:");
+        await loggingExeca(logger, "pnpm", ["i", "esbuild"], { cwd: absolutePathToBundleFolder });
         // resolve imports
-        await loggingExeca(logger, "node", ["install-esbuild.js"]);
+        logger.debug("Resolve esbuild imports");
+        await loggingExeca(logger, "node", ["install-esbuild.js"], { cwd: absolutePathToBundleFolder });
     }
 
     return {
