@@ -1,0 +1,28 @@
+name: Label Issues and PRs
+
+on:
+  issues:
+    types: [opened, reopened]
+  pull_request:
+    types: [opened, reopened]
+  schedule:
+    - cron: '0 */6 * * *'  # Run every 6 hours
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  add-labels:
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: read
+
+    steps:
+      - name: Label Issues and PRs with Gemini AI
+        uses: Prachi-Jamdade/auto-labeler@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
+          label-mapping: '{ "bug": "bug", "feature": "enhancement", "enhancement": "enhancement", "documentation": "documentation", "question": "question", "security": "security", "performance": "performance"}'
+          max-issues: 20
