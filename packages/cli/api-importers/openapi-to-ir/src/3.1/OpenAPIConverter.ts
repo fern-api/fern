@@ -84,7 +84,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 securityScheme: resolvedSecurityScheme
             });
             const convertedScheme = securitySchemeConverter.convert();
-            if (convertedScheme != null && topLevelSchemes.has(id)) {
+            // if no top level schemes, then just add the scheme to the whole api
+            if (convertedScheme != null && (topLevelSchemes.size === 0 || topLevelSchemes.has(id))) {
                 securitySchemes.push(convertedScheme);
             } else if (convertedScheme != null) {
                 idToAuthScheme[id] = convertedScheme;

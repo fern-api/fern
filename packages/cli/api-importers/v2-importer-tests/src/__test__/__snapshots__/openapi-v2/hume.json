@@ -19,8 +19,49 @@
     }
   },
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "name": {
+          "name": {
+            "originalName": "X-Hume-Api-Key",
+            "camelCase": {
+              "unsafeName": "xHumeApiKey",
+              "safeName": "xHumeApiKey"
+            },
+            "snakeCase": {
+              "unsafeName": "x_hume_api_key",
+              "safeName": "x_hume_api_key"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "X_HUME_API_KEY",
+              "safeName": "X_HUME_API_KEY"
+            },
+            "pascalCase": {
+              "unsafeName": "XHumeApiKey",
+              "safeName": "XHumeApiKey"
+            }
+          },
+          "wireValue": "X-Hume-Api-Key"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "type": "header"
+      }
+    ]
   },
   "headers": [],
   "environments": {

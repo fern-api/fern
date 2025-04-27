@@ -1,7 +1,30 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      }
+    ]
   },
   "types": {
     "ClientProvidedResponseMetadata": {

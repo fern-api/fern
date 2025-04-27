@@ -1,7 +1,49 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "name": {
+          "name": {
+            "originalName": "API-Key",
+            "camelCase": {
+              "unsafeName": "apiKey",
+              "safeName": "apiKey"
+            },
+            "snakeCase": {
+              "unsafeName": "api_key",
+              "safeName": "api_key"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "API_KEY",
+              "safeName": "API_KEY"
+            },
+            "pascalCase": {
+              "unsafeName": "ApiKey",
+              "safeName": "ApiKey"
+            }
+          },
+          "wireValue": "API-Key"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "docs": "API Key based client identification. See details at [Secure Access](https://dx.apiture.com/docs/api-documentation/secure-access).",
+        "type": "header"
+      }
+    ]
   },
   "types": {
     "accountIds": {

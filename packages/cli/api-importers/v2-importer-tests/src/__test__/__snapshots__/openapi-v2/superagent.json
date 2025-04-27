@@ -1,7 +1,70 @@
 {
   "auth": {
-    "requirement": "ALL",
-    "schemes": []
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "type": "bearer"
+      },
+      {
+        "name": {
+          "name": {
+            "originalName": "X_SUPERAGENT_API_KEY",
+            "camelCase": {
+              "unsafeName": "xSuperagentApiKey",
+              "safeName": "xSuperagentApiKey"
+            },
+            "snakeCase": {
+              "unsafeName": "x_superagent_api_key",
+              "safeName": "x_superagent_api_key"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "X_SUPERAGENT_API_KEY",
+              "safeName": "X_SUPERAGENT_API_KEY"
+            },
+            "pascalCase": {
+              "unsafeName": "XSuperagentApiKey",
+              "safeName": "XSuperagentApiKey"
+            }
+          },
+          "wireValue": "X_SUPERAGENT_API_KEY"
+        },
+        "valueType": {
+          "container": {
+            "optional": {
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "type": "string"
+                }
+              },
+              "type": "primitive"
+            },
+            "type": "optional"
+          },
+          "type": "container"
+        },
+        "type": "header"
+      }
+    ]
   },
   "types": {
     "AgentLlm": {
