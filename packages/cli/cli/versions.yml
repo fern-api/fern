@@ -24,7 +24,7 @@
       Local development is now available for all machines using `fern-dev`. 
     type: feat
   irVersion: 57
-  version: 0.58.3-rc0
+  version: 0.58.4-rc0
 
 - changelogEntry:
   - summary: |
