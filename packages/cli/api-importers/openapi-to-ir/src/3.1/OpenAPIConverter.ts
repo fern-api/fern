@@ -26,13 +26,13 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             context: this.context
         }) as OpenAPIV3_1.Document;
 
-        await this.convertSecuritySchemes();
+        const idToAuthScheme = await this.convertSecuritySchemes();
 
         await this.convertSchemas();
 
         await this.convertWebhooks();
 
-        const { endpointLevelServers } = await this.convertPaths();
+        const { endpointLevelServers } = await this.convertPaths({ idToAuthScheme });
 
         this.convertServers({ endpointLevelServers });
 
@@ -56,7 +56,13 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         return ir;
     }
 
-    private async convertSecuritySchemes(): Promise<void> {
+    private async convertSecuritySchemes(): Promise<Record<string, AuthScheme>> {
+        const topLevelSchemes = new Set<string>(
+            this.context.spec.security?.flatMap(securityRequirement => Object.keys(securityRequirement)) ?? []
+        );
+
+        // Create a map to store converted auth schemes by their ID
+        const idToAuthScheme: Record<string, AuthScheme> = {};
         const securitySchemes: AuthScheme[] = [];
 
         for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
@@ -78,8 +84,10 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 securityScheme: resolvedSecurityScheme
             });
             const convertedScheme = securitySchemeConverter.convert();
-            if (convertedScheme != null) {
+            if (convertedScheme != null && topLevelSchemes.has(id)) {
                 securitySchemes.push(convertedScheme);
+            } else if (convertedScheme != null) {
+                idToAuthScheme[id] = convertedScheme;
             }
         }
 
@@ -90,6 +98,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 docs: undefined
             };
         }
+
+        return idToAuthScheme;
     }
 
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): void {
@@ -198,7 +208,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         }
     }
 
-    private async convertPaths(): Promise<{ endpointLevelServers?: OpenAPIV3_1.ServerObject[] }> {
+    private async convertPaths({
+        idToAuthScheme
+    }: {
+        idToAuthScheme: Record<string, AuthScheme>
+    }): Promise<{ endpointLevelServers?: OpenAPIV3_1.ServerObject[] }> {
         const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
 
         for (const [path, pathItem] of Object.entries(this.context.spec.paths ?? {})) {

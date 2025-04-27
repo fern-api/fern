@@ -1,30 +1,7 @@
 {
   "auth": {
-    "requirement": "ANY",
-    "schemes": [
-      {
-        "token": {
-          "originalName": "token",
-          "camelCase": {
-            "unsafeName": "token",
-            "safeName": "token"
-          },
-          "snakeCase": {
-            "unsafeName": "token",
-            "safeName": "token"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TOKEN",
-            "safeName": "TOKEN"
-          },
-          "pascalCase": {
-            "unsafeName": "Token",
-            "safeName": "Token"
-          }
-        },
-        "type": "bearer"
-      }
-    ]
+    "requirement": "ALL",
+    "schemes": []
   },
   "types": {
     "Record_string.never_": {

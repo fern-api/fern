@@ -1,49 +1,7 @@
 {
   "auth": {
-    "requirement": "ANY",
-    "schemes": [
-      {
-        "name": {
-          "name": {
-            "originalName": "X_API_KEY",
-            "camelCase": {
-              "unsafeName": "xApiKey",
-              "safeName": "xApiKey"
-            },
-            "snakeCase": {
-              "unsafeName": "x_api_key",
-              "safeName": "x_api_key"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "X_API_KEY",
-              "safeName": "X_API_KEY"
-            },
-            "pascalCase": {
-              "unsafeName": "XApiKey",
-              "safeName": "XApiKey"
-            }
-          },
-          "wireValue": "X_API_KEY"
-        },
-        "valueType": {
-          "container": {
-            "optional": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "type": "string"
-                }
-              },
-              "type": "primitive"
-            },
-            "type": "optional"
-          },
-          "type": "container"
-        },
-        "docs": "API key based authentication",
-        "type": "header"
-      }
-    ]
+    "requirement": "ALL",
+    "schemes": []
   },
   "types": {
     "BlockTypeEnum": {

@@ -1,48 +1,7 @@
 {
   "auth": {
-    "requirement": "ANY",
-    "schemes": [
-      {
-        "name": {
-          "name": {
-            "originalName": "x-access-token",
-            "camelCase": {
-              "unsafeName": "xAccessToken",
-              "safeName": "xAccessToken"
-            },
-            "snakeCase": {
-              "unsafeName": "x_access_token",
-              "safeName": "x_access_token"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "X_ACCESS_TOKEN",
-              "safeName": "X_ACCESS_TOKEN"
-            },
-            "pascalCase": {
-              "unsafeName": "XAccessToken",
-              "safeName": "XAccessToken"
-            }
-          },
-          "wireValue": "x-access-token"
-        },
-        "valueType": {
-          "container": {
-            "optional": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "type": "string"
-                }
-              },
-              "type": "primitive"
-            },
-            "type": "optional"
-          },
-          "type": "container"
-        },
-        "type": "header"
-      }
-    ]
+    "requirement": "ALL",
+    "schemes": []
   },
   "types": {
     "Account": {

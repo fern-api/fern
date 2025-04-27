@@ -1,31 +1,7 @@
 {
   "auth": {
-    "requirement": "ANY",
-    "schemes": [
-      {
-        "token": {
-          "originalName": "token",
-          "camelCase": {
-            "unsafeName": "token",
-            "safeName": "token"
-          },
-          "snakeCase": {
-            "unsafeName": "token",
-            "safeName": "token"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TOKEN",
-            "safeName": "TOKEN"
-          },
-          "pascalCase": {
-            "unsafeName": "Token",
-            "safeName": "Token"
-          }
-        },
-        "docs": "Endpoints that support authorization expect Bearer authentication, using an API token provided from Val Town.",
-        "type": "bearer"
-      }
-    ]
+    "requirement": "ALL",
+    "schemes": []
   },
   "types": {
     "UserLinks": {
