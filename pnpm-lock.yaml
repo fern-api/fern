@@ -6354,6 +6354,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../logger
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../commons/logging-execa
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../project-loader
