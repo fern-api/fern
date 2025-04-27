@@ -164,7 +164,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path,
             idempotent: isIdempotent,
-            idToAuthScheme: this.idToAuthScheme,
+            idToAuthScheme: this.idToAuthScheme
         });
         return await operationConverter.convert();
     }

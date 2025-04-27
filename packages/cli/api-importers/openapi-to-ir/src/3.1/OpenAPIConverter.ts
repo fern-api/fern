@@ -58,7 +58,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
     private async convertSecuritySchemes(): Promise<Record<string, AuthScheme>> {
         const topLevelSchemes = new Set<string>(
-            this.context.spec.security?.flatMap(securityRequirement => Object.keys(securityRequirement)) ?? []
+            this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
         );
 
         // Create a map to store converted auth schemes by their ID
@@ -212,7 +212,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
     private async convertPaths({
         idToAuthScheme
     }: {
-        idToAuthScheme: Record<string, AuthScheme>
+        idToAuthScheme: Record<string, AuthScheme>;
     }): Promise<{ endpointLevelServers?: OpenAPIV3_1.ServerObject[] }> {
         const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
 

@@ -29,7 +29,16 @@ export class OperationConverter extends AbstractOperationConverter {
 
     private static readonly AUTHORIZATION_HEADER = "Authorization";
 
-    constructor({ context, breadcrumbs, operation, method, path, idempotent, servers, idToAuthScheme }: OperationConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        operation,
+        method,
+        path,
+        idempotent,
+        servers,
+        idToAuthScheme
+    }: OperationConverter.Args) {
         super({ context, breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
         this.servers = servers;
@@ -89,7 +98,7 @@ export class OperationConverter extends AbstractOperationConverter {
         });
 
         const endpointLevelSecuritySchemes = new Set<string>(
-            this.operation.security?.flatMap(securityRequirement => Object.keys(securityRequirement)) ?? []
+            this.operation.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
         );
         // Convert security scheme IDs to HTTP headers and add them to existing headers
         const securityHeaders = this.authSchemeToHeaders(Array.from(endpointLevelSecuritySchemes));
@@ -108,8 +117,8 @@ export class OperationConverter extends AbstractOperationConverter {
                 path,
                 pathParameters,
                 queryParameters,
-                headers: headers.filter((header, index, self) => 
-                    index === self.findIndex((h) => h.name.wireValue === header.name.wireValue)
+                headers: headers.filter(
+                    (header, index, self) => index === self.findIndex((h) => h.name.wireValue === header.name.wireValue)
                 ),
                 requestBody,
                 sdkRequest: undefined,
@@ -150,13 +159,13 @@ export class OperationConverter extends AbstractOperationConverter {
      */
     private authSchemeToHeaders(securitySchemeIds: string[]): FernIr.HttpHeader[] {
         const headers: FernIr.HttpHeader[] = [];
-        
+
         for (const id of securitySchemeIds) {
             const authScheme = this.idToAuthScheme?.[id];
             if (authScheme == null) {
                 continue;
             }
-            
+
             switch (authScheme.type) {
                 case "bearer":
                     headers.push({
@@ -168,7 +177,7 @@ export class OperationConverter extends AbstractOperationConverter {
                         availability: undefined,
                         docs: undefined,
                         env: undefined,
-                        v2Examples: undefined                                                                     
+                        v2Examples: undefined
                     });
                     break;
                 case "basic":
@@ -181,7 +190,7 @@ export class OperationConverter extends AbstractOperationConverter {
                         availability: undefined,
                         docs: undefined,
                         env: undefined,
-                        v2Examples: undefined                                                                     
+                        v2Examples: undefined
                     });
                     break;
                 case "header":
@@ -191,12 +200,12 @@ export class OperationConverter extends AbstractOperationConverter {
                         availability: undefined,
                         docs: undefined,
                         env: undefined,
-                        v2Examples: undefined                                                                     
+                        v2Examples: undefined
                     });
                     break;
             }
         }
-        
+
         return headers;
     }
 
