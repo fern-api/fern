@@ -16,6 +16,7 @@ import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.Object;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.util.Objects;
 
 @JsonDeserialize(
@@ -36,6 +37,7 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
     return this.value;
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T visit(Visitor<T> visitor) {
     if(this.type == 0) {
       return visitor.visit((AliasVariant) this.value);

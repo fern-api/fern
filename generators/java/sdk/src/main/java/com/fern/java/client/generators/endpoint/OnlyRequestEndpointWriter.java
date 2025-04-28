@@ -227,7 +227,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             if (isOptional) {
                 codeBlock
                         .addStatement(
-                                "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
+                                "$L = $T.create(null, \"\")", variables.getOkhttpRequestBodyName(), RequestBody.class)
                         .beginControlFlow("if ($N.isPresent())", "request");
             }
 
@@ -259,13 +259,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
             codeBlock
                     .addStatement(
-                            "$L = $T.create($T.$L.writeValueAsBytes($L), $L)",
+                            "$L = $T.create($L, $T.$L.writeValueAsBytes($L))",
                             variables.getOkhttpRequestBodyName(),
                             RequestBody.class,
+                            requestBodyContentType,
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
-                            requestBodyGetter,
-                            requestBodyContentType)
+                            requestBodyGetter)
                     .endControlFlow();
             if (isOptional) {
                 codeBlock.endControlFlow();

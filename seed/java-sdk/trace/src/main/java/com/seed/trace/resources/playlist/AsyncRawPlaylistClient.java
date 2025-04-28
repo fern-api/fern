@@ -69,7 +69,7 @@ public class AsyncRawPlaylistClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -280,10 +280,10 @@ public class AsyncRawPlaylistClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create("", null);
+            body = RequestBody.create(null, "");
             if (request.isPresent()) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
             }
         } catch (JsonProcessingException e) {
             throw new SeedTraceException("Failed to serialize request", e);

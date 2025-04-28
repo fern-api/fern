@@ -29,6 +29,7 @@ public final class TorU {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visit((com.seed.api.model.ast.T) this.value);

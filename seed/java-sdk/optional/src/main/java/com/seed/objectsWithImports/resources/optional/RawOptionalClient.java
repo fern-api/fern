@@ -45,10 +45,10 @@ public class RawOptionalClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create("", null);
+            body = RequestBody.create(null, "");
             if (request.isPresent()) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
             }
         } catch (JsonProcessingException e) {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
