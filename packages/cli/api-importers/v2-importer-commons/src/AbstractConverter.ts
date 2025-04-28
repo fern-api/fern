@@ -107,7 +107,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                     if (this.context.isReferenceObject(current[i])) {
                         // repeatedly resolve nested refs until we get a definition to check whether it's external
                         let depth = 0;
-                        while (this.context.isReferenceObject(resolvedRefVal) && depth < 10) {
+                        while (this.context.isReferenceObject(resolvedRefVal)) {
                             resolvedRefVal = await context.resolveReference({ $ref: resolvedRefVal.$ref });
                             if (resolvedRefVal.resolved) {
                                 resolvedRefVal = resolvedRefVal.value;
@@ -129,7 +129,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                     let resolvedRefVal = value;
                     if (this.context.isReferenceObject(value)) {
                         let depth = 0;
-                        while (this.context.isReferenceObject(resolvedRefVal) && depth < 10) {
+                        while (this.context.isReferenceObject(resolvedRefVal)) {
                             resolvedRefVal = await context.resolveReference({ $ref: resolvedRefVal.$ref });
                             if (resolvedRefVal.resolved) {
                                 resolvedRefVal = resolvedRefVal.value;
@@ -138,6 +138,10 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                                 break;
                             }
                             depth++;
+                        }
+                        if (resolvedRefVal != null) {
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            (current as any)[key] = resolvedRefVal;
                         }
                     } else {
                         queue.push(value);

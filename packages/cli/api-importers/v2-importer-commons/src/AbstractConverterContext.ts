@@ -232,9 +232,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         if (externalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
             resolvedReference = await this.resolveNestedExternalReferences(resolvedReference, externalDoc);
-        } else if (this.isReferenceObject(resolvedReference) && this.isExternalReference(resolvedReference.$ref)) {
-            return await this.resolveReference(resolvedReference as OpenAPIV3_1.ReferenceObject);
         }
+        // else if (this.isReferenceObject(resolvedReference) && this.isExternalReference(resolvedReference.$ref)) {
+        //     return await this.resolveReference(resolvedReference as OpenAPIV3_1.ReferenceObject);
+        // }
 
         return { resolved: true, value: resolvedReference as unknown as T, externalRef };
     }
