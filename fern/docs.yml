@@ -356,6 +356,7 @@ navigation:
             path: ./pages/docs/getting-started/publishing-your-docs.mdx
             icon: fa-regular fa-cloud-arrow-up
           - changelog: ./pages/changelogs/docs
+            title: Feature Highlights
 
 
       - section: Building and Customizing Your Docs
