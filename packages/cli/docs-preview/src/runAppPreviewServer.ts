@@ -62,7 +62,8 @@ export async function runAppPreviewServer({
     validateProject,
     context,
     port,
-    bundlePath
+    bundlePath,
+    backendPort
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -70,6 +71,7 @@ export async function runAppPreviewServer({
     context: TaskContext;
     port: number;
     bundlePath?: string;
+    backendPort: number;
 }): Promise<void> {
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
@@ -97,17 +99,17 @@ export async function runAppPreviewServer({
 
     const bundleRoot = bundlePath || getPathToBundleFolder({ app: true });
     const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
-    const backendPort = port + 1;
 
     const env = {
         ...process.env,
         PORT: port.toString(),
         HOSTNAME: "0.0.0.0",
+        NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
         NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
         NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
         NEXT_PUBLIC_IS_LOCAL: "1",
         NEXT_DISABLE_CACHE: "1",
-        NODE_ENV: "development",
+        NODE_ENV: "production",
         NODE_PATH: bundleRoot
     };
 
@@ -314,8 +316,8 @@ export async function runAppPreviewServer({
     });
 
     app.listen(backendPort);
-
-    context.logger.debug(`Running server on http://localhost:${backendPort}`);
+    context.logger.info(chalk.dim(`[Backend server running on http://localhost:${backendPort}]`));
+    context.logger.info(`Development server ready on http://localhost:${port}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function

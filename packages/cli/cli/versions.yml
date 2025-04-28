@@ -29,6 +29,13 @@
   
 - changelogEntry:
   - summary: |
+      Local development now supports adjusting the backend server to use open ports.
+    type: feat
+  irVersion: 57
+  version: 0.58.4
+  
+- changelogEntry:
+  - summary: |
       Local development is now available for all machines using `fern-dev`. 
     type: feat
   irVersion: 57
