@@ -124,9 +124,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                             (current as any)[key] = resolvedRef.value;
                         }
                         continue;
-                    }
-
-                    if (typeof value === "object" && value !== null) {
+                    } else {
                         queue.push(value);
                     }
                 }
