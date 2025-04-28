@@ -93,19 +93,13 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
     public abstract convert(): Output | undefined | Promise<Output | undefined>;
 
     protected async resolveExternalRefs({ spec, context }: { spec: unknown; context: Context }): Promise<unknown> {
-        type QueueItem = {
-            current: unknown;
-            breadcrumbs: (string | number)[];
-        };
-
-        const queue: QueueItem[] = [{ current: spec, breadcrumbs: [] }];
+        const queue = [spec];
 
         while (queue.length > 0) {
-            const item = queue.shift();
-            if (item == null) {
+            const current = queue.shift();
+            if (current == null) {
                 continue;
             }
-            const { current, breadcrumbs } = item;
 
             if (Array.isArray(current)) {
                 for (let i = 0; i < current.length; i++) {
@@ -118,10 +112,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                             current[i] = resolvedRef.value;
                         }
                     } else {
-                        queue.push({
-                            current: current[i],
-                            breadcrumbs: [...breadcrumbs, i]
-                        });
+                        queue.push(current[i]);
                     }
                 }
             } else if (current != null && typeof current === "object") {
@@ -136,10 +127,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                     }
 
                     if (typeof value === "object" && value !== null) {
-                        queue.push({
-                            current: value,
-                            breadcrumbs: [...breadcrumbs, key]
-                        });
+                        queue.push(value);
                     }
                 }
             }
