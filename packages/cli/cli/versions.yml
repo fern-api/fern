@@ -1,7 +1,7 @@
 - changelogEntry:
   - summary: |
-      Add support for parsing publicly accessible external $ref's over HTTP in OpenAPI. External references 
-      can now be used to define request and response bodies, headers, parameters, schemas, and more.
+      Add support for external $ref's to OpenAPI converter. Publicly-available external references hosted over HTTP(S)
+      can now be used to define request/response bodies, headers, parameters, schemas, and more.
     type: feat
   irVersion: 57
   version: 0.58.4
