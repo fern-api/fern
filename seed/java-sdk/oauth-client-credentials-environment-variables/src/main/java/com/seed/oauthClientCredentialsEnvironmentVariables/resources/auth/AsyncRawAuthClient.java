@@ -48,7 +48,7 @@ public class AsyncRawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedOauthClientCredentialsEnvironmentVariablesException("Failed to serialize request", e);
         }
@@ -111,7 +111,7 @@ public class AsyncRawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedOauthClientCredentialsEnvironmentVariablesException("Failed to serialize request", e);
         }

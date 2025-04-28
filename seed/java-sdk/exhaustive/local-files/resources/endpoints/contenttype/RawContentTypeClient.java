@@ -49,7 +49,7 @@ public class RawContentTypeClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaType.parse("application/json-patch+json"), ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json"));
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -94,7 +94,7 @@ public class RawContentTypeClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaType.parse("application/json-patch+json; charset=utf-8"), ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json; charset=utf-8"));
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);

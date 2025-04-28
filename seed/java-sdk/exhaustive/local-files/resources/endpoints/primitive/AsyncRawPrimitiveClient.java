@@ -53,7 +53,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -107,7 +107,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -161,7 +161,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -215,7 +215,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -269,7 +269,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -324,7 +324,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -378,7 +378,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -432,7 +432,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -486,7 +486,7 @@ public class AsyncRawPrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(JsonProcessingException e) {
       throw new SeedExhaustiveException("Failed to serialize request", e);
