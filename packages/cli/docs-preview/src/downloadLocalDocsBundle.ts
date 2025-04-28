@@ -7,6 +7,7 @@ import xml2js from "xml2js";
 
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
@@ -167,6 +168,15 @@ export async function downloadBundle({
     // write etag
     await writeFile(eTagFilepath, eTag);
     logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
+
+    if (app) {
+        // install esbuild
+        logger.debug("Installing esbuild in directory:");
+        await loggingExeca(logger, "pnpm", ["i", "esbuild"], { cwd: absolutePathToBundleFolder });
+        // resolve imports
+        logger.debug("Resolve esbuild imports");
+        await loggingExeca(logger, "node", ["install-esbuild.js"], { cwd: absolutePathToBundleFolder });
+    }
 
     return {
         type: "success"

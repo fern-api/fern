@@ -23,6 +23,17 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
     protected breadcrumbs: string[] = [];
     protected context: Context;
 
+    /**
+     * String primitive type constant
+     */
+    protected static STRING = FernIr.TypeReference.primitive({
+        v1: "STRING",
+        v2: FernIr.PrimitiveTypeV2.string({
+            default: undefined,
+            validation: undefined
+        })
+    });
+
     constructor({ breadcrumbs = [], context }: AbstractConverter.Args<Context>) {
         this.breadcrumbs = breadcrumbs;
         this.context = context;

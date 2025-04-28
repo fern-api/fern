@@ -51575,11 +51575,11 @@
                 "type": "single"
               },
               "value": {
-                "jsonExample": "access_token",
+                "jsonExample": "",
                 "shape": {
                   "primitive": {
                     "string": {
-                      "original": "access_token"
+                      "original": ""
                     },
                     "type": "string"
                   },
