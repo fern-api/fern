@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      Add the `fern sdk version` command to generate the next semantic version based on your API changes.
+      This command is in-development; changes are expected.
+    type: feat
+  irVersion: 57
+  version: 0.59.0
+
+- changelogEntry:
+  - summary: |
       Local development is now available in beta for all machines.
     type: feat
   irVersion: 57
