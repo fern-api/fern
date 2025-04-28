@@ -1,3 +1,4 @@
+import { appendFileSync } from "fs";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { AuthScheme, IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -25,6 +26,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             document: this.context.spec,
             context: this.context
         }) as OpenAPIV3_1.Document;
+
+        this.context.spec = (await this.resolveExternalRefs({
+            spec: this.context.spec,
+            context: this.context
+        })) as OpenAPIV3_1.Document;
 
         const idToAuthScheme = await this.convertSecuritySchemes();
 
@@ -220,6 +226,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             if (pathItem == null) {
                 continue;
             }
+
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],
@@ -290,7 +297,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
                     pkg.webhooks = groupId;
                 }
-
                 this.ir.types = {
                     ...this.ir.types,
                     ...convertedPath.inlinedTypes
