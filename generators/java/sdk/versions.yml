@@ -1,6 +1,6 @@
 - changelogEntry:
     - summary: |
-        Suppres unchecked cast warning for undiscriminated union visitor
+        Suppress unchecked cast warning for undiscriminated union visitor
       type: fix
   createdAt: '2025-04-28'
   irVersion: 55
