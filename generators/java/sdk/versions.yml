@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Use non-deprecated method to create request body
+      type: fix
+  createdAt: '2025-04-25'
+  irVersion: 55
+  version: 2.33.2
+- changelogEntry:
+    - summary: |
         Fix inline overrides undoing allow-multiple parameterization
       type: fix
   createdAt: '2025-04-24'

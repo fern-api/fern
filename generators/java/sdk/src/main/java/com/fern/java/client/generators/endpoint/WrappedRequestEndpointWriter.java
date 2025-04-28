@@ -264,7 +264,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         if (isOptional) {
             // Set a default empty response body and begin a conditional, prior to parsing the RequestBody
             requestBodyCodeBlock
-                    .addStatement("$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
+                    .addStatement("$L = $T.create(null, \"\")", variables.getOkhttpRequestBodyName(), RequestBody.class)
                     .beginControlFlow("if ($N.isPresent())", variableToJsonify);
         }
         CodeBlock requestBodyContentType = CodeBlock.of(
@@ -278,13 +278,13 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
         requestBodyCodeBlock
                 .addStatement(
-                        "$L = $T.create($T.$L.writeValueAsBytes($L), $L)",
+                        "$L = $T.create($L, $T.$L.writeValueAsBytes($L))",
                         variables.getOkhttpRequestBodyName(),
                         RequestBody.class,
+                        requestBodyContentType,
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
-                        variableToJsonify,
-                        requestBodyContentType)
+                        variableToJsonify)
                 .endControlFlow();
         if (isOptional) {
             requestBodyCodeBlock.endControlFlow();
@@ -407,13 +407,13 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     MediaType.class,
                                     mimeTypeVariableName)
                             .addStatement(
-                                    "$L.addFormDataPart($S, $L.get().getName(), $T.create($L, $L.get()))",
+                                    "$L.addFormDataPart($S, $L.get().getName(), $T.create($L.get(), $L))",
                                     variables.getMultipartBodyPropertiesName(),
                                     filePropertyKey.getWireValue(),
                                     filePropertyParameterName,
                                     RequestBody.class,
-                                    mediaTypeVariableName,
-                                    filePropertyParameterName)
+                                    filePropertyParameterName,
+                                    mediaTypeVariableName)
                             .endControlFlow();
                 } else {
                     requestBodyCodeBlock
@@ -435,8 +435,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     filePropertyKey.getWireValue(),
                                     filePropertyParameterName,
                                     RequestBody.class,
-                                    mediaTypeVariableName,
-                                    filePropertyParameterName);
+                                    filePropertyParameterName,
+                                    mediaTypeVariableName);
                 }
             }
         }

@@ -49,7 +49,7 @@ public class AsyncRawHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
