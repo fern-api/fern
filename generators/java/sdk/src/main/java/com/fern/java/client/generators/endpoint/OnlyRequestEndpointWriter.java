@@ -227,7 +227,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             if (isOptional) {
                 codeBlock
                         .addStatement(
-                                "$L = $T.create(null, \"\")", variables.getOkhttpRequestBodyName(), RequestBody.class)
+                                "$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
                         .beginControlFlow("if ($N.isPresent())", "request");
             }
 
@@ -259,13 +259,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
             codeBlock
                     .addStatement(
-                            "$L = $T.create($L, $T.$L.writeValueAsBytes($L))",
+                            "$L = $T.create($T.$L.writeValueAsBytes($L), $L)",
                             variables.getOkhttpRequestBodyName(),
                             RequestBody.class,
-                            requestBodyContentType,
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
-                            requestBodyGetter)
+                            requestBodyGetter,
+                            requestBodyContentType)
                     .endControlFlow();
             if (isOptional) {
                 codeBlock.endControlFlow();
@@ -280,13 +280,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         @Override
         public Void visitBytes(BytesRequest bytes) {
             codeBlock.addStatement(
-                    "$T $L = new $T($T.parse($S), $L)",
+                    "$T $L = new $T($L, $T.parse($S))",
                     RequestBody.class,
                     variables.getOkhttpRequestBodyName(),
                     clientGeneratorContext.getPoetClassNameFactory().getInputStreamRequestBodyClassName(),
+                    sdkRequest.getRequestParameterName().getCamelCase().getSafeName(),
                     MediaType.class,
-                    bytes.getContentType().orElse(APPLICATION_OCTET_STREAM),
-                    sdkRequest.getRequestParameterName().getCamelCase().getSafeName());
+                    bytes.getContentType().orElse(APPLICATION_OCTET_STREAM));
             return null;
         }
 

@@ -44,7 +44,7 @@ public class AsyncRawSeedPackageYmlClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPackageYmlException("Failed to serialize request", e);
         }

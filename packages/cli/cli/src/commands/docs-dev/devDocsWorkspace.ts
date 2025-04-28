@@ -11,7 +11,8 @@ export async function previewDocsWorkspace({
     port,
     bundlePath,
     brokenLinks,
-    appPreview
+    appPreview,
+    backendPort
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
@@ -19,6 +20,7 @@ export async function previewDocsWorkspace({
     bundlePath?: string;
     brokenLinks: boolean;
     appPreview?: boolean;
+    backendPort: number;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -68,7 +70,8 @@ export async function previewDocsWorkspace({
                 },
                 context,
                 port,
-                bundlePath
+                bundlePath,
+                backendPort
             });
         });
 

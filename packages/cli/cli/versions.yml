@@ -1,5 +1,20 @@
 - changelogEntry:
   - summary: |
+      Local development is now available in beta for all machines.
+    type: feat
+  irVersion: 57
+  version: 0.58.5
+  
+- changelogEntry:
+  - summary: |
+      Add support for external $ref's to OpenAPI converter. Publicly-available external references hosted over HTTP(S)
+      can now be used to define request/response bodies, headers, parameters, schemas, and more.
+    type: feat
+  irVersion: 57
+  version: 0.58.4
+
+- changelogEntry:
+  - summary: |
       Enhance OpenAPI security scheme handling in the parser to support both global and endpoint-level security requirements. 
       The parser now properly converts security schemes from OpenAPI's `securitySchemes` component into appropriate authentication 
       headers, supporting bearer tokens, basic auth, and custom API key headers. Global security requirements defined at the 
@@ -18,6 +33,13 @@
     type: feat
   irVersion: 57
   version: 0.58.2
+  
+- changelogEntry:
+  - summary: |
+      Local development now supports adjusting the backend server to use open ports.
+    type: feat
+  irVersion: 57
+  version: 0.58.4
   
 - changelogEntry:
   - summary: |

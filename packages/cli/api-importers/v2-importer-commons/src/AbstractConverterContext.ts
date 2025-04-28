@@ -1,3 +1,4 @@
+import { appendFileSync } from "fs";
 import yaml from "js-yaml";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -173,8 +174,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }): Promise<{ resolved: true; value: T } | { resolved: false }> {
         let resolvedReference: unknown = this.spec;
         let fragment: string | undefined;
+        let externalRef: boolean = false;
+        let externalDoc: unknown | null = null;
 
-        if (reference.$ref.startsWith("http://") || reference.$ref.startsWith("https://")) {
+        if (this.isExternalReference(reference.$ref)) {
+            externalRef = true;
             const splitReference = reference.$ref.split("#");
             const url = splitReference[0];
             fragment = splitReference[1];
@@ -191,9 +195,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
             try {
                 const responseText = await response.text();
                 try {
-                    resolvedReference = JSON.parse(responseText);
+                    externalDoc = JSON.parse(responseText);
+                    resolvedReference = externalDoc;
                 } catch {
-                    resolvedReference = yaml.load(responseText);
+                    externalDoc = yaml.load(responseText);
+                    resolvedReference = externalDoc;
                 }
                 if (resolvedReference == null) {
                     return { resolved: false };
@@ -224,7 +230,75 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return { resolved: false };
         }
 
+        if (externalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
+            resolvedReference = await this.resolveNestedExternalReferences(resolvedReference, externalDoc);
+        }
+
         return { resolved: true, value: resolvedReference as unknown as T };
+    }
+
+    /**
+     * Helper function to resolve nested external references
+     * @param obj The object to resolve
+     * @param rootDoc The root document to resolve against
+     * @returns The resolved object
+     */
+    private async resolveNestedExternalReferences(obj: unknown, rootDoc: unknown): Promise<unknown> {
+        if (obj === null || typeof obj !== "object") {
+            return obj;
+        }
+
+        if (Array.isArray(obj)) {
+            const result = [];
+            for (const item of obj) {
+                result.push(await this.resolveNestedExternalReferences(item, rootDoc));
+            }
+            return result;
+        }
+
+        if (this.isReferenceObject(obj)) {
+            const refValue = obj.$ref;
+            if (this.isExternalReference(refValue)) {
+                const refResult = await this.resolveReference({ $ref: refValue });
+                if (refResult.resolved) {
+                    return refResult.value;
+                }
+            } else {
+                let tempRef = rootDoc;
+                const refPath = refValue
+                    .substring(2) // Remove leading "#/"
+                    .split("/")
+                    .map((seg) => seg.replace(/~1/g, "/").replace(/~0/g, "~"));
+
+                for (const segment of refPath) {
+                    if (typeof tempRef !== "object" || tempRef === null) {
+                        // Cannot resolve fully — keep the original ref
+                        return obj;
+                    }
+                    tempRef = (tempRef as Record<string, unknown>)[segment];
+                }
+
+                if (tempRef !== undefined && tempRef !== null) {
+                    const resolvedNested = await this.resolveNestedExternalReferences(tempRef, rootDoc);
+                    return resolvedNested;
+                }
+            }
+
+            // Resolution failed, keep the original ref
+            return obj;
+        }
+
+        // Regular object with properties — recursively resolve each property
+        const result: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(obj)) {
+            if (typeof value === "object" && value !== null) {
+                result[key] = await this.resolveNestedExternalReferences(value, rootDoc);
+            } else {
+                result[key] = value;
+            }
+        }
+
+        return result;
     }
 
     public getExamplesFromSchema({
@@ -454,6 +528,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public isReferenceObject(value: unknown): value is OpenAPIV3_1.ReferenceObject {
         return typeof value === "object" && value !== null && "$ref" in value;
+    }
+
+    public isExternalReference($ref: string): boolean {
+        return $ref.startsWith("http://") || $ref.startsWith("https://");
     }
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {
