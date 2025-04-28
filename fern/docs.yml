@@ -357,6 +357,7 @@ navigation:
             icon: fa-regular fa-cloud-arrow-up
           - changelog: ./pages/changelogs/docs
             title: Feature Highlights
+            icon: fa-regular fa-bullhorn
 
 
       - section: Building and Customizing Your Docs
@@ -586,7 +587,12 @@ navigation:
           - page: View Markdown
             icon: fa-brands fa-markdown
             path: ./pages/docs/developer-tools/view-markdown.mdx
-
+      
+      - changelog: ./pages/changelogs/docs-full
+        title: Full Changelog
+        icon: fa-regular fa-clock-rotate-left
+        slug: changelog
+        
       - section: Alternatives
         hidden: true
         contents:
@@ -756,6 +762,9 @@ redirects:
     permanent: true
   - source: /learn/sdks/capabilities/merging-multiple-apis
     destination: /learn/sdks/capabilities/merging-apis
+    permanent: true
+  - source: /learn/docs/getting-started/changelog
+    destination: /learn/docs/getting-started/feature-highlights
     permanent: true
     
 
