@@ -106,19 +106,19 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                     let resolvedRefVal = current[i];
                     if (this.context.isReferenceObject(current[i])) {
                         // repeatedly resolve nested refs until we get a definition to check whether it's external
-                        let depth = 0;
                         while (this.context.isReferenceObject(resolvedRefVal)) {
-                            resolvedRefVal = await context.resolveReference({ $ref: resolvedRefVal.$ref });
-                            if (resolvedRefVal.resolved) {
-                                resolvedRefVal = resolvedRefVal.value;
+                            const externalRef = this.context.isExternalReference(resolvedRefVal.$ref);
+                            const nextResolvedRef = await context.resolveReference({ $ref: resolvedRefVal.$ref });
+                            if (nextResolvedRef.resolved) {
+                                resolvedRefVal = nextResolvedRef.value;
+                                if (externalRef) {
+                                    current[i] = resolvedRefVal;
+                                    break;
+                                }
                             } else {
                                 resolvedRefVal = null;
                                 break;
                             }
-                            depth++;
-                        }
-                        if (resolvedRefVal != null) {
-                            current[i] = resolvedRefVal;
                         }
                     } else {
                         queue.push(current[i]);
@@ -128,20 +128,20 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                 for (const [key, value] of Object.entries(current)) {
                     let resolvedRefVal = value;
                     if (this.context.isReferenceObject(value)) {
-                        let depth = 0;
                         while (this.context.isReferenceObject(resolvedRefVal)) {
-                            resolvedRefVal = await context.resolveReference({ $ref: resolvedRefVal.$ref });
-                            if (resolvedRefVal.resolved) {
-                                resolvedRefVal = resolvedRefVal.value;
+                            const externalRef = this.context.isExternalReference(resolvedRefVal.$ref);
+                            const nextResolvedRef = await context.resolveReference({ $ref: resolvedRefVal.$ref });
+                            if (nextResolvedRef.resolved) {
+                                resolvedRefVal = nextResolvedRef.value;
+                                if (externalRef) {
+                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                    (current as any)[key] = resolvedRefVal;
+                                    break;
+                                }
                             } else {
                                 resolvedRefVal = null;
                                 break;
                             }
-                            depth++;
-                        }
-                        if (resolvedRefVal != null) {
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            (current as any)[key] = resolvedRefVal;
                         }
                     } else {
                         queue.push(value);
