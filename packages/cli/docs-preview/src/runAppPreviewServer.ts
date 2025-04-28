@@ -316,7 +316,7 @@ export async function runAppPreviewServer({
     });
 
     app.listen(backendPort);
-    context.logger.info(chalk.dim(`[Backend server running on http://localhost:${backendPort}]`));
+    context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
     context.logger.info(`Development server ready on http://localhost:${port}`);
 
     // await infinitely
