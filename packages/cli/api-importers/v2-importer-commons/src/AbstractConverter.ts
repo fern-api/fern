@@ -102,15 +102,15 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
             }
 
             if (Array.isArray(current)) {
-                await this.processArray(current, context, queue);
+                await this.resolveExternalRefsInArray(current, context, queue);
             } else if (typeof current === "object") {
-                await this.processObject(current as Record<string, unknown>, context, queue);
+                await this.resolveExternalRefsInObject(current as Record<string, unknown>, context, queue);
             }
         }
         return spec;
     }
 
-    private async processArray(arr: unknown[], context: Context, queue: unknown[]): Promise<void> {
+    private async resolveExternalRefsInArray(arr: unknown[], context: Context, queue: unknown[]): Promise<void> {
         for (let i = 0; i < arr.length; i++) {
             const resolvedRefVal = await this.resolveReferenceChain(arr[i], context, queue);
             if (resolvedRefVal != null) {
@@ -119,7 +119,11 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
         }
     }
 
-    private async processObject(obj: Record<string, unknown>, context: Context, queue: unknown[]): Promise<void> {
+    private async resolveExternalRefsInObject(
+        obj: Record<string, unknown>,
+        context: Context,
+        queue: unknown[]
+    ): Promise<void> {
         for (const [key, value] of Object.entries(obj)) {
             const resolvedRefVal = await this.resolveReferenceChain(value, context, queue);
             if (resolvedRefVal != null) {
