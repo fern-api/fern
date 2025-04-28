@@ -27,7 +27,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             context: this.context
         }) as OpenAPIV3_1.Document;
 
-        await this.resolveExternalRefs();
+        // await this.resolveExternalRefs();
 
         const idToAuthScheme = await this.convertSecuritySchemes();
 
@@ -57,91 +57,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         };
 
         return ir;
-    }
-
-    private async resolveExternalRefs(): Promise<void> {
-        // 1. Scrub external refs across file, except for from securitySchemes (follow $ref, nested, etc. until getting to the base url)
-        // 2. Pull/recursively resolve the external ref definition if is nested
-        // 3. Add it to this.ir (this.ir.types = { ...this.ir.types, [id]: convertedSchema.typeDeclaration })
-        const spec = this.context.spec;
-        const group = this.context.getGroup({
-            groupParts: [],
-            namespace: this.context.namespace
-        });
-
-        const pkg = this.getOrCreatePackage({
-            group
-        });
-
-        // External refs in schemas
-        for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
-            const queue = [schema];
-            const refs: string[] = [];
-            // bfs to find all (nested) external refs in this schema
-            while (queue.length > 0) {
-                const current = queue.shift();
-                if (current && typeof current === "object") {
-                    for (const [key, value] of Object.entries(current)) {
-                        if (
-                            key === "$ref" &&
-                            typeof value === "string" &&
-                            (value.startsWith("http://") || value.startsWith("https://"))
-                        ) {
-                            refs.push(value);
-                        } else if (typeof value === "object" && value !== null) {
-                            queue.push(value);
-                        }
-                    }
-                }
-            }
-            for (const ref of refs) {
-                const fragment = ref.split("#");
-                if (!fragment || !fragment[1]) {
-                    continue;
-                }
-                const keys = fragment[1]
-                    .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
-                    .split("/")
-                    .map((key) => key.replace(/~1/g, "/"));
-                const externalRefId = keys[keys.length - 1];
-
-                if (externalRefId == null) {
-                    continue;
-                }
-
-                // Don't repeatedly fetch external refs that have already been resolved
-                if (this.ir.types[externalRefId] != null) {
-                    continue;
-                }
-
-                const resolvedExternalRef = await this.context.resolveReference({ $ref: ref });
-                if (resolvedExternalRef.resolved) {
-                    const resolvedExternalSchema = resolvedExternalRef.value;
-                    // appendFileSync("resolved.json", JSON.stringify(resolvedExternalSchema, null, 2));
-                    const externalSchemaConverter = new Converters.SchemaConverters.SchemaConverter({
-                        context: this.context,
-                        id: externalRefId,
-                        breadcrumbs: ["components", "schemas", externalRefId],
-                        schema: resolvedExternalSchema as OpenAPIV3_1.SchemaObject
-                    });
-                    const convertedExternalSchema = await externalSchemaConverter.convert();
-                    if (convertedExternalSchema != null) {
-                        pkg.types.push(externalRefId);
-                        this.ir.types = {
-                            ...this.ir.types,
-                            ...convertedExternalSchema.inlinedTypes,
-                            [externalRefId]: convertedExternalSchema.typeDeclaration
-                        };
-                    }
-                }
-            }
-        }
-        // External refs in paths
-        // appendFileSync("resolved.json", JSON.stringify("PATHS\n", null, 2));
-        for (const [path, pathItem] of Object.entries(this.context.spec.paths ?? {})) {
-            // appendFileSync("resolved.json", JSON.stringify(path, null, 2));
-            // appendFileSync("resolved.json", JSON.stringify(pathItem, null, 2));
-        }
     }
 
     private async convertSecuritySchemes(): Promise<Record<string, AuthScheme>> {
@@ -215,11 +130,12 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         });
 
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
+            const resolvedSchema = await this.resolveExternalRefs({ spec: schema, context: this.context });
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
                 id,
                 breadcrumbs: ["components", "schemas", id],
-                schema
+                schema: resolvedSchema as OpenAPIV3_1.SchemaObject
             });
             const convertedSchema = await schemaConverter.convert();
             if (convertedSchema != null) {
@@ -308,10 +224,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             if (pathItem == null) {
                 continue;
             }
+            const resolvedPathItem = await this.resolveExternalRefs({ spec: pathItem, context: this.context });
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],
-                pathItem,
+                pathItem: resolvedPathItem as OpenAPIV3_1.PathItemObject,
                 path,
                 servers: this.context.spec.servers
             });

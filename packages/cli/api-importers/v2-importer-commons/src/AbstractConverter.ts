@@ -93,53 +93,58 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
     public abstract convert(): Output | undefined | Promise<Output | undefined>;
 
     protected async resolveExternalRefs({ spec, context }: { spec: unknown; context: Context }): Promise<unknown> {
-        type QueueItem = {
-            current: unknown;
-            breadcrumbs: (string | number)[];
-        };
-
-        const queue: QueueItem[] = [{ current: spec, breadcrumbs: [] }];
+        const queue: unknown[] = [{ current: spec, breadcrumbs: [] }];
 
         while (queue.length > 0) {
-            const item = queue.shift();
-            if (item == null) {
+            const current = queue.shift();
+            if (current == null) {
                 continue;
             }
-            const { current, breadcrumbs } = item;
 
             if (Array.isArray(current)) {
                 for (let i = 0; i < current.length; i++) {
-                    if (
-                        this.context.isReferenceObject(current[i]) &&
-                        this.context.isExternalReference(current[i].$ref)
-                    ) {
-                        const resolvedRef = await context.resolveReference({ $ref: current[i].$ref });
-                        if (resolvedRef.resolved) {
-                            current[i] = resolvedRef.value;
+                    let resolvedRefVal = current[i];
+                    if (this.context.isReferenceObject(current[i])) {
+                        // repeatedly resolve nested refs until we get a definition to check whether it's external
+                        let depth = 0;
+                        while (this.context.isReferenceObject(resolvedRefVal) && depth < 10) {
+                            resolvedRefVal = await context.resolveReference({ $ref: resolvedRefVal.$ref });
+                            if (resolvedRefVal.resolved) {
+                                resolvedRefVal = resolvedRefVal.value;
+                            } else {
+                                resolvedRefVal = null;
+                                break;
+                            }
+                            depth++;
+                        }
+                        if (resolvedRefVal != null) {
+                            current[i] = resolvedRefVal;
                         }
                     } else {
-                        queue.push({
-                            current: current[i],
-                            breadcrumbs: [...breadcrumbs, i]
-                        });
+                        queue.push(current[i]);
                     }
                 }
-            } else if (current != null && typeof current === "object") {
+            } else if (typeof current === "object") {
                 for (const [key, value] of Object.entries(current)) {
-                    if (this.context.isReferenceObject(value) && this.context.isExternalReference(value.$ref)) {
-                        const resolvedRef = await context.resolveReference({ $ref: value.$ref });
-                        if (resolvedRef.resolved) {
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            (current as any)[key] = resolvedRef.value;
+                    let resolvedRefVal = value;
+                    if (this.context.isReferenceObject(value)) {
+                        let depth = 0;
+                        while (this.context.isReferenceObject(resolvedRefVal) && depth < 10) {
+                            resolvedRefVal = await context.resolveReference({ $ref: resolvedRefVal.$ref });
+                            if (resolvedRefVal.resolved) {
+                                resolvedRefVal = resolvedRefVal.value;
+                            } else {
+                                resolvedRefVal = null;
+                                break;
+                            }
+                            depth++;
                         }
-                        continue;
-                    }
-
-                    if (typeof value === "object" && value !== null) {
-                        queue.push({
-                            current: value,
-                            breadcrumbs: [...breadcrumbs, key]
-                        });
+                        if (resolvedRefVal != null) {
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            (current as any)[key] = resolvedRefVal;
+                        }
+                    } else {
+                        queue.push(value);
                     }
                 }
             }
