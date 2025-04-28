@@ -51,8 +51,8 @@ public class AsyncRawContentTypeClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    MediaType.parse("application/json-patch+json"),
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    MediaType.parse("application/json-patch+json"));
         } catch (JsonProcessingException e) {
             throw new CustomException("Failed to serialize request", e);
         }
@@ -115,8 +115,8 @@ public class AsyncRawContentTypeClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    MediaType.parse("application/json-patch+json; charset=utf-8"),
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    MediaType.parse("application/json-patch+json; charset=utf-8"));
         } catch (JsonProcessingException e) {
             throw new CustomException("Failed to serialize request", e);
         }

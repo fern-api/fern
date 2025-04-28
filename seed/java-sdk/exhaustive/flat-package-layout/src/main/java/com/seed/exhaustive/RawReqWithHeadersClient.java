@@ -40,7 +40,7 @@ public class RawReqWithHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    MediaTypes.APPLICATION_JSON, ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
