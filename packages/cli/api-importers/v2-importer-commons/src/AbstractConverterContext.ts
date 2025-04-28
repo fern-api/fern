@@ -171,7 +171,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
      */
     public async resolveReference<T>(reference: {
         $ref: string;
-    }): Promise<{ resolved: true; value: T; externalRef?: boolean } | { resolved: false }> {
+    }): Promise<{ resolved: true; value: T } | { resolved: false }> {
         let resolvedReference: unknown = this.spec;
         let fragment: string | undefined;
         let externalRef: boolean = false;
@@ -209,7 +209,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             }
 
             if (!fragment) {
-                return { resolved: true, value: resolvedReference as T, externalRef };
+                return { resolved: true, value: resolvedReference as T };
             }
         }
 
@@ -233,11 +233,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
         if (externalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
             resolvedReference = await this.resolveNestedExternalReferences(resolvedReference, externalDoc);
         }
-        // else if (this.isReferenceObject(resolvedReference) && this.isExternalReference(resolvedReference.$ref)) {
-        //     return await this.resolveReference(resolvedReference as OpenAPIV3_1.ReferenceObject);
-        // }
 
-        return { resolved: true, value: resolvedReference as unknown as T, externalRef };
+        return { resolved: true, value: resolvedReference as unknown as T };
     }
 
     private async resolveNestedExternalReferences(obj: unknown, rootDoc: unknown): Promise<unknown> {
