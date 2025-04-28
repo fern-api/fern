@@ -27,6 +27,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             context: this.context
         }) as OpenAPIV3_1.Document;
 
+        this.context.spec = (await this.resolveExternalRefs({
+            spec: this.context.spec,
+            context: this.context
+        })) as OpenAPIV3_1.Document;
+
         const idToAuthScheme = await this.convertSecuritySchemes();
 
         await this.convertSchemas();
@@ -128,12 +133,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         });
 
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
-            const partiallyResolvedSchema = await this.resolveExternalRefs({ spec: schema, context: this.context });
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
                 id,
                 breadcrumbs: ["components", "schemas", id],
-                schema: partiallyResolvedSchema as OpenAPIV3_1.SchemaObject
+                schema
             });
             const convertedSchema = await schemaConverter.convert();
             if (convertedSchema != null) {
@@ -222,12 +226,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             if (pathItem == null) {
                 continue;
             }
-            const partiallyResolvedPathItem = await this.resolveExternalRefs({ spec: pathItem, context: this.context });
 
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],
-                pathItem: partiallyResolvedPathItem as OpenAPIV3_1.PathItemObject,
+                pathItem,
                 path,
                 servers: this.context.spec.servers
             });

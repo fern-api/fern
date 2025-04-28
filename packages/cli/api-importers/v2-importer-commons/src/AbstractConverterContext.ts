@@ -237,6 +237,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return { resolved: true, value: resolvedReference as unknown as T };
     }
 
+    /**
+     * Helper function to resolve nested external references
+     * @param obj The object to resolve
+     * @param rootDoc The root document to resolve against
+     * @returns The resolved object
+     */
     private async resolveNestedExternalReferences(obj: unknown, rootDoc: unknown): Promise<unknown> {
         if (obj === null || typeof obj !== "object") {
             return obj;
@@ -278,7 +284,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 }
             }
 
-            // Resolution failed, keep the original reference
+            // Resolution failed, keep the original ref
             return obj;
         }
 

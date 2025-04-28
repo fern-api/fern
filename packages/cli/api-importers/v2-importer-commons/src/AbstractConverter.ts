@@ -105,7 +105,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                 for (let i = 0; i < current.length; i++) {
                     let resolvedRefVal = current[i];
                     if (this.context.isReferenceObject(current[i])) {
-                        // repeatedly resolve nested refs until we get a definition to check whether it's external
+                        // repeatedly resolve refs from the spec until we 1) get a definition that's not external or 2) get an external ref
                         while (this.context.isReferenceObject(resolvedRefVal)) {
                             const externalRef = this.context.isExternalReference(resolvedRefVal.$ref);
                             const nextResolvedRef = await context.resolveReference({ $ref: resolvedRefVal.$ref });
