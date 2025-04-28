@@ -104,6 +104,15 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
         super(className, generatorContext, reservedTypeNames, isTopLevelClass);
         this.undiscriminatedUnion = undiscriminatedUnion;
 
+        Map<UndiscriminatedUnionMember, TypeName> typeNames = new HashMap<>(undiscriminatedUnion.getMembers().stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        member -> generatorContext.getPoetTypeNameMapper().convertToTypeName(true, member.getType()))));
+        if (generatorContext.getCustomConfig().enableInlineTypes()) {
+            typeNames.putAll(overrideMemberTypeNames(
+                    className, generatorContext, undiscriminatedUnion, reservedTypeNames, undiscriminatedUnionPrefix));
+        }
+        this.memberTypeNames = typeNames;
         List<UndiscriminatedUnionMember> membersWithoutLiterals = new ArrayList<>();
 
         for (int i = 0; i < undiscriminatedUnion.getMembers().size(); ++i) {
@@ -159,15 +168,6 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
         this.membersWithoutLiterals = membersWithoutLiterals;
 
-        Map<UndiscriminatedUnionMember, TypeName> typeNames = new HashMap<>(undiscriminatedUnion.getMembers().stream()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        member -> generatorContext.getPoetTypeNameMapper().convertToTypeName(true, member.getType()))));
-        if (generatorContext.getCustomConfig().enableInlineTypes()) {
-            typeNames.putAll(overrideMemberTypeNames(
-                    className, generatorContext, undiscriminatedUnion, reservedTypeNames, undiscriminatedUnionPrefix));
-        }
-        this.memberTypeNames = typeNames;
         this.duplicatedOuterContainerTypes = getDuplicatedOuterContainerTypes(undiscriminatedUnion);
         this.visitorName = visitorName(
                 // We need to take into consideration all ancestor types as well as all sibling types so that
@@ -398,6 +398,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
 
     private MethodSpec getVisitMethod() {
         MethodSpec.Builder visitMethod = MethodSpec.methodBuilder(VISIT_METHOD_NAME)
+                .addAnnotation(AnnotationSpec.builder(SuppressWarnings.class)
+                        .addMember("value", "$S", "unchecked")
+                        .build())
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterizedTypeName.get(visitorClassName, VISITOR_RETURN_TYPE), "visitor")
                 .addTypeVariable(VISITOR_RETURN_TYPE)
