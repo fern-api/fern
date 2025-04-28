@@ -5676,6 +5676,9 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.5.8
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.11
@@ -5730,6 +5733,9 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.3
       tar:
         specifier: ^6.2.1
         version: 6.2.1

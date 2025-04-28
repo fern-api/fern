@@ -1,3 +1,5 @@
+import semver from "semver";
+
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../../cli-context/CliContext";
@@ -5,18 +7,27 @@ import { CliContext } from "../../../cli-context/CliContext";
 export async function getSdkVersion({
     project,
     context,
-    from
+    group,
+    from,
+    currentVersion
 }: {
     project: Project;
     context: CliContext;
+    group: string;
     from: string;
+    currentVersion: string;
 }): Promise<void> {
     if (!isGitSha({ value: from })) {
         context.failAndThrow(`Invalid --from argument: ${from}; expected a valid git SHA`);
         return;
     }
-    // TODO: For now, we just respond with a hard-coded version.
-    context.logger.info("1.1.0");
+    // TODO: For now, we always bump the minor version.
+    const nextVersion = semver.inc(currentVersion, "minor");
+    if (!nextVersion) {
+        context.failAndThrow(`Invalid current version: ${currentVersion}`);
+        return;
+    }
+    context.logger.info(nextVersion);
     return;
 }
 

@@ -337,14 +337,20 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         string: true,
                         description: "Only run the command on the provided API"
                     });
+                    yargs.option("group", {
+                        string: true,
+                        demandOption: true,
+                        description: "The group to generate the next semantic version for"
+                    });
                     yargs.option("current-version", {
                         string: true,
                         description: "The current version of the SDK (e.g. 1.1.0)"
                     });
                     yargs.option("from", {
                         string: true,
+                        demandOption: true,
                         description:
-                            "A reference that resolves to the previous version of the SDK (e.g. a git SHA like 'bac7962')"
+                            "A reference that resolves to the previous version of the API (e.g. a git SHA like 'bac7962')"
                     });
                 },
                 async (argv) =>
@@ -354,7 +360,9 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                             defaultToAllApiWorkspaces: true
                         }),
                         context: cliContext,
-                        from: argv.from as string
+                        group: argv.group as string,
+                        from: argv.from as string,
+                        currentVersion: argv.currentVersion as string
                     })
             )
             .demandCommand(1)
