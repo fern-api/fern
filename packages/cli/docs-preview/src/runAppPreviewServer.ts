@@ -317,7 +317,7 @@ export async function runAppPreviewServer({
 
     app.listen(backendPort);
     context.logger.info(chalk.dim(`[Backend server running on http://localhost:${backendPort}]`));
-    context.logger.info(`Running server running on http://localhost:${port}`);
+    context.logger.info(`Development server ready on http://localhost:${port}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
