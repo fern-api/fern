@@ -1,5 +1,26 @@
 - changelogEntry:
     - summary: |
+        (Corrected from 2.33.2) Use non-deprecated method to create request body
+      type: fix
+  createdAt: '2025-04-28'
+  irVersion: 55
+  version: 2.33.4
+- changelogEntry:
+    - summary: |
+        Suppress unchecked cast warning for undiscriminated union visitor
+      type: fix
+  createdAt: '2025-04-28'
+  irVersion: 55
+  version: 2.33.3
+- changelogEntry:
+    - summary: |
+        Use non-deprecated method to create request body
+      type: fix
+  createdAt: '2025-04-25'
+  irVersion: 55
+  version: 2.33.2
+- changelogEntry:
+    - summary: |
         Fix inline overrides undoing allow-multiple parameterization
       type: fix
   createdAt: '2025-04-24'

@@ -407,13 +407,13 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     MediaType.class,
                                     mimeTypeVariableName)
                             .addStatement(
-                                    "$L.addFormDataPart($S, $L.get().getName(), $T.create($L, $L.get()))",
+                                    "$L.addFormDataPart($S, $L.get().getName(), $T.create($L.get(), $L))",
                                     variables.getMultipartBodyPropertiesName(),
                                     filePropertyKey.getWireValue(),
                                     filePropertyParameterName,
                                     RequestBody.class,
-                                    mediaTypeVariableName,
-                                    filePropertyParameterName)
+                                    filePropertyParameterName,
+                                    mediaTypeVariableName)
                             .endControlFlow();
                 } else {
                     requestBodyCodeBlock
@@ -435,8 +435,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     filePropertyKey.getWireValue(),
                                     filePropertyParameterName,
                                     RequestBody.class,
-                                    mediaTypeVariableName,
-                                    filePropertyParameterName);
+                                    filePropertyParameterName,
+                                    mediaTypeVariableName);
                 }
             }
         }

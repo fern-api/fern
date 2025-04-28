@@ -280,13 +280,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         @Override
         public Void visitBytes(BytesRequest bytes) {
             codeBlock.addStatement(
-                    "$T $L = new $T($T.parse($S), $L)",
+                    "$T $L = new $T($L, $T.parse($S))",
                     RequestBody.class,
                     variables.getOkhttpRequestBodyName(),
                     clientGeneratorContext.getPoetClassNameFactory().getInputStreamRequestBodyClassName(),
+                    sdkRequest.getRequestParameterName().getCamelCase().getSafeName(),
                     MediaType.class,
-                    bytes.getContentType().orElse(APPLICATION_OCTET_STREAM),
-                    sdkRequest.getRequestParameterName().getCamelCase().getSafeName());
+                    bytes.getContentType().orElse(APPLICATION_OCTET_STREAM));
             return null;
         }
 
