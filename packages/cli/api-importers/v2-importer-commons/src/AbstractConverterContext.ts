@@ -173,8 +173,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }): Promise<{ resolved: true; value: T } | { resolved: false }> {
         let resolvedReference: unknown = this.spec;
         let fragment: string | undefined;
+        let externalRef: boolean = false;
+        let externalDoc: unknown | null = null;
 
         if (reference.$ref.startsWith("http://") || reference.$ref.startsWith("https://")) {
+            externalRef = true;
             const splitReference = reference.$ref.split("#");
             const url = splitReference[0];
             fragment = splitReference[1];
@@ -191,9 +194,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
             try {
                 const responseText = await response.text();
                 try {
-                    resolvedReference = JSON.parse(responseText);
+                    externalDoc = JSON.parse(responseText);
+                    resolvedReference = externalDoc;
                 } catch {
-                    resolvedReference = yaml.load(responseText);
+                    externalDoc = yaml.load(responseText);
+                    resolvedReference = externalDoc;
                 }
                 if (resolvedReference == null) {
                     return { resolved: false };
@@ -224,7 +229,78 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return { resolved: false };
         }
 
+        if (externalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
+            resolvedReference = await this.resolveNestedReferences(resolvedReference, externalDoc);
+        }
+
         return { resolved: true, value: resolvedReference as unknown as T };
+    }
+
+    private async resolveNestedReferences(obj: unknown, rootDoc: unknown): Promise<unknown> {
+        if (obj === null || typeof obj !== "object") {
+            return obj;
+        }
+
+        if (Array.isArray(obj)) {
+            // Handle arrays by resolving each element
+            const result = [];
+            for (const item of obj) {
+                result.push(await this.resolveNestedReferences(item, rootDoc));
+            }
+            return result;
+        }
+
+        // Handle regular objects
+        const result: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(obj)) {
+            if (key === "$ref" && typeof value === "string") {
+                // If this is a reference, we need to resolve it using the root document
+                const refValue = value as string;
+
+                // For local references within the external document
+                if (refValue.startsWith("#/")) {
+                    // Create a temporary object to track through the document
+                    let tempRef = rootDoc;
+                    const refPath = refValue
+                        .substring(2) // Remove the "#/"
+                        .split("/")
+                        .map((seg) => seg.replace(/~1/g, "/")); // Handle JSON pointer encoding
+
+                    // Navigate to the referenced location
+                    for (const segment of refPath) {
+                        if (typeof tempRef !== "object" || tempRef === null) {
+                            // Failed to resolve
+                            result[key] = value; // Keep the original reference
+                            break;
+                        }
+                        tempRef = (tempRef as Record<string, unknown>)[segment];
+                    }
+
+                    if (tempRef !== null && tempRef !== undefined) {
+                        // Successfully resolved the reference
+                        const resolvedNested = await this.resolveNestedReferences(tempRef, rootDoc);
+                        return resolvedNested; // Replace the entire object with the resolved reference
+                    }
+                } else {
+                    // Handle external references (http://, https://, or relative)
+                    const refResult = await this.resolveReference({ $ref: refValue });
+                    if (refResult.resolved) {
+                        return refResult.value; // Replace with resolved value
+                    }
+                }
+
+                // If resolution failed, keep the original reference
+                result[key] = value;
+            } else if (typeof value === "object" && value !== null) {
+                // Recursively process nested objects
+                result[key] = await this.resolveNestedReferences(value, rootDoc);
+            } else {
+                // Keep primitive values as is
+                result[key] = value;
+            }
+        }
+
+        return result;
     }
 
     public getExamplesFromSchema({
