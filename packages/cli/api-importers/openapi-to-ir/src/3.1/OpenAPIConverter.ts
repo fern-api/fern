@@ -27,8 +27,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             context: this.context
         }) as OpenAPIV3_1.Document;
 
-        // await this.resolveExternalRefs();
-
         const idToAuthScheme = await this.convertSecuritySchemes();
 
         await this.convertSchemas();
@@ -130,12 +128,12 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         });
 
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
-            const resolvedSchema = await this.resolveExternalRefs({ spec: schema, context: this.context });
+            const partiallyResolvedSchema = await this.resolveExternalRefs({ spec: schema, context: this.context });
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
                 id,
                 breadcrumbs: ["components", "schemas", id],
-                schema: resolvedSchema as OpenAPIV3_1.SchemaObject
+                schema: partiallyResolvedSchema as OpenAPIV3_1.SchemaObject
             });
             const convertedSchema = await schemaConverter.convert();
             if (convertedSchema != null) {
@@ -224,11 +222,12 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             if (pathItem == null) {
                 continue;
             }
-            const resolvedPathItem = await this.resolveExternalRefs({ spec: pathItem, context: this.context });
+            const partiallyResolvedPathItem = await this.resolveExternalRefs({ spec: pathItem, context: this.context });
+
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],
-                pathItem: resolvedPathItem as OpenAPIV3_1.PathItemObject,
+                pathItem: partiallyResolvedPathItem as OpenAPIV3_1.PathItemObject,
                 path,
                 servers: this.context.spec.servers
             });

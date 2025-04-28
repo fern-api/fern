@@ -93,7 +93,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
     public abstract convert(): Output | undefined | Promise<Output | undefined>;
 
     protected async resolveExternalRefs({ spec, context }: { spec: unknown; context: Context }): Promise<unknown> {
-        const queue: unknown[] = [{ current: spec, breadcrumbs: [] }];
+        const queue = [spec];
 
         while (queue.length > 0) {
             const current = queue.shift();
@@ -138,10 +138,6 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                                 break;
                             }
                             depth++;
-                        }
-                        if (resolvedRefVal != null) {
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            (current as any)[key] = resolvedRefVal;
                         }
                     } else {
                         queue.push(value);
