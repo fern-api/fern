@@ -1,3 +1,4 @@
+import { appendFileSync } from "fs";
 import yaml from "js-yaml";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -176,7 +177,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         let externalRef: boolean = false;
         let externalDoc: unknown | null = null;
 
-        if (reference.$ref.startsWith("http://") || reference.$ref.startsWith("https://")) {
+        if (this.isExternalReference(reference.$ref)) {
             externalRef = true;
             const splitReference = reference.$ref.split("#");
             const url = splitReference[0];
@@ -231,6 +232,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         if (externalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
             resolvedReference = await this.resolveNestedReferences(resolvedReference, externalDoc);
+        } else if (this.isReferenceObject(resolvedReference) && this.isExternalReference(resolvedReference.$ref)) {
+            return await this.resolveReference(resolvedReference as OpenAPIV3_1.ReferenceObject);
         }
 
         return { resolved: true, value: resolvedReference as unknown as T };
@@ -530,6 +533,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public isReferenceObject(value: unknown): value is OpenAPIV3_1.ReferenceObject {
         return typeof value === "object" && value !== null && "$ref" in value;
+    }
+
+    public isExternalReference($ref: string): boolean {
+        return $ref.startsWith("http://") || $ref.startsWith("https://");
     }
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {

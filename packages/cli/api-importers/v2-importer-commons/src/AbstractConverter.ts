@@ -1,3 +1,5 @@
+import { appendFileSync } from "fs";
+
 import { FernIr, IntermediateRepresentation, Package } from "@fern-api/ir-sdk";
 
 import { AbstractConverterContext } from "./AbstractConverterContext";
@@ -89,6 +91,61 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
      * @returns The converted target type Output
      */
     public abstract convert(): Output | undefined | Promise<Output | undefined>;
+
+    protected async resolveExternalRefs({ spec, context }: { spec: unknown; context: Context }): Promise<unknown> {
+        type QueueItem = {
+            current: unknown;
+            breadcrumbs: (string | number)[];
+        };
+
+        const queue: QueueItem[] = [{ current: spec, breadcrumbs: [] }];
+
+        while (queue.length > 0) {
+            const item = queue.shift();
+            if (item == null) {
+                continue;
+            }
+            const { current, breadcrumbs } = item;
+
+            if (Array.isArray(current)) {
+                for (let i = 0; i < current.length; i++) {
+                    if (
+                        this.context.isReferenceObject(current[i]) &&
+                        this.context.isExternalReference(current[i].$ref)
+                    ) {
+                        const resolvedRef = await context.resolveReference({ $ref: current[i].$ref });
+                        if (resolvedRef.resolved) {
+                            current[i] = resolvedRef.value;
+                        }
+                    } else {
+                        queue.push({
+                            current: current[i],
+                            breadcrumbs: [...breadcrumbs, i]
+                        });
+                    }
+                }
+            } else if (current != null && typeof current === "object") {
+                for (const [key, value] of Object.entries(current)) {
+                    if (this.context.isReferenceObject(value) && this.context.isExternalReference(value.$ref)) {
+                        const resolvedRef = await context.resolveReference({ $ref: value.$ref });
+                        if (resolvedRef.resolved) {
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            (current as any)[key] = resolvedRef.value;
+                        }
+                        continue;
+                    }
+
+                    if (typeof value === "object" && value !== null) {
+                        queue.push({
+                            current: value,
+                            breadcrumbs: [...breadcrumbs, key]
+                        });
+                    }
+                }
+            }
+        }
+        return spec;
+    }
 
     protected removeXFernIgnores({
         document,
