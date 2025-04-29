@@ -428,8 +428,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfZeroStatus": {
-      "name": "ActionAttemptOneOfZeroStatus",
+    "ActionAttemptOneOf0Status": {
+      "name": "ActionAttemptOneOf0Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -439,8 +439,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfZeroActionType": {
-      "name": "ActionAttemptOneOfZeroActionType",
+    "ActionAttemptOneOf0ActionType": {
+      "name": "ActionAttemptOneOf0ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -450,9 +450,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfZero": {
+    "ActionAttempt0": {
       "description": "Locking door.",
-      "name": "ActionAttemptOneOfZero",
+      "name": "ActionAttempt0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -472,7 +472,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfZeroStatus"
+              "value": "ActionAttemptOneOf0Status"
             }
           },
           {
@@ -505,14 +505,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfZeroActionType"
+              "value": "ActionAttemptOneOf0ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfOneStatus": {
-      "name": "ActionAttemptOneOfOneStatus",
+    "ActionAttemptOneOf1Status": {
+      "name": "ActionAttemptOneOf1Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -522,8 +522,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfOneActionType": {
-      "name": "ActionAttemptOneOfOneActionType",
+    "ActionAttemptOneOf1ActionType": {
+      "name": "ActionAttemptOneOf1ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -533,17 +533,17 @@
         ]
       }
     },
-    "ActionAttemptOneOfOneResult": {
-      "name": "ActionAttemptOneOfOneResult",
+    "ActionAttemptOneOf1Result": {
+      "name": "ActionAttemptOneOf1Result",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ActionAttemptOneOfOne": {
+    "ActionAttempt1": {
       "description": "Locking door succeeded.",
-      "name": "ActionAttemptOneOfOne",
+      "name": "ActionAttempt1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -563,7 +563,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfOneStatus"
+              "value": "ActionAttemptOneOf1Status"
             }
           },
           {
@@ -583,21 +583,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfOneActionType"
+              "value": "ActionAttemptOneOf1ActionType"
             }
           },
           {
             "key": "result",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfOneResult"
+              "value": "ActionAttemptOneOf1Result"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwoStatus": {
-      "name": "ActionAttemptOneOfTwoStatus",
+    "ActionAttemptOneOf2Status": {
+      "name": "ActionAttemptOneOf2Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -607,8 +607,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwoActionType": {
-      "name": "ActionAttemptOneOfTwoActionType",
+    "ActionAttemptOneOf2ActionType": {
+      "name": "ActionAttemptOneOf2ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -618,8 +618,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwoError": {
-      "name": "ActionAttemptOneOfTwoError",
+    "ActionAttemptOneOf2Error": {
+      "name": "ActionAttemptOneOf2Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -645,9 +645,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwo": {
+    "ActionAttempt2": {
       "description": "Locking door failed.",
-      "name": "ActionAttemptOneOfTwo",
+      "name": "ActionAttempt2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -667,7 +667,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwoStatus"
+              "value": "ActionAttemptOneOf2Status"
             }
           },
           {
@@ -687,21 +687,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwoActionType"
+              "value": "ActionAttemptOneOf2ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwoError"
+              "value": "ActionAttemptOneOf2Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThreeStatus": {
-      "name": "ActionAttemptOneOfThreeStatus",
+    "ActionAttemptOneOf3Status": {
+      "name": "ActionAttemptOneOf3Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -711,8 +711,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThreeActionType": {
-      "name": "ActionAttemptOneOfThreeActionType",
+    "ActionAttemptOneOf3ActionType": {
+      "name": "ActionAttemptOneOf3ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -722,9 +722,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfThree": {
+    "ActionAttempt3": {
       "description": "Unlocking door.",
-      "name": "ActionAttemptOneOfThree",
+      "name": "ActionAttempt3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -744,7 +744,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThreeStatus"
+              "value": "ActionAttemptOneOf3Status"
             }
           },
           {
@@ -777,14 +777,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThreeActionType"
+              "value": "ActionAttemptOneOf3ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFourStatus": {
-      "name": "ActionAttemptOneOfFourStatus",
+    "ActionAttemptOneOf4Status": {
+      "name": "ActionAttemptOneOf4Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -794,8 +794,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFourActionType": {
-      "name": "ActionAttemptOneOfFourActionType",
+    "ActionAttemptOneOf4ActionType": {
+      "name": "ActionAttemptOneOf4ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -805,17 +805,17 @@
         ]
       }
     },
-    "ActionAttemptOneOfFourResult": {
-      "name": "ActionAttemptOneOfFourResult",
+    "ActionAttemptOneOf4Result": {
+      "name": "ActionAttemptOneOf4Result",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ActionAttemptOneOfFour": {
+    "ActionAttempt4": {
       "description": "Unlocking door succeeded.",
-      "name": "ActionAttemptOneOfFour",
+      "name": "ActionAttempt4",
       "shape": {
         "type": "object",
         "extends": [],
@@ -835,7 +835,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFourStatus"
+              "value": "ActionAttemptOneOf4Status"
             }
           },
           {
@@ -855,21 +855,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFourActionType"
+              "value": "ActionAttemptOneOf4ActionType"
             }
           },
           {
             "key": "result",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFourResult"
+              "value": "ActionAttemptOneOf4Result"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFiveStatus": {
-      "name": "ActionAttemptOneOfFiveStatus",
+    "ActionAttemptOneOf5Status": {
+      "name": "ActionAttemptOneOf5Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -879,8 +879,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFiveActionType": {
-      "name": "ActionAttemptOneOfFiveActionType",
+    "ActionAttemptOneOf5ActionType": {
+      "name": "ActionAttemptOneOf5ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -890,8 +890,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFiveError": {
-      "name": "ActionAttemptOneOfFiveError",
+    "ActionAttemptOneOf5Error": {
+      "name": "ActionAttemptOneOf5Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -917,9 +917,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfFive": {
+    "ActionAttempt5": {
       "description": "Unlocking door failed.",
-      "name": "ActionAttemptOneOfFive",
+      "name": "ActionAttempt5",
       "shape": {
         "type": "object",
         "extends": [],
@@ -939,7 +939,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFiveStatus"
+              "value": "ActionAttemptOneOf5Status"
             }
           },
           {
@@ -959,21 +959,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFiveActionType"
+              "value": "ActionAttemptOneOf5ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFiveError"
+              "value": "ActionAttemptOneOf5Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfSixStatus": {
-      "name": "ActionAttemptOneOfSixStatus",
+    "ActionAttemptOneOf6Status": {
+      "name": "ActionAttemptOneOf6Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -983,8 +983,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfSixActionType": {
-      "name": "ActionAttemptOneOfSixActionType",
+    "ActionAttemptOneOf6ActionType": {
+      "name": "ActionAttemptOneOf6ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -994,9 +994,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfSix": {
+    "ActionAttempt6": {
       "description": "Resetting sandbox workspace.",
-      "name": "ActionAttemptOneOfSix",
+      "name": "ActionAttempt6",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1016,7 +1016,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSixStatus"
+              "value": "ActionAttemptOneOf6Status"
             }
           },
           {
@@ -1049,14 +1049,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSixActionType"
+              "value": "ActionAttemptOneOf6ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfSevenStatus": {
-      "name": "ActionAttemptOneOfSevenStatus",
+    "ActionAttemptOneOf7Status": {
+      "name": "ActionAttemptOneOf7Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1066,8 +1066,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfSevenActionType": {
-      "name": "ActionAttemptOneOfSevenActionType",
+    "ActionAttemptOneOf7ActionType": {
+      "name": "ActionAttemptOneOf7ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1077,17 +1077,17 @@
         ]
       }
     },
-    "ActionAttemptOneOfSevenResult": {
-      "name": "ActionAttemptOneOfSevenResult",
+    "ActionAttemptOneOf7Result": {
+      "name": "ActionAttemptOneOf7Result",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ActionAttemptOneOfSeven": {
+    "ActionAttempt7": {
       "description": "Resetting sandbox workspace succeeded.",
-      "name": "ActionAttemptOneOfSeven",
+      "name": "ActionAttempt7",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1107,7 +1107,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSevenStatus"
+              "value": "ActionAttemptOneOf7Status"
             }
           },
           {
@@ -1127,21 +1127,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSevenActionType"
+              "value": "ActionAttemptOneOf7ActionType"
             }
           },
           {
             "key": "result",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSevenResult"
+              "value": "ActionAttemptOneOf7Result"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfEightStatus": {
-      "name": "ActionAttemptOneOfEightStatus",
+    "ActionAttemptOneOf8Status": {
+      "name": "ActionAttemptOneOf8Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1151,8 +1151,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfEightActionType": {
-      "name": "ActionAttemptOneOfEightActionType",
+    "ActionAttemptOneOf8ActionType": {
+      "name": "ActionAttemptOneOf8ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1162,8 +1162,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfEightError": {
-      "name": "ActionAttemptOneOfEightError",
+    "ActionAttemptOneOf8Error": {
+      "name": "ActionAttemptOneOf8Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1189,9 +1189,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfEight": {
+    "ActionAttempt8": {
       "description": "Resetting sandbox workspace failed.",
-      "name": "ActionAttemptOneOfEight",
+      "name": "ActionAttempt8",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1211,7 +1211,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfEightStatus"
+              "value": "ActionAttemptOneOf8Status"
             }
           },
           {
@@ -1231,21 +1231,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfEightActionType"
+              "value": "ActionAttemptOneOf8ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfEightError"
+              "value": "ActionAttemptOneOf8Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfNineStatus": {
-      "name": "ActionAttemptOneOfNineStatus",
+    "ActionAttemptOneOf9Status": {
+      "name": "ActionAttemptOneOf9Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1255,8 +1255,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfNineActionType": {
-      "name": "ActionAttemptOneOfNineActionType",
+    "ActionAttemptOneOf9ActionType": {
+      "name": "ActionAttemptOneOf9ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1266,9 +1266,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfNine": {
+    "ActionAttempt9": {
       "description": "Setting HVAC to cool.",
-      "name": "ActionAttemptOneOfNine",
+      "name": "ActionAttempt9",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1288,7 +1288,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfNineStatus"
+              "value": "ActionAttemptOneOf9Status"
             }
           },
           {
@@ -1321,14 +1321,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfNineActionType"
+              "value": "ActionAttemptOneOf9ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTenStatus": {
-      "name": "ActionAttemptOneOfTenStatus",
+    "ActionAttemptOneOf10Status": {
+      "name": "ActionAttemptOneOf10Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1338,8 +1338,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTenActionType": {
-      "name": "ActionAttemptOneOfTenActionType",
+    "ActionAttemptOneOf10ActionType": {
+      "name": "ActionAttemptOneOf10ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1349,17 +1349,17 @@
         ]
       }
     },
-    "ActionAttemptOneOfTenResult": {
-      "name": "ActionAttemptOneOfTenResult",
+    "ActionAttemptOneOf10Result": {
+      "name": "ActionAttemptOneOf10Result",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ActionAttemptOneOfTen": {
+    "ActionAttempt10": {
       "description": "Setting HVAC to cool succeeded.",
-      "name": "ActionAttemptOneOfTen",
+      "name": "ActionAttempt10",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1379,7 +1379,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTenStatus"
+              "value": "ActionAttemptOneOf10Status"
             }
           },
           {
@@ -1399,21 +1399,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTenActionType"
+              "value": "ActionAttemptOneOf10ActionType"
             }
           },
           {
             "key": "result",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTenResult"
+              "value": "ActionAttemptOneOf10Result"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfElevenStatus": {
-      "name": "ActionAttemptOneOfElevenStatus",
+    "ActionAttemptOneOf11Status": {
+      "name": "ActionAttemptOneOf11Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1423,8 +1423,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfElevenActionType": {
-      "name": "ActionAttemptOneOfElevenActionType",
+    "ActionAttemptOneOf11ActionType": {
+      "name": "ActionAttemptOneOf11ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1434,8 +1434,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfElevenError": {
-      "name": "ActionAttemptOneOfElevenError",
+    "ActionAttemptOneOf11Error": {
+      "name": "ActionAttemptOneOf11Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1461,9 +1461,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfEleven": {
+    "ActionAttempt11": {
       "description": "Setting HVAC to cool failed.",
-      "name": "ActionAttemptOneOfEleven",
+      "name": "ActionAttempt11",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1483,7 +1483,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfElevenStatus"
+              "value": "ActionAttemptOneOf11Status"
             }
           },
           {
@@ -1503,21 +1503,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfElevenActionType"
+              "value": "ActionAttemptOneOf11ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfElevenError"
+              "value": "ActionAttemptOneOf11Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwelveStatus": {
-      "name": "ActionAttemptOneOfTwelveStatus",
+    "ActionAttemptOneOf12Status": {
+      "name": "ActionAttemptOneOf12Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1527,8 +1527,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwelveActionType": {
-      "name": "ActionAttemptOneOfTwelveActionType",
+    "ActionAttemptOneOf12ActionType": {
+      "name": "ActionAttemptOneOf12ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1538,9 +1538,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwelve": {
+    "ActionAttempt12": {
       "description": "Setting HVAC to heat mode.",
-      "name": "ActionAttemptOneOfTwelve",
+      "name": "ActionAttempt12",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1560,7 +1560,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwelveStatus"
+              "value": "ActionAttemptOneOf12Status"
             }
           },
           {
@@ -1593,14 +1593,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwelveActionType"
+              "value": "ActionAttemptOneOf12ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirteenStatus": {
-      "name": "ActionAttemptOneOfThirteenStatus",
+    "ActionAttemptOneOf13Status": {
+      "name": "ActionAttemptOneOf13Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1610,8 +1610,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirteenActionType": {
-      "name": "ActionAttemptOneOfThirteenActionType",
+    "ActionAttemptOneOf13ActionType": {
+      "name": "ActionAttemptOneOf13ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1621,17 +1621,17 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirteenResult": {
-      "name": "ActionAttemptOneOfThirteenResult",
+    "ActionAttemptOneOf13Result": {
+      "name": "ActionAttemptOneOf13Result",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ActionAttemptOneOfThirteen": {
+    "ActionAttempt13": {
       "description": "Setting HVAC to heat mode succeeded.",
-      "name": "ActionAttemptOneOfThirteen",
+      "name": "ActionAttempt13",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1651,7 +1651,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirteenStatus"
+              "value": "ActionAttemptOneOf13Status"
             }
           },
           {
@@ -1671,21 +1671,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirteenActionType"
+              "value": "ActionAttemptOneOf13ActionType"
             }
           },
           {
             "key": "result",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirteenResult"
+              "value": "ActionAttemptOneOf13Result"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFourteenStatus": {
-      "name": "ActionAttemptOneOfFourteenStatus",
+    "ActionAttemptOneOf14Status": {
+      "name": "ActionAttemptOneOf14Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1695,8 +1695,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFourteenActionType": {
-      "name": "ActionAttemptOneOfFourteenActionType",
+    "ActionAttemptOneOf14ActionType": {
+      "name": "ActionAttemptOneOf14ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1706,8 +1706,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFourteenError": {
-      "name": "ActionAttemptOneOfFourteenError",
+    "ActionAttemptOneOf14Error": {
+      "name": "ActionAttemptOneOf14Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1733,9 +1733,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfFourteen": {
+    "ActionAttempt14": {
       "description": "Setting HVAC to heat mode failed.",
-      "name": "ActionAttemptOneOfFourteen",
+      "name": "ActionAttempt14",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1755,7 +1755,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFourteenStatus"
+              "value": "ActionAttemptOneOf14Status"
             }
           },
           {
@@ -1775,21 +1775,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFourteenActionType"
+              "value": "ActionAttemptOneOf14ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFourteenError"
+              "value": "ActionAttemptOneOf14Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFifteenStatus": {
-      "name": "ActionAttemptOneOfFifteenStatus",
+    "ActionAttemptOneOf15Status": {
+      "name": "ActionAttemptOneOf15Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1799,8 +1799,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFifteenActionType": {
-      "name": "ActionAttemptOneOfFifteenActionType",
+    "ActionAttemptOneOf15ActionType": {
+      "name": "ActionAttemptOneOf15ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1810,9 +1810,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfFifteen": {
+    "ActionAttempt15": {
       "description": "Setting HVAC to heat-cool mode.",
-      "name": "ActionAttemptOneOfFifteen",
+      "name": "ActionAttempt15",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1832,7 +1832,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFifteenStatus"
+              "value": "ActionAttemptOneOf15Status"
             }
           },
           {
@@ -1865,14 +1865,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFifteenActionType"
+              "value": "ActionAttemptOneOf15ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfSixteenStatus": {
-      "name": "ActionAttemptOneOfSixteenStatus",
+    "ActionAttemptOneOf16Status": {
+      "name": "ActionAttemptOneOf16Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1882,8 +1882,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfSixteenActionType": {
-      "name": "ActionAttemptOneOfSixteenActionType",
+    "ActionAttemptOneOf16ActionType": {
+      "name": "ActionAttemptOneOf16ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1893,17 +1893,17 @@
         ]
       }
     },
-    "ActionAttemptOneOfSixteenResult": {
-      "name": "ActionAttemptOneOfSixteenResult",
+    "ActionAttemptOneOf16Result": {
+      "name": "ActionAttemptOneOf16Result",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ActionAttemptOneOfSixteen": {
+    "ActionAttempt16": {
       "description": "Setting HVAC to heat-cool mode succeeded.",
-      "name": "ActionAttemptOneOfSixteen",
+      "name": "ActionAttempt16",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1923,7 +1923,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSixteenStatus"
+              "value": "ActionAttemptOneOf16Status"
             }
           },
           {
@@ -1943,21 +1943,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSixteenActionType"
+              "value": "ActionAttemptOneOf16ActionType"
             }
           },
           {
             "key": "result",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSixteenResult"
+              "value": "ActionAttemptOneOf16Result"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfSeventeenStatus": {
-      "name": "ActionAttemptOneOfSeventeenStatus",
+    "ActionAttemptOneOf17Status": {
+      "name": "ActionAttemptOneOf17Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -1967,8 +1967,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfSeventeenActionType": {
-      "name": "ActionAttemptOneOfSeventeenActionType",
+    "ActionAttemptOneOf17ActionType": {
+      "name": "ActionAttemptOneOf17ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -1978,8 +1978,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfSeventeenError": {
-      "name": "ActionAttemptOneOfSeventeenError",
+    "ActionAttemptOneOf17Error": {
+      "name": "ActionAttemptOneOf17Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2005,9 +2005,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfSeventeen": {
+    "ActionAttempt17": {
       "description": "Setting heat-cool mode failed.",
-      "name": "ActionAttemptOneOfSeventeen",
+      "name": "ActionAttempt17",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2027,7 +2027,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSeventeenStatus"
+              "value": "ActionAttemptOneOf17Status"
             }
           },
           {
@@ -2047,21 +2047,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSeventeenActionType"
+              "value": "ActionAttemptOneOf17ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfSeventeenError"
+              "value": "ActionAttemptOneOf17Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfEighteenStatus": {
-      "name": "ActionAttemptOneOfEighteenStatus",
+    "ActionAttemptOneOf18Status": {
+      "name": "ActionAttemptOneOf18Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2071,8 +2071,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfEighteenActionType": {
-      "name": "ActionAttemptOneOfEighteenActionType",
+    "ActionAttemptOneOf18ActionType": {
+      "name": "ActionAttemptOneOf18ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2082,9 +2082,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfEighteen": {
+    "ActionAttempt18": {
       "description": "Setting fan mode.",
-      "name": "ActionAttemptOneOfEighteen",
+      "name": "ActionAttempt18",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2104,7 +2104,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfEighteenStatus"
+              "value": "ActionAttemptOneOf18Status"
             }
           },
           {
@@ -2137,14 +2137,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfEighteenActionType"
+              "value": "ActionAttemptOneOf18ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfNineteenStatus": {
-      "name": "ActionAttemptOneOfNineteenStatus",
+    "ActionAttemptOneOf19Status": {
+      "name": "ActionAttemptOneOf19Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2154,8 +2154,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfNineteenActionType": {
-      "name": "ActionAttemptOneOfNineteenActionType",
+    "ActionAttemptOneOf19ActionType": {
+      "name": "ActionAttemptOneOf19ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2165,17 +2165,17 @@
         ]
       }
     },
-    "ActionAttemptOneOfNineteenResult": {
-      "name": "ActionAttemptOneOfNineteenResult",
+    "ActionAttemptOneOf19Result": {
+      "name": "ActionAttemptOneOf19Result",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ActionAttemptOneOfNineteen": {
+    "ActionAttempt19": {
       "description": "Setting fan mode succeeded.",
-      "name": "ActionAttemptOneOfNineteen",
+      "name": "ActionAttempt19",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2195,7 +2195,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfNineteenStatus"
+              "value": "ActionAttemptOneOf19Status"
             }
           },
           {
@@ -2215,21 +2215,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfNineteenActionType"
+              "value": "ActionAttemptOneOf19ActionType"
             }
           },
           {
             "key": "result",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfNineteenResult"
+              "value": "ActionAttemptOneOf19Result"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentyStatus": {
-      "name": "ActionAttemptOneOfTwentyStatus",
+    "ActionAttemptOneOf20Status": {
+      "name": "ActionAttemptOneOf20Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2239,8 +2239,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyActionType": {
-      "name": "ActionAttemptOneOfTwentyActionType",
+    "ActionAttemptOneOf20ActionType": {
+      "name": "ActionAttemptOneOf20ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2250,8 +2250,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyError": {
-      "name": "ActionAttemptOneOfTwentyError",
+    "ActionAttemptOneOf20Error": {
+      "name": "ActionAttemptOneOf20Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2277,9 +2277,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwenty": {
+    "ActionAttempt20": {
       "description": "Setting fan mode failed.",
-      "name": "ActionAttemptOneOfTwenty",
+      "name": "ActionAttempt20",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2299,7 +2299,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyStatus"
+              "value": "ActionAttemptOneOf20Status"
             }
           },
           {
@@ -2319,21 +2319,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyActionType"
+              "value": "ActionAttemptOneOf20ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyError"
+              "value": "ActionAttemptOneOf20Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentyOneStatus": {
-      "name": "ActionAttemptOneOfTwentyOneStatus",
+    "ActionAttemptOneOf21Status": {
+      "name": "ActionAttemptOneOf21Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2343,8 +2343,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyOneActionType": {
-      "name": "ActionAttemptOneOfTwentyOneActionType",
+    "ActionAttemptOneOf21ActionType": {
+      "name": "ActionAttemptOneOf21ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2354,9 +2354,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyOne": {
+    "ActionAttempt21": {
       "description": "Turning HVAC off.",
-      "name": "ActionAttemptOneOfTwentyOne",
+      "name": "ActionAttempt21",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2376,7 +2376,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyOneStatus"
+              "value": "ActionAttemptOneOf21Status"
             }
           },
           {
@@ -2409,14 +2409,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyOneActionType"
+              "value": "ActionAttemptOneOf21ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentyTwoStatus": {
-      "name": "ActionAttemptOneOfTwentyTwoStatus",
+    "ActionAttemptOneOf22Status": {
+      "name": "ActionAttemptOneOf22Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2426,8 +2426,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyTwoActionType": {
-      "name": "ActionAttemptOneOfTwentyTwoActionType",
+    "ActionAttemptOneOf22ActionType": {
+      "name": "ActionAttemptOneOf22ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2437,17 +2437,17 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyTwoResult": {
-      "name": "ActionAttemptOneOfTwentyTwoResult",
+    "ActionAttemptOneOf22Result": {
+      "name": "ActionAttemptOneOf22Result",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ActionAttemptOneOfTwentyTwo": {
+    "ActionAttempt22": {
       "description": "Turning HVAC off succeeded.",
-      "name": "ActionAttemptOneOfTwentyTwo",
+      "name": "ActionAttempt22",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2467,7 +2467,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyTwoStatus"
+              "value": "ActionAttemptOneOf22Status"
             }
           },
           {
@@ -2487,21 +2487,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyTwoActionType"
+              "value": "ActionAttemptOneOf22ActionType"
             }
           },
           {
             "key": "result",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyTwoResult"
+              "value": "ActionAttemptOneOf22Result"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentyThreeStatus": {
-      "name": "ActionAttemptOneOfTwentyThreeStatus",
+    "ActionAttemptOneOf23Status": {
+      "name": "ActionAttemptOneOf23Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2511,8 +2511,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyThreeActionType": {
-      "name": "ActionAttemptOneOfTwentyThreeActionType",
+    "ActionAttemptOneOf23ActionType": {
+      "name": "ActionAttemptOneOf23ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2522,8 +2522,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyThreeError": {
-      "name": "ActionAttemptOneOfTwentyThreeError",
+    "ActionAttemptOneOf23Error": {
+      "name": "ActionAttemptOneOf23Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2549,9 +2549,9 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyThree": {
+    "ActionAttempt23": {
       "description": "Turning HVAC off failed.",
-      "name": "ActionAttemptOneOfTwentyThree",
+      "name": "ActionAttempt23",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2571,7 +2571,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyThreeStatus"
+              "value": "ActionAttemptOneOf23Status"
             }
           },
           {
@@ -2591,21 +2591,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyThreeActionType"
+              "value": "ActionAttemptOneOf23ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyThreeError"
+              "value": "ActionAttemptOneOf23Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentyFourStatus": {
-      "name": "ActionAttemptOneOfTwentyFourStatus",
+    "ActionAttemptOneOf24Status": {
+      "name": "ActionAttemptOneOf24Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2615,8 +2615,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyFourActionType": {
-      "name": "ActionAttemptOneOfTwentyFourActionType",
+    "ActionAttemptOneOf24ActionType": {
+      "name": "ActionAttemptOneOf24ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2626,8 +2626,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyFour": {
-      "name": "ActionAttemptOneOfTwentyFour",
+    "ActionAttempt24": {
+      "name": "ActionAttempt24",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2647,7 +2647,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyFourStatus"
+              "value": "ActionAttemptOneOf24Status"
             }
           },
           {
@@ -2680,14 +2680,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyFourActionType"
+              "value": "ActionAttemptOneOf24ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentyFiveStatus": {
-      "name": "ActionAttemptOneOfTwentyFiveStatus",
+    "ActionAttemptOneOf25Status": {
+      "name": "ActionAttemptOneOf25Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2697,8 +2697,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyFiveActionType": {
-      "name": "ActionAttemptOneOfTwentyFiveActionType",
+    "ActionAttemptOneOf25ActionType": {
+      "name": "ActionAttemptOneOf25ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2708,8 +2708,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyFive": {
-      "name": "ActionAttemptOneOfTwentyFive",
+    "ActionAttempt25": {
+      "name": "ActionAttempt25",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2729,7 +2729,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyFiveStatus"
+              "value": "ActionAttemptOneOf25Status"
             }
           },
           {
@@ -2749,14 +2749,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyFiveActionType"
+              "value": "ActionAttemptOneOf25ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentySixStatus": {
-      "name": "ActionAttemptOneOfTwentySixStatus",
+    "ActionAttemptOneOf26Status": {
+      "name": "ActionAttemptOneOf26Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2766,8 +2766,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentySixActionType": {
-      "name": "ActionAttemptOneOfTwentySixActionType",
+    "ActionAttemptOneOf26ActionType": {
+      "name": "ActionAttemptOneOf26ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2777,8 +2777,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentySixError": {
-      "name": "ActionAttemptOneOfTwentySixError",
+    "ActionAttemptOneOf26Error": {
+      "name": "ActionAttemptOneOf26Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2804,8 +2804,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentySix": {
-      "name": "ActionAttemptOneOfTwentySix",
+    "ActionAttempt26": {
+      "name": "ActionAttempt26",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2825,7 +2825,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentySixStatus"
+              "value": "ActionAttemptOneOf26Status"
             }
           },
           {
@@ -2845,21 +2845,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentySixActionType"
+              "value": "ActionAttemptOneOf26ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentySixError"
+              "value": "ActionAttemptOneOf26Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentySevenStatus": {
-      "name": "ActionAttemptOneOfTwentySevenStatus",
+    "ActionAttemptOneOf27Status": {
+      "name": "ActionAttemptOneOf27Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2869,8 +2869,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentySevenActionType": {
-      "name": "ActionAttemptOneOfTwentySevenActionType",
+    "ActionAttemptOneOf27ActionType": {
+      "name": "ActionAttemptOneOf27ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2880,8 +2880,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentySeven": {
-      "name": "ActionAttemptOneOfTwentySeven",
+    "ActionAttempt27": {
+      "name": "ActionAttempt27",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2901,7 +2901,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentySevenStatus"
+              "value": "ActionAttemptOneOf27Status"
             }
           },
           {
@@ -2934,14 +2934,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentySevenActionType"
+              "value": "ActionAttemptOneOf27ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentyEightStatus": {
-      "name": "ActionAttemptOneOfTwentyEightStatus",
+    "ActionAttemptOneOf28Status": {
+      "name": "ActionAttemptOneOf28Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -2951,8 +2951,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyEightActionType": {
-      "name": "ActionAttemptOneOfTwentyEightActionType",
+    "ActionAttemptOneOf28ActionType": {
+      "name": "ActionAttemptOneOf28ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2962,8 +2962,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyEight": {
-      "name": "ActionAttemptOneOfTwentyEight",
+    "ActionAttempt28": {
+      "name": "ActionAttempt28",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2983,7 +2983,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyEightStatus"
+              "value": "ActionAttemptOneOf28Status"
             }
           },
           {
@@ -3003,14 +3003,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyEightActionType"
+              "value": "ActionAttemptOneOf28ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfTwentyNineStatus": {
-      "name": "ActionAttemptOneOfTwentyNineStatus",
+    "ActionAttemptOneOf29Status": {
+      "name": "ActionAttemptOneOf29Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3020,8 +3020,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyNineActionType": {
-      "name": "ActionAttemptOneOfTwentyNineActionType",
+    "ActionAttemptOneOf29ActionType": {
+      "name": "ActionAttemptOneOf29ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3031,8 +3031,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyNineError": {
-      "name": "ActionAttemptOneOfTwentyNineError",
+    "ActionAttemptOneOf29Error": {
+      "name": "ActionAttemptOneOf29Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3058,8 +3058,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfTwentyNine": {
-      "name": "ActionAttemptOneOfTwentyNine",
+    "ActionAttempt29": {
+      "name": "ActionAttempt29",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3079,7 +3079,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyNineStatus"
+              "value": "ActionAttemptOneOf29Status"
             }
           },
           {
@@ -3099,21 +3099,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyNineActionType"
+              "value": "ActionAttemptOneOf29ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyNineError"
+              "value": "ActionAttemptOneOf29Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtyStatus": {
-      "name": "ActionAttemptOneOfThirtyStatus",
+    "ActionAttemptOneOf30Status": {
+      "name": "ActionAttemptOneOf30Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3123,8 +3123,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyActionType": {
-      "name": "ActionAttemptOneOfThirtyActionType",
+    "ActionAttemptOneOf30ActionType": {
+      "name": "ActionAttemptOneOf30ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3134,8 +3134,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirty": {
-      "name": "ActionAttemptOneOfThirty",
+    "ActionAttempt30": {
+      "name": "ActionAttempt30",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3155,7 +3155,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyStatus"
+              "value": "ActionAttemptOneOf30Status"
             }
           },
           {
@@ -3188,14 +3188,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyActionType"
+              "value": "ActionAttemptOneOf30ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtyOneStatus": {
-      "name": "ActionAttemptOneOfThirtyOneStatus",
+    "ActionAttemptOneOf31Status": {
+      "name": "ActionAttemptOneOf31Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3205,8 +3205,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyOneActionType": {
-      "name": "ActionAttemptOneOfThirtyOneActionType",
+    "ActionAttemptOneOf31ActionType": {
+      "name": "ActionAttemptOneOf31ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3216,8 +3216,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyOne": {
-      "name": "ActionAttemptOneOfThirtyOne",
+    "ActionAttempt31": {
+      "name": "ActionAttempt31",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3237,7 +3237,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyOneStatus"
+              "value": "ActionAttemptOneOf31Status"
             }
           },
           {
@@ -3257,14 +3257,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyOneActionType"
+              "value": "ActionAttemptOneOf31ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtyTwoStatus": {
-      "name": "ActionAttemptOneOfThirtyTwoStatus",
+    "ActionAttemptOneOf32Status": {
+      "name": "ActionAttemptOneOf32Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3274,8 +3274,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyTwoActionType": {
-      "name": "ActionAttemptOneOfThirtyTwoActionType",
+    "ActionAttemptOneOf32ActionType": {
+      "name": "ActionAttemptOneOf32ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3285,8 +3285,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyTwoError": {
-      "name": "ActionAttemptOneOfThirtyTwoError",
+    "ActionAttemptOneOf32Error": {
+      "name": "ActionAttemptOneOf32Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3312,8 +3312,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyTwo": {
-      "name": "ActionAttemptOneOfThirtyTwo",
+    "ActionAttempt32": {
+      "name": "ActionAttempt32",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3333,7 +3333,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyTwoStatus"
+              "value": "ActionAttemptOneOf32Status"
             }
           },
           {
@@ -3353,21 +3353,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyTwoActionType"
+              "value": "ActionAttemptOneOf32ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyTwoError"
+              "value": "ActionAttemptOneOf32Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtyThreeStatus": {
-      "name": "ActionAttemptOneOfThirtyThreeStatus",
+    "ActionAttemptOneOf33Status": {
+      "name": "ActionAttemptOneOf33Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3377,8 +3377,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyThreeActionType": {
-      "name": "ActionAttemptOneOfThirtyThreeActionType",
+    "ActionAttemptOneOf33ActionType": {
+      "name": "ActionAttemptOneOf33ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3388,8 +3388,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyThree": {
-      "name": "ActionAttemptOneOfThirtyThree",
+    "ActionAttempt33": {
+      "name": "ActionAttempt33",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3409,7 +3409,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyThreeStatus"
+              "value": "ActionAttemptOneOf33Status"
             }
           },
           {
@@ -3442,14 +3442,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyThreeActionType"
+              "value": "ActionAttemptOneOf33ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtyFourStatus": {
-      "name": "ActionAttemptOneOfThirtyFourStatus",
+    "ActionAttemptOneOf34Status": {
+      "name": "ActionAttemptOneOf34Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3459,8 +3459,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyFourActionType": {
-      "name": "ActionAttemptOneOfThirtyFourActionType",
+    "ActionAttemptOneOf34ActionType": {
+      "name": "ActionAttemptOneOf34ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3470,8 +3470,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyFour": {
-      "name": "ActionAttemptOneOfThirtyFour",
+    "ActionAttempt34": {
+      "name": "ActionAttempt34",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3491,7 +3491,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyFourStatus"
+              "value": "ActionAttemptOneOf34Status"
             }
           },
           {
@@ -3511,14 +3511,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyFourActionType"
+              "value": "ActionAttemptOneOf34ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtyFiveStatus": {
-      "name": "ActionAttemptOneOfThirtyFiveStatus",
+    "ActionAttemptOneOf35Status": {
+      "name": "ActionAttemptOneOf35Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3528,8 +3528,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyFiveActionType": {
-      "name": "ActionAttemptOneOfThirtyFiveActionType",
+    "ActionAttemptOneOf35ActionType": {
+      "name": "ActionAttemptOneOf35ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3539,8 +3539,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyFiveError": {
-      "name": "ActionAttemptOneOfThirtyFiveError",
+    "ActionAttemptOneOf35Error": {
+      "name": "ActionAttemptOneOf35Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3566,8 +3566,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyFive": {
-      "name": "ActionAttemptOneOfThirtyFive",
+    "ActionAttempt35": {
+      "name": "ActionAttempt35",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3587,7 +3587,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyFiveStatus"
+              "value": "ActionAttemptOneOf35Status"
             }
           },
           {
@@ -3607,21 +3607,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyFiveActionType"
+              "value": "ActionAttemptOneOf35ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyFiveError"
+              "value": "ActionAttemptOneOf35Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtySixStatus": {
-      "name": "ActionAttemptOneOfThirtySixStatus",
+    "ActionAttemptOneOf36Status": {
+      "name": "ActionAttemptOneOf36Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3631,8 +3631,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtySixActionType": {
-      "name": "ActionAttemptOneOfThirtySixActionType",
+    "ActionAttemptOneOf36ActionType": {
+      "name": "ActionAttemptOneOf36ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3642,8 +3642,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtySix": {
-      "name": "ActionAttemptOneOfThirtySix",
+    "ActionAttempt36": {
+      "name": "ActionAttempt36",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3663,7 +3663,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtySixStatus"
+              "value": "ActionAttemptOneOf36Status"
             }
           },
           {
@@ -3696,14 +3696,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtySixActionType"
+              "value": "ActionAttemptOneOf36ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtySevenStatus": {
-      "name": "ActionAttemptOneOfThirtySevenStatus",
+    "ActionAttemptOneOf37Status": {
+      "name": "ActionAttemptOneOf37Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3713,8 +3713,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtySevenActionType": {
-      "name": "ActionAttemptOneOfThirtySevenActionType",
+    "ActionAttemptOneOf37ActionType": {
+      "name": "ActionAttemptOneOf37ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3724,8 +3724,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtySeven": {
-      "name": "ActionAttemptOneOfThirtySeven",
+    "ActionAttempt37": {
+      "name": "ActionAttempt37",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3745,7 +3745,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtySevenStatus"
+              "value": "ActionAttemptOneOf37Status"
             }
           },
           {
@@ -3765,14 +3765,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtySevenActionType"
+              "value": "ActionAttemptOneOf37ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtyEightStatus": {
-      "name": "ActionAttemptOneOfThirtyEightStatus",
+    "ActionAttemptOneOf38Status": {
+      "name": "ActionAttemptOneOf38Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3782,8 +3782,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyEightActionType": {
-      "name": "ActionAttemptOneOfThirtyEightActionType",
+    "ActionAttemptOneOf38ActionType": {
+      "name": "ActionAttemptOneOf38ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3793,8 +3793,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyEightError": {
-      "name": "ActionAttemptOneOfThirtyEightError",
+    "ActionAttemptOneOf38Error": {
+      "name": "ActionAttemptOneOf38Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3820,8 +3820,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyEight": {
-      "name": "ActionAttemptOneOfThirtyEight",
+    "ActionAttempt38": {
+      "name": "ActionAttempt38",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3841,7 +3841,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyEightStatus"
+              "value": "ActionAttemptOneOf38Status"
             }
           },
           {
@@ -3861,21 +3861,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyEightActionType"
+              "value": "ActionAttemptOneOf38ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyEightError"
+              "value": "ActionAttemptOneOf38Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfThirtyNineStatus": {
-      "name": "ActionAttemptOneOfThirtyNineStatus",
+    "ActionAttemptOneOf39Status": {
+      "name": "ActionAttemptOneOf39Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3885,8 +3885,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyNineActionType": {
-      "name": "ActionAttemptOneOfThirtyNineActionType",
+    "ActionAttemptOneOf39ActionType": {
+      "name": "ActionAttemptOneOf39ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3896,8 +3896,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfThirtyNine": {
-      "name": "ActionAttemptOneOfThirtyNine",
+    "ActionAttempt39": {
+      "name": "ActionAttempt39",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3917,7 +3917,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyNineStatus"
+              "value": "ActionAttemptOneOf39Status"
             }
           },
           {
@@ -3950,14 +3950,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyNineActionType"
+              "value": "ActionAttemptOneOf39ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFortyStatus": {
-      "name": "ActionAttemptOneOfFortyStatus",
+    "ActionAttemptOneOf40Status": {
+      "name": "ActionAttemptOneOf40Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -3967,8 +3967,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyActionType": {
-      "name": "ActionAttemptOneOfFortyActionType",
+    "ActionAttemptOneOf40ActionType": {
+      "name": "ActionAttemptOneOf40ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3978,8 +3978,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfForty": {
-      "name": "ActionAttemptOneOfForty",
+    "ActionAttempt40": {
+      "name": "ActionAttempt40",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3999,7 +3999,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyStatus"
+              "value": "ActionAttemptOneOf40Status"
             }
           },
           {
@@ -4019,14 +4019,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyActionType"
+              "value": "ActionAttemptOneOf40ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFortyOneStatus": {
-      "name": "ActionAttemptOneOfFortyOneStatus",
+    "ActionAttemptOneOf41Status": {
+      "name": "ActionAttemptOneOf41Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -4036,8 +4036,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyOneActionType": {
-      "name": "ActionAttemptOneOfFortyOneActionType",
+    "ActionAttemptOneOf41ActionType": {
+      "name": "ActionAttemptOneOf41ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -4047,8 +4047,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyOneError": {
-      "name": "ActionAttemptOneOfFortyOneError",
+    "ActionAttemptOneOf41Error": {
+      "name": "ActionAttemptOneOf41Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4074,8 +4074,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyOne": {
-      "name": "ActionAttemptOneOfFortyOne",
+    "ActionAttempt41": {
+      "name": "ActionAttempt41",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4095,7 +4095,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyOneStatus"
+              "value": "ActionAttemptOneOf41Status"
             }
           },
           {
@@ -4115,21 +4115,21 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyOneActionType"
+              "value": "ActionAttemptOneOf41ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyOneError"
+              "value": "ActionAttemptOneOf41Error"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFortyTwoStatus": {
-      "name": "ActionAttemptOneOfFortyTwoStatus",
+    "ActionAttemptOneOf42Status": {
+      "name": "ActionAttemptOneOf42Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -4139,8 +4139,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyTwoActionType": {
-      "name": "ActionAttemptOneOfFortyTwoActionType",
+    "ActionAttemptOneOf42ActionType": {
+      "name": "ActionAttemptOneOf42ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -4150,8 +4150,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyTwo": {
-      "name": "ActionAttemptOneOfFortyTwo",
+    "ActionAttempt42": {
+      "name": "ActionAttempt42",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4171,7 +4171,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyTwoStatus"
+              "value": "ActionAttemptOneOf42Status"
             }
           },
           {
@@ -4204,14 +4204,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyTwoActionType"
+              "value": "ActionAttemptOneOf42ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFortyThreeStatus": {
-      "name": "ActionAttemptOneOfFortyThreeStatus",
+    "ActionAttemptOneOf43Status": {
+      "name": "ActionAttemptOneOf43Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -4221,8 +4221,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyThreeActionType": {
-      "name": "ActionAttemptOneOfFortyThreeActionType",
+    "ActionAttemptOneOf43ActionType": {
+      "name": "ActionAttemptOneOf43ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -4232,8 +4232,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyThree": {
-      "name": "ActionAttemptOneOfFortyThree",
+    "ActionAttempt43": {
+      "name": "ActionAttempt43",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4253,7 +4253,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyThreeStatus"
+              "value": "ActionAttemptOneOf43Status"
             }
           },
           {
@@ -4273,14 +4273,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyThreeActionType"
+              "value": "ActionAttemptOneOf43ActionType"
             }
           }
         ]
       }
     },
-    "ActionAttemptOneOfFortyFourStatus": {
-      "name": "ActionAttemptOneOfFortyFourStatus",
+    "ActionAttemptOneOf44Status": {
+      "name": "ActionAttemptOneOf44Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -4290,8 +4290,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyFourActionType": {
-      "name": "ActionAttemptOneOfFortyFourActionType",
+    "ActionAttemptOneOf44ActionType": {
+      "name": "ActionAttemptOneOf44ActionType",
       "shape": {
         "type": "enum",
         "values": [
@@ -4301,8 +4301,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyFourError": {
-      "name": "ActionAttemptOneOfFortyFourError",
+    "ActionAttemptOneOf44Error": {
+      "name": "ActionAttemptOneOf44Error",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4328,8 +4328,8 @@
         ]
       }
     },
-    "ActionAttemptOneOfFortyFour": {
-      "name": "ActionAttemptOneOfFortyFour",
+    "ActionAttempt44": {
+      "name": "ActionAttempt44",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4349,7 +4349,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyFourStatus"
+              "value": "ActionAttemptOneOf44Status"
             }
           },
           {
@@ -4369,14 +4369,14 @@
             "key": "action_type",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyFourActionType"
+              "value": "ActionAttemptOneOf44ActionType"
             }
           },
           {
             "key": "error",
             "valueType": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyFourError"
+              "value": "ActionAttemptOneOf44Error"
             }
           }
         ]
@@ -4388,342 +4388,342 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ActionAttemptOneOfZero",
+            "typeName": "ActionAttempt0",
             "description": "Locking door.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfZero"
+              "value": "ActionAttempt0"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfOne",
+            "typeName": "ActionAttempt1",
             "description": "Locking door succeeded.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfOne"
+              "value": "ActionAttempt1"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwo",
+            "typeName": "ActionAttempt2",
             "description": "Locking door failed.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwo"
+              "value": "ActionAttempt2"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThree",
+            "typeName": "ActionAttempt3",
             "description": "Unlocking door.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThree"
+              "value": "ActionAttempt3"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfFour",
+            "typeName": "ActionAttempt4",
             "description": "Unlocking door succeeded.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfFour"
+              "value": "ActionAttempt4"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfFive",
+            "typeName": "ActionAttempt5",
             "description": "Unlocking door failed.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfFive"
+              "value": "ActionAttempt5"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfSix",
+            "typeName": "ActionAttempt6",
             "description": "Resetting sandbox workspace.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfSix"
+              "value": "ActionAttempt6"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfSeven",
+            "typeName": "ActionAttempt7",
             "description": "Resetting sandbox workspace succeeded.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfSeven"
+              "value": "ActionAttempt7"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfEight",
+            "typeName": "ActionAttempt8",
             "description": "Resetting sandbox workspace failed.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfEight"
+              "value": "ActionAttempt8"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfNine",
+            "typeName": "ActionAttempt9",
             "description": "Setting HVAC to cool.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfNine"
+              "value": "ActionAttempt9"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTen",
+            "typeName": "ActionAttempt10",
             "description": "Setting HVAC to cool succeeded.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTen"
+              "value": "ActionAttempt10"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfEleven",
+            "typeName": "ActionAttempt11",
             "description": "Setting HVAC to cool failed.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfEleven"
+              "value": "ActionAttempt11"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwelve",
+            "typeName": "ActionAttempt12",
             "description": "Setting HVAC to heat mode.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwelve"
+              "value": "ActionAttempt12"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirteen",
+            "typeName": "ActionAttempt13",
             "description": "Setting HVAC to heat mode succeeded.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirteen"
+              "value": "ActionAttempt13"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfFourteen",
+            "typeName": "ActionAttempt14",
             "description": "Setting HVAC to heat mode failed.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfFourteen"
+              "value": "ActionAttempt14"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfFifteen",
+            "typeName": "ActionAttempt15",
             "description": "Setting HVAC to heat-cool mode.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfFifteen"
+              "value": "ActionAttempt15"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfSixteen",
+            "typeName": "ActionAttempt16",
             "description": "Setting HVAC to heat-cool mode succeeded.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfSixteen"
+              "value": "ActionAttempt16"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfSeventeen",
+            "typeName": "ActionAttempt17",
             "description": "Setting heat-cool mode failed.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfSeventeen"
+              "value": "ActionAttempt17"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfEighteen",
+            "typeName": "ActionAttempt18",
             "description": "Setting fan mode.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfEighteen"
+              "value": "ActionAttempt18"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfNineteen",
+            "typeName": "ActionAttempt19",
             "description": "Setting fan mode succeeded.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfNineteen"
+              "value": "ActionAttempt19"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwenty",
+            "typeName": "ActionAttempt20",
             "description": "Setting fan mode failed.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwenty"
+              "value": "ActionAttempt20"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentyOne",
+            "typeName": "ActionAttempt21",
             "description": "Turning HVAC off.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyOne"
+              "value": "ActionAttempt21"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentyTwo",
+            "typeName": "ActionAttempt22",
             "description": "Turning HVAC off succeeded.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyTwo"
+              "value": "ActionAttempt22"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentyThree",
+            "typeName": "ActionAttempt23",
             "description": "Turning HVAC off failed.",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyThree"
+              "value": "ActionAttempt23"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentyFour",
+            "typeName": "ActionAttempt24",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyFour"
+              "value": "ActionAttempt24"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentyFive",
+            "typeName": "ActionAttempt25",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyFive"
+              "value": "ActionAttempt25"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentySix",
+            "typeName": "ActionAttempt26",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentySix"
+              "value": "ActionAttempt26"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentySeven",
+            "typeName": "ActionAttempt27",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentySeven"
+              "value": "ActionAttempt27"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentyEight",
+            "typeName": "ActionAttempt28",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyEight"
+              "value": "ActionAttempt28"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfTwentyNine",
+            "typeName": "ActionAttempt29",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfTwentyNine"
+              "value": "ActionAttempt29"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirty",
+            "typeName": "ActionAttempt30",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirty"
+              "value": "ActionAttempt30"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtyOne",
+            "typeName": "ActionAttempt31",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyOne"
+              "value": "ActionAttempt31"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtyTwo",
+            "typeName": "ActionAttempt32",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyTwo"
+              "value": "ActionAttempt32"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtyThree",
+            "typeName": "ActionAttempt33",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyThree"
+              "value": "ActionAttempt33"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtyFour",
+            "typeName": "ActionAttempt34",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyFour"
+              "value": "ActionAttempt34"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtyFive",
+            "typeName": "ActionAttempt35",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyFive"
+              "value": "ActionAttempt35"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtySix",
+            "typeName": "ActionAttempt36",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtySix"
+              "value": "ActionAttempt36"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtySeven",
+            "typeName": "ActionAttempt37",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtySeven"
+              "value": "ActionAttempt37"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtyEight",
+            "typeName": "ActionAttempt38",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyEight"
+              "value": "ActionAttempt38"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfThirtyNine",
+            "typeName": "ActionAttempt39",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfThirtyNine"
+              "value": "ActionAttempt39"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfForty",
+            "typeName": "ActionAttempt40",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfForty"
+              "value": "ActionAttempt40"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfFortyOne",
+            "typeName": "ActionAttempt41",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyOne"
+              "value": "ActionAttempt41"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfFortyTwo",
+            "typeName": "ActionAttempt42",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyTwo"
+              "value": "ActionAttempt42"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfFortyThree",
+            "typeName": "ActionAttempt43",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyThree"
+              "value": "ActionAttempt43"
             }
           },
           {
-            "typeName": "ActionAttemptOneOfFortyFour",
+            "typeName": "ActionAttempt44",
             "type": {
               "type": "id",
-              "value": "ActionAttemptOneOfFortyFour"
+              "value": "ActionAttempt44"
             }
           }
         ]
@@ -5072,8 +5072,8 @@
         ]
       }
     },
-    "ConnectWebviewCustomMetadataOneOfZero": {
-      "name": "ConnectWebviewCustomMetadataOneOfZero",
+    "ConnectWebviewCustomMetadata0": {
+      "name": "ConnectWebviewCustomMetadata0",
       "shape": {
         "type": "alias",
         "value": {
@@ -5084,8 +5084,8 @@
         }
       }
     },
-    "ConnectWebviewCustomMetadataOneOfOne": {
-      "name": "ConnectWebviewCustomMetadataOneOfOne",
+    "ConnectWebviewCustomMetadata1": {
+      "name": "ConnectWebviewCustomMetadata1",
       "shape": {
         "type": "alias",
         "value": {
@@ -5102,17 +5102,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewCustomMetadataOneOfZero",
+            "typeName": "ConnectWebviewCustomMetadata0",
             "type": {
               "type": "id",
-              "value": "ConnectWebviewCustomMetadataOneOfZero"
+              "value": "ConnectWebviewCustomMetadata0"
             }
           },
           {
-            "typeName": "ConnectWebviewCustomMetadataOneOfOne",
+            "typeName": "ConnectWebviewCustomMetadata1",
             "type": {
               "type": "id",
-              "value": "ConnectWebviewCustomMetadataOneOfOne"
+              "value": "ConnectWebviewCustomMetadata1"
             }
           }
         ]
@@ -5401,8 +5401,8 @@
         ]
       }
     },
-    "ConnectedAccountCustomMetadataOneOfZero": {
-      "name": "ConnectedAccountCustomMetadataOneOfZero",
+    "ConnectedAccountCustomMetadata0": {
+      "name": "ConnectedAccountCustomMetadata0",
       "shape": {
         "type": "alias",
         "value": {
@@ -5413,8 +5413,8 @@
         }
       }
     },
-    "ConnectedAccountCustomMetadataOneOfOne": {
-      "name": "ConnectedAccountCustomMetadataOneOfOne",
+    "ConnectedAccountCustomMetadata1": {
+      "name": "ConnectedAccountCustomMetadata1",
       "shape": {
         "type": "alias",
         "value": {
@@ -5431,17 +5431,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountCustomMetadataOneOfZero",
+            "typeName": "ConnectedAccountCustomMetadata0",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountCustomMetadataOneOfZero"
+              "value": "ConnectedAccountCustomMetadata0"
             }
           },
           {
-            "typeName": "ConnectedAccountCustomMetadataOneOfOne",
+            "typeName": "ConnectedAccountCustomMetadata1",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountCustomMetadataOneOfOne"
+              "value": "ConnectedAccountCustomMetadata1"
             }
           }
         ]
@@ -5538,8 +5538,8 @@
         ]
       }
     },
-    "DeviceDeviceTypeOneOfZero": {
-      "name": "DeviceDeviceTypeOneOfZero",
+    "DeviceDeviceType0": {
+      "name": "DeviceDeviceType0",
       "shape": {
         "type": "enum",
         "values": [
@@ -5624,8 +5624,8 @@
         ]
       }
     },
-    "DeviceDeviceTypeOneOfOne": {
-      "name": "DeviceDeviceTypeOneOfOne",
+    "DeviceDeviceType1": {
+      "name": "DeviceDeviceType1",
       "shape": {
         "type": "enum",
         "values": [
@@ -5638,8 +5638,8 @@
         ]
       }
     },
-    "DeviceDeviceTypeOneOfTwo": {
-      "name": "DeviceDeviceTypeOneOfTwo",
+    "DeviceDeviceType2": {
+      "name": "DeviceDeviceType2",
       "shape": {
         "type": "enum",
         "values": [
@@ -5655,8 +5655,8 @@
         ]
       }
     },
-    "DeviceDeviceTypeOneOfThree": {
-      "name": "DeviceDeviceTypeOneOfThree",
+    "DeviceDeviceType3": {
+      "name": "DeviceDeviceType3",
       "shape": {
         "type": "enum",
         "values": [
@@ -5676,31 +5676,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DeviceDeviceTypeOneOfZero",
+            "typeName": "DeviceDeviceType0",
             "type": {
               "type": "id",
-              "value": "DeviceDeviceTypeOneOfZero"
+              "value": "DeviceDeviceType0"
             }
           },
           {
-            "typeName": "DeviceDeviceTypeOneOfOne",
+            "typeName": "DeviceDeviceType1",
             "type": {
               "type": "id",
-              "value": "DeviceDeviceTypeOneOfOne"
+              "value": "DeviceDeviceType1"
             }
           },
           {
-            "typeName": "DeviceDeviceTypeOneOfTwo",
+            "typeName": "DeviceDeviceType2",
             "type": {
               "type": "id",
-              "value": "DeviceDeviceTypeOneOfTwo"
+              "value": "DeviceDeviceType2"
             }
           },
           {
-            "typeName": "DeviceDeviceTypeOneOfThree",
+            "typeName": "DeviceDeviceType3",
             "type": {
               "type": "id",
-              "value": "DeviceDeviceTypeOneOfThree"
+              "value": "DeviceDeviceType3"
             }
           }
         ]
@@ -5831,8 +5831,8 @@
         ]
       }
     },
-    "DeviceCustomMetadataOneOfZero": {
-      "name": "DeviceCustomMetadataOneOfZero",
+    "DeviceCustomMetadata0": {
+      "name": "DeviceCustomMetadata0",
       "shape": {
         "type": "alias",
         "value": {
@@ -5843,8 +5843,8 @@
         }
       }
     },
-    "DeviceCustomMetadataOneOfOne": {
-      "name": "DeviceCustomMetadataOneOfOne",
+    "DeviceCustomMetadata1": {
+      "name": "DeviceCustomMetadata1",
       "shape": {
         "type": "alias",
         "value": {
@@ -5861,17 +5861,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DeviceCustomMetadataOneOfZero",
+            "typeName": "DeviceCustomMetadata0",
             "type": {
               "type": "id",
-              "value": "DeviceCustomMetadataOneOfZero"
+              "value": "DeviceCustomMetadata0"
             }
           },
           {
-            "typeName": "DeviceCustomMetadataOneOfOne",
+            "typeName": "DeviceCustomMetadata1",
             "type": {
               "type": "id",
-              "value": "DeviceCustomMetadataOneOfOne"
+              "value": "DeviceCustomMetadata1"
             }
           }
         ]
@@ -6123,8 +6123,8 @@
         ]
       }
     },
-    "UnmanagedDeviceDeviceTypeOneOfZero": {
-      "name": "UnmanagedDeviceDeviceTypeOneOfZero",
+    "UnmanagedDeviceDeviceType0": {
+      "name": "UnmanagedDeviceDeviceType0",
       "shape": {
         "type": "enum",
         "values": [
@@ -6209,8 +6209,8 @@
         ]
       }
     },
-    "UnmanagedDeviceDeviceTypeOneOfOne": {
-      "name": "UnmanagedDeviceDeviceTypeOneOfOne",
+    "UnmanagedDeviceDeviceType1": {
+      "name": "UnmanagedDeviceDeviceType1",
       "shape": {
         "type": "enum",
         "values": [
@@ -6223,8 +6223,8 @@
         ]
       }
     },
-    "UnmanagedDeviceDeviceTypeOneOfTwo": {
-      "name": "UnmanagedDeviceDeviceTypeOneOfTwo",
+    "UnmanagedDeviceDeviceType2": {
+      "name": "UnmanagedDeviceDeviceType2",
       "shape": {
         "type": "enum",
         "values": [
@@ -6240,8 +6240,8 @@
         ]
       }
     },
-    "UnmanagedDeviceDeviceTypeOneOfThree": {
-      "name": "UnmanagedDeviceDeviceTypeOneOfThree",
+    "UnmanagedDeviceDeviceType3": {
+      "name": "UnmanagedDeviceDeviceType3",
       "shape": {
         "type": "enum",
         "values": [
@@ -6261,31 +6261,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "UnmanagedDeviceDeviceTypeOneOfZero",
+            "typeName": "UnmanagedDeviceDeviceType0",
             "type": {
               "type": "id",
-              "value": "UnmanagedDeviceDeviceTypeOneOfZero"
+              "value": "UnmanagedDeviceDeviceType0"
             }
           },
           {
-            "typeName": "UnmanagedDeviceDeviceTypeOneOfOne",
+            "typeName": "UnmanagedDeviceDeviceType1",
             "type": {
               "type": "id",
-              "value": "UnmanagedDeviceDeviceTypeOneOfOne"
+              "value": "UnmanagedDeviceDeviceType1"
             }
           },
           {
-            "typeName": "UnmanagedDeviceDeviceTypeOneOfTwo",
+            "typeName": "UnmanagedDeviceDeviceType2",
             "type": {
               "type": "id",
-              "value": "UnmanagedDeviceDeviceTypeOneOfTwo"
+              "value": "UnmanagedDeviceDeviceType2"
             }
           },
           {
-            "typeName": "UnmanagedDeviceDeviceTypeOneOfThree",
+            "typeName": "UnmanagedDeviceDeviceType3",
             "type": {
               "type": "id",
-              "value": "UnmanagedDeviceDeviceTypeOneOfThree"
+              "value": "UnmanagedDeviceDeviceType3"
             }
           }
         ]
@@ -7539,8 +7539,8 @@
         ]
       }
     },
-    "AcsSystemErrorsItemsOneOfZeroErrorCode": {
-      "name": "AcsSystemErrorsItemsOneOfZeroErrorCode",
+    "AcsSystemErrorsItemsOneOf0ErrorCode": {
+      "name": "AcsSystemErrorsItemsOneOf0ErrorCode",
       "shape": {
         "type": "enum",
         "values": [
@@ -7550,8 +7550,8 @@
         ]
       }
     },
-    "AcsSystemErrorsItemsOneOfZero": {
-      "name": "AcsSystemErrorsItemsOneOfZero",
+    "AcsSystemErrorsItems0": {
+      "name": "AcsSystemErrorsItems0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7579,14 +7579,14 @@
             "key": "error_code",
             "valueType": {
               "type": "id",
-              "value": "AcsSystemErrorsItemsOneOfZeroErrorCode"
+              "value": "AcsSystemErrorsItemsOneOf0ErrorCode"
             }
           }
         ]
       }
     },
-    "AcsSystemErrorsItemsOneOfOneErrorCode": {
-      "name": "AcsSystemErrorsItemsOneOfOneErrorCode",
+    "AcsSystemErrorsItemsOneOf1ErrorCode": {
+      "name": "AcsSystemErrorsItemsOneOf1ErrorCode",
       "shape": {
         "type": "enum",
         "values": [
@@ -7596,8 +7596,8 @@
         ]
       }
     },
-    "AcsSystemErrorsItemsOneOfOne": {
-      "name": "AcsSystemErrorsItemsOneOfOne",
+    "AcsSystemErrorsItems1": {
+      "name": "AcsSystemErrorsItems1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7625,7 +7625,7 @@
             "key": "error_code",
             "valueType": {
               "type": "id",
-              "value": "AcsSystemErrorsItemsOneOfOneErrorCode"
+              "value": "AcsSystemErrorsItemsOneOf1ErrorCode"
             }
           }
         ]
@@ -7637,17 +7637,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "AcsSystemErrorsItemsOneOfZero",
+            "typeName": "AcsSystemErrorsItems0",
             "type": {
               "type": "id",
-              "value": "AcsSystemErrorsItemsOneOfZero"
+              "value": "AcsSystemErrorsItems0"
             }
           },
           {
-            "typeName": "AcsSystemErrorsItemsOneOfOne",
+            "typeName": "AcsSystemErrorsItems1",
             "type": {
               "type": "id",
-              "value": "AcsSystemErrorsItemsOneOfOne"
+              "value": "AcsSystemErrorsItems1"
             }
           }
         ]
@@ -9334,8 +9334,8 @@
         ]
       }
     },
-    "PhoneCustomMetadataOneOfZero": {
-      "name": "PhoneCustomMetadataOneOfZero",
+    "PhoneCustomMetadata0": {
+      "name": "PhoneCustomMetadata0",
       "shape": {
         "type": "alias",
         "value": {
@@ -9346,8 +9346,8 @@
         }
       }
     },
-    "PhoneCustomMetadataOneOfOne": {
-      "name": "PhoneCustomMetadataOneOfOne",
+    "PhoneCustomMetadata1": {
+      "name": "PhoneCustomMetadata1",
       "shape": {
         "type": "alias",
         "value": {
@@ -9364,17 +9364,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "PhoneCustomMetadataOneOfZero",
+            "typeName": "PhoneCustomMetadata0",
             "type": {
               "type": "id",
-              "value": "PhoneCustomMetadataOneOfZero"
+              "value": "PhoneCustomMetadata0"
             }
           },
           {
-            "typeName": "PhoneCustomMetadataOneOfOne",
+            "typeName": "PhoneCustomMetadata1",
             "type": {
               "type": "id",
-              "value": "PhoneCustomMetadataOneOfOne"
+              "value": "PhoneCustomMetadata1"
             }
           }
         ]
@@ -10454,8 +10454,8 @@
         ]
       }
     },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfZero": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfZero",
+    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0": {
+      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0",
       "shape": {
         "type": "alias",
         "value": {
@@ -10467,8 +10467,8 @@
         }
       }
     },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfOne": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfOne",
+    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1": {
+      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1",
       "shape": {
         "type": "alias",
         "value": {
@@ -10479,8 +10479,8 @@
         }
       }
     },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfTwo": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfTwo",
+    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2": {
+      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2",
       "shape": {
         "type": "alias",
         "value": {
@@ -10498,24 +10498,24 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfZero",
+            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0",
             "type": {
               "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfZero"
+              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0"
             }
           },
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfOne",
+            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1",
             "type": {
               "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfOne"
+              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1"
             }
           },
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfTwo",
+            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2",
             "type": {
               "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadataOneOfTwo"
+              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2"
             }
           }
         ]
@@ -10589,8 +10589,8 @@
         ]
       }
     },
-    "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHasOneOfZero": {
-      "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+    "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0": {
+      "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0",
       "shape": {
         "type": "alias",
         "value": {
@@ -10601,8 +10601,8 @@
         }
       }
     },
-    "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHasOneOfOne": {
-      "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+    "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1": {
+      "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1",
       "shape": {
         "type": "alias",
         "value": {
@@ -10619,17 +10619,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+            "typeName": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
               "type": "id",
-              "value": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHasOneOfZero"
+              "value": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0"
             }
           },
           {
-            "typeName": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+            "typeName": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
               "type": "id",
-              "value": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHasOneOfOne"
+              "value": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1"
             }
           }
         ]
@@ -10681,8 +10681,8 @@
         ]
       }
     },
-    "ConnectedAccountsGetPostRequestBodySchemaOneOfZero": {
-      "name": "ConnectedAccountsGetPostRequestBodySchemaOneOfZero",
+    "ConnectedAccountsGetRequest0": {
+      "name": "ConnectedAccountsGetRequest0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10700,8 +10700,8 @@
         ]
       }
     },
-    "ConnectedAccountsGetPostRequestBodySchemaOneOfOne": {
-      "name": "ConnectedAccountsGetPostRequestBodySchemaOneOfOne",
+    "ConnectedAccountsGetRequest1": {
+      "name": "ConnectedAccountsGetRequest1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10725,17 +10725,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountsGetPostRequestBodySchemaOneOfZero",
+            "typeName": "ConnectedAccountsGetRequest0",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountsGetPostRequestBodySchemaOneOfZero"
+              "value": "ConnectedAccountsGetRequest0"
             }
           },
           {
-            "typeName": "ConnectedAccountsGetPostRequestBodySchemaOneOfOne",
+            "typeName": "ConnectedAccountsGetRequest1",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountsGetPostRequestBodySchemaOneOfOne"
+              "value": "ConnectedAccountsGetRequest1"
             }
           }
         ]
@@ -10766,8 +10766,8 @@
         ]
       }
     },
-    "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHasOneOfZero": {
-      "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+    "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0": {
+      "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0",
       "shape": {
         "type": "alias",
         "value": {
@@ -10778,8 +10778,8 @@
         }
       }
     },
-    "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHasOneOfOne": {
-      "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+    "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1": {
+      "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1",
       "shape": {
         "type": "alias",
         "value": {
@@ -10796,17 +10796,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+            "typeName": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHasOneOfZero"
+              "value": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0"
             }
           },
           {
-            "typeName": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+            "typeName": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHasOneOfOne"
+              "value": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1"
             }
           }
         ]
@@ -10840,8 +10840,8 @@
         ]
       }
     },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfZero": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfZero",
+    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0": {
+      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0",
       "shape": {
         "type": "alias",
         "value": {
@@ -10853,8 +10853,8 @@
         }
       }
     },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfOne": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfOne",
+    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1": {
+      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1",
       "shape": {
         "type": "alias",
         "value": {
@@ -10865,8 +10865,8 @@
         }
       }
     },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfTwo": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfTwo",
+    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2": {
+      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2",
       "shape": {
         "type": "alias",
         "value": {
@@ -10884,24 +10884,24 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfZero",
+            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfZero"
+              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0"
             }
           },
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfOne",
+            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfOne"
+              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1"
             }
           },
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfTwo",
+            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2",
             "type": {
               "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadataOneOfTwo"
+              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2"
             }
           }
         ]
@@ -10975,8 +10975,8 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaDeviceTypeOneOfZero": {
-      "name": "DevicesListPostRequestBodySchemaDeviceTypeOneOfZero",
+    "DevicesListPostRequestBodySchemaDeviceType0": {
+      "name": "DevicesListPostRequestBodySchemaDeviceType0",
       "shape": {
         "type": "enum",
         "values": [
@@ -11061,8 +11061,8 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaDeviceTypeOneOfOne": {
-      "name": "DevicesListPostRequestBodySchemaDeviceTypeOneOfOne",
+    "DevicesListPostRequestBodySchemaDeviceType1": {
+      "name": "DevicesListPostRequestBodySchemaDeviceType1",
       "shape": {
         "type": "enum",
         "values": [
@@ -11075,8 +11075,8 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaDeviceTypeOneOfTwo": {
-      "name": "DevicesListPostRequestBodySchemaDeviceTypeOneOfTwo",
+    "DevicesListPostRequestBodySchemaDeviceType2": {
+      "name": "DevicesListPostRequestBodySchemaDeviceType2",
       "shape": {
         "type": "enum",
         "values": [
@@ -11092,8 +11092,8 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaDeviceTypeOneOfThree": {
-      "name": "DevicesListPostRequestBodySchemaDeviceTypeOneOfThree",
+    "DevicesListPostRequestBodySchemaDeviceType3": {
+      "name": "DevicesListPostRequestBodySchemaDeviceType3",
       "shape": {
         "type": "enum",
         "values": [
@@ -11112,38 +11112,38 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesListPostRequestBodySchemaDeviceTypeOneOfZero",
+            "typeName": "DevicesListPostRequestBodySchemaDeviceType0",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaDeviceTypeOneOfZero"
+              "value": "DevicesListPostRequestBodySchemaDeviceType0"
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaDeviceTypeOneOfOne",
+            "typeName": "DevicesListPostRequestBodySchemaDeviceType1",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaDeviceTypeOneOfOne"
+              "value": "DevicesListPostRequestBodySchemaDeviceType1"
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaDeviceTypeOneOfTwo",
+            "typeName": "DevicesListPostRequestBodySchemaDeviceType2",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaDeviceTypeOneOfTwo"
+              "value": "DevicesListPostRequestBodySchemaDeviceType2"
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaDeviceTypeOneOfThree",
+            "typeName": "DevicesListPostRequestBodySchemaDeviceType3",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaDeviceTypeOneOfThree"
+              "value": "DevicesListPostRequestBodySchemaDeviceType3"
             }
           }
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfZero": {
-      "name": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfZero",
+    "DevicesListPostRequestBodySchemaDeviceTypesItems0": {
+      "name": "DevicesListPostRequestBodySchemaDeviceTypesItems0",
       "shape": {
         "type": "enum",
         "values": [
@@ -11228,8 +11228,8 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfOne": {
-      "name": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfOne",
+    "DevicesListPostRequestBodySchemaDeviceTypesItems1": {
+      "name": "DevicesListPostRequestBodySchemaDeviceTypesItems1",
       "shape": {
         "type": "enum",
         "values": [
@@ -11242,8 +11242,8 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfTwo": {
-      "name": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfTwo",
+    "DevicesListPostRequestBodySchemaDeviceTypesItems2": {
+      "name": "DevicesListPostRequestBodySchemaDeviceTypesItems2",
       "shape": {
         "type": "enum",
         "values": [
@@ -11259,8 +11259,8 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfThree": {
-      "name": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfThree",
+    "DevicesListPostRequestBodySchemaDeviceTypesItems3": {
+      "name": "DevicesListPostRequestBodySchemaDeviceTypesItems3",
       "shape": {
         "type": "enum",
         "values": [
@@ -11279,31 +11279,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfZero",
+            "typeName": "DevicesListPostRequestBodySchemaDeviceTypesItems0",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfZero"
+              "value": "DevicesListPostRequestBodySchemaDeviceTypesItems0"
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfOne",
+            "typeName": "DevicesListPostRequestBodySchemaDeviceTypesItems1",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfOne"
+              "value": "DevicesListPostRequestBodySchemaDeviceTypesItems1"
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfTwo",
+            "typeName": "DevicesListPostRequestBodySchemaDeviceTypesItems2",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfTwo"
+              "value": "DevicesListPostRequestBodySchemaDeviceTypesItems2"
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfThree",
+            "typeName": "DevicesListPostRequestBodySchemaDeviceTypesItems3",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaDeviceTypesItemsOneOfThree"
+              "value": "DevicesListPostRequestBodySchemaDeviceTypesItems3"
             }
           }
         ]
@@ -11419,8 +11419,8 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaCustomMetadataHasOneOfZero": {
-      "name": "DevicesListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+    "DevicesListPostRequestBodySchemaCustomMetadataHas0": {
+      "name": "DevicesListPostRequestBodySchemaCustomMetadataHas0",
       "shape": {
         "type": "alias",
         "value": {
@@ -11431,8 +11431,8 @@
         }
       }
     },
-    "DevicesListPostRequestBodySchemaCustomMetadataHasOneOfOne": {
-      "name": "DevicesListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+    "DevicesListPostRequestBodySchemaCustomMetadataHas1": {
+      "name": "DevicesListPostRequestBodySchemaCustomMetadataHas1",
       "shape": {
         "type": "alias",
         "value": {
@@ -11449,17 +11449,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+            "typeName": "DevicesListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaCustomMetadataHasOneOfZero"
+              "value": "DevicesListPostRequestBodySchemaCustomMetadataHas0"
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+            "typeName": "DevicesListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
               "type": "id",
-              "value": "DevicesListPostRequestBodySchemaCustomMetadataHasOneOfOne"
+              "value": "DevicesListPostRequestBodySchemaCustomMetadataHas1"
             }
           }
         ]
@@ -11626,8 +11626,8 @@
         ]
       }
     },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfZero": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfZero",
+    "DevicesUpdatePostRequestBodySchemaCustomMetadata0": {
+      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata0",
       "shape": {
         "type": "alias",
         "value": {
@@ -11639,8 +11639,8 @@
         }
       }
     },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfOne": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfOne",
+    "DevicesUpdatePostRequestBodySchemaCustomMetadata1": {
+      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata1",
       "shape": {
         "type": "alias",
         "value": {
@@ -11651,8 +11651,8 @@
         }
       }
     },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfTwo": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfTwo",
+    "DevicesUpdatePostRequestBodySchemaCustomMetadata2": {
+      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata2",
       "shape": {
         "type": "alias",
         "value": {
@@ -11670,24 +11670,24 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfZero",
+            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata0",
             "type": {
               "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfZero"
+              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata0"
             }
           },
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfOne",
+            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata1",
             "type": {
               "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfOne"
+              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata1"
             }
           },
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfTwo",
+            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata2",
             "type": {
               "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadataOneOfTwo"
+              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata2"
             }
           }
         ]
@@ -11751,8 +11751,8 @@
         ]
       }
     },
-    "EventsListPostRequestBodySchemaBetweenItemsOneOfZero": {
-      "name": "EventsListPostRequestBodySchemaBetweenItemsOneOfZero",
+    "EventsListPostRequestBodySchemaBetweenItems0": {
+      "name": "EventsListPostRequestBodySchemaBetweenItems0",
       "shape": {
         "type": "alias",
         "value": {
@@ -11763,8 +11763,8 @@
         }
       }
     },
-    "EventsListPostRequestBodySchemaBetweenItemsOneOfOne": {
-      "name": "EventsListPostRequestBodySchemaBetweenItemsOneOfOne",
+    "EventsListPostRequestBodySchemaBetweenItems1": {
+      "name": "EventsListPostRequestBodySchemaBetweenItems1",
       "shape": {
         "type": "alias",
         "value": {
@@ -11782,17 +11782,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EventsListPostRequestBodySchemaBetweenItemsOneOfZero",
+            "typeName": "EventsListPostRequestBodySchemaBetweenItems0",
             "type": {
               "type": "id",
-              "value": "EventsListPostRequestBodySchemaBetweenItemsOneOfZero"
+              "value": "EventsListPostRequestBodySchemaBetweenItems0"
             }
           },
           {
-            "typeName": "EventsListPostRequestBodySchemaBetweenItemsOneOfOne",
+            "typeName": "EventsListPostRequestBodySchemaBetweenItems1",
             "type": {
               "type": "id",
-              "value": "EventsListPostRequestBodySchemaBetweenItemsOneOfOne"
+              "value": "EventsListPostRequestBodySchemaBetweenItems1"
             }
           }
         ]
@@ -12222,8 +12222,8 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaDeviceTypeOneOfZero": {
-      "name": "LocksListPostRequestBodySchemaDeviceTypeOneOfZero",
+    "LocksListPostRequestBodySchemaDeviceType0": {
+      "name": "LocksListPostRequestBodySchemaDeviceType0",
       "shape": {
         "type": "enum",
         "values": [
@@ -12308,8 +12308,8 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaDeviceTypeOneOfOne": {
-      "name": "LocksListPostRequestBodySchemaDeviceTypeOneOfOne",
+    "LocksListPostRequestBodySchemaDeviceType1": {
+      "name": "LocksListPostRequestBodySchemaDeviceType1",
       "shape": {
         "type": "enum",
         "values": [
@@ -12322,8 +12322,8 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaDeviceTypeOneOfTwo": {
-      "name": "LocksListPostRequestBodySchemaDeviceTypeOneOfTwo",
+    "LocksListPostRequestBodySchemaDeviceType2": {
+      "name": "LocksListPostRequestBodySchemaDeviceType2",
       "shape": {
         "type": "enum",
         "values": [
@@ -12339,8 +12339,8 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaDeviceTypeOneOfThree": {
-      "name": "LocksListPostRequestBodySchemaDeviceTypeOneOfThree",
+    "LocksListPostRequestBodySchemaDeviceType3": {
+      "name": "LocksListPostRequestBodySchemaDeviceType3",
       "shape": {
         "type": "enum",
         "values": [
@@ -12359,38 +12359,38 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LocksListPostRequestBodySchemaDeviceTypeOneOfZero",
+            "typeName": "LocksListPostRequestBodySchemaDeviceType0",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaDeviceTypeOneOfZero"
+              "value": "LocksListPostRequestBodySchemaDeviceType0"
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaDeviceTypeOneOfOne",
+            "typeName": "LocksListPostRequestBodySchemaDeviceType1",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaDeviceTypeOneOfOne"
+              "value": "LocksListPostRequestBodySchemaDeviceType1"
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaDeviceTypeOneOfTwo",
+            "typeName": "LocksListPostRequestBodySchemaDeviceType2",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaDeviceTypeOneOfTwo"
+              "value": "LocksListPostRequestBodySchemaDeviceType2"
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaDeviceTypeOneOfThree",
+            "typeName": "LocksListPostRequestBodySchemaDeviceType3",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaDeviceTypeOneOfThree"
+              "value": "LocksListPostRequestBodySchemaDeviceType3"
             }
           }
         ]
       }
     },
-    "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfZero": {
-      "name": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfZero",
+    "LocksListPostRequestBodySchemaDeviceTypesItems0": {
+      "name": "LocksListPostRequestBodySchemaDeviceTypesItems0",
       "shape": {
         "type": "enum",
         "values": [
@@ -12475,8 +12475,8 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfOne": {
-      "name": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfOne",
+    "LocksListPostRequestBodySchemaDeviceTypesItems1": {
+      "name": "LocksListPostRequestBodySchemaDeviceTypesItems1",
       "shape": {
         "type": "enum",
         "values": [
@@ -12489,8 +12489,8 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfTwo": {
-      "name": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfTwo",
+    "LocksListPostRequestBodySchemaDeviceTypesItems2": {
+      "name": "LocksListPostRequestBodySchemaDeviceTypesItems2",
       "shape": {
         "type": "enum",
         "values": [
@@ -12506,8 +12506,8 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfThree": {
-      "name": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfThree",
+    "LocksListPostRequestBodySchemaDeviceTypesItems3": {
+      "name": "LocksListPostRequestBodySchemaDeviceTypesItems3",
       "shape": {
         "type": "enum",
         "values": [
@@ -12526,31 +12526,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfZero",
+            "typeName": "LocksListPostRequestBodySchemaDeviceTypesItems0",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfZero"
+              "value": "LocksListPostRequestBodySchemaDeviceTypesItems0"
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfOne",
+            "typeName": "LocksListPostRequestBodySchemaDeviceTypesItems1",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfOne"
+              "value": "LocksListPostRequestBodySchemaDeviceTypesItems1"
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfTwo",
+            "typeName": "LocksListPostRequestBodySchemaDeviceTypesItems2",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfTwo"
+              "value": "LocksListPostRequestBodySchemaDeviceTypesItems2"
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfThree",
+            "typeName": "LocksListPostRequestBodySchemaDeviceTypesItems3",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaDeviceTypesItemsOneOfThree"
+              "value": "LocksListPostRequestBodySchemaDeviceTypesItems3"
             }
           }
         ]
@@ -12666,8 +12666,8 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaCustomMetadataHasOneOfZero": {
-      "name": "LocksListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+    "LocksListPostRequestBodySchemaCustomMetadataHas0": {
+      "name": "LocksListPostRequestBodySchemaCustomMetadataHas0",
       "shape": {
         "type": "alias",
         "value": {
@@ -12678,8 +12678,8 @@
         }
       }
     },
-    "LocksListPostRequestBodySchemaCustomMetadataHasOneOfOne": {
-      "name": "LocksListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+    "LocksListPostRequestBodySchemaCustomMetadataHas1": {
+      "name": "LocksListPostRequestBodySchemaCustomMetadataHas1",
       "shape": {
         "type": "alias",
         "value": {
@@ -12696,17 +12696,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LocksListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+            "typeName": "LocksListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaCustomMetadataHasOneOfZero"
+              "value": "LocksListPostRequestBodySchemaCustomMetadataHas0"
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+            "typeName": "LocksListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
               "type": "id",
-              "value": "LocksListPostRequestBodySchemaCustomMetadataHasOneOfOne"
+              "value": "LocksListPostRequestBodySchemaCustomMetadataHas1"
             }
           }
         ]
@@ -13057,8 +13057,8 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfZero": {
-      "name": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfZero",
+    "ThermostatsListPostRequestBodySchemaDeviceType0": {
+      "name": "ThermostatsListPostRequestBodySchemaDeviceType0",
       "shape": {
         "type": "enum",
         "values": [
@@ -13143,8 +13143,8 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfOne": {
-      "name": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfOne",
+    "ThermostatsListPostRequestBodySchemaDeviceType1": {
+      "name": "ThermostatsListPostRequestBodySchemaDeviceType1",
       "shape": {
         "type": "enum",
         "values": [
@@ -13157,8 +13157,8 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfTwo": {
-      "name": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfTwo",
+    "ThermostatsListPostRequestBodySchemaDeviceType2": {
+      "name": "ThermostatsListPostRequestBodySchemaDeviceType2",
       "shape": {
         "type": "enum",
         "values": [
@@ -13174,8 +13174,8 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfThree": {
-      "name": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfThree",
+    "ThermostatsListPostRequestBodySchemaDeviceType3": {
+      "name": "ThermostatsListPostRequestBodySchemaDeviceType3",
       "shape": {
         "type": "enum",
         "values": [
@@ -13194,38 +13194,38 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfZero",
+            "typeName": "ThermostatsListPostRequestBodySchemaDeviceType0",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfZero"
+              "value": "ThermostatsListPostRequestBodySchemaDeviceType0"
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfOne",
+            "typeName": "ThermostatsListPostRequestBodySchemaDeviceType1",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfOne"
+              "value": "ThermostatsListPostRequestBodySchemaDeviceType1"
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfTwo",
+            "typeName": "ThermostatsListPostRequestBodySchemaDeviceType2",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfTwo"
+              "value": "ThermostatsListPostRequestBodySchemaDeviceType2"
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfThree",
+            "typeName": "ThermostatsListPostRequestBodySchemaDeviceType3",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaDeviceTypeOneOfThree"
+              "value": "ThermostatsListPostRequestBodySchemaDeviceType3"
             }
           }
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfZero": {
-      "name": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfZero",
+    "ThermostatsListPostRequestBodySchemaDeviceTypesItems0": {
+      "name": "ThermostatsListPostRequestBodySchemaDeviceTypesItems0",
       "shape": {
         "type": "enum",
         "values": [
@@ -13310,8 +13310,8 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfOne": {
-      "name": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfOne",
+    "ThermostatsListPostRequestBodySchemaDeviceTypesItems1": {
+      "name": "ThermostatsListPostRequestBodySchemaDeviceTypesItems1",
       "shape": {
         "type": "enum",
         "values": [
@@ -13324,8 +13324,8 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfTwo": {
-      "name": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfTwo",
+    "ThermostatsListPostRequestBodySchemaDeviceTypesItems2": {
+      "name": "ThermostatsListPostRequestBodySchemaDeviceTypesItems2",
       "shape": {
         "type": "enum",
         "values": [
@@ -13341,8 +13341,8 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfThree": {
-      "name": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfThree",
+    "ThermostatsListPostRequestBodySchemaDeviceTypesItems3": {
+      "name": "ThermostatsListPostRequestBodySchemaDeviceTypesItems3",
       "shape": {
         "type": "enum",
         "values": [
@@ -13361,31 +13361,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfZero",
+            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypesItems0",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfZero"
+              "value": "ThermostatsListPostRequestBodySchemaDeviceTypesItems0"
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfOne",
+            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypesItems1",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfOne"
+              "value": "ThermostatsListPostRequestBodySchemaDeviceTypesItems1"
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfTwo",
+            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypesItems2",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfTwo"
+              "value": "ThermostatsListPostRequestBodySchemaDeviceTypesItems2"
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfThree",
+            "typeName": "ThermostatsListPostRequestBodySchemaDeviceTypesItems3",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaDeviceTypesItemsOneOfThree"
+              "value": "ThermostatsListPostRequestBodySchemaDeviceTypesItems3"
             }
           }
         ]
@@ -13501,8 +13501,8 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaCustomMetadataHasOneOfZero": {
-      "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+    "ThermostatsListPostRequestBodySchemaCustomMetadataHas0": {
+      "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0",
       "shape": {
         "type": "alias",
         "value": {
@@ -13513,8 +13513,8 @@
         }
       }
     },
-    "ThermostatsListPostRequestBodySchemaCustomMetadataHasOneOfOne": {
-      "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+    "ThermostatsListPostRequestBodySchemaCustomMetadataHas1": {
+      "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1",
       "shape": {
         "type": "alias",
         "value": {
@@ -13531,17 +13531,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+            "typeName": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaCustomMetadataHasOneOfZero"
+              "value": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0"
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+            "typeName": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
               "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaCustomMetadataHasOneOfOne"
+              "value": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1"
             }
           }
         ]
@@ -13913,8 +13913,8 @@
         ]
       }
     },
-    "UserIdentitiesGetPostRequestBodySchemaOneOfZero": {
-      "name": "UserIdentitiesGetPostRequestBodySchemaOneOfZero",
+    "UserIdentitiesGetRequest0": {
+      "name": "UserIdentitiesGetRequest0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13932,8 +13932,8 @@
         ]
       }
     },
-    "UserIdentitiesGetPostRequestBodySchemaOneOfOne": {
-      "name": "UserIdentitiesGetPostRequestBodySchemaOneOfOne",
+    "UserIdentitiesGetRequest1": {
+      "name": "UserIdentitiesGetRequest1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13956,17 +13956,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "UserIdentitiesGetPostRequestBodySchemaOneOfZero",
+            "typeName": "UserIdentitiesGetRequest0",
             "type": {
               "type": "id",
-              "value": "UserIdentitiesGetPostRequestBodySchemaOneOfZero"
+              "value": "UserIdentitiesGetRequest0"
             }
           },
           {
-            "typeName": "UserIdentitiesGetPostRequestBodySchemaOneOfOne",
+            "typeName": "UserIdentitiesGetRequest1",
             "type": {
               "type": "id",
-              "value": "UserIdentitiesGetPostRequestBodySchemaOneOfOne"
+              "value": "UserIdentitiesGetRequest1"
             }
           }
         ]
@@ -15620,8 +15620,8 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfZero": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfZero",
+    "DevicesUnmanagedListPostRequestBodySchemaDeviceType0": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceType0",
       "shape": {
         "type": "enum",
         "values": [
@@ -15706,8 +15706,8 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfOne": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfOne",
+    "DevicesUnmanagedListPostRequestBodySchemaDeviceType1": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceType1",
       "shape": {
         "type": "enum",
         "values": [
@@ -15720,8 +15720,8 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfTwo": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfTwo",
+    "DevicesUnmanagedListPostRequestBodySchemaDeviceType2": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceType2",
       "shape": {
         "type": "enum",
         "values": [
@@ -15737,8 +15737,8 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfThree": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfThree",
+    "DevicesUnmanagedListPostRequestBodySchemaDeviceType3": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceType3",
       "shape": {
         "type": "enum",
         "values": [
@@ -15757,38 +15757,38 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfZero",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceType0",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfZero"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceType0"
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfOne",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceType1",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfOne"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceType1"
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfTwo",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceType2",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfTwo"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceType2"
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfThree",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceType3",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypeOneOfThree"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceType3"
             }
           }
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfZero": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfZero",
+    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems0": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems0",
       "shape": {
         "type": "enum",
         "values": [
@@ -15873,8 +15873,8 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfOne": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfOne",
+    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems1": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems1",
       "shape": {
         "type": "enum",
         "values": [
@@ -15887,8 +15887,8 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfTwo": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfTwo",
+    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems2": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems2",
       "shape": {
         "type": "enum",
         "values": [
@@ -15904,8 +15904,8 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfThree": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfThree",
+    "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems3": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems3",
       "shape": {
         "type": "enum",
         "values": [
@@ -15924,31 +15924,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfZero",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems0",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfZero"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems0"
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfOne",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems1",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfOne"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems1"
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfTwo",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems2",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfTwo"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems2"
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfThree",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems3",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItemsOneOfThree"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaDeviceTypesItems3"
             }
           }
         ]
@@ -16064,8 +16064,8 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHasOneOfZero": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+    "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0",
       "shape": {
         "type": "alias",
         "value": {
@@ -16076,8 +16076,8 @@
         }
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHasOneOfOne": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+    "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1": {
+      "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1",
       "shape": {
         "type": "alias",
         "value": {
@@ -16094,17 +16094,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHasOneOfZero",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHasOneOfZero"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0"
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHasOneOfOne",
+            "typeName": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
               "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHasOneOfOne"
+              "value": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1"
             }
           }
         ]

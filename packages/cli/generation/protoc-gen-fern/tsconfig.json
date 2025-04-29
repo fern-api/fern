@@ -1,0 +1,13 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    // We use CommonJS for this package.
+    "verbatimModuleSyntax": false,
+    "module": "CommonJS",
+  },
+  "include": [
+    "./package.json",
+    "./src/**/*"
+  ],
+  "references": []
+}

@@ -73,7 +73,7 @@ class RawServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return _response.read()  # type: ignore
+                return HttpResponse(response=_response, data=_response.read())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
@@ -142,7 +142,7 @@ class AsyncRawServiceClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return _response.read()  # type: ignore
+                return AsyncHttpResponse(response=_response, data=_response.read())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)

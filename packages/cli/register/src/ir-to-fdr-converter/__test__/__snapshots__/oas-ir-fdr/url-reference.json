@@ -1,8 +1,8 @@
 {
   "types": {
-    "MammalOneOfZeroCategory": {
+    "MammalOneOf0Category": {
       "description": "A category for a pet",
-      "name": "MammalOneOfZeroCategory",
+      "name": "MammalOneOf0Category",
       "shape": {
         "type": "object",
         "extends": [],
@@ -34,9 +34,9 @@
         ]
       }
     },
-    "MammalOneOfZeroTagsItems": {
+    "MammalOneOf0TagsItems": {
       "description": "A tag for a pet",
-      "name": "MammalOneOfZeroTagsItems",
+      "name": "MammalOneOf0TagsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -68,9 +68,9 @@
         ]
       }
     },
-    "MammalOneOfZeroStatus": {
+    "MammalOneOf0Status": {
       "description": "pet status in the store",
-      "name": "MammalOneOfZeroStatus",
+      "name": "MammalOneOf0Status",
       "shape": {
         "type": "enum",
         "values": [
@@ -86,9 +86,9 @@
         ]
       }
     },
-    "MammalOneOfZero": {
+    "Mammal0": {
       "description": "A pet for sale in the pet store",
-      "name": "MammalOneOfZero",
+      "name": "Mammal0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -112,7 +112,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MammalOneOfZeroCategory"
+                "value": "MammalOneOf0Category"
               }
             }
           },
@@ -145,7 +145,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "MammalOneOfZeroTagsItems"
+                  "value": "MammalOneOf0TagsItems"
                 }
               }
             }
@@ -157,16 +157,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MammalOneOfZeroStatus"
+                "value": "MammalOneOf0Status"
               }
             }
           }
         ]
       }
     },
-    "MammalOneOfOne": {
+    "Mammal1": {
       "description": "A User who is purchasing from the pet store",
-      "name": "MammalOneOfOne",
+      "name": "Mammal1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -277,19 +277,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "MammalOneOfZero",
+            "typeName": "Mammal0",
             "description": "A pet for sale in the pet store",
             "type": {
               "type": "id",
-              "value": "MammalOneOfZero"
+              "value": "Mammal0"
             }
           },
           {
-            "typeName": "MammalOneOfOne",
+            "typeName": "Mammal1",
             "description": "A User who is purchasing from the pet store",
             "type": {
               "type": "id",
-              "value": "MammalOneOfOne"
+              "value": "Mammal1"
             }
           }
         ]

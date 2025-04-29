@@ -432,8 +432,8 @@
         ]
       }
     },
-    "ValidationErrorLocItemsOneOfZero": {
-      "name": "ValidationErrorLocItemsOneOfZero",
+    "ValidationErrorLocItems0": {
+      "name": "ValidationErrorLocItems0",
       "shape": {
         "type": "alias",
         "value": {
@@ -444,8 +444,8 @@
         }
       }
     },
-    "ValidationErrorLocItemsOneOfOne": {
-      "name": "ValidationErrorLocItemsOneOfOne",
+    "ValidationErrorLocItems1": {
+      "name": "ValidationErrorLocItems1",
       "shape": {
         "type": "alias",
         "value": {
@@ -462,17 +462,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItemsOneOfZero",
+            "typeName": "ValidationErrorLocItems0",
             "type": {
               "type": "id",
-              "value": "ValidationErrorLocItemsOneOfZero"
+              "value": "ValidationErrorLocItems0"
             }
           },
           {
-            "typeName": "ValidationErrorLocItemsOneOfOne",
+            "typeName": "ValidationErrorLocItems1",
             "type": {
               "type": "id",
-              "value": "ValidationErrorLocItemsOneOfOne"
+              "value": "ValidationErrorLocItems1"
             }
           }
         ]
