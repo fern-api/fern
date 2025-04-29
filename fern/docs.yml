@@ -31,10 +31,15 @@ tabs:
     display-name: SDKs
     icon: fa-brands fa-codepen
     slug: sdks
+  ai-search: 
+    display-name: AI Search
+    icon: fa-regular fa-magnifying-glass
+    slug: ai-search
   cli-api:
     display-name: CLI & API Reference
     icon: fa-regular fa-code
     skip-slug: true
+
 
 css: ./assets/styles.css
 
@@ -595,6 +600,25 @@ navigation:
           - page: Mintlify
             slug: mintlify
             path: ./pages/docs/comparison/mintlify.mdx
+
+  - tab: ai-search
+    layout:
+    - section: Getting Started 
+      contents:
+        - page: Overview
+          icon: fa-regular fa-book-open
+          path: ./pages/ai-search/getting-started/overview.mdx
+        - page: AI Search Customer Showcase
+          icon: fa-regular fa-star
+          path: ./pages/ai-search/getting-started/customer-showcase.mdx
+    - section: Features 
+      contents:
+        - page: Custom Prompting
+          icon: fa-regular fa-gear
+          path: ./pages/ai-search/features/custom-prompting.mdx
+        - page: Citations
+          icon: fa-regular fa-quote-right
+          path: ./pages/ai-search/features/citations.mdx
 
   - tab: cli-api
     layout:
