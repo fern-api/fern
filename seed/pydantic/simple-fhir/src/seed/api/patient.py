@@ -5,13 +5,16 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from .core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
-class Patient(BaseResource):
+class Patient(UniversalBaseModel):
     resource_type: typing.Literal["Patient"] = "Patient"
     name: str
     scripts: typing.List["Script"]
+    id: str
+    related_resources: typing.List["ResourceList"]
+    memo: "Memo"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -21,10 +24,11 @@ class Patient(BaseResource):
             extra = pydantic.Extra.allow
 
 
-from .base_resource import BaseResource  # noqa: E402, F401, I001
 from .account import Account  # noqa: E402, F401, I001
+from .base_resource import BaseResource  # noqa: E402, F401, I001
 from .memo import Memo  # noqa: E402, F401, I001
 from .practitioner import Practitioner  # noqa: E402, F401, I001
 from .script import Script  # noqa: E402, F401, I001
+from .resource_list import ResourceList  # noqa: E402, F401, I001
 
 update_forward_refs(Patient)

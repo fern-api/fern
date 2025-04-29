@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..types.alias_type import AliasType
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class InlinedChildRequest(AliasType):
+class InlinedChildRequest(UniversalBaseModel):
     child: str
 
     if IS_PYDANTIC_V2:

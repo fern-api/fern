@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from .docs import Docs
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class Json(Docs):
+class Json(UniversalBaseModel):
     """
     Examples
     --------
@@ -16,6 +15,7 @@ class Json(Docs):
     """
 
     raw: str
+    docs: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

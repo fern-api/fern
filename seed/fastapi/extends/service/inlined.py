@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..types.example_type import ExampleType
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class Inlined(ExampleType):
+class Inlined(UniversalBaseModel):
     unique: str
 
     if IS_PYDANTIC_V2:
