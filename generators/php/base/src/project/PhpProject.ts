@@ -248,7 +248,7 @@ class PhpProjectFilepaths {
     }
 
     public getTestsDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(TESTS_DIRECTORY_NAME);
+        return RelativeFilePath.of(TESTS_DIRECTORY_NAME + this.packagePathPrefix);
     }
 
     public getCoreDirectory(): RelativeFilePath {
