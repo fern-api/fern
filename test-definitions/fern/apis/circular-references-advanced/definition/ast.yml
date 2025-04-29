@@ -19,6 +19,9 @@ types:
     properties:
       child: FirstUnion
   SecondUnionSecondElement:
+    extends: 
+      - SecondUnionSecondElementSuperclass
+  SecondUnionSecondElementSuperclass:
     properties:
       child: FirstUnion
   ContainerValue:
@@ -42,4 +45,3 @@ types:
     properties:
       name: FieldName
       value: FieldValue
-

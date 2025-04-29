@@ -24,6 +24,7 @@ class FirstUnionFirstElement(UniversalBaseModel):
 from .first_union_second_element import FirstUnionSecondElement  # noqa: E402, F401, I001
 from .second_union_first_element import SecondUnionFirstElement  # noqa: E402, F401, I001
 from .second_union_second_element import SecondUnionSecondElement  # noqa: E402, F401, I001
+from .second_union_second_element_superclass import SecondUnionSecondElementSuperclass  # noqa: E402, F401, I001
 from .second_union import SecondUnion  # noqa: E402, F401, I001
 
 update_forward_refs(FirstUnionFirstElement)

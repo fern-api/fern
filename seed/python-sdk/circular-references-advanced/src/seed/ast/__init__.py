@@ -20,6 +20,7 @@ from .types import (
     SecondUnion,
     SecondUnionFirstElement,
     SecondUnionSecondElement,
+    SecondUnionSecondElementSuperclass,
 )
 
 __all__ = [
@@ -40,4 +41,5 @@ __all__ = [
     "SecondUnion",
     "SecondUnionFirstElement",
     "SecondUnionSecondElement",
+    "SecondUnionSecondElementSuperclass",
 ]

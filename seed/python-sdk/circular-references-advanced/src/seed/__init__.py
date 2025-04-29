@@ -23,6 +23,7 @@ from .ast import (
     SecondUnion,
     SecondUnionFirstElement,
     SecondUnionSecondElement,
+    SecondUnionSecondElementSuperclass,
 )
 from .client import AsyncSeedApi, SeedApi
 from .version import __version__
@@ -49,6 +50,7 @@ __all__ = [
     "SecondUnion",
     "SecondUnionFirstElement",
     "SecondUnionSecondElement",
+    "SecondUnionSecondElementSuperclass",
     "SeedApi",
     "__version__",
     "a",

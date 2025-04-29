@@ -8,7 +8,7 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
-class SecondUnionFirstElement(UniversalBaseModel):
+class SecondUnionSecondElementSuperclass(UniversalBaseModel):
     child: "FirstUnion"
 
     if IS_PYDANTIC_V2:
@@ -23,8 +23,8 @@ class SecondUnionFirstElement(UniversalBaseModel):
 
 from .first_union_first_element import FirstUnionFirstElement  # noqa: E402, F401, I001
 from .first_union_second_element import FirstUnionSecondElement  # noqa: E402, F401, I001
+from .second_union_first_element import SecondUnionFirstElement  # noqa: E402, F401, I001
 from .second_union_second_element import SecondUnionSecondElement  # noqa: E402, F401, I001
-from .second_union_second_element_superclass import SecondUnionSecondElementSuperclass  # noqa: E402, F401, I001
 from .first_union import FirstUnion  # noqa: E402, F401, I001
 
-update_forward_refs(SecondUnionFirstElement)
+update_forward_refs(SecondUnionSecondElementSuperclass)

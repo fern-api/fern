@@ -14,6 +14,7 @@ from .primitive_value import PrimitiveValue
 from .second_union import SecondUnion
 from .second_union_first_element import SecondUnionFirstElement
 from .second_union_second_element import SecondUnionSecondElement
+from .second_union_second_element_superclass import SecondUnionSecondElementSuperclass
 
 __all__ = [
     "ContainerValue",
@@ -33,4 +34,5 @@ __all__ = [
     "SecondUnion",
     "SecondUnionFirstElement",
     "SecondUnionSecondElement",
+    "SecondUnionSecondElementSuperclass",
 ]
