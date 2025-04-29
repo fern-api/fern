@@ -36210,7 +36210,8 @@
                     }
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -36767,7 +36768,8 @@
                     }
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -37393,7 +37395,8 @@
                     }
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -39087,7 +39090,8 @@
                     }
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {

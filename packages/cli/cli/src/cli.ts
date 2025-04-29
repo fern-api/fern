@@ -38,6 +38,7 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { getSdkVersion } from "./commands/sdk/version/getSdkVersion";
 import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
@@ -182,6 +183,7 @@ async function tryRunCli(cliContext: CliContext) {
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
     addGeneratorCommands(cli, cliContext);
+    addSdkCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -322,6 +324,50 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             }
         }
     );
+}
+
+function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("sdk <command>", "SDK management commands", (yargs) => {
+        return yargs
+            .command(
+                "version",
+                "Generate the next semantic version based on your API changes.",
+                (yargs) => {
+                    yargs.option("api", {
+                        string: true,
+                        description: "Only run the command on the provided API"
+                    });
+                    yargs.option("group", {
+                        string: true,
+                        demandOption: true,
+                        description: "The group to generate the next semantic version for"
+                    });
+                    yargs.option("from-version", {
+                        string: true,
+                        description: "The previous version of the SDK (e.g. 1.1.0)"
+                    });
+                    yargs.option("from", {
+                        string: true,
+                        demandOption: true,
+                        description:
+                            "A reference that resolves to the previous version of the API (e.g. a git SHA like 'bac7962')"
+                    });
+                },
+                async (argv) =>
+                    await getSdkVersion({
+                        project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                            commandLineApiWorkspace: undefined,
+                            defaultToAllApiWorkspaces: true
+                        }),
+                        context: cliContext,
+                        group: argv.group as string,
+                        from: argv.from as string,
+                        fromVersion: argv.fromVersion as string
+                    })
+            )
+            .demandCommand(1)
+            .help();
+    });
 }
 
 function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
