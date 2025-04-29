@@ -14,6 +14,6 @@ $client->get(
     new GetRequest([
         'decimal' => 2.2,
         'even' => 100,
-        'name' => 'foo',
+        'name' => 'fern',
     ]),
 );
