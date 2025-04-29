@@ -8,6 +8,15 @@
 
 - changelogEntry:
   - summary: |
+      Add support for schema conversion in OpenRPC importer. The importer now properly converts schemas defined in the 
+      OpenRPC document's components section into Fern types, enabling full type definitions for request and response 
+      objects. This enhancement allows for more complete and accurate SDK generation from OpenRPC specifications.
+    type: feat
+  irVersion: 57
+  version: 0.58.6
+
+- changelogEntry:
+  - summary: |
       Local development is now available in beta for all machines.
     type: feat
   irVersion: 57
