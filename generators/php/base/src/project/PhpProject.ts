@@ -44,16 +44,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }) {
         super(context);
         this.name = name;
-        this.packagePathPrefix = "";
-        if (this.context.customConfig.packagePath != null) {
-            this.packagePathPrefix = this.context.customConfig.packagePath;
-            if (!this.packagePathPrefix.endsWith("/")) {
-                this.packagePathPrefix += "/";
-            }
-            if (!this.packagePathPrefix.startsWith("/")) {
-                this.packagePathPrefix = "/" + this.packagePathPrefix;
-            }
-        }
+        this.packagePathPrefix = PhpProject.getPackagePathPrefix(this.context.customConfig.packagePath);
         this.filepaths = new PhpProjectFilepaths(this.packagePathPrefix, this.name);
     }
 
@@ -78,6 +69,19 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.createUtilsDirectory();
         await this.createGitHubWorkflowsDirectory();
         await this.createComposerJson();
+    }
+
+    private static getPackagePathPrefix(packagePath?: string): string {
+        if (!packagePath) {
+            return "";
+        }
+        if (!packagePath.endsWith("/")) {
+            packagePath += "/";
+        }
+        if (!packagePath.startsWith("/")) {
+            packagePath = "/" + packagePath;
+        }
+        return packagePath;
     }
 
     private async createComposerJson(): Promise<void> {
