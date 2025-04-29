@@ -63,8 +63,8 @@
         }
       }
     },
-    "l_i_s_t___p_e_t_s_Request_limit": {
-      "name": "MethodsParams",
+    "l_i_s_t___p_e_t_s_Param_limit": {
+      "name": "LISTPETSParams",
       "shape": {
         "type": "alias",
         "value": {
@@ -76,8 +76,8 @@
         }
       }
     },
-    "c_r_e_a_t_e___p_e_t_Request_newPetName": {
-      "name": "MethodsParams",
+    "c_r_e_a_t_e___p_e_t_Param_newPetName": {
+      "name": "CREATEPETParams",
       "shape": {
         "type": "alias",
         "value": {
@@ -88,8 +88,8 @@
         }
       }
     },
-    "c_r_e_a_t_e___p_e_t_Request_newPetTag": {
-      "name": "MethodsParams",
+    "c_r_e_a_t_e___p_e_t_Param_newPetTag": {
+      "name": "CREATEPETParams",
       "shape": {
         "type": "alias",
         "value": {

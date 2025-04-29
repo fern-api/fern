@@ -3005,7 +3005,8 @@
                     }
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "errorsV2": [],
