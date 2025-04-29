@@ -9,22 +9,22 @@ export async function getSdkVersion({
     context,
     group,
     from,
-    currentVersion
+    fromVersion
 }: {
     project: Project;
     context: CliContext;
     group: string;
     from: string;
-    currentVersion: string;
+    fromVersion: string;
 }): Promise<void> {
     if (!isGitSha({ value: from })) {
         context.failAndThrow(`Invalid --from argument: ${from}; expected a valid git SHA`);
         return;
     }
     // TODO: For now, we always bump the minor version.
-    const nextVersion = semver.inc(currentVersion, "minor");
+    const nextVersion = semver.inc(fromVersion, "minor");
     if (!nextVersion) {
-        context.failAndThrow(`Invalid current version: ${currentVersion}`);
+        context.failAndThrow(`Invalid current version: ${fromVersion}`);
         return;
     }
     context.logger.info(nextVersion);

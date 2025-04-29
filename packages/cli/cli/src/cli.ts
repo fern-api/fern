@@ -342,9 +342,9 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         demandOption: true,
                         description: "The group to generate the next semantic version for"
                     });
-                    yargs.option("current-version", {
+                    yargs.option("from-version", {
                         string: true,
-                        description: "The current version of the SDK (e.g. 1.1.0)"
+                        description: "The previous version of the SDK (e.g. 1.1.0)"
                     });
                     yargs.option("from", {
                         string: true,
@@ -362,7 +362,7 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         context: cliContext,
                         group: argv.group as string,
                         from: argv.from as string,
-                        currentVersion: argv.currentVersion as string
+                        fromVersion: argv.fromVersion as string
                     })
             )
             .demandCommand(1)
