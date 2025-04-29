@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from .foo import Foo
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class FooExtended(Foo):
+class FooExtended(UniversalBaseModel):
     """
     Examples
     --------
@@ -16,6 +15,7 @@ class FooExtended(Foo):
     """
 
     age: int
+    name: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

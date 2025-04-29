@@ -3,14 +3,14 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
-from ...types.with_metadata import WithMetadata
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .movie import Movie
-from .with_docs import WithDocs
 
 
-class Response(WithMetadata, WithDocs):
+class Response(UniversalBaseModel):
     data: Movie
+    metadata: typing.Dict[str, str]
+    docs: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
