@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Add ping/pong to keep websocket connection alive in local development mode.
+    type: fix
+  irVersion: 57
+  version: 0.59.2
+
+- changelogEntry:
+  - summary: |
       Enhance OpenAPI -> IR parser to better handle inlined oneOf schemas. The parser now uses the schema ID when 
       generating names for oneOf variants, resulting in more predictable and consistent type names in the generated SDKs.
     type: feat
