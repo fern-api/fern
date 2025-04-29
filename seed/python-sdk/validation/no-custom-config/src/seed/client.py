@@ -101,7 +101,7 @@ class SeedValidation:
         --------
         from seed import SeedValidation
         client = SeedValidation(base_url="https://yourhost.com/path/to/api", )
-        client.create(decimal=2.2, even=100, name='foo', shape="SQUARE", )
+        client.create(decimal=2.2, even=100, name='fern', shape="SQUARE", )
         """
         _response = self._raw_client.create(
             decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
@@ -131,7 +131,7 @@ class SeedValidation:
         --------
         from seed import SeedValidation
         client = SeedValidation(base_url="https://yourhost.com/path/to/api", )
-        client.get(decimal=2.2, even=100, name='foo', )
+        client.get(decimal=2.2, even=100, name='fern', )
         """
         _response = self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
         return _response.data
@@ -227,7 +227,7 @@ class AsyncSeedValidation:
         import asyncio
         client = AsyncSeedValidation(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.create(decimal=2.2, even=100, name='foo', shape="SQUARE", )
+            await client.create(decimal=2.2, even=100, name='fern', shape="SQUARE", )
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
@@ -260,7 +260,7 @@ class AsyncSeedValidation:
         import asyncio
         client = AsyncSeedValidation(base_url="https://yourhost.com/path/to/api", )
         async def main() -> None:
-            await client.get(decimal=2.2, even=100, name='foo', )
+            await client.get(decimal=2.2, even=100, name='fern', )
         asyncio.run(main())
         """
         _response = await self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)

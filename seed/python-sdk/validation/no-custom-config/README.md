@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedValidation
 client = SeedValidation(base_url="https://yourhost.com/path/to/api", )
-client.create(decimal=2.2, even=100, name='foo', shape="SQUARE", )
+client.create(decimal=2.2, even=100, name='fern', shape="SQUARE", )
 ```
 
 ## Async Client
@@ -34,7 +34,7 @@ from seed import AsyncSeedValidation
 import asyncio
 client = AsyncSeedValidation(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.create(decimal=2.2, even=100, name='foo', shape="SQUARE", )
+    await client.create(decimal=2.2, even=100, name='fern', shape="SQUARE", )
 asyncio.run(main())```
 
 ## Exception Handling
