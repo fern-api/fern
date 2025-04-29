@@ -20918,8 +20918,8 @@
         ]
       }
     },
-    "CreatePaymentLinkOfpiAmountOneOfZero": {
-      "name": "CreatePaymentLinkOfpiAmountOneOfZero",
+    "CreatePaymentLinkOfpiAmount0": {
+      "name": "CreatePaymentLinkOfpiAmount0",
       "shape": {
         "type": "alias",
         "value": {
@@ -20931,8 +20931,8 @@
         }
       }
     },
-    "CreatePaymentLinkOfpiAmountOneOfOne": {
-      "name": "CreatePaymentLinkOfpiAmountOneOfOne",
+    "CreatePaymentLinkOfpiAmount1": {
+      "name": "CreatePaymentLinkOfpiAmount1",
       "shape": {
         "type": "alias",
         "value": {
@@ -20950,17 +20950,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CreatePaymentLinkOfpiAmountOneOfZero",
+            "typeName": "CreatePaymentLinkOfpiAmount0",
             "type": {
               "type": "id",
-              "value": "CreatePaymentLinkOfpiAmountOneOfZero"
+              "value": "CreatePaymentLinkOfpiAmount0"
             }
           },
           {
-            "typeName": "CreatePaymentLinkOfpiAmountOneOfOne",
+            "typeName": "CreatePaymentLinkOfpiAmount1",
             "type": {
               "type": "id",
-              "value": "CreatePaymentLinkOfpiAmountOneOfOne"
+              "value": "CreatePaymentLinkOfpiAmount1"
             }
           }
         ]
@@ -21115,8 +21115,8 @@
         ]
       }
     },
-    "CreatePaymentLinkPseAmountOneOfZero": {
-      "name": "CreatePaymentLinkPseAmountOneOfZero",
+    "CreatePaymentLinkPseAmount0": {
+      "name": "CreatePaymentLinkPseAmount0",
       "shape": {
         "type": "alias",
         "value": {
@@ -21128,8 +21128,8 @@
         }
       }
     },
-    "CreatePaymentLinkPseAmountOneOfOne": {
-      "name": "CreatePaymentLinkPseAmountOneOfOne",
+    "CreatePaymentLinkPseAmount1": {
+      "name": "CreatePaymentLinkPseAmount1",
       "shape": {
         "type": "alias",
         "value": {
@@ -21147,17 +21147,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CreatePaymentLinkPseAmountOneOfZero",
+            "typeName": "CreatePaymentLinkPseAmount0",
             "type": {
               "type": "id",
-              "value": "CreatePaymentLinkPseAmountOneOfZero"
+              "value": "CreatePaymentLinkPseAmount0"
             }
           },
           {
-            "typeName": "CreatePaymentLinkPseAmountOneOfOne",
+            "typeName": "CreatePaymentLinkPseAmount1",
             "type": {
               "type": "id",
-              "value": "CreatePaymentLinkPseAmountOneOfOne"
+              "value": "CreatePaymentLinkPseAmount1"
             }
           }
         ]
@@ -25231,8 +25231,8 @@
         ]
       }
     },
-    "CreatePaymentIntentPseAmountOneOfZero": {
-      "name": "CreatePaymentIntentPseAmountOneOfZero",
+    "CreatePaymentIntentPseAmount0": {
+      "name": "CreatePaymentIntentPseAmount0",
       "shape": {
         "type": "alias",
         "value": {
@@ -25244,8 +25244,8 @@
         }
       }
     },
-    "CreatePaymentIntentPseAmountOneOfOne": {
-      "name": "CreatePaymentIntentPseAmountOneOfOne",
+    "CreatePaymentIntentPseAmount1": {
+      "name": "CreatePaymentIntentPseAmount1",
       "shape": {
         "type": "alias",
         "value": {
@@ -25263,17 +25263,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CreatePaymentIntentPseAmountOneOfZero",
+            "typeName": "CreatePaymentIntentPseAmount0",
             "type": {
               "type": "id",
-              "value": "CreatePaymentIntentPseAmountOneOfZero"
+              "value": "CreatePaymentIntentPseAmount0"
             }
           },
           {
-            "typeName": "CreatePaymentIntentPseAmountOneOfOne",
+            "typeName": "CreatePaymentIntentPseAmount1",
             "type": {
               "type": "id",
-              "value": "CreatePaymentIntentPseAmountOneOfOne"
+              "value": "CreatePaymentIntentPseAmount1"
             }
           }
         ]

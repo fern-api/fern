@@ -1224,8 +1224,8 @@
         ]
       }
     },
-    "ChatGuardrailIdOneOfZero": {
-      "name": "ChatGuardrailIdOneOfZero",
+    "ChatGuardrailId0": {
+      "name": "ChatGuardrailId0",
       "shape": {
         "type": "enum",
         "values": [
@@ -1235,8 +1235,8 @@
         ]
       }
     },
-    "ChatGuardrailIdOneOfOne": {
-      "name": "ChatGuardrailIdOneOfOne",
+    "ChatGuardrailId1": {
+      "name": "ChatGuardrailId1",
       "shape": {
         "type": "enum",
         "values": [
@@ -1255,17 +1255,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ChatGuardrailIdOneOfZero",
+            "typeName": "ChatGuardrailId0",
             "type": {
               "type": "id",
-              "value": "ChatGuardrailIdOneOfZero"
+              "value": "ChatGuardrailId0"
             }
           },
           {
-            "typeName": "ChatGuardrailIdOneOfOne",
+            "typeName": "ChatGuardrailId1",
             "type": {
               "type": "id",
-              "value": "ChatGuardrailIdOneOfOne"
+              "value": "ChatGuardrailId1"
             }
           }
         ]
@@ -4034,8 +4034,8 @@
         ]
       }
     },
-    "KratosWebhookResponseIdentityOneOfZero": {
-      "name": "KratosWebhookResponseIdentityOneOfZero",
+    "KratosWebhookResponseIdentity0": {
+      "name": "KratosWebhookResponseIdentity0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4048,10 +4048,10 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "KratosWebhookResponseIdentityOneOfZero",
+            "typeName": "KratosWebhookResponseIdentity0",
             "type": {
               "type": "id",
-              "value": "KratosWebhookResponseIdentityOneOfZero"
+              "value": "KratosWebhookResponseIdentity0"
             }
           },
           {
@@ -8109,8 +8109,8 @@
         ]
       }
     },
-    "ValidationErrorLocItemsOneOfZero": {
-      "name": "ValidationErrorLocItemsOneOfZero",
+    "ValidationErrorLocItems0": {
+      "name": "ValidationErrorLocItems0",
       "shape": {
         "type": "alias",
         "value": {
@@ -8121,8 +8121,8 @@
         }
       }
     },
-    "ValidationErrorLocItemsOneOfOne": {
-      "name": "ValidationErrorLocItemsOneOfOne",
+    "ValidationErrorLocItems1": {
+      "name": "ValidationErrorLocItems1",
       "shape": {
         "type": "alias",
         "value": {
@@ -8139,17 +8139,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItemsOneOfZero",
+            "typeName": "ValidationErrorLocItems0",
             "type": {
               "type": "id",
-              "value": "ValidationErrorLocItemsOneOfZero"
+              "value": "ValidationErrorLocItems0"
             }
           },
           {
-            "typeName": "ValidationErrorLocItemsOneOfOne",
+            "typeName": "ValidationErrorLocItems1",
             "type": {
               "type": "id",
-              "value": "ValidationErrorLocItemsOneOfOne"
+              "value": "ValidationErrorLocItems1"
             }
           }
         ]

@@ -514,9 +514,9 @@
         ]
       }
     },
-    "MetadataCreateOneOfZero": {
+    "MetadataCreate0": {
       "description": "Object format.",
-      "name": "MetadataCreateOneOfZero",
+      "name": "MetadataCreate0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -539,8 +539,8 @@
         ]
       }
     },
-    "MetadataCreateOneOfOneItems": {
-      "name": "MetadataCreateOneOfOneItems",
+    "MetadataCreateOneOf1Items": {
+      "name": "MetadataCreateOneOf1Items",
       "shape": {
         "type": "object",
         "extends": [],
@@ -575,16 +575,16 @@
         ]
       }
     },
-    "MetadataCreateOneOfOne": {
+    "MetadataCreate1": {
       "description": "Array format.",
-      "name": "MetadataCreateOneOfOne",
+      "name": "MetadataCreate1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "MetadataCreateOneOfOneItems"
+            "value": "MetadataCreateOneOf1Items"
           }
         }
       }
@@ -596,19 +596,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "MetadataCreateOneOfZero",
+            "typeName": "MetadataCreate0",
             "description": "Object format.",
             "type": {
               "type": "id",
-              "value": "MetadataCreateOneOfZero"
+              "value": "MetadataCreate0"
             }
           },
           {
-            "typeName": "MetadataCreateOneOfOne",
+            "typeName": "MetadataCreate1",
             "description": "Array format.",
             "type": {
               "type": "id",
-              "value": "MetadataCreateOneOfOne"
+              "value": "MetadataCreate1"
             }
           }
         ]
@@ -6062,8 +6062,8 @@
         ]
       }
     },
-    "GenericObjectRefIdOneOfZero": {
-      "name": "GenericObjectRefIdOneOfZero",
+    "GenericObjectRefId0": {
+      "name": "GenericObjectRefId0",
       "shape": {
         "type": "alias",
         "value": {
@@ -6074,8 +6074,8 @@
         }
       }
     },
-    "GenericObjectRefIdOneOfOne": {
-      "name": "GenericObjectRefIdOneOfOne",
+    "GenericObjectRefId1": {
+      "name": "GenericObjectRefId1",
       "shape": {
         "type": "alias",
         "value": {
@@ -6092,17 +6092,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GenericObjectRefIdOneOfZero",
+            "typeName": "GenericObjectRefId0",
             "type": {
               "type": "id",
-              "value": "GenericObjectRefIdOneOfZero"
+              "value": "GenericObjectRefId0"
             }
           },
           {
-            "typeName": "GenericObjectRefIdOneOfOne",
+            "typeName": "GenericObjectRefId1",
             "type": {
               "type": "id",
-              "value": "GenericObjectRefIdOneOfOne"
+              "value": "GenericObjectRefId1"
             }
           }
         ]
