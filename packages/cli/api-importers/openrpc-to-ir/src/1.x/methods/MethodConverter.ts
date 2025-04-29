@@ -84,11 +84,11 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             }
 
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                breadcrumbs: [...this.breadcrumbs, "params"],
+                breadcrumbs: [...this.method.name, "params"],
                 context: this.context,
                 schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
             });
-            const schemaId = [...this.method.name, "Request", resolvedParam.name].join("_");
+            const schemaId = [...this.method.name, "Param", resolvedParam.name].join("_");
             const schema = await parameterSchemaConverter.convert();
             if (schema != null) {
                 requestProperties.push({
@@ -128,7 +128,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
             if (resolvedResult != null) {
                 const resultSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                    breadcrumbs: [...this.breadcrumbs, "result"],
+                    breadcrumbs: [this.method.name, "result"],
                     context: this.context,
                     schemaOrReference: resolvedResult.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
                 });
