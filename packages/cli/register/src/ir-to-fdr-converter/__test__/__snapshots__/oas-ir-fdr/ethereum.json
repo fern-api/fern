@@ -1077,7 +1077,7 @@
       }
     },
     "w_e_b_3___c_l_i_e_n_t_V_e_r_s_i_o_n_Result": {
-      "name": "MethodsResult",
+      "name": "Web3ClientVersionResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1088,8 +1088,8 @@
         }
       }
     },
-    "w_e_b_3___s_h_a_3_Request_data": {
-      "name": "MethodsParams",
+    "w_e_b_3___s_h_a_3_Param_data": {
+      "name": "WEBSHAParams",
       "shape": {
         "type": "alias",
         "value": {
@@ -1102,7 +1102,7 @@
       }
     },
     "n_e_t___l_i_s_t_e_n_i_n_g_Result": {
-      "name": "MethodsResult",
+      "name": "NetListeningResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1115,7 +1115,7 @@
     },
     "n_e_t___p_e_e_r_C_o_u_n_t_Result": {
       "description": "Hex representation of number of connected peers",
-      "name": "MethodsResult",
+      "name": "NetPeerCountResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1127,7 +1127,7 @@
       }
     },
     "n_e_t___v_e_r_s_i_o_n_Result": {
-      "name": "MethodsResult",
+      "name": "NetVersionResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1139,31 +1139,8 @@
         }
       }
     },
-    "MethodsResult": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "MethodsResultOneOfZero",
-            "description": "An object with sync status data",
-            "type": {
-              "type": "id",
-              "value": "MethodsResultOneOfZero"
-            }
-          },
-          {
-            "typeName": "MethodsResultOneOfOne",
-            "type": {
-              "type": "id",
-              "value": "MethodsResultOneOfOne"
-            }
-          }
-        ]
-      }
-    },
-    "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
-      "name": "MethodsResult",
+    "EthBlockNumberResult": {
+      "name": "EthBlockNumberResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1184,58 +1161,52 @@
         ]
       }
     },
-    "MethodsParams": {
-      "description": "A filter used to monitor the blockchain for log/events",
-      "name": "MethodsParams",
+    "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
+      "name": "EthBlockNumberResult",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
+        "type": "undiscriminatedUnion",
+        "variants": [
           {
-            "key": "fromBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
             }
           },
           {
-            "key": "toBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "MethodsParamsAddress"
-              }
-            }
-          },
-          {
-            "key": "topics",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "Topics"
-              }
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
             }
           }
         ]
       }
     },
-    "e_t_h___c_a_l_l_Request_blockNumber": {
-      "name": "MethodsParams",
+    "ETHCALLParams": {
+      "name": "ETHCALLParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___c_a_l_l_Param_blockNumber": {
+      "name": "ETHCALLParams",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1257,7 +1228,7 @@
       }
     },
     "e_t_h___c_h_a_i_n_I_d_Result": {
-      "name": "MethodsResult",
+      "name": "EthChainIdResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1269,8 +1240,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Request_includeTransactions": {
-      "name": "MethodsParams",
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_includeTransactions": {
+      "name": "ETHGETBLOCKBYHASHParams",
       "shape": {
         "type": "alias",
         "value": {
@@ -1281,8 +1252,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Request_blockNumber": {
-      "name": "MethodsParams",
+    "ETHGETBLOCKBYNUMBERParams": {
+      "name": "ETHGETBLOCKBYNUMBERParams",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1303,8 +1274,30 @@
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Request_includeTransactions": {
-      "name": "MethodsParams",
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_blockNumber": {
+      "name": "ETHGETBLOCKBYNUMBERParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_includeTransactions": {
+      "name": "ETHGETBLOCKBYNUMBERParams",
       "shape": {
         "type": "alias",
         "value": {
@@ -1315,8 +1308,30 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Request_blockNumber": {
-      "name": "MethodsParams",
+    "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParams": {
+      "name": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_blockNumber": {
+      "name": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParams",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1338,7 +1353,7 @@
       }
     },
     "e_t_h___g_e_t_F_i_l_t_e_r_C_h_a_n_g_e_s_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetFilterChangesResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1351,7 +1366,7 @@
       }
     },
     "e_t_h___g_e_t_F_i_l_t_e_r_L_o_g_s_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetFilterLogsResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1363,8 +1378,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Request_blockNumber": {
-      "name": "MethodsParams",
+    "ETHGETRAWTRANSACTIONBYBLOCKNUMBERANDINDEXParams": {
+      "name": "ETHGETRAWTRANSACTIONBYBLOCKNUMBERANDINDEXParams",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1385,8 +1400,30 @@
         ]
       }
     },
-    "MethodsParamsAddress": {
-      "name": "MethodsParamsAddress",
+    "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber": {
+      "name": "ETHGETRAWTRANSACTIONBYBLOCKNUMBERANDINDEXParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "ETHGETLOGSParamsAddress": {
+      "name": "ETHGETLOGSParamsAddress",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1407,9 +1444,9 @@
         ]
       }
     },
-    "e_t_h___g_e_t_L_o_g_s_Request_filter": {
+    "ETHGETLOGSParams": {
       "description": "A filter used to monitor the blockchain for log/events",
-      "name": "MethodsParams",
+      "name": "ETHGETLOGSParams",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1440,7 +1477,57 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParamsAddress"
+                "value": "ETHGETLOGSParamsAddress"
+              }
+            }
+          },
+          {
+            "key": "topics",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Topics"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_L_o_g_s_Param_filter": {
+      "description": "A filter used to monitor the blockchain for log/events",
+      "name": "ETHGETLOGSParams",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "fromBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "toBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ETHGETLOGSParamsAddress"
               }
             }
           },
@@ -1458,7 +1545,7 @@
       }
     },
     "e_t_h___g_e_t_L_o_g_s_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetLogsResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1470,8 +1557,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Request_blockNumber": {
-      "name": "MethodsParams",
+    "ETHGETSTORAGEATParams": {
+      "name": "ETHGETSTORAGEATParams",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1492,8 +1579,30 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Result": {
-      "name": "MethodsResult",
+    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_blockNumber": {
+      "name": "ETHGETSTORAGEATParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "EthGetTransactionByBlockHashAndIndexResult": {
+      "name": "EthGetTransactionByBlockHashAndIndexResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1514,8 +1623,74 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Request_blockNumber": {
-      "name": "MethodsParams",
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Result": {
+      "name": "EthGetTransactionByBlockHashAndIndexResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Transaction",
+            "type": {
+              "type": "id",
+              "value": "Transaction"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "EthGetTransactionByBlockNumberAndIndexResult": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Transaction",
+            "type": {
+              "type": "id",
+              "value": "Transaction"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParams": {
+      "name": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber": {
+      "name": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParams",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1537,7 +1712,29 @@
       }
     },
     "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetTransactionByBlockNumberAndIndexResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Transaction",
+            "type": {
+              "type": "id",
+              "value": "Transaction"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "EthGetTransactionByHashResult": {
+      "name": "EthGetTransactionByHashResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1559,7 +1756,7 @@
       }
     },
     "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetTransactionByHashResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1580,8 +1777,52 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Request_blockNumber": {
-      "name": "MethodsParams",
+    "EthGetTransactionCountResult": {
+      "name": "EthGetTransactionCountResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Nonce",
+            "type": {
+              "type": "id",
+              "value": "Nonce"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "ETHGETTRANSACTIONCOUNTParams": {
+      "name": "ETHGETTRANSACTIONCOUNTParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_blockNumber": {
+      "name": "ETHGETTRANSACTIONCOUNTParams",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1603,7 +1844,7 @@
       }
     },
     "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetTransactionCountResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1624,8 +1865,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Result": {
-      "name": "MethodsResult",
+    "EthGetTransactionReceiptResult": {
+      "name": "EthGetTransactionReceiptResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1646,8 +1887,30 @@
         ]
       }
     },
-    "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Request_blockNumber": {
-      "name": "MethodsParams",
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Result": {
+      "name": "EthGetTransactionReceiptResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Receipt",
+            "type": {
+              "type": "id",
+              "value": "Receipt"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "ETHGETUNCLECOUNTBYBLOCKNUMBERParams": {
+      "name": "ETHGETUNCLECOUNTBYBLOCKNUMBERParams",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1668,9 +1931,376 @@
         ]
       }
     },
-    "MethodsResultOneOfZero": {
+    "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Param_blockNumber": {
+      "name": "ETHGETUNCLECOUNTBYBLOCKNUMBERParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "EthGetProofResultOneOfZero": {
+      "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
+      "name": "EthGetProofResultOneOfZero",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The address of the account or contract of the request",
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Address"
+              }
+            }
+          },
+          {
+            "key": "accountProof",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProofNodes"
+              }
+            }
+          },
+          {
+            "description": "The Ether balance of the account or contract of the request",
+            "key": "balance",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Integer"
+              }
+            }
+          },
+          {
+            "description": "The code hash of the contract of the request (keccak(NULL) if external account)",
+            "key": "codeHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Keccak"
+              }
+            }
+          },
+          {
+            "description": "The transaction count of the account or contract of the request",
+            "key": "nonce",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Nonce"
+              }
+            }
+          },
+          {
+            "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)",
+            "key": "storageHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Keccak"
+              }
+            }
+          },
+          {
+            "key": "storageProof",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "StorageProof"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "EthGetProofResult": {
+      "name": "EthGetProofResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EthGetProofResultOneOfZero",
+            "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
+            "type": {
+              "type": "id",
+              "value": "EthGetProofResultOneOfZero"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "ETHGETPROOFParams": {
+      "name": "ETHGETPROOFParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_P_r_o_o_f_Param_blockNumber": {
+      "name": "ETHGETPROOFParams",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_P_r_o_o_f_Result": {
+      "name": "EthGetProofResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EthGetProofResultOneOfZero",
+            "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
+            "type": {
+              "type": "id",
+              "value": "EthGetProofResultOneOfZero"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_W_o_r_k_Result": {
+      "name": "EthGetWorkResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "unknown"
+          }
+        }
+      }
+    },
+    "e_t_h___m_i_n_i_n_g_Result": {
+      "name": "EthMiningResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "ETHNEWFILTERParamsAddress": {
+      "name": "ETHNEWFILTERParamsAddress",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Address",
+            "type": {
+              "type": "id",
+              "value": "Address"
+            }
+          },
+          {
+            "typeName": "Addresses",
+            "type": {
+              "type": "id",
+              "value": "Addresses"
+            }
+          }
+        ]
+      }
+    },
+    "ETHNEWFILTERParams": {
+      "description": "A filter used to monitor the blockchain for log/events",
+      "name": "ETHNEWFILTERParams",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "fromBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "toBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ETHNEWFILTERParamsAddress"
+              }
+            }
+          },
+          {
+            "key": "topics",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Topics"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___n_e_w_F_i_l_t_e_r_Param_filter": {
+      "description": "A filter used to monitor the blockchain for log/events",
+      "name": "ETHNEWFILTERParams",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "fromBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "toBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ETHNEWFILTERParamsAddress"
+              }
+            }
+          },
+          {
+            "key": "topics",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Topics"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___s_u_b_m_i_t_H_a_s_h_r_a_t_e_Result": {
+      "name": "EthSubmitHashrateResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "e_t_h___s_u_b_m_i_t_W_o_r_k_Result": {
+      "name": "EthSubmitWorkResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "EthSyncingResultOneOfZero": {
       "description": "An object with sync status data",
-      "name": "MethodsResultOneOfZero",
+      "name": "EthSyncingResultOneOfZero",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1733,186 +2363,66 @@
         ]
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Request_blockNumber": {
-      "name": "MethodsParams",
+    "EthSyncingResultOneOfOne": {
+      "name": "EthSyncingResultOneOfOne",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "EthSyncingResult": {
+      "name": "EthSyncingResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
-    "e_t_h___g_e_t_P_r_o_o_f_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "MethodsResultOneOfZero",
-            "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
-            "type": {
-              "type": "id",
-              "value": "MethodsResultOneOfZero"
-            }
-          },
-          {
-            "typeName": "Null",
-            "type": {
-              "type": "id",
-              "value": "Null"
-            }
-          }
-        ]
-      }
-    },
-    "e_t_h___g_e_t_W_o_r_k_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
-      }
-    },
-    "e_t_h___m_i_n_i_n_g_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "e_t_h___n_e_w_F_i_l_t_e_r_Request_filter": {
-      "description": "A filter used to monitor the blockchain for log/events",
-      "name": "MethodsParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "fromBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "toBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "MethodsParamsAddress"
-              }
-            }
-          },
-          {
-            "key": "topics",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "Topics"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "e_t_h___s_u_b_m_i_t_H_a_s_h_r_a_t_e_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "e_t_h___s_u_b_m_i_t_W_o_r_k_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "MethodsResultOneOfOne": {
-      "name": "MethodsResultOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "e_t_h___s_y_n_c_i_n_g_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "MethodsResultOneOfZero",
+            "typeName": "EthSyncingResultOneOfZero",
             "description": "An object with sync status data",
             "type": {
               "type": "id",
-              "value": "MethodsResultOneOfZero"
+              "value": "EthSyncingResultOneOfZero"
             }
           },
           {
-            "typeName": "MethodsResultOneOfOne",
+            "typeName": "EthSyncingResultOneOfOne",
             "type": {
               "type": "id",
-              "value": "MethodsResultOneOfOne"
+              "value": "EthSyncingResultOneOfOne"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___s_y_n_c_i_n_g_Result": {
+      "name": "EthSyncingResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EthSyncingResultOneOfZero",
+            "description": "An object with sync status data",
+            "type": {
+              "type": "id",
+              "value": "EthSyncingResultOneOfZero"
+            }
+          },
+          {
+            "typeName": "EthSyncingResultOneOfOne",
+            "type": {
+              "type": "id",
+              "value": "EthSyncingResultOneOfOne"
             }
           }
         ]
       }
     },
     "e_t_h___u_n_i_n_s_t_a_l_l_F_i_l_t_e_r_Result": {
-      "name": "MethodsResult",
+      "name": "EthUninstallFilterResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -2436,7 +2946,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthBlockNumberResult"
             }
           }
         },
@@ -2533,7 +3043,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHCALLParams"
                   }
                 }
               ]
@@ -3133,7 +3643,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETBLOCKBYNUMBERParams"
                   }
                 },
                 {
@@ -3322,7 +3832,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParams"
                   }
                 }
               ]
@@ -3923,7 +4433,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETRAWTRANSACTIONBYBLOCKNUMBERANDINDEXParams"
                   }
                 },
                 {
@@ -4021,7 +4531,7 @@
                   "key": "filter",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETLOGSParams"
                   }
                 }
               ]
@@ -4148,7 +4658,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETSTORAGEATParams"
                   }
                 }
               ]
@@ -4257,7 +4767,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionByBlockHashAndIndexResult"
             }
           },
           "description": "Returns a transaction or null"
@@ -4342,7 +4852,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParams"
                   }
                 },
                 {
@@ -4362,7 +4872,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionByBlockNumberAndIndexResult"
             }
           },
           "description": "Returns a transaction or null"
@@ -4476,7 +4986,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionByHashResult"
             }
           },
           "description": "Returns a transaction or null"
@@ -4585,7 +5095,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETTRANSACTIONCOUNTParams"
                   }
                 }
               ]
@@ -4597,7 +5107,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionCountResult"
             }
           }
         },
@@ -4702,7 +5212,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionReceiptResult"
             }
           },
           "description": "returns either a receipt or null"
@@ -5117,7 +5627,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETUNCLECOUNTBYBLOCKNUMBERParams"
                   }
                 }
               ]
@@ -5215,7 +5725,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHGETPROOFParams"
                   }
                 }
               ]
@@ -5227,7 +5737,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetProofResult"
             }
           }
         },
@@ -5630,7 +6140,7 @@
                   "key": "filter",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "ETHNEWFILTERParams"
                   }
                 }
               ]
@@ -6237,7 +6747,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthSyncingResult"
             }
           }
         },

@@ -109,6 +109,7 @@
                 }
               ]
             },
+            "contentType": "multipart/form-data",
             "description": "Test request body\n"
           },
           "description": "Test request body\n"

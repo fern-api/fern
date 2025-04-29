@@ -2002,7 +2002,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "errorsV2": [],
