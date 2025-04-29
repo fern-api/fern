@@ -6,12 +6,11 @@ import express from "express";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
-import { type WebSocket, WebSocketServer } from "ws";
+import { WebSocket, WebSocketServer } from "ws";
 
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
-// import { WebSocket } from "ws"
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 
@@ -179,7 +178,15 @@ export async function runAppPreviewServer({
     wss.on("connection", function connection(ws) {
         connections.add(ws);
 
+        const pingInterval = setInterval(() => {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: "ping" }));
+                context.logger.debug("Server: Sent ping to keep connection alive");
+            }
+        }, 60000);
+
         ws.on("close", function close() {
+            clearInterval(pingInterval);
             connections.delete(ws);
         });
     });
